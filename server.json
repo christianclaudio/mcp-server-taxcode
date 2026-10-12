@@ -1,0 +1,74 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.christianclaudio/taxcode",
+  "description": "Enterprise Model Context Protocol (MCP) server for Tax Code with safety gating.",
+  "status": "active",
+  "repository": {
+    "url": "https://github.com/christianclaudio/mcp-server-taxcode",
+    "source": "github"
+  },
+  "version": "0.0.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "mcp-server-taxcode",
+      "version": "0.0.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "TAXCODE_API_KEY",
+          "description": "API token for service authentication",
+          "isSecret": true
+        },
+        {
+          "name": "TAXCODE_BASE_URL",
+          "description": "Optional REST base URL override",
+          "default": "https://api.example.com"
+        },
+        {
+          "name": "TAXCODE_MCP_READONLY",
+          "description": "Restrict server execution strictly to read-only inspection tools",
+          "default": "0"
+        },
+        {
+          "name": "TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE",
+          "description": "Safety gate required to unlock bulk destructive operations",
+          "default": "0"
+        }
+      ]
+    },
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/christianclaudio/mcp-server-taxcode:0.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "TAXCODE_API_KEY",
+          "description": "API token for service authentication",
+          "isSecret": true
+        },
+        {
+          "name": "TAXCODE_BASE_URL",
+          "description": "Optional REST base URL override",
+          "default": "https://api.example.com"
+        },
+        {
+          "name": "TAXCODE_MCP_READONLY",
+          "description": "Restrict server execution strictly to read-only inspection tools",
+          "default": "0"
+        },
+        {
+          "name": "TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE",
+          "description": "Safety gate required to unlock bulk destructive operations",
+          "default": "0"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://gofastmcp.com/public/schemas/fastmcp.json/v1.json",
+  "source": {
+    "path": "src/taxcode_mcp/server.py",
+    "entrypoint": "mcp"
+  },
+  "environment": {
+    "dependencies": [
+      "mcp>=2.3.0",
+      "fastmcp>=4.1.0",
+      "httpx>=0.28.0",
+      "pydantic>=2.10.0",
+      "pydantic-settings>=2.7.0"
+    ]
+  },
+  "deployment": {
+    "transport": "stdio",
+    "log_level": "INFO"
+  }
+}

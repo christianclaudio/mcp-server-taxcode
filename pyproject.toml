@@ -1,0 +1,113 @@
+[build-system]
+requires = ["hatchling>=1.32.4,<2", "uv-dynamic-versioning>=0.14.1,<0.15"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-server-taxcode"
+dynamic = ["version"]
+description = "Enterprise Model Context Protocol (MCP) server for Tax Code"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [
+    { name = "Christian Claudio", email = "christianclaudio@mail.com" }
+]
+requires-python = ">=3.10"
+keywords = ["mcp", "model-context-protocol", "ai", "agents", "fastmcp"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "mcp>=2.3.0",
+    "fastmcp>=4.1.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+]
+
+[project.optional-dependencies]
+# Code Mode is optional: FastMCP ships its pydantic-monty sandbox as the code-mode extra.
+# Users install mcp-server-<name>[code-mode]; dev repeats the same pin so tests run execute.
+code-mode = [
+    "fastmcp[code-mode]>=4.1.0",
+]
+dev = [
+    "fastmcp[code-mode]>=4.1.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "mypy>=2.4.0",
+    "opentelemetry-sdk>=1.45.1",
+    "ruff>=0.16.10",
+    "twine>=7.0.0",
+]
+
+[project.scripts]
+mcp-server-taxcode = "taxcode_mcp.server:main"
+taxcode-mcp = "taxcode_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/christianclaudio/mcp-server-taxcode"
+Documentation = "https://github.com/christianclaudio/mcp-server-taxcode#readme"
+Repository = "https://github.com/christianclaudio/mcp-server-taxcode.git"
+Issues = "https://github.com/christianclaudio/mcp-server-taxcode/issues"
+Changelog = "https://github.com/christianclaudio/mcp-server-taxcode/releases"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.uv-dynamic-versioning]
+vcs = "git"
+style = "pep440"
+bump = true
+fallback-version = "0.0.0"
+
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/taxcode_mcp"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N"]
+ignore = ["B008"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+markers = [
+    "e2e: end-to-end live network tests against upstream services (run with -m e2e)",
+]
+addopts = "-m 'not e2e' --strict-markers --cov=src/taxcode_mcp --cov-report=term-missing --cov-fail-under=100"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]

@@ -1,0 +1,47 @@
+version: 2
+# The Dockerfile pulls its base from public.ecr.aws. Declaring that host
+# under registries (no credentials; it allows anonymous pulls) lets the
+# docker update job reach it. See "Configuring access to private registries
+# for Dependabot" on docs.github.com.
+registries:
+  public-ecr:
+    type: docker-registry
+    url: https://public.ecr.aws
+
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "04:30"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 10
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "04:30"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 10
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "04:30"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 10
+    registries:
+      - public-ecr

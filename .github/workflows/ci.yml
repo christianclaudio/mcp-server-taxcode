@@ -1,0 +1,179 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  # Each push to main gets its own group, keyed on the commit SHA, so runs for
+  # different main commits never wait behind, replace or cancel each other.
+  # Pull request runs share one group per PR ref, and a new push to the PR cancels
+  # the run in progress.
+  group: ${{ github.workflow }}-${{ github.event_name == 'push' && github.sha || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-types:
+    name: Lint and types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: uv sync --locked --extra dev --python 3.10
+
+      - name: Check code formatting
+        run: uv run ruff format --check .
+
+      - name: Run linter
+        run: uv run ruff check .
+
+      - name: Static type analysis
+        run: uv run mypy --strict src
+
+  test:
+    name: Tests (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        # The code-mode extra is installed explicitly; with CI set, tests/conftest.py
+        # aborts the run if the Code Mode sandbox is missing instead of skipping its tests.
+        run: uv sync --locked --extra dev --extra code-mode --python "$PYTHON_VERSION"
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
+
+      - name: Run unit test suite
+        run: uv run pytest
+
+  tool-contract:
+    name: Tool contract assertions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: uv sync --locked --extra dev --python 3.10
+
+      - name: Verify tool contracts
+        run: uv run python scripts/check_tool_contract.py
+
+      - name: Verify OpenAPI drift
+        run: uv run python scripts/check_openapi_drift.py
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
+        with:
+          node-version: "22"
+
+      - name: Protocol conformance suite
+        run: ./scripts/check_conformance.sh
+
+  build-check:
+    name: Build and package check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: uv sync --locked --extra dev --python 3.10
+
+      - name: Build wheel and sdist
+        run: uv build
+
+      - name: Reject fallback and untagged versions
+        run: uv run python scripts/check_version.py
+
+      - name: Validate distribution
+        run: uv run twine check dist/*
+
+  docker-build:
+    name: Container image build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build image (no push)
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc  # v7.4.0
+        with:
+          context: .
+          push: false
+          load: true
+          tags: mcp-server-ci:test
+
+      - name: Image label matches server.json name
+        run: |
+          EXPECTED="$(jq -r .name server.json)"
+          ACTUAL="$(docker inspect --format '{{ index .Config.Labels "io.modelcontextprotocol.server.name" }}' mcp-server-ci:test)"
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+            echo "::error::image label '${ACTUAL}' does not match server.json name '${EXPECTED}'"
+            exit 1
+          fi
+          echo "Image label matches ${EXPECTED}"
