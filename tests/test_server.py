@@ -12,7 +12,9 @@ from fastmcp.exceptions import ToolError
 
 from taxcode_mcp import server
 from taxcode_mcp.config import settings
+from taxcode_mcp.db import db
 from taxcode_mcp.errors import SafetyViolationError
+from taxcode_mcp.tools.statutes import StatuteInput
 
 
 @pytest.mark.asyncio
@@ -24,47 +26,89 @@ async def test_server_tools(mock_transport, monkeypatch):
     # 1. Health
     health = await server.get_health_status()
     assert health["status"] == "success"
-    assert health["data"]["status"] == "healthy"
+    assert health["database"]["backend"] == "DuckDB"
 
-    # 2. List items
-    items = await server.list_items(limit=10, offset=0)
-    assert items["status"] == "success"
+    # 2. Lookup statute
+    statute = await server.lookup_statute("26 U.S.C. § 933")
+    assert statute["status"] == "success"
+    assert statute["data"]["section"] == "933"
 
-    # 3. Get item
-    item = await server.get_item(item_id="123")
-    assert item["status"] == "success"
-    assert item["data"]["id"] == "123"
+    # 3. Search tax code
+    search_res = await server.search_tax_code("bona fide resident")
+    assert search_res["status"] == "success"
+    assert len(search_res["results"]) > 0
 
-    # 4. Create item
-    created = await server.create_item(name="New Item", payload={"description": "Test"})
+    # 4. List publications
+    pubs = await server.list_publications()
+    assert pubs["status"] == "success"
+    assert len(pubs["publications"]) > 0
+
+    # 5. Evaluate bona fide residency
+    residency = server.evaluate_pr_bona_fide_residency(
+        days_present_pr=185,
+        days_present_us=30,
+        has_us_tax_home=False,
+        closer_connection_jurisdiction="PR",
+    )
+    assert residency["status"] == "success"
+    assert residency["is_bona_fide_resident"] is True
+
+    # 6. Calculate built-in gain sourcing
+    big = server.calculate_built_in_gain_sourcing(
+        is_marketable=True,
+        total_gain=700000.0,
+        fmv_on_residency_date=500000.0,
+        adjusted_basis=100000.0,
+        years_since_residency=4.0,
+    )
+    assert big["status"] == "success"
+    assert big["us_source_gain"] == 400000.0
+    assert big["pr_source_gain"] == 300000.0
+
+    # 7. Create statute
+    payload = StatuteInput(
+        id="test-sec-9999",
+        citation="26 U.S.C. § 9999",
+        title="Test Provision",
+        jurisdiction="US",
+        corpus="IRC",
+        section="9999",
+    )
+    created = await server.create_statute(payload=payload)
     assert created["status"] == "success"
-    assert created["data"]["created"] is True
+    assert created["created"] is True
 
-    # 5. Delete item (confirm=False should raise SafetyViolationError)
+    # 8. Delete statute (confirm=False should raise SafetyViolationError)
     with pytest.raises(SafetyViolationError):
-        await server.delete_item(item_id="123", confirm=False)
+        await server.delete_statute(statute_id="test-sec-9999", confirm=False)
 
-    # 6. Delete item (confirm=True)
-    deleted = await server.delete_item(item_id="123", confirm=True)
+    # 9. Delete statute (confirm=True)
+    deleted = await server.delete_statute(statute_id="test-sec-9999", confirm=True)
     assert deleted["status"] == "success"
     assert deleted["deleted"] is True
 
-    # 7. Bulk delete (default dry_run=True, but gated by settings)
+    # 10. Bulk delete (default dry_run=True, but gated by settings)
     with pytest.raises(SafetyViolationError) as exc_info:
-        await server.bulk_delete_items(item_ids=["1", "2"], dry_run=True)
+        await server.bulk_delete_statutes(statute_ids=["test-1", "test-2"], dry_run=True)
     assert "TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE=1" in str(exc_info.value)
 
     # Enable bulk destructive
     monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-    dry_run_res = await server.bulk_delete_items(item_ids=["1", "2"], dry_run=True)
+    dry_run_res = await server.bulk_delete_statutes(statute_ids=["test-1", "test-2"], dry_run=True)
     assert dry_run_res["status"] == "dry_run"
 
     # Bulk delete live without confirm
     with pytest.raises(SafetyViolationError):
-        await server.bulk_delete_items(item_ids=["1", "2"], dry_run=False, confirm=False)
+        await server.bulk_delete_statutes(
+            statute_ids=["test-bulk-1", "test-bulk-2"], dry_run=False, confirm=False
+        )
 
     # Bulk delete live with confirm
-    bulk_res = await server.bulk_delete_items(item_ids=["1", "2"], dry_run=False, confirm=True)
+    await server.create_statute(payload=StatuteInput(id="test-bulk-1", citation="c1", title="t1"))
+    await server.create_statute(payload=StatuteInput(id="test-bulk-2", citation="c2", title="t2"))
+    bulk_res = await server.bulk_delete_statutes(
+        statute_ids=["test-bulk-1", "test-bulk-2"], dry_run=False, confirm=True
+    )
     assert bulk_res["status"] == "success"
     assert bulk_res["deleted_count"] == 2
 
@@ -77,13 +121,13 @@ async def test_server_read_only_mode(mock_transport, monkeypatch):
     monkeypatch.setattr(settings, "MCP_READONLY", True)
 
     with pytest.raises(SafetyViolationError, match="read-only"):
-        await server.create_item(name="Forbidden")
+        await server.create_statute(payload=StatuteInput(id="x", citation="x", title="x"))
 
     with pytest.raises(SafetyViolationError, match="read-only"):
-        await server.delete_item(item_id="1", confirm=True)
+        await server.delete_statute(statute_id="1", confirm=True)
 
     with pytest.raises(SafetyViolationError, match="read-only"):
-        await server.bulk_delete_items(item_ids=["1"], dry_run=True)
+        await server.bulk_delete_statutes(statute_ids=["1"], dry_run=True)
 
 
 def _exception_chain(exc: BaseException) -> list[BaseException]:
@@ -104,19 +148,15 @@ def _exception_chain(exc: BaseException) -> list[BaseException]:
     "call",
     [
         lambda: server.get_health_status(),
-        lambda: server.list_items(),
-        lambda: server.get_item("1"),
-        lambda: server.create_item("Test"),
-        lambda: server.delete_item("1", confirm=True),
-        lambda: server.bulk_delete_items(["1"], dry_run=False, confirm=True),
+        lambda: server.lookup_statute("933"),
+        lambda: server.delete_statute("1", confirm=True),
+        lambda: server.bulk_delete_statutes(["1"], dry_run=False, confirm=True),
     ],
     ids=[
         "get_health_status",
-        "list_items",
-        "get_item",
-        "create_item",
-        "delete_item",
-        "bulk_delete_items_batch_failed",
+        "lookup_statute",
+        "delete_statute",
+        "bulk_delete_statutes",
     ],
 )
 async def test_tool_error_original_is_not_reachable_via_context(
@@ -128,7 +168,12 @@ async def test_tool_error_original_is_not_reachable_via_context(
     async def request(method: str, path: str, **_: Any) -> Any:
         raise RuntimeError(f"upstream rejected Authorization: Bearer {raw_token}")
 
+    def fake_db_err(*args: Any, **kwargs: Any) -> Any:
+        raise RuntimeError(f"storage rejected Authorization: Bearer {raw_token}")
+
     monkeypatch.setattr(server.client, "request", request)
+    monkeypatch.setattr(db, "lookup_statute", fake_db_err)
+    monkeypatch.setattr(db, "delete_statute", fake_db_err)
     monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
     with pytest.raises(ToolError) as exc_info:
         await call()
@@ -164,21 +209,29 @@ async def test_server_error_handling(monkeypatch):
     assert health_exc.value.__context__ is None
     assert health_exc.value.__suppress_context__
 
-    with pytest.raises(ToolError, match=r"Bearer \[REDACTED\]"):
-        await server.list_items()
+    def fake_db_err(*args: Any, **kwargs: Any) -> Any:
+        raise RuntimeError("Bearer secret-token-abc failure")
+
+    monkeypatch.setattr(db, "lookup_statute", fake_db_err)
+    monkeypatch.setattr(db, "search_statutes", fake_db_err)
+    monkeypatch.setattr(db, "list_publications", fake_db_err)
+    monkeypatch.setattr(db, "delete_statute", fake_db_err)
 
     with pytest.raises(ToolError, match=r"Bearer \[REDACTED\]"):
-        await server.get_item("1")
+        await server.lookup_statute("933")
 
     with pytest.raises(ToolError, match=r"Bearer \[REDACTED\]"):
-        await server.create_item("Test")
+        await server.search_tax_code("test")
 
     with pytest.raises(ToolError, match=r"Bearer \[REDACTED\]"):
-        await server.delete_item("1", confirm=True)
+        await server.list_publications()
+
+    with pytest.raises(ToolError, match=r"Bearer \[REDACTED\]"):
+        await server.delete_statute("1", confirm=True)
 
     monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
     with pytest.raises(ToolError, match=r"Bearer \[REDACTED\]"):
-        await server.bulk_delete_items(["1"], dry_run=False, confirm=True)
+        await server.bulk_delete_statutes(["1"], dry_run=False, confirm=True)
 
 
 @pytest.mark.asyncio
@@ -197,11 +250,9 @@ async def test_tool_errors_reach_client_as_is_error(monkeypatch, caplog):
 
     caplog.set_level(logging.DEBUG)
     async with Client(server.create_server()) as mcp_client:
-        result = await mcp_client.call_tool(
-            "items_get_item", {"item_id": "1"}, raise_on_error=False
-        )
+        result = await mcp_client.call_tool("system_get_health_status", {}, raise_on_error=False)
         refusal = await mcp_client.call_tool(
-            "items_delete_item", {"item_id": "1"}, raise_on_error=False
+            "statutes_delete_statute", {"statute_id": "1"}, raise_on_error=False
         )
 
     assert result.is_error
@@ -224,43 +275,47 @@ async def test_mrtr_elicitation(mock_transport, monkeypatch):
     """Verify MRTR interactive client confirmation and fallback paths."""
     async_client = httpx.AsyncClient(transport=mock_transport, base_url="https://api.example.com")
     monkeypatch.setattr(server, "client", server.TemplateClient(http_client=async_client))
+    monkeypatch.setattr(db, "delete_statute", lambda *args, **kwargs: True)
 
-    # 1. delete_item: MRTR accepted
+    # 1. delete_statute: MRTR accepted
     ctx_accept = MagicMock()
     ctx_accept.elicit = AsyncMock(
         return_value=SimpleNamespace(action="accept", data=SimpleNamespace(confirm=True))
     )
-    res_accept = await server.delete_item("123", confirm=False, ctx=ctx_accept)
+    res_accept = await server.delete_statute("test-sec-9999", confirm=False, ctx=ctx_accept)
     assert res_accept["status"] == "success"
-    assert res_accept["deleted"] is True
 
-    # 2. delete_item: MRTR declined
+    # 2. delete_statute: MRTR declined
     ctx_decline = MagicMock()
     ctx_decline.elicit = AsyncMock(return_value=SimpleNamespace(action="decline", data=None))
     with pytest.raises(SafetyViolationError):
-        await server.delete_item("123", confirm=False, ctx=ctx_decline)
+        await server.delete_statute("test-sec-9999", confirm=False, ctx=ctx_decline)
 
-    # 3. delete_item: MRTR error fallback
+    # 3. delete_statute: MRTR error fallback
     ctx_err = MagicMock()
     ctx_err.elicit = AsyncMock(side_effect=RuntimeError("Elicitation unsupported"))
     with pytest.raises(SafetyViolationError):
-        await server.delete_item("123", confirm=False, ctx=ctx_err)
+        await server.delete_statute("test-sec-9999", confirm=False, ctx=ctx_err)
 
-    # 4. bulk_delete_items: MRTR accepted
+    # 4. bulk_delete_statutes: MRTR accepted
     monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-    bulk_accept = await server.bulk_delete_items(
-        ["1", "2"], dry_run=False, confirm=False, ctx=ctx_accept
+    bulk_accept = await server.bulk_delete_statutes(
+        ["test-1", "test-2"], dry_run=False, confirm=False, ctx=ctx_accept
     )
     assert bulk_accept["status"] == "success"
     assert bulk_accept["deleted_count"] == 2
 
-    # 5. bulk_delete_items: MRTR declined
+    # 5. bulk_delete_statutes: MRTR declined
     with pytest.raises(SafetyViolationError):
-        await server.bulk_delete_items(["1", "2"], dry_run=False, confirm=False, ctx=ctx_decline)
+        await server.bulk_delete_statutes(
+            ["test-1", "test-2"], dry_run=False, confirm=False, ctx=ctx_decline
+        )
 
-    # 6. bulk_delete_items: MRTR error fallback
+    # 6. bulk_delete_statutes: MRTR error fallback
     with pytest.raises(SafetyViolationError):
-        await server.bulk_delete_items(["1", "2"], dry_run=False, confirm=False, ctx=ctx_err)
+        await server.bulk_delete_statutes(
+            ["test-1", "test-2"], dry_run=False, confirm=False, ctx=ctx_err
+        )
 
 
 @pytest.mark.asyncio
@@ -268,13 +323,14 @@ async def test_input_responses_confirmation(mock_transport, monkeypatch):
     """Verify modern FastMCP 4 / SEP-2322 input_responses confirmation channel."""
     async_client = httpx.AsyncClient(transport=mock_transport, base_url="https://api.example.com")
     monkeypatch.setattr(server, "client", server.TemplateClient(http_client=async_client))
+    monkeypatch.setattr(db, "delete_statute", lambda *args, **kwargs: True)
 
     # 1. Accepted via dict content
     ctx_dict = SimpleNamespace(
         input_responses={"confirm": SimpleNamespace(action="accept", content={"confirm": True})},
         elicit=AsyncMock(),
     )
-    res_dict = await server.delete_item("123", confirm=False, ctx=ctx_dict)
+    res_dict = await server.delete_statute("test-sec-9999", confirm=False, ctx=ctx_dict)
     assert res_dict["status"] == "success"
     ctx_dict.elicit.assert_not_called()
 
@@ -286,7 +342,9 @@ async def test_input_responses_confirmation(mock_transport, monkeypatch):
         elicit=AsyncMock(),
     )
     monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-    res_obj = await server.bulk_delete_items(["1", "2"], dry_run=False, confirm=False, ctx=ctx_obj)
+    res_obj = await server.bulk_delete_statutes(
+        ["test-1", "test-2"], dry_run=False, confirm=False, ctx=ctx_obj
+    )
     assert res_obj["status"] == "success"
     assert res_obj["deleted_count"] == 2
     ctx_obj.elicit.assert_not_called()
@@ -302,14 +360,18 @@ async def test_input_responses_confirmation(mock_transport, monkeypatch):
     assert await server._verify_confirmation(ctx_err, "msg") is False
 
 
-def test_server_resources_and_prompts():
+@pytest.mark.asyncio
+async def test_server_resources_and_prompts():
     """Verify dynamic resources and prompts metadata and rendering."""
     cap = server.get_capabilities()
     assert "Tax Code MCP Server capabilities" in cap
-    assert "MRTR Elicitations" in cap
+    assert "Act 60-2019" in cap
 
-    p = server.analyze_item_prompt(item_id="item-456")
-    assert "item 'item-456'" in p
+    res = await server.get_statute_resource("US", "933")
+    assert "933" in res
+
+    p = server.cross_border_tax_analysis(taxpayer_scenario="Scenario 456")
+    assert "Scenario 456" in p
 
 
 def test_cache_hints():
@@ -563,3 +625,118 @@ async def test_tool_error_chain_and_logs_hold_no_secret(monkeypatch: pytest.Monk
     assert "Bearer [REDACTED]" in logged
     assert inner not in logged
     assert outer not in logged
+
+
+@pytest.mark.asyncio
+async def test_compliance_and_statutes_coverage_branches(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Exercise remaining branching lines in modules for 100% coverage."""
+    # 1. Negative day count in evaluate_pr_bona_fide_residency
+    with pytest.raises(SafetyViolationError, match="cannot be negative"):
+        server.evaluate_pr_bona_fide_residency(days_present_pr=-5, days_present_us=10)
+
+    # 2. Non-bona-fide residency warning in evaluate_pr_bona_fide_residency
+    non_bf = server.evaluate_pr_bona_fide_residency(
+        days_present_pr=100,
+        days_present_us=120,
+        has_us_tax_home=True,
+        closer_connection_jurisdiction="US",
+    )
+    assert non_bf["is_bona_fide_resident"] is False
+    assert any("Caution: Worldwide income" in r for r in non_bf["reporting_requirements"])
+
+    # 3. Negative total gain in calculate_built_in_gain_sourcing
+    with pytest.raises(ToolError):
+        server.calculate_built_in_gain_sourcing(is_marketable=True, total_gain=-1000.0)
+
+    # 4. 10-year expired lookback in calculate_built_in_gain_sourcing
+    expired = server.calculate_built_in_gain_sourcing(
+        is_marketable=True,
+        total_gain=50000.0,
+        years_since_residency=11.5,
+    )
+    assert expired["lookback_expired"] is True
+    assert expired["us_source_gain"] == 0.0
+
+    # 5. Marketable missing fmv or basis
+    with pytest.raises(ToolError):
+        server.calculate_built_in_gain_sourcing(
+            is_marketable=True,
+            total_gain=50000.0,
+            fmv_on_residency_date=None,
+            adjusted_basis=None,
+        )
+
+    # 6. Marketable with fmv < basis (loss/no gain pre-move)
+    loss_pre_move = server.calculate_built_in_gain_sourcing(
+        is_marketable=True,
+        total_gain=50000.0,
+        fmv_on_residency_date=10000.0,
+        adjusted_basis=20000.0,
+        years_since_residency=2.0,
+    )
+    assert loss_pre_move["us_source_gain"] == 0.0
+    assert loss_pre_move["pr_source_gain"] == 50000.0
+
+    # 7. Non-marketable missing days or invalid days
+    with pytest.raises(ToolError):
+        server.calculate_built_in_gain_sourcing(
+            is_marketable=False,
+            total_gain=50000.0,
+            days_held_as_resident=None,
+            total_days_held=0,
+        )
+
+    # 8. Non-marketable valid linear apportionment
+    non_marketable = server.calculate_built_in_gain_sourcing(
+        is_marketable=False,
+        total_gain=100000.0,
+        days_held_as_resident=365,
+        total_days_held=730,
+        years_since_residency=1.0,
+    )
+    assert non_marketable["status"] == "success"
+    assert non_marketable["us_source_gain"] == 50000.0
+    assert non_marketable["pr_source_gain"] == 50000.0
+
+    # 9. lookup_statute not found
+    nf = await server.lookup_statute("NONEXISTENT_STATUTE_9999")
+    assert nf["status"] == "not_found"
+
+    # 10. delete_statute not found
+    with pytest.raises(ToolError, match="not found for deletion"):
+        await server.delete_statute("NONEXISTENT_STATUTE_9999", confirm=True)
+
+    # 11. bulk_delete_statutes partial not found (results > 0, errors > 0)
+    monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
+    await server.create_statute(
+        payload=StatuteInput(id="partial-test-1", citation="c1", title="t1")
+    )
+    partial_res = await server.bulk_delete_statutes(
+        statute_ids=["partial-test-1", "nonexistent-statute-id-xyz"],
+        dry_run=False,
+        confirm=True,
+    )
+    assert partial_res["status"] == "partial_success"
+    assert partial_res["deleted_count"] == 1
+    assert partial_res["failed_count"] == 1
+
+    # 12. get_statute_resource not found
+    res_nf = await server.get_statute_resource("US", "NONEXISTENT_SEC")
+    assert "not found" in res_nf
+
+    # 13. File-backed TaxDatabase close path in get_stats
+    import tempfile
+    from pathlib import Path
+
+    from taxcode_mcp.db import TaxDatabase
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        file_db_path = Path(tmp_dir) / "test_tax.duckdb"
+        file_db = TaxDatabase(db_path=file_db_path)
+        s_cnt, p_cnt = file_db.get_stats()
+        assert s_cnt >= 0
+        assert p_cnt >= 0
+
+    # 14. create_statute error path (duplicate key violation)
+    with pytest.raises(ToolError):
+        await server.create_statute(payload=StatuteInput(id="us-irc-933", citation="c", title="t"))

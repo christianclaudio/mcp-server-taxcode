@@ -16,9 +16,9 @@ from taxcode_mcp import server
 from taxcode_mcp.config import settings
 from taxcode_mcp.errors import SafetyViolationError
 from taxcode_mcp.middleware import (
-    ItemsDomainGuardMiddleware,
     ParentAuditMiddleware,
     ReadOnlyGateMiddleware,
+    StatutesDomainGuardMiddleware,
 )
 from taxcode_mcp.server import create_server
 
@@ -36,11 +36,14 @@ async def test_server_composition_mounting() -> None:
 
     expected = {
         "system_get_health_status",
-        "items_list_items",
-        "items_get_item",
-        "items_create_item",
-        "items_delete_item",
-        "items_bulk_delete_items",
+        "statutes_lookup_statute",
+        "statutes_search_tax_code",
+        "statutes_list_publications",
+        "statutes_create_statute",
+        "statutes_delete_statute",
+        "statutes_bulk_delete_statutes",
+        "compliance_evaluate_pr_bona_fide_residency",
+        "compliance_calculate_built_in_gain_sourcing",
     }
     assert expected == tool_names
 
@@ -52,7 +55,7 @@ async def test_server_composition_mounting() -> None:
     # Check prompts namespacing
     prompts = await app.list_prompts()
     prompt_names = {p.name for p in prompts}
-    assert "items_analyze_item" in prompt_names
+    assert "compliance_cross_border_tax_analysis" in prompt_names
 
 
 @pytest.mark.asyncio
@@ -68,7 +71,7 @@ async def test_hierarchical_middleware_execution_order() -> None:
     parent_audit = ParentAuditMiddleware()
     context = MiddlewareContext(
         method="tools/call",
-        message=SimpleNamespace(name="items_list_items", arguments={}),
+        message=SimpleNamespace(name="statutes_lookup_statute", arguments={}),
     )
 
     res = await parent_audit.on_message(context, fake_call_next)
@@ -86,7 +89,9 @@ async def test_parent_middleware_error_logging(caplog: pytest.LogCaptureFixture)
 
     context = MiddlewareContext(
         method="tools/call",
-        message=SimpleNamespace(name="items_get_item", arguments={"item_id": "123"}),
+        message=SimpleNamespace(
+            name="statutes_lookup_statute", arguments={"citation": "26 U.S.C. § 933"}
+        ),
     )
 
     with caplog.at_level(logging.ERROR):
@@ -117,7 +122,7 @@ async def test_readonly_gate_middleware(monkeypatch: pytest.MonkeyPatch) -> None
 
     mutate_ctx = MiddlewareContext(
         method="tools/call",
-        message=SimpleNamespace(name="items_create_item", arguments={}),
+        message=SimpleNamespace(name="statutes_create_statute", arguments={}),
         fastmcp_context=serving,  # type: ignore[arg-type]
     )
     with pytest.raises(SafetyViolationError) as exc_info:
@@ -126,16 +131,16 @@ async def test_readonly_gate_middleware(monkeypatch: pytest.MonkeyPatch) -> None
 
 
 @pytest.mark.asyncio
-async def test_child_items_domain_guard_middleware(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Verify ItemsDomainGuardMiddleware restricts bulk destructive actions without env gate."""
-    guard = ItemsDomainGuardMiddleware()
+async def test_child_statutes_domain_guard_middleware(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify StatutesDomainGuardMiddleware restricts bulk destructive actions without env gate."""
+    guard = StatutesDomainGuardMiddleware()
 
     async def dummy_next(ctx: MiddlewareContext) -> str:
         return "proceed"
 
     bulk_ctx = MiddlewareContext(
         method="tools/call",
-        message=SimpleNamespace(name="bulk_delete_items", arguments={}),
+        message=SimpleNamespace(name="bulk_delete_statutes", arguments={}),
     )
 
     # 1. Blocked when MCP_ALLOW_BULK_DESTRUCTIVE=False
@@ -150,25 +155,31 @@ async def test_child_items_domain_guard_middleware(monkeypatch: pytest.MonkeyPat
 
 
 @pytest.mark.asyncio
-async def test_tool_transform_argument_hiding(
-    mock_transport: object, monkeypatch: pytest.MonkeyPatch
-) -> None:
+async def test_tool_transform_argument_hiding() -> None:
     """Verify ToolTransform hides client_id from input schema but injects default at execution."""
-
-    async_client = httpx.AsyncClient(transport=mock_transport, base_url="https://api.example.com")
-    monkeypatch.setattr(server, "client", server.TemplateClient(http_client=async_client))
-
-    app = create_server(profile="items", enable_tool_search=False)
+    app = create_server(profile="statutes", enable_tool_search=False)
     tools = await app.list_tools()
-    create_tool = next(t for t in tools if t.name == "items_create_item")
+    create_tool = next(t for t in tools if t.name == "statutes_create_statute")
 
     # client_id is hidden from client-visible input schema
     params = create_tool.parameters.get("properties", {})
-    assert "name" in params
+    assert "payload" in params
     assert "client_id" not in params
 
     # Calling tool without client_id executes with the transformed default
-    res = await app.call_tool("items_create_item", {"name": "TransformTest"})
+    res = await app.call_tool(
+        "statutes_create_statute",
+        {
+            "payload": {
+                "id": "test-1",
+                "citation": "TEST-STATUTE-1",
+                "title": "Test Title",
+                "text_es": "Texto estatutario de prueba",
+                "jurisdiction": "PR",
+                "corpus": "CRI",
+            }
+        },
+    )
     assert not res.is_error
     assert len(res.content) > 0
 
@@ -181,19 +192,19 @@ async def test_profile_based_composition() -> None:
     sys_tools = [t.name for t in await sys_app.list_tools()]
     assert sys_tools == ["system_get_health_status"]
 
-    # 2. Items profile
-    items_app = create_server(profile="items")
-    items_tools = [t.name for t in await items_app.list_tools()]
-    assert "items_list_items" in items_tools
-    assert "system_get_health_status" not in items_tools
+    # 2. Statutes profile
+    statutes_app = create_server(profile="statutes")
+    statutes_tools = [t.name for t in await statutes_app.list_tools()]
+    assert "statutes_lookup_statute" in statutes_tools
+    assert "system_get_health_status" not in statutes_tools
 
     # 3. Readonly profile
     ro_app = create_server(profile="readonly")
     ro_tools = [t.name for t in await ro_app.list_tools()]
     assert "system_get_health_status" in ro_tools
-    assert "items_list_items" in ro_tools
-    assert "items_create_item" not in ro_tools
-    assert "items_delete_item" not in ro_tools
+    assert "statutes_lookup_statute" in ro_tools
+    assert "statutes_create_statute" not in ro_tools
+    assert "statutes_delete_statute" not in ro_tools
 
 
 @pytest.mark.asyncio
@@ -254,12 +265,12 @@ async def test_curated_profile_stays_flat_without_discovery_meta(
     assert "execute" not in sys_names
     assert any("Tool Search requested with profile='system'" in r.message for r in caplog.records)
 
-    items_app = create_server(profile="items", enable_tool_search=False)
-    items_names = {t.name for t in await items_app.list_tools()}
-    assert "items_list_items" in items_names
-    assert "system_get_health_status" not in items_names
-    assert "search_tools" not in items_names
-    assert "call_tool" not in items_names
+    statutes_app = create_server(profile="statutes", enable_tool_search=False)
+    statutes_names = {t.name for t in await statutes_app.list_tools()}
+    assert "statutes_lookup_statute" in statutes_names
+    assert "system_get_health_status" not in statutes_names
+    assert "search_tools" not in statutes_names
+    assert "call_tool" not in statutes_names
 
 
 @pytest.mark.asyncio
@@ -278,7 +289,7 @@ async def test_full_tool_search_lists_discovery_meta_only(
     tool_names = [t.name for t in await search_app.list_tools()]
     assert tool_names == ["search_tools", "call_tool"]
     assert "system_get_health_status" not in tool_names
-    assert "items_list_items" not in tool_names
+    assert "statutes_lookup_statute" not in tool_names
 
 
 @pytest.mark.asyncio
@@ -298,10 +309,10 @@ async def test_readonly_blocks_mutations_via_search_call_tool(
     with pytest.raises(SafetyViolationError) as exc_info:
         await app.call_tool(
             "call_tool",
-            {"name": "items_create_item", "arguments": {"name": "blocked"}},
+            {"name": "statutes_create_statute", "arguments": {"citation": "blocked"}},
         )
     assert "read-only mode" in str(exc_info.value)
-    assert "items_create_item" in str(exc_info.value)
+    assert "statutes_create_statute" in str(exc_info.value)
 
 
 @pytest.mark.asyncio
@@ -318,13 +329,13 @@ async def test_readonly_gate_unwraps_call_tool_proxy(monkeypatch: pytest.MonkeyP
         method="tools/call",
         message=SimpleNamespace(
             name="call_tool",
-            arguments={"name": "items_delete_item", "arguments": {"item_id": "1"}},
+            arguments={"name": "statutes_delete_statute", "arguments": {"citation": "1"}},
         ),
         fastmcp_context=serving,  # type: ignore[arg-type]
     )
     with pytest.raises(SafetyViolationError) as exc_info:
         await gate.on_message(proxy_ctx, allowed_call_next)
-    assert "items_delete_item" in str(exc_info.value)
+    assert "statutes_delete_statute" in str(exc_info.value)
 
     search_only_ctx = MiddlewareContext(
         method="tools/call",
@@ -360,11 +371,11 @@ async def test_full_code_mode_attaches_when_available(
     # Curated profile refuses Code Mode attach
     caplog.clear()
     with caplog.at_level(logging.WARNING):
-        curated = create_server(profile="items", enable_code_mode=True)
+        curated = create_server(profile="statutes", enable_code_mode=True)
     curated_names = {t.name for t in await curated.list_tools()}
     assert "execute" not in curated_names
-    assert "items_list_items" in curated_names
-    assert any("Code Mode requested with profile='items'" in r.message for r in caplog.records)
+    assert "statutes_lookup_statute" in curated_names
+    assert any("Code Mode requested with profile='statutes'" in r.message for r in caplog.records)
 
 
 @pytest.mark.asyncio
@@ -426,7 +437,7 @@ async def test_code_mode_skips_attach_without_sandbox(
     assert "execute" not in names
     assert "search" not in names
     assert "system_get_health_status" in names
-    assert "items_list_items" in names
+    assert "statutes_lookup_statute" in names
     assert any(
         "pydantic-monty" in r.message and "mcp-server-taxcode[code-mode]" in r.message
         for r in caplog.records
@@ -438,14 +449,17 @@ async def test_code_mode_execute_runs_real_tool() -> None:
     """execute runs Python in the Code Mode sandbox and reaches a real catalog tool."""
     pytest.importorskip("pydantic_monty", reason=CODE_MODE_SKIP_REASON)
     app = create_server(profile="full", enable_code_mode=True, enable_tool_search=False)
-    code = "res = await call_tool('items_get_item', {'item_id': 'abc'})\nreturn res"
+    code = (
+        "res = await call_tool('statutes_lookup_statute', "
+        "{'citation_or_section': '26 U.S.C. § 933'})\nreturn res"
+    )
     async with Client(app) as client:
         arith = await client.call_tool("execute", {"code": "return 1 + 1"}, raise_on_error=False)
         res = await client.call_tool("execute", {"code": code}, raise_on_error=False)
     assert not arith.is_error, arith.content
     assert [c.text for c in arith.content if isinstance(c, TextContent)] == ["2"]
     assert not res.is_error, res.content
-    assert "Item abc" in str(res.content)
+    assert "933" in str(res.content)
 
 
 @pytest.mark.asyncio

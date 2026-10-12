@@ -8,11 +8,14 @@ from taxcode_mcp.server import mcp
 
 EXPECTED_TOOLS = {
     "system_get_health_status": {"read_only": True, "destructive": False},
-    "items_list_items": {"read_only": True, "destructive": False},
-    "items_get_item": {"read_only": True, "destructive": False},
-    "items_create_item": {"read_only": False, "destructive": False},
-    "items_delete_item": {"read_only": False, "destructive": True},
-    "items_bulk_delete_items": {"read_only": False, "destructive": True},
+    "statutes_lookup_statute": {"read_only": True, "destructive": False},
+    "statutes_search_tax_code": {"read_only": True, "destructive": False},
+    "statutes_list_publications": {"read_only": True, "destructive": False},
+    "statutes_create_statute": {"read_only": False, "destructive": False},
+    "statutes_delete_statute": {"read_only": False, "destructive": True},
+    "statutes_bulk_delete_statutes": {"read_only": False, "destructive": True},
+    "compliance_evaluate_pr_bona_fide_residency": {"read_only": True, "destructive": False},
+    "compliance_calculate_built_in_gain_sourcing": {"read_only": True, "destructive": False},
 }
 
 

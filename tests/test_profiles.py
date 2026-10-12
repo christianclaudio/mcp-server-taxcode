@@ -31,7 +31,7 @@ from taxcode_mcp.server import create_server
 # conftest guard aborts the session instead, so these never skip silently there.
 CODE_MODE_SKIP_REASON = "needs the code-mode extra (fastmcp[code-mode] / pydantic-monty)"
 
-INTAKE = PROFILES["intake"]
+RESEARCHER = PROFILES["researcher"]
 JOB_PROFILES = [p for p in PROFILES.values() if p.is_allowlist]
 
 
@@ -46,48 +46,52 @@ async def _tool_names(app: FastMCP) -> set[str]:
 
 @pytest.mark.asyncio
 async def test_allowlist_profile_exposes_exactly_its_tools() -> None:
-    """intake exposes exactly its allowlist, spanning the system and items domains."""
-    assert INTAKE.tools is not None
-    names = await _tool_names(create_server(profile="intake"))
-    assert names == set(INTAKE.tools)
-    assert {n.split("_", 1)[0] for n in names} == {"system", "items"}
+    """researcher exposes exactly its allowlist, spanning the system and statutes domains."""
+    assert RESEARCHER.tools is not None
+    names = await _tool_names(create_server(profile="researcher"))
+    assert names == set(RESEARCHER.tools)
+    assert {n.split("_", 1)[0] for n in names} == {"system", "statutes"}
 
 
 @pytest.mark.asyncio
 async def test_domain_mount_and_allowlist_profiles_coexist() -> None:
-    """A domain-mount profile (items) and an allowlist profile (intake) both build."""
-    assert not PROFILES["items"].is_allowlist
-    assert INTAKE.is_allowlist
-    items_names = await _tool_names(create_server(profile="items"))
-    intake_names = await _tool_names(create_server(profile="intake"))
-    assert items_names == {n for n in EXPECTED_TOOLS if n.startswith("items_")}
-    assert "system_get_health_status" in intake_names
-    assert "items_delete_item" in items_names
-    assert "items_delete_item" not in intake_names
+    """A domain-mount profile (statutes) and an allowlist profile (researcher) both build."""
+    assert not PROFILES["statutes"].is_allowlist
+    assert RESEARCHER.is_allowlist
+    statutes_names = await _tool_names(create_server(profile="statutes"))
+    researcher_names = await _tool_names(create_server(profile="researcher"))
+    assert statutes_names == {n for n in EXPECTED_TOOLS if n.startswith("statutes_")}
+    assert "system_get_health_status" in researcher_names
+    assert "statutes_delete_statute" in statutes_names
+    assert "statutes_delete_statute" not in researcher_names
 
 
 @pytest.mark.asyncio
 async def test_allowlist_keeps_prompts_and_resources() -> None:
     """Allowlist filtering is tools-only: prompts and resources match the full profile."""
     full = create_server(profile="full")
-    intake = create_server(profile="intake")
-    assert {p.name for p in await intake.list_prompts()} == {
+    researcher = create_server(profile="researcher")
+    assert {p.name for p in await researcher.list_prompts()} == {
         p.name for p in await full.list_prompts()
     }
-    assert {str(r.uri) for r in await intake.list_resources()} == {
+    assert {str(r.uri) for r in await researcher.list_resources()} == {
         str(r.uri) for r in await full.list_resources()
     }
-    assert "items_analyze_item" in {p.name for p in await intake.list_prompts()}
-    rendered = await intake.render_prompt("items_analyze_item", {"item_id": "42"})
+    researcher_prompts = {p.name for p in await researcher.list_prompts()}
+    assert "compliance_cross_border_tax_analysis" in researcher_prompts
+    rendered = await researcher.render_prompt(
+        "compliance_cross_border_tax_analysis",
+        {"taxpayer_scenario": "Taxpayer 42 moved from California to Puerto Rico in 2024"},
+    )
     assert "42" in str(rendered)
 
 
 @pytest.mark.asyncio
 async def test_allowlist_hides_tools_outside_the_list() -> None:
     """A tool outside the allowlist cannot be called on that profile."""
-    app = create_server(profile="intake")
+    app = create_server(profile="researcher")
     with pytest.raises(Exception, match="Unknown tool"):
-        await app.call_tool("items_delete_item", {"item_id": "1", "confirm": True})
+        await app.call_tool("statutes_delete_statute", {"citation": "1", "confirm": True})
 
 
 def test_unknown_allowlist_name_fails_at_build(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -95,10 +99,10 @@ def test_unknown_allowlist_name_fails_at_build(monkeypatch: pytest.MonkeyPatch) 
     broken = Profile(
         name="broken",
         job="Test only.",
-        tools=frozenset({"items_list_items", "items_nonexistent", "system_typo"}),
+        tools=frozenset({"statutes_lookup_statute", "statutes_nonexistent", "system_typo"}),
     )
     monkeypatch.setitem(profiles.PROFILES, "broken", broken)
-    with pytest.raises(ValueError, match="items_nonexistent, system_typo"):
+    with pytest.raises(ValueError, match="statutes_nonexistent, system_typo"):
         create_server(profile="broken")
 
 
@@ -125,15 +129,15 @@ async def test_bulk_tool_listed_in_full_but_blocked_without_gate(
     """Bulk destructive tools are listed in full but refused while the bulk gate is off."""
     monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", False)
     app = create_server(profile="full")
-    assert "items_bulk_delete_items" in await _tool_names(app)
+    assert "statutes_bulk_delete_statutes" in await _tool_names(app)
     with pytest.raises(ToolError, match="Bulk destructive operations disabled"):
-        await app.call_tool("items_bulk_delete_items", {"item_ids": ["1"]})
+        await app.call_tool("statutes_bulk_delete_statutes", {"citations": ["1"]})
 
 
 def test_main_accepts_allowlist_profile(monkeypatch: pytest.MonkeyPatch) -> None:
-    """--profile intake is a valid CLI choice and rebuilds the gateway."""
+    """--profile researcher is a valid CLI choice and rebuilds the gateway."""
     monkeypatch.setattr(FastMCP, "run", MagicMock())
-    monkeypatch.setattr("sys.argv", ["taxcode-mcp", "--profile", "intake"])
+    monkeypatch.setattr("sys.argv", ["taxcode-mcp", "--profile", "researcher"])
     server.main()
     assert server.mcp is not None
 
@@ -147,20 +151,20 @@ def test_main_accepts_allowlist_profile(monkeypatch: pytest.MonkeyPatch) -> None
 async def test_allowlist_profile_with_search_stays_flat(caplog: pytest.LogCaptureFixture) -> None:
     """Requesting Tool Search or Code Mode on an allowlist profile logs and stays flat."""
     with caplog.at_level(logging.WARNING):
-        searched = create_server(profile="intake", enable_tool_search=True)
-        coded = create_server(profile="intake", enable_code_mode=True)
-    assert INTAKE.tools is not None
-    assert await _tool_names(searched) == set(INTAKE.tools)
-    assert await _tool_names(coded) == set(INTAKE.tools)
+        searched = create_server(profile="researcher", enable_tool_search=True)
+        coded = create_server(profile="researcher", enable_code_mode=True)
+    assert RESEARCHER.tools is not None
+    assert await _tool_names(searched) == set(RESEARCHER.tools)
+    assert await _tool_names(coded) == set(RESEARCHER.tools)
     messages = [r.message for r in caplog.records]
-    assert any("Tool Search requested with profile='intake'" in m for m in messages)
-    assert any("Code Mode requested with profile='intake'" in m for m in messages)
+    assert any("Tool Search requested with profile='researcher'" in m for m in messages)
+    assert any("Code Mode requested with profile='researcher'" in m for m in messages)
 
 
 def test_discovery_modes_mutually_exclusive_on_allowlist_profile() -> None:
     """Mutual exclusion is checked before profile handling."""
     with pytest.raises(ValueError, match="mutually exclusive"):
-        create_server(profile="intake", enable_tool_search=True, enable_code_mode=True)
+        create_server(profile="researcher", enable_tool_search=True, enable_code_mode=True)
 
 
 # ---------------------------------------------------------------------------
@@ -184,8 +188,8 @@ async def test_readonly_profile_gate_enforced_without_env(
     """profile=readonly enforces the gate itself, even with MCP_READONLY unset."""
     monkeypatch.setattr(settings, "MCP_READONLY", False)
     app = create_server(profile="readonly")
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool("items_create_item", {"name": "x"})
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
     res = await app.call_tool("system_get_health_status", {})
     assert not res.is_error
 
@@ -193,16 +197,27 @@ async def test_readonly_profile_gate_enforced_without_env(
 @pytest.mark.asyncio
 async def test_readonly_enforced_under_allowlist_profile(monkeypatch: pytest.MonkeyPatch) -> None:
     """MCP_READONLY on an allowlist profile hides and refuses its write tools."""
+    write_profile = Profile(
+        name="test_writer",
+        job="Test writer profile",
+        tools=frozenset(
+            {
+                "system_get_health_status",
+                "statutes_lookup_statute",
+                "statutes_create_statute",
+            }
+        ),
+    )
+    monkeypatch.setitem(profiles.PROFILES, "test_writer", write_profile)
     monkeypatch.setattr(settings, "MCP_READONLY", True)
-    app = create_server(profile="intake")
+    app = create_server(profile="test_writer")
     assert await _tool_names(app) == {
         "system_get_health_status",
-        "items_list_items",
-        "items_get_item",
+        "statutes_lookup_statute",
     }
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool("items_create_item", {"name": "x"})
-    res = await app.call_tool("items_get_item", {"item_id": "7"})
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
+    res = await app.call_tool("statutes_lookup_statute", {"citation_or_section": "933"})
     assert not res.is_error
 
 
@@ -279,20 +294,20 @@ async def test_full_search_readonly_read_succeeds_write_refused_on_wire(
     async with Client(app) as client:
         read = await client.call_tool(
             "call_tool",
-            {"name": "items_list_items", "arguments": {}},
+            {"name": "statutes_lookup_statute", "arguments": {"citation_or_section": "933"}},
             raise_on_error=False,
         )
         assert not read.is_error
-        assert "Item 1" in str(read.content)
+        assert "933" in str(read.content)
 
         write = await client.call_tool(
             "call_tool",
-            {"name": "items_create_item", "arguments": {"name": "blocked"}},
+            {"name": "statutes_create_statute", "arguments": {"payload": {"citation": "blocked"}}},
             raise_on_error=False,
         )
         assert write.is_error
         assert "read-only mode" in str(write.content)
-        assert "items_create_item" in str(write.content)
+        assert "statutes_create_statute" in str(write.content)
 
 
 @pytest.mark.asyncio
@@ -309,10 +324,10 @@ async def test_gate_refuses_on_outer_call_tool_invocation(monkeypatch: pytest.Mo
 
     monkeypatch.setattr(middleware, "_resolve_effective_tool_name", spy)
     app = create_server(profile="full", enable_tool_search=True)
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool("call_tool", {"name": "items_create_item", "arguments": {}})
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool("call_tool", {"name": "statutes_create_statute", "arguments": {}})
     # Exactly one gate decision: on the outer proxy call. The inner call never ran.
-    assert seen == [("call_tool", "items_create_item")]
+    assert seen == [("call_tool", "statutes_create_statute")]
 
 
 @pytest.mark.asyncio
@@ -330,10 +345,13 @@ async def test_without_unwrap_the_proxy_gate_behaviour_breaks(
     monkeypatch.setattr(middleware, "_resolve_effective_tool_name", no_unwrap)
     app = create_server(profile="full", enable_tool_search=True)
     with pytest.raises(SafetyViolationError, match="'call_tool' blocked"):
-        await app.call_tool("call_tool", {"name": "items_list_items", "arguments": {}})
+        await app.call_tool(
+            "call_tool",
+            {"name": "statutes_lookup_statute", "arguments": {"citation_or_section": "933"}},
+        )
     with pytest.raises(SafetyViolationError) as exc_info:
-        await app.call_tool("call_tool", {"name": "items_create_item", "arguments": {}})
-    assert "items_create_item" not in str(exc_info.value)
+        await app.call_tool("call_tool", {"name": "statutes_create_statute", "arguments": {}})
+    assert "statutes_create_statute" not in str(exc_info.value)
 
 
 @pytest.mark.asyncio
@@ -346,10 +364,10 @@ async def test_search_tools_annotated_read_only_and_usable_under_readonly(
     listed = {t.name: t for t in await app.list_tools()}
     assert is_read_only_tool(listed["search_tools"])
     assert not is_read_only_tool(listed["call_tool"])
-    res = await app.call_tool("search_tools", {"pattern": "item"})
+    res = await app.call_tool("search_tools", {"pattern": "statute"})
     assert not res.is_error
-    assert "items_list_items" in str(res.content)
-    assert "items_create_item" not in str(res.content)
+    assert "statutes_lookup_statute" in str(res.content)
+    assert "statutes_create_statute" not in str(res.content)
     assert await app.get_tool("not_a_tool") is None
 
 
@@ -382,10 +400,10 @@ async def test_readonly_unknown_name_direct_is_unknown_tool(
     """Direct call to a name outside the catalog gets Unknown tool, not the read-only refusal."""
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="full")
-    with pytest.raises(NotFoundError, match="Unknown tool: 'items_nope'"):
-        await app.call_tool("items_nope", {})
+    with pytest.raises(NotFoundError, match="Unknown tool: 'statutes_nope'"):
+        await app.call_tool("statutes_nope", {})
     async with Client(app) as client:
-        res = await client.call_tool("items_nope", {}, raise_on_error=False)
+        res = await client.call_tool("statutes_nope", {}, raise_on_error=False)
     assert res.is_error
     assert "Unknown tool" in str(res.content)
     assert "read-only" not in str(res.content)
@@ -398,12 +416,12 @@ async def test_readonly_unknown_name_via_call_tool_is_unknown_tool(
     """call_tool with a name outside the catalog gets Unknown tool on full + search."""
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="full", enable_tool_search=True)
-    with pytest.raises(ToolError, match="Unknown tool: 'items_nope'") as exc_info:
-        await app.call_tool("call_tool", {"name": "items_nope", "arguments": {}})
+    with pytest.raises(ToolError, match="Unknown tool: 'statutes_nope'") as exc_info:
+        await app.call_tool("call_tool", {"name": "statutes_nope", "arguments": {}})
     assert not isinstance(exc_info.value, SafetyViolationError)
     async with Client(app) as client:
         res = await client.call_tool(
-            "call_tool", {"name": "items_nope", "arguments": {}}, raise_on_error=False
+            "call_tool", {"name": "statutes_nope", "arguments": {}}, raise_on_error=False
         )
     assert res.is_error
     assert "Unknown tool" in str(res.content)
@@ -426,29 +444,36 @@ async def test_readonly_hidden_write_refused_and_read_succeeds(
 
     async with Client(app) as client:
         write = await client.call_tool(
-            *call("items_create_item", {"name": "x"}), raise_on_error=False
+            *call("statutes_create_statute", {"payload": {"citation": "x"}}), raise_on_error=False
         )
         read = await client.call_tool(
-            *call("items_get_item", {"item_id": "7"}), raise_on_error=False
+            *call("statutes_lookup_statute", {"citation_or_section": "933"}), raise_on_error=False
         )
     assert write.is_error
     assert "read-only mode" in str(write.content)
-    assert "items_create_item" in str(write.content)
+    assert "statutes_create_statute" in str(write.content)
     assert not read.is_error
-    assert "Item 7" in str(read.content)
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool(*call("items_create_item", {"name": "x"}))
+    assert "933" in str(read.content)
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool(*call("statutes_create_statute", {"payload": {"citation": "x"}}))
 
 
 @pytest.mark.asyncio
 async def test_readonly_outside_allowlist_is_unknown_tool(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Under read-only, a tool outside the active allowlist profile is unknown, like without it."""
+    """Under read-only, a tool outside the active allowlist profile is unknown, like without it;
+    a write tool inside the allowlist is refused by the read-only gate."""
+    test_prof = Profile(
+        name="test_mix",
+        job="Test mix profile",
+        tools=frozenset({"system_get_health_status", "statutes_create_statute"}),
+    )
+    monkeypatch.setitem(profiles.PROFILES, "test_mix", test_prof)
     monkeypatch.setattr(settings, "MCP_READONLY", True)
-    app = create_server(profile="intake")
+    app = create_server(profile="test_mix")
     with pytest.raises(NotFoundError, match="Unknown tool"):
-        await app.call_tool("items_delete_item", {"item_id": "1"})
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool("items_create_item", {"name": "x"})
+        await app.call_tool("statutes_delete_statute", {"citation": "1"})
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
 
 
 @pytest.mark.asyncio
@@ -459,9 +484,9 @@ async def test_readonly_switched_on_after_build(monkeypatch: pytest.MonkeyPatch)
     app = create_server(profile="full")
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     with pytest.raises(NotFoundError, match="Unknown tool"):
-        await app.call_tool("items_nope", {})
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool("items_create_item", {"name": "x"})
+        await app.call_tool("statutes_nope", {})
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
 
 
 # ---------------------------------------------------------------------------
@@ -470,8 +495,8 @@ async def test_readonly_switched_on_after_build(monkeypatch: pytest.MonkeyPatch)
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("profile", ["full", "intake", "readonly"])
-@pytest.mark.parametrize("inner", ["items_create_item", "items_list_items"])
+@pytest.mark.parametrize("profile", ["full", "researcher", "readonly"])
+@pytest.mark.parametrize("inner", ["statutes_create_statute", "statutes_lookup_statute"])
 async def test_readonly_call_tool_without_search_is_unknown_tool(
     monkeypatch: pytest.MonkeyPatch, profile: str, inner: str
 ) -> None:
@@ -497,7 +522,10 @@ async def test_readonly_call_tool_with_search_still_unwraps(
     """With Tool Search on full, call_tool is real: unwrap and judge the proxied tool."""
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="full", enable_tool_search=True)
-    with pytest.raises(SafetyViolationError, match="items_create_item"):
-        await app.call_tool("call_tool", {"name": "items_create_item", "arguments": {}})
-    read = await app.call_tool("call_tool", {"name": "items_list_items", "arguments": {}})
+    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
+        await app.call_tool("call_tool", {"name": "statutes_create_statute", "arguments": {}})
+    read = await app.call_tool(
+        "call_tool",
+        {"name": "statutes_lookup_statute", "arguments": {"citation_or_section": "933"}},
+    )
     assert not read.is_error

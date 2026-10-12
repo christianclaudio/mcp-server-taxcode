@@ -24,7 +24,7 @@ from fastmcp.tools import Tool
 from fastmcp.utilities.versions import VersionSpec
 from mcp.types import ToolAnnotations
 
-ALL_DOMAINS: tuple[str, ...] = ("system", "items")
+ALL_DOMAINS: tuple[str, ...] = ("system", "statutes", "compliance")
 
 
 @dataclass(frozen=True)
@@ -49,35 +49,59 @@ PROFILES: dict[str, Profile] = {
         # Domain-mount profiles
         Profile(
             name="full",
-            job="Complete catalog: every tool, including bulk/destructive tools (still gated).",
+            job="Complete catalog: statutory search, publications, and cross-border calculators.",
         ),
-        Profile(name="system", job="Upstream health checks only.", domains=("system",)),
-        Profile(name="items", job="Item lifecycle within the items domain.", domains=("items",)),
+        Profile(name="system", job="System diagnostics and capabilities.", domains=("system",)),
+        Profile(
+            name="statutes",
+            job="Statutory research, lookup, search, and publications.",
+            domains=("statutes",),
+        ),
+        Profile(
+            name="compliance",
+            job="Cross-border residency evaluation and capital gains sourcing calculators.",
+            domains=("compliance",),
+        ),
         Profile(
             name="readonly",
-            job="Inspect without side effects: every tool annotated readOnlyHint=True.",
+            job="Inspect and calculate without mutations: every tool annotated readOnlyHint=True.",
             readonly=True,
         ),
-        # Allowlist (job-shaped) profiles: span domains, names are client-visible names
+        # Allowlist (job-shaped) profiles
         Profile(
-            name="intake",
-            job="Item intake: confirm the upstream is healthy, look up items, create new ones.",
+            name="researcher",
+            job="Statutory research: health checks, exact statutory lookups, search, circulars.",
             tools=frozenset(
                 {
                     "system_get_health_status",
-                    "items_list_items",
-                    "items_get_item",
-                    "items_create_item",
+                    "statutes_lookup_statute",
+                    "statutes_search_tax_code",
+                    "statutes_list_publications",
+                }
+            ),
+        ),
+        Profile(
+            name="advisor",
+            job=(
+                "Cross-border tax advisory: statutes, residency testing, "
+                "and built-in gain sourcing."
+            ),
+            tools=frozenset(
+                {
+                    "system_get_health_status",
+                    "statutes_lookup_statute",
+                    "compliance_evaluate_pr_bona_fide_residency",
+                    "compliance_calculate_built_in_gain_sourcing",
                 }
             ),
         ),
     )
 }
 
-# Tools in no job (allowlist) profile. They stay reachable in ``full`` (and in the
-# ``items`` domain-mount profile). Tests require every tool in ``full`` to be in a job
-# profile or listed here, so a new tool is placed on purpose.
-FULL_ONLY_TOOLS: frozenset[str] = frozenset({"items_delete_item", "items_bulk_delete_items"})
+# Tools in no job (allowlist) profile. They stay reachable in ``full`` and ``statutes``.
+FULL_ONLY_TOOLS: frozenset[str] = frozenset(
+    {"statutes_create_statute", "statutes_delete_statute", "statutes_bulk_delete_statutes"}
+)
 
 READ_ONLY_ANNOTATIONS = ToolAnnotations(
     read_only_hint=True,
