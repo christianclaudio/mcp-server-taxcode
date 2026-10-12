@@ -32,6 +32,10 @@ class Settings(BaseSettings):
         le=10,
         description="Maximum retry attempts on HTTP 429 / 5xx",
     )
+    DB_PATH: str = Field(
+        default=":memory:",
+        description="Path to DuckDB database file, or ':memory:' for transient storage",
+    )
 
     # Safety Gating
     MCP_READONLY: bool = Field(
