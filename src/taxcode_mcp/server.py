@@ -43,15 +43,20 @@ from taxcode_mcp.profiles import (
 )
 from taxcode_mcp.tools import (
     _verify_confirmation,
-    analyze_item_prompt,
-    bulk_delete_items,
-    create_item,
-    delete_item,
+    bulk_delete_statutes,
+    calculate_built_in_gain_sourcing,
+    compliance_server,
+    create_statute,
+    cross_border_tax_analysis,
+    delete_statute,
+    evaluate_pr_bona_fide_residency,
     get_capabilities,
     get_health_status,
-    get_item,
-    items_server,
-    list_items,
+    get_statute_resource,
+    list_publications,
+    lookup_statute,
+    search_tax_code,
+    statutes_server,
     system_server,
 )
 
@@ -62,22 +67,27 @@ __all__ = [
     "SafetyViolationError",
     "TemplateClient",
     "_verify_confirmation",
-    "analyze_item_prompt",
-    "bulk_delete_items",
+    "bulk_delete_statutes",
+    "calculate_built_in_gain_sourcing",
     "client",
-    "create_item",
+    "compliance_server",
     "create_server",
-    "delete_item",
+    "create_statute",
+    "cross_border_tax_analysis",
+    "delete_statute",
+    "evaluate_pr_bona_fide_residency",
     "get_capabilities",
     "get_health_status",
-    "get_item",
-    "items_server",
-    "list_items",
+    "get_statute_resource",
+    "list_publications",
+    "lookup_statute",
     "main",
     "mcp",
     "redact_secrets",
+    "search_tax_code",
     "server_lifespan",
     "settings",
+    "statutes_server",
     "system_server",
 ]
 
@@ -95,7 +105,11 @@ ToolSearchBackend = Literal["regex", "bm25"]
 logger = logging.getLogger(__name__)
 
 # Domain sub-servers by mount namespace (hybrid A+B: the namespace is the domain).
-DOMAIN_SERVERS: dict[str, FastMCP] = {"system": system_server, "items": items_server}
+DOMAIN_SERVERS: dict[str, FastMCP] = {
+    "system": system_server,
+    "statutes": statutes_server,
+    "compliance": compliance_server,
+}
 
 # FastMCP synthetic discovery tools that only read the catalog (annotated readOnlyHint=True).
 TOOL_SEARCH_READ_ONLY_TOOLS = ("search_tools",)

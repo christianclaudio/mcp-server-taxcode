@@ -96,7 +96,7 @@ async def test_in_memory_client_lifespan() -> None:
         # The tool contract owns the expected set and count (AGENTS.md Key Paths).
         assert {t.name for t in tools} == set(EXPECTED_TOOLS)
         assert len(tools) == len(EXPECTED_TOOLS)
-        res = await client.call_tool("items_list_items", {"limit": 5, "offset": 0})
+        res = await client.call_tool("statutes_list_publications", {})
         assert not res.is_error
         assert len(res.content) > 0
 
@@ -108,7 +108,7 @@ async def test_dynamic_resources_and_prompts() -> None:
     assert any("reference/capabilities" in str(r.uri) for r in resources)
 
     prompts = await mcp.list_prompts()
-    assert any("analyze_item" in p.name for p in prompts)
+    assert any("cross_border_tax_analysis" in p.name for p in prompts)
 
 
 @pytest.mark.asyncio
@@ -205,7 +205,7 @@ async def test_stateless_streamable_http_standalone_post(
             tool_data = res_tool.json()
             assert "result" in tool_data
             assert "content" in tool_data["result"]
-            assert json.loads(tool_data["result"]["content"][0]["text"]) == {
-                "status": "success",
-                "data": {"status": "healthy", "uptime": 1234},
-            }
+            tool_res_json = json.loads(tool_data["result"]["content"][0]["text"])
+            assert tool_res_json["status"] == "success"
+            assert tool_res_json["database"]["backend"] == "DuckDB"
+            assert tool_res_json["upstream"]["status"] == "healthy"

@@ -5,34 +5,46 @@ from __future__ import annotations
 import time
 from typing import Any
 
-import httpx
 import pytest
 from fastmcp.exceptions import ToolError
 
+from taxcode_mcp.db import db
 from taxcode_mcp.errors import SafetyViolationError, redact_secrets
 from taxcode_mcp.server import client, mcp
 
 SAFE_TOOL_FIXTURES: dict[str, dict[str, Any]] = {
     # Destructive tools (tested safely with confirm=False)
-    "delete_item": {"item_id": "probe-test", "confirm": False},
-    "items_delete_item": {"item_id": "probe-test", "confirm": False},
-    "bulk_delete_items": {"item_ids": ["probe-test"], "confirm": False},
-    "items_bulk_delete_items": {"item_ids": ["probe-test"], "confirm": False},
+    "delete_statute": {"statute_id": "probe-test", "confirm": False},
+    "statutes_delete_statute": {"statute_id": "probe-test", "confirm": False},
+    "bulk_delete_statutes": {"statute_ids": ["probe-test"], "confirm": False},
+    "statutes_bulk_delete_statutes": {"statute_ids": ["probe-test"], "confirm": False},
     # Parameterized read tools with probe IDs
-    "get_item": {"item_id": "probe-test"},
-    "items_get_item": {"item_id": "probe-test"},
+    "lookup_statute": {"citation_or_section": "26 U.S.C. § 933"},
+    "statutes_lookup_statute": {"citation_or_section": "26 U.S.C. § 933"},
+    "search_tax_code": {"query": "residency"},
+    "statutes_search_tax_code": {"query": "residency"},
+    "compliance_evaluate_pr_bona_fide_residency": {
+        "days_present_pr": 185,
+        "days_present_us": 30,
+    },
+    "compliance_calculate_built_in_gain_sourcing": {
+        "is_marketable": True,
+        "total_gain": 100000.0,
+        "fmv_on_residency_date": 80000.0,
+        "adjusted_basis": 20000.0,
+    },
 }
 
 SAFE_ARGUMENTLESS_LIST_TOOLS: set[str] = {
     "get_health_status",
     "system_get_health_status",
-    "list_items",
-    "items_list_items",
+    "list_publications",
+    "statutes_list_publications",
 }
 
 INTENTIONALLY_SKIPPED_MUTATING_TOOLS: set[str] = {
-    "create_item",
-    "items_create_item",
+    "create_statute",
+    "statutes_create_statute",
 }
 
 
@@ -61,7 +73,12 @@ async def dispatch_tool_call(
             content_str = (
                 res.content[0].text if res.content and hasattr(res.content[0], "text") else ""
             )
-            if "requires explicit confirm=True" in content_str or "Safety Gate:" in content_str:
+            if (
+                "requires explicit confirm=True" in content_str
+                or "Safety Gate:" in content_str
+                or '"status": "not_found"' in content_str
+                or '"not_found"' in content_str
+            ):
                 return ("EXPECTED_ERROR", False, None)
 
             is_err = getattr(res, "is_error", getattr(res, "isError", False))
@@ -79,26 +96,10 @@ async def dispatch_tool_call(
 
 @pytest.mark.asyncio
 async def test_dispatch_tool_call_offline(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Verify tool invocation logic and dispatch behavior using HTTP transport mocking."""
-    request_count = 0
-
-    def mock_handler(request: httpx.Request) -> httpx.Response:
-        nonlocal request_count
-        request_count += 1
-        url_str = str(request.url)
-        if "items/probe-test" in url_str:
-            return httpx.Response(200, json={"id": "probe-test", "name": "Test Item"})
-        if "items" in url_str:
-            return httpx.Response(200, json={"items": [{"id": "1", "name": "First Item"}]})
-        return httpx.Response(200, json={})
-
-    mock_transport = httpx.MockTransport(mock_handler)
-    mock_http = httpx.AsyncClient(transport=mock_transport, base_url="https://api.example.com/v1")
-    monkeypatch.setattr(client, "_custom_client", mock_http)
-
+    """Verify tool invocation logic and dispatch behavior using database mocking."""
     # 1. Successful non-destructive parameterized read tool
     status, is_err, err = await dispatch_tool_call(
-        "items_get_item", is_destructive=False, required_args=["item_id"]
+        "statutes_lookup_statute", is_destructive=False, required_args=["citation_or_section"]
     )
     assert status == "PASS"
     assert not is_err
@@ -106,31 +107,31 @@ async def test_dispatch_tool_call_offline(monkeypatch: pytest.MonkeyPatch) -> No
 
     # 2a. Destructive tool skipped by default in live dispatch mode
     status, is_err, err = await dispatch_tool_call(
-        "items_delete_item", is_destructive=True, required_args=["item_id"]
+        "statutes_delete_statute", is_destructive=True, required_args=["statute_id"]
     )
     assert status == "SKIP"
     assert not is_err
 
     # 2b. Destructive tool with safety gate probe enabled returns EXPECTED_ERROR
-    requests_before_delete = request_count
     status, is_err, err = await dispatch_tool_call(
-        "items_delete_item",
+        "statutes_delete_statute",
         is_destructive=True,
-        required_args=["item_id"],
+        required_args=["statute_id"],
         allow_destructive_probe=True,
     )
     assert status == "EXPECTED_ERROR"
     assert not is_err
-    assert request_count == requests_before_delete
 
     # 3. List tool from positive allowlist with pagination argument
-    status, is_err, err = await dispatch_tool_call("items_list_items", is_destructive=False)
+    status, is_err, err = await dispatch_tool_call(
+        "statutes_list_publications", is_destructive=False
+    )
     assert status == "PASS"
     assert not is_err
 
     # 4. Intentionally skipped mutating tool
     status, is_err, err = await dispatch_tool_call(
-        "items_create_item", is_destructive=False, required_args=["name"]
+        "statutes_create_statute", is_destructive=False, required_args=["payload"]
     )
     assert status == "SKIP"
     assert not is_err
@@ -143,32 +144,24 @@ async def test_dispatch_tool_call_offline(monkeypatch: pytest.MonkeyPatch) -> No
     assert is_err
     assert "is not in a safety allowlist" in str(err)
 
-    # 6. Expected 404/not-found response returns EXPECTED_ERROR
-    def not_found_handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(404, json={"status": "error", "message": "Item not found"})
-
-    nf_transport = httpx.MockTransport(not_found_handler)
-    nf_http = httpx.AsyncClient(transport=nf_transport, base_url="https://api.example.com/v1")
-    monkeypatch.setattr(client, "_custom_client", nf_http)
-
+    # 6. Expected not-found response returns EXPECTED_ERROR
+    monkeypatch.setattr(db, "lookup_statute", lambda *args, **kwargs: None)
     status, is_err, err = await dispatch_tool_call(
-        "items_get_item", is_destructive=False, required_args=["item_id"]
+        "statutes_lookup_statute", is_destructive=False, required_args=["citation_or_section"]
     )
     assert status == "EXPECTED_ERROR"
     assert not is_err
 
-    # 7. Error response with 500 status code fails with secret redaction
+    # 7. Error response fails with secret redaction
     monkeypatch.setenv("TAXCODE_MCP_API_KEY", "secret-api-key")
 
-    def err_handler(request: httpx.Request) -> httpx.Response:
-        raise RuntimeError("transport broken with TAXCODE_MCP_API_KEY=secret-api-key")
+    def err_db(*args: Any, **kwargs: Any) -> Any:
+        raise RuntimeError("db error with TAXCODE_MCP_API_KEY=secret-api-key")
 
-    err_transport = httpx.MockTransport(err_handler)
-    err_http = httpx.AsyncClient(transport=err_transport, base_url="https://api.example.com/v1")
-    monkeypatch.setattr(client, "_custom_client", err_http)
+    monkeypatch.setattr(db, "lookup_statute", err_db)
 
     status, is_err, err = await dispatch_tool_call(
-        "items_get_item", is_destructive=False, required_args=["item_id"]
+        "statutes_lookup_statute", is_destructive=False, required_args=["citation_or_section"]
     )
 
     assert status == "FAIL"

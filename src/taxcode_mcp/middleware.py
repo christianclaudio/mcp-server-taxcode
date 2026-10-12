@@ -149,18 +149,17 @@ class ReadOnlyGateMiddleware(Middleware):
         return tool, tool is not None or name in self.catalog
 
 
-class ItemsDomainGuardMiddleware(Middleware):
-    """Child domain middleware mounted on items sub-server for bulk and mutation protection."""
+class StatutesDomainGuardMiddleware(Middleware):
+    """Child domain middleware mounted on statutes sub-server for bulk and mutation protection."""
 
     async def on_message(
         self,
         context: MiddlewareContext,
         call_next: Callable[[MiddlewareContext], Any],
     ) -> Any:
-        """Enforce domain safety gates strictly within the items namespace."""
+        """Enforce domain safety gates strictly within the statutes namespace."""
         tool_name = getattr(context.message, "name", "") if context.message else ""
-        # Inside the mounted child, tool_name is the local name ("bulk_delete_items")
-        if tool_name in ("bulk_delete_items", "items_bulk_delete_items"):
+        if tool_name in ("bulk_delete_statutes", "statutes_bulk_delete_statutes"):
             if not settings.MCP_ALLOW_BULK_DESTRUCTIVE:
                 raise SafetyViolationError(
                     "Bulk destructive operations disabled. "

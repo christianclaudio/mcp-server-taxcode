@@ -8,6 +8,7 @@ from typing import Any
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
+from taxcode_mcp.db import db
 from taxcode_mcp.errors import tool_error
 
 logger = logging.getLogger(__name__)
@@ -27,17 +28,28 @@ system_server = FastMCP(
 
 @system_server.tool(
     name="get_health_status",
-    description="Check the connectivity and operational health of the upstream API.",
+    description="Check the operational health of the taxcode server and DuckDB storage.",
     annotations=ANNOTATION_READ_ONLY,
     tags={"system", "health", "read_only"},
 )
 async def get_health_status() -> dict[str, Any]:
-    """Verify connectivity to upstream service."""
+    """Verify connectivity to upstream service and database status."""
     from taxcode_mcp import server
 
     try:
         data = await server.client.request("GET", "health")
-        return {"status": "success", "data": data}
+        statutes_count, pubs_count = db.get_stats()
+
+        return {
+            "status": "success",
+            "upstream": data,
+            "database": {
+                "backend": "DuckDB",
+                "path": db.db_path,
+                "statutes_indexed": statutes_count,
+                "publications_indexed": pubs_count,
+            },
+        }
     except Exception as exc:
         failure = tool_error(exc)
     raise failure from None
@@ -50,6 +62,7 @@ async def get_health_status() -> dict[str, Any]:
 )
 def get_capabilities() -> str:
     return (
-        "Tax Code MCP Server capabilities: Health, Items, Bulk, MRTR Elicitations, "
-        "Server Composition."
+        "Tax Code MCP Server capabilities: US Title 26 (IRC), 26 CFR (Treasury Regulations), "
+        "Puerto Rico CRI (Ley 1-2011), Act 60-2019 Incentives Code, DuckDB full-text search, "
+        "and IRC § 937 / Treas. Reg. § 1.937-2(f) compliance calculators."
     )

@@ -380,13 +380,28 @@ class TaxDatabase:
                     conn.close()
 
     def get_connection(self) -> duckdb.DuckDBPyConnection:
-        """Open a DuckDB connection.
+        """Open a DuckDB connection or in-memory cursor.
 
         Uses ``read_only=True`` for non-memory files to allow multiple concurrent readers.
         """
         if self._mem_conn is not None:
-            return self._mem_conn
+            return self._mem_conn.cursor()
         return duckdb.connect(self.db_path, read_only=True)
+
+    def get_stats(self) -> tuple[int, int]:
+        """Return the count of indexed (statutes, publications)."""
+        with self._lock:
+            conn = self._get_read_conn()
+            try:
+                s_count = conn.execute("SELECT COUNT(*) FROM statutes;").fetchone()
+                p_count = conn.execute("SELECT COUNT(*) FROM publications;").fetchone()
+                return (
+                    s_count[0] if s_count else 0,
+                    p_count[0] if p_count else 0,
+                )
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
 
     def lookup_statute(
         self,
