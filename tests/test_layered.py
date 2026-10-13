@@ -10,7 +10,7 @@ import httpx
 import pytest
 from fastmcp import Client, FastMCP
 from fastmcp.server.middleware import MiddlewareContext
-from mcp.types import TextContent
+from mcp.types import TextContent, ToolAnnotations
 
 from taxcode_mcp import server
 from taxcode_mcp.config import settings
@@ -39,11 +39,10 @@ async def test_server_composition_mounting() -> None:
         "statutes_lookup_statute",
         "statutes_search_tax_code",
         "statutes_list_publications",
-        "statutes_create_statute",
-        "statutes_delete_statute",
-        "statutes_bulk_delete_statutes",
         "compliance_evaluate_pr_bona_fide_residency",
         "compliance_calculate_built_in_gain_sourcing",
+        "compliance_evaluate_georgia_residency",
+        "compliance_evaluate_state_residency",
     }
     assert expected == tool_names
 
@@ -105,8 +104,17 @@ async def test_parent_middleware_error_logging(caplog: pytest.LogCaptureFixture)
 async def test_readonly_gate_middleware(monkeypatch: pytest.MonkeyPatch) -> None:
     """Verify ReadOnlyGateMiddleware blocks mutating tools and allows read-only tools."""
     # The gate resolves tools on the serving FastMCP instance to read readOnlyHint.
-    # Built before read-only is switched on, so writes stay resolvable (not filtered).
-    serving = SimpleNamespace(fastmcp=create_server(profile="full"))
+    probe_server = FastMCP("test-server")
+
+    @probe_server.tool(annotations=ToolAnnotations(read_only_hint=True))
+    def read_tool() -> str:
+        return "read"
+
+    @probe_server.tool(annotations=ToolAnnotations(read_only_hint=False))
+    def write_tool() -> str:
+        return "write"
+
+    serving = SimpleNamespace(fastmcp=probe_server)
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     gate = ReadOnlyGateMiddleware()
 
@@ -115,14 +123,14 @@ async def test_readonly_gate_middleware(monkeypatch: pytest.MonkeyPatch) -> None
 
     read_ctx = MiddlewareContext(
         method="tools/call",
-        message=SimpleNamespace(name="system_get_health_status", arguments={}),
+        message=SimpleNamespace(name="read_tool", arguments={}),
         fastmcp_context=serving,  # type: ignore[arg-type]
     )
     assert await gate.on_message(read_ctx, allowed_call_next) == "allowed"
 
     mutate_ctx = MiddlewareContext(
         method="tools/call",
-        message=SimpleNamespace(name="statutes_create_statute", arguments={}),
+        message=SimpleNamespace(name="write_tool", arguments={}),
         fastmcp_context=serving,  # type: ignore[arg-type]
     )
     with pytest.raises(SafetyViolationError) as exc_info:
@@ -159,29 +167,21 @@ async def test_tool_transform_argument_hiding() -> None:
     """Verify ToolTransform hides client_id from input schema but injects default at execution."""
     app = create_server(profile="statutes", enable_tool_search=False)
     tools = await app.list_tools()
-    create_tool = next(t for t in tools if t.name == "statutes_create_statute")
+    search_tool = next(t for t in tools if t.name == "statutes_search_tax_code")
 
     # client_id is hidden from client-visible input schema
-    params = create_tool.parameters.get("properties", {})
-    assert "payload" in params
+    params = search_tool.parameters.get("properties", {})
+    assert "query" in params
     assert "client_id" not in params
 
     # Calling tool without client_id executes with the transformed default
     res = await app.call_tool(
-        "statutes_create_statute",
-        {
-            "payload": {
-                "id": "test-1",
-                "citation": "TEST-STATUTE-1",
-                "title": "Test Title",
-                "text_es": "Texto estatutario de prueba",
-                "jurisdiction": "PR",
-                "corpus": "CRI",
-            }
-        },
+        "statutes_search_tax_code",
+        {"query": "residency"},
     )
     assert not res.is_error
     assert len(res.content) > 0
+    assert "taxcode-client-default" in str(res.content)
 
 
 @pytest.mark.asyncio
@@ -196,6 +196,7 @@ async def test_profile_based_composition() -> None:
     statutes_app = create_server(profile="statutes")
     statutes_tools = [t.name for t in await statutes_app.list_tools()]
     assert "statutes_lookup_statute" in statutes_tools
+    assert "statutes_search_tax_code" in statutes_tools
     assert "system_get_health_status" not in statutes_tools
 
     # 3. Readonly profile
@@ -203,8 +204,8 @@ async def test_profile_based_composition() -> None:
     ro_tools = [t.name for t in await ro_app.list_tools()]
     assert "system_get_health_status" in ro_tools
     assert "statutes_lookup_statute" in ro_tools
-    assert "statutes_create_statute" not in ro_tools
-    assert "statutes_delete_statute" not in ro_tools
+    assert "statutes_search_tax_code" in ro_tools
+    assert "compliance_evaluate_pr_bona_fide_residency" in ro_tools
 
 
 @pytest.mark.asyncio
@@ -301,26 +302,29 @@ async def test_readonly_blocks_mutations_via_search_call_tool(
     monkeypatch.setattr(server, "client", server.TemplateClient(http_client=async_client))
     monkeypatch.setattr(settings, "MCP_READONLY", True)
 
-    # Build full+search without the create_server disable path re-reading a stale flag:
-    # create_server also disables mutation tags when MCP_READONLY is set, so nested tools
-    # are hidden. Middleware unwrap must still fire on the outer call_tool invocation.
     app = create_server(profile="full", enable_tool_search=True)
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
 
     with pytest.raises(SafetyViolationError) as exc_info:
         await app.call_tool(
             "call_tool",
-            {"name": "statutes_create_statute", "arguments": {"citation": "blocked"}},
+            {"name": "mock_write", "arguments": {"citation": "blocked"}},
         )
     assert "read-only mode" in str(exc_info.value)
-    assert "statutes_create_statute" in str(exc_info.value)
+    assert "mock_write" in str(exc_info.value)
 
 
 @pytest.mark.asyncio
 async def test_readonly_gate_unwraps_call_tool_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
     """Unit: ReadOnlyGateMiddleware resolves nested name inside call_tool arguments."""
     serving = SimpleNamespace(fastmcp=create_server(profile="full", enable_tool_search=True))
+    for m in serving.fastmcp.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_delete"}
     monkeypatch.setattr(settings, "MCP_READONLY", True)
-    gate = ReadOnlyGateMiddleware()
+    gate = ReadOnlyGateMiddleware(catalog=frozenset({"mock_delete"}))
 
     async def allowed_call_next(ctx: MiddlewareContext) -> str:
         return "allowed"
@@ -329,13 +333,13 @@ async def test_readonly_gate_unwraps_call_tool_proxy(monkeypatch: pytest.MonkeyP
         method="tools/call",
         message=SimpleNamespace(
             name="call_tool",
-            arguments={"name": "statutes_delete_statute", "arguments": {"citation": "1"}},
+            arguments={"name": "mock_delete", "arguments": {"citation": "1"}},
         ),
         fastmcp_context=serving,  # type: ignore[arg-type]
     )
     with pytest.raises(SafetyViolationError) as exc_info:
         await gate.on_message(proxy_ctx, allowed_call_next)
-    assert "statutes_delete_statute" in str(exc_info.value)
+    assert "mock_delete" in str(exc_info.value)
 
     search_only_ctx = MiddlewareContext(
         method="tools/call",

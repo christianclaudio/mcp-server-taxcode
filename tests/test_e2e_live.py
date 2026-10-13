@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import time
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -13,11 +14,6 @@ from taxcode_mcp.errors import SafetyViolationError, redact_secrets
 from taxcode_mcp.server import client, mcp
 
 SAFE_TOOL_FIXTURES: dict[str, dict[str, Any]] = {
-    # Destructive tools (tested safely with confirm=False)
-    "delete_statute": {"statute_id": "probe-test", "confirm": False},
-    "statutes_delete_statute": {"statute_id": "probe-test", "confirm": False},
-    "bulk_delete_statutes": {"statute_ids": ["probe-test"], "confirm": False},
-    "statutes_bulk_delete_statutes": {"statute_ids": ["probe-test"], "confirm": False},
     # Parameterized read tools with probe IDs
     "lookup_statute": {"citation_or_section": "26 U.S.C. § 933"},
     "statutes_lookup_statute": {"citation_or_section": "26 U.S.C. § 933"},
@@ -107,20 +103,28 @@ async def test_dispatch_tool_call_offline(monkeypatch: pytest.MonkeyPatch) -> No
 
     # 2a. Destructive tool skipped by default in live dispatch mode
     status, is_err, err = await dispatch_tool_call(
-        "statutes_delete_statute", is_destructive=True, required_args=["statute_id"]
+        "statutes_lookup_statute", is_destructive=True, required_args=["citation_or_section"]
     )
     assert status == "SKIP"
     assert not is_err
 
     # 2b. Destructive tool with safety gate probe enabled returns EXPECTED_ERROR
+    async def fake_call_tool(*args: Any, **kwargs: Any) -> Any:
+        return SimpleNamespace(
+            content=[SimpleNamespace(text="Safety Gate: requires explicit confirm=True")]
+        )
+
+    real_call_tool = mcp.call_tool
+    monkeypatch.setattr(mcp, "call_tool", fake_call_tool)
     status, is_err, err = await dispatch_tool_call(
-        "statutes_delete_statute",
+        "statutes_lookup_statute",
         is_destructive=True,
-        required_args=["statute_id"],
+        required_args=["citation_or_section"],
         allow_destructive_probe=True,
     )
     assert status == "EXPECTED_ERROR"
     assert not is_err
+    monkeypatch.setattr(mcp, "call_tool", real_call_tool)
 
     # 3. List tool from positive allowlist with pagination argument
     status, is_err, err = await dispatch_tool_call(

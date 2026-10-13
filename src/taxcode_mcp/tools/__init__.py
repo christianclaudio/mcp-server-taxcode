@@ -6,13 +6,11 @@ from taxcode_mcp.tools.compliance import (
     calculate_built_in_gain_sourcing,
     compliance_server,
     cross_border_tax_analysis,
+    evaluate_georgia_residency,
     evaluate_pr_bona_fide_residency,
+    evaluate_state_residency,
 )
 from taxcode_mcp.tools.statutes import (
-    _verify_confirmation,
-    bulk_delete_statutes,
-    create_statute,
-    delete_statute,
     get_statute_resource,
     list_publications,
     lookup_statute,
@@ -26,14 +24,12 @@ from taxcode_mcp.tools.system import (
 )
 
 __all__ = [
-    "_verify_confirmation",
-    "bulk_delete_statutes",
     "calculate_built_in_gain_sourcing",
     "compliance_server",
-    "create_statute",
     "cross_border_tax_analysis",
-    "delete_statute",
+    "evaluate_georgia_residency",
     "evaluate_pr_bona_fide_residency",
+    "evaluate_state_residency",
     "get_capabilities",
     "get_health_status",
     "get_statute_resource",

@@ -37,7 +37,11 @@ async def get_health_status() -> dict[str, Any]:
     from taxcode_mcp import server
 
     try:
-        data = await server.client.request("GET", "health")
+        if server.client._custom_client is not None or "example.com" not in server.client.base_url:
+            data = await server.client.request("GET", "health")
+        else:
+            data = {"status": "healthy", "mode": "duckdb_offline"}
+
         statutes_count, pubs_count = db.get_stats()
 
         return {

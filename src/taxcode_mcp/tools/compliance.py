@@ -190,6 +190,338 @@ def calculate_built_in_gain_sourcing(
     raise failure from None
 
 
+@compliance_server.tool(
+    name="evaluate_georgia_residency",
+    description=(
+        "Evaluate Georgia statutory residency criteria under O.C.G.A. § 48-7-1(10) "
+        "and Ga. Comp. R. & Regs. r. 560-7-3-.01, and compute state income tax."
+    ),
+    annotations=ANNOTATION_READ_ONLY,
+    tags={"compliance", "georgia", "residency", "read_only"},
+)
+def evaluate_georgia_residency(
+    days_present_ga: int,
+    is_domiciled_in_ga: bool = False,
+    maintains_permanent_abode_ga: bool = False,
+    federal_agi: float = 0.0,
+    filing_status: str = "single",
+    age: int = 40,
+    retirement_income: float = 0.0,
+    tax_year: int = 2024,
+    ga_homestead_exemption_claimed: bool = False,
+    ga_driver_license_active: bool = False,
+    ga_voter_registration_active: bool = False,
+) -> dict[str, Any]:
+    """Evaluate Georgia domicile, 183-day presence, and state income tax liability."""
+    if days_present_ga < 0 or days_present_ga > 366:
+        raise SafetyViolationError("Day count must be between 0 and 366.")
+    if federal_agi < 0:
+        raise SafetyViolationError("Federal AGI cannot be negative.")
+    if retirement_income < 0:
+        raise SafetyViolationError("Retirement income cannot be negative.")
+
+    # 1. Statutory Residency Tests under O.C.G.A. § 48-7-1(10)
+    domicile_test = is_domiciled_in_ga
+    presence_test = days_present_ga >= 183
+    abode_test = maintains_permanent_abode_ga and days_present_ga > 0
+
+    is_georgia_resident = domicile_test or presence_test or abode_test
+
+    # 2. Domicile Abandonment Audit Risk Analysis (Ga. Comp. R. & Regs. r. 560-7-3-.01)
+    audit_flags: list[str] = []
+    if ga_homestead_exemption_claimed:
+        audit_flags.append(
+            "CRITICAL: Active Georgia homestead exemption under O.C.G.A. § 48-5-40 "
+            "legally presumes Georgia domicile."
+        )
+    if ga_driver_license_active:
+        audit_flags.append("Active Georgia driver's license indicates continuing residency ties.")
+    if ga_voter_registration_active:
+        audit_flags.append(
+            "Active Georgia voter registration is probative evidence of continuing domicile."
+        )
+
+    # 3. Tax Calculation under HB 1023 / HB 1015 (O.C.G.A. § 48-7-20 & § 48-7-27)
+    is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
+    standard_deduction = 24000.0 if is_mfj else 12000.0
+
+    # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
+    max_exclusion = 0.0
+    if age >= 65:
+        max_exclusion = 65000.0
+    elif age >= 62:
+        max_exclusion = 35000.0
+    retirement_exclusion_applied = min(retirement_income, max_exclusion)
+
+    # Tax rate selection
+    if tax_year >= 2026:
+        tax_rate = 0.0499
+    elif tax_year == 2025:
+        tax_rate = 0.0539
+    else:
+        tax_rate = 0.0549
+
+    taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
+    estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
+
+    return {
+        "status": "success",
+        "tax_year": tax_year,
+        "is_georgia_resident": is_georgia_resident,
+        "residency_tests": {
+            "domicile_test_satisfied": domicile_test,
+            "183_day_presence_test_satisfied": presence_test,
+            "permanent_abode_test_satisfied": abode_test,
+            "days_present_ga": days_present_ga,
+            "statutory_basis": "O.C.G.A. § 48-7-1(10); Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        },
+        "domicile_audit_risk": {
+            "risk_level": "high" if audit_flags else "standard",
+            "flags": audit_flags,
+            "abandonment_burden_of_proof": (
+                "Under Ga. Comp. R. & Regs. r. 560-7-3-.01, a Georgia domicile continues "
+                "until the taxpayer establishes permanent abandonment and relocation elsewhere."
+            ),
+        },
+        "tax_computation": {
+            "applicable_rate": tax_rate,
+            "standard_deduction": standard_deduction,
+            "retirement_exclusion_applied": retirement_exclusion_applied,
+            "georgia_taxable_net_income": taxable_income,
+            "estimated_georgia_tax": estimated_tax,
+            "statutory_rate_authority": "O.C.G.A. § 48-7-20 (HB 1023 / HB 1015 flat tax)",
+        },
+    }
+
+
+SUPPORTED_STATE_JURISDICTIONS = frozenset({"GA", "NY", "CA", "FL", "TX", "WA", "MA", "NJ", "IL"})
+
+
+@compliance_server.tool(
+    name="evaluate_state_residency",
+    description=(
+        "Evaluate individual statutory residency, domicile nexus, and state tax liability "
+        "across key migration corridors: GA, NY, CA, FL, TX, WA, MA, NJ, and IL."
+    ),
+    annotations=ANNOTATION_READ_ONLY,
+    tags={"compliance", "states", "residency", "read_only"},
+)
+def evaluate_state_residency(
+    jurisdiction: str,
+    days_in_state: int,
+    is_domiciled: bool = False,
+    maintains_permanent_abode: bool = False,
+    federal_agi: float = 0.0,
+    filing_status: str = "single",
+    age: int = 40,
+    retirement_income: float = 0.0,
+    capital_gains: float = 0.0,
+    tax_year: int = 2024,
+    has_active_homestead_exemption: bool = False,
+    has_active_driver_license: bool = False,
+    has_active_voter_registration: bool = False,
+    telecommuting_days_out_of_state: int = 0,
+) -> dict[str, Any]:
+    """Evaluate state domicile, presence day counts, and statutory state tax liability."""
+    state = jurisdiction.strip().upper()
+    if state not in SUPPORTED_STATE_JURISDICTIONS:
+        raise SafetyViolationError(
+            f"Unsupported jurisdiction '{jurisdiction}'. Supported states: "
+            f"{', '.join(sorted(SUPPORTED_STATE_JURISDICTIONS))}."
+        )
+    if days_in_state < 0 or days_in_state > 366:
+        raise SafetyViolationError("Day count must be between 0 and 366.")
+    if federal_agi < 0:
+        raise SafetyViolationError("Federal AGI cannot be negative.")
+    if retirement_income < 0:
+        raise SafetyViolationError("Retirement income cannot be negative.")
+    if capital_gains < 0:
+        raise SafetyViolationError("Capital gains cannot be negative.")
+    if telecommuting_days_out_of_state < 0:
+        raise SafetyViolationError("Telecommuting day count cannot be negative.")
+
+    is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
+
+    # Common domicile audit risk factors
+    audit_flags: list[str] = []
+    if has_active_homestead_exemption:
+        audit_flags.append(
+            f"CRITICAL: Active homestead exemption in {state} legally presumes local domicile."
+        )
+    if has_active_driver_license:
+        audit_flags.append(f"Active {state} driver's license indicates continuing residency ties.")
+    if has_active_voter_registration:
+        audit_flags.append(
+            f"Active {state} voter registration is probative evidence of continuing domicile."
+        )
+
+    # State-specific statutory determination
+    is_resident = False
+    statutory_basis = ""
+    rate_authority = ""
+    rate_desc = ""
+    taxable_income = 0.0
+    estimated_tax = 0.0
+
+    if state == "GA":
+        statutory_basis = "O.C.G.A. § 48-7-1(10); Ga. Comp. R. & Regs. r. 560-7-3-.01"
+        is_resident = (
+            is_domiciled
+            or days_in_state >= 183
+            or (maintains_permanent_abode and days_in_state > 0)
+        )
+        standard_ded = 24000.0 if is_mfj else 12000.0
+        max_ret = 65000.0 if age >= 65 else (35000.0 if age >= 62 else 0.0)
+        ret_excl = min(retirement_income, max_ret)
+        rate = 0.0499 if tax_year >= 2026 else (0.0539 if tax_year == 2025 else 0.0549)
+        rate_desc = f"Flat {rate * 100:.2f}% income tax (HB 1023 / HB 1015)"
+        rate_authority = "O.C.G.A. § 48-7-20"
+        taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
+        estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
+
+    elif state == "NY":
+        statutory_basis = "NY Tax Law § 605(b); 20 NYCRR § 105.20"
+        statutory_res = maintains_permanent_abode and days_in_state > 183
+        is_resident = is_domiciled or statutory_res
+        if not is_resident and telecommuting_days_out_of_state > 0:
+            audit_flags.append(
+                "NY Convenience of the Employer Rule (20 NYCRR § 132.18): Telecommuting days "
+                "outside NY for a NY employer are sourced to NY unless for employer necessity."
+            )
+        rate_authority = "NY Tax Law § 601"
+        rate_desc = "Graduated brackets from 4.0% to 10.9%"
+        std_ded = 16050.0 if is_mfj else 8000.0
+        taxable_income = max(0.0, federal_agi - std_ded)
+        if is_resident:
+            if taxable_income > 5000000:
+                estimated_tax = round(taxable_income * 0.109, 2)
+            elif taxable_income > 1077550:
+                estimated_tax = round(taxable_income * 0.0965, 2)
+            elif taxable_income > 215400:
+                estimated_tax = round(taxable_income * 0.0685, 2)
+            elif taxable_income > 80650:
+                estimated_tax = round(taxable_income * 0.060, 2)
+            else:
+                estimated_tax = round(taxable_income * 0.055, 2)
+
+    elif state == "CA":
+        statutory_basis = "Cal. Rev. & Tax Code § 17014, § 17016; 18 CCR § 17014"
+        presumption_9mo = days_in_state > 270
+        if presumption_9mo:
+            audit_flags.append(
+                "CA RTC § 17016: Presence exceeding 9 months establishes statutory presumption "
+                "of California residence."
+            )
+        is_resident = (
+            is_domiciled or presumption_9mo or (days_in_state > 183 and maintains_permanent_abode)
+        )
+        rate_authority = "Cal. Rev. & Tax Code § 17041"
+        rate_desc = "Graduated brackets up to 12.3% plus 1% Mental Health Services Tax (13.3%)"
+        std_ded = 10726.0 if is_mfj else 5363.0
+        taxable_income = max(0.0, federal_agi - std_ded)
+        if is_resident:
+            if taxable_income > 1000000:
+                estimated_tax = round(taxable_income * 0.133, 2)
+            elif taxable_income > 349137:
+                estimated_tax = round(taxable_income * 0.113, 2)
+            elif taxable_income > 68350:
+                estimated_tax = round(taxable_income * 0.093, 2)
+            else:
+                estimated_tax = round(taxable_income * 0.060, 2)
+
+    elif state == "FL":
+        statutory_basis = "Fla. Const. Art. VII § 5; Fla. Stat. § 222.17"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
+        rate_authority = "Fla. Const. Art. VII § 5"
+        rate_desc = "0.0% (Constitutional prohibition of personal income tax)"
+        taxable_income = 0.0
+        estimated_tax = 0.0
+
+    elif state == "TX":
+        statutory_basis = "Tex. Const. art. VIII § 24-a; Tex. Tax Code § 171.001"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
+        rate_authority = "Tex. Const. art. VIII § 24-a"
+        rate_desc = "0.0% (Constitutional prohibition of personal income tax)"
+        taxable_income = 0.0
+        estimated_tax = 0.0
+
+    elif state == "WA":
+        statutory_basis = "Wash. Const. art. VII § 1; RCW 82.87.040"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
+        rate_authority = "RCW 82.87.040"
+        rate_desc = "0.0% on ordinary income; 7.0% excise tax on capital gains over deduction"
+        cap_gain_ded = 262000.0
+        taxable_income = max(0.0, capital_gains - cap_gain_ded)
+        estimated_tax = round(taxable_income * 0.07, 2) if is_resident else 0.0
+
+    elif state == "MA":
+        statutory_basis = "M.G.L. c. 62 § 1(f), § 4; Mass. Const. amend. art. XLIV"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
+        rate_authority = "M.G.L. c. 62 § 4 & Fair Share Amendment"
+        rate_desc = "5.0% Part B income tax plus 4.0% Fair Share surtax on income > $1,000,000"
+        std_ded = 8800.0 if is_mfj else 4400.0
+        taxable_income = max(0.0, federal_agi - std_ded)
+        if is_resident:
+            base_tax = taxable_income * 0.05
+            surtax = max(0.0, taxable_income - 1000000.0) * 0.04
+            estimated_tax = round(base_tax + surtax, 2)
+
+    elif state == "NJ":
+        statutory_basis = "N.J.S.A. 54A:1-2, 54A:2-1; N.J.A.C. 18:35-5.2"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
+        if not is_resident and telecommuting_days_out_of_state > 0:
+            audit_flags.append(
+                "NJ Reciprocal Convenience Rule (P.L. 2023 c. 125): Telecommuting days outside "
+                "NJ for a NJ employer are sourced to NJ if employee home state applies a "
+                "convenience rule."
+            )
+        rate_authority = "N.J.S.A. 54A:2-1"
+        rate_desc = "Graduated brackets from 1.4% to 10.75%"
+        exemption = 2000.0 if is_mfj else 1000.0
+        taxable_income = max(0.0, federal_agi - exemption)
+        if is_resident:
+            if taxable_income > 1000000:
+                estimated_tax = round(taxable_income * 0.1075, 2)
+            elif taxable_income > 500000:
+                estimated_tax = round(taxable_income * 0.0897, 2)
+            elif taxable_income > 75000:
+                estimated_tax = round(taxable_income * 0.0637, 2)
+            else:
+                estimated_tax = round(taxable_income * 0.035, 2)
+
+    else:  # IL
+        statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"
+        is_resident = is_domiciled or (days_in_state >= 183 and maintains_permanent_abode)
+        rate_authority = "35 ILCS 5/201"
+        rate_desc = "Constitutional flat 4.95% rate"
+        exemption = 5550.0 if is_mfj else 2775.0
+        taxable_income = max(0.0, federal_agi - exemption)
+        estimated_tax = round(taxable_income * 0.0495, 2) if is_resident else 0.0
+
+    return {
+        "status": "success",
+        "jurisdiction": state,
+        "tax_year": tax_year,
+        "is_resident": is_resident,
+        "residency_tests": {
+            "domicile_satisfied": is_domiciled,
+            "days_in_state": days_in_state,
+            "maintains_permanent_abode": maintains_permanent_abode,
+            "statutory_basis": statutory_basis,
+        },
+        "domicile_audit_risk": {
+            "risk_level": "high" if audit_flags else "standard",
+            "flags": audit_flags,
+        },
+        "tax_computation": {
+            "taxable_net_income": taxable_income,
+            "estimated_state_tax": estimated_tax,
+            "rate_description": rate_desc,
+            "statutory_rate_authority": rate_authority,
+        },
+    }
+
+
 @compliance_server.prompt("cross_border_tax_analysis")
 def cross_border_tax_analysis(taxpayer_scenario: str) -> str:
     """Generate structured analytical prompt for dual-jurisdiction US and PR tax analysis."""

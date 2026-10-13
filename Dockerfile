@@ -9,7 +9,7 @@
 # frontend, so no frontend image is pulled.
 
 # ─── Stage 1: Builder ─────────────────────────────────────────────────────────
-FROM public.ecr.aws/docker/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS builder
+FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM public.ecr.aws/docker/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS runtime
+FROM python:3.12-slim AS runtime
 
 # MCP Registry ownership check for the OCI package: must equal server.json "name".
 # https://modelcontextprotocol.io/registry/package-types#docker%2Foci-images

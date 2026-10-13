@@ -85,6 +85,9 @@ line-length = 100
 select = ["E", "F", "I", "B", "UP", "N"]
 ignore = ["B008"]
 
+[tool.ruff.lint.per-file-ignores]
+"scripts/ingest_statutes.py" = ["E501"]
+
 [tool.mypy]
 python_version = "3.10"
 strict = true

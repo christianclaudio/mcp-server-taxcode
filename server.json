@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.christianclaudio/taxcode",
-  "description": "Enterprise Model Context Protocol (MCP) server for Tax Code with safety gating.",
+  "description": "Enterprise Model Context Protocol (MCP) server for Federal, Territorial, and Multi-State Tax Law with deterministic compliance.",
   "status": "active",
   "repository": {
     "url": "https://github.com/christianclaudio/mcp-server-taxcode",
@@ -30,13 +30,13 @@
           "default": "https://api.example.com"
         },
         {
-          "name": "TAXCODE_MCP_READONLY",
-          "description": "Restrict server execution strictly to read-only inspection tools",
-          "default": "0"
+          "name": "TAXCODE_MCP_PROFILE",
+          "description": "Server profile (full, system, statutes, compliance, readonly, researcher, advisor)",
+          "default": "full"
         },
         {
-          "name": "TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE",
-          "description": "Safety gate required to unlock bulk destructive operations",
+          "name": "TAXCODE_MCP_READONLY",
+          "description": "Restrict server execution strictly to read-only inspection tools",
           "default": "0"
         }
       ]
@@ -59,13 +59,13 @@
           "default": "https://api.example.com"
         },
         {
-          "name": "TAXCODE_MCP_READONLY",
-          "description": "Restrict server execution strictly to read-only inspection tools",
-          "default": "0"
+          "name": "TAXCODE_MCP_PROFILE",
+          "description": "Server profile (full, system, statutes, compliance, readonly, researcher, advisor)",
+          "default": "full"
         },
         {
-          "name": "TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE",
-          "description": "Safety gate required to unlock bulk destructive operations",
+          "name": "TAXCODE_MCP_READONLY",
+          "description": "Restrict server execution strictly to read-only inspection tools",
           "default": "0"
         }
       ]

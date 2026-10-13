@@ -8,6 +8,8 @@ from typing import Any
 
 import duckdb
 
+from taxcode_mcp.config import settings
+
 logger = logging.getLogger(__name__)
 
 # Canonical initial seed data for US Federal and Puerto Rico tax provisions
@@ -229,6 +231,688 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "source_url": "https://bvirtualogp.pr.gov/",
         "cross_references": ["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
     },
+    {
+        "id": "pr-act22-2012",
+        "jurisdiction": "PR",
+        "corpus": "LEY22",
+        "citation": "Act 22-2012 Sec. 3",
+        "section": "3",
+        "title": "Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)",
+        "text_es": (
+            "Exención total del 100% sobre ganancias de capital devengadas luego de establecer "
+            "residencia bajo la Ley 22 original (sin requisito de donación anual compulsoria)."
+        ),
+        "text_en": (
+            "Predecessor 100% tax exemption on capital gains accrued post-residency under original "
+            "Act 22-2012 (prior to Act 60 mandatory charitable donations)."
+        ),
+        "effective_year": 2012,
+        "superseded_year": 2019,
+        "source_url": "https://bvirtualogp.pr.gov/",
+        "cross_references": ["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
+    },
+    {
+        "id": "ga-ocga-48-7-1",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-1",
+        "section": "48-7-1",
+        "title": "Income Tax Definitions / Residency Rules",
+        "text_es": (
+            "Define residente de Georgia como todo individuo con residencia legal en "
+            "Georgia el día de pago del impuesto, que resida en el estado al menos "
+            "183 días del año contributivo, o que mantenga una vivienda permanente en Georgia."
+        ),
+        "text_en": (
+            "Defines Georgia resident as any individual who is a legal resident of Georgia on "
+            "income tax day, who resides within the state for 183 days or more in the aggregate "
+            "during the taxable year, or who maintains a permanent place of abode within the state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/",
+        "cross_references": [
+            "O.C.G.A. § 48-7-20",
+            "O.C.G.A. § 48-7-30",
+            "Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        ],
+    },
+    {
+        "id": "ga-ocga-48-7-20-2024",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-20",
+        "section": "48-7-20",
+        "title": "Individual Income Tax Rates (2024 Flat Rate: 5.49%)",
+        "text_es": (
+            "Establece una tasa impositiva fija (flat tax) de 5.49% sobre el ingreso neto "
+            "tributable de individuos para el año contributivo 2024 bajo HB 1023."
+        ),
+        "text_en": (
+            "Imposes a flat individual income tax rate of 5.49% on Georgia taxable net income "
+            "for tax year 2024 pursuant to HB 1023, eliminating previous graduated brackets."
+        ),
+        "effective_year": 2024,
+        "superseded_year": 2025,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+    },
+    {
+        "id": "ga-ocga-48-7-20-2025",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-20",
+        "section": "48-7-20",
+        "title": "Individual Income Tax Rates (2025 Flat Rate: 5.39%)",
+        "text_es": (
+            "Acelera la reducción de la tasa impositiva individual fija al 5.39% para el "
+            "año contributivo 2025 bajo HB 1015."
+        ),
+        "text_en": (
+            "Accelerates the reduction of the flat individual income tax rate to 5.39% for "
+            "tax year 2025 pursuant to HB 1015."
+        ),
+        "effective_year": 2025,
+        "superseded_year": 2026,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+    },
+    {
+        "id": "ga-ocga-48-7-20-2026",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-20",
+        "section": "48-7-20",
+        "title": "Individual Income Tax Rates (2026 Target Flat Rate: 4.99%)",
+        "text_es": (
+            "Establece la tasa impositiva fija objetivo de 4.99% sobre el ingreso neto "
+            "tributable a partir del 1 de enero de 2026 bajo HB 1023."
+        ),
+        "text_en": (
+            "Imposes the target flat individual income tax rate of 4.99% for taxable years "
+            "beginning on or after January 1, 2026 pursuant to HB 1023."
+        ),
+        "effective_year": 2026,
+        "superseded_year": None,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+    },
+    {
+        "id": "ga-ocga-48-7-27",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-27",
+        "section": "48-7-27",
+        "title": "Computation of Georgia Taxable Net Income",
+        "text_es": (
+            "Dispone el cálculo del ingreso neto gravable a partir del AGI federal, deducción "
+            "estándar de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 "
+            "en ingresos de jubilación para mayores de 65 años."
+        ),
+        "text_en": (
+            "Calculates Georgia taxable net income from Federal AGI, allowing standard "
+            "deductions of $12,000 (single) or $24,000 (married filing jointly), and a "
+            "retirement income exclusion of up to $65,000 for age 65+ ($35,000 for ages 62-64)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-20", "26 U.S.C. § 62"],
+    },
+    {
+        "id": "ga-ocga-48-7-30",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-30",
+        "section": "48-7-30",
+        "title": "Taxation of Nonresidents",
+        "text_es": (
+            "Grava a personas no residentes sobre su ingreso bruto derivado de fuentes de "
+            "Georgia, incluyendo compensación por servicios realizados en Georgia y "
+            "actividades comerciales locales."
+        ),
+        "text_en": (
+            "Taxes nonresidents on gross income derived from Georgia sources, including "
+            "compensation for services performed within Georgia, property located in Georgia, "
+            "and business conducted in the state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-20"],
+    },
+    {
+        "id": "ga-reg-560-7-3-01",
+        "jurisdiction": "GA",
+        "corpus": "GAREG",
+        "citation": "Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        "section": "560-7-3-.01",
+        "title": "Residence and Domicile",
+        "text_es": (
+            "Reglamento del Departamento de Ingresos de Georgia sobre domicilio y residencia. "
+            "El domicilio en Georgia se presume continuo a menos que el contribuyente demuestre "
+            "abandono definitivo y adquisición de nuevo domicilio."
+        ),
+        "text_en": (
+            "Georgia Department of Revenue rule governing residence and legal domicile. "
+            "Domicile in Georgia is presumed to continue until the taxpayer establishes "
+            "abandonment and acquisition of a permanent domicile elsewhere."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://rules.sos.ga.gov/gac/560-7-3-.01",
+        "cross_references": ["O.C.G.A. § 48-7-1", "26 U.S.C. § 937"],
+    },
+    # State of California (Revenue and Taxation Code & FTB Regulations)
+    {
+        "id": "ca-rtc-17014",
+        "jurisdiction": "CA",
+        "corpus": "RTC",
+        "citation": "Cal. Rev. & Tax Code § 17014",
+        "section": "17014",
+        "title": "Definition of Resident (Non-Temporary Purpose Test)",
+        "text_es": (
+            "Define residente como todo individuo que permanezca en California para fines "
+            "que no sean temporales o transitorios, y todo domiciliado que esté fuera del estado "
+            "de forma temporal. Aplica el criterio de conexión más cercana."
+        ),
+        "text_en": (
+            "Defines resident as every individual who is in California for other than a temporary "
+            "or transitory purpose, and every individual domiciled in California who is outside "
+            "the state for a temporary or transitory purpose. Presumption under § 17016 "
+            "at 9 months."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": [
+            "Cal. Rev. & Tax Code § 17041",
+            "18 CCR § 17014",
+        ],
+    },
+    {
+        "id": "ca-rtc-17041",
+        "jurisdiction": "CA",
+        "corpus": "RTC",
+        "citation": "Cal. Rev. & Tax Code § 17041",
+        "section": "17041",
+        "title": "Individual Income Tax Rates and Brackets",
+        "text_es": (
+            "Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, "
+            "más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M "
+            "(Proposición 63), para una tasa marginal máxima de 13.3%."
+        ),
+        "text_en": (
+            "Imposes graduated income tax rates on California taxable income ranging from 1% to "
+            "12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income exceeding "
+            "$1,000,000, creating a top marginal individual rate of 13.3%."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": ["Cal. Rev. & Tax Code § 17014"],
+    },
+    {
+        "id": "ca-rtc-17951",
+        "jurisdiction": "CA",
+        "corpus": "RTC",
+        "citation": "Cal. Rev. & Tax Code § 17951",
+        "section": "17951",
+        "title": "Gross Income of Nonresidents and Sourcing",
+        "text_es": (
+            "Para no residentes, el ingreso bruto comprende únicamente ingresos derivados de "
+            "fuentes en California, incluyendo negocios, profesiones y servicios personales "
+            "realizados dentro del estado."
+        ),
+        "text_en": (
+            "In the case of nonresidents, gross income includes only gross income from sources "
+            "within California, including income from a business, trade, or profession conducted "
+            "in the state, and compensation for personal services performed in California."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": [
+            "Cal. Rev. & Tax Code § 17014",
+            "Cal. Rev. & Tax Code § 17041",
+        ],
+    },
+    {
+        "id": "ca-ccr-17014",
+        "jurisdiction": "CA",
+        "corpus": "CACCR",
+        "citation": "18 CCR § 17014",
+        "section": "17014",
+        "title": "FTB Residence and Domicile Guidelines",
+        "text_es": (
+            "Reglamento de la FTB sobre residencia y domicilio. Aplica el criterio de conexión "
+            "más cercana evaluando propiedades inmuebles, familia, cuentas bancarias, licencias "
+            "profesionales y afiliaciones comerciales."
+        ),
+        "text_en": (
+            "FTB regulation detailing domicile and residence determination. A person may have "
+            "multiple residences but only one domicile. Applies the closest connection test "
+            "evaluating real property, family, bank accounts, business affiliations, and licenses."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": ["Cal. Rev. & Tax Code § 17014"],
+    },
+    # State of New York (Tax Law & Department of Taxation and Finance Regulations)
+    {
+        "id": "ny-tax-605",
+        "jurisdiction": "NY",
+        "corpus": "NYTAX",
+        "citation": "NY Tax Law § 605(b)",
+        "section": "605",
+        "title": "Resident Individual and Domicile Defined",
+        "text_es": (
+            "Define individuo residente como domiciliado en Nueva York a menos que no mantenga "
+            "vivienda permanente en NY y pase menos de 30 días en el estado; o no domiciliado "
+            "que mantenga vivienda permanente y pase más de 183 días en NY (Residente Estatutario)."
+        ),
+        "text_en": (
+            "Defines resident individual as one domiciled in New York unless they maintain no "
+            "permanent abode in NY and spend under 30 days in state; or one not domiciled who "
+            "maintains a permanent place of abode and spends over 183 days in NY."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 601", "20 NYCRR § 105.20"],
+    },
+    {
+        "id": "ny-tax-601",
+        "jurisdiction": "NY",
+        "corpus": "NYTAX",
+        "citation": "NY Tax Law § 601",
+        "section": "601",
+        "title": "Personal Income Tax Rates",
+        "text_es": (
+            "Grava el ingreso tributable de Nueva York con tasas escalonadas de hasta 10.9% "
+            "para personas con altos ingresos, más el impuesto municipal de la Ciudad de "
+            "Nueva York (hasta 3.876%) para residentes de NYC."
+        ),
+        "text_en": (
+            "Imposes graduated income tax on New York taxable income with top marginal rates up "
+            "to 10.9% for high-income earners, plus applicable New York City personal income tax "
+            "(up to 3.876%) for NYC residents."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 605"],
+    },
+    {
+        "id": "ny-reg-105-20",
+        "jurisdiction": "NY",
+        "corpus": "NYCRR",
+        "citation": "20 NYCRR § 105.20",
+        "section": "105.20",
+        "title": "Rules for Determining Domicile (5 Primary Factors)",
+        "text_es": (
+            "Reglamento de auditoría de domicilio de NY que establece los 5 factores primarios: "
+            "Vivienda, Negocio Activo, Tiempo, Objetos de Valor Sentimental ('Near and Dear') "
+            "y Familia."
+        ),
+        "text_en": (
+            "New York DTF regulation establishing the 5 primary factors for domicile audit "
+            "evaluation: Home, Active Business Involvement, Time Allocation, Items of Personal "
+            "Significance ('Near and Dear'), and Family."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 605"],
+    },
+    {
+        "id": "ny-reg-132-18",
+        "jurisdiction": "NY",
+        "corpus": "NYCRR",
+        "citation": "20 NYCRR § 132.18",
+        "section": "132.18",
+        "title": "Convenience of the Employer Rule",
+        "text_es": (
+            "Dispone que la compensación de empleados no residentes por servicios realizados fuera "
+            "del estado se atribuye a Nueva York si el trabajo remoto se realiza por conveniencia "
+            "del empleado y no por necesidad del empleador."
+        ),
+        "text_en": (
+            "Provides that compensation of a nonresident employee for services performed out of "
+            "state is sourced to New York if the services are performed outside NY for the "
+            "employee's convenience rather than by necessity of the employer."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 605"],
+    },
+    # State of Florida (Constitutional & Statutory Absence of Individual Income Tax)
+    {
+        "id": "fl-const-7-5",
+        "jurisdiction": "FL",
+        "corpus": "FLCONST",
+        "citation": "Fla. Const. Art. VII § 5",
+        "section": "Art. VII Sec. 5",
+        "title": "Constitutional Prohibition of Personal Income Tax",
+        "text_es": (
+            "Prohíbe constitucionalmente cualquier impuesto sobre el ingreso de personas "
+            "naturales residentes o ciudadanas de Florida, garantizando la ausencia de "
+            "impuesto estatal sobre ingresos individuales."
+        ),
+        "text_en": (
+            "Prohibits any tax upon the income of natural persons who are residents or citizens "
+            "of Florida, guaranteeing the absence of state individual income taxation."
+        ),
+        "effective_year": 1968,
+        "source_url": "https://www.flsenate.gov/",
+        "cross_references": ["Fla. Stat. § 222.17"],
+    },
+    {
+        "id": "fl-stat-222-17",
+        "jurisdiction": "FL",
+        "corpus": "FLSTAT",
+        "citation": "Fla. Stat. § 222.17",
+        "section": "222.17",
+        "title": "Manifesting and Evidencing Domicile in Florida",
+        "text_es": (
+            "Autoriza a toda persona que haya establecido domicilio en Florida a manifestarlo "
+            "formalmente mediante declaración jurada radicada ante el secretario del tribunal de "
+            "circuito del condado correspondiente."
+        ),
+        "text_en": (
+            "Authorizes any person who has established a domicile in Florida to manifest that "
+            "domicile by filing a sworn, notarized statement of domicile with the clerk of the "
+            "circuit court in the county of residence."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.flsenate.gov/",
+        "cross_references": ["Fla. Const. Art. VII § 5", "Fla. Stat. § 196.031"],
+    },
+    {
+        "id": "fl-stat-196-031",
+        "jurisdiction": "FL",
+        "corpus": "FLSTAT",
+        "citation": "Fla. Stat. § 196.031",
+        "section": "196.031",
+        "title": "Exemption of Homesteads",
+        "text_es": (
+            "Concede hasta $50,000 de exención contributiva sobre la propiedad principal a "
+            "residentes permanentes. Solicitar la exención de 'homestead' constituye prueba "
+            "prima facie de domicilio en Florida."
+        ),
+        "text_en": (
+            "Grants up to $50,000 homestead property tax exemption to persons who maintain "
+            "permanent residence. Claiming Florida homestead establishes prima facie proof of "
+            "Florida domicile."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.flsenate.gov/",
+        "cross_references": ["Fla. Stat. § 222.17"],
+    },
+    # State of Texas (Constitutional Prohibition of Individual Income Tax)
+    {
+        "id": "tx-const-8-24a",
+        "jurisdiction": "TX",
+        "corpus": "TXCONST",
+        "citation": "Tex. Const. art. VIII § 24-a",
+        "section": "Art. VIII Sec. 24-a",
+        "title": "Constitutional Prohibition of Personal Income Tax",
+        "text_es": (
+            "Enmienda constitucional aprobada en 2019 que prohíbe a la legislatura de Texas "
+            "imponer impuestos sobre el ingreso neto de individuos o su participación en "
+            "sociedades y asociaciones no incorporadas."
+        ),
+        "text_en": (
+            "Constitutional amendment approved by voters in 2019 prohibiting the Texas legislature "
+            "from imposing a tax on the net incomes of individuals, including an individual's "
+            "share of partnership and unincorporated association income."
+        ),
+        "effective_year": 2019,
+        "source_url": "https://statutes.capitol.texas.gov/",
+        "cross_references": ["Tex. Tax Code § 171.001"],
+    },
+    {
+        "id": "tx-tax-171-001",
+        "jurisdiction": "TX",
+        "corpus": "TXTAX",
+        "citation": "Tex. Tax Code § 171.001",
+        "section": "171.001",
+        "title": "Texas Franchise Tax (Entity Level)",
+        "text_es": (
+            "Impone el impuesto de franquicia únicamente a entidades comerciales organizadas o con "
+            "negocios en Texas sobre su margen bruto, sin gravar a personas naturales."
+        ),
+        "text_en": (
+            "Imposes franchise tax on each taxable entity chartered or organized in Texas or doing "
+            "business in Texas based on gross margin, maintaining zero taxation on individuals."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://statutes.capitol.texas.gov/",
+        "cross_references": ["Tex. Const. art. VIII § 24-a"],
+    },
+    # State of Washington (Capital Gains Excise Tax & No Income Tax)
+    {
+        "id": "wa-rcw-82-87-040",
+        "jurisdiction": "WA",
+        "corpus": "RCW",
+        "citation": "RCW 82.87.040",
+        "section": "82.87.040",
+        "title": "Tax Imposed on Long-Term Capital Gains",
+        "text_es": (
+            "Impuesto especial del 7% sobre ganancias de capital a largo plazo de individuos "
+            "que excedan la deducción estándar anual ($250,000 indexada por inflación)."
+        ),
+        "text_en": (
+            "7% excise tax on individual annual net long-term capital gains allocated to "
+            "Washington in excess of statutory standard deduction ($250,000 indexed for inflation)."
+        ),
+        "effective_year": 2022,
+        "source_url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.040",
+        "cross_references": ["RCW 82.87.020", "Wash. Const. art. VII § 1"],
+    },
+    {
+        "id": "wa-rcw-82-87-020",
+        "jurisdiction": "WA",
+        "corpus": "RCW",
+        "citation": "RCW 82.87.020",
+        "section": "82.87.020",
+        "title": "Capital Gains Tax Definitions and Resident Sourcing",
+        "text_es": (
+            "Define residente de Washington para el impuesto de ganancias de capital como "
+            "persona natural domiciliada en el estado al momento de la venta o intercambio."
+        ),
+        "text_en": (
+            "Defines resident for Washington capital gains excise tax purposes as an individual "
+            "domiciled in Washington at the time the long-term capital asset was sold or exchanged."
+        ),
+        "effective_year": 2022,
+        "source_url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.020",
+        "cross_references": ["RCW 82.87.040"],
+    },
+    {
+        "id": "wa-const-7-1",
+        "jurisdiction": "WA",
+        "corpus": "WACONST",
+        "citation": "Wash. Const. art. VII § 1",
+        "section": "Art. VII Sec. 1",
+        "title": "Constitutional Uniformity and Prohibition of Net Income Tax",
+        "text_es": (
+            "Disposición constitucional de tributación uniforme que prohíbe impuestos "
+            "progresivos sobre el ingreso neto según interpretado en doctrina judicial histórica."
+        ),
+        "text_en": (
+            "Constitutional requirement that all taxes be uniform upon the same class of property, "
+            "historically interpreted to prohibit graduated net income taxes."
+        ),
+        "effective_year": 1889,
+        "source_url": "https://leg.wa.gov/CodeReviser/Pages/WAConstitution.aspx",
+        "cross_references": ["RCW 82.87.040"],
+    },
+    # Commonwealth of Massachusetts (Part B Income Tax & Fair Share Surtax)
+    {
+        "id": "ma-const-amend-44",
+        "jurisdiction": "MA",
+        "corpus": "MACONST",
+        "citation": "Mass. Const. amend. art. XLIV",
+        "section": "Art. XLIV",
+        "title": "Fair Share Amendment (4% Millionaires' Surtax)",
+        "text_es": (
+            "Enmienda constitucional que impone una sobretasa adicional del 4% sobre la porción "
+            "del ingreso imponible anual que exceda $1,000,000 (indexado por inflación)."
+        ),
+        "text_en": (
+            "Constitutional amendment imposing an additional 4% surtax on the portion of annual "
+            "taxable income exceeding $1,000,000, creating a top rate of 9.0%."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://malegislature.gov/Laws/Constitution",
+        "cross_references": ["M.G.L. c. 62 § 4"],
+    },
+    {
+        "id": "ma-gl-62-4",
+        "jurisdiction": "MA",
+        "corpus": "MGL",
+        "citation": "M.G.L. c. 62 § 4",
+        "section": "62-4",
+        "title": "Personal Income Tax Rates",
+        "text_es": (
+            "Tasa básica de impuesto sobre el ingreso personal de Massachusetts del 5.0% sobre "
+            "ingreso imponible de Parte B (salarios, negocios y pensiones)."
+        ),
+        "text_en": (
+            "Standard 5.0% flat income tax rate on Part B taxable personal income (wages, trade, "
+            "business, and interest income)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section4",
+        "cross_references": ["Mass. Const. amend. art. XLIV", "M.G.L. c. 62 § 1"],
+    },
+    {
+        "id": "ma-gl-62-1f",
+        "jurisdiction": "MA",
+        "corpus": "MGL",
+        "citation": "M.G.L. c. 62 § 1(f)",
+        "section": "62-1(f)",
+        "title": "Definition of Resident (Domicile and 183-Day Rule)",
+        "text_es": (
+            "Define residente como persona domiciliada en Massachusetts o no domiciliada que "
+            "mantenga un lugar permanente de morada y pase más de 183 días en el estado."
+        ),
+        "text_en": (
+            "Defines resident as any natural person domiciled in Massachusetts, or non-domiciliary "
+            "maintaining a permanent place of abode and spending more than 183 days in the state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section1",
+        "cross_references": ["M.G.L. c. 62 § 4"],
+    },
+    # State of New Jersey (Gross Income Tax & Convenience of Employer)
+    {
+        "id": "nj-stat-54a-1-2",
+        "jurisdiction": "NJ",
+        "corpus": "NJSA",
+        "citation": "N.J.S.A. 54A:1-2",
+        "section": "54A:1-2",
+        "title": "Definition of Resident Individual",
+        "text_es": (
+            "Define residente de NJ por domicilio (salvo morada permanente exterior con <= 30 "
+            "días en NJ) o residente estatutario con morada permanente en NJ y más de 183 días."
+        ),
+        "text_en": (
+            "Defines resident individual based on domicile or statutory residency (maintaining a "
+            "permanent place of abode in NJ and spending more than 183 days in NJ)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://lis.njleg.state.nj.us/",
+        "cross_references": ["N.J.S.A. 54A:2-1", "N.J.A.C. 18:35-5.2"],
+    },
+    {
+        "id": "nj-stat-54a-2-1",
+        "jurisdiction": "NJ",
+        "corpus": "NJSA",
+        "citation": "N.J.S.A. 54A:2-1",
+        "section": "54A:2-1",
+        "title": "New Jersey Gross Income Tax Rates",
+        "text_es": (
+            "Escalas progresivas de impuesto sobre el ingreso bruto que varían entre 1.4% y una "
+            "tasa marginal máxima de 10.75% para ingresos mayores a $1,000,000."
+        ),
+        "text_en": (
+            "Graduated gross income tax brackets ranging from 1.4% up to top marginal rate of "
+            "10.75% on taxable income exceeding $1,000,000."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://lis.njleg.state.nj.us/",
+        "cross_references": ["N.J.S.A. 54A:1-2"],
+    },
+    {
+        "id": "nj-admin-18-35-5-2",
+        "jurisdiction": "NJ",
+        "corpus": "NJAC",
+        "citation": "N.J.A.C. 18:35-5.2",
+        "section": "18:35-5.2",
+        "title": "Convenience of the Employer Rule (Reciprocal Sourcing)",
+        "text_es": (
+            "Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no "
+            "residentes que teletrabajen si su estado aplica regla similar (ej. Nueva York)."
+        ),
+        "text_en": (
+            "Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing "
+            "telecommuting compensation of nonresidents to NJ if their resident state "
+            "imposes a convenience rule."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://www.nj.gov/treasury/taxation/",
+        "cross_references": ["N.J.S.A. 54A:5-8"],
+    },
+    # State of Illinois (Flat Income Tax & Nonresident Sourcing)
+    {
+        "id": "il-stat-35-ilcs-5-201",
+        "jurisdiction": "IL",
+        "corpus": "ILCS",
+        "citation": "35 ILCS 5/201",
+        "section": "5/201",
+        "title": "Illinois Individual Income Tax Rate",
+        "text_es": (
+            "Impuesto estatal no graduado a tasa fija del 4.95% sobre el ingreso neto de "
+            "personas naturales, mandatado por la Constitución de Illinois."
+        ),
+        "text_en": (
+            "Constitutionally mandated non-graduated flat income tax rate of 4.95% on net income "
+            "of individuals, trusts, and estates."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+        "cross_references": ["35 ILCS 5/1501(a)(20)", "35 ILCS 5/301"],
+    },
+    {
+        "id": "il-stat-35-ilcs-5-1501",
+        "jurisdiction": "IL",
+        "corpus": "ILCS",
+        "citation": "35 ILCS 5/1501(a)(20)",
+        "section": "5/1501(a)(20)",
+        "title": "Definition of Resident",
+        "text_es": (
+            "Define residente como persona en Illinois para fines no transitorios o temporales, "
+            "o domiciliada en Illinois ausente temporalmente."
+        ),
+        "text_en": (
+            "Defines resident as an individual who is in Illinois for other than a temporary "
+            "or transitory purpose during the taxable year or who is domiciled in Illinois."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+        "cross_references": ["35 ILCS 5/201"],
+    },
+    {
+        "id": "il-stat-35-ilcs-5-301",
+        "jurisdiction": "IL",
+        "corpus": "ILCS",
+        "citation": "35 ILCS 5/301",
+        "section": "5/301",
+        "title": "Compensation and Nonresident Income Sourcing",
+        "text_es": (
+            "Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose "
+            "en servicios efectivamente prestados en el estado."
+        ),
+        "text_en": (
+            "Rules for allocating and sourcing compensation and business income of nonresidents "
+            "based on physical days of services performed within Illinois."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+        "cross_references": ["35 ILCS 5/201"],
+    },
 ]
 
 INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
@@ -268,6 +952,32 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
         ),
         "source_url": "https://hacienda.pr.gov/publicaciones/determinacion-administrativa-num-21-04",
     },
+    {
+        "id": "ga-dor-pb-it-2024-01",
+        "category": "policy-bulletin",
+        "doc_number": "DOR PB IT-2024-01",
+        "doc_date": "2024-04-20",
+        "title": "Georgia Flat Tax Rate and Standard Deduction Adjustments under HB 1023",
+        "summary": (
+            "Guidance from the Georgia Department of Revenue explaining the reduction in the "
+            "individual income tax rate to 5.49% for tax year 2024 and elimination of "
+            "graduated brackets."
+        ),
+        "source_url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2024-01/download",
+    },
+    {
+        "id": "ga-dor-pb-it-2022-02",
+        "category": "policy-bulletin",
+        "doc_number": "DOR PB IT-2022-02",
+        "doc_date": "2022-05-18",
+        "title": "Georgia Pass-Through Entity Tax (PTET) Guidance under HB 149",
+        "summary": (
+            "Technical guidelines for eligible S corporations and partnerships electing to pay "
+            "tax at the entity level to mitigate the federal limitation on individual state and "
+            "local tax (SALT) deductions."
+        ),
+        "source_url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download",
+    },
 ]
 
 
@@ -303,12 +1013,13 @@ class TaxDatabase:
                         id VARCHAR PRIMARY KEY,
                         jurisdiction VARCHAR,
                         corpus VARCHAR,
-                        citation VARCHAR UNIQUE,
+                        citation VARCHAR,
                         section VARCHAR,
                         title VARCHAR,
                         text_es VARCHAR,
                         text_en VARCHAR,
                         effective_year INTEGER,
+                        superseded_year INTEGER,
                         source_url VARCHAR,
                         cross_references VARCHAR[]
                     );
@@ -337,8 +1048,8 @@ class TaxDatabase:
                             INSERT INTO statutes (
                                 id, jurisdiction, corpus, citation, section,
                                 title, text_es, text_en, effective_year,
-                                source_url, cross_references
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                                superseded_year, source_url, cross_references
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                             """,
                             [
                                 s["id"],
@@ -350,6 +1061,7 @@ class TaxDatabase:
                                 s["text_es"],
                                 s["text_en"],
                                 s["effective_year"],
+                                s.get("superseded_year"),
                                 s["source_url"],
                                 s["cross_references"],
                             ],
@@ -407,16 +1119,18 @@ class TaxDatabase:
         self,
         citation_or_section: str,
         jurisdiction: str | None = None,
+        tax_year: int | None = None,
         lang: str = "en",
     ) -> dict[str, Any] | None:
-        """Find a statute by exact citation or section code."""
+        """Find a statute by exact citation or section code and optional tax year."""
         query_val = citation_or_section.strip()
         with self._lock:
             conn = self._get_read_conn()
             try:
                 sql = """
                     SELECT id, jurisdiction, corpus, citation, section, title,
-                           text_es, text_en, effective_year, source_url, cross_references
+                           text_es, text_en, effective_year, superseded_year,
+                           source_url, cross_references
                     FROM statutes
                     WHERE (
                         LOWER(citation) = LOWER(?)
@@ -429,12 +1143,40 @@ class TaxDatabase:
                     sql += " AND UPPER(jurisdiction) = UPPER(?)"
                     params.append(jurisdiction.strip())
 
-                sql += " LIMIT 1;"
+                if tax_year is not None:
+                    sql += (
+                        " AND effective_year <= ? "
+                        "AND (superseded_year IS NULL OR ? < superseded_year)"
+                    )
+                    params.extend([tax_year, tax_year])
+
+                sql += " ORDER BY effective_year DESC LIMIT 1;"
                 result = conn.execute(sql, params).fetchone()
                 if not result:
                     return None
 
                 text = result[7] if lang.lower() == "en" else result[6]
+                matched_citation = result[3]
+
+                history_rows = conn.execute(
+                    """
+                    SELECT effective_year, superseded_year, id
+                    FROM statutes
+                    WHERE LOWER(citation) = LOWER(?)
+                    ORDER BY effective_year DESC;
+                    """,
+                    [matched_citation],
+                ).fetchall()
+                available_versions = [
+                    {
+                        "effective_year": h[0],
+                        "superseded_year": h[1],
+                        "is_current": h[1] is None,
+                        "id": h[2],
+                    }
+                    for h in history_rows
+                ]
+
                 return {
                     "id": result[0],
                     "jurisdiction": result[1],
@@ -446,8 +1188,11 @@ class TaxDatabase:
                     "text_es": result[6],
                     "text_en": result[7],
                     "effective_year": result[8],
-                    "source_url": result[9],
-                    "cross_references": result[10] or [],
+                    "superseded_year": result[9],
+                    "is_current": result[9] is None,
+                    "available_versions": available_versions,
+                    "source_url": result[10],
+                    "cross_references": result[11] or [],
                     "language": lang.lower(),
                     "official_language": "es" if result[1] == "PR" else "en",
                 }
@@ -460,6 +1205,7 @@ class TaxDatabase:
         query: str,
         jurisdiction: str | None = None,
         corpus: str | None = None,
+        tax_year: int | None = None,
         lang: str = "en",
         limit: int = 5,
     ) -> list[dict[str, Any]]:
@@ -470,7 +1216,8 @@ class TaxDatabase:
             try:
                 sql = """
                     SELECT id, jurisdiction, corpus, citation, section, title,
-                           text_es, text_en, effective_year, source_url, cross_references
+                           text_es, text_en, effective_year, superseded_year,
+                           source_url, cross_references
                     FROM statutes
                     WHERE (
                         LOWER(title) LIKE ?
@@ -486,8 +1233,14 @@ class TaxDatabase:
                 if corpus:
                     sql += " AND UPPER(corpus) = UPPER(?)"
                     params.append(corpus.strip())
+                if tax_year is not None:
+                    sql += (
+                        " AND effective_year <= ? "
+                        "AND (superseded_year IS NULL OR ? < superseded_year)"
+                    )
+                    params.extend([tax_year, tax_year])
 
-                sql += " ORDER BY id LIMIT ?;"
+                sql += " ORDER BY effective_year DESC, id LIMIT ?;"
                 params.append(limit)
 
                 rows = conn.execute(sql, params).fetchall()
@@ -504,8 +1257,10 @@ class TaxDatabase:
                             "title": r[5],
                             "operative_text": text,
                             "effective_year": r[8],
-                            "source_url": r[9],
-                            "cross_references": r[10] or [],
+                            "superseded_year": r[9],
+                            "is_current": r[9] is None,
+                            "source_url": r[10],
+                            "cross_references": r[11] or [],
                         }
                     )
                 return output
@@ -566,8 +1321,8 @@ class TaxDatabase:
                     INSERT INTO statutes (
                         id, jurisdiction, corpus, citation, section,
                         title, text_es, text_en, effective_year,
-                        source_url, cross_references
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                        superseded_year, source_url, cross_references
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                     """,
                     [
                         statute["id"],
@@ -579,8 +1334,85 @@ class TaxDatabase:
                         statute.get("text_es", ""),
                         statute.get("text_en", ""),
                         statute.get("effective_year", 2026),
+                        statute.get("superseded_year"),
                         statute.get("source_url", ""),
                         statute.get("cross_references", []),
+                    ],
+                )
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
+
+    def upsert_statute(self, statute: dict[str, Any]) -> None:
+        """Insert or update a statute in the database."""
+        with self._lock:
+            conn = self._get_write_conn()
+            try:
+                conn.execute(
+                    """
+                    INSERT INTO statutes (
+                        id, jurisdiction, corpus, citation, section,
+                        title, text_es, text_en, effective_year,
+                        superseded_year, source_url, cross_references
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT (id) DO UPDATE SET
+                        jurisdiction = EXCLUDED.jurisdiction,
+                        corpus = EXCLUDED.corpus,
+                        citation = EXCLUDED.citation,
+                        section = EXCLUDED.section,
+                        title = EXCLUDED.title,
+                        text_es = EXCLUDED.text_es,
+                        text_en = EXCLUDED.text_en,
+                        effective_year = EXCLUDED.effective_year,
+                        superseded_year = EXCLUDED.superseded_year,
+                        source_url = EXCLUDED.source_url,
+                        cross_references = EXCLUDED.cross_references;
+                    """,
+                    [
+                        statute["id"],
+                        statute["jurisdiction"],
+                        statute["corpus"],
+                        statute["citation"],
+                        statute["section"],
+                        statute["title"],
+                        statute.get("text_es", ""),
+                        statute.get("text_en", ""),
+                        statute.get("effective_year", 2026),
+                        statute.get("superseded_year"),
+                        statute.get("source_url", ""),
+                        statute.get("cross_references", []),
+                    ],
+                )
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
+
+    def upsert_publication(self, pub: dict[str, Any]) -> None:
+        """Insert or update an administrative publication in the database."""
+        with self._lock:
+            conn = self._get_write_conn()
+            try:
+                conn.execute(
+                    """
+                    INSERT INTO publications (
+                        id, category, doc_number, doc_date, title, summary, source_url
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT (id) DO UPDATE SET
+                        category = EXCLUDED.category,
+                        doc_number = EXCLUDED.doc_number,
+                        doc_date = EXCLUDED.doc_date,
+                        title = EXCLUDED.title,
+                        summary = EXCLUDED.summary,
+                        source_url = EXCLUDED.source_url;
+                    """,
+                    [
+                        pub["id"],
+                        pub["category"],
+                        pub["doc_number"],
+                        pub["doc_date"],
+                        pub["title"],
+                        pub.get("summary", ""),
+                        pub.get("source_url", ""),
                     ],
                 )
             finally:
@@ -600,6 +1432,19 @@ class TaxDatabase:
                 if self._mem_conn is None:
                     conn.close()
 
+    def delete_publication(self, pub_id: str) -> bool:
+        """Delete a publication by ID."""
+        with self._lock:
+            conn = self._get_write_conn()
+            try:
+                res = conn.execute(
+                    "DELETE FROM publications WHERE id = ? RETURNING id;", [pub_id]
+                ).fetchone()
+                return res is not None
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
 
-# Global default database instance
-db = TaxDatabase(":memory:")
+
+# Global default database instance configured via settings.DB_PATH
+db = TaxDatabase(settings.DB_PATH)

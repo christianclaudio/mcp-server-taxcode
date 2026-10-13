@@ -1,0 +1,460 @@
+# Full Statutory Corpus: US, Puerto Rico & Georgia Tax Intelligence
+
+## 26 U.S.C. § 933: Income from sources within Puerto Rico
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 933`
+
+### English
+In the case of an individual who is a bona fide resident of Puerto Rico during the entire taxable year, gross income does not include income derived from sources within Puerto Rico (except amounts received for services performed as an employee of the United States or any agency thereof); but such individual shall not be allowed as a deduction from his gross income any deductions (other than the deduction under section 151, relating to personal exemptions) or any credit properly allocable to or chargeable against amounts excluded from gross income.
+
+### Español
+En el caso de un individuo que sea residente de buena fe de Puerto Rico durante todo el año tributario, el ingreso bruto no incluirá ingresos derivados de fuentes dentro de Puerto Rico (excepto cantidades recibidas por servicios prestados como empleado de los Estados Unidos o cualquiera de sus agencias); no permitiéndose deducciones atribuibles a dicho ingreso.
+
+## 26 U.S.C. § 937: Residence and source rules involving possessions
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 937`
+
+### English
+Rules for determining bona fide residency in possessions: (a) An individual is a bona fide resident if present in the possession for at least 183 days during the taxable year, does not have a tax home outside the possession, and does not have a closer connection to the United States or a foreign country. (b) Source rules: Principles for determining whether income is derived from sources within a possession or effectively connected with the conduct of a trade or business within a possession.
+
+### Español
+Establece los requisitos estatutarios para determinar residencia de buena fe en posesiones (presencia física de 183 días, centro de actividad tributaria 'tax home' y conexión más cercana), así como las reglas de fuente de ingresos aplicables a posesiones y territorios.
+
+## 26 U.S.C. § 865: Source rules for personal property sales
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part I > § 865`
+
+### English
+Except as otherwise provided in this section, income from the sale of personal property (including corporate stock, debt securities, and marketable assets) by a United States resident shall be sourced in the United States, and by a non-resident shall be sourced outside the United States.
+
+### Español
+Salvo disposición expresa en contrario, el ingreso derivado de la venta de bienes personales (incluyendo acciones y valores negociables) se atribuirá a la residencia del vendedor.
+
+## 26 U.S.C. § 957: Controlled foreign corporations; United States persons
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart F > § 957`
+
+### English
+Defines controlled foreign corporations (CFCs). Under subsection (c), bona fide residents of Puerto Rico are excluded from the definition of a United States person with respect to corporations organized under the laws of the Commonwealth of Puerto Rico, exempting them from Subpart F and GILTI reporting.
+
+### Español
+Define corporaciones foráneas controladas (CFC). Bajo el inciso (c), los residentes de buena fe de Puerto Rico quedan excluidos de la definición de persona de EE.UU. respecto a corporaciones creadas bajo las leyes del Estado Libre Asociado de Puerto Rico, eximiéndoles de Subpart F y GILTI.
+
+## 26 U.S.C. § 1411: Imposition of tax on net investment income
+`Title 26 > Subtitle A > Chapter 2A > § 1411`
+
+### English
+Imposes a 3.8 percent tax on net investment income of individuals, estates, and trusts having modified adjusted gross income exceeding statutory thresholds ($200,000 single, $250,000 married filing jointly). Excluded Puerto Rico-source income under § 933 is not included in MAGI or net investment income.
+
+### Español
+Impone un impuesto de 3.8 por ciento sobre el ingreso neto de inversión para individuos con ingreso bruto ajustado modificado superior a los límites estatutarios ($200,000 solteros, $250,000 casados). El ingreso excluido bajo § 933 no forma parte del ingreso neto de inversión tributable.
+
+## 26 U.S.C. § 6688: Assessable penalties with respect to information required under section 937
+`Title 26 > Subtitle F > Chapter 68 > Subchapter B > § 6688`
+
+### English
+Imposes a statutory penalty of $1,000 for failure to file information required under section 937(c) (IRS Form 8898 for individuals establishing or terminating bona fide residence in a possession) without reasonable cause.
+
+### Español
+Impone una penalidad estatutaria de $1,000 por no presentar la declaración informativa requerida bajo la sección 937(c) (Formulario IRS 8898 al establecer o culminar residencia en una posesión) sin causa justificada.
+
+## 26 CFR § 1.937-1: Bona fide residency in a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-1`
+
+### English
+Treasury Regulation detailing the physical presence test alternatives (183-day rule, 549-day 3-year rule with 60 days minimum per year, 90-day US limit rule), the tax home test, and closer connection evaluation factors for determining bona fide residency under 26 U.S.C. § 937.
+
+### Español
+Reglamentación del Tesoro que detalla las cinco alternativas de presencia física (regla de 183 días, regla de 549 días en 3 años, límite de 90 días en EE.UU.), el requisito de no mantener tax home fuera, y los factores de conexión más cercana para calificar como residente de buena fe.
+
+## 26 CFR § 1.937-2: Income from sources within a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-2`
+
+### English
+Sourcing rules for possessions and 10-year built-in gain lookback rules under Treas. Reg. § 1.937-2(f) for property held prior to establishing bona fide residency. Allows election under § 1.937-2(f)(1)(vi) to allocate gain based on FMV on residency date (marketable securities) or linear time apportionment.
+
+### Español
+Reglas de fuente para posesiones y regla de lookback de 10 años para ganancias acumuladas (built-in gains) sobre bienes adquiridos antes de establecer residencia bajo Treas. Reg. § 1.937-2(f), permitiendo elección para segregar valor acumulado previo y posterior.
+
+## 26 CFR § 1.937-3: Income effectively connected with the conduct of a trade or business in a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3`
+
+### English
+Principles for determining whether income is effectively connected with the active conduct of a trade or business within a possession. Evaluates asset-use test and business-activities test for both possession-source and foreign-source income.
+
+### Español
+Principios para determinar si el ingreso está efectivamente conectado con la conducción activa de una industria o negocio en una posesión, aplicando pruebas de uso de activos y actividades operacionales.
+
+## PR CRI Sec. 1010.01: Definiciones generales / General Definitions
+`Ley 1-2011 > Subtítulo A > Capítulo 1 > Sección 1010.01`
+
+### English
+Defines fundamental statutory terms under the PR Internal Revenue Code (Ley 1-2011), including resident individual (domiciled in PR or present for entire tax year), foreign corporation, taxable year, and person.
+
+### Español
+Define términos fundamentales bajo el Código de Rentas Internas de Puerto Rico (Ley 1-2011), incluyendo individuo residente (domiciliado en PR o presente durante el año contributivo), corporación foránea y año contributivo.
+
+## PR CRI Sec. 1031.01: Ingreso bruto / Gross Income
+`Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.01`
+
+### English
+Statutory definition of gross income including gains, profits, and income derived from salaries, professions, commerce, trades, or sales of property, while excluding statutory exclusions.
+
+### Español
+Incluye ganancias, beneficios e ingresos derivados de sueldos, profesiones, comercio, negocios o ventas de bienes y propiedades, excluyendo aquellas partidas estatutariamente exentas.
+
+## PR CRI Sec. 1031.02: Exclusiones de ingreso bruto / Exclusions from Gross Income
+`Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.02`
+
+### English
+Enumerates statutory exclusions from gross income under Puerto Rico law, including life insurance proceeds, gifts, inheritances, interest on obligations of the Commonwealth of Puerto Rico, and eligible pensions.
+
+### Español
+Enumera exclusiones estatutarias del ingreso bruto bajo la ley de Puerto Rico, incluyendo indemnizaciones de seguro de vida, donaciones, herencias, intereses sobre obligaciones de Puerto Rico y pensiones elegibles.
+
+## PR CRI Sec. 1062.01: Retención en el origen sobre pagos por servicios prestados
+`Ley 1-2011 > Subtítulo A > Capítulo 6 > Sección 1062.01`
+
+### English
+Mandates a 10 percent withholding at source on payments made for services rendered in Puerto Rico, subject to relief vouchers or reduced rate certifications issued by the Department of the Treasury.
+
+### Español
+Dispone la retención obligatoria del 10 por ciento en el origen sobre pagos por servicios prestados dentro de Puerto Rico, sujeta a relevos o certificaciones emitidas por el Departamento de Hacienda.
+
+## Ley 60-2019 Sec. 2021.01: Individuos Residentes Inversionistas - Cualificación
+`Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01`
+
+### English
+Establishes eligibility criteria for Individual Resident Investors under Act 60 Chapter 2 (formerly Act 22), requiring non-residency in Puerto Rico during the 10 preceding years and acquisition of primary residential property.
+
+### Español
+Establece requisitos para acogerse al Capítulo 2 del Código de Incentivos (ex-Ley 22), incluyendo no haber sido residente de Puerto Rico durante los 10 años anteriores y adquirir una residencia principal en la isla.
+
+## Ley 60-2019 Sec. 2022.01: Exención Contributiva sobre Ganancias de Capital e Intereses
+`Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01`
+
+### English
+Provides 100% tax exemption on qualifying capital gains, dividends, and interest recognized after establishing residency for decrees requested prior to 2027 (4% rate for decrees requested on or after Jan 1, 2027).
+
+### Español
+Dispone exención total (100%) sobre ganancias de capital e intereses devengados tras establecer residencia para decretos previos a 2027 (y tasa preferencial del 4% para decretos solicitados desde el 1 de enero de 2027).
+
+## Ley 60-2019 Sec. 2031.01: Exportación de Servicios y Comercio - Cualificación
+`Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2031.01`
+
+### English
+Qualifies businesses engaged in export services conducted from Puerto Rico to foreign or mainland markets with no prior commercial nexus on the island (formerly Act 20).
+
+### Español
+Cualifica negocios dedicados a la exportación de servicios elegibles prestados desde Puerto Rico hacia mercados exteriores sin nexo comercial previo en la isla (antigua Ley 20).
+
+## Ley 60-2019 Sec. 2032.01: Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo
+`Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01`
+
+### English
+Establishes a 4 percent flat corporate income tax rate on net export service development income, 100 percent exemption on distributions and dividends, and 75 percent exemption on municipal and real property taxes.
+
+### Español
+Fija una tasa preferencial del 4 por ciento sobre el ingreso neto de desarrollo para exportación, 100 por ciento de exención sobre distribuciones y dividendos, y 75 por ciento de exención en contribuciones sobre la propiedad.
+
+## Ley 60-2019 Sec. 6070.55: Derechos de presentación e informes anuales
+`Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55`
+
+### English
+Prescribes annual compliance report requirements, filing fees ($5,000 annual filing fee), and mandatory annual charitable donations ($10,000 split across certified PR non-profit organizations) for decree holders.
+
+### Español
+Prescribe los requisitos del informe anual de cumplimiento, cargos de presentación anual ($5,000) y la aportación benéfica compulsoria de $10,000 anuales distribuida entre entidades sin fines de lucro certificadas.
+
+## Act 22-2012 Sec. 3: Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)
+`Ley 22-2012 > Sección 3`
+
+### English
+Predecessor 100% tax exemption on capital gains accrued post-residency under original Act 22-2012 (prior to Act 60 mandatory charitable donations).
+
+### Español
+Exención total del 100% sobre ganancias de capital devengadas luego de establecer residencia bajo la Ley 22 original (sin requisito de donación anual compulsoria).
+
+## O.C.G.A. § 48-7-1: Income Tax Definitions / Residency Rules
+`O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1`
+
+### English
+Defines Georgia resident as any individual who is a legal resident of Georgia on income tax day, who resides within the state for 183 days or more in the aggregate during the taxable year, or who maintains a permanent place of abode within the state.
+
+### Español
+Define residente de Georgia como todo individuo con residencia legal en Georgia el día de pago del impuesto, que resida en el estado al menos 183 días del año contributivo, o que mantenga una vivienda permanente.
+
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates (2024 Flat Rate: 5.49%)
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2024)`
+
+### English
+Imposes a flat individual income tax rate of 5.49% on Georgia taxable net income for tax year 2024 pursuant to HB 1023, eliminating previous graduated brackets.
+
+### Español
+Establece una tasa impositiva fija (flat tax) de 5.49% sobre el ingreso neto tributable de individuos para el año contributivo 2024 bajo HB 1023.
+
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates (2025 Flat Rate: 5.39%)
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2025)`
+
+### English
+Accelerates the reduction of the flat individual income tax rate to 5.39% for tax year 2025 pursuant to HB 1015.
+
+### Español
+Acelera la reducción de la tasa impositiva individual fija al 5.39% para el año contributivo 2025 bajo HB 1015.
+
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates (2026 Target Flat Rate: 4.99%)
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2026)`
+
+### English
+Imposes the target flat individual income tax rate of 4.99% for taxable years beginning on or after January 1, 2026 pursuant to HB 1023.
+
+### Español
+Establece la tasa impositiva fija objetivo de 4.99% sobre el ingreso neto tributable a partir del 1 de enero de 2026 bajo HB 1023.
+
+## O.C.G.A. § 48-7-27: Computation of Georgia Taxable Net Income
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-27`
+
+### English
+Calculates Georgia taxable net income from Federal AGI, allowing standard deductions of $12,000 (single) or $24,000 (married filing jointly), and a retirement income exclusion of up to $65,000 for individuals age 65 or older ($35,000 for ages 62-64).
+
+### Español
+Dispone el cálculo del ingreso neto gravable a partir del AGI federal, deducción estándar de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 en ingresos de jubilación para mayores de 65 años.
+
+## O.C.G.A. § 48-7-30: Taxation of Nonresidents
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-30`
+
+### English
+Taxes nonresidents on gross income derived from Georgia sources, including compensation for services performed within Georgia, property located in Georgia, and business conducted in the state.
+
+### Español
+Grava a personas no residentes sobre su ingreso bruto derivado de fuentes de Georgia, incluyendo compensación por servicios realizados en Georgia y actividades comerciales locales.
+
+## Ga. Comp. R. & Regs. r. 560-7-3-.01: Residence and Domicile
+`Ga. Comp. R. & Regs. > Chapter 560-7 > Subject 560-7-3 > Rule 560-7-3-.01`
+
+### English
+Georgia Department of Revenue rule governing residence and legal domicile. Domicile in Georgia is presumed to continue until the taxpayer establishes abandonment and acquisition of a permanent domicile elsewhere.
+
+### Español
+Reglamento del Departamento de Ingresos de Georgia sobre domicilio y residencia. El domicilio en Georgia se presume continuo a menos que el contribuyente demuestre abandono definitivo y adquisición de nuevo domicilio.
+
+## Cal. Rev. & Tax Code § 17014: Definition of Resident (Non-Temporary Purpose Test)
+`Cal. Rev. & Tax Code > Part 10 > Chapter 1 > § 17014`
+
+### English
+Defines resident as every individual who is in California for other than a temporary or transitory purpose, and every individual domiciled in California who is outside the state for a temporary or transitory purpose. Presumption under § 17016 at 9 months.
+
+### Español
+Define residente como todo individuo que permanezca en California para fines que no sean temporales o transitorios, y todo domiciliado que esté fuera del estado de forma temporal. Aplica el criterio de conexión más cercana.
+
+## Cal. Rev. & Tax Code § 17041: Individual Income Tax Rates and Brackets
+`Cal. Rev. & Tax Code > Part 10 > Chapter 2 > § 17041`
+
+### English
+Imposes graduated income tax rates on California taxable income ranging from 1% to 12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income exceeding $1,000,000, creating a top marginal individual rate of 13.3%.
+
+### Español
+Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M (Proposición 63), para una tasa marginal máxima de 13.3%.
+
+## Cal. Rev. & Tax Code § 17951: Gross Income of Nonresidents and Sourcing
+`Cal. Rev. & Tax Code > Part 10 > Chapter 9 > § 17951`
+
+### English
+In the case of nonresidents, gross income includes only gross income from sources within California, including income from a business, trade, or profession conducted in the state, and compensation for personal services performed in California.
+
+### Español
+Para no residentes, el ingreso bruto comprende únicamente ingresos derivados de fuentes en California, incluyendo negocios, profesiones y servicios personales realizados dentro del estado.
+
+## 18 CCR § 17014: FTB Residence and Domicile Guidelines
+`18 CCR > Division 3 > Chapter 2.5 > Subchapter 1 > § 17014`
+
+### English
+FTB regulation detailing domicile and residence determination. A person may have multiple residences but only one domicile. Applies the closest connection test evaluating real property, family, bank accounts, business affiliations, and licenses.
+
+### Español
+Reglamento de la FTB sobre residencia y domicilio. Aplica el criterio de conexión más cercana evaluando propiedades inmuebles, familia, cuentas bancarias, licencias profesionales y afiliaciones comerciales.
+
+## NY Tax Law § 605(b): Resident Individual and Domicile Defined
+`NY Tax Law > Article 22 > Part I > § 605`
+
+### English
+Defines resident individual as one domiciled in New York unless they maintain no permanent abode in NY and spend under 30 days in state; or one not domiciled who maintains a permanent place of abode and spends over 183 days in NY.
+
+### Español
+Define individuo residente como domiciliado en Nueva York a menos que no mantenga vivienda permanente en NY y pase menos de 30 días en el estado; o no domiciliado que mantenga vivienda permanente y pase más de 183 días en NY (Residente Estatutario).
+
+## NY Tax Law § 601: Personal Income Tax Rates
+`NY Tax Law > Article 22 > Part I > § 601`
+
+### English
+Imposes graduated income tax on New York taxable income with top marginal rates up to 10.9% for high-income earners, plus applicable New York City personal income tax (up to 3.876%) for NYC residents.
+
+### Español
+Grava el ingreso tributable de Nueva York con tasas escalonadas de hasta 10.9% para personas con altos ingresos, más el impuesto municipal de la Ciudad de Nueva York (hasta 3.876%) para residentes de NYC.
+
+## 20 NYCRR § 105.20: Rules for Determining Domicile (5 Primary Factors)
+`20 NYCRR > Chapter II > Subchapter A > Part 105 > § 105.20`
+
+### English
+New York DTF regulation establishing the 5 primary factors for domicile audit evaluation: Home, Active Business Involvement, Time Allocation, Items of Personal Significance ('Near and Dear'), and Family.
+
+### Español
+Reglamento de auditoría de domicilio de NY que establece los 5 factores primarios: Vivienda, Negocio Activo, Tiempo, Objetos de Valor Sentimental ('Near and Dear') y Familia.
+
+## 20 NYCRR § 132.18: Convenience of the Employer Rule
+`20 NYCRR > Chapter II > Subchapter A > Part 132 > § 132.18`
+
+### English
+Provides that compensation of a nonresident employee for services performed out of state is sourced to New York if the services are performed outside NY for the employee's convenience rather than by necessity of the employer.
+
+### Español
+Dispone que la compensación de empleados no residentes por servicios realizados fuera del estado se atribuye a Nueva York si el trabajo remoto se realiza por conveniencia del empleado y no por necesidad del empleador.
+
+## Fla. Const. Art. VII § 5: Constitutional Prohibition of Personal Income Tax
+`Fla. Const. > Article VII > Section 5`
+
+### English
+Prohibits any tax upon the income of natural persons who are residents or citizens of Florida, guaranteeing the absence of state individual income taxation.
+
+### Español
+Prohíbe constitucionalmente cualquier impuesto sobre el ingreso de personas naturales residentes o ciudadanas de Florida, garantizando la ausencia de impuesto estatal sobre ingresos individuales.
+
+## Fla. Stat. § 222.17: Manifesting and Evidencing Domicile in Florida
+`Fla. Stat. > Title XV > Chapter 222 > § 222.17`
+
+### English
+Authorizes any person who has established a domicile in Florida to manifest that domicile by filing a sworn, notarized statement of domicile with the clerk of the circuit court in the county of residence.
+
+### Español
+Autoriza a toda persona que haya establecido domicilio en Florida a manifestarlo formalmente mediante declaración jurada radicada ante el secretario del tribunal de circuito del condado correspondiente.
+
+## Fla. Stat. § 196.031: Exemption of Homesteads
+`Fla. Stat. > Title XIV > Chapter 196 > § 196.031`
+
+### English
+Grants up to $50,000 homestead property tax exemption to persons who maintain permanent residence. Claiming Florida homestead establishes prima facie proof of Florida domicile.
+
+### Español
+Concede hasta $50,000 de exención contributiva sobre la propiedad principal a residentes permanentes. Solicitar la exención de 'homestead' constituye prueba prima facie de domicilio en Florida.
+
+## Tex. Const. art. VIII § 24-a: Constitutional Prohibition of Personal Income Tax
+`Tex. Const. > Article VIII > Section 24-a`
+
+### English
+Constitutional amendment approved by voters in 2019 prohibiting the Texas legislature from imposing a tax on the net incomes of individuals, including an individual's share of partnership and unincorporated association income.
+
+### Español
+Enmienda constitucional aprobada en 2019 que prohíbe a la legislatura de Texas imponer impuestos sobre el ingreso neto de individuos o su participación en sociedades y asociaciones no incorporadas.
+
+## Tex. Tax Code § 171.001: Texas Franchise Tax (Entity Level)
+`Tex. Tax Code > Title 2 > Subtitle F > Chapter 171 > § 171.001`
+
+### English
+Imposes franchise tax on each taxable entity chartered or organized in Texas or doing business in Texas based on gross margin, maintaining zero taxation on individuals.
+
+### Español
+Impone el impuesto de franquicia únicamente a entidades comerciales organizadas o con negocios en Texas sobre su margen bruto, sin gravar a personas naturales.
+
+## RCW 82.87.040: Tax Imposed on Long-Term Capital Gains
+`RCW > Title 82 > Chapter 82.87 > Section 82.87.040`
+
+### English
+7% excise tax on individual annual net long-term capital gains allocated to Washington in excess of statutory standard deduction ($250,000 indexed for inflation).
+
+### Español
+Impuesto especial del 7% sobre ganancias de capital a largo plazo de individuos que excedan la deducción estándar anual ($250,000 indexada por inflación).
+
+## RCW 82.87.020: Capital Gains Tax Definitions and Resident Sourcing
+`RCW > Title 82 > Chapter 82.87 > Section 82.87.020`
+
+### English
+Defines resident for Washington capital gains excise tax purposes as an individual domiciled in Washington at the time the long-term capital asset was sold or exchanged.
+
+### Español
+Define residente de Washington para el impuesto de ganancias de capital como persona natural domiciliada en el estado al momento de la venta o intercambio.
+
+## Wash. Const. art. VII § 1: Constitutional Uniformity and Prohibition of Net Income Tax
+`Wash. Const. > Article VII > Section 1`
+
+### English
+Constitutional requirement that all taxes be uniform upon the same class of property, historically interpreted to prohibit graduated net income taxes.
+
+### Español
+Disposición constitucional de tributación uniforme que prohíbe impuestos progresivos sobre el ingreso neto según interpretado en doctrina judicial histórica.
+
+## Mass. Const. amend. art. XLIV: Fair Share Amendment (4% Millionaires' Surtax)
+`Mass. Const. > Amendments > Article XLIV`
+
+### English
+Constitutional amendment imposing an additional 4% surtax on the portion of annual taxable income exceeding $1,000,000, creating a top rate of 9.0%.
+
+### Español
+Enmienda constitucional que impone una sobretasa adicional del 4% sobre la porción del ingreso imponible anual que exceda $1,000,000 (indexado por inflación).
+
+## M.G.L. c. 62 § 4: Personal Income Tax Rates
+`M.G.L. > Part I > Title IX > Chapter 62 > Section 4`
+
+### English
+Standard 5.0% flat income tax rate on Part B taxable personal income (wages, trade, business, and interest income).
+
+### Español
+Tasa básica de impuesto sobre el ingreso personal de Massachusetts del 5.0% sobre ingreso imponible de Parte B (salarios, negocios y pensiones).
+
+## M.G.L. c. 62 § 1(f): Definition of Resident (Domicile and 183-Day Rule)
+`M.G.L. > Part I > Title IX > Chapter 62 > Section 1(f)`
+
+### English
+Defines resident as any natural person domiciled in Massachusetts, or non-domiciliary maintaining a permanent place of abode and spending more than 183 days in the state.
+
+### Español
+Define residente como persona domiciliada en Massachusetts o no domiciliada que mantenga un lugar permanente de morada y pase más de 183 días en el estado.
+
+## N.J.S.A. 54A:1-2: Definition of Resident Individual
+`N.J.S.A. > Title 54A > Chapter 1 > Section 54A:1-2`
+
+### English
+Defines resident individual based on domicile or statutory residency (maintaining a permanent place of abode in NJ and spending more than 183 days in NJ).
+
+### Español
+Define residente de NJ por domicilio (salvo morada permanente exterior con <= 30 días en NJ) o residente estatutario con morada permanente en NJ y más de 183 días.
+
+## N.J.S.A. 54A:2-1: New Jersey Gross Income Tax Rates
+`N.J.S.A. > Title 54A > Chapter 2 > Section 54A:2-1`
+
+### English
+Graduated gross income tax brackets ranging from 1.4% up to top marginal rate of 10.75% on taxable income exceeding $1,000,000.
+
+### Español
+Escalas progresivas de impuesto sobre el ingreso bruto que varían entre 1.4% y una tasa marginal máxima de 10.75% para ingresos mayores a $1,000,000.
+
+## N.J.A.C. 18:35-5.2: Convenience of the Employer Rule (Reciprocal Sourcing)
+`N.J.A.C. > Title 18 > Chapter 35 > Subchapter 5 > Section 18:35-5.2`
+
+### English
+Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing telecommuting compensation of nonresidents to NJ if their resident state imposes a convenience rule.
+
+### Español
+Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no residentes que teletrabajen si su estado de residencia aplica una regla similar (ej. Nueva York).
+
+## 35 ILCS 5/201: Illinois Individual Income Tax Rate
+`35 ILCS 5/ > Article 2 > Section 201`
+
+### English
+Constitutionally mandated non-graduated flat income tax rate of 4.95% on net income of individuals, trusts, and estates.
+
+### Español
+Impuesto estatal no graduado a tasa fija del 4.95% sobre el ingreso neto de personas naturales, mandatado por la Constitución de Illinois.
+
+## 35 ILCS 5/1501(a)(20): Definition of Resident
+`35 ILCS 5/ > Article 15 > Section 1501(a)(20)`
+
+### English
+Defines resident as an individual who is in Illinois for other than a temporary or transitory purpose during the taxable year or who is domiciled in Illinois.
+
+### Español
+Define residente como persona en Illinois para fines no transitorios o temporales, o domiciliada en Illinois ausente temporalmente.
+
+## 35 ILCS 5/301: Compensation and Nonresident Income Sourcing
+`35 ILCS 5/ > Article 3 > Section 301`
+
+### English
+Rules for allocating and sourcing compensation and business income of nonresidents based on physical days of services performed within Illinois.
+
+### Español
+Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado.
