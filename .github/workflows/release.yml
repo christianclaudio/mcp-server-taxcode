@@ -13,11 +13,11 @@ permissions:
   contents: read
 
 jobs:
-  release:
-    name: Build and GitHub Release
+  build:
+    name: Build distributions
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # create the GitHub Release
+      contents: read
     steps:
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -26,7 +26,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884  # v10.3.0
         with:
           version: "latest"
           enable-cache: false
@@ -58,19 +58,54 @@ jobs:
       - name: Build release notes
         run: python3 scripts/release_notes.py --to "$GITHUB_REF_NAME" > release-notes.md
 
+      - name: Verify Packages
+        run: |
+          uv pip install --system twine==7.0.0 cyclonedx-bom==7.5.0
+          twine check dist/*
+
+      - name: Generate CycloneDX SBOM
+        run: |
+          python -m venv --without-pip "$RUNNER_TEMP/sbom-env"
+          python -m pip --python "$RUNNER_TEMP/sbom-env/bin/python" install dist/*.whl
+          cyclonedx-py environment "$RUNNER_TEMP/sbom-env" -o sbom.cdx.json
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
+        with:
+          name: dist
+          path: |
+            dist/
+            sbom.cdx.json
+            release-notes.md
+          if-no-files-found: error
+
+  publish:
+    name: Publish to PyPI and GitHub Release
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write      # OIDC for PyPI Trusted Publishing; no API token stored
+      contents: write      # create the GitHub Release
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
+        with:
+          name: dist
+
+      - name: Publish to PyPI via OIDC
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33  # v1.14.2
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64  # v3.0.3
         with:
           files: |
             dist/*.whl
             dist/*.tar.gz
+            sbom.cdx.json
           body_path: release-notes.md
 
   docker:
-    name: Build and push container image
-    # Ship no image unless the GitHub Release job succeeded. The template repo
-    # builds the image but never pushes it (it is internal and publishes nothing).
-    needs: [release]
+    name: Publish GHCR image
+    needs: [publish]
     runs-on: ubuntu-latest
     permissions:
       contents: read     # checkout
@@ -78,15 +113,13 @@ jobs:
     outputs:
       digest: ${{ steps.build.outputs.digest }}
       image: ${{ steps.image.outputs.name }}
-    env:
-      PUBLISH: ${{ github.repository != 'christianclaudio/mcp-server-template' }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Log in to GHCR
-        if: env.PUBLISH == 'true'
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
         with:
           registry: ghcr.io
@@ -101,14 +134,12 @@ jobs:
         id: version
         run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      - name: Build and push
+      - name: Build and Push Docker Image
         id: build
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc  # v7.4.0
         with:
           context: .
-          push: ${{ env.PUBLISH == 'true' }}
-          # Provenance comes from the separate attest job; no buildx attestation
-          # manifests (provenance or SBOM), so the pushed tag is a plain image manifest.
+          push: true
           provenance: false
           sbom: false
           tags: |
@@ -118,38 +149,39 @@ jobs:
             UV_DYNAMIC_VERSIONING_BYPASS=${{ steps.version.outputs.version }}
 
   attest:
-    name: Attest container image provenance
-    # Separate job so the OIDC token and attestation rights never share a job
-    # with the GHCR push credentials.
-    needs: [docker]
-    if: github.repository != 'christianclaudio/mcp-server-template'
+    name: Attest build provenance
+    needs: [build, docker]
     runs-on: ubuntu-latest
     permissions:
       contents: read       # required by attest-build-provenance
       id-token: write      # Sigstore signing certificate (OIDC)
       attestations: write  # store the attestation on GitHub
     steps:
-      - name: Attest build provenance
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
+        with:
+          name: dist
+
+      - name: Attest distribution provenance
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8  # v4.2.2
+        with:
+          subject-path: "dist/*"
+
+      - name: Attest container image provenance
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8  # v4.2.2
         with:
           subject-name: ${{ needs.docker.outputs.image }}
           subject-digest: ${{ needs.docker.outputs.digest }}
 
   registry:
-    name: Publish MCP Registry entry
-    # Publish last, after the GitHub Release, GHCR and the attestation, so a
-    # registry failure cannot skip any of them, and a re-run of this job retries
-    # only the registry publish.
-    # Product repos add their PyPI publish job here, so the registry entry is
-    # published only after the PyPI package it lists exists.
-    needs: [docker, attest]
-    if: github.repository != 'christianclaudio/mcp-server-template'
+    name: Publish to MCP Registry
+    needs: [publish, docker, attest]
     runs-on: ubuntu-latest
     permissions:
       contents: read     # checkout (server.json)
-      id-token: write    # MCP Registry login (github-oidc)
+      id-token: write    # mcp-publisher login github-oidc
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
 
@@ -180,8 +212,6 @@ jobs:
           done
 
       - name: Set version in server.json
-        # Stamp the tag version into the server, each versioned package, and the
-        # OCI identifier's tag (OCI packages carry the version in the identifier).
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           jq --arg v "$VERSION" '
