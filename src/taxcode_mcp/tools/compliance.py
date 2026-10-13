@@ -190,6 +190,110 @@ def calculate_built_in_gain_sourcing(
     raise failure from None
 
 
+@compliance_server.tool(
+    name="evaluate_georgia_residency",
+    description=(
+        "Evaluate Georgia statutory residency criteria under O.C.G.A. § 48-7-1(10) "
+        "and Ga. Comp. R. & Regs. r. 560-7-3-.01, and compute state income tax."
+    ),
+    annotations=ANNOTATION_READ_ONLY,
+    tags={"compliance", "georgia", "residency", "read_only"},
+)
+def evaluate_georgia_residency(
+    days_present_ga: int,
+    is_domiciled_in_ga: bool = False,
+    maintains_permanent_abode_ga: bool = False,
+    federal_agi: float = 0.0,
+    filing_status: str = "single",
+    age: int = 40,
+    retirement_income: float = 0.0,
+    tax_year: int = 2024,
+    ga_homestead_exemption_claimed: bool = False,
+    ga_driver_license_active: bool = False,
+    ga_voter_registration_active: bool = False,
+) -> dict[str, Any]:
+    """Evaluate Georgia domicile, 183-day presence, and state income tax liability."""
+    if days_present_ga < 0 or days_present_ga > 366:
+        raise SafetyViolationError("Day count must be between 0 and 366.")
+    if federal_agi < 0:
+        raise SafetyViolationError("Federal AGI cannot be negative.")
+    if retirement_income < 0:
+        raise SafetyViolationError("Retirement income cannot be negative.")
+
+    # 1. Statutory Residency Tests under O.C.G.A. § 48-7-1(10)
+    domicile_test = is_domiciled_in_ga
+    presence_test = days_present_ga >= 183
+    abode_test = maintains_permanent_abode_ga and days_present_ga > 0
+
+    is_georgia_resident = domicile_test or presence_test or abode_test
+
+    # 2. Domicile Abandonment Audit Risk Analysis (Ga. Comp. R. & Regs. r. 560-7-3-.01)
+    audit_flags: list[str] = []
+    if ga_homestead_exemption_claimed:
+        audit_flags.append(
+            "CRITICAL: Active Georgia homestead exemption under O.C.G.A. § 48-5-40 "
+            "legally presumes Georgia domicile."
+        )
+    if ga_driver_license_active:
+        audit_flags.append("Active Georgia driver's license indicates continuing residency ties.")
+    if ga_voter_registration_active:
+        audit_flags.append(
+            "Active Georgia voter registration is probative evidence of continuing domicile."
+        )
+
+    # 3. Tax Calculation under HB 1023 / HB 1015 (O.C.G.A. § 48-7-20 & § 48-7-27)
+    is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
+    standard_deduction = 24000.0 if is_mfj else 12000.0
+
+    # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
+    max_exclusion = 0.0
+    if age >= 65:
+        max_exclusion = 65000.0
+    elif age >= 62:
+        max_exclusion = 35000.0
+    retirement_exclusion_applied = min(retirement_income, max_exclusion)
+
+    # Tax rate selection
+    if tax_year >= 2026:
+        tax_rate = 0.0499
+    elif tax_year == 2025:
+        tax_rate = 0.0539
+    else:
+        tax_rate = 0.0549
+
+    taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
+    estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
+
+    return {
+        "status": "success",
+        "tax_year": tax_year,
+        "is_georgia_resident": is_georgia_resident,
+        "residency_tests": {
+            "domicile_test_satisfied": domicile_test,
+            "183_day_presence_test_satisfied": presence_test,
+            "permanent_abode_test_satisfied": abode_test,
+            "days_present_ga": days_present_ga,
+            "statutory_basis": "O.C.G.A. § 48-7-1(10); Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        },
+        "domicile_audit_risk": {
+            "risk_level": "high" if audit_flags else "standard",
+            "flags": audit_flags,
+            "abandonment_burden_of_proof": (
+                "Under Ga. Comp. R. & Regs. r. 560-7-3-.01, a Georgia domicile continues "
+                "until the taxpayer establishes permanent abandonment and relocation elsewhere."
+            ),
+        },
+        "tax_computation": {
+            "applicable_rate": tax_rate,
+            "standard_deduction": standard_deduction,
+            "retirement_exclusion_applied": retirement_exclusion_applied,
+            "georgia_taxable_net_income": taxable_income,
+            "estimated_georgia_tax": estimated_tax,
+            "statutory_rate_authority": "O.C.G.A. § 48-7-20 (HB 1023 / HB 1015 flat tax)",
+        },
+    }
+
+
 @compliance_server.prompt("cross_border_tax_analysis")
 def cross_border_tax_analysis(taxpayer_scenario: str) -> str:
     """Generate structured analytical prompt for dual-jurisdiction US and PR tax analysis."""

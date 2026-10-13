@@ -59,6 +59,13 @@ def test_lookup_statute_by_citation_and_section() -> None:
     res_miss_filter = test_db.lookup_statute("937", jurisdiction="PR")
     assert res_miss_filter is None
 
+    # Georgia lookup
+    res_ga = test_db.lookup_statute("O.C.G.A. § 48-7-1")
+    assert res_ga is not None
+    assert res_ga["jurisdiction"] == "GA"
+    assert res_ga["corpus"] == "OCGA"
+    assert "Georgia resident" in res_ga["operative_text"]
+
     # Non-existent statute
     assert test_db.lookup_statute("Non-existent 9999") is None
 

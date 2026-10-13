@@ -63,6 +63,27 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert big["us_source_gain"] == 400000.0
     assert big["pr_source_gain"] == 300000.0
 
+    # 7. Evaluate Georgia residency & tax
+    ga_res = server.evaluate_georgia_residency(
+        days_present_ga=200,
+        is_domiciled_in_ga=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        age=66,
+        retirement_income=40000.0,
+        tax_year=2024,
+        ga_homestead_exemption_claimed=True,
+        ga_driver_license_active=True,
+        ga_voter_registration_active=True,
+    )
+    assert ga_res["status"] == "success"
+    assert ga_res["is_georgia_resident"] is True
+    assert ga_res["residency_tests"]["183_day_presence_test_satisfied"] is True
+    assert ga_res["domicile_audit_risk"]["risk_level"] == "high"
+    assert len(ga_res["domicile_audit_risk"]["flags"]) == 3
+    assert ga_res["tax_computation"]["georgia_taxable_net_income"] == 48000.0
+    assert ga_res["tax_computation"]["estimated_georgia_tax"] == 2635.20
+
 
 @pytest.mark.asyncio
 async def test_server_read_only_mode(mock_transport, monkeypatch):
@@ -573,3 +594,59 @@ async def test_compliance_and_statutes_coverage_branches(monkeypatch: pytest.Mon
         assert offline_health["upstream"]["mode"] == "duckdb_offline"
     finally:
         server.client._custom_client = orig_custom
+
+
+def test_evaluate_georgia_residency_cases() -> None:
+    """Test edge cases, exemptions, rate reductions, and safety gates for Georgia tax tool."""
+    # 1. Nonresident
+    non_res = server.evaluate_georgia_residency(
+        days_present_ga=0,
+        is_domiciled_in_ga=False,
+        maintains_permanent_abode_ga=False,
+        federal_agi=50000.0,
+    )
+    assert non_res["is_georgia_resident"] is False
+    assert non_res["tax_computation"]["estimated_georgia_tax"] == 0.0
+
+    # 2. Married filing jointly & age 62-64 retirement exclusion
+    mfj_res = server.evaluate_georgia_residency(
+        days_present_ga=190,
+        is_domiciled_in_ga=False,
+        maintains_permanent_abode_ga=True,
+        federal_agi=100000.0,
+        filing_status="married_joint",
+        age=63,
+        retirement_income=50000.0,
+        tax_year=2025,
+    )
+    assert mfj_res["is_georgia_resident"] is True
+    assert mfj_res["tax_computation"]["standard_deduction"] == 24000.0
+    assert mfj_res["tax_computation"]["retirement_exclusion_applied"] == 35000.0
+    assert mfj_res["tax_computation"]["applicable_rate"] == 0.0539
+    # Taxable: 100k - 24k - 35k = 41k
+    assert mfj_res["tax_computation"]["georgia_taxable_net_income"] == 41000.0
+    assert mfj_res["tax_computation"]["estimated_georgia_tax"] == round(41000.0 * 0.0539, 2)
+
+    # 3. Tax year 2026+ flat rate
+    ga_2026 = server.evaluate_georgia_residency(
+        days_present_ga=100,
+        is_domiciled_in_ga=True,
+        federal_agi=50000.0,
+        filing_status="single",
+        age=40,
+        tax_year=2026,
+    )
+    assert ga_2026["tax_computation"]["applicable_rate"] == 0.0499
+
+    # 4. Safety violations
+    with pytest.raises(SafetyViolationError, match="Day count must be between 0 and 366"):
+        server.evaluate_georgia_residency(days_present_ga=-5)
+
+    with pytest.raises(SafetyViolationError, match="Day count must be between 0 and 366"):
+        server.evaluate_georgia_residency(days_present_ga=400)
+
+    with pytest.raises(SafetyViolationError, match="Federal AGI cannot be negative"):
+        server.evaluate_georgia_residency(days_present_ga=100, federal_agi=-1000.0)
+
+    with pytest.raises(SafetyViolationError, match="Retirement income cannot be negative"):
+        server.evaluate_georgia_residency(days_present_ga=100, retirement_income=-500.0)

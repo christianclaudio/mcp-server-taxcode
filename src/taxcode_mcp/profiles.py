@@ -92,6 +92,7 @@ PROFILES: dict[str, Profile] = {
                     "statutes_lookup_statute",
                     "compliance_evaluate_pr_bona_fide_residency",
                     "compliance_calculate_built_in_gain_sourcing",
+                    "compliance_evaluate_georgia_residency",
                 }
             ),
         ),

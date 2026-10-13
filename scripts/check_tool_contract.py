@@ -13,6 +13,7 @@ EXPECTED_TOOLS = {
     "statutes_list_publications": {"read_only": True, "destructive": False},
     "compliance_evaluate_pr_bona_fide_residency": {"read_only": True, "destructive": False},
     "compliance_calculate_built_in_gain_sourcing": {"read_only": True, "destructive": False},
+    "compliance_evaluate_georgia_residency": {"read_only": True, "destructive": False},
 }
 
 

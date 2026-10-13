@@ -51,11 +51,15 @@ def test_run_ingest_source_filters() -> None:
 
     pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
     assert pr_stats["statutes_considered"] > 0
-    assert pr_stats["publications_considered"] == len(PUBLICATIONS_CATALOG)
+    assert pr_stats["publications_considered"] == 5
 
     cfr_stats = run_ingest(db_path=":memory:", sources="cfr", dry_run=True)
     assert cfr_stats["statutes_considered"] > 0
     assert cfr_stats["publications_considered"] == 0
+
+    ga_stats = run_ingest(db_path=":memory:", sources="ga", dry_run=True)
+    assert ga_stats["statutes_considered"] > 0
+    assert ga_stats["publications_considered"] == 2
 
     pub_stats = run_ingest(db_path=":memory:", sources="publications", dry_run=True)
     assert pub_stats["statutes_considered"] == 0
@@ -83,10 +87,12 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert llms_full_txt.exists()
     assert "TaxCode MCP Intelligence Corpus" in llms_txt.read_text(encoding="utf-8")
     assert "26 U.S.C. § 933" in llms_full_txt.read_text(encoding="utf-8")
+    assert "O.C.G.A. § 48-7-1" in llms_full_txt.read_text(encoding="utf-8")
 
     # Verify markdown subdirectories
     assert (docs_out / "us" / "irc_933.md").exists()
     assert (docs_out / "pr" / "ley60_2021_01.md").exists()
+    assert (docs_out / "ga" / "ocga_48_7_1.md").exists()
 
 
 def test_check_upstream_endpoints() -> None:
@@ -99,7 +105,9 @@ def test_check_upstream_endpoints() -> None:
     with patch("urllib.request.urlopen", return_value=mock_resp):
         res = check_upstream_endpoints()
         assert "OLRC_USLM" in res
+        assert "Georgia_DOR" in res
         assert res["OLRC_USLM"]["status"] == "reachable"
+        assert res["Georgia_DOR"]["status"] == "reachable"
 
     with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("Connection refused")):
         res_err = check_upstream_endpoints()

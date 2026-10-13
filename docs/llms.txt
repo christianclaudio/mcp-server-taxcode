@@ -1,7 +1,7 @@
 # TaxCode MCP Intelligence Corpus
 
-> Authoritative statutory and regulatory references for United States Federal Tax Law
-> and Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011).
+> Authoritative statutory and regulatory references for United States Federal Tax Law,
+> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and Georgia State Tax Law (O.C.G.A. Title 48).
 
 ## Statutory Catalog
 
@@ -23,11 +23,18 @@
 - [Ley 60-2019 Sec. 2031.01 — Exportación de Servicios y Comercio - Cualificación](./pr/ley60_2031_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2031.01
 - [Ley 60-2019 Sec. 2032.01 — Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo](./pr/ley60_2032_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01
 - [Ley 60-2019 Sec. 6070.55 — Derechos de presentación e informes anuales](./pr/ley60_6070_55.md): Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55
+- [O.C.G.A. § 48-7-1 — Income Tax Definitions / Residency Rules](./ga/ocga_48_7_1.md): O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1
+- [O.C.G.A. § 48-7-20 — Individual Income Tax Rates](./ga/ocga_48_7_20.md): O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20
+- [O.C.G.A. § 48-7-27 — Computation of Georgia Taxable Net Income](./ga/ocga_48_7_27.md): O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-27
+- [O.C.G.A. § 48-7-30 — Taxation of Nonresidents](./ga/ocga_48_7_30.md): O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-30
+- [Ga. Comp. R. & Regs. r. 560-7-3-.01 — Residence and Domicile](./ga/gareg_560_7_3__01.md): Ga. Comp. R. & Regs. > Chapter 560-7 > Subject 560-7-3 > Rule 560-7-3-.01
 
-## Administrative Publications (Hacienda SURI)
+## Administrative Publications (Hacienda SURI & Georgia DOR)
 
 - **CC RI 26-13** (2026-06-30) — Radicación electrónica obligatoria de planillas de individuos: Instrucciones y requisitos técnicos para la radicación compulsoria a través de SURI de las planillas de contribución sobre ingresos de individuos para el año contributivo 2026.
 - **DA 23-04** (2023-08-15) — Tratamiento contributivo de transferencias de propiedad bajo Ley 60: Determinación administrativa sobre exenciones contributivas en la enajenación de activos de capital por parte de inversionistas residentes con decreto bajo Ley 60.
 - **DA 21-04** (2021-04-12) — Procedimiento de cumplimiento anual para decretos de individuos: Directrices para la presentación de informes anuales de cumplimiento y comprobantes de donaciones benéficas requeridas por el Código de Incentivos de Puerto Rico.
 - **BI 26-02** (2026-01-20) — Ajustes por inflación para el año contributivo 2026: Parámetros de ajuste por costo de vida, escalas de deducción y exenciones personales aplicables a la determinación de la obligación tributaria en Puerto Rico.
 - **CC RI 25-12** (2025-11-10) — Guía sobre retención en el origen para corporaciones foráneas: Procedimientos de retención y remisión del impuesto sobre pagos efectuados a corporaciones foráneas no dedicadas a industria o negocio en Puerto Rico.
+- **DOR PB IT-2024-01** (2024-04-20) — Georgia Flat Tax Rate and Standard Deduction Adjustments under HB 1023: Guidance from the Georgia Department of Revenue explaining the reduction in the individual income tax rate to 5.49% for tax year 2024 and elimination of graduated brackets.
+- **DOR PB IT-2022-02** (2022-05-18) — Georgia Pass-Through Entity Tax (PTET) Guidance under HB 149: Technical guidelines for eligible S corporations and partnerships electing to pay tax at the entity level to mitigate the federal limitation on individual state and local tax (SALT) deductions.

@@ -6,6 +6,7 @@ from taxcode_mcp.tools.compliance import (
     calculate_built_in_gain_sourcing,
     compliance_server,
     cross_border_tax_analysis,
+    evaluate_georgia_residency,
     evaluate_pr_bona_fide_residency,
 )
 from taxcode_mcp.tools.statutes import (
@@ -25,6 +26,7 @@ __all__ = [
     "calculate_built_in_gain_sourcing",
     "compliance_server",
     "cross_border_tax_analysis",
+    "evaluate_georgia_residency",
     "evaluate_pr_bona_fide_residency",
     "get_capabilities",
     "get_health_status",

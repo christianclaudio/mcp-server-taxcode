@@ -231,6 +231,114 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "source_url": "https://bvirtualogp.pr.gov/",
         "cross_references": ["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
     },
+    {
+        "id": "ga-ocga-48-7-1",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-1",
+        "section": "48-7-1",
+        "title": "Income Tax Definitions / Residency Rules",
+        "text_es": (
+            "Define residente de Georgia como todo individuo con residencia legal en "
+            "Georgia el día de pago del impuesto, que resida en el estado al menos "
+            "183 días del año contributivo, o que mantenga una vivienda permanente en Georgia."
+        ),
+        "text_en": (
+            "Defines Georgia resident as any individual who is a legal resident of Georgia on "
+            "income tax day, who resides within the state for 183 days or more in the aggregate "
+            "during the taxable year, or who maintains a permanent place of abode within the state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/",
+        "cross_references": [
+            "O.C.G.A. § 48-7-20",
+            "O.C.G.A. § 48-7-30",
+            "Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        ],
+    },
+    {
+        "id": "ga-ocga-48-7-20",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-20",
+        "section": "48-7-20",
+        "title": "Individual Income Tax Rates",
+        "text_es": (
+            "Establece una tasa impositiva fija (flat tax) sobre el ingreso neto tributable "
+            "de individuos (5.49% para 2024, 5.39% para 2025, con reducciones graduales "
+            "hacia 4.99% bajo HB 1023)."
+        ),
+        "text_en": (
+            "Imposes a flat income tax rate on Georgia taxable net income of individuals "
+            "(5.49% for 2024, 5.39% for 2025, transitioning towards 4.99% under HB 1023 / HB 1015)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+    },
+    {
+        "id": "ga-ocga-48-7-27",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-27",
+        "section": "48-7-27",
+        "title": "Computation of Georgia Taxable Net Income",
+        "text_es": (
+            "Dispone el cálculo del ingreso neto gravable a partir del AGI federal, deducción "
+            "estándar de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 "
+            "en ingresos de jubilación para mayores de 65 años."
+        ),
+        "text_en": (
+            "Calculates Georgia taxable net income from Federal AGI, allowing standard "
+            "deductions of $12,000 (single) or $24,000 (married filing jointly), and a "
+            "retirement income exclusion of up to $65,000 for age 65+ ($35,000 for ages 62-64)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-20", "26 U.S.C. § 62"],
+    },
+    {
+        "id": "ga-ocga-48-7-30",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-30",
+        "section": "48-7-30",
+        "title": "Taxation of Nonresidents",
+        "text_es": (
+            "Grava a personas no residentes sobre su ingreso bruto derivado de fuentes de "
+            "Georgia, incluyendo compensación por servicios realizados en Georgia y "
+            "actividades comerciales locales."
+        ),
+        "text_en": (
+            "Taxes nonresidents on gross income derived from Georgia sources, including "
+            "compensation for services performed within Georgia, property located in Georgia, "
+            "and business conducted in the state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://dor.georgia.gov/",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-20"],
+    },
+    {
+        "id": "ga-reg-560-7-3-01",
+        "jurisdiction": "GA",
+        "corpus": "GAREG",
+        "citation": "Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        "section": "560-7-3-.01",
+        "title": "Residence and Domicile",
+        "text_es": (
+            "Reglamento del Departamento de Ingresos de Georgia sobre domicilio y residencia. "
+            "El domicilio en Georgia se presume continuo a menos que el contribuyente demuestre "
+            "abandono definitivo y adquisición de nuevo domicilio."
+        ),
+        "text_en": (
+            "Georgia Department of Revenue rule governing residence and legal domicile. "
+            "Domicile in Georgia is presumed to continue until the taxpayer establishes "
+            "abandonment and acquisition of a permanent domicile elsewhere."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://rules.sos.ga.gov/gac/560-7-3-.01",
+        "cross_references": ["O.C.G.A. § 48-7-1", "26 U.S.C. § 937"],
+    },
 ]
 
 INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
@@ -269,6 +377,32 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
             "de donaciones benéficas requeridas por el Código de Incentivos de Puerto Rico."
         ),
         "source_url": "https://hacienda.pr.gov/publicaciones/determinacion-administrativa-num-21-04",
+    },
+    {
+        "id": "ga-dor-pb-it-2024-01",
+        "category": "policy-bulletin",
+        "doc_number": "DOR PB IT-2024-01",
+        "doc_date": "2024-04-20",
+        "title": "Georgia Flat Tax Rate and Standard Deduction Adjustments under HB 1023",
+        "summary": (
+            "Guidance from the Georgia Department of Revenue explaining the reduction in the "
+            "individual income tax rate to 5.49% for tax year 2024 and elimination of "
+            "graduated brackets."
+        ),
+        "source_url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2024-01/download",
+    },
+    {
+        "id": "ga-dor-pb-it-2022-02",
+        "category": "policy-bulletin",
+        "doc_number": "DOR PB IT-2022-02",
+        "doc_date": "2022-05-18",
+        "title": "Georgia Pass-Through Entity Tax (PTET) Guidance under HB 149",
+        "summary": (
+            "Technical guidelines for eligible S corporations and partnerships electing to pay "
+            "tax at the entity level to mitigate the federal limitation on individual state and "
+            "local tax (SALT) deductions."
+        ),
+        "source_url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download",
     },
 ]
 

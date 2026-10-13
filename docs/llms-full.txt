@@ -1,4 +1,4 @@
-# Full Statutory Corpus: US & Puerto Rico Tax Intelligence
+# Full Statutory Corpus: US, Puerto Rico & Georgia Tax Intelligence
 
 ## 26 U.S.C. § 933: Income from sources within Puerto Rico
 `Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 933`
@@ -161,3 +161,48 @@ Prescribes annual compliance report requirements, filing fees ($5,000 annual fil
 
 ### Español
 Prescribe los requisitos del informe anual de cumplimiento, cargos de presentación anual ($5,000) y la aportación benéfica compulsoria de $10,000 anuales distribuida entre entidades sin fines de lucro certificadas.
+
+## O.C.G.A. § 48-7-1: Income Tax Definitions / Residency Rules
+`O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1`
+
+### English
+Defines Georgia resident as any individual who is a legal resident of Georgia on income tax day, who resides within the state for 183 days or more in the aggregate during the taxable year, or who maintains a permanent place of abode within the state.
+
+### Español
+Define residente de Georgia como todo individuo con residencia legal en Georgia el día de pago del impuesto, que resida en el estado al menos 183 días del año contributivo, o que mantenga una vivienda permanente.
+
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20`
+
+### English
+Imposes a flat income tax rate on Georgia taxable net income of individuals (5.49% for 2024, 5.39% for 2025, transitioning towards 4.99% under HB 1023 / HB 1015).
+
+### Español
+Establece una tasa impositiva fija (flat tax) sobre el ingreso neto tributable de individuos (5.49% para 2024, 5.39% para 2025, con reducciones graduales hacia 4.99% bajo HB 1023).
+
+## O.C.G.A. § 48-7-27: Computation of Georgia Taxable Net Income
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-27`
+
+### English
+Calculates Georgia taxable net income from Federal AGI, allowing standard deductions of $12,000 (single) or $24,000 (married filing jointly), and a retirement income exclusion of up to $65,000 for individuals age 65 or older ($35,000 for ages 62-64).
+
+### Español
+Dispone el cálculo del ingreso neto gravable a partir del AGI federal, deducción estándar de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 en ingresos de jubilación para mayores de 65 años.
+
+## O.C.G.A. § 48-7-30: Taxation of Nonresidents
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-30`
+
+### English
+Taxes nonresidents on gross income derived from Georgia sources, including compensation for services performed within Georgia, property located in Georgia, and business conducted in the state.
+
+### Español
+Grava a personas no residentes sobre su ingreso bruto derivado de fuentes de Georgia, incluyendo compensación por servicios realizados en Georgia y actividades comerciales locales.
+
+## Ga. Comp. R. & Regs. r. 560-7-3-.01: Residence and Domicile
+`Ga. Comp. R. & Regs. > Chapter 560-7 > Subject 560-7-3 > Rule 560-7-3-.01`
+
+### English
+Georgia Department of Revenue rule governing residence and legal domicile. Domicile in Georgia is presumed to continue until the taxpayer establishes abandonment and acquisition of a permanent domicile elsewhere.
+
+### Español
+Reglamento del Departamento de Ingresos de Georgia sobre domicilio y residencia. El domicilio en Georgia se presume continuo a menos que el contribuyente demuestre abandono definitivo y adquisición de nuevo domicilio.

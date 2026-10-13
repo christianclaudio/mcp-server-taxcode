@@ -482,6 +482,113 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         cross_references=["Ley 60-2019 Sec. 2021.01", "Ley 60-2019 Sec. 2022.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55",
     ),
+    # State of Georgia (Title 48 O.C.G.A. & Regulations)
+    StatuteRecord(
+        id="ga-ocga-48-7-1",
+        jurisdiction="GA",
+        corpus="OCGA",
+        citation="O.C.G.A. § 48-7-1",
+        section="48-7-1",
+        title="Income Tax Definitions / Residency Rules",
+        text_en=(
+            "Defines Georgia resident as any individual who is a legal resident of Georgia on income tax day, "
+            "who resides within the state for 183 days or more in the aggregate during the taxable year, "
+            "or who maintains a permanent place of abode within the state."
+        ),
+        text_es=(
+            "Define residente de Georgia como todo individuo con residencia legal en Georgia el día de pago "
+            "del impuesto, que resida en el estado al menos 183 días del año contributivo, o que mantenga una vivienda permanente."
+        ),
+        effective_year=2024,
+        source_url="https://dor.georgia.gov/",
+        cross_references=[
+            "O.C.G.A. § 48-7-20",
+            "O.C.G.A. § 48-7-30",
+            "Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        ],
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1",
+    ),
+    StatuteRecord(
+        id="ga-ocga-48-7-20",
+        jurisdiction="GA",
+        corpus="OCGA",
+        citation="O.C.G.A. § 48-7-20",
+        section="48-7-20",
+        title="Individual Income Tax Rates",
+        text_en=(
+            "Imposes a flat income tax rate on Georgia taxable net income of individuals "
+            "(5.49% for 2024, 5.39% for 2025, transitioning towards 4.99% under HB 1023 / HB 1015)."
+        ),
+        text_es=(
+            "Establece una tasa impositiva fija (flat tax) sobre el ingreso neto tributable de individuos "
+            "(5.49% para 2024, 5.39% para 2025, con reducciones graduales hacia 4.99% bajo HB 1023)."
+        ),
+        effective_year=2024,
+        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20",
+    ),
+    StatuteRecord(
+        id="ga-ocga-48-7-27",
+        jurisdiction="GA",
+        corpus="OCGA",
+        citation="O.C.G.A. § 48-7-27",
+        section="48-7-27",
+        title="Computation of Georgia Taxable Net Income",
+        text_en=(
+            "Calculates Georgia taxable net income from Federal AGI, allowing standard deductions of "
+            "$12,000 (single) or $24,000 (married filing jointly), and a retirement income exclusion "
+            "of up to $65,000 for individuals age 65 or older ($35,000 for ages 62-64)."
+        ),
+        text_es=(
+            "Dispone el cálculo del ingreso neto gravable a partir del AGI federal, deducción estándar "
+            "de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 en ingresos de jubilación para mayores de 65 años."
+        ),
+        effective_year=2024,
+        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        cross_references=["O.C.G.A. § 48-7-20", "26 U.S.C. § 62"],
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-27",
+    ),
+    StatuteRecord(
+        id="ga-ocga-48-7-30",
+        jurisdiction="GA",
+        corpus="OCGA",
+        citation="O.C.G.A. § 48-7-30",
+        section="48-7-30",
+        title="Taxation of Nonresidents",
+        text_en=(
+            "Taxes nonresidents on gross income derived from Georgia sources, including compensation "
+            "for services performed within Georgia, property located in Georgia, and business conducted in the state."
+        ),
+        text_es=(
+            "Grava a personas no residentes sobre su ingreso bruto derivado de fuentes de Georgia, "
+            "incluyendo compensación por servicios realizados en Georgia y actividades comerciales locales."
+        ),
+        effective_year=2024,
+        source_url="https://dor.georgia.gov/",
+        cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-20"],
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-30",
+    ),
+    StatuteRecord(
+        id="ga-reg-560-7-3-01",
+        jurisdiction="GA",
+        corpus="GAREG",
+        citation="Ga. Comp. R. & Regs. r. 560-7-3-.01",
+        section="560-7-3-.01",
+        title="Residence and Domicile",
+        text_en=(
+            "Georgia Department of Revenue rule governing residence and legal domicile. Domicile in Georgia "
+            "is presumed to continue until the taxpayer establishes abandonment and acquisition of a permanent domicile elsewhere."
+        ),
+        text_es=(
+            "Reglamento del Departamento de Ingresos de Georgia sobre domicilio y residencia. El domicilio en "
+            "Georgia se presume continuo a menos que el contribuyente demuestre abandono definitivo y adquisición de nuevo domicilio."
+        ),
+        effective_year=2023,
+        source_url="https://rules.sos.ga.gov/gac/560-7-3-.01",
+        cross_references=["O.C.G.A. § 48-7-1", "26 U.S.C. § 937"],
+        breadcrumbs="Ga. Comp. R. & Regs. > Chapter 560-7 > Subject 560-7-3 > Rule 560-7-3-.01",
+    ),
 ]
 
 PUBLICATIONS_CATALOG: list[PublicationRecord] = [
@@ -545,6 +652,30 @@ PUBLICATIONS_CATALOG: list[PublicationRecord] = [
         ),
         source_url="https://hacienda.pr.gov/publicaciones/carta-circular-de-rentas-internas-num-25-12",
     ),
+    PublicationRecord(
+        id="ga-dor-pb-it-2024-01",
+        category="policy-bulletin",
+        doc_number="DOR PB IT-2024-01",
+        doc_date="2024-04-20",
+        title="Georgia Flat Tax Rate and Standard Deduction Adjustments under HB 1023",
+        summary=(
+            "Guidance from the Georgia Department of Revenue explaining the reduction in the individual income "
+            "tax rate to 5.49% for tax year 2024 and elimination of graduated brackets."
+        ),
+        source_url="https://dor.georgia.gov/document/document/policy-bulletin-it-2024-01/download",
+    ),
+    PublicationRecord(
+        id="ga-dor-pb-it-2022-02",
+        category="policy-bulletin",
+        doc_number="DOR PB IT-2022-02",
+        doc_date="2022-05-18",
+        title="Georgia Pass-Through Entity Tax (PTET) Guidance under HB 149",
+        summary=(
+            "Technical guidelines for eligible S corporations and partnerships electing to pay tax at the entity level "
+            "to mitigate the federal limitation on individual state and local tax (SALT) deductions."
+        ),
+        source_url="https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download",
+    ),
 ]
 
 
@@ -555,6 +686,7 @@ def check_upstream_endpoints() -> dict[str, Any]:
         "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/versions.json",
         "Hacienda_PR": "https://hacienda.pr.gov/",
         "OGP_PR": "https://bvirtualogp.pr.gov/",
+        "Georgia_DOR": "https://dor.georgia.gov/",
     }
     results: dict[str, Any] = {}
     for name, url in endpoints.items():
@@ -577,13 +709,20 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
     output_dir.mkdir(parents=True, exist_ok=True)
     us_dir = output_dir / "us"
     pr_dir = output_dir / "pr"
+    ga_dir = output_dir / "ga"
     us_dir.mkdir(exist_ok=True)
     pr_dir.mkdir(exist_ok=True)
+    ga_dir.mkdir(exist_ok=True)
 
     statute_count = 0
     # Export individual markdown files
     for s in STATUTES_CATALOG:
-        target_dir = pr_dir if s.jurisdiction == "PR" else us_dir
+        if s.jurisdiction == "PR":
+            target_dir = pr_dir
+        elif s.jurisdiction == "GA":
+            target_dir = ga_dir
+        else:
+            target_dir = us_dir
         filename = f"{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}.md"
         content = f"""# {s.citation} — {s.title}
 
@@ -610,21 +749,21 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
     llms_summary = [
         "# TaxCode MCP Intelligence Corpus",
         "",
-        "> Authoritative statutory and regulatory references for United States Federal Tax Law",
-        "> and Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011).",
+        "> Authoritative statutory and regulatory references for United States Federal Tax Law,",
+        "> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and Georgia State Tax Law (O.C.G.A. Title 48).",
         "",
         "## Statutory Catalog",
         "",
     ]
     for s in STATUTES_CATALOG:
         llms_summary.append(
-            f"- [{s.citation} — {s.title}](./{'pr' if s.jurisdiction == 'PR' else 'us'}/{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}.md): {s.breadcrumbs}"
+            f"- [{s.citation} — {s.title}](./{s.jurisdiction.lower()}/{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}.md): {s.breadcrumbs}"
         )
 
     llms_summary.extend(
         [
             "",
-            "## Administrative Publications (Hacienda SURI)",
+            "## Administrative Publications (Hacienda SURI & Georgia DOR)",
             "",
         ]
     )
@@ -635,7 +774,7 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
 
     # Generate llms-full.txt
     llms_full_path = output_dir / "llms-full.txt"
-    llms_full_content = ["# Full Statutory Corpus: US & Puerto Rico Tax Intelligence\n"]
+    llms_full_content = ["# Full Statutory Corpus: US, Puerto Rico & Georgia Tax Intelligence\n"]
     for s in STATUTES_CATALOG:
         llms_full_content.append(
             f"## {s.citation}: {s.title}\n`{s.breadcrumbs}`\n\n### English\n{s.text_en}\n\n### Español\n{s.text_es}\n"
@@ -667,12 +806,19 @@ def run_ingest(
             selected_statutes.append(s)
         elif sources == "pr" and s.jurisdiction == "PR":
             selected_statutes.append(s)
+        elif sources == "ga" and s.jurisdiction == "GA":
+            selected_statutes.append(s)
         elif sources == "cfr" and s.corpus == "CFR":
             selected_statutes.append(s)
 
     selected_publications: list[PublicationRecord] = []
-    if sources in ("all", "pr", "publications"):
-        selected_publications = list(PUBLICATIONS_CATALOG)
+    for pub in PUBLICATIONS_CATALOG:
+        if sources in ("all", "publications"):
+            selected_publications.append(pub)
+        elif sources == "pr" and pub.id.startswith("pr-"):
+            selected_publications.append(pub)
+        elif sources == "ga" and pub.id.startswith("ga-"):
+            selected_publications.append(pub)
 
     stats = {
         "statutes_considered": len(selected_statutes),
@@ -718,7 +864,7 @@ def run_ingest(
 def main(argv: list[str] | None = None) -> int:
     """CLI entrypoint for statutory ingestion pipeline."""
     parser = argparse.ArgumentParser(
-        description="Ingest, parse, and synchronize US & Puerto Rico Tax Codes into DuckDB.",
+        description="Ingest, parse, and synchronize US, Puerto Rico & Georgia Tax Codes into DuckDB.",
     )
     parser.add_argument(
         "--db-path",
@@ -727,7 +873,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--sources",
-        choices=["all", "us", "pr", "cfr", "publications"],
+        choices=["all", "us", "pr", "ga", "cfr", "publications"],
         default="all",
         help="Subsets of statutory sources to process (default: all).",
     )
