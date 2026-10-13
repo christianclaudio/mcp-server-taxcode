@@ -563,3 +563,13 @@ async def test_compliance_and_statutes_coverage_branches(monkeypatch: pytest.Mon
         s_cnt, p_cnt = file_db.get_stats()
         assert s_cnt >= 0
         assert p_cnt >= 0
+
+    # 12. Unconfigured offline health mode
+    orig_custom = server.client._custom_client
+    server.client._custom_client = None
+    try:
+        offline_health = await server.get_health_status()
+        assert offline_health["status"] == "success"
+        assert offline_health["upstream"]["mode"] == "duckdb_offline"
+    finally:
+        server.client._custom_client = orig_custom
