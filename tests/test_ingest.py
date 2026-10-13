@@ -1,0 +1,131 @@
+"""Unit tests for the statutory ingestion and update pipeline script."""
+
+from __future__ import annotations
+
+import urllib.error
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+import pytest
+
+from scripts.ingest_statutes import (
+    PUBLICATIONS_CATALOG,
+    STATUTES_CATALOG,
+    check_upstream_endpoints,
+    main,
+    run_ingest,
+)
+
+
+def test_statute_and_publication_records_serialization() -> None:
+    """Test data records serialization and content hashing."""
+    st = STATUTES_CATALOG[0]
+    st_dict = st.to_dict()
+    assert st_dict["id"] == st.id
+    assert st_dict["citation"] == st.citation
+    h1 = st.content_hash()
+    assert len(h1) == 64
+
+    pub = PUBLICATIONS_CATALOG[0]
+    pub_dict = pub.to_dict()
+    assert pub_dict["id"] == pub.id
+    assert pub_dict["doc_number"] == pub.doc_number
+    h2 = pub.content_hash()
+    assert len(h2) == 64
+
+
+def test_run_ingest_dry_run() -> None:
+    """Dry run validates records without executing database writes."""
+    stats = run_ingest(db_path=":memory:", sources="all", dry_run=True)
+    assert stats["statutes_considered"] == len(STATUTES_CATALOG)
+    assert stats["statutes_upserted"] == 0
+    assert stats["publications_considered"] == len(PUBLICATIONS_CATALOG)
+    assert stats["publications_upserted"] == 0
+
+
+def test_run_ingest_source_filters() -> None:
+    """Filter by specific jurisdiction or corpus subsets."""
+    us_stats = run_ingest(db_path=":memory:", sources="us", dry_run=True)
+    assert us_stats["statutes_considered"] > 0
+    assert us_stats["publications_considered"] == 0
+
+    pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
+    assert pr_stats["statutes_considered"] > 0
+    assert pr_stats["publications_considered"] == len(PUBLICATIONS_CATALOG)
+
+    cfr_stats = run_ingest(db_path=":memory:", sources="cfr", dry_run=True)
+    assert cfr_stats["statutes_considered"] > 0
+    assert cfr_stats["publications_considered"] == 0
+
+    pub_stats = run_ingest(db_path=":memory:", sources="publications", dry_run=True)
+    assert pub_stats["statutes_considered"] == 0
+    assert pub_stats["publications_considered"] == len(PUBLICATIONS_CATALOG)
+
+
+def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
+    """Live run upserts data into DuckDB and exports documentation."""
+    db_file = str(tmp_path / "tax.duckdb")
+    docs_out = tmp_path / "docs"
+
+    stats = run_ingest(
+        db_path=db_file,
+        sources="all",
+        dry_run=False,
+        export_docs=docs_out,
+    )
+    assert stats["statutes_upserted"] == len(STATUTES_CATALOG)
+    assert stats["publications_upserted"] == len(PUBLICATIONS_CATALOG)
+
+    # Verify documentation files
+    llms_txt = docs_out / "llms.txt"
+    llms_full_txt = docs_out / "llms-full.txt"
+    assert llms_txt.exists()
+    assert llms_full_txt.exists()
+    assert "TaxCode MCP Intelligence Corpus" in llms_txt.read_text(encoding="utf-8")
+    assert "26 U.S.C. § 933" in llms_full_txt.read_text(encoding="utf-8")
+
+    # Verify markdown subdirectories
+    assert (docs_out / "us" / "irc_933.md").exists()
+    assert (docs_out / "pr" / "ley60_2021_01.md").exists()
+
+
+def test_check_upstream_endpoints() -> None:
+    """Test upstream endpoint health check with mocked responses."""
+    mock_resp = MagicMock()
+    mock_resp.getcode.return_value = 200
+    mock_resp.__enter__.return_value = mock_resp
+    mock_resp.__exit__.return_value = None
+
+    with patch("urllib.request.urlopen", return_value=mock_resp):
+        res = check_upstream_endpoints()
+        assert "OLRC_USLM" in res
+        assert res["OLRC_USLM"]["status"] == "reachable"
+
+    with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("Connection refused")):
+        res_err = check_upstream_endpoints()
+        assert "OLRC_USLM" in res_err
+        assert res_err["OLRC_USLM"]["status"] == "unreachable_or_blocked"
+
+
+def test_main_cli_invocations(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Test CLI commands execution via main()."""
+    # Dry run
+    code_dry = main(["--dry-run", "--sources", "us"])
+    assert code_dry == 0
+
+    # Check upstream
+    with patch(
+        "scripts.ingest_statutes.check_upstream_endpoints",
+        return_value={"test": {"status": "reachable"}},
+    ):
+        code_check = main(["--check-upstream"])
+        assert code_check == 0
+        captured = capsys.readouterr()
+        assert "test" in captured.out
+
+    # Full execution with docs
+    db_file = str(tmp_path / "cli_tax.duckdb")
+    docs_dir = str(tmp_path / "cli_docs")
+    code_full = main(["--db-path", db_file, "--export-docs", docs_dir])
+    assert code_full == 0
+    assert (tmp_path / "cli_docs" / "llms.txt").exists()

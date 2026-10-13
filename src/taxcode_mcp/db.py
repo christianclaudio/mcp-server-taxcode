@@ -8,6 +8,8 @@ from typing import Any
 
 import duckdb
 
+from taxcode_mcp.config import settings
+
 logger = logging.getLogger(__name__)
 
 # Canonical initial seed data for US Federal and Puerto Rico tax provisions
@@ -587,6 +589,80 @@ class TaxDatabase:
                 if self._mem_conn is None:
                     conn.close()
 
+    def upsert_statute(self, statute: dict[str, Any]) -> None:
+        """Insert or update a statute in the database."""
+        with self._lock:
+            conn = self._get_write_conn()
+            try:
+                conn.execute(
+                    """
+                    INSERT INTO statutes (
+                        id, jurisdiction, corpus, citation, section,
+                        title, text_es, text_en, effective_year,
+                        source_url, cross_references
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT (id) DO UPDATE SET
+                        jurisdiction = EXCLUDED.jurisdiction,
+                        corpus = EXCLUDED.corpus,
+                        citation = EXCLUDED.citation,
+                        section = EXCLUDED.section,
+                        title = EXCLUDED.title,
+                        text_es = EXCLUDED.text_es,
+                        text_en = EXCLUDED.text_en,
+                        effective_year = EXCLUDED.effective_year,
+                        source_url = EXCLUDED.source_url,
+                        cross_references = EXCLUDED.cross_references;
+                    """,
+                    [
+                        statute["id"],
+                        statute["jurisdiction"],
+                        statute["corpus"],
+                        statute["citation"],
+                        statute["section"],
+                        statute["title"],
+                        statute.get("text_es", ""),
+                        statute.get("text_en", ""),
+                        statute.get("effective_year", 2026),
+                        statute.get("source_url", ""),
+                        statute.get("cross_references", []),
+                    ],
+                )
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
+
+    def upsert_publication(self, pub: dict[str, Any]) -> None:
+        """Insert or update an administrative publication in the database."""
+        with self._lock:
+            conn = self._get_write_conn()
+            try:
+                conn.execute(
+                    """
+                    INSERT INTO publications (
+                        id, category, doc_number, doc_date, title, summary, source_url
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT (id) DO UPDATE SET
+                        category = EXCLUDED.category,
+                        doc_number = EXCLUDED.doc_number,
+                        doc_date = EXCLUDED.doc_date,
+                        title = EXCLUDED.title,
+                        summary = EXCLUDED.summary,
+                        source_url = EXCLUDED.source_url;
+                    """,
+                    [
+                        pub["id"],
+                        pub["category"],
+                        pub["doc_number"],
+                        pub["doc_date"],
+                        pub["title"],
+                        pub.get("summary", ""),
+                        pub.get("source_url", ""),
+                    ],
+                )
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
+
     def delete_statute(self, statute_id: str) -> bool:
         """Delete a statute by ID."""
         with self._lock:
@@ -600,6 +676,19 @@ class TaxDatabase:
                 if self._mem_conn is None:
                     conn.close()
 
+    def delete_publication(self, pub_id: str) -> bool:
+        """Delete a publication by ID."""
+        with self._lock:
+            conn = self._get_write_conn()
+            try:
+                res = conn.execute(
+                    "DELETE FROM publications WHERE id = ? RETURNING id;", [pub_id]
+                ).fetchone()
+                return res is not None
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
 
-# Global default database instance
-db = TaxDatabase(":memory:")
+
+# Global default database instance configured via settings.DB_PATH
+db = TaxDatabase(settings.DB_PATH)

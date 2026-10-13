@@ -1,0 +1,163 @@
+# Full Statutory Corpus: US & Puerto Rico Tax Intelligence
+
+## 26 U.S.C. § 933: Income from sources within Puerto Rico
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 933`
+
+### English
+In the case of an individual who is a bona fide resident of Puerto Rico during the entire taxable year, gross income does not include income derived from sources within Puerto Rico (except amounts received for services performed as an employee of the United States or any agency thereof); but such individual shall not be allowed as a deduction from his gross income any deductions (other than the deduction under section 151, relating to personal exemptions) or any credit properly allocable to or chargeable against amounts excluded from gross income.
+
+### Español
+En el caso de un individuo que sea residente de buena fe de Puerto Rico durante todo el año tributario, el ingreso bruto no incluirá ingresos derivados de fuentes dentro de Puerto Rico (excepto cantidades recibidas por servicios prestados como empleado de los Estados Unidos o cualquiera de sus agencias); no permitiéndose deducciones atribuibles a dicho ingreso.
+
+## 26 U.S.C. § 937: Residence and source rules involving possessions
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 937`
+
+### English
+Rules for determining bona fide residency in possessions: (a) An individual is a bona fide resident if present in the possession for at least 183 days during the taxable year, does not have a tax home outside the possession, and does not have a closer connection to the United States or a foreign country. (b) Source rules: Principles for determining whether income is derived from sources within a possession or effectively connected with the conduct of a trade or business within a possession.
+
+### Español
+Establece los requisitos estatutarios para determinar residencia de buena fe en posesiones (presencia física de 183 días, centro de actividad tributaria 'tax home' y conexión más cercana), así como las reglas de fuente de ingresos aplicables a posesiones y territorios.
+
+## 26 U.S.C. § 865: Source rules for personal property sales
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part I > § 865`
+
+### English
+Except as otherwise provided in this section, income from the sale of personal property (including corporate stock, debt securities, and marketable assets) by a United States resident shall be sourced in the United States, and by a non-resident shall be sourced outside the United States.
+
+### Español
+Salvo disposición expresa en contrario, el ingreso derivado de la venta de bienes personales (incluyendo acciones y valores negociables) se atribuirá a la residencia del vendedor.
+
+## 26 U.S.C. § 957: Controlled foreign corporations; United States persons
+`Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart F > § 957`
+
+### English
+Defines controlled foreign corporations (CFCs). Under subsection (c), bona fide residents of Puerto Rico are excluded from the definition of a United States person with respect to corporations organized under the laws of the Commonwealth of Puerto Rico, exempting them from Subpart F and GILTI reporting.
+
+### Español
+Define corporaciones foráneas controladas (CFC). Bajo el inciso (c), los residentes de buena fe de Puerto Rico quedan excluidos de la definición de persona de EE.UU. respecto a corporaciones creadas bajo las leyes del Estado Libre Asociado de Puerto Rico, eximiéndoles de Subpart F y GILTI.
+
+## 26 U.S.C. § 1411: Imposition of tax on net investment income
+`Title 26 > Subtitle A > Chapter 2A > § 1411`
+
+### English
+Imposes a 3.8 percent tax on net investment income of individuals, estates, and trusts having modified adjusted gross income exceeding statutory thresholds ($200,000 single, $250,000 married filing jointly). Excluded Puerto Rico-source income under § 933 is not included in MAGI or net investment income.
+
+### Español
+Impone un impuesto de 3.8 por ciento sobre el ingreso neto de inversión para individuos con ingreso bruto ajustado modificado superior a los límites estatutarios ($200,000 solteros, $250,000 casados). El ingreso excluido bajo § 933 no forma parte del ingreso neto de inversión tributable.
+
+## 26 U.S.C. § 6688: Assessable penalties with respect to information required under section 937
+`Title 26 > Subtitle F > Chapter 68 > Subchapter B > § 6688`
+
+### English
+Imposes a statutory penalty of $1,000 for failure to file information required under section 937(c) (IRS Form 8898 for individuals establishing or terminating bona fide residence in a possession) without reasonable cause.
+
+### Español
+Impone una penalidad estatutaria de $1,000 por no presentar la declaración informativa requerida bajo la sección 937(c) (Formulario IRS 8898 al establecer o culminar residencia en una posesión) sin causa justificada.
+
+## 26 CFR § 1.937-1: Bona fide residency in a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-1`
+
+### English
+Treasury Regulation detailing the physical presence test alternatives (183-day rule, 549-day 3-year rule with 60 days minimum per year, 90-day US limit rule), the tax home test, and closer connection evaluation factors for determining bona fide residency under 26 U.S.C. § 937.
+
+### Español
+Reglamentación del Tesoro que detalla las cinco alternativas de presencia física (regla de 183 días, regla de 549 días en 3 años, límite de 90 días en EE.UU.), el requisito de no mantener tax home fuera, y los factores de conexión más cercana para calificar como residente de buena fe.
+
+## 26 CFR § 1.937-2: Income from sources within a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-2`
+
+### English
+Sourcing rules for possessions and 10-year built-in gain lookback rules under Treas. Reg. § 1.937-2(f) for property held prior to establishing bona fide residency. Allows election under § 1.937-2(f)(1)(vi) to allocate gain based on FMV on residency date (marketable securities) or linear time apportionment.
+
+### Español
+Reglas de fuente para posesiones y regla de lookback de 10 años para ganancias acumuladas (built-in gains) sobre bienes adquiridos antes de establecer residencia bajo Treas. Reg. § 1.937-2(f), permitiendo elección para segregar valor acumulado previo y posterior.
+
+## 26 CFR § 1.937-3: Income effectively connected with the conduct of a trade or business in a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3`
+
+### English
+Principles for determining whether income is effectively connected with the active conduct of a trade or business within a possession. Evaluates asset-use test and business-activities test for both possession-source and foreign-source income.
+
+### Español
+Principios para determinar si el ingreso está efectivamente conectado con la conducción activa de una industria o negocio en una posesión, aplicando pruebas de uso de activos y actividades operacionales.
+
+## PR CRI Sec. 1010.01: Definiciones generales / General Definitions
+`Ley 1-2011 > Subtítulo A > Capítulo 1 > Sección 1010.01`
+
+### English
+Defines fundamental statutory terms under the PR Internal Revenue Code (Ley 1-2011), including resident individual (domiciled in PR or present for entire tax year), foreign corporation, taxable year, and person.
+
+### Español
+Define términos fundamentales bajo el Código de Rentas Internas de Puerto Rico (Ley 1-2011), incluyendo individuo residente (domiciliado en PR o presente durante el año contributivo), corporación foránea y año contributivo.
+
+## PR CRI Sec. 1031.01: Ingreso bruto / Gross Income
+`Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.01`
+
+### English
+Statutory definition of gross income including gains, profits, and income derived from salaries, professions, commerce, trades, or sales of property, while excluding statutory exclusions.
+
+### Español
+Incluye ganancias, beneficios e ingresos derivados de sueldos, profesiones, comercio, negocios o ventas de bienes y propiedades, excluyendo aquellas partidas estatutariamente exentas.
+
+## PR CRI Sec. 1031.02: Exclusiones de ingreso bruto / Exclusions from Gross Income
+`Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.02`
+
+### English
+Enumerates statutory exclusions from gross income under Puerto Rico law, including life insurance proceeds, gifts, inheritances, interest on obligations of the Commonwealth of Puerto Rico, and eligible pensions.
+
+### Español
+Enumera exclusiones estatutarias del ingreso bruto bajo la ley de Puerto Rico, incluyendo indemnizaciones de seguro de vida, donaciones, herencias, intereses sobre obligaciones de Puerto Rico y pensiones elegibles.
+
+## PR CRI Sec. 1062.01: Retención en el origen sobre pagos por servicios prestados
+`Ley 1-2011 > Subtítulo A > Capítulo 6 > Sección 1062.01`
+
+### English
+Mandates a 10 percent withholding at source on payments made for services rendered in Puerto Rico, subject to relief vouchers or reduced rate certifications issued by the Department of the Treasury.
+
+### Español
+Dispone la retención obligatoria del 10 por ciento en el origen sobre pagos por servicios prestados dentro de Puerto Rico, sujeta a relevos o certificaciones emitidas por el Departamento de Hacienda.
+
+## Ley 60-2019 Sec. 2021.01: Individuos Residentes Inversionistas - Cualificación
+`Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01`
+
+### English
+Establishes eligibility criteria for Individual Resident Investors under Act 60 Chapter 2 (formerly Act 22), requiring non-residency in Puerto Rico during the 10 preceding years and acquisition of primary residential property.
+
+### Español
+Establece requisitos para acogerse al Capítulo 2 del Código de Incentivos (ex-Ley 22), incluyendo no haber sido residente de Puerto Rico durante los 10 años anteriores y adquirir una residencia principal en la isla.
+
+## Ley 60-2019 Sec. 2022.01: Exención Contributiva sobre Ganancias de Capital e Intereses
+`Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01`
+
+### English
+Provides 100% tax exemption on qualifying capital gains, dividends, and interest recognized after establishing residency for decrees requested prior to 2027 (4% rate for decrees requested on or after Jan 1, 2027).
+
+### Español
+Dispone exención total (100%) sobre ganancias de capital e intereses devengados tras establecer residencia para decretos previos a 2027 (y tasa preferencial del 4% para decretos solicitados desde el 1 de enero de 2027).
+
+## Ley 60-2019 Sec. 2031.01: Exportación de Servicios y Comercio - Cualificación
+`Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2031.01`
+
+### English
+Qualifies businesses engaged in export services conducted from Puerto Rico to foreign or mainland markets with no prior commercial nexus on the island (formerly Act 20).
+
+### Español
+Cualifica negocios dedicados a la exportación de servicios elegibles prestados desde Puerto Rico hacia mercados exteriores sin nexo comercial previo en la isla (antigua Ley 20).
+
+## Ley 60-2019 Sec. 2032.01: Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo
+`Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01`
+
+### English
+Establishes a 4 percent flat corporate income tax rate on net export service development income, 100 percent exemption on distributions and dividends, and 75 percent exemption on municipal and real property taxes.
+
+### Español
+Fija una tasa preferencial del 4 por ciento sobre el ingreso neto de desarrollo para exportación, 100 por ciento de exención sobre distribuciones y dividendos, y 75 por ciento de exención en contribuciones sobre la propiedad.
+
+## Ley 60-2019 Sec. 6070.55: Derechos de presentación e informes anuales
+`Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55`
+
+### English
+Prescribes annual compliance report requirements, filing fees ($5,000 annual filing fee), and mandatory annual charitable donations ($10,000 split across certified PR non-profit organizations) for decree holders.
+
+### Español
+Prescribe los requisitos del informe anual de cumplimiento, cargos de presentación anual ($5,000) y la aportación benéfica compulsoria de $10,000 anuales distribuida entre entidades sin fines de lucro certificadas.

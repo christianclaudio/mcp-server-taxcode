@@ -153,3 +153,72 @@ def test_file_based_duckdb_lifecycle(tmp_path: Path) -> None:
     assert second_db.lookup_statute("26 U.S.C. § 2") is not None
     assert len(second_db.list_publications()) == len(INITIAL_PUBLICATIONS)
     assert second_db.delete_statute("file-1") is True
+
+    # Test publication on file db
+    second_db.upsert_publication(
+        {
+            "id": "file-pub-1",
+            "category": "carta-circular",
+            "doc_number": "CC FILE 1",
+            "doc_date": "2026-02-01",
+            "title": "File Pub",
+        }
+    )
+    assert second_db.delete_publication("file-pub-1") is True
+
+
+def test_upsert_statute_and_publication() -> None:
+    """Upsert inserts new records and updates existing records seamlessly."""
+    test_db = TaxDatabase(":memory:")
+
+    # Upsert a new statute
+    statute_payload: dict[str, Any] = {
+        "id": "test-upsert-1",
+        "jurisdiction": "US",
+        "corpus": "IRC",
+        "citation": "26 U.S.C. § 999",
+        "section": "999",
+        "title": "International boycott factor",
+        "text_en": "Reports regarding participation in international boycotts.",
+        "text_es": "Informes sobre participación en boicots internacionales.",
+        "effective_year": 1976,
+        "source_url": "https://uscode.house.gov/",
+        "cross_references": ["26 U.S.C. § 908"],
+    }
+    test_db.upsert_statute(statute_payload)
+    item = test_db.lookup_statute("26 U.S.C. § 999")
+    assert item is not None
+    assert item["title"] == "International boycott factor"
+
+    # Modify and upsert the same statute ID
+    statute_payload["title"] = "Updated International boycott factor"
+    test_db.upsert_statute(statute_payload)
+    item_updated = test_db.lookup_statute("26 U.S.C. § 999")
+    assert item_updated is not None
+    assert item_updated["title"] == "Updated International boycott factor"
+
+    # Upsert new publication
+    pub_payload: dict[str, Any] = {
+        "id": "pub-test-1",
+        "category": "boletin-informativo",
+        "doc_number": "BI 26-01",
+        "doc_date": "2026-01-15",
+        "title": "Boletín sobre retención en el origen",
+        "summary": "Resumen sobre tasas de retención.",
+        "source_url": "https://hacienda.pr.gov/bi-26-01",
+    }
+    test_db.upsert_publication(pub_payload)
+    pubs = test_db.list_publications(category="boletin-informativo")
+    assert any(p["doc_number"] == "BI 26-01" for p in pubs)
+
+    # Modify and upsert the same publication ID
+    pub_payload["title"] = "Boletín Actualizado"
+    test_db.upsert_publication(pub_payload)
+    pubs_updated = test_db.list_publications(category="boletin-informativo")
+    assert any(
+        p["doc_number"] == "BI 26-01" and p["title"] == "Boletín Actualizado" for p in pubs_updated
+    )
+
+    # Delete publication
+    assert test_db.delete_publication("pub-test-1") is True
+    assert test_db.delete_publication("non-existent-pub") is False

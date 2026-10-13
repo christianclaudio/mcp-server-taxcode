@@ -1,0 +1,33 @@
+# TaxCode MCP Intelligence Corpus
+
+> Authoritative statutory and regulatory references for United States Federal Tax Law
+> and Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011).
+
+## Statutory Catalog
+
+- [26 U.S.C. § 933 — Income from sources within Puerto Rico](./us/irc_933.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 933
+- [26 U.S.C. § 937 — Residence and source rules involving possessions](./us/irc_937.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 937
+- [26 U.S.C. § 865 — Source rules for personal property sales](./us/irc_865.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part I > § 865
+- [26 U.S.C. § 957 — Controlled foreign corporations; United States persons](./us/irc_957.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart F > § 957
+- [26 U.S.C. § 1411 — Imposition of tax on net investment income](./us/irc_1411.md): Title 26 > Subtitle A > Chapter 2A > § 1411
+- [26 U.S.C. § 6688 — Assessable penalties with respect to information required under section 937](./us/irc_6688.md): Title 26 > Subtitle F > Chapter 68 > Subchapter B > § 6688
+- [26 CFR § 1.937-1 — Bona fide residency in a possession](./us/cfr_1_937_1.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-1
+- [26 CFR § 1.937-2 — Income from sources within a possession](./us/cfr_1_937_2.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-2
+- [26 CFR § 1.937-3 — Income effectively connected with the conduct of a trade or business in a possession](./us/cfr_1_937_3.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3
+- [PR CRI Sec. 1010.01 — Definiciones generales / General Definitions](./pr/cri_1010_01.md): Ley 1-2011 > Subtítulo A > Capítulo 1 > Sección 1010.01
+- [PR CRI Sec. 1031.01 — Ingreso bruto / Gross Income](./pr/cri_1031_01.md): Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.01
+- [PR CRI Sec. 1031.02 — Exclusiones de ingreso bruto / Exclusions from Gross Income](./pr/cri_1031_02.md): Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.02
+- [PR CRI Sec. 1062.01 — Retención en el origen sobre pagos por servicios prestados](./pr/cri_1062_01.md): Ley 1-2011 > Subtítulo A > Capítulo 6 > Sección 1062.01
+- [Ley 60-2019 Sec. 2021.01 — Individuos Residentes Inversionistas - Cualificación](./pr/ley60_2021_01.md): Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01
+- [Ley 60-2019 Sec. 2022.01 — Exención Contributiva sobre Ganancias de Capital e Intereses](./pr/ley60_2022_01.md): Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01
+- [Ley 60-2019 Sec. 2031.01 — Exportación de Servicios y Comercio - Cualificación](./pr/ley60_2031_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2031.01
+- [Ley 60-2019 Sec. 2032.01 — Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo](./pr/ley60_2032_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01
+- [Ley 60-2019 Sec. 6070.55 — Derechos de presentación e informes anuales](./pr/ley60_6070_55.md): Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55
+
+## Administrative Publications (Hacienda SURI)
+
+- **CC RI 26-13** (2026-06-30) — Radicación electrónica obligatoria de planillas de individuos: Instrucciones y requisitos técnicos para la radicación compulsoria a través de SURI de las planillas de contribución sobre ingresos de individuos para el año contributivo 2026.
+- **DA 23-04** (2023-08-15) — Tratamiento contributivo de transferencias de propiedad bajo Ley 60: Determinación administrativa sobre exenciones contributivas en la enajenación de activos de capital por parte de inversionistas residentes con decreto bajo Ley 60.
+- **DA 21-04** (2021-04-12) — Procedimiento de cumplimiento anual para decretos de individuos: Directrices para la presentación de informes anuales de cumplimiento y comprobantes de donaciones benéficas requeridas por el Código de Incentivos de Puerto Rico.
+- **BI 26-02** (2026-01-20) — Ajustes por inflación para el año contributivo 2026: Parámetros de ajuste por costo de vida, escalas de deducción y exenciones personales aplicables a la determinación de la obligación tributaria en Puerto Rico.
+- **CC RI 25-12** (2025-11-10) — Guía sobre retención en el origen para corporaciones foráneas: Procedimientos de retención y remisión del impuesto sobre pagos efectuados a corporaciones foráneas no dedicadas a industria o negocio en Puerto Rico.
