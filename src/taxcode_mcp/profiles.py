@@ -98,10 +98,8 @@ PROFILES: dict[str, Profile] = {
     )
 }
 
-# Tools in no job (allowlist) profile. They stay reachable in ``full`` and ``statutes``.
-FULL_ONLY_TOOLS: frozenset[str] = frozenset(
-    {"statutes_create_statute", "statutes_delete_statute", "statutes_bulk_delete_statutes"}
-)
+# Tools in no job (allowlist) profile. In pure read-only research mode, all tools are mapped.
+FULL_ONLY_TOOLS: frozenset[str] = frozenset()
 
 READ_ONLY_ANNOTATIONS = ToolAnnotations(
     read_only_hint=True,

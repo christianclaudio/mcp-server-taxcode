@@ -62,8 +62,8 @@ async def test_domain_mount_and_allowlist_profiles_coexist() -> None:
     researcher_names = await _tool_names(create_server(profile="researcher"))
     assert statutes_names == {n for n in EXPECTED_TOOLS if n.startswith("statutes_")}
     assert "system_get_health_status" in researcher_names
-    assert "statutes_delete_statute" in statutes_names
-    assert "statutes_delete_statute" not in researcher_names
+    assert "statutes_list_publications" in statutes_names
+    assert "compliance_evaluate_pr_bona_fide_residency" not in researcher_names
 
 
 @pytest.mark.asyncio
@@ -91,7 +91,7 @@ async def test_allowlist_hides_tools_outside_the_list() -> None:
     """A tool outside the allowlist cannot be called on that profile."""
     app = create_server(profile="researcher")
     with pytest.raises(Exception, match="Unknown tool"):
-        await app.call_tool("statutes_delete_statute", {"citation": "1", "confirm": True})
+        await app.call_tool("compliance_calculate_built_in_gain_sourcing", {})
 
 
 def test_unknown_allowlist_name_fails_at_build(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -123,15 +123,13 @@ async def test_full_is_exhaustive_and_every_tool_is_placed() -> None:
 
 
 @pytest.mark.asyncio
-async def test_bulk_tool_listed_in_full_but_blocked_without_gate(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    """Bulk destructive tools are listed in full but refused while the bulk gate is off."""
-    monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", False)
+async def test_bulk_tool_listed_in_full_but_blocked_without_gate() -> None:
+    """Verify full catalog is pure read-only and contains no destructive tools."""
     app = create_server(profile="full")
-    assert "statutes_bulk_delete_statutes" in await _tool_names(app)
-    with pytest.raises(ToolError, match="Bulk destructive operations disabled"):
-        await app.call_tool("statutes_bulk_delete_statutes", {"citations": ["1"]})
+    tools = await app.list_tools()
+    for t in tools:
+        assert getattr(t.annotations, "destructive_hint", False) is False
+        assert getattr(t.annotations, "read_only_hint", False) is True
 
 
 def test_main_accepts_allowlist_profile(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -188,8 +186,11 @@ async def test_readonly_profile_gate_enforced_without_env(
     """profile=readonly enforces the gate itself, even with MCP_READONLY unset."""
     monkeypatch.setattr(settings, "MCP_READONLY", False)
     app = create_server(profile="readonly")
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await app.call_tool("mock_write", {})
     res = await app.call_tool("system_get_health_status", {})
     assert not res.is_error
 
@@ -197,27 +198,23 @@ async def test_readonly_profile_gate_enforced_without_env(
 @pytest.mark.asyncio
 async def test_readonly_enforced_under_allowlist_profile(monkeypatch: pytest.MonkeyPatch) -> None:
     """MCP_READONLY on an allowlist profile hides and refuses its write tools."""
-    write_profile = Profile(
-        name="test_writer",
-        job="Test writer profile",
-        tools=frozenset(
-            {
-                "system_get_health_status",
-                "statutes_lookup_statute",
-                "statutes_create_statute",
-            }
-        ),
-    )
-    monkeypatch.setitem(profiles.PROFILES, "test_writer", write_profile)
-    monkeypatch.setattr(settings, "MCP_READONLY", True)
-    app = create_server(profile="test_writer")
-    assert await _tool_names(app) == {
-        "system_get_health_status",
-        "statutes_lookup_statute",
-    }
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
-    res = await app.call_tool("statutes_lookup_statute", {"citation_or_section": "933"})
+    probe = FastMCP("test_writer")
+    gate = ReadOnlyGateMiddleware(enforce=True, catalog=["mock_write", "system_get_health_status"])
+    probe.add_middleware(gate)
+
+    @probe.tool(annotations=ToolAnnotations(read_only_hint=True))
+    def system_get_health_status() -> str:
+        return "healthy"
+
+    @probe.tool(annotations=ToolAnnotations(read_only_hint=False))
+    def mock_write() -> str:
+        return "write"
+
+    probe.add_transform(ReadOnlyToolFilter())
+    assert [t.name for t in await probe.list_tools()] == ["system_get_health_status"]
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await probe.call_tool("mock_write", {})
+    res = await probe.call_tool("system_get_health_status", {})
     assert not res.is_error
 
 
@@ -291,6 +288,9 @@ async def test_full_search_readonly_read_succeeds_write_refused_on_wire(
     """On full + Tool Search + readonly: a READ via call_tool works; a WRITE is isError."""
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="full", enable_tool_search=True)
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
     async with Client(app) as client:
         read = await client.call_tool(
             "call_tool",
@@ -302,12 +302,12 @@ async def test_full_search_readonly_read_succeeds_write_refused_on_wire(
 
         write = await client.call_tool(
             "call_tool",
-            {"name": "statutes_create_statute", "arguments": {"payload": {"citation": "blocked"}}},
+            {"name": "mock_write", "arguments": {"payload": {"citation": "blocked"}}},
             raise_on_error=False,
         )
         assert write.is_error
         assert "read-only mode" in str(write.content)
-        assert "statutes_create_statute" in str(write.content)
+        assert "mock_write" in str(write.content)
 
 
 @pytest.mark.asyncio
@@ -324,10 +324,13 @@ async def test_gate_refuses_on_outer_call_tool_invocation(monkeypatch: pytest.Mo
 
     monkeypatch.setattr(middleware, "_resolve_effective_tool_name", spy)
     app = create_server(profile="full", enable_tool_search=True)
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool("call_tool", {"name": "statutes_create_statute", "arguments": {}})
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await app.call_tool("call_tool", {"name": "mock_write", "arguments": {}})
     # Exactly one gate decision: on the outer proxy call. The inner call never ran.
-    assert seen == [("call_tool", "statutes_create_statute")]
+    assert seen == [("call_tool", "mock_write")]
 
 
 @pytest.mark.asyncio
@@ -344,14 +347,17 @@ async def test_without_unwrap_the_proxy_gate_behaviour_breaks(
 
     monkeypatch.setattr(middleware, "_resolve_effective_tool_name", no_unwrap)
     app = create_server(profile="full", enable_tool_search=True)
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
     with pytest.raises(SafetyViolationError, match="'call_tool' blocked"):
         await app.call_tool(
             "call_tool",
             {"name": "statutes_lookup_statute", "arguments": {"citation_or_section": "933"}},
         )
     with pytest.raises(SafetyViolationError) as exc_info:
-        await app.call_tool("call_tool", {"name": "statutes_create_statute", "arguments": {}})
-    assert "statutes_create_statute" not in str(exc_info.value)
+        await app.call_tool("call_tool", {"name": "mock_write", "arguments": {}})
+    assert "mock_write" not in str(exc_info.value)
 
 
 @pytest.mark.asyncio
@@ -436,6 +442,9 @@ async def test_readonly_hidden_write_refused_and_read_succeeds(
     """A real write hidden by the read-only filter is refused; a real read still works."""
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="full", enable_tool_search=via_proxy)
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
 
     def call(name: str, arguments: dict[str, Any]) -> tuple[str, dict[str, Any]]:
         if via_proxy:
@@ -444,18 +453,18 @@ async def test_readonly_hidden_write_refused_and_read_succeeds(
 
     async with Client(app) as client:
         write = await client.call_tool(
-            *call("statutes_create_statute", {"payload": {"citation": "x"}}), raise_on_error=False
+            *call("mock_write", {"payload": {"citation": "x"}}), raise_on_error=False
         )
         read = await client.call_tool(
             *call("statutes_lookup_statute", {"citation_or_section": "933"}), raise_on_error=False
         )
     assert write.is_error
     assert "read-only mode" in str(write.content)
-    assert "statutes_create_statute" in str(write.content)
+    assert "mock_write" in str(write.content)
     assert not read.is_error
     assert "933" in str(read.content)
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool(*call("statutes_create_statute", {"payload": {"citation": "x"}}))
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await app.call_tool(*call("mock_write", {"payload": {"citation": "x"}}))
 
 
 @pytest.mark.asyncio
@@ -465,15 +474,18 @@ async def test_readonly_outside_allowlist_is_unknown_tool(monkeypatch: pytest.Mo
     test_prof = Profile(
         name="test_mix",
         job="Test mix profile",
-        tools=frozenset({"system_get_health_status", "statutes_create_statute"}),
+        tools=frozenset({"system_get_health_status", "statutes_lookup_statute"}),
     )
     monkeypatch.setitem(profiles.PROFILES, "test_mix", test_prof)
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="test_mix")
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
     with pytest.raises(NotFoundError, match="Unknown tool"):
-        await app.call_tool("statutes_delete_statute", {"citation": "1"})
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
+        await app.call_tool("compliance_calculate_built_in_gain_sourcing", {})
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await app.call_tool("mock_write", {})
 
 
 @pytest.mark.asyncio
@@ -482,11 +494,16 @@ async def test_readonly_switched_on_after_build(monkeypatch: pytest.MonkeyPatch)
     still reach Unknown tool and real writes are still refused."""
     monkeypatch.setattr(settings, "MCP_READONLY", False)
     app = create_server(profile="full")
+
+    @app.tool(annotations=ToolAnnotations(read_only_hint=False))
+    def mock_write() -> str:
+        return "write"
+
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     with pytest.raises(NotFoundError, match="Unknown tool"):
         await app.call_tool("statutes_nope", {})
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool("statutes_create_statute", {"payload": {"citation": "x"}})
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await app.call_tool("mock_write", {})
 
 
 # ---------------------------------------------------------------------------
@@ -496,7 +513,7 @@ async def test_readonly_switched_on_after_build(monkeypatch: pytest.MonkeyPatch)
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("profile", ["full", "researcher", "readonly"])
-@pytest.mark.parametrize("inner", ["statutes_create_statute", "statutes_lookup_statute"])
+@pytest.mark.parametrize("inner", ["mock_write", "statutes_lookup_statute"])
 async def test_readonly_call_tool_without_search_is_unknown_tool(
     monkeypatch: pytest.MonkeyPatch, profile: str, inner: str
 ) -> None:
@@ -522,8 +539,11 @@ async def test_readonly_call_tool_with_search_still_unwraps(
     """With Tool Search on full, call_tool is real: unwrap and judge the proxied tool."""
     monkeypatch.setattr(settings, "MCP_READONLY", True)
     app = create_server(profile="full", enable_tool_search=True)
-    with pytest.raises(SafetyViolationError, match="statutes_create_statute"):
-        await app.call_tool("call_tool", {"name": "statutes_create_statute", "arguments": {}})
+    for m in app.middleware:
+        if isinstance(m, ReadOnlyGateMiddleware):
+            m.catalog = m.catalog | {"mock_write"}
+    with pytest.raises(SafetyViolationError, match="mock_write"):
+        await app.call_tool("call_tool", {"name": "mock_write", "arguments": {}})
     read = await app.call_tool(
         "call_tool",
         {"name": "statutes_lookup_statute", "arguments": {"citation_or_section": "933"}},

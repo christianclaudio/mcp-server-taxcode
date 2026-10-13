@@ -1,237 +1,147 @@
-"""Batch rule: bulk_delete_statutes processes every statute and reports each one's status."""
+"""Batch read rules: parallel and concurrent statutory lookups and search."""
 
 from __future__ import annotations
 
 import asyncio
 import json
-import logging
 from typing import Any
 
 import pytest
 from fastmcp import Client
-from fastmcp.exceptions import ToolError
 
 from taxcode_mcp import server
-from taxcode_mcp.config import settings
-from taxcode_mcp.db import db
-
-_SECRET = "secret-token-abc"
 
 
-def _use_mock_db(monkeypatch: pytest.MonkeyPatch, failing: set[str]) -> list[str]:
-    """Route statute deletion to mock database handler that fails ids in ``failing``."""
-    calls: list[str] = []
-
-    def fake_delete(sid: str) -> bool:
-        calls.append(sid)
-        if sid in failing:
-            raise RuntimeError(f"Bearer {_SECRET} failure for {sid}")
-        return True
-
-    monkeypatch.setattr(db, "delete_statute", fake_delete)
-    monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-    return calls
-
-
-async def _bulk_delete(statute_ids: list[str]) -> Any:
+@pytest.mark.asyncio
+async def test_batch_parallel_statute_lookups() -> None:
+    """Verify concurrent batch lookups across multiple citations execute safely."""
+    citations = [
+        "26 U.S.C. § 933",
+        "13 L.P.R.A. § 30041",
+        "26 U.S.C. § 937",
+        "Act 60-2019",
+    ]
     async with Client(server.create_server()) as mcp_client:
-        return await mcp_client.call_tool(
-            "statutes_bulk_delete_statutes",
-            {"statute_ids": statute_ids, "dry_run": False, "confirm": True},
-            raise_on_error=False,
+        tasks = [
+            mcp_client.call_tool(
+                "statutes_lookup_statute",
+                {"citation_or_section": citation},
+                raise_on_error=False,
+            )
+            for citation in citations
+        ]
+        results = await asyncio.gather(*tasks)
+
+    assert len(results) == len(citations)
+    for res in results:
+        assert not res.is_error
+        data = json.loads(res.content[0].text)
+        assert data["status"] in ("success", "not_found")
+
+
+@pytest.mark.asyncio
+async def test_batch_parallel_search() -> None:
+    """Verify concurrent full-text and concept searches against DuckDB execute safely."""
+    queries = ["residency", "capital gain", "corporation", "source of income"]
+    async with Client(server.create_server()) as mcp_client:
+        tasks = [
+            mcp_client.call_tool(
+                "statutes_search_tax_code",
+                {"query": q, "limit": 3},
+                raise_on_error=False,
+            )
+            for q in queries
+        ]
+        results = await asyncio.gather(*tasks)
+
+    assert len(results) == len(queries)
+    for res in results:
+        assert not res.is_error
+        data = json.loads(res.content[0].text)
+        assert data["status"] == "success"
+        assert "count" in data
+        assert "results" in data
+
+
+@pytest.mark.asyncio
+async def test_batch_lookup_mixed_found_and_not_found() -> None:
+    """Verify batch lookups accurately partition into found statutes and not_found responses."""
+    queries = [
+        "26 U.S.C. § 933",
+        "NONEXISTENT-STATUTE-XYZ-999",
+        "26 U.S.C. § 865",
+        "FAKE-CITATION-000",
+    ]
+    async with Client(server.create_server()) as mcp_client:
+        tasks = [
+            mcp_client.call_tool(
+                "statutes_lookup_statute",
+                {"citation_or_section": q},
+                raise_on_error=False,
+            )
+            for q in queries
+        ]
+        results = await asyncio.gather(*tasks)
+
+    statuses: list[str] = []
+    for res in results:
+        assert not res.is_error
+        data = json.loads(res.content[0].text)
+        statuses.append(data["status"])
+
+    assert statuses == ["success", "not_found", "success", "not_found"]
+
+
+@pytest.mark.asyncio
+async def test_batch_concurrent_compliance_evaluations() -> None:
+    """Verify concurrent compliance residency evaluations return deterministic results."""
+    scenarios: list[dict[str, Any]] = [
+        {"days_present_pr": 185, "days_present_us": 20},
+        {"days_present_pr": 120, "days_present_us": 120},
+        {"days_present_pr": 200, "days_present_us": 10},
+    ]
+    async with Client(server.create_server()) as mcp_client:
+        tasks = [
+            mcp_client.call_tool(
+                "compliance_evaluate_pr_bona_fide_residency",
+                scenario,
+                raise_on_error=False,
+            )
+            for scenario in scenarios
+        ]
+        results = await asyncio.gather(*tasks)
+
+    assert len(results) == len(scenarios)
+    for res in results:
+        assert not res.is_error
+        data = json.loads(res.content[0].text)
+        assert data["status"] == "success"
+        assert "presence_test" in data
+
+
+@pytest.mark.asyncio
+async def test_batch_parallel_cancellation() -> None:
+    """Cancellation of a single batch task propagates cleanly without breaking others."""
+    async with Client(server.create_server()) as mcp_client:
+        t1 = asyncio.create_task(
+            mcp_client.call_tool(
+                "statutes_lookup_statute",
+                {"citation_or_section": "26 U.S.C. § 933"},
+                raise_on_error=False,
+            )
         )
+        t2 = asyncio.create_task(
+            mcp_client.call_tool(
+                "statutes_lookup_statute",
+                {"citation_or_section": "26 U.S.C. § 865"},
+                raise_on_error=False,
+            )
+        )
+        t1.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await t1
 
-
-@pytest.mark.asyncio
-async def test_bulk_delete_all_succeed(monkeypatch: pytest.MonkeyPatch) -> None:
-    calls = _use_mock_db(monkeypatch, failing=set())
-    res = await _bulk_delete(["1", "2"])
-    assert res.is_error is False
-    data = json.loads(res.content[0].text)
-    assert data["status"] == "success"
-    assert data["deleted_count"] == 2
-    assert data["failed_count"] == 0
-    assert [r["status"] for r in data["results"]] == ["deleted", "deleted"]
-    assert data["errors"] == []
-    assert calls == ["1", "2"]
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_partial_success_is_a_normal_result(
-    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
-) -> None:
-    calls = _use_mock_db(monkeypatch, failing={"2"})
-    caplog.set_level(logging.DEBUG)
-    res = await _bulk_delete(["1", "2", "3"])
-    assert res.is_error is False
-    text = res.content[0].text
-    assert _SECRET not in text
-    data = json.loads(text)
-    assert data["status"] == "partial_success"
-    assert data["deleted_count"] == 2
-    assert data["failed_count"] == 1
-    assert [(r["id"], r["status"]) for r in data["results"]] == [("1", "deleted"), ("3", "deleted")]
-    assert [(e["id"], e["status"]) for e in data["errors"]] == [("2", "failed")]
-    assert "Bearer [REDACTED]" in data["errors"][0]["error"]["message"]
-    # Every statute is attempted: the failure on "2" does not stop the batch.
-    assert calls == ["1", "2", "3"]
-    assert _SECRET not in caplog.text
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_partial_redacts_a_raw_item_error(
-    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
-) -> None:
-    """A per-item error that arrives unredacted is redacted by bulk_delete_statutes itself."""
-    raw_token = "sk-live-abc123"
-
-    def fake_delete(sid: str) -> bool:
-        if sid == "2":
-            raise RuntimeError(f"storage rejected Authorization: Bearer {raw_token}")
-        return True
-
-    monkeypatch.setattr(db, "delete_statute", fake_delete)
-    monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-    caplog.set_level(logging.DEBUG)
-    res = await _bulk_delete(["1", "2", "3"])
-    assert res.is_error is False
-    text = res.content[0].text
-    assert raw_token not in text
-    data = json.loads(text)
-    assert data["status"] == "partial_success"
-    assert [(e["id"], e["status"]) for e in data["errors"]] == [("2", "failed")]
-    assert "Bearer [REDACTED]" in data["errors"][0]["error"]["message"]
-    assert raw_token not in caplog.text
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_all_failed_is_redacted_batch_failed(
-    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
-) -> None:
-    calls = _use_mock_db(monkeypatch, failing={"1", "2"})
-    caplog.set_level(logging.DEBUG)
-    res = await _bulk_delete(["1", "2"])
-    assert res.is_error is True
-    text = res.content[0].text
-    assert _SECRET not in text
-    err = json.loads(text)["error"]
-    assert err["type"] == "batch_failed"
-    assert "Failed to delete any statutes out of 2 requested" in err["message"]
-    assert err["failed_count"] == 2
-    assert [(e["id"], e["status"]) for e in err["errors"]] == [("1", "failed"), ("2", "failed")]
-    assert all("Bearer [REDACTED]" in e["error"]["message"] for e in err["errors"])
-    assert calls == ["1", "2"]
-    assert _SECRET not in caplog.text
-
-
-_TOKEN_SECRETS = ("SECRET1", "SECRET2", "SECRET3")
-_TOKEN_ERROR = (
-    "storage failure for statute {id}?token=SECRET3 with api_token=SECRET1 access_token=SECRET2"
-)
-
-
-def _raise_token_errors(monkeypatch: pytest.MonkeyPatch, failing: set[str]) -> None:
-    """Make the ids in ``failing`` raise a raw error carrying query and key=value tokens."""
-
-    def fake_delete(sid: str) -> bool:
-        if sid in failing:
-            raise RuntimeError(_TOKEN_ERROR.format(id=sid))
-        return True
-
-    monkeypatch.setattr(db, "delete_statute", fake_delete)
-    monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_partial_redacts_token_forms(
-    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
-) -> None:
-    """A partial batch redacts api_token=, access_token= and ?token= in each statute's message."""
-    _raise_token_errors(monkeypatch, failing={"2"})
-    caplog.set_level(logging.DEBUG)
-    res = await _bulk_delete(["1", "2"])
-    assert res.is_error is False
-    text = res.content[0].text
-    data = json.loads(text)
-    assert data["status"] == "partial_success"
-    assert [(r["id"], r["status"]) for r in data["results"]] == [("1", "deleted")]
-    assert [(e["id"], e["status"]) for e in data["errors"]] == [("2", "failed")]
-    message = data["errors"][0]["error"]["message"]
-    assert message == (
-        "storage failure for statute 2?token=[REDACTED] "
-        "with api_token=[REDACTED] access_token=[REDACTED]"
-    )
-    assert res.structured_content is not None
-    assert res.structured_content["errors"][0]["error"]["message"] == message
-    for secret in _TOKEN_SECRETS:
-        assert secret not in text
-        assert secret not in caplog.text
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_all_failed_redacts_token_forms(
-    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
-) -> None:
-    """All statutes fail: the batch_failed ToolError text and its audit log line are redacted."""
-    _raise_token_errors(monkeypatch, failing={"1", "2"})
-    caplog.set_level(logging.DEBUG)
-    res = await _bulk_delete(["1", "2"])
-    assert res.is_error is True
-    text = res.content[0].text
-    err = json.loads(text)["error"]
-    assert err["type"] == "batch_failed"
-    assert [e["error"]["message"] for e in err["errors"]] == [
-        "storage failure for statute 1?token=[REDACTED] "
-        "with api_token=[REDACTED] access_token=[REDACTED]",
-        "storage failure for statute 2?token=[REDACTED] "
-        "with api_token=[REDACTED] access_token=[REDACTED]",
-    ]
-    failed_lines = [
-        r.getMessage() for r in caplog.records if "MCP Request failed" in r.getMessage()
-    ]
-    assert len(failed_lines) == 1
-    assert "batch_failed" in failed_lines[0]
-    assert "api_token=[REDACTED]" in failed_lines[0]
-    assert "?token=[REDACTED]" in failed_lines[0]
-    for secret in _TOKEN_SECRETS:
-        assert secret not in text
-        assert secret not in caplog.text
-
-    # The ToolError raised by the handler itself carries the same redacted text.
-    with pytest.raises(ToolError) as excinfo:
-        await server.bulk_delete_statutes(statute_ids=["1", "2"], dry_run=False, confirm=True)
-    for secret in _TOKEN_SECRETS:
-        assert secret not in str(excinfo.value)
-    assert "access_token=[REDACTED]" in str(excinfo.value)
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_empty_batch_is_success(monkeypatch: pytest.MonkeyPatch) -> None:
-    _use_mock_db(monkeypatch, failing=set())
-    res = await _bulk_delete([])
-    assert res.is_error is False
-    data = json.loads(res.content[0].text)
-    assert (data["status"], data["deleted_count"], data["failed_count"]) == ("success", 0, 0)
-
-
-@pytest.mark.asyncio
-async def test_bulk_delete_cancellation_is_not_a_failed_item(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    """Cancellation stops the batch; it is never caught and reported as a failed item."""
-    calls: list[str] = []
-
-    def fake_delete(sid: str) -> bool:
-        calls.append(sid)
-        if sid == "2":
-            raise asyncio.CancelledError
-        return True
-
-    monkeypatch.setattr(db, "delete_statute", fake_delete)
-    monkeypatch.setattr(settings, "MCP_ALLOW_BULK_DESTRUCTIVE", True)
-    # Called directly so the CancelledError itself is observable: a per-item catch of
-    # BaseException would swallow it and return a partial_success result instead.
-    with pytest.raises(asyncio.CancelledError):
-        await server.bulk_delete_statutes(statute_ids=["1", "2", "3"], dry_run=False, confirm=True)
-    # The call stops at the cancelled item: "3" is never attempted.
-    assert calls == ["1", "2"]
+        res2 = await t2
+        assert not res2.is_error
+        data2 = json.loads(res2.content[0].text)
+        assert data2["status"] == "success"
