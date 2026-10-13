@@ -399,6 +399,287 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "source_url": "https://rules.sos.ga.gov/gac/560-7-3-.01",
         "cross_references": ["O.C.G.A. § 48-7-1", "26 U.S.C. § 937"],
     },
+    # State of California (Revenue and Taxation Code & FTB Regulations)
+    {
+        "id": "ca-rtc-17014",
+        "jurisdiction": "CA",
+        "corpus": "RTC",
+        "citation": "Cal. Rev. & Tax Code § 17014",
+        "section": "17014",
+        "title": "Definition of Resident (Non-Temporary Purpose Test)",
+        "text_es": (
+            "Define residente como todo individuo que permanezca en California para fines "
+            "que no sean temporales o transitorios, y todo domiciliado que esté fuera del estado "
+            "de forma temporal. Aplica el criterio de conexión más cercana."
+        ),
+        "text_en": (
+            "Defines resident as every individual who is in California for other than a temporary "
+            "or transitory purpose, and every individual domiciled in California who is outside "
+            "the state for a temporary or transitory purpose. Presumption under § 17016 "
+            "at 9 months."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": [
+            "Cal. Rev. & Tax Code § 17041",
+            "18 CCR § 17014",
+        ],
+    },
+    {
+        "id": "ca-rtc-17041",
+        "jurisdiction": "CA",
+        "corpus": "RTC",
+        "citation": "Cal. Rev. & Tax Code § 17041",
+        "section": "17041",
+        "title": "Individual Income Tax Rates and Brackets",
+        "text_es": (
+            "Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, "
+            "más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M "
+            "(Proposición 63), para una tasa marginal máxima de 13.3%."
+        ),
+        "text_en": (
+            "Imposes graduated income tax rates on California taxable income ranging from 1% to "
+            "12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income exceeding "
+            "$1,000,000, creating a top marginal individual rate of 13.3%."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": ["Cal. Rev. & Tax Code § 17014"],
+    },
+    {
+        "id": "ca-rtc-17951",
+        "jurisdiction": "CA",
+        "corpus": "RTC",
+        "citation": "Cal. Rev. & Tax Code § 17951",
+        "section": "17951",
+        "title": "Gross Income of Nonresidents and Sourcing",
+        "text_es": (
+            "Para no residentes, el ingreso bruto comprende únicamente ingresos derivados de "
+            "fuentes en California, incluyendo negocios, profesiones y servicios personales "
+            "realizados dentro del estado."
+        ),
+        "text_en": (
+            "In the case of nonresidents, gross income includes only gross income from sources "
+            "within California, including income from a business, trade, or profession conducted "
+            "in the state, and compensation for personal services performed in California."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": [
+            "Cal. Rev. & Tax Code § 17014",
+            "Cal. Rev. & Tax Code § 17041",
+        ],
+    },
+    {
+        "id": "ca-ccr-17014",
+        "jurisdiction": "CA",
+        "corpus": "CACCR",
+        "citation": "18 CCR § 17014",
+        "section": "17014",
+        "title": "FTB Residence and Domicile Guidelines",
+        "text_es": (
+            "Reglamento de la FTB sobre residencia y domicilio. Aplica el criterio de conexión "
+            "más cercana evaluando propiedades inmuebles, familia, cuentas bancarias, licencias "
+            "profesionales y afiliaciones comerciales."
+        ),
+        "text_en": (
+            "FTB regulation detailing domicile and residence determination. A person may have "
+            "multiple residences but only one domicile. Applies the closest connection test "
+            "evaluating real property, family, bank accounts, business affiliations, and licenses."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://www.ftb.ca.gov/",
+        "cross_references": ["Cal. Rev. & Tax Code § 17014"],
+    },
+    # State of New York (Tax Law & Department of Taxation and Finance Regulations)
+    {
+        "id": "ny-tax-605",
+        "jurisdiction": "NY",
+        "corpus": "NYTAX",
+        "citation": "NY Tax Law § 605(b)",
+        "section": "605",
+        "title": "Resident Individual and Domicile Defined",
+        "text_es": (
+            "Define individuo residente como domiciliado en Nueva York a menos que no mantenga "
+            "vivienda permanente en NY y pase menos de 30 días en el estado; o no domiciliado "
+            "que mantenga vivienda permanente y pase más de 183 días en NY (Residente Estatutario)."
+        ),
+        "text_en": (
+            "Defines resident individual as one domiciled in New York unless they maintain no "
+            "permanent abode in NY and spend under 30 days in state; or one not domiciled who "
+            "maintains a permanent place of abode and spends over 183 days in NY."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 601", "20 NYCRR § 105.20"],
+    },
+    {
+        "id": "ny-tax-601",
+        "jurisdiction": "NY",
+        "corpus": "NYTAX",
+        "citation": "NY Tax Law § 601",
+        "section": "601",
+        "title": "Personal Income Tax Rates",
+        "text_es": (
+            "Grava el ingreso tributable de Nueva York con tasas escalonadas de hasta 10.9% "
+            "para personas con altos ingresos, más el impuesto municipal de la Ciudad de "
+            "Nueva York (hasta 3.876%) para residentes de NYC."
+        ),
+        "text_en": (
+            "Imposes graduated income tax on New York taxable income with top marginal rates up "
+            "to 10.9% for high-income earners, plus applicable New York City personal income tax "
+            "(up to 3.876%) for NYC residents."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 605"],
+    },
+    {
+        "id": "ny-reg-105-20",
+        "jurisdiction": "NY",
+        "corpus": "NYCRR",
+        "citation": "20 NYCRR § 105.20",
+        "section": "105.20",
+        "title": "Rules for Determining Domicile (5 Primary Factors)",
+        "text_es": (
+            "Reglamento de auditoría de domicilio de NY que establece los 5 factores primarios: "
+            "Vivienda, Negocio Activo, Tiempo, Objetos de Valor Sentimental ('Near and Dear') "
+            "y Familia."
+        ),
+        "text_en": (
+            "New York DTF regulation establishing the 5 primary factors for domicile audit "
+            "evaluation: Home, Active Business Involvement, Time Allocation, Items of Personal "
+            "Significance ('Near and Dear'), and Family."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 605"],
+    },
+    {
+        "id": "ny-reg-132-18",
+        "jurisdiction": "NY",
+        "corpus": "NYCRR",
+        "citation": "20 NYCRR § 132.18",
+        "section": "132.18",
+        "title": "Convenience of the Employer Rule",
+        "text_es": (
+            "Dispone que la compensación de empleados no residentes por servicios realizados fuera "
+            "del estado se atribuye a Nueva York si el trabajo remoto se realiza por conveniencia "
+            "del empleado y no por necesidad del empleador."
+        ),
+        "text_en": (
+            "Provides that compensation of a nonresident employee for services performed out of "
+            "state is sourced to New York if the services are performed outside NY for the "
+            "employee's convenience rather than by necessity of the employer."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.tax.ny.gov/",
+        "cross_references": ["NY Tax Law § 605"],
+    },
+    # State of Florida (Constitutional & Statutory Absence of Individual Income Tax)
+    {
+        "id": "fl-const-7-5",
+        "jurisdiction": "FL",
+        "corpus": "FLCONST",
+        "citation": "Fla. Const. Art. VII § 5",
+        "section": "Art. VII Sec. 5",
+        "title": "Constitutional Prohibition of Personal Income Tax",
+        "text_es": (
+            "Prohíbe constitucionalmente cualquier impuesto sobre el ingreso de personas "
+            "naturales residentes o ciudadanas de Florida, garantizando la ausencia de "
+            "impuesto estatal sobre ingresos individuales."
+        ),
+        "text_en": (
+            "Prohibits any tax upon the income of natural persons who are residents or citizens "
+            "of Florida, guaranteeing the absence of state individual income taxation."
+        ),
+        "effective_year": 1968,
+        "source_url": "https://www.flsenate.gov/",
+        "cross_references": ["Fla. Stat. § 222.17"],
+    },
+    {
+        "id": "fl-stat-222-17",
+        "jurisdiction": "FL",
+        "corpus": "FLSTAT",
+        "citation": "Fla. Stat. § 222.17",
+        "section": "222.17",
+        "title": "Manifesting and Evidencing Domicile in Florida",
+        "text_es": (
+            "Autoriza a toda persona que haya establecido domicilio en Florida a manifestarlo "
+            "formalmente mediante declaración jurada radicada ante el secretario del tribunal de "
+            "circuito del condado correspondiente."
+        ),
+        "text_en": (
+            "Authorizes any person who has established a domicile in Florida to manifest that "
+            "domicile by filing a sworn, notarized statement of domicile with the clerk of the "
+            "circuit court in the county of residence."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.flsenate.gov/",
+        "cross_references": ["Fla. Const. Art. VII § 5", "Fla. Stat. § 196.031"],
+    },
+    {
+        "id": "fl-stat-196-031",
+        "jurisdiction": "FL",
+        "corpus": "FLSTAT",
+        "citation": "Fla. Stat. § 196.031",
+        "section": "196.031",
+        "title": "Exemption of Homesteads",
+        "text_es": (
+            "Concede hasta $50,000 de exención contributiva sobre la propiedad principal a "
+            "residentes permanentes. Solicitar la exención de 'homestead' constituye prueba "
+            "prima facie de domicilio en Florida."
+        ),
+        "text_en": (
+            "Grants up to $50,000 homestead property tax exemption to persons who maintain "
+            "permanent residence. Claiming Florida homestead establishes prima facie proof of "
+            "Florida domicile."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.flsenate.gov/",
+        "cross_references": ["Fla. Stat. § 222.17"],
+    },
+    # State of Texas (Constitutional Prohibition of Individual Income Tax)
+    {
+        "id": "tx-const-8-24a",
+        "jurisdiction": "TX",
+        "corpus": "TXCONST",
+        "citation": "Tex. Const. art. VIII § 24-a",
+        "section": "Art. VIII Sec. 24-a",
+        "title": "Constitutional Prohibition of Personal Income Tax",
+        "text_es": (
+            "Enmienda constitucional aprobada en 2019 que prohíbe a la legislatura de Texas "
+            "imponer impuestos sobre el ingreso neto de individuos o su participación en "
+            "sociedades y asociaciones no incorporadas."
+        ),
+        "text_en": (
+            "Constitutional amendment approved by voters in 2019 prohibiting the Texas legislature "
+            "from imposing a tax on the net incomes of individuals, including an individual's "
+            "share of partnership and unincorporated association income."
+        ),
+        "effective_year": 2019,
+        "source_url": "https://statutes.capitol.texas.gov/",
+        "cross_references": ["Tex. Tax Code § 171.001"],
+    },
+    {
+        "id": "tx-tax-171-001",
+        "jurisdiction": "TX",
+        "corpus": "TXTAX",
+        "citation": "Tex. Tax Code § 171.001",
+        "section": "171.001",
+        "title": "Texas Franchise Tax (Entity Level)",
+        "text_es": (
+            "Impone el impuesto de franquicia únicamente a entidades comerciales organizadas o con "
+            "negocios en Texas sobre su margen bruto, sin gravar a personas naturales."
+        ),
+        "text_en": (
+            "Imposes franchise tax on each taxable entity chartered or organized in Texas or doing "
+            "business in Texas based on gross margin, maintaining zero taxation on individuals."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://statutes.capitol.texas.gov/",
+        "cross_references": ["Tex. Const. art. VIII § 24-a"],
+    },
 ]
 
 INITIAL_PUBLICATIONS: list[dict[str, Any]] = [

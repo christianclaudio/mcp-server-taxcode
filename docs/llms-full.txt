@@ -233,3 +233,120 @@ Georgia Department of Revenue rule governing residence and legal domicile. Domic
 
 ### Español
 Reglamento del Departamento de Ingresos de Georgia sobre domicilio y residencia. El domicilio en Georgia se presume continuo a menos que el contribuyente demuestre abandono definitivo y adquisición de nuevo domicilio.
+
+## Cal. Rev. & Tax Code § 17014: Definition of Resident (Non-Temporary Purpose Test)
+`Cal. Rev. & Tax Code > Part 10 > Chapter 1 > § 17014`
+
+### English
+Defines resident as every individual who is in California for other than a temporary or transitory purpose, and every individual domiciled in California who is outside the state for a temporary or transitory purpose. Presumption under § 17016 at 9 months.
+
+### Español
+Define residente como todo individuo que permanezca en California para fines que no sean temporales o transitorios, y todo domiciliado que esté fuera del estado de forma temporal. Aplica el criterio de conexión más cercana.
+
+## Cal. Rev. & Tax Code § 17041: Individual Income Tax Rates and Brackets
+`Cal. Rev. & Tax Code > Part 10 > Chapter 2 > § 17041`
+
+### English
+Imposes graduated income tax rates on California taxable income ranging from 1% to 12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income exceeding $1,000,000, creating a top marginal individual rate of 13.3%.
+
+### Español
+Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M (Proposición 63), para una tasa marginal máxima de 13.3%.
+
+## Cal. Rev. & Tax Code § 17951: Gross Income of Nonresidents and Sourcing
+`Cal. Rev. & Tax Code > Part 10 > Chapter 9 > § 17951`
+
+### English
+In the case of nonresidents, gross income includes only gross income from sources within California, including income from a business, trade, or profession conducted in the state, and compensation for personal services performed in California.
+
+### Español
+Para no residentes, el ingreso bruto comprende únicamente ingresos derivados de fuentes en California, incluyendo negocios, profesiones y servicios personales realizados dentro del estado.
+
+## 18 CCR § 17014: FTB Residence and Domicile Guidelines
+`18 CCR > Division 3 > Chapter 2.5 > Subchapter 1 > § 17014`
+
+### English
+FTB regulation detailing domicile and residence determination. A person may have multiple residences but only one domicile. Applies the closest connection test evaluating real property, family, bank accounts, business affiliations, and licenses.
+
+### Español
+Reglamento de la FTB sobre residencia y domicilio. Aplica el criterio de conexión más cercana evaluando propiedades inmuebles, familia, cuentas bancarias, licencias profesionales y afiliaciones comerciales.
+
+## NY Tax Law § 605(b): Resident Individual and Domicile Defined
+`NY Tax Law > Article 22 > Part I > § 605`
+
+### English
+Defines resident individual as one domiciled in New York unless they maintain no permanent abode in NY and spend under 30 days in state; or one not domiciled who maintains a permanent place of abode and spends over 183 days in NY.
+
+### Español
+Define individuo residente como domiciliado en Nueva York a menos que no mantenga vivienda permanente en NY y pase menos de 30 días en el estado; o no domiciliado que mantenga vivienda permanente y pase más de 183 días en NY (Residente Estatutario).
+
+## NY Tax Law § 601: Personal Income Tax Rates
+`NY Tax Law > Article 22 > Part I > § 601`
+
+### English
+Imposes graduated income tax on New York taxable income with top marginal rates up to 10.9% for high-income earners, plus applicable New York City personal income tax (up to 3.876%) for NYC residents.
+
+### Español
+Grava el ingreso tributable de Nueva York con tasas escalonadas de hasta 10.9% para personas con altos ingresos, más el impuesto municipal de la Ciudad de Nueva York (hasta 3.876%) para residentes de NYC.
+
+## 20 NYCRR § 105.20: Rules for Determining Domicile (5 Primary Factors)
+`20 NYCRR > Chapter II > Subchapter A > Part 105 > § 105.20`
+
+### English
+New York DTF regulation establishing the 5 primary factors for domicile audit evaluation: Home, Active Business Involvement, Time Allocation, Items of Personal Significance ('Near and Dear'), and Family.
+
+### Español
+Reglamento de auditoría de domicilio de NY que establece los 5 factores primarios: Vivienda, Negocio Activo, Tiempo, Objetos de Valor Sentimental ('Near and Dear') y Familia.
+
+## 20 NYCRR § 132.18: Convenience of the Employer Rule
+`20 NYCRR > Chapter II > Subchapter A > Part 132 > § 132.18`
+
+### English
+Provides that compensation of a nonresident employee for services performed out of state is sourced to New York if the services are performed outside NY for the employee's convenience rather than by necessity of the employer.
+
+### Español
+Dispone que la compensación de empleados no residentes por servicios realizados fuera del estado se atribuye a Nueva York si el trabajo remoto se realiza por conveniencia del empleado y no por necesidad del empleador.
+
+## Fla. Const. Art. VII § 5: Constitutional Prohibition of Personal Income Tax
+`Fla. Const. > Article VII > Section 5`
+
+### English
+Prohibits any tax upon the income of natural persons who are residents or citizens of Florida, guaranteeing the absence of state individual income taxation.
+
+### Español
+Prohíbe constitucionalmente cualquier impuesto sobre el ingreso de personas naturales residentes o ciudadanas de Florida, garantizando la ausencia de impuesto estatal sobre ingresos individuales.
+
+## Fla. Stat. § 222.17: Manifesting and Evidencing Domicile in Florida
+`Fla. Stat. > Title XV > Chapter 222 > § 222.17`
+
+### English
+Authorizes any person who has established a domicile in Florida to manifest that domicile by filing a sworn, notarized statement of domicile with the clerk of the circuit court in the county of residence.
+
+### Español
+Autoriza a toda persona que haya establecido domicilio en Florida a manifestarlo formalmente mediante declaración jurada radicada ante el secretario del tribunal de circuito del condado correspondiente.
+
+## Fla. Stat. § 196.031: Exemption of Homesteads
+`Fla. Stat. > Title XIV > Chapter 196 > § 196.031`
+
+### English
+Grants up to $50,000 homestead property tax exemption to persons who maintain permanent residence. Claiming Florida homestead establishes prima facie proof of Florida domicile.
+
+### Español
+Concede hasta $50,000 de exención contributiva sobre la propiedad principal a residentes permanentes. Solicitar la exención de 'homestead' constituye prueba prima facie de domicilio en Florida.
+
+## Tex. Const. art. VIII § 24-a: Constitutional Prohibition of Personal Income Tax
+`Tex. Const. > Article VIII > Section 24-a`
+
+### English
+Constitutional amendment approved by voters in 2019 prohibiting the Texas legislature from imposing a tax on the net incomes of individuals, including an individual's share of partnership and unincorporated association income.
+
+### Español
+Enmienda constitucional aprobada en 2019 que prohíbe a la legislatura de Texas imponer impuestos sobre el ingreso neto de individuos o su participación en sociedades y asociaciones no incorporadas.
+
+## Tex. Tax Code § 171.001: Texas Franchise Tax (Entity Level)
+`Tex. Tax Code > Title 2 > Subtitle F > Chapter 171 > § 171.001`
+
+### English
+Imposes franchise tax on each taxable entity chartered or organized in Texas or doing business in Texas based on gross margin, maintaining zero taxation on individuals.
+
+### Español
+Impone el impuesto de franquicia únicamente a entidades comerciales organizadas o con negocios en Texas sobre su margen bruto, sin gravar a personas naturales.

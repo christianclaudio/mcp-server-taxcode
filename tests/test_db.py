@@ -66,6 +66,28 @@ def test_lookup_statute_by_citation_and_section() -> None:
     assert res_ga["corpus"] == "OCGA"
     assert "Georgia resident" in res_ga["operative_text"]
 
+    # California lookup (Closest connection / non-transitory purpose)
+    res_ca = test_db.lookup_statute("Cal. Rev. & Tax Code § 17014")
+    assert res_ca is not None
+    assert res_ca["jurisdiction"] == "CA"
+    assert "temporary or transitory purpose" in res_ca["operative_text"]
+
+    # New York lookup (Convenience of employer rule)
+    res_ny = test_db.lookup_statute("20 NYCRR § 132.18")
+    assert res_ny is not None
+    assert res_ny["jurisdiction"] == "NY"
+    assert "convenience" in res_ny["operative_text"]
+
+    # Florida lookup (Declaration of domicile)
+    res_fl = test_db.lookup_statute("Fla. Stat. § 222.17")
+    assert res_fl is not None
+    assert res_fl["jurisdiction"] == "FL"
+
+    # Texas lookup (Constitutional prohibition)
+    res_tx = test_db.lookup_statute("Tex. Const. art. VIII § 24-a")
+    assert res_tx is not None
+    assert res_tx["jurisdiction"] == "TX"
+
     # Non-existent statute
     assert test_db.lookup_statute("Non-existent 9999") is None
 
