@@ -12,6 +12,26 @@ from taxcode_mcp.errors import SafetyViolationError, tool_error
 
 logger = logging.getLogger(__name__)
 
+BILINGUAL_DISCLAIMER: dict[str, str] = {
+    "en": (
+        "NOT TAX OR LEGAL ADVICE. This computational determination is for reference and "
+        "informational purposes only based on statutory heuristic models. It does not constitute "
+        "formal legal or tax advice, an official opinion, or an audit defense. Any translations "
+        "or statutory summaries are unofficial and non-binding; official enacted statutory text "
+        "and administrative rulings in their original language control."
+    ),
+    "es": (
+        "NO CONSTITUYE ASESORAMIENTO CONTRIBUTIVO NI LEGAL. Esta determinación computacional es "
+        "para fines informativos y de referencia únicamente, basada en modelos heurísticos "
+        "estatutarios. No constituye asesoramiento legal o contributivo formal, opinión oficial "
+        "ni defensa de auditoría. Todas las traducciones o resúmenes estatutarios son no "
+        "oficiales y no vinculantes; el texto estatutario oficial promulgado y las determinaciones "
+        "administrativas en su idioma original prevalecen."
+    ),
+}
+
+CONTENT_NOTICE = "Computational heuristic model with unofficial statutory reference summaries."
+
 ANNOTATION_READ_ONLY = ToolAnnotations(
     read_only_hint=True,
     destructive_hint=False,
@@ -102,6 +122,8 @@ def evaluate_pr_bona_fide_residency(
         },
         "authoritative_basis": "26 U.S.C. § 937; 26 CFR § 1.937-1",
         "reporting_requirements": reporting_triggers,
+        "disclaimer": BILINGUAL_DISCLAIMER,
+        "content_notice": CONTENT_NOTICE,
     }
 
 
@@ -184,6 +206,8 @@ def calculate_built_in_gain_sourcing(
                 "(0% grandfathered, or 4% for post-2026 decrees)."
             ),
             "statutory_basis": "26 CFR § 1.937-2(f); 26 U.S.C. § 865; 26 U.S.C. § 933",
+            "disclaimer": BILINGUAL_DISCLAIMER,
+            "content_notice": CONTENT_NOTICE,
         }
     except Exception as exc:
         failure = tool_error(exc)
@@ -291,6 +315,8 @@ def evaluate_georgia_residency(
             "estimated_georgia_tax": estimated_tax,
             "statutory_rate_authority": "O.C.G.A. § 48-7-20 (HB 1023 / HB 1015 flat tax)",
         },
+        "disclaimer": BILINGUAL_DISCLAIMER,
+        "content_notice": CONTENT_NOTICE,
     }
 
 
@@ -519,6 +545,8 @@ def evaluate_state_residency(
             "rate_description": rate_desc,
             "statutory_rate_authority": rate_authority,
         },
+        "disclaimer": BILINGUAL_DISCLAIMER,
+        "content_notice": CONTENT_NOTICE,
     }
 
 

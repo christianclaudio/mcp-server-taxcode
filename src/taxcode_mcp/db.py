@@ -12,6 +12,11 @@ from taxcode_mcp.config import settings
 
 logger = logging.getLogger(__name__)
 
+STATUTE_TRANSLATION_DISCLAIMER = (
+    "Unofficial translation/summary for reference purposes only. Official "
+    "statutory text in the jurisdiction's authoritative language controls."
+)
+
 # Canonical initial seed data for US Federal and Puerto Rico tax provisions
 INITIAL_STATUTES: list[dict[str, Any]] = [
     {
@@ -1195,6 +1200,9 @@ class TaxDatabase:
                     "cross_references": result[11] or [],
                     "language": lang.lower(),
                     "official_language": "es" if result[1] == "PR" else "en",
+                    "content_type": "reference_summary",
+                    "unofficial_summary": True,
+                    "translation_disclaimer": STATUTE_TRANSLATION_DISCLAIMER,
                 }
             finally:
                 if self._mem_conn is None:
@@ -1261,6 +1269,9 @@ class TaxDatabase:
                             "is_current": r[9] is None,
                             "source_url": r[10],
                             "cross_references": r[11] or [],
+                            "content_type": "reference_summary",
+                            "unofficial_summary": True,
+                            "translation_disclaimer": STATUTE_TRANSLATION_DISCLAIMER,
                         }
                     )
                 return output

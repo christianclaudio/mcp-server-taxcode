@@ -8,7 +8,12 @@
 [![CodeRabbit Reviews](https://img.shields.io/coderabbit/prs/github/christianclaudio/mcp-server-taxcode?labelColor=171717&color=FF570A&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
 > **Enterprise-grade Model Context Protocol (MCP) server for Federal, Territorial, and Multi-State Tax Law.**  
-> Authoritative statutory and administrative intelligence covering United States Federal (IRC/CFR), Puerto Rico (Act 60/Ley 1), and state tax corridors (GA, CA, NY, FL, TX, WA, MA, NJ, IL) with deterministic residency and capital gains compliance engines.
+> Reference statutory catalog covering United States Federal (IRC/CFR), Puerto Rico (Act 60/Ley 1), and state tax corridors (GA, CA, NY, FL, TX, WA, MA, NJ, IL) with computational residency and capital gains models.
+
+> [!WARNING]
+> **NOT TAX OR LEGAL ADVICE / NO CONSTITUYE ASESORAMIENTO CONTRIBUTIVO NI LEGAL**  
+> **EN:** This software and its tools provide computational models, heuristic checks, and unofficial summaries for informational and research purposes only. Nothing returned by this server constitutes formal legal or tax advice, an official legal opinion, or audit representation. Unofficial translations and summaries are non-binding; official statutory and administrative sources in their enacted language control.  
+> **ES:** Este software y sus herramientas proporcionan modelos computacionales, verificaciones heurísticas y resúmenes no oficiales únicamente para fines informativos y de investigación. Ninguna respuesta emitida por este servidor constituye asesoramiento legal o contributivo formal, una opinión legal oficial ni representación ante auditorías. Las traducciones y resúmenes no oficiales no son vinculantes; los textos estatutarios y administrativos oficiales promulgados en su idioma original prevalecen.
 
 ---
 

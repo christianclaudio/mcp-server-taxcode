@@ -71,6 +71,9 @@ async def test_server_tools(mock_transport, monkeypatch):
     )
     assert residency["status"] == "success"
     assert residency["is_bona_fide_resident"] is True
+    assert "NOT TAX OR LEGAL ADVICE" in residency["disclaimer"]["en"]
+    assert "NO CONSTITUYE ASESORAMIENTO CONTRIBUTIVO NI LEGAL" in residency["disclaimer"]["es"]
+    assert "unofficial statutory reference summaries" in residency["content_notice"]
 
     # 6. Calculate built-in gain sourcing
     big = server.calculate_built_in_gain_sourcing(
@@ -83,6 +86,7 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert big["status"] == "success"
     assert big["us_source_gain"] == 400000.0
     assert big["pr_source_gain"] == 300000.0
+    assert "NOT TAX OR LEGAL ADVICE" in big["disclaimer"]["en"]
 
     # 7. Evaluate Georgia residency & tax
     ga_res = server.evaluate_georgia_residency(
@@ -104,6 +108,7 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert len(ga_res["domicile_audit_risk"]["flags"]) == 3
     assert ga_res["tax_computation"]["georgia_taxable_net_income"] == 48000.0
     assert ga_res["tax_computation"]["estimated_georgia_tax"] == 2635.20
+    assert "NOT TAX OR LEGAL ADVICE" in ga_res["disclaimer"]["en"]
 
 
 @pytest.mark.asyncio
@@ -709,6 +714,8 @@ def test_evaluate_state_residency_cases() -> None:
     assert flagged["domicile_audit_risk"]["risk_level"] == "high"
     assert len(flagged["domicile_audit_risk"]["flags"]) == 3
     assert flagged["tax_computation"]["estimated_state_tax"] == 0.0
+    assert "NOT TAX OR LEGAL ADVICE" in flagged["disclaimer"]["en"]
+    assert "unofficial statutory reference summaries" in flagged["content_notice"]
 
     # 4. Georgia (GA)
     ga_sr = server.evaluate_state_residency(

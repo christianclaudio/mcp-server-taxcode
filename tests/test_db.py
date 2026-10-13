@@ -34,6 +34,9 @@ def test_lookup_statute_by_citation_and_section() -> None:
     assert "bona fide resident" in res_en["operative_text"]
     assert res_en["language"] == "en"
     assert res_en["official_language"] == "en"
+    assert res_en["content_type"] == "reference_summary"
+    assert res_en["unofficial_summary"] is True
+    assert "Unofficial translation/summary" in res_en["translation_disclaimer"]
 
     # Spanish language lookup
     res_es = test_db.lookup_statute("933", lang="es")
