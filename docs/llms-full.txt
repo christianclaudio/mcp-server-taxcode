@@ -350,3 +350,111 @@ Imposes franchise tax on each taxable entity chartered or organized in Texas or 
 
 ### Español
 Impone el impuesto de franquicia únicamente a entidades comerciales organizadas o con negocios en Texas sobre su margen bruto, sin gravar a personas naturales.
+
+## RCW 82.87.040: Tax Imposed on Long-Term Capital Gains
+`RCW > Title 82 > Chapter 82.87 > Section 82.87.040`
+
+### English
+7% excise tax on individual annual net long-term capital gains allocated to Washington in excess of statutory standard deduction ($250,000 indexed for inflation).
+
+### Español
+Impuesto especial del 7% sobre ganancias de capital a largo plazo de individuos que excedan la deducción estándar anual ($250,000 indexada por inflación).
+
+## RCW 82.87.020: Capital Gains Tax Definitions and Resident Sourcing
+`RCW > Title 82 > Chapter 82.87 > Section 82.87.020`
+
+### English
+Defines resident for Washington capital gains excise tax purposes as an individual domiciled in Washington at the time the long-term capital asset was sold or exchanged.
+
+### Español
+Define residente de Washington para el impuesto de ganancias de capital como persona natural domiciliada en el estado al momento de la venta o intercambio.
+
+## Wash. Const. art. VII § 1: Constitutional Uniformity and Prohibition of Net Income Tax
+`Wash. Const. > Article VII > Section 1`
+
+### English
+Constitutional requirement that all taxes be uniform upon the same class of property, historically interpreted to prohibit graduated net income taxes.
+
+### Español
+Disposición constitucional de tributación uniforme que prohíbe impuestos progresivos sobre el ingreso neto según interpretado en doctrina judicial histórica.
+
+## Mass. Const. amend. art. XLIV: Fair Share Amendment (4% Millionaires' Surtax)
+`Mass. Const. > Amendments > Article XLIV`
+
+### English
+Constitutional amendment imposing an additional 4% surtax on the portion of annual taxable income exceeding $1,000,000, creating a top rate of 9.0%.
+
+### Español
+Enmienda constitucional que impone una sobretasa adicional del 4% sobre la porción del ingreso imponible anual que exceda $1,000,000 (indexado por inflación).
+
+## M.G.L. c. 62 § 4: Personal Income Tax Rates
+`M.G.L. > Part I > Title IX > Chapter 62 > Section 4`
+
+### English
+Standard 5.0% flat income tax rate on Part B taxable personal income (wages, trade, business, and interest income).
+
+### Español
+Tasa básica de impuesto sobre el ingreso personal de Massachusetts del 5.0% sobre ingreso imponible de Parte B (salarios, negocios y pensiones).
+
+## M.G.L. c. 62 § 1(f): Definition of Resident (Domicile and 183-Day Rule)
+`M.G.L. > Part I > Title IX > Chapter 62 > Section 1(f)`
+
+### English
+Defines resident as any natural person domiciled in Massachusetts, or non-domiciliary maintaining a permanent place of abode and spending more than 183 days in the state.
+
+### Español
+Define residente como persona domiciliada en Massachusetts o no domiciliada que mantenga un lugar permanente de morada y pase más de 183 días en el estado.
+
+## N.J.S.A. 54A:1-2: Definition of Resident Individual
+`N.J.S.A. > Title 54A > Chapter 1 > Section 54A:1-2`
+
+### English
+Defines resident individual based on domicile or statutory residency (maintaining a permanent place of abode in NJ and spending more than 183 days in NJ).
+
+### Español
+Define residente de NJ por domicilio (salvo morada permanente exterior con <= 30 días en NJ) o residente estatutario con morada permanente en NJ y más de 183 días.
+
+## N.J.S.A. 54A:2-1: New Jersey Gross Income Tax Rates
+`N.J.S.A. > Title 54A > Chapter 2 > Section 54A:2-1`
+
+### English
+Graduated gross income tax brackets ranging from 1.4% up to top marginal rate of 10.75% on taxable income exceeding $1,000,000.
+
+### Español
+Escalas progresivas de impuesto sobre el ingreso bruto que varían entre 1.4% y una tasa marginal máxima de 10.75% para ingresos mayores a $1,000,000.
+
+## N.J.A.C. 18:35-5.2: Convenience of the Employer Rule (Reciprocal Sourcing)
+`N.J.A.C. > Title 18 > Chapter 35 > Subchapter 5 > Section 18:35-5.2`
+
+### English
+Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing telecommuting compensation of nonresidents to NJ if their resident state imposes a convenience rule.
+
+### Español
+Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no residentes que teletrabajen si su estado de residencia aplica una regla similar (ej. Nueva York).
+
+## 35 ILCS 5/201: Illinois Individual Income Tax Rate
+`35 ILCS 5/ > Article 2 > Section 201`
+
+### English
+Constitutionally mandated non-graduated flat income tax rate of 4.95% on net income of individuals, trusts, and estates.
+
+### Español
+Impuesto estatal no graduado a tasa fija del 4.95% sobre el ingreso neto de personas naturales, mandatado por la Constitución de Illinois.
+
+## 35 ILCS 5/1501(a)(20): Definition of Resident
+`35 ILCS 5/ > Article 15 > Section 1501(a)(20)`
+
+### English
+Defines resident as an individual who is in Illinois for other than a temporary or transitory purpose during the taxable year or who is domiciled in Illinois.
+
+### Español
+Define residente como persona en Illinois para fines no transitorios o temporales, o domiciliada en Illinois ausente temporalmente.
+
+## 35 ILCS 5/301: Compensation and Nonresident Income Sourcing
+`35 ILCS 5/ > Article 3 > Section 301`
+
+### English
+Rules for allocating and sourcing compensation and business income of nonresidents based on physical days of services performed within Illinois.
+
+### Español
+Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado.

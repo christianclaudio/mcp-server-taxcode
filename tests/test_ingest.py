@@ -77,6 +77,22 @@ def test_run_ingest_source_filters() -> None:
     assert tx_stats["statutes_considered"] == 2
     assert tx_stats["publications_considered"] == 0
 
+    wa_stats = run_ingest(db_path=":memory:", sources="wa", dry_run=True)
+    assert wa_stats["statutes_considered"] == 3
+    assert wa_stats["publications_considered"] == 0
+
+    ma_stats = run_ingest(db_path=":memory:", sources="ma", dry_run=True)
+    assert ma_stats["statutes_considered"] == 3
+    assert ma_stats["publications_considered"] == 0
+
+    nj_stats = run_ingest(db_path=":memory:", sources="nj", dry_run=True)
+    assert nj_stats["statutes_considered"] == 3
+    assert nj_stats["publications_considered"] == 0
+
+    il_stats = run_ingest(db_path=":memory:", sources="il", dry_run=True)
+    assert il_stats["statutes_considered"] == 3
+    assert il_stats["publications_considered"] == 0
+
     pub_stats = run_ingest(db_path=":memory:", sources="publications", dry_run=True)
     assert pub_stats["statutes_considered"] == 0
     assert pub_stats["publications_considered"] == len(PUBLICATIONS_CATALOG)
@@ -113,6 +129,10 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "ny" / "nytax_605.md").exists()
     assert (docs_out / "fl" / "flstat_222_17.md").exists()
     assert (docs_out / "tx" / "txconst_art__viii_sec__24_a.md").exists()
+    assert (docs_out / "wa" / "rcw_82_87_040.md").exists()
+    assert (docs_out / "ma" / "maconst_art__xliv.md").exists()
+    assert (docs_out / "nj" / "njsa_54a_2_1.md").exists()
+    assert (docs_out / "il" / "ilcs_5_201.md").exists()
 
 
 def test_check_upstream_endpoints() -> None:

@@ -680,6 +680,239 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "source_url": "https://statutes.capitol.texas.gov/",
         "cross_references": ["Tex. Const. art. VIII § 24-a"],
     },
+    # State of Washington (Capital Gains Excise Tax & No Income Tax)
+    {
+        "id": "wa-rcw-82-87-040",
+        "jurisdiction": "WA",
+        "corpus": "RCW",
+        "citation": "RCW 82.87.040",
+        "section": "82.87.040",
+        "title": "Tax Imposed on Long-Term Capital Gains",
+        "text_es": (
+            "Impuesto especial del 7% sobre ganancias de capital a largo plazo de individuos "
+            "que excedan la deducción estándar anual ($250,000 indexada por inflación)."
+        ),
+        "text_en": (
+            "7% excise tax on individual annual net long-term capital gains allocated to "
+            "Washington in excess of statutory standard deduction ($250,000 indexed for inflation)."
+        ),
+        "effective_year": 2022,
+        "source_url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.040",
+        "cross_references": ["RCW 82.87.020", "Wash. Const. art. VII § 1"],
+    },
+    {
+        "id": "wa-rcw-82-87-020",
+        "jurisdiction": "WA",
+        "corpus": "RCW",
+        "citation": "RCW 82.87.020",
+        "section": "82.87.020",
+        "title": "Capital Gains Tax Definitions and Resident Sourcing",
+        "text_es": (
+            "Define residente de Washington para el impuesto de ganancias de capital como "
+            "persona natural domiciliada en el estado al momento de la venta o intercambio."
+        ),
+        "text_en": (
+            "Defines resident for Washington capital gains excise tax purposes as an individual "
+            "domiciled in Washington at the time the long-term capital asset was sold or exchanged."
+        ),
+        "effective_year": 2022,
+        "source_url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.020",
+        "cross_references": ["RCW 82.87.040"],
+    },
+    {
+        "id": "wa-const-7-1",
+        "jurisdiction": "WA",
+        "corpus": "WACONST",
+        "citation": "Wash. Const. art. VII § 1",
+        "section": "Art. VII Sec. 1",
+        "title": "Constitutional Uniformity and Prohibition of Net Income Tax",
+        "text_es": (
+            "Disposición constitucional de tributación uniforme que prohíbe impuestos "
+            "progresivos sobre el ingreso neto según interpretado en doctrina judicial histórica."
+        ),
+        "text_en": (
+            "Constitutional requirement that all taxes be uniform upon the same class of property, "
+            "historically interpreted to prohibit graduated net income taxes."
+        ),
+        "effective_year": 1889,
+        "source_url": "https://leg.wa.gov/CodeReviser/Pages/WAConstitution.aspx",
+        "cross_references": ["RCW 82.87.040"],
+    },
+    # Commonwealth of Massachusetts (Part B Income Tax & Fair Share Surtax)
+    {
+        "id": "ma-const-amend-44",
+        "jurisdiction": "MA",
+        "corpus": "MACONST",
+        "citation": "Mass. Const. amend. art. XLIV",
+        "section": "Art. XLIV",
+        "title": "Fair Share Amendment (4% Millionaires' Surtax)",
+        "text_es": (
+            "Enmienda constitucional que impone una sobretasa adicional del 4% sobre la porción "
+            "del ingreso imponible anual que exceda $1,000,000 (indexado por inflación)."
+        ),
+        "text_en": (
+            "Constitutional amendment imposing an additional 4% surtax on the portion of annual "
+            "taxable income exceeding $1,000,000, creating a top rate of 9.0%."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://malegislature.gov/Laws/Constitution",
+        "cross_references": ["M.G.L. c. 62 § 4"],
+    },
+    {
+        "id": "ma-gl-62-4",
+        "jurisdiction": "MA",
+        "corpus": "MGL",
+        "citation": "M.G.L. c. 62 § 4",
+        "section": "62-4",
+        "title": "Personal Income Tax Rates",
+        "text_es": (
+            "Tasa básica de impuesto sobre el ingreso personal de Massachusetts del 5.0% sobre "
+            "ingreso imponible de Parte B (salarios, negocios y pensiones)."
+        ),
+        "text_en": (
+            "Standard 5.0% flat income tax rate on Part B taxable personal income (wages, trade, "
+            "business, and interest income)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section4",
+        "cross_references": ["Mass. Const. amend. art. XLIV", "M.G.L. c. 62 § 1"],
+    },
+    {
+        "id": "ma-gl-62-1f",
+        "jurisdiction": "MA",
+        "corpus": "MGL",
+        "citation": "M.G.L. c. 62 § 1(f)",
+        "section": "62-1(f)",
+        "title": "Definition of Resident (Domicile and 183-Day Rule)",
+        "text_es": (
+            "Define residente como persona domiciliada en Massachusetts o no domiciliada que "
+            "mantenga un lugar permanente de morada y pase más de 183 días en el estado."
+        ),
+        "text_en": (
+            "Defines resident as any natural person domiciled in Massachusetts, or non-domiciliary "
+            "maintaining a permanent place of abode and spending more than 183 days in the state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section1",
+        "cross_references": ["M.G.L. c. 62 § 4"],
+    },
+    # State of New Jersey (Gross Income Tax & Convenience of Employer)
+    {
+        "id": "nj-stat-54a-1-2",
+        "jurisdiction": "NJ",
+        "corpus": "NJSA",
+        "citation": "N.J.S.A. 54A:1-2",
+        "section": "54A:1-2",
+        "title": "Definition of Resident Individual",
+        "text_es": (
+            "Define residente de NJ por domicilio (salvo morada permanente exterior con <= 30 "
+            "días en NJ) o residente estatutario con morada permanente en NJ y más de 183 días."
+        ),
+        "text_en": (
+            "Defines resident individual based on domicile or statutory residency (maintaining a "
+            "permanent place of abode in NJ and spending more than 183 days in NJ)."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://lis.njleg.state.nj.us/",
+        "cross_references": ["N.J.S.A. 54A:2-1", "N.J.A.C. 18:35-5.2"],
+    },
+    {
+        "id": "nj-stat-54a-2-1",
+        "jurisdiction": "NJ",
+        "corpus": "NJSA",
+        "citation": "N.J.S.A. 54A:2-1",
+        "section": "54A:2-1",
+        "title": "New Jersey Gross Income Tax Rates",
+        "text_es": (
+            "Escalas progresivas de impuesto sobre el ingreso bruto que varían entre 1.4% y una "
+            "tasa marginal máxima de 10.75% para ingresos mayores a $1,000,000."
+        ),
+        "text_en": (
+            "Graduated gross income tax brackets ranging from 1.4% up to top marginal rate of "
+            "10.75% on taxable income exceeding $1,000,000."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://lis.njleg.state.nj.us/",
+        "cross_references": ["N.J.S.A. 54A:1-2"],
+    },
+    {
+        "id": "nj-admin-18-35-5-2",
+        "jurisdiction": "NJ",
+        "corpus": "NJAC",
+        "citation": "N.J.A.C. 18:35-5.2",
+        "section": "18:35-5.2",
+        "title": "Convenience of the Employer Rule (Reciprocal Sourcing)",
+        "text_es": (
+            "Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no "
+            "residentes que teletrabajen si su estado aplica regla similar (ej. Nueva York)."
+        ),
+        "text_en": (
+            "Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing "
+            "telecommuting compensation of nonresidents to NJ if their resident state "
+            "imposes a convenience rule."
+        ),
+        "effective_year": 2023,
+        "source_url": "https://www.nj.gov/treasury/taxation/",
+        "cross_references": ["N.J.S.A. 54A:5-8"],
+    },
+    # State of Illinois (Flat Income Tax & Nonresident Sourcing)
+    {
+        "id": "il-stat-35-ilcs-5-201",
+        "jurisdiction": "IL",
+        "corpus": "ILCS",
+        "citation": "35 ILCS 5/201",
+        "section": "5/201",
+        "title": "Illinois Individual Income Tax Rate",
+        "text_es": (
+            "Impuesto estatal no graduado a tasa fija del 4.95% sobre el ingreso neto de "
+            "personas naturales, mandatado por la Constitución de Illinois."
+        ),
+        "text_en": (
+            "Constitutionally mandated non-graduated flat income tax rate of 4.95% on net income "
+            "of individuals, trusts, and estates."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+        "cross_references": ["35 ILCS 5/1501(a)(20)", "35 ILCS 5/301"],
+    },
+    {
+        "id": "il-stat-35-ilcs-5-1501",
+        "jurisdiction": "IL",
+        "corpus": "ILCS",
+        "citation": "35 ILCS 5/1501(a)(20)",
+        "section": "5/1501(a)(20)",
+        "title": "Definition of Resident",
+        "text_es": (
+            "Define residente como persona en Illinois para fines no transitorios o temporales, "
+            "o domiciliada en Illinois ausente temporalmente."
+        ),
+        "text_en": (
+            "Defines resident as an individual who is in Illinois for other than a temporary "
+            "or transitory purpose during the taxable year or who is domiciled in Illinois."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+        "cross_references": ["35 ILCS 5/201"],
+    },
+    {
+        "id": "il-stat-35-ilcs-5-301",
+        "jurisdiction": "IL",
+        "corpus": "ILCS",
+        "citation": "35 ILCS 5/301",
+        "section": "5/301",
+        "title": "Compensation and Nonresident Income Sourcing",
+        "text_es": (
+            "Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose "
+            "en servicios efectivamente prestados en el estado."
+        ),
+        "text_en": (
+            "Rules for allocating and sourcing compensation and business income of nonresidents "
+            "based on physical days of services performed within Illinois."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+        "cross_references": ["35 ILCS 5/201"],
+    },
 ]
 
 INITIAL_PUBLICATIONS: list[dict[str, Any]] = [

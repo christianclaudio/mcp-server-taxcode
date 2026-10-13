@@ -7,8 +7,8 @@
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/christianclaudio/mcp-server-taxcode)
 [![CodeRabbit Reviews](https://img.shields.io/coderabbit/prs/github/christianclaudio/mcp-server-taxcode?labelColor=171717&color=FF570A&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
-> **Enterprise-grade Model Context Protocol (MCP) server template.**  
-> Provides a hardened, production-ready blueprint with static typing (`mypy --strict`), 100% statement coverage, single-delete & bulk safety gates, and automated multi-channel OIDC release workflows.
+> **Enterprise-grade Model Context Protocol (MCP) server for Federal, Territorial, and Multi-State Tax Law.**  
+> Authoritative statutory and administrative intelligence covering United States Federal (IRC/CFR), Puerto Rico (Act 60/Ley 1), and state tax corridors (GA, CA, NY, FL, TX, WA, MA, NJ, IL) with deterministic residency and capital gains compliance engines.
 
 ---
 
@@ -16,51 +16,40 @@
 
 ```mermaid
 graph TD
-    Client["AI Agent / MCP Host<br>(Claude, Cursor, Antigravity, Cortex)"]
+    Client["AI Agent / MCP Host<br>(Claude, Cursor, Antigravity, Snowflake Cortex)"]
     Gateway["FastMCP Root Gateway<br>(stdio / streamable-http)"]
     ParentMW["Parent Middleware<br>(Audit Logging, Timing, Secret Redaction, ReadOnly Gate)"]
     SysSub["System Sub-server (mount: 'system')<br>• system_get_health_status<br>• taxcode://system/reference/capabilities"]
-    ItemsSub["Items Sub-server (mount: 'items')<br>• items_list_items, items_get_item<br>• items_create_item, items_delete_item<br>• items_bulk_delete_items"]
-    ChildMW["Child Guard Middleware<br>(Bulk Destructive & Domain Limits)"]
-    Transform["ToolTransform<br>(Hide client_id, inject runtime defaults)"]
-    ClientHandler["Hardened AsyncClient<br>(Connection Pool & 429 Jitter)"]
-    API["Target REST API"]
+    StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications"]
+    CompSub["Compliance Sub-server (mount: 'compliance')<br>• compliance_evaluate_pr_bona_fide_residency<br>• compliance_calculate_built_in_gain_sourcing<br>• compliance_evaluate_georgia_residency<br>• compliance_evaluate_state_residency"]
+    DuckDB["DuckDB In-Memory & File Engine<br>(51 Statutes, 7 Publications, Full-Text Search, Temporal Versions)"]
 
     Client <-->|"JSON-RPC (tools/list, tools/call)"| Gateway
     Gateway --> ParentMW
     ParentMW --> SysSub
-    ParentMW --> ItemsSub
-    ItemsSub --> ChildMW
-    ItemsSub --> Transform
-    SysSub & ItemsSub <-->|"API Methods"| ClientHandler
-    ClientHandler <-->|"HTTP / HTTPS (Sanitized)"| API
+    ParentMW --> StatSub
+    ParentMW --> CompSub
+    StatSub <-->|"Point-in-Time & Full-Text Queries"| DuckDB
+    CompSub <-->|"Deterministic Statutory Calculations"| DuckDB
 ```
 
 ---
 
 ## 🚀 Key Features
 
-* **FastMCP 4 Server Composition**: Modular sub-servers mounted via `root.mount(..., namespace="...")` providing clean domain boundaries and automatic namespacing (`system_*`, `items_*`).
-* **Hierarchical Middleware Pipeline**: Global parent middleware for audit logging and read-only gating; child middleware for domain safety gates (bulk destructive controls).
-* **Tool Transformation**: `ToolTransform` hides internal infrastructure arguments (`client_id`) from LLM schemas and injects defaults automatically at runtime.
+* **Authoritative Multi-Jurisdiction Statutory Catalog**:
+  * **Federal (`US`)**: IRC § 933, § 937, § 865, 26 CFR § 1.937-1/2.
+  * **Puerto Rico (`PR`)**: Act 60-2019 (Resident Individual Investors & Export Services), Ley 1-2011, Act 22-2012 predecessor versions.
+  * **Key State Corridors**: Georgia (O.C.G.A. Title 48), California (RTC § 17014, § 17041, 18 CCR § 17014), New York (Tax Law § 605, § 601, Convenience Rule § 132.18, 5 Primary Domicile Factors § 105.20), Florida (Const. Art. VII § 5, § 222.17 Domicile, § 196.031 Homestead), Texas (Const. art. VIII § 24-a, Franchise Tax § 171.001), Washington (RCW 82.87 Capital Gains Excise Tax), Massachusetts (M.G.L. c. 62 § 4 & Fair Share Surtax), New Jersey (N.J.S.A. 54A & Reciprocal Convenience Rule), Illinois (35 ILCS 5 Flat Tax).
+* **Temporal Statutory Versioning**: Point-in-time statutory lookup with `superseded_year` filtering and descending historical ordering (`tax_year` parameter).
+* **Deterministic Compliance Engines**:
+  * `evaluate_pr_bona_fide_residency`: Evaluates IRC § 937 presence (183-day, 549-day 3-year, 90-day US), tax home, and closer connection tests.
+  * `calculate_built_in_gain_sourcing`: Allocates Section 937 / Act 60 capital gains across pre-move and post-move holding periods.
+  * `evaluate_state_residency`: Multi-state statutory presence day-counter, permanent place of abode (PPA), domicile audit risk flags, and tax liability computation across 9 states.
 * **Profiles & Opt-in ToolSearch**:
-  * Run focused surfaces using `--profile`: domain-mount profiles `full|system|items|readonly`, or job-shaped tool-name allowlist profiles that span domains (`intake`). Unknown profiles or allowlisted names fail at startup.
-  * Read-only (`--profile readonly` or `TAXCODE_MCP_READONLY=1`) is decided by each tool's `readOnlyHint` annotation; any other tool is refused, including through `call_tool` when Tool Search is on; an unknown name (including `call_tool` without Tool Search) still returns `Unknown tool`.
-  * Preserves standard flat `tools/list` by default for seamless IDE and host compatibility.
-  * Opt-in `--enable-tool-search` replaces flat lists with dynamic `search_tools` and `call_tool`.
-  * Experimental, opt-in `--enable-code-mode` (`full` only; not with Tool Search) replaces flat lists with `search`, `get_schema` and `execute`. Code Mode needs the package's `code-mode` extra, which pulls `fastmcp[code-mode]` (the `pydantic-monty` sandbox): install `mcp-server-taxcode[code-mode]`, or from a clone run `uv sync --extra code-mode`. Without it, Code Mode is skipped with a warning and the flat catalog is served. Code Mode is optional: FastMCP ships its sandbox as an extra ([FastMCP Code Mode docs](https://gofastmcp.com/servers/transforms/code-mode)). Any doc or post that quotes a Code Mode token figure must say it needs the `code-mode` extra.
-* **MCP 2.0 Annotations**: Every tool declares explicit `readOnlyHint`, `destructiveHint`, `idempotentHint`, and `openWorldHint` flags.
-* **Safety by Default**:
-  * Mandatory `confirm: bool = False` confirmation gate on single-record deletions.
-  * Bulk destructive operations gated behind `TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE=1` and `dry_run=True` defaults.
-  * Global `TAXCODE_MCP_READONLY=1` runtime toggle restricting startup strictly to safe query tools.
-* **Secret Redaction**: Automated regex scrubbing (`redact_secrets`) for Bearer tokens, API keys, client secrets, passwords, and access tokens in error messages and logs, with a fixed `[REDACTED]` mask that never reveals a secret's length.
-* **Path Traversal Protection**: Parametric path sanitization (`urllib.parse.quote(seg, safe="")`).
-* **Multi-Channel Distribution**:
-  * **PyPI**: Tokenless GitHub Actions OIDC Trusted Publishing.
-  * **Official MCP Registry**: Automated `server.json` publishing via `mcp-publisher`.
-  * **Docker (GHCR)**: Multi-tag container builds (`ghcr.io/christianclaudio/<name>`).
-  * **GitHub Releases**: CycloneDX SBOM (`sbom.cdx.json`) and cryptographic build provenance attestations.
+  * Domain-mount profiles: `full`, `system`, `statutes`, `compliance`, `readonly`.
+  * Job-shaped allowlist profiles: `researcher` (statutes + circulars), `advisor` (cross-border residency + BIG calculations).
+* **Zero Tool Bloat**: Exactly 8 lean, read-only MCP tools exposed with explicit MCP 2.0 annotations (`readOnlyHint=True`).
 
 ---
 
@@ -69,13 +58,12 @@ graph TD
 | Variable | CLI Flag | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `TAXCODE_API_KEY` | — | `""` | Service API token for authentication |
-| `TAXCODE_BASE_URL` | — | `https://api.example.com` | Target REST API base URL |
-| `TAXCODE_MCP_READONLY` | — | `0` | Expose and allow only tools annotated `readOnlyHint=True` |
-| `TAXCODE_MCP_ALLOW_BULK_DESTRUCTIVE` | — | `0` | Unlock batch destructive mutations |
-| `TAXCODE_MCP_PROFILE` | `--profile` | `full` | Server profile. Domain mounts: `full`, `system`, `items`, `readonly`. Tool-name allowlist: `intake` |
-| `TAXCODE_MCP_ENABLE_TOOL_SEARCH` | `--enable-tool-search` | `0` | Replace flat catalog with dynamic search meta-tools |
-| `TAXCODE_MCP_ENABLE_CODE_MODE` | `--enable-code-mode` | `0` | Experimental Code Mode on `full`; needs the `code-mode` extra, otherwise skipped with a warning |
-| `TAXCODE_MCP_AUTH_TOKEN` | — | `""` | Shared bearer token required on the HTTP transports (`streamable-http`, `sse`). Leading and trailing whitespace is stripped; empty or whitespace-only means no auth (a warning is logged). Ignored on stdio |
+| `TAXCODE_BASE_URL` | — | `https://api.example.com` | Upstream REST API base URL |
+| `TAXCODE_MCP_READONLY` | — | `0` | Restrict server execution strictly to safe read-only inspection tools |
+| `TAXCODE_MCP_PROFILE` | `--profile` | `full` | Server profile: `full`, `system`, `statutes`, `compliance`, `readonly`, `researcher`, `advisor` |
+| `TAXCODE_MCP_ENABLE_TOOL_SEARCH` | `--enable-tool-search` | `0` | Replace flat catalog with dynamic search meta-tools (`profile=full` only) |
+| `TAXCODE_MCP_ENABLE_CODE_MODE` | `--enable-code-mode` | `0` | Experimental Code Mode on `full` (requires `code-mode` extra) |
+| `TAXCODE_MCP_AUTH_TOKEN` | — | `""` | Shared bearer token for HTTP transports (`streamable-http`, `sse`) |
 | `TAXCODE_MCP_ALLOW_UNAUTHENTICATED_BIND` | — | `0` | Set to `1` (or `true`/`yes`/`on`) to let an HTTP transport bind a host other than `127.0.0.1`, `::1` or `localhost` with no token. Without it, such a bind exits at startup |
 
 ### HTTP transports and authentication

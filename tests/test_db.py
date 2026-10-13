@@ -88,6 +88,26 @@ def test_lookup_statute_by_citation_and_section() -> None:
     assert res_tx is not None
     assert res_tx["jurisdiction"] == "TX"
 
+    # Washington lookup (Capital gains excise tax)
+    res_wa = test_db.lookup_statute("RCW 82.87.040")
+    assert res_wa is not None
+    assert res_wa["jurisdiction"] == "WA"
+
+    # Massachusetts lookup (Fair Share Amendment)
+    res_ma = test_db.lookup_statute("Mass. Const. amend. art. XLIV")
+    assert res_ma is not None
+    assert res_ma["jurisdiction"] == "MA"
+
+    # New Jersey lookup (Gross income tax rates)
+    res_nj = test_db.lookup_statute("N.J.S.A. 54A:2-1")
+    assert res_nj is not None
+    assert res_nj["jurisdiction"] == "NJ"
+
+    # Illinois lookup (Flat tax rate)
+    res_il = test_db.lookup_statute("35 ILCS 5/201")
+    assert res_il is not None
+    assert res_il["jurisdiction"] == "IL"
+
     # Non-existent statute
     assert test_db.lookup_statute("Non-existent 9999") is None
 

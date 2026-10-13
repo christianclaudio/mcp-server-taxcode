@@ -44,6 +44,18 @@
 - [Fla. Stat. § 196.031 (2024) — Exemption of Homesteads](./fl/flstat_196_031.md): Fla. Stat. > Title XIV > Chapter 196 > § 196.031
 - [Tex. Const. art. VIII § 24-a (2019) — Constitutional Prohibition of Personal Income Tax](./tx/txconst_art__viii_sec__24_a.md): Tex. Const. > Article VIII > Section 24-a
 - [Tex. Tax Code § 171.001 (2024) — Texas Franchise Tax (Entity Level)](./tx/txtax_171_001.md): Tex. Tax Code > Title 2 > Subtitle F > Chapter 171 > § 171.001
+- [RCW 82.87.040 (2022) — Tax Imposed on Long-Term Capital Gains](./wa/rcw_82_87_040.md): RCW > Title 82 > Chapter 82.87 > Section 82.87.040
+- [RCW 82.87.020 (2022) — Capital Gains Tax Definitions and Resident Sourcing](./wa/rcw_82_87_020.md): RCW > Title 82 > Chapter 82.87 > Section 82.87.020
+- [Wash. Const. art. VII § 1 (1889) — Constitutional Uniformity and Prohibition of Net Income Tax](./wa/waconst_art__vii_sec__1.md): Wash. Const. > Article VII > Section 1
+- [Mass. Const. amend. art. XLIV (2023) — Fair Share Amendment (4% Millionaires' Surtax)](./ma/maconst_art__xliv.md): Mass. Const. > Amendments > Article XLIV
+- [M.G.L. c. 62 § 4 (2024) — Personal Income Tax Rates](./ma/mgl_62_4.md): M.G.L. > Part I > Title IX > Chapter 62 > Section 4
+- [M.G.L. c. 62 § 1(f) (2024) — Definition of Resident (Domicile and 183-Day Rule)](./ma/mgl_62_1_f.md): M.G.L. > Part I > Title IX > Chapter 62 > Section 1(f)
+- [N.J.S.A. 54A:1-2 (2024) — Definition of Resident Individual](./nj/njsa_54a_1_2.md): N.J.S.A. > Title 54A > Chapter 1 > Section 54A:1-2
+- [N.J.S.A. 54A:2-1 (2024) — New Jersey Gross Income Tax Rates](./nj/njsa_54a_2_1.md): N.J.S.A. > Title 54A > Chapter 2 > Section 54A:2-1
+- [N.J.A.C. 18:35-5.2 (2023) — Convenience of the Employer Rule (Reciprocal Sourcing)](./nj/njac_18_35_5_2.md): N.J.A.C. > Title 18 > Chapter 35 > Subchapter 5 > Section 18:35-5.2
+- [35 ILCS 5/201 (2024) — Illinois Individual Income Tax Rate](./il/ilcs_5_201.md): 35 ILCS 5/ > Article 2 > Section 201
+- [35 ILCS 5/1501(a)(20) (2024) — Definition of Resident](./il/ilcs_5_1501_a_20.md): 35 ILCS 5/ > Article 15 > Section 1501(a)(20)
+- [35 ILCS 5/301 (2024) — Compensation and Nonresident Income Sourcing](./il/ilcs_5_301.md): 35 ILCS 5/ > Article 3 > Section 301
 
 ## Administrative Publications (Hacienda SURI & Georgia DOR)
 

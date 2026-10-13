@@ -42,6 +42,7 @@ async def test_server_composition_mounting() -> None:
         "compliance_evaluate_pr_bona_fide_residency",
         "compliance_calculate_built_in_gain_sourcing",
         "compliance_evaluate_georgia_residency",
+        "compliance_evaluate_state_residency",
     }
     assert expected == tool_names
 

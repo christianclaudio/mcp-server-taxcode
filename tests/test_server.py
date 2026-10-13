@@ -671,3 +671,178 @@ def test_evaluate_georgia_residency_cases() -> None:
 
     with pytest.raises(SafetyViolationError, match="Retirement income cannot be negative"):
         server.evaluate_georgia_residency(days_present_ga=100, retirement_income=-500.0)
+
+
+def test_evaluate_state_residency_cases() -> None:
+    """Test multi-state residency determinations, rates, brackets, and audit gates."""
+    # 1. Unsupported jurisdiction
+    with pytest.raises(SafetyViolationError, match="Unsupported jurisdiction 'ZZ'"):
+        server.evaluate_state_residency(jurisdiction="ZZ", days_in_state=100)
+
+    # 2. Validation error handling
+    with pytest.raises(SafetyViolationError, match="Day count must be between 0 and 366"):
+        server.evaluate_state_residency(jurisdiction="CA", days_in_state=-1)
+    with pytest.raises(SafetyViolationError, match="Day count must be between 0 and 366"):
+        server.evaluate_state_residency(jurisdiction="CA", days_in_state=400)
+    with pytest.raises(SafetyViolationError, match="Federal AGI cannot be negative"):
+        server.evaluate_state_residency(jurisdiction="CA", days_in_state=100, federal_agi=-1.0)
+    with pytest.raises(SafetyViolationError, match="Retirement income cannot be negative"):
+        server.evaluate_state_residency(
+            jurisdiction="GA", days_in_state=100, retirement_income=-1.0
+        )
+    with pytest.raises(SafetyViolationError, match="Capital gains cannot be negative"):
+        server.evaluate_state_residency(jurisdiction="WA", days_in_state=100, capital_gains=-1.0)
+    with pytest.raises(SafetyViolationError, match="Telecommuting day count cannot be negative"):
+        server.evaluate_state_residency(
+            jurisdiction="NY", days_in_state=50, telecommuting_days_out_of_state=-5
+        )
+
+    # 3. Domicile audit risk flags
+    flagged = server.evaluate_state_residency(
+        jurisdiction="FL",
+        days_in_state=200,
+        is_domiciled=True,
+        has_active_homestead_exemption=True,
+        has_active_driver_license=True,
+        has_active_voter_registration=True,
+    )
+    assert flagged["domicile_audit_risk"]["risk_level"] == "high"
+    assert len(flagged["domicile_audit_risk"]["flags"]) == 3
+    assert flagged["tax_computation"]["estimated_state_tax"] == 0.0
+
+    # 4. Georgia (GA)
+    ga_sr = server.evaluate_state_residency(
+        jurisdiction="ga",
+        days_in_state=190,
+        federal_agi=150000.0,
+        filing_status="married_joint",
+        age=66,
+        retirement_income=80000.0,
+        tax_year=2024,
+    )
+    assert ga_sr["is_resident"] is True
+    # 150k - 24k - 65k = 61k * 0.0549
+    assert ga_sr["tax_computation"]["taxable_net_income"] == 61000.0
+    assert ga_sr["tax_computation"]["estimated_state_tax"] == round(61000.0 * 0.0549, 2)
+
+    # 5. New York (NY) - non-resident convenience rule & progressive brackets
+    ny_nonres = server.evaluate_state_residency(
+        jurisdiction="NY",
+        days_in_state=40,
+        is_domiciled=False,
+        telecommuting_days_out_of_state=120,
+    )
+    assert ny_nonres["is_resident"] is False
+    ny_flags = ny_nonres["domicile_audit_risk"]["flags"]
+    assert any("Convenience of the Employer" in f for f in ny_flags)
+    assert ny_nonres["tax_computation"]["estimated_state_tax"] == 0.0
+
+    for inc, expected_pct in [
+        (6000000.0, 0.109),
+        (2000000.0, 0.0965),
+        (500000.0, 0.0685),
+        (150000.0, 0.060),
+        (50000.0, 0.055),
+    ]:
+        ny_res = server.evaluate_state_residency(
+            jurisdiction="NY",
+            days_in_state=200,
+            maintains_permanent_abode=True,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        assert ny_res["is_resident"] is True
+        taxable = inc - 8000.0
+        assert ny_res["tax_computation"]["estimated_state_tax"] == round(taxable * expected_pct, 2)
+
+    # 6. California (CA) - 9 month presumption & progressive brackets
+    for inc, expected_pct in [
+        (2000000.0, 0.133),
+        (500000.0, 0.113),
+        (100000.0, 0.093),
+        (40000.0, 0.060),
+    ]:
+        ca_res = server.evaluate_state_residency(
+            jurisdiction="CA",
+            days_in_state=280,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        assert ca_res["is_resident"] is True
+        assert any("RTC § 17016" in f for f in ca_res["domicile_audit_risk"]["flags"])
+        taxable = inc - 5363.0
+        assert ca_res["tax_computation"]["estimated_state_tax"] == round(taxable * expected_pct, 2)
+
+    # 7. Texas (TX)
+    tx_res = server.evaluate_state_residency(
+        jurisdiction="TX",
+        days_in_state=200,
+        is_domiciled=True,
+        federal_agi=250000.0,
+    )
+    assert tx_res["is_resident"] is True
+    assert tx_res["tax_computation"]["estimated_state_tax"] == 0.0
+
+    # 8. Washington (WA) - Capital gains excise tax
+    wa_res = server.evaluate_state_residency(
+        jurisdiction="WA",
+        days_in_state=200,
+        is_domiciled=True,
+        capital_gains=500000.0,
+    )
+    assert wa_res["is_resident"] is True
+    # Taxable: 500k - 262k = 238k * 0.07 = 16,660.0
+    assert wa_res["tax_computation"]["estimated_state_tax"] == round(238000.0 * 0.07, 2)
+
+    # 9. Massachusetts (MA) - Fair Share Surtax
+    ma_res_high = server.evaluate_state_residency(
+        jurisdiction="MA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=2000000.0,
+        filing_status="single",
+    )
+    assert ma_res_high["is_resident"] is True
+    # Taxable: 2M - 4400 = 1,995,600. Base: 5%, Surtax on 995,600: 4%
+    taxable_ma = 2000000.0 - 4400.0
+    expected_ma = round((taxable_ma * 0.05) + ((taxable_ma - 1000000.0) * 0.04), 2)
+    assert ma_res_high["tax_computation"]["estimated_state_tax"] == expected_ma
+
+    # 10. New Jersey (NJ) - brackets & convenience rule
+    nj_nonres = server.evaluate_state_residency(
+        jurisdiction="NJ",
+        days_in_state=30,
+        is_domiciled=False,
+        telecommuting_days_out_of_state=100,
+    )
+    assert any("NJ Reciprocal Convenience" in f for f in nj_nonres["domicile_audit_risk"]["flags"])
+
+    for inc, expected_pct in [
+        (2000000.0, 0.1075),
+        (800000.0, 0.0897),
+        (200000.0, 0.0637),
+        (50000.0, 0.035),
+    ]:
+        nj_res = server.evaluate_state_residency(
+            jurisdiction="NJ",
+            days_in_state=200,
+            maintains_permanent_abode=True,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        assert nj_res["is_resident"] is True
+        taxable_nj = inc - 1000.0
+        exp_nj = round(taxable_nj * expected_pct, 2)
+        assert nj_res["tax_computation"]["estimated_state_tax"] == exp_nj
+
+    # 11. Illinois (IL) - flat 4.95% rate
+    il_res = server.evaluate_state_residency(
+        jurisdiction="IL",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="married_joint",
+    )
+    assert il_res["is_resident"] is True
+    # Taxable: 100k - 5550 = 94450 * 0.0495
+    assert il_res["tax_computation"]["estimated_state_tax"] == round(94450.0 * 0.0495, 2)
