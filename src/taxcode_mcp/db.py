@@ -232,6 +232,26 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "cross_references": ["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
     },
     {
+        "id": "pr-act22-2012",
+        "jurisdiction": "PR",
+        "corpus": "LEY22",
+        "citation": "Act 22-2012 Sec. 3",
+        "section": "3",
+        "title": "Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)",
+        "text_es": (
+            "Exención total del 100% sobre ganancias de capital devengadas luego de establecer "
+            "residencia bajo la Ley 22 original (sin requisito de donación anual compulsoria)."
+        ),
+        "text_en": (
+            "Predecessor 100% tax exemption on capital gains accrued post-residency under original "
+            "Act 22-2012 (prior to Act 60 mandatory charitable donations)."
+        ),
+        "effective_year": 2012,
+        "superseded_year": 2019,
+        "source_url": "https://bvirtualogp.pr.gov/",
+        "cross_references": ["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
+    },
+    {
         "id": "ga-ocga-48-7-1",
         "jurisdiction": "GA",
         "corpus": "OCGA",
@@ -257,22 +277,62 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         ],
     },
     {
-        "id": "ga-ocga-48-7-20",
+        "id": "ga-ocga-48-7-20-2024",
         "jurisdiction": "GA",
         "corpus": "OCGA",
         "citation": "O.C.G.A. § 48-7-20",
         "section": "48-7-20",
-        "title": "Individual Income Tax Rates",
+        "title": "Individual Income Tax Rates (2024 Flat Rate: 5.49%)",
         "text_es": (
-            "Establece una tasa impositiva fija (flat tax) sobre el ingreso neto tributable "
-            "de individuos (5.49% para 2024, 5.39% para 2025, con reducciones graduales "
-            "hacia 4.99% bajo HB 1023)."
+            "Establece una tasa impositiva fija (flat tax) de 5.49% sobre el ingreso neto "
+            "tributable de individuos para el año contributivo 2024 bajo HB 1023."
         ),
         "text_en": (
-            "Imposes a flat income tax rate on Georgia taxable net income of individuals "
-            "(5.49% for 2024, 5.39% for 2025, transitioning towards 4.99% under HB 1023 / HB 1015)."
+            "Imposes a flat individual income tax rate of 5.49% on Georgia taxable net income "
+            "for tax year 2024 pursuant to HB 1023, eliminating previous graduated brackets."
         ),
         "effective_year": 2024,
+        "superseded_year": 2025,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+    },
+    {
+        "id": "ga-ocga-48-7-20-2025",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-20",
+        "section": "48-7-20",
+        "title": "Individual Income Tax Rates (2025 Flat Rate: 5.39%)",
+        "text_es": (
+            "Acelera la reducción de la tasa impositiva individual fija al 5.39% para el "
+            "año contributivo 2025 bajo HB 1015."
+        ),
+        "text_en": (
+            "Accelerates the reduction of the flat individual income tax rate to 5.39% for "
+            "tax year 2025 pursuant to HB 1015."
+        ),
+        "effective_year": 2025,
+        "superseded_year": 2026,
+        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+    },
+    {
+        "id": "ga-ocga-48-7-20-2026",
+        "jurisdiction": "GA",
+        "corpus": "OCGA",
+        "citation": "O.C.G.A. § 48-7-20",
+        "section": "48-7-20",
+        "title": "Individual Income Tax Rates (2026 Target Flat Rate: 4.99%)",
+        "text_es": (
+            "Establece la tasa impositiva fija objetivo de 4.99% sobre el ingreso neto "
+            "tributable a partir del 1 de enero de 2026 bajo HB 1023."
+        ),
+        "text_en": (
+            "Imposes the target flat individual income tax rate of 4.99% for taxable years "
+            "beginning on or after January 1, 2026 pursuant to HB 1023."
+        ),
+        "effective_year": 2026,
+        "superseded_year": None,
         "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
         "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
     },
@@ -439,12 +499,13 @@ class TaxDatabase:
                         id VARCHAR PRIMARY KEY,
                         jurisdiction VARCHAR,
                         corpus VARCHAR,
-                        citation VARCHAR UNIQUE,
+                        citation VARCHAR,
                         section VARCHAR,
                         title VARCHAR,
                         text_es VARCHAR,
                         text_en VARCHAR,
                         effective_year INTEGER,
+                        superseded_year INTEGER,
                         source_url VARCHAR,
                         cross_references VARCHAR[]
                     );
@@ -473,8 +534,8 @@ class TaxDatabase:
                             INSERT INTO statutes (
                                 id, jurisdiction, corpus, citation, section,
                                 title, text_es, text_en, effective_year,
-                                source_url, cross_references
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                                superseded_year, source_url, cross_references
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                             """,
                             [
                                 s["id"],
@@ -486,6 +547,7 @@ class TaxDatabase:
                                 s["text_es"],
                                 s["text_en"],
                                 s["effective_year"],
+                                s.get("superseded_year"),
                                 s["source_url"],
                                 s["cross_references"],
                             ],
@@ -543,16 +605,18 @@ class TaxDatabase:
         self,
         citation_or_section: str,
         jurisdiction: str | None = None,
+        tax_year: int | None = None,
         lang: str = "en",
     ) -> dict[str, Any] | None:
-        """Find a statute by exact citation or section code."""
+        """Find a statute by exact citation or section code and optional tax year."""
         query_val = citation_or_section.strip()
         with self._lock:
             conn = self._get_read_conn()
             try:
                 sql = """
                     SELECT id, jurisdiction, corpus, citation, section, title,
-                           text_es, text_en, effective_year, source_url, cross_references
+                           text_es, text_en, effective_year, superseded_year,
+                           source_url, cross_references
                     FROM statutes
                     WHERE (
                         LOWER(citation) = LOWER(?)
@@ -565,12 +629,40 @@ class TaxDatabase:
                     sql += " AND UPPER(jurisdiction) = UPPER(?)"
                     params.append(jurisdiction.strip())
 
-                sql += " LIMIT 1;"
+                if tax_year is not None:
+                    sql += (
+                        " AND effective_year <= ? "
+                        "AND (superseded_year IS NULL OR ? < superseded_year)"
+                    )
+                    params.extend([tax_year, tax_year])
+
+                sql += " ORDER BY effective_year DESC LIMIT 1;"
                 result = conn.execute(sql, params).fetchone()
                 if not result:
                     return None
 
                 text = result[7] if lang.lower() == "en" else result[6]
+                matched_citation = result[3]
+
+                history_rows = conn.execute(
+                    """
+                    SELECT effective_year, superseded_year, id
+                    FROM statutes
+                    WHERE LOWER(citation) = LOWER(?)
+                    ORDER BY effective_year DESC;
+                    """,
+                    [matched_citation],
+                ).fetchall()
+                available_versions = [
+                    {
+                        "effective_year": h[0],
+                        "superseded_year": h[1],
+                        "is_current": h[1] is None,
+                        "id": h[2],
+                    }
+                    for h in history_rows
+                ]
+
                 return {
                     "id": result[0],
                     "jurisdiction": result[1],
@@ -582,8 +674,11 @@ class TaxDatabase:
                     "text_es": result[6],
                     "text_en": result[7],
                     "effective_year": result[8],
-                    "source_url": result[9],
-                    "cross_references": result[10] or [],
+                    "superseded_year": result[9],
+                    "is_current": result[9] is None,
+                    "available_versions": available_versions,
+                    "source_url": result[10],
+                    "cross_references": result[11] or [],
                     "language": lang.lower(),
                     "official_language": "es" if result[1] == "PR" else "en",
                 }
@@ -596,6 +691,7 @@ class TaxDatabase:
         query: str,
         jurisdiction: str | None = None,
         corpus: str | None = None,
+        tax_year: int | None = None,
         lang: str = "en",
         limit: int = 5,
     ) -> list[dict[str, Any]]:
@@ -606,7 +702,8 @@ class TaxDatabase:
             try:
                 sql = """
                     SELECT id, jurisdiction, corpus, citation, section, title,
-                           text_es, text_en, effective_year, source_url, cross_references
+                           text_es, text_en, effective_year, superseded_year,
+                           source_url, cross_references
                     FROM statutes
                     WHERE (
                         LOWER(title) LIKE ?
@@ -622,8 +719,14 @@ class TaxDatabase:
                 if corpus:
                     sql += " AND UPPER(corpus) = UPPER(?)"
                     params.append(corpus.strip())
+                if tax_year is not None:
+                    sql += (
+                        " AND effective_year <= ? "
+                        "AND (superseded_year IS NULL OR ? < superseded_year)"
+                    )
+                    params.extend([tax_year, tax_year])
 
-                sql += " ORDER BY id LIMIT ?;"
+                sql += " ORDER BY effective_year DESC, id LIMIT ?;"
                 params.append(limit)
 
                 rows = conn.execute(sql, params).fetchall()
@@ -640,8 +743,10 @@ class TaxDatabase:
                             "title": r[5],
                             "operative_text": text,
                             "effective_year": r[8],
-                            "source_url": r[9],
-                            "cross_references": r[10] or [],
+                            "superseded_year": r[9],
+                            "is_current": r[9] is None,
+                            "source_url": r[10],
+                            "cross_references": r[11] or [],
                         }
                     )
                 return output
@@ -702,8 +807,8 @@ class TaxDatabase:
                     INSERT INTO statutes (
                         id, jurisdiction, corpus, citation, section,
                         title, text_es, text_en, effective_year,
-                        source_url, cross_references
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                        superseded_year, source_url, cross_references
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                     """,
                     [
                         statute["id"],
@@ -715,6 +820,7 @@ class TaxDatabase:
                         statute.get("text_es", ""),
                         statute.get("text_en", ""),
                         statute.get("effective_year", 2026),
+                        statute.get("superseded_year"),
                         statute.get("source_url", ""),
                         statute.get("cross_references", []),
                     ],
@@ -733,8 +839,8 @@ class TaxDatabase:
                     INSERT INTO statutes (
                         id, jurisdiction, corpus, citation, section,
                         title, text_es, text_en, effective_year,
-                        source_url, cross_references
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        superseded_year, source_url, cross_references
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ON CONFLICT (id) DO UPDATE SET
                         jurisdiction = EXCLUDED.jurisdiction,
                         corpus = EXCLUDED.corpus,
@@ -744,6 +850,7 @@ class TaxDatabase:
                         text_es = EXCLUDED.text_es,
                         text_en = EXCLUDED.text_en,
                         effective_year = EXCLUDED.effective_year,
+                        superseded_year = EXCLUDED.superseded_year,
                         source_url = EXCLUDED.source_url,
                         cross_references = EXCLUDED.cross_references;
                     """,
@@ -757,6 +864,7 @@ class TaxDatabase:
                         statute.get("text_es", ""),
                         statute.get("text_en", ""),
                         statute.get("effective_year", 2026),
+                        statute.get("superseded_year"),
                         statute.get("source_url", ""),
                         statute.get("cross_references", []),
                     ],

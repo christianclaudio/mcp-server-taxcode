@@ -40,12 +40,16 @@ class StatuteRecord:
     text_es: str
     effective_year: int
     source_url: str
+    superseded_year: int | None = None
     cross_references: list[str] = field(default_factory=list)
     breadcrumbs: str = ""
 
     def content_hash(self) -> str:
         """Compute a SHA-256 checksum of the bilingual text payload."""
-        payload = f"{self.citation}|{self.title}|{self.text_en}|{self.text_es}"
+        payload = (
+            f"{self.citation}|{self.title}|{self.text_en}|{self.text_es}|"
+            f"{self.effective_year}|{self.superseded_year}"
+        )
         return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
     def to_dict(self) -> dict[str, Any]:
@@ -60,6 +64,7 @@ class StatuteRecord:
             "text_en": self.text_en,
             "text_es": self.text_es,
             "effective_year": self.effective_year,
+            "superseded_year": self.superseded_year,
             "source_url": self.source_url,
             "cross_references": self.cross_references,
         }
@@ -482,6 +487,27 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         cross_references=["Ley 60-2019 Sec. 2021.01", "Ley 60-2019 Sec. 2022.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55",
     ),
+    StatuteRecord(
+        id="pr-act22-2012",
+        jurisdiction="PR",
+        corpus="LEY22",
+        citation="Act 22-2012 Sec. 3",
+        section="3",
+        title="Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)",
+        text_en=(
+            "Predecessor 100% tax exemption on capital gains accrued post-residency under original "
+            "Act 22-2012 (prior to Act 60 mandatory charitable donations)."
+        ),
+        text_es=(
+            "Exención total del 100% sobre ganancias de capital devengadas luego de establecer "
+            "residencia bajo la Ley 22 original (sin requisito de donación anual compulsoria)."
+        ),
+        effective_year=2012,
+        superseded_year=2019,
+        source_url="https://bvirtualogp.pr.gov/",
+        cross_references=["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
+        breadcrumbs="Ley 22-2012 > Sección 3",
+    ),
     # State of Georgia (Title 48 O.C.G.A. & Regulations)
     StatuteRecord(
         id="ga-ocga-48-7-1",
@@ -509,24 +535,67 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1",
     ),
     StatuteRecord(
-        id="ga-ocga-48-7-20",
+        id="ga-ocga-48-7-20-2024",
         jurisdiction="GA",
         corpus="OCGA",
         citation="O.C.G.A. § 48-7-20",
         section="48-7-20",
-        title="Individual Income Tax Rates",
+        title="Individual Income Tax Rates (2024 Flat Rate: 5.49%)",
         text_en=(
-            "Imposes a flat income tax rate on Georgia taxable net income of individuals "
-            "(5.49% for 2024, 5.39% for 2025, transitioning towards 4.99% under HB 1023 / HB 1015)."
+            "Imposes a flat individual income tax rate of 5.49% on Georgia taxable net income "
+            "for tax year 2024 pursuant to HB 1023, eliminating previous graduated brackets."
         ),
         text_es=(
-            "Establece una tasa impositiva fija (flat tax) sobre el ingreso neto tributable de individuos "
-            "(5.49% para 2024, 5.39% para 2025, con reducciones graduales hacia 4.99% bajo HB 1023)."
+            "Establece una tasa impositiva fija (flat tax) de 5.49% sobre el ingreso neto "
+            "tributable de individuos para el año contributivo 2024 bajo HB 1023."
         ),
         effective_year=2024,
+        superseded_year=2025,
         source_url="https://dor.georgia.gov/taxes/individual-income-tax",
         cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
-        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20",
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2024)",
+    ),
+    StatuteRecord(
+        id="ga-ocga-48-7-20-2025",
+        jurisdiction="GA",
+        corpus="OCGA",
+        citation="O.C.G.A. § 48-7-20",
+        section="48-7-20",
+        title="Individual Income Tax Rates (2025 Flat Rate: 5.39%)",
+        text_en=(
+            "Accelerates the reduction of the flat individual income tax rate to 5.39% for "
+            "tax year 2025 pursuant to HB 1015."
+        ),
+        text_es=(
+            "Acelera la reducción de la tasa impositiva individual fija al 5.39% para el "
+            "año contributivo 2025 bajo HB 1015."
+        ),
+        effective_year=2025,
+        superseded_year=2026,
+        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2025)",
+    ),
+    StatuteRecord(
+        id="ga-ocga-48-7-20-2026",
+        jurisdiction="GA",
+        corpus="OCGA",
+        citation="O.C.G.A. § 48-7-20",
+        section="48-7-20",
+        title="Individual Income Tax Rates (2026 Target Flat Rate: 4.99%)",
+        text_en=(
+            "Imposes the target flat individual income tax rate of 4.99% for taxable years "
+            "beginning on or after January 1, 2026 pursuant to HB 1023."
+        ),
+        text_es=(
+            "Establece la tasa impositiva fija objetivo de 4.99% sobre el ingreso neto "
+            "tributable a partir del 1 de enero de 2026 bajo HB 1023."
+        ),
+        effective_year=2026,
+        superseded_year=None,
+        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
+        breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2026)",
     ),
     StatuteRecord(
         id="ga-ocga-48-7-27",
@@ -723,12 +792,22 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
             target_dir = ga_dir
         else:
             target_dir = us_dir
-        filename = f"{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}.md"
+
+        if s.superseded_year:
+            file_base = (
+                f"{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}"
+                f"_{s.effective_year}"
+            )
+        else:
+            file_base = f"{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}"
+
+        filename = f"{file_base}.md"
         content = f"""# {s.citation} — {s.title}
 
 - **Jurisdiction:** {s.jurisdiction}
 - **Corpus:** {s.corpus}
 - **Effective Year:** {s.effective_year}
+- **Superseded Year:** {s.superseded_year or "Current / In Force"}
 - **Source:** [{s.source_url}]({s.source_url})
 - **Hierarchy:** `{s.breadcrumbs}`
 - **Cross References:** {", ".join(f"`{ref}`" for ref in s.cross_references)}
@@ -756,8 +835,15 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
         "",
     ]
     for s in STATUTES_CATALOG:
+        if s.superseded_year:
+            file_base = (
+                f"{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}"
+                f"_{s.effective_year}"
+            )
+        else:
+            file_base = f"{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}"
         llms_summary.append(
-            f"- [{s.citation} — {s.title}](./{s.jurisdiction.lower()}/{s.corpus.lower()}_{s.section.replace('.', '_').replace('-', '_')}.md): {s.breadcrumbs}"
+            f"- [{s.citation} ({s.effective_year}) — {s.title}](./{s.jurisdiction.lower()}/{file_base}.md): {s.breadcrumbs}"
         )
 
     llms_summary.extend(

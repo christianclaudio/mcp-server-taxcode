@@ -229,3 +229,61 @@ def test_upsert_statute_and_publication() -> None:
     # Delete publication
     assert test_db.delete_publication("pub-test-1") is True
     assert test_db.delete_publication("non-existent-pub") is False
+
+
+def test_lookup_statute_temporal_versioning() -> None:
+    """Temporal lookups return year-specific statutes or default to the latest version."""
+    test_db = TaxDatabase(":memory:")
+
+    # Default lookup without tax_year returns the latest (2026) version
+    latest = test_db.lookup_statute("O.C.G.A. § 48-7-20")
+    assert latest is not None
+    assert latest["effective_year"] == 2026
+    assert latest["superseded_year"] is None
+    assert latest["is_current"] is True
+    assert len(latest["available_versions"]) == 3
+
+    # Point-in-time lookup for 2024 tax year audit returns 2024 flat rate (5.49%)
+    statute_2024 = test_db.lookup_statute("O.C.G.A. § 48-7-20", tax_year=2024)
+    assert statute_2024 is not None
+    assert statute_2024["effective_year"] == 2024
+    assert statute_2024["superseded_year"] == 2025
+    assert statute_2024["is_current"] is False
+    assert "5.49%" in statute_2024["title"]
+
+    # Point-in-time lookup for 2025 tax year returns 2025 rate (5.39%)
+    statute_2025 = test_db.lookup_statute("O.C.G.A. § 48-7-20", tax_year=2025)
+    assert statute_2025 is not None
+    assert statute_2025["effective_year"] == 2025
+    assert statute_2025["superseded_year"] == 2026
+    assert "5.39%" in statute_2025["title"]
+
+    # Predecessor PR Act 22 lookup for 2015 tax year
+    act22 = test_db.lookup_statute("Act 22-2012 Sec. 3", tax_year=2015)
+    assert act22 is not None
+    assert act22["effective_year"] == 2012
+    assert act22["superseded_year"] == 2019
+    assert act22["is_current"] is False
+
+    # Act 22 in tax year 2022 was already superseded by Ley 60 (returns None)
+    act22_superseded = test_db.lookup_statute("Act 22-2012 Sec. 3", tax_year=2022)
+    assert act22_superseded is None
+
+
+def test_search_statutes_temporal_and_descending_order() -> None:
+    """Search results sort by effective_year descending and filter by tax_year."""
+    test_db = TaxDatabase(":memory:")
+
+    # Searching across GA returns newest versions first
+    results = test_db.search_statutes("Flat Rate", jurisdiction="GA", limit=10)
+    assert len(results) >= 3
+    years = [r["effective_year"] for r in results if r["citation"] == "O.C.G.A. § 48-7-20"]
+    assert years == sorted(years, reverse=True)
+
+    # Searching with tax_year=2024 filters to versions valid in 2024
+    results_2024 = test_db.search_statutes(
+        "Individual Income Tax Rates", jurisdiction="GA", tax_year=2024, limit=10
+    )
+    for r in results_2024:
+        if r["citation"] == "O.C.G.A. § 48-7-20":
+            assert r["effective_year"] == 2024

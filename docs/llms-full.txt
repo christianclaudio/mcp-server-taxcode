@@ -162,6 +162,15 @@ Prescribes annual compliance report requirements, filing fees ($5,000 annual fil
 ### Español
 Prescribe los requisitos del informe anual de cumplimiento, cargos de presentación anual ($5,000) y la aportación benéfica compulsoria de $10,000 anuales distribuida entre entidades sin fines de lucro certificadas.
 
+## Act 22-2012 Sec. 3: Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)
+`Ley 22-2012 > Sección 3`
+
+### English
+Predecessor 100% tax exemption on capital gains accrued post-residency under original Act 22-2012 (prior to Act 60 mandatory charitable donations).
+
+### Español
+Exención total del 100% sobre ganancias de capital devengadas luego de establecer residencia bajo la Ley 22 original (sin requisito de donación anual compulsoria).
+
 ## O.C.G.A. § 48-7-1: Income Tax Definitions / Residency Rules
 `O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1`
 
@@ -171,14 +180,32 @@ Defines Georgia resident as any individual who is a legal resident of Georgia on
 ### Español
 Define residente de Georgia como todo individuo con residencia legal en Georgia el día de pago del impuesto, que resida en el estado al menos 183 días del año contributivo, o que mantenga una vivienda permanente.
 
-## O.C.G.A. § 48-7-20: Individual Income Tax Rates
-`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20`
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates (2024 Flat Rate: 5.49%)
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2024)`
 
 ### English
-Imposes a flat income tax rate on Georgia taxable net income of individuals (5.49% for 2024, 5.39% for 2025, transitioning towards 4.99% under HB 1023 / HB 1015).
+Imposes a flat individual income tax rate of 5.49% on Georgia taxable net income for tax year 2024 pursuant to HB 1023, eliminating previous graduated brackets.
 
 ### Español
-Establece una tasa impositiva fija (flat tax) sobre el ingreso neto tributable de individuos (5.49% para 2024, 5.39% para 2025, con reducciones graduales hacia 4.99% bajo HB 1023).
+Establece una tasa impositiva fija (flat tax) de 5.49% sobre el ingreso neto tributable de individuos para el año contributivo 2024 bajo HB 1023.
+
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates (2025 Flat Rate: 5.39%)
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2025)`
+
+### English
+Accelerates the reduction of the flat individual income tax rate to 5.39% for tax year 2025 pursuant to HB 1015.
+
+### Español
+Acelera la reducción de la tasa impositiva individual fija al 5.39% para el año contributivo 2025 bajo HB 1015.
+
+## O.C.G.A. § 48-7-20: Individual Income Tax Rates (2026 Target Flat Rate: 4.99%)
+`O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2026)`
+
+### English
+Imposes the target flat individual income tax rate of 4.99% for taxable years beginning on or after January 1, 2026 pursuant to HB 1023.
+
+### Español
+Establece la tasa impositiva fija objetivo de 4.99% sobre el ingreso neto tributable a partir del 1 de enero de 2026 bajo HB 1023.
 
 ## O.C.G.A. § 48-7-27: Computation of Georgia Taxable Net Income
 `O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-27`

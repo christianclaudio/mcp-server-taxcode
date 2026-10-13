@@ -42,13 +42,17 @@ statutes_server.add_transform(
 
 @statutes_server.tool(
     name="lookup_statute",
-    description="Retrieve exact statutory language and metadata by citation or section code.",
+    description=(
+        "Retrieve exact statutory language, temporal version, and metadata by "
+        "citation or section code."
+    ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "read_only"},
 )
 async def lookup_statute(
     citation_or_section: str,
     jurisdiction: str | None = None,
+    tax_year: int | None = None,
     lang: str = "en",
 ) -> dict[str, Any]:
     """Find a statute by exact citation or section code in DuckDB."""
@@ -56,15 +60,21 @@ async def lookup_statute(
         result = db.lookup_statute(
             citation_or_section=citation_or_section,
             jurisdiction=jurisdiction,
+            tax_year=tax_year,
             lang=lang,
         )
         if result is None:
+            msg = f"Statute matching '{citation_or_section}'"
+            if tax_year:
+                msg += f" for tax year {tax_year}"
+            if jurisdiction:
+                msg += f" in jurisdiction '{jurisdiction}'"
             return {
                 "status": "not_found",
                 "query": citation_or_section,
-                "message": (
-                    f"Statute matching '{citation_or_section}' not found in indexed corpora."
-                ),
+                "tax_year": tax_year,
+                "jurisdiction": jurisdiction,
+                "message": f"{msg} not found in indexed corpora.",
             }
         return {"status": "success", "data": result}
     except Exception as exc:
@@ -74,7 +84,10 @@ async def lookup_statute(
 
 @statutes_server.tool(
     name="search_tax_code",
-    description="Keyword and concept search across US and PR statutory corpora.",
+    description=(
+        "Keyword and concept search across Federal and State statutory corpora, "
+        "ordered by tax year descending."
+    ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},
 )
@@ -82,17 +95,24 @@ async def search_tax_code(
     query: str,
     jurisdiction: str | None = None,
     corpus: str | None = None,
+    tax_year: int | None = None,
     limit: int = 5,
     client_id: str = "taxcode-client-default",
 ) -> dict[str, Any]:
     """Search statutes by keywords or concepts in DuckDB."""
     try:
         matches = db.search_statutes(
-            query=query, jurisdiction=jurisdiction, corpus=corpus, limit=limit
+            query=query,
+            jurisdiction=jurisdiction,
+            corpus=corpus,
+            tax_year=tax_year,
+            limit=limit,
         )
         return {
             "status": "success",
             "query": query,
+            "tax_year": tax_year,
+            "jurisdiction": jurisdiction,
             "count": len(matches),
             "results": matches,
             "client_id": client_id,

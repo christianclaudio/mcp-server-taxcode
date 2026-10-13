@@ -31,10 +31,31 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert statute["status"] == "success"
     assert statute["data"]["section"] == "933"
 
+    # 2b. Lookup statute with tax_year (historical audit point-in-time)
+    statute_ga_2024 = await server.lookup_statute("O.C.G.A. § 48-7-20", tax_year=2024)
+    assert statute_ga_2024["status"] == "success"
+    assert statute_ga_2024["data"]["effective_year"] == 2024
+    assert statute_ga_2024["data"]["superseded_year"] == 2025
+
+    # 2c. Lookup statute not found with tax_year and jurisdiction
+    statute_miss = await server.lookup_statute("Nonexistent 9999", jurisdiction="GA", tax_year=2024)
+    assert statute_miss["status"] == "not_found"
+    assert statute_miss["tax_year"] == 2024
+    assert statute_miss["jurisdiction"] == "GA"
+
     # 3. Search tax code
     search_res = await server.search_tax_code("bona fide resident")
     assert search_res["status"] == "success"
     assert len(search_res["results"]) > 0
+
+    # 3b. Search tax code with tax_year and jurisdiction
+    search_ga = await server.search_tax_code(
+        "Individual Income Tax Rates", jurisdiction="GA", tax_year=2024
+    )
+    assert search_ga["status"] == "success"
+    assert search_ga["tax_year"] == 2024
+    assert search_ga["jurisdiction"] == "GA"
+    assert len(search_ga["results"]) > 0
 
     # 4. List publications
     pubs = await server.list_publications()
