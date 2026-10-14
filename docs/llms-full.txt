@@ -458,3 +458,75 @@ Rules for allocating and sourcing compensation and business income of nonresiden
 
 ### Español
 Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado.
+
+## 72 P.S. § 7302: Imposition of Tax
+`72 P.S. > Chapter 73 > § 7302`
+
+### English
+Imposes Pennsylvania personal income tax at a constitutional flat rate of 3.07% on eight specified classes of taxable income.
+
+### Español
+Impone un impuesto sobre la renta personal con tasa uniforme y fija del 3.07% sobre ocho clases especificadas de ingresos gravables.
+
+## 72 P.S. § 7301: Definitions - Resident Individual
+`72 P.S. > Chapter 73 > § 7301`
+
+### English
+Defines a resident individual as one domiciled in Pennsylvania or who maintains a permanent place of abode and spends in the aggregate more than 183 days in the commonwealth.
+
+### Español
+Define individuo residente como quien tiene domicilio en Pensilvania o mantiene un lugar permanente de morada y pasa más de 183 días en el estado.
+
+## 61 Pa. Code § 109.8: Convenience of the Employer Rule
+`61 Pa. Code > Chapter 109 > § 109.8`
+
+### English
+Requires compensation earned by nonresidents telecommuting for a Pennsylvania employer to be sourced to Pennsylvania unless working from home is for employer necessity.
+
+### Español
+Dispone que la compensación por servicios remotos o de teletrabajo para un patrono de Pensilvania se considera de fuente local a menos que el teletrabajo sea por necesidad del patrono.
+
+## Conn. Gen. Stat. § 12-700: Imposition of Income Tax and Rates
+`C.G.S. > Title 12 > Chapter 229 > § 12-700`
+
+### English
+Imposes graduated personal income tax rates from 3.0% to 6.99% on resident Connecticut taxable income with benefit phase-out recaptures for high earners.
+
+### Español
+Impone tasas impositivas graduadas del 3.0% al 6.99% sobre el ingreso neto de residentes, con eliminación progresiva de tramos de exención en ingresos altos.
+
+## Conn. Gen. Stat. § 12-701: Definitions - Resident and Sourcing
+`C.G.S. > Title 12 > Chapter 229 > § 12-701`
+
+### English
+Defines resident as an individual domiciled in Connecticut or who maintains a permanent place of abode and spends in the aggregate more than 183 days of the taxable year in state.
+
+### Español
+Define residente statutario como quien mantiene un lugar permanente de morada en Connecticut y pasa en total más de 183 días en el año contributivo.
+
+## Conn. Gen. Stat. § 12-711: Convenience of Employer Rule
+`C.G.S. > Title 12 > Chapter 229 > § 12-711`
+
+### English
+Applies a reciprocal convenience of the employer test to nonresident compensation earned while telecommuting for a Connecticut employer if employee's state applies a convenience rule.
+
+### Español
+Aplica la regla de conveniencia del patrono para determinar la fuente de ingresos salariales de no residentes que teletrabajan si su estado de residencia aplica una regla similar.
+
+## N.C. Gen. Stat. § 105-153.7: Individual Income Tax Imposition and Rate
+`N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.7`
+
+### English
+Imposes individual income tax at a decreasing flat rate: 4.5% for 2024, 4.25% for 2025, and 3.99% for taxable years beginning on or after 2026.
+
+### Español
+Impone un impuesto sobre la renta individual de tasa fija decreciente: 4.5% en 2024, 4.25% en 2025, y 3.99% para años tributarios 2026 y posteriores.
+
+## N.C. Gen. Stat. § 105-153.3: Definitions - Resident Individual
+`N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.3`
+
+### English
+Defines resident individual as one domiciled in North Carolina or who resides in state for more than 183 days during the taxable year creating a rebuttable presumption of residency.
+
+### Español
+Define individuo residente como quien reside o tiene domicilio en Carolina del Norte, o quien pasa más de 183 días en el estado durante el año contributivo presumiendo residencia.

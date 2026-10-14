@@ -320,14 +320,16 @@ def evaluate_georgia_residency(
     }
 
 
-SUPPORTED_STATE_JURISDICTIONS = frozenset({"GA", "NY", "CA", "FL", "TX", "WA", "MA", "NJ", "IL"})
+SUPPORTED_STATE_JURISDICTIONS = frozenset(
+    {"GA", "NY", "CA", "FL", "TX", "WA", "MA", "NJ", "IL", "PA", "CT", "NC"}
+)
 
 
 @compliance_server.tool(
     name="evaluate_state_residency",
     description=(
         "Evaluate individual statutory residency, domicile nexus, and state tax liability "
-        "across key migration corridors: GA, NY, CA, FL, TX, WA, MA, NJ, and IL."
+        "across key migration corridors: GA, NY, CA, FL, TX, WA, MA, NJ, IL, PA, CT, and NC."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"compliance", "states", "residency", "read_only"},
@@ -515,7 +517,7 @@ def evaluate_state_residency(
             else:
                 estimated_tax = round(taxable_income * 0.035, 2)
 
-    else:  # IL
+    elif state == "IL":
         statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"
         is_resident = is_domiciled or (days_in_state >= 183 and maintains_permanent_abode)
         rate_authority = "35 ILCS 5/201"
@@ -523,6 +525,61 @@ def evaluate_state_residency(
         exemption = 5550.0 if is_mfj else 2775.0
         taxable_income = max(0.0, federal_agi - exemption)
         estimated_tax = round(taxable_income * 0.0495, 2) if is_resident else 0.0
+
+    elif state == "PA":
+        statutory_basis = "72 P.S. § 7301, 72 P.S. § 7302; 61 Pa. Code § 109.8"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
+        if not is_resident and telecommuting_days_out_of_state > 0:
+            audit_flags.append(
+                "PA Convenience of the Employer Rule (61 Pa. Code § 109.8): Wages earned while "
+                "telecommuting for a Pennsylvania employer are sourced to PA unless remote work "
+                "is for the employer's necessity."
+            )
+        rate_authority = "72 P.S. § 7302"
+        rate_desc = "Constitutional flat 3.07% rate"
+        taxable_income = max(0.0, federal_agi)
+        estimated_tax = round(taxable_income * 0.0307, 2) if is_resident else 0.0
+
+    elif state == "CT":
+        statutory_basis = "Conn. Gen. Stat. §§ 12-700, 12-701, 12-711"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
+        if not is_resident and telecommuting_days_out_of_state > 0:
+            audit_flags.append(
+                "CT Reciprocal Convenience Rule (Conn. Gen. Stat. § 12-711): Nonresident "
+                "telecommuting wages are sourced to CT if employee's resident state applies "
+                "a convenience rule."
+            )
+        rate_authority = "Conn. Gen. Stat. § 12-700"
+        rate_desc = "Graduated brackets from 3.0% to 6.99%"
+        # Standard exemption phase-out model
+        exemption = 24000.0 if is_mfj else 15000.0
+        taxable_income = max(0.0, federal_agi - exemption)
+        if is_resident:
+            if taxable_income > 500000:
+                estimated_tax = round(taxable_income * 0.0699, 2)
+            elif taxable_income > 100000:
+                estimated_tax = round(taxable_income * 0.06, 2)
+            elif taxable_income > 50000:
+                estimated_tax = round(taxable_income * 0.05, 2)
+            else:
+                estimated_tax = round(taxable_income * 0.03, 2)
+
+    else:  # NC
+        statutory_basis = "N.C. Gen. Stat. §§ 105-153.3, 105-153.7"
+        is_resident = is_domiciled or (days_in_state > 183)
+        rate_authority = "N.C. Gen. Stat. § 105-153.7"
+        if tax_year >= 2026:
+            nc_rate = 0.0399
+            rate_desc = "Flat 3.99% rate (2026+ statutory phase-in)"
+        elif tax_year == 2025:
+            nc_rate = 0.0425
+            rate_desc = "Flat 4.25% rate (2025 statutory rate)"
+        else:
+            nc_rate = 0.045
+            rate_desc = "Flat 4.5% rate (2024 statutory rate)"
+        exemption = 25500.0 if is_mfj else 12750.0
+        taxable_income = max(0.0, federal_agi - exemption)
+        estimated_tax = round(taxable_income * nc_rate, 2) if is_resident else 0.0
 
     return {
         "status": "success",

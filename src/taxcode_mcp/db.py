@@ -918,9 +918,179 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
         "cross_references": ["35 ILCS 5/201"],
     },
+    {
+        "id": "pa-stat-72-ps-7302",
+        "jurisdiction": "PA",
+        "corpus": "P.S.",
+        "citation": "72 P.S. § 7302",
+        "section": "7302",
+        "title": "Imposition of Tax",
+        "text_es": (
+            "Impone un impuesto sobre la renta personal con tasa uniforme y fija del 3.07% sobre "
+            "ocho clases especificadas de ingresos gravables."
+        ),
+        "text_en": (
+            "Imposes Pennsylvania personal income tax at a constitutional flat rate of 3.07% on "
+            "eight specified classes of taxable income."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=72&div=0&chpt=73",
+        "cross_references": ["72 P.S. § 7301", "72 P.S. § 7303"],
+    },
+    {
+        "id": "pa-stat-72-ps-7301",
+        "jurisdiction": "PA",
+        "corpus": "P.S.",
+        "citation": "72 P.S. § 7301",
+        "section": "7301",
+        "title": "Definitions - Resident Individual",
+        "text_es": (
+            "Define individuo residente como quien tiene domicilio en Pensilvania o mantiene un "
+            "lugar permanente de morada y pasa más de 183 días en el estado."
+        ),
+        "text_en": (
+            "Defines a resident individual as one domiciled in Pennsylvania or who maintains a "
+            "permanent place of abode and spends in the aggregate more than 183 days in the "
+            "commonwealth."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=72&div=0&chpt=73",
+        "cross_references": ["72 P.S. § 7302", "61 Pa. Code § 101.1"],
+    },
+    {
+        "id": "pa-code-61-109-8",
+        "jurisdiction": "PA",
+        "corpus": "Pa. Code",
+        "citation": "61 Pa. Code § 109.8",
+        "section": "109.8",
+        "title": "Convenience of the Employer Rule",
+        "text_es": (
+            "Dispone que la compensación por servicios remotos o de teletrabajo para un patrono "
+            "de Pensilvania se considera de fuente local a menos que el teletrabajo sea por "
+            "necesidad del patrono."
+        ),
+        "text_en": (
+            "Requires compensation earned by nonresidents telecommuting for a Pennsylvania "
+            "employer to be sourced to Pennsylvania unless working from home is for employer "
+            "necessity."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/061/chapter109/s109.8.html",
+        "cross_references": ["72 P.S. § 7308"],
+    },
+    {
+        "id": "ct-stat-cgs-12-700",
+        "jurisdiction": "CT",
+        "corpus": "C.G.S.",
+        "citation": "Conn. Gen. Stat. § 12-700",
+        "section": "12-700",
+        "title": "Imposition of Income Tax and Rates",
+        "text_es": (
+            "Impone tasas impositivas graduadas del 3.0% al 6.99% sobre el ingreso neto de "
+            "residentes, con eliminación progresiva de tramos de exención en ingresos altos."
+        ),
+        "text_en": (
+            "Imposes graduated personal income tax rates from 3.0% to 6.99% on resident "
+            "Connecticut taxable income with benefit phase-out recaptures for high earners."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-700",
+        "cross_references": ["Conn. Gen. Stat. § 12-701"],
+    },
+    {
+        "id": "ct-stat-cgs-12-701",
+        "jurisdiction": "CT",
+        "corpus": "C.G.S.",
+        "citation": "Conn. Gen. Stat. § 12-701",
+        "section": "12-701",
+        "title": "Definitions - Resident and Sourcing",
+        "text_es": (
+            "Define residente statutario como quien mantiene un lugar permanente de morada en "
+            "Connecticut y pasa en total más de 183 días en el año contributivo."
+        ),
+        "text_en": (
+            "Defines resident as an individual domiciled in Connecticut or who maintains a "
+            "permanent place of abode and spends in the aggregate more than 183 days of the "
+            "taxable year in state."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-701",
+        "cross_references": ["Conn. Gen. Stat. § 12-700", "Conn. Gen. Stat. § 12-711"],
+    },
+    {
+        "id": "ct-stat-cgs-12-711",
+        "jurisdiction": "CT",
+        "corpus": "C.G.S.",
+        "citation": "Conn. Gen. Stat. § 12-711",
+        "section": "12-711",
+        "title": "Convenience of Employer Rule",
+        "text_es": (
+            "Aplica la regla de conveniencia del patrono para determinar la fuente de ingresos "
+            "salariales de no residentes que teletrabajan si su estado aplica una regla similar."
+        ),
+        "text_en": (
+            "Applies a reciprocal convenience of the employer test to nonresident compensation "
+            "earned while telecommuting for a Connecticut employer if employee's state applies "
+            "a convenience rule."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-711",
+        "cross_references": ["Conn. Gen. Stat. § 12-701"],
+    },
+    {
+        "id": "nc-stat-ncgs-105-153-7",
+        "jurisdiction": "NC",
+        "corpus": "N.C.G.S.",
+        "citation": "N.C. Gen. Stat. § 105-153.7",
+        "section": "105-153.7",
+        "title": "Individual Income Tax Imposition and Rate",
+        "text_es": (
+            "Impone un impuesto sobre la renta individual de tasa fija decreciente: 4.5% en 2024, "
+            "4.25% en 2025, y 3.99% para años tributarios 2026 y posteriores."
+        ),
+        "text_en": (
+            "Imposes individual income tax at a decreasing flat rate: 4.5% for 2024, 4.25% "
+            "for 2025, and 3.99% for taxable years beginning on or after 2026."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/Section_105-153.7.html",
+        "cross_references": ["N.C. Gen. Stat. § 105-153.3", "N.C. Gen. Stat. § 105-153.5"],
+    },
+    {
+        "id": "nc-stat-ncgs-105-153-3",
+        "jurisdiction": "NC",
+        "corpus": "N.C.G.S.",
+        "citation": "N.C. Gen. Stat. § 105-153.3",
+        "section": "105-153.3",
+        "title": "Definitions - Resident Individual",
+        "text_es": (
+            "Define individuo residente como quien reside o tiene domicilio en Carolina del "
+            "Norte, o quien pasa más de 183 días en el estado presumiendo residencia."
+        ),
+        "text_en": (
+            "Defines resident individual as one domiciled in North Carolina or who resides in "
+            "state for more than 183 days during the taxable year creating a rebuttable "
+            "presumption."
+        ),
+        "effective_year": 2024,
+        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/Section_105-153.3.html",
+        "cross_references": ["N.C. Gen. Stat. § 105-153.7"],
+    },
 ]
 
 INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
+    {
+        "id": "pr-cc-ri-21-10",
+        "category": "carta-circular",
+        "doc_number": "CC RI 21-10",
+        "doc_date": "2021-03-31",
+        "title": "Tratamiento contributivo del teletrabajo y servicios prestados por no residentes",
+        "summary": (
+            "Directrices oficiales del Departamento de Hacienda sobre la fuente de ingresos "
+            "por servicios laborales remotos, retención y establecimiento permanente en PR."
+        ),
+        "source_url": "https://hacienda.pr.gov/publicaciones/carta-circular-de-rentas-internas-num-21-10",
+    },
     {
         "id": "pr-cc-ri-26-13",
         "category": "carta-circular",
@@ -956,6 +1126,18 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
             "de donaciones benéficas requeridas por el Código de Incentivos de Puerto Rico."
         ),
         "source_url": "https://hacienda.pr.gov/publicaciones/determinacion-administrativa-num-21-04",
+    },
+    {
+        "id": "pa-dor-it-bulletin-2021-01",
+        "category": "policy-bulletin",
+        "doc_number": "PA REV-BULL 2021-01",
+        "doc_date": "2021-06-15",
+        "title": "Pennsylvania Personal Income Tax Telework and Sourcing Guidance",
+        "summary": (
+            "Guidance from the Pennsylvania Department of Revenue concerning the convenience of "
+            "the employer doctrine and withholding obligations for telecommuting employees."
+        ),
+        "source_url": "https://www.revenue.pa.gov/FormsandPublications/FormsPublications/Pages/default.aspx",
     },
     {
         "id": "ga-dor-pb-it-2024-01",
