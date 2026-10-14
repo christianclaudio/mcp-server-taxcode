@@ -939,3 +939,138 @@ def test_evaluate_state_residency_cases() -> None:
     )
     # Taxable: 100k - 12,750 = 87,250 * 0.0399
     assert nc_2026["tax_computation"]["estimated_state_tax"] == round(87250.0 * 0.0399, 2)
+
+    # 15. Virginia (VA) - actual residency and graduated brackets
+    va_nonres = server.evaluate_state_residency(
+        jurisdiction="VA",
+        days_in_state=50,
+        is_domiciled=False,
+    )
+    assert va_nonres["is_resident"] is False
+    assert va_nonres["tax_computation"]["estimated_state_tax"] == 0.0
+
+    va_res_high = server.evaluate_state_residency(
+        jurisdiction="VA",
+        days_in_state=200,
+        federal_agi=50000.0,
+        filing_status="single",
+    )
+    assert va_res_high["is_resident"] is True
+    # Taxable: 50,000 - 8,500 = 41,500.
+    # Tax: 720 + 0.0575 * (41500 - 17000) = 2128.75
+    assert va_res_high["tax_computation"]["estimated_state_tax"] == 2128.75
+
+    for inc, expected_va in [
+        (18500.0, round(120.0 + 0.05 * 5000.0, 2)),
+        (12500.0, round(60.0 + 0.03 * 1000.0, 2)),
+        (10500.0, round(0.02 * 2000.0, 2)),
+    ]:
+        va_res_bracket = server.evaluate_state_residency(
+            jurisdiction="VA",
+            days_in_state=200,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        assert va_res_bracket["tax_computation"]["estimated_state_tax"] == expected_va
+
+    # 16. Maryland (MD) - county piggyback tax notice and graduated brackets
+    md_nonres = server.evaluate_state_residency(
+        jurisdiction="MD",
+        days_in_state=50,
+        is_domiciled=False,
+    )
+    assert md_nonres["is_resident"] is False
+
+    md_res_top = server.evaluate_state_residency(
+        jurisdiction="MD",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=400000.0,
+        filing_status="married_joint",
+    )
+    assert md_res_top["is_resident"] is True
+    assert any("MD County Piggyback Tax" in f for f in md_res_top["domicile_audit_risk"]["flags"])
+    # MFJ deduction capped at 5450. Taxable: 400,000 - 5450 = 394,550 (>300k) -> 5.75%
+    assert md_res_top["tax_computation"]["estimated_state_tax"] == round(394550.0 * 0.0575, 2)
+
+    for inc, expected_rate in [(200000.0, 0.05), (80000.0, 0.0475)]:
+        md_res_sub = server.evaluate_state_residency(
+            jurisdiction="MD",
+            days_in_state=200,
+            maintains_permanent_abode=True,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        taxable_md = inc - 2700.0
+        assert md_res_sub["tax_computation"]["estimated_state_tax"] == round(
+            taxable_md * expected_rate, 2
+        )
+
+    # 17. Colorado (CO) - Proposition 121 flat 4.40%
+    co_nonres = server.evaluate_state_residency(
+        jurisdiction="CO",
+        days_in_state=30,
+        is_domiciled=False,
+    )
+    assert co_nonres["is_resident"] is False
+    assert co_nonres["tax_computation"]["estimated_state_tax"] == 0.0
+
+    co_res = server.evaluate_state_residency(
+        jurisdiction="CO",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+    )
+    assert co_res["is_resident"] is True
+    # Taxable: 100,000 - 14,600 = 85,400 * 0.044
+    assert co_res["tax_computation"]["estimated_state_tax"] == round(85400.0 * 0.044, 2)
+
+    # 18. Arizona (AZ) - SB 1828 flat 2.50% & 9-month presumption
+    az_presumption_flag = server.evaluate_state_residency(
+        jurisdiction="AZ",
+        days_in_state=200,
+        is_domiciled=False,
+        maintains_permanent_abode=False,
+    )
+    assert az_presumption_flag["is_resident"] is False
+    assert any(
+        "AZ Rebuttable Presumption" in f
+        for f in az_presumption_flag["domicile_audit_risk"]["flags"]
+    )
+
+    az_res = server.evaluate_state_residency(
+        jurisdiction="AZ",
+        days_in_state=280,
+        federal_agi=100000.0,
+        filing_status="single",
+    )
+    assert az_res["is_resident"] is True
+    # Taxable: 100,000 - 14,600 = 85,400 * 0.025
+    assert az_res["tax_computation"]["estimated_state_tax"] == round(85400.0 * 0.025, 2)
+
+    # 19. Ohio (OH) - bright-line contact periods & consolidated brackets
+    oh_contact_flag = server.evaluate_state_residency(
+        jurisdiction="OH",
+        days_in_state=200,
+        is_domiciled=False,
+    )
+    assert oh_contact_flag["is_resident"] is False
+    assert any(
+        "OH Bright-Line Contact Period Rule" in f
+        for f in oh_contact_flag["domicile_audit_risk"]["flags"]
+    )
+
+    for inc, expected_calc in [
+        (150000.0, round(2033.63 + 0.035 * (150000.0 - 2400.0 - 100000.0), 2)),
+        (50000.0, round(0.0275 * (50000.0 - 2400.0 - 26050.0), 2)),
+        (25000.0, 0.0),
+    ]:
+        oh_res = server.evaluate_state_residency(
+            jurisdiction="OH",
+            days_in_state=220,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        assert oh_res["is_resident"] is True
+        assert oh_res["tax_computation"]["estimated_state_tax"] == expected_calc

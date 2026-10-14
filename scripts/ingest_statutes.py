@@ -1351,6 +1351,257 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         cross_references=["N.C. Gen. Stat. § 105-153.7"],
         breadcrumbs="N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.3",
     ),
+    # Commonwealth of Virginia (Graduated Brackets, Actual Residency, Commuter Reciprocity)
+    StatuteRecord(
+        id="va-stat-58-1-320",
+        jurisdiction="VA",
+        corpus="Va. Code",
+        citation="Va. Code Ann. § 58.1-320",
+        section="58.1-320",
+        title="Rates of Tax on Individuals",
+        text_en=(
+            "Imposes Virginia individual income tax at graduated rates: 2.0% on the first $3,000; "
+            "3.0% on $3,001 to $5,000; 5.0% on $5,001 to $17,000; and 5.75% on taxable income "
+            "exceeding $17,000."
+        ),
+        text_es=(
+            "Impone el impuesto sobre la renta individual de Virginia con tasas graduadas: "
+            "2.0% sobre los primeros $3,000; 3.0% de $3,001 a $5,000; 5.0% de $5,001 a $17,000; "
+            "y 5.75% sobre el exceso de $17,000."
+        ),
+        effective_year=2024,
+        source_url="https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-320/",
+        cross_references=["Va. Code Ann. § 58.1-302", "Va. Code Ann. § 58.1-322.03"],
+        breadcrumbs="Va. Code > Title 58.1 > Chapter 3 > Article 2 > § 58.1-320",
+    ),
+    StatuteRecord(
+        id="va-stat-58-1-302",
+        jurisdiction="VA",
+        corpus="Va. Code",
+        citation="Va. Code Ann. § 58.1-302",
+        section="58.1-302",
+        title="Definitions - Resident and Actual Resident",
+        text_en=(
+            "Defines resident individual as one domiciled in Virginia, or an actual resident who maintains "
+            "a place of abode and spends in the aggregate more than 183 days of the taxable year in Virginia."
+        ),
+        text_es=(
+            "Define individuo residente como quien tiene domicilio en Virginia, o un residente de "
+            "hecho que mantiene morada y pasa más de 183 días en total del año contributivo en Virginia."
+        ),
+        effective_year=2024,
+        source_url="https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-302/",
+        cross_references=["Va. Code Ann. § 58.1-320", "Va. Code Ann. § 58.1-342"],
+        breadcrumbs="Va. Code > Title 58.1 > Chapter 3 > Article 1 > § 58.1-302",
+    ),
+    StatuteRecord(
+        id="va-stat-58-1-342",
+        jurisdiction="VA",
+        corpus="Va. Code",
+        citation="Va. Code Ann. § 58.1-342",
+        section="58.1-342",
+        title="Reciprocal Tax Agreements for Commuters",
+        text_en=(
+            "Authorizes reciprocal agreements with contiguous jurisdictions (DC, Maryland, West Virginia, "
+            "Pennsylvania, and Kentucky) exempting commuter compensation from non-resident withholding."
+        ),
+        text_es=(
+            "Autoriza acuerdos recíprocos de exención con jurisdicciones limítrofes (DC, Maryland, "
+            "West Virginia, Pensilvania y Kentucky) para salarios devengados por viajeros diarios."
+        ),
+        effective_year=2024,
+        source_url="https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-342/",
+        cross_references=["Va. Code Ann. § 58.1-302"],
+        breadcrumbs="Va. Code > Title 58.1 > Chapter 3 > Article 8 > § 58.1-342",
+    ),
+    # State of Maryland (Graduated Rates, Abode + 183 Days, County Piggyback Tax)
+    StatuteRecord(
+        id="md-stat-tg-10-105",
+        jurisdiction="MD",
+        corpus="Md. Code",
+        citation="Md. Code Ann., Tax-Gen. § 10-105",
+        section="10-105",
+        title="Individual State Income Tax Rates",
+        text_en=(
+            "Imposes graduated Maryland state income tax rates from 2.0% up to 5.75% for taxable income "
+            "exceeding $250,000 for single filers or $300,000 for married couples filing jointly."
+        ),
+        text_es=(
+            "Impone tasas impositivas estatales graduadas desde 2.0% hasta 5.75% sobre el ingreso gravable "
+            "que exceda de $250,000 (solteros) o $300,000 (casados rindiendo conjuntamente)."
+        ),
+        effective_year=2024,
+        source_url="https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-105",
+        cross_references=["Md. Code Ann., Tax-Gen. § 10-101", "Md. Code Ann., Tax-Gen. § 10-106"],
+        breadcrumbs="Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-105",
+    ),
+    StatuteRecord(
+        id="md-stat-tg-10-101",
+        jurisdiction="MD",
+        corpus="Md. Code",
+        citation="Md. Code Ann., Tax-Gen. § 10-101",
+        section="10-101",
+        title="Definitions - Resident Individual",
+        text_en=(
+            "Defines a resident individual as one who is domiciled in Maryland on the last day of the taxable "
+            "year, or who maintains a place of abode in Maryland for more than six months and is physically "
+            "present for 183 days or more."
+        ),
+        text_es=(
+            "Define individuo residente como quien tiene domicilio en Maryland el último día del año "
+            "contributivo, o mantiene morada por más de 6 meses y está presente físicamente 183 días o más."
+        ),
+        effective_year=2024,
+        source_url="https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-101",
+        cross_references=["Md. Code Ann., Tax-Gen. § 10-105"],
+        breadcrumbs="Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-101",
+    ),
+    StatuteRecord(
+        id="md-stat-tg-10-106",
+        jurisdiction="MD",
+        corpus="Md. Code",
+        citation="Md. Code Ann., Tax-Gen. § 10-106",
+        section="10-106",
+        title="County and Local Piggyback Income Tax",
+        text_en=(
+            "Mandates that each Maryland county and Baltimore City levy a local piggyback income tax rate "
+            "between 2.25% and 3.20%, collected by the Comptroller on the state tax return."
+        ),
+        text_es=(
+            "Requiere que cada condado de Maryland y la ciudad de Baltimore cobren un impuesto local sobre la "
+            "renta ('piggyback') de entre 2.25% y 3.20%, recaudado en la planilla estatal."
+        ),
+        effective_year=2024,
+        source_url="https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-106",
+        cross_references=["Md. Code Ann., Tax-Gen. § 10-105"],
+        breadcrumbs="Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-106",
+    ),
+    # State of Colorado (Proposition 121 Flat Tax & Statutory Residency)
+    StatuteRecord(
+        id="co-stat-39-22-104",
+        jurisdiction="CO",
+        corpus="C.R.S.",
+        citation="Colo. Rev. Stat. § 39-22-104",
+        section="39-22-104",
+        title="Levy of Tax - Single Rate for Individuals",
+        text_en=(
+            "Imposes a flat tax of 4.40% on Colorado modified federal taxable income of individuals pursuant "
+            "to voter-approved Proposition 121 (reduced from 4.55%)."
+        ),
+        text_es=(
+            "Impone una tasa uniforme del 4.40% sobre el ingreso federal tributable modificado de individuos "
+            "de Colorado bajo la Proposición 121 aprobada por los electores."
+        ),
+        effective_year=2024,
+        source_url="https://leg.colorado.gov/agencies/office-legislative-legal-services/colorado-revised-statutes",
+        cross_references=["Colo. Rev. Stat. § 39-22-103"],
+        breadcrumbs="C.R.S. > Title 39 > Article 22 > Part 1 > § 39-22-104",
+    ),
+    StatuteRecord(
+        id="co-stat-39-22-103",
+        jurisdiction="CO",
+        corpus="C.R.S.",
+        citation="Colo. Rev. Stat. § 39-22-103",
+        section="39-22-103",
+        title="Definitions - Resident Individual",
+        text_en=(
+            "Defines a resident individual as one domiciled in Colorado, or who maintains a permanent place "
+            "of abode in Colorado and spends in the aggregate more than six months of the taxable year in Colorado."
+        ),
+        text_es=(
+            "Define individuo residente como quien tiene domicilio en Colorado, o mantiene morada permanente "
+            "y pasa en agregado más de seis meses del año contributivo en Colorado."
+        ),
+        effective_year=2024,
+        source_url="https://leg.colorado.gov/agencies/office-legislative-legal-services/colorado-revised-statutes",
+        cross_references=["Colo. Rev. Stat. § 39-22-104"],
+        breadcrumbs="C.R.S. > Title 39 > Article 22 > Part 1 > § 39-22-103",
+    ),
+    # State of Arizona (SB 1828 Flat Tax & 9-Month Presumption)
+    StatuteRecord(
+        id="az-stat-43-1011",
+        jurisdiction="AZ",
+        corpus="A.R.S.",
+        citation="A.R.S. § 43-1011",
+        section="43-1011",
+        title="Taxes and Tax Rates - Individuals",
+        text_en=(
+            "Imposes a flat individual income tax rate of 2.50% on Arizona taxable income, enacted by SB 1828 "
+            "to replace graduated individual tax brackets."
+        ),
+        text_es=(
+            "Impone una tasa impositiva fija del 2.50% sobre el ingreso gravable de Arizona de individuos, "
+            "promulgada bajo SB 1828 eliminando tramos graduales anteriores."
+        ),
+        effective_year=2024,
+        source_url="https://www.azleg.gov/ars/43/01011.htm",
+        cross_references=["A.R.S. § 43-104"],
+        breadcrumbs="A.R.S. > Title 43 > Chapter 10 > Article 1 > § 43-1011",
+    ),
+    StatuteRecord(
+        id="az-stat-43-104",
+        jurisdiction="AZ",
+        corpus="A.R.S.",
+        citation="A.R.S. § 43-104",
+        section="43-104",
+        title="Definitions - Resident and Presumption of Residency",
+        text_en=(
+            "Defines resident as every individual in Arizona for other than a temporary or transitory purpose; "
+            "individuals spending in the aggregate more than nine months (270 days) of the tax year in state "
+            "are presumed residents."
+        ),
+        text_es=(
+            "Define residente como todo individuo en Arizona para fines no temporales ni transitorios; quien "
+            "pase en agregado más de nueve meses (270 días) en el estado se presume residente."
+        ),
+        effective_year=2024,
+        source_url="https://www.azleg.gov/ars/43/00104.htm",
+        cross_references=["A.R.S. § 43-1011"],
+        breadcrumbs="A.R.S. > Title 43 > Chapter 1 > Article 1 > § 43-104",
+    ),
+    # State of Ohio (Rate Consolidation & Bright-Line Contact Period Rule)
+    StatuteRecord(
+        id="oh-stat-5747-02",
+        jurisdiction="OH",
+        corpus="R.C.",
+        citation="Ohio Rev. Code § 5747.02",
+        section="5747.02",
+        title="Taxation of Personal Income - Rates",
+        text_en=(
+            "Levies Ohio personal income tax with phased rate consolidation: 0% up to $26,050; 2.75% from "
+            "$26,051 to $100,000; and 3.50% on non-business taxable income exceeding $100,000 for tax year 2024+."
+        ),
+        text_es=(
+            "Grava el ingreso personal en Ohio con consolidación de tasas: 0% hasta $26,050; 2.75% de "
+            "$26,051 a $100,000; y 3.50% sobre el ingreso no comercial que exceda $100,000 para el año 2024+."
+        ),
+        effective_year=2024,
+        source_url="https://codes.ohio.gov/ohio-revised-code/section-5747.02",
+        cross_references=["Ohio Rev. Code § 5747.24"],
+        breadcrumbs="R.C. > Title 57 > Chapter 5747 > § 5747.02",
+    ),
+    StatuteRecord(
+        id="oh-stat-5747-24",
+        jurisdiction="OH",
+        corpus="R.C.",
+        citation="Ohio Rev. Code § 5747.24",
+        section="5747.24",
+        title="Bright-Line Presumption of Domicile - Contact Periods",
+        text_en=(
+            "Establishes bright-line residency rules: an individual with <= 212 Ohio contact periods is presumed "
+            "non-resident if filing Form IT-NRS affidavit by October 15; an individual with >= 213 contact periods "
+            "is presumed an Ohio resident."
+        ),
+        text_es=(
+            "Establece regla objetiva de periodos de contacto: quien tenga <= 212 periodos de contacto se "
+            "presume no residente si radica declaración jurada IT-NRS antes del 15 de octubre; >= 213 periodos "
+            "presume residencia."
+        ),
+        effective_year=2024,
+        source_url="https://codes.ohio.gov/ohio-revised-code/section-5747.24",
+        cross_references=["Ohio Rev. Code § 5747.02"],
+        breadcrumbs="R.C. > Title 57 > Chapter 5747 > § 5747.24",
+    ),
 ]
 
 PUBLICATIONS_CATALOG: list[PublicationRecord] = [
@@ -1461,6 +1712,42 @@ PUBLICATIONS_CATALOG: list[PublicationRecord] = [
             "to mitigate the federal limitation on individual state and local tax (SALT) deductions."
         ),
         source_url="https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download",
+    ),
+    PublicationRecord(
+        id="va-tax-bulletin-05-7",
+        category="policy-bulletin",
+        doc_number="VA TB 05-7",
+        doc_date="2005-08-25",
+        title="Virginia Guidelines for Determining Residency",
+        summary=(
+            "Official guidance from the Virginia Department of Taxation regarding domiciliary and "
+            "actual residency tests, temporary absences, and reciprocal commuter provisions."
+        ),
+        source_url="https://www.tax.virginia.gov/laws-rules-decisions/tax-bulletins/05-7",
+    ),
+    PublicationRecord(
+        id="md-admin-release-34",
+        category="policy-bulletin",
+        doc_number="MD AR-34",
+        doc_date="2023-01-10",
+        title="Maryland Domicile and Statutory Residency Physical Presence Guidelines",
+        summary=(
+            "Administrative guidance issued by the Comptroller of Maryland detailing the 183-day rule, "
+            "permanent place of abode factors, and county local income tax calculation."
+        ),
+        source_url="https://www.marylandtaxes.gov/forms/tax_publications/administrative_releases.php",
+    ),
+    PublicationRecord(
+        id="oh-tax-info-it-2007-08",
+        category="policy-bulletin",
+        doc_number="OH IT 2007-08",
+        doc_date="2007-09-01",
+        title="Ohio Residency Guidelines and Bright-Line Contact Period Test",
+        summary=(
+            "Comprehensive information release from the Ohio Department of Taxation explaining contact "
+            "periods, the bright-line test, and instructions for filing Form IT-NRS non-domicile affidavit."
+        ),
+        source_url="https://tax.ohio.gov/individual/resources/information-releases",
     ),
 ]
 
@@ -1607,9 +1894,7 @@ def run_ingest(
     for pub in PUBLICATIONS_CATALOG:
         if sources in ("all", "publications"):
             selected_publications.append(pub)
-        elif sources == "pr" and pub.id.startswith("pr-"):
-            selected_publications.append(pub)
-        elif sources == "ga" and pub.id.startswith("ga-"):
+        elif sources.lower() == pub.id.split("-")[0].lower():
             selected_publications.append(pub)
 
     stats = {
@@ -1656,7 +1941,7 @@ def run_ingest(
 def main(argv: list[str] | None = None) -> int:
     """CLI entrypoint for statutory ingestion pipeline."""
     parser = argparse.ArgumentParser(
-        description="Ingest, parse, and synchronize US, Puerto Rico & Georgia Tax Codes into DuckDB.",
+        description="Ingest, parse, and synchronize US, Puerto Rico & State Tax Codes into DuckDB.",
     )
     parser.add_argument(
         "--db-path",
@@ -1665,7 +1950,6 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--sources",
-        choices=["all", "us", "pr", "ga", "cfr", "publications"],
         default="all",
         help="Subsets of statutory sources to process (default: all).",
     )
