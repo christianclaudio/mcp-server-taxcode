@@ -64,6 +64,18 @@
 - [Conn. Gen. Stat. § 12-711 (2024) — Convenience of Employer Rule](./ct/c.g.s._12_711.md): C.G.S. > Title 12 > Chapter 229 > § 12-711
 - [N.C. Gen. Stat. § 105-153.7 (2024) — Individual Income Tax Imposition and Rate](./nc/n.c.g.s._105_153_7.md): N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.7
 - [N.C. Gen. Stat. § 105-153.3 (2024) — Definitions - Resident Individual](./nc/n.c.g.s._105_153_3.md): N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.3
+- [Va. Code Ann. § 58.1-320 (2024) — Rates of Tax on Individuals](./va/va. code_58_1_320.md): Va. Code > Title 58.1 > Chapter 3 > Article 2 > § 58.1-320
+- [Va. Code Ann. § 58.1-302 (2024) — Definitions - Resident and Actual Resident](./va/va. code_58_1_302.md): Va. Code > Title 58.1 > Chapter 3 > Article 1 > § 58.1-302
+- [Va. Code Ann. § 58.1-342 (2024) — Reciprocal Tax Agreements for Commuters](./va/va. code_58_1_342.md): Va. Code > Title 58.1 > Chapter 3 > Article 8 > § 58.1-342
+- [Md. Code Ann., Tax-Gen. § 10-105 (2024) — Individual State Income Tax Rates](./md/md. code_10_105.md): Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-105
+- [Md. Code Ann., Tax-Gen. § 10-101 (2024) — Definitions - Resident Individual](./md/md. code_10_101.md): Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-101
+- [Md. Code Ann., Tax-Gen. § 10-106 (2024) — County and Local Piggyback Income Tax](./md/md. code_10_106.md): Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-106
+- [Colo. Rev. Stat. § 39-22-104 (2024) — Levy of Tax - Single Rate for Individuals](./co/c.r.s._39_22_104.md): C.R.S. > Title 39 > Article 22 > Part 1 > § 39-22-104
+- [Colo. Rev. Stat. § 39-22-103 (2024) — Definitions - Resident Individual](./co/c.r.s._39_22_103.md): C.R.S. > Title 39 > Article 22 > Part 1 > § 39-22-103
+- [A.R.S. § 43-1011 (2024) — Taxes and Tax Rates - Individuals](./az/a.r.s._43_1011.md): A.R.S. > Title 43 > Chapter 10 > Article 1 > § 43-1011
+- [A.R.S. § 43-104 (2024) — Definitions - Resident and Presumption of Residency](./az/a.r.s._43_104.md): A.R.S. > Title 43 > Chapter 1 > Article 1 > § 43-104
+- [Ohio Rev. Code § 5747.02 (2024) — Taxation of Personal Income - Rates](./oh/r.c._5747_02.md): R.C. > Title 57 > Chapter 5747 > § 5747.02
+- [Ohio Rev. Code § 5747.24 (2024) — Bright-Line Presumption of Domicile - Contact Periods](./oh/r.c._5747_24.md): R.C. > Title 57 > Chapter 5747 > § 5747.24
 
 ## Administrative Publications (Hacienda SURI & Georgia DOR)
 
@@ -76,3 +88,6 @@
 - **CC RI 25-12** (2025-11-10) — Guía sobre retención en el origen para corporaciones foráneas: Procedimientos de retención y remisión del impuesto sobre pagos efectuados a corporaciones foráneas no dedicadas a industria o negocio en Puerto Rico.
 - **DOR PB IT-2024-01** (2024-04-20) — Georgia Flat Tax Rate and Standard Deduction Adjustments under HB 1023: Guidance from the Georgia Department of Revenue explaining the reduction in the individual income tax rate to 5.49% for tax year 2024 and elimination of graduated brackets.
 - **DOR PB IT-2022-02** (2022-05-18) — Georgia Pass-Through Entity Tax (PTET) Guidance under HB 149: Technical guidelines for eligible S corporations and partnerships electing to pay tax at the entity level to mitigate the federal limitation on individual state and local tax (SALT) deductions.
+- **VA TB 05-7** (2005-08-25) — Virginia Guidelines for Determining Residency: Official guidance from the Virginia Department of Taxation regarding domiciliary and actual residency tests, temporary absences, and reciprocal commuter provisions.
+- **MD AR-34** (2023-01-10) — Maryland Domicile and Statutory Residency Physical Presence Guidelines: Administrative guidance issued by the Comptroller of Maryland detailing the 183-day rule, permanent place of abode factors, and county local income tax calculation.
+- **OH IT 2007-08** (2007-09-01) — Ohio Residency Guidelines and Bright-Line Contact Period Test: Comprehensive information release from the Ohio Department of Taxation explaining contact periods, the bright-line test, and instructions for filing Form IT-NRS non-domicile affidavit.

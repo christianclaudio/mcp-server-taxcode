@@ -321,7 +321,25 @@ def evaluate_georgia_residency(
 
 
 SUPPORTED_STATE_JURISDICTIONS = frozenset(
-    {"GA", "NY", "CA", "FL", "TX", "WA", "MA", "NJ", "IL", "PA", "CT", "NC"}
+    {
+        "GA",
+        "NY",
+        "CA",
+        "FL",
+        "TX",
+        "WA",
+        "MA",
+        "NJ",
+        "IL",
+        "PA",
+        "CT",
+        "NC",
+        "VA",
+        "MD",
+        "CO",
+        "AZ",
+        "OH",
+    }
 )
 
 
@@ -329,7 +347,8 @@ SUPPORTED_STATE_JURISDICTIONS = frozenset(
     name="evaluate_state_residency",
     description=(
         "Evaluate individual statutory residency, domicile nexus, and state tax liability "
-        "across key migration corridors: GA, NY, CA, FL, TX, WA, MA, NJ, IL, PA, CT, and NC."
+        "across key migration corridors: GA, NY, CA, FL, TX, WA, MA, NJ, IL, PA, CT, NC, "
+        "VA, MD, CO, AZ, and OH."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"compliance", "states", "residency", "read_only"},
@@ -564,7 +583,7 @@ def evaluate_state_residency(
             else:
                 estimated_tax = round(taxable_income * 0.03, 2)
 
-    else:  # NC
+    elif state == "NC":
         statutory_basis = "N.C. Gen. Stat. §§ 105-153.3, 105-153.7"
         is_resident = is_domiciled or (days_in_state > 183)
         rate_authority = "N.C. Gen. Stat. § 105-153.7"
@@ -580,6 +599,95 @@ def evaluate_state_residency(
         exemption = 25500.0 if is_mfj else 12750.0
         taxable_income = max(0.0, federal_agi - exemption)
         estimated_tax = round(taxable_income * nc_rate, 2) if is_resident else 0.0
+
+    elif state == "VA":
+        statutory_basis = "Va. Code Ann. §§ 58.1-302, 58.1-320, 58.1-342"
+        is_resident = is_domiciled or days_in_state > 183
+        rate_authority = "Va. Code Ann. § 58.1-320"
+        rate_desc = "Graduated brackets from 2.0% to 5.75%"
+        standard_ded = 17000.0 if is_mfj else 8500.0
+        taxable_income = max(0.0, federal_agi - standard_ded)
+        if is_resident:
+            if taxable_income > 17000:
+                estimated_tax = round(720.0 + 0.0575 * (taxable_income - 17000), 2)
+            elif taxable_income > 5000:
+                estimated_tax = round(120.0 + 0.05 * (taxable_income - 5000), 2)
+            elif taxable_income > 3000:
+                estimated_tax = round(60.0 + 0.03 * (taxable_income - 3000), 2)
+            else:
+                estimated_tax = round(0.02 * taxable_income, 2)
+
+    elif state == "MD":
+        statutory_basis = "Md. Code Ann., Tax-Gen. §§ 10-101, 10-105, 10-106"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
+        if is_resident:
+            audit_flags.append(
+                "MD County Piggyback Tax (Tax-Gen. § 10-106): Maryland residents are subject "
+                "to an additional mandatory local income tax between 2.25% and 3.20%."
+            )
+        rate_authority = "Md. Code Ann., Tax-Gen. § 10-105"
+        rate_desc = "Graduated state rates 2.0% to 5.75% plus county piggyback tax (2.25%-3.20%)"
+        max_ded = 5450.0 if is_mfj else 2700.0
+        min_ded = 3450.0 if is_mfj else 1700.0
+        standard_ded = min(max_ded, max(min_ded, federal_agi * 0.15))
+        taxable_income = max(0.0, federal_agi - standard_ded)
+        top_bracket = 300000.0 if is_mfj else 250000.0
+        if is_resident:
+            if taxable_income > top_bracket:
+                estimated_tax = round(taxable_income * 0.0575, 2)
+            elif taxable_income > 100000:
+                estimated_tax = round(taxable_income * 0.05, 2)
+            else:
+                estimated_tax = round(taxable_income * 0.0475, 2)
+
+    elif state == "CO":
+        statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
+        is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
+        rate_authority = "Colo. Rev. Stat. § 39-22-104"
+        rate_desc = "Proposition 121 flat 4.40% rate"
+        standard_ded = 29200.0 if is_mfj else 14600.0
+        taxable_income = max(0.0, federal_agi - standard_ded)
+        estimated_tax = round(taxable_income * 0.044, 2) if is_resident else 0.0
+
+    elif state == "AZ":
+        statutory_basis = "A.R.S. §§ 43-104, 43-1011"
+        is_resident = (
+            is_domiciled
+            or days_in_state > 270
+            or (maintains_permanent_abode and days_in_state > 183)
+        )
+        if not is_resident and 183 < days_in_state <= 270:
+            audit_flags.append(
+                "AZ Rebuttable Presumption (A.R.S. § 43-104): Aggregate presence over 9 months "
+                "creates a statutory presumption of residency; 183+ days with local ties invites "
+                "audit scrutiny."
+            )
+        rate_authority = "A.R.S. § 43-1011"
+        rate_desc = "SB 1828 flat 2.50% rate"
+        standard_ded = 29200.0 if is_mfj else 14600.0
+        taxable_income = max(0.0, federal_agi - standard_ded)
+        estimated_tax = round(taxable_income * 0.025, 2) if is_resident else 0.0
+
+    else:  # OH
+        statutory_basis = "Ohio Rev. Code §§ 5747.02, 5747.24"
+        is_resident = is_domiciled or days_in_state >= 213
+        if not is_domiciled and 183 <= days_in_state <= 212:
+            audit_flags.append(
+                "OH Bright-Line Contact Period Rule (R.C. § 5747.24): Taxpayer with <= 212 contact "
+                "periods must file Form IT-NRS Non-Ohio Domicile Affidavit by October 15 to secure "
+                "non-residency presumption."
+            )
+        rate_authority = "Ohio Rev. Code § 5747.02"
+        rate_desc = "Graduated brackets: 0% up to $26,050, 2.75% to $100k, 3.50% over $100k"
+        personal_exemption = 4800.0 if is_mfj else 2400.0
+        taxable_income = max(0.0, federal_agi - personal_exemption)
+        if is_resident:
+            if taxable_income > 100000:
+                estimated_tax = round(2033.63 + 0.035 * (taxable_income - 100000), 2)
+            elif taxable_income > 26050:
+                estimated_tax = round(0.0275 * (taxable_income - 26050), 2)
+            else:
+                estimated_tax = 0.0
 
     return {
         "status": "success",

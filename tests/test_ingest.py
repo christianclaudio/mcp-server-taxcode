@@ -93,6 +93,38 @@ def test_run_ingest_source_filters() -> None:
     assert il_stats["statutes_considered"] == 3
     assert il_stats["publications_considered"] == 0
 
+    pa_stats = run_ingest(db_path=":memory:", sources="pa", dry_run=True)
+    assert pa_stats["statutes_considered"] == 3
+    assert pa_stats["publications_considered"] == 1
+
+    ct_stats = run_ingest(db_path=":memory:", sources="ct", dry_run=True)
+    assert ct_stats["statutes_considered"] == 3
+    assert ct_stats["publications_considered"] == 0
+
+    nc_stats = run_ingest(db_path=":memory:", sources="nc", dry_run=True)
+    assert nc_stats["statutes_considered"] == 2
+    assert nc_stats["publications_considered"] == 0
+
+    va_stats = run_ingest(db_path=":memory:", sources="va", dry_run=True)
+    assert va_stats["statutes_considered"] == 3
+    assert va_stats["publications_considered"] == 1
+
+    md_stats = run_ingest(db_path=":memory:", sources="md", dry_run=True)
+    assert md_stats["statutes_considered"] == 3
+    assert md_stats["publications_considered"] == 1
+
+    co_stats = run_ingest(db_path=":memory:", sources="co", dry_run=True)
+    assert co_stats["statutes_considered"] == 2
+    assert co_stats["publications_considered"] == 0
+
+    az_stats = run_ingest(db_path=":memory:", sources="az", dry_run=True)
+    assert az_stats["statutes_considered"] == 2
+    assert az_stats["publications_considered"] == 0
+
+    oh_stats = run_ingest(db_path=":memory:", sources="oh", dry_run=True)
+    assert oh_stats["statutes_considered"] == 2
+    assert oh_stats["publications_considered"] == 1
+
     pub_stats = run_ingest(db_path=":memory:", sources="publications", dry_run=True)
     assert pub_stats["statutes_considered"] == 0
     assert pub_stats["publications_considered"] == len(PUBLICATIONS_CATALOG)
@@ -133,6 +165,14 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "ma" / "maconst_art__xliv.md").exists()
     assert (docs_out / "nj" / "njsa_54a_2_1.md").exists()
     assert (docs_out / "il" / "ilcs_5_201.md").exists()
+    assert (docs_out / "pa" / "p.s._7302.md").exists()
+    assert (docs_out / "ct" / "c.g.s._12_700.md").exists()
+    assert (docs_out / "nc" / "n.c.g.s._105_153_7.md").exists()
+    assert (docs_out / "va" / "va. code_58_1_320.md").exists()
+    assert (docs_out / "md" / "md. code_10_105.md").exists()
+    assert (docs_out / "co" / "c.r.s._39_22_104.md").exists()
+    assert (docs_out / "az" / "a.r.s._43_1011.md").exists()
+    assert (docs_out / "oh" / "r.c._5747_02.md").exists()
 
 
 def test_check_upstream_endpoints() -> None:

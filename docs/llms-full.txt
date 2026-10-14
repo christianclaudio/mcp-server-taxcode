@@ -530,3 +530,111 @@ Defines resident individual as one domiciled in North Carolina or who resides in
 
 ### Español
 Define individuo residente como quien reside o tiene domicilio en Carolina del Norte, o quien pasa más de 183 días en el estado durante el año contributivo presumiendo residencia.
+
+## Va. Code Ann. § 58.1-320: Rates of Tax on Individuals
+`Va. Code > Title 58.1 > Chapter 3 > Article 2 > § 58.1-320`
+
+### English
+Imposes Virginia individual income tax at graduated rates: 2.0% on the first $3,000; 3.0% on $3,001 to $5,000; 5.0% on $5,001 to $17,000; and 5.75% on taxable income exceeding $17,000.
+
+### Español
+Impone el impuesto sobre la renta individual de Virginia con tasas graduadas: 2.0% sobre los primeros $3,000; 3.0% de $3,001 a $5,000; 5.0% de $5,001 a $17,000; y 5.75% sobre el exceso de $17,000.
+
+## Va. Code Ann. § 58.1-302: Definitions - Resident and Actual Resident
+`Va. Code > Title 58.1 > Chapter 3 > Article 1 > § 58.1-302`
+
+### English
+Defines resident individual as one domiciled in Virginia, or an actual resident who maintains a place of abode and spends in the aggregate more than 183 days of the taxable year in Virginia.
+
+### Español
+Define individuo residente como quien tiene domicilio en Virginia, o un residente de hecho que mantiene morada y pasa más de 183 días en total del año contributivo en Virginia.
+
+## Va. Code Ann. § 58.1-342: Reciprocal Tax Agreements for Commuters
+`Va. Code > Title 58.1 > Chapter 3 > Article 8 > § 58.1-342`
+
+### English
+Authorizes reciprocal agreements with contiguous jurisdictions (DC, Maryland, West Virginia, Pennsylvania, and Kentucky) exempting commuter compensation from non-resident withholding.
+
+### Español
+Autoriza acuerdos recíprocos de exención con jurisdicciones limítrofes (DC, Maryland, West Virginia, Pensilvania y Kentucky) para salarios devengados por viajeros diarios.
+
+## Md. Code Ann., Tax-Gen. § 10-105: Individual State Income Tax Rates
+`Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-105`
+
+### English
+Imposes graduated Maryland state income tax rates from 2.0% up to 5.75% for taxable income exceeding $250,000 for single filers or $300,000 for married couples filing jointly.
+
+### Español
+Impone tasas impositivas estatales graduadas desde 2.0% hasta 5.75% sobre el ingreso gravable que exceda de $250,000 (solteros) o $300,000 (casados rindiendo conjuntamente).
+
+## Md. Code Ann., Tax-Gen. § 10-101: Definitions - Resident Individual
+`Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-101`
+
+### English
+Defines a resident individual as one who is domiciled in Maryland on the last day of the taxable year, or who maintains a place of abode in Maryland for more than six months and is physically present for 183 days or more.
+
+### Español
+Define individuo residente como quien tiene domicilio en Maryland el último día del año contributivo, o mantiene morada por más de 6 meses y está presente físicamente 183 días o más.
+
+## Md. Code Ann., Tax-Gen. § 10-106: County and Local Piggyback Income Tax
+`Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-106`
+
+### English
+Mandates that each Maryland county and Baltimore City levy a local piggyback income tax rate between 2.25% and 3.20%, collected by the Comptroller on the state tax return.
+
+### Español
+Requiere que cada condado de Maryland y la ciudad de Baltimore cobren un impuesto local sobre la renta ('piggyback') de entre 2.25% y 3.20%, recaudado en la planilla estatal.
+
+## Colo. Rev. Stat. § 39-22-104: Levy of Tax - Single Rate for Individuals
+`C.R.S. > Title 39 > Article 22 > Part 1 > § 39-22-104`
+
+### English
+Imposes a flat tax of 4.40% on Colorado modified federal taxable income of individuals pursuant to voter-approved Proposition 121 (reduced from 4.55%).
+
+### Español
+Impone una tasa uniforme del 4.40% sobre el ingreso federal tributable modificado de individuos de Colorado bajo la Proposición 121 aprobada por los electores.
+
+## Colo. Rev. Stat. § 39-22-103: Definitions - Resident Individual
+`C.R.S. > Title 39 > Article 22 > Part 1 > § 39-22-103`
+
+### English
+Defines a resident individual as one domiciled in Colorado, or who maintains a permanent place of abode in Colorado and spends in the aggregate more than six months of the taxable year in Colorado.
+
+### Español
+Define individuo residente como quien tiene domicilio en Colorado, o mantiene morada permanente y pasa en agregado más de seis meses del año contributivo en Colorado.
+
+## A.R.S. § 43-1011: Taxes and Tax Rates - Individuals
+`A.R.S. > Title 43 > Chapter 10 > Article 1 > § 43-1011`
+
+### English
+Imposes a flat individual income tax rate of 2.50% on Arizona taxable income, enacted by SB 1828 to replace graduated individual tax brackets.
+
+### Español
+Impone una tasa impositiva fija del 2.50% sobre el ingreso gravable de Arizona de individuos, promulgada bajo SB 1828 eliminando tramos graduales anteriores.
+
+## A.R.S. § 43-104: Definitions - Resident and Presumption of Residency
+`A.R.S. > Title 43 > Chapter 1 > Article 1 > § 43-104`
+
+### English
+Defines resident as every individual in Arizona for other than a temporary or transitory purpose; individuals spending in the aggregate more than nine months (270 days) of the tax year in state are presumed residents.
+
+### Español
+Define residente como todo individuo en Arizona para fines no temporales ni transitorios; quien pase en agregado más de nueve meses (270 días) en el estado se presume residente.
+
+## Ohio Rev. Code § 5747.02: Taxation of Personal Income - Rates
+`R.C. > Title 57 > Chapter 5747 > § 5747.02`
+
+### English
+Levies Ohio personal income tax with phased rate consolidation: 0% up to $26,050; 2.75% from $26,051 to $100,000; and 3.50% on non-business taxable income exceeding $100,000 for tax year 2024+.
+
+### Español
+Grava el ingreso personal en Ohio con consolidación de tasas: 0% hasta $26,050; 2.75% de $26,051 a $100,000; y 3.50% sobre el ingreso no comercial que exceda $100,000 para el año 2024+.
+
+## Ohio Rev. Code § 5747.24: Bright-Line Presumption of Domicile - Contact Periods
+`R.C. > Title 57 > Chapter 5747 > § 5747.24`
+
+### English
+Establishes bright-line residency rules: an individual with <= 212 Ohio contact periods is presumed non-resident if filing Form IT-NRS affidavit by October 15; an individual with >= 213 contact periods is presumed an Ohio resident.
+
+### Español
+Establece regla objetiva de periodos de contacto: quien tenga <= 212 periodos de contacto se presume no residente si radica declaración jurada IT-NRS antes del 15 de octubre; >= 213 periodos presume residencia.
