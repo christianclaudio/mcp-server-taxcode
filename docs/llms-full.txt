@@ -639,14 +639,14 @@ Establishes bright-line residency rules: an individual with <= 212 Ohio contact 
 ### Español
 Establece regla objetiva de periodos de contacto: quien tenga <= 212 periodos de contacto se presume no residente si radica declaración jurada IT-NRS antes del 15 de octubre; >= 213 periodos presume residencia.
 
-## Alaska Stat. § 43.05.080: Administration of Revenue Laws and Absence of Personal Income Tax
+## Alaska Stat. § 43.05.080: Revenue Administration and Absence of Individual Income Tax
 `Alaska Stat. > Title 43 > Chapter 05 > § 43.05.080`
 
 ### English
-Codifies state tax administration under the Department of Revenue following the 1980 repeal of the Alaska individual income tax.
+Empowers the Department of Revenue to administer tax laws, operating alongside the historic repeal of former AS 43.20 individual income tax by Ch. 1, SLA 1980.
 
 ### Español
-Codifica la administración tributaria estatal bajo el Departamento de Ingresos tras la derogación en 1980 del impuesto estatal sobre la renta individual de Alaska.
+Faculta al Departamento de Ingresos a reglamentar la administración tributaria estatal, tras la histórica derogación del impuesto individual por el Cap. 1, SLA 1980.
 
 ## Ala. Code § 40-18-2: Tax on Individuals
 `Ala. Code > Title 40 > Chapter 18 > § 40-18-2`
@@ -738,14 +738,23 @@ Imposes flat individual income tax rate of 4.0% on net income under statutory ra
 ### Español
 Impone una tasa fija de impuesto sobre la renta del 4.0% sobre el ingreso neto bajo criterios estatutarios de reducción en Kentucky.
 
-## La. Rev. Stat. Ann. § 47:32: Rates of Tax
+## La. Rev. Stat. Ann. § 47:32: Rates of Tax (Graduated Schedule through 2024)
 `La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32`
 
 ### English
-Imposes graduated personal income tax rates of 1.85%, 3.50%, and 4.25% in Louisiana.
+Imposes graduated personal income tax rates of 1.85%, 3.50%, and 4.25% in Louisiana applicable through tax year 2024.
 
 ### Español
-Impone tasas de impuesto sobre la renta personal graduadas de 1.85%, 3.50% y 4.25% en Luisiana.
+Impone tasas de impuesto sobre la renta personal graduadas de 1.85%, 3.50% y 4.25% en Luisiana aplicables hasta el año contributivo 2024.
+
+## La. Rev. Stat. Ann. § 47:32 (2025): Flat Individual Income Tax Rate (Act 1 of 2024 3rd Ex. Sess.)
+`La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32 (2025)`
+
+### English
+Imposes a flat individual income tax rate of 3.00% on net taxable income effective for tax periods beginning on or after January 1, 2025 (Act 1 of 2024).
+
+### Español
+Impone una tasa fija de impuesto sobre la renta del 3.00% sobre el ingreso neto gravable de individuos a partir del 1 de enero de 2025 (Act 1 de 2024).
 
 ## Me. Rev. Stat. tit. 36, § 5111: Imposition and Rate of Tax
 `36 M.R.S. > Part 8 > Chapter 803 > § 5111`
@@ -819,14 +828,14 @@ Constitutional prohibition against state personal income, estate, or inheritance
 ### Español
 Prohibición constitucional contra impuestos estatales sobre el ingreso personal, herencias o sucesiones en Nevada.
 
-## N.H. Rev. Stat. Ann. § 77:1: Rate of Tax on Interest and Dividends
+## N.H. Rev. Stat. Ann. § 77:1: Rate of Tax on Interest and Dividends (Repealed Effective 2025)
 `RSA > Title V > Chapter 77 > § 77:1`
 
 ### English
-Levies tax strictly on dividend and interest income (phasing out by 2027) while exempting individual earned wage income in New Hampshire.
+Imposed 3.0% tax on dividend and interest income for 2024, fully repealed for tax periods beginning January 1, 2025 under 2023 HB 2 in New Hampshire.
 
 ### Español
-Grava dividendos e intereses (eliminándose para 2027) eximiendo sueldos y salarios individuales en New Hampshire.
+Impuso 3.0% sobre dividendos e intereses en 2024, totalmente derogado a partir del 1 de enero de 2025 bajo la ley HB 2 de 2023 de New Hampshire.
 
 ## N.M. Stat. Ann. § 7-2-7: Individual Income Tax Rates
 `NMSA > Chapter 7 > Article 2 > § 7-2-7`
@@ -882,14 +891,14 @@ Imposes individual income tax with 0% on initial income and a top marginal rate 
 ### Español
 Impone impuesto individual sobre ingresos con 0% en tramo inicial y tasa marginal máxima del 6.40% en Carolina del Sur.
 
-## S.D. Const. art. XI, § 2: Equality and Uniformity of Property - Prohibition of Income Tax
+## S.D. Const. art. XI, § 2: Constitutional Taxation Power - Incomes and Property
 `S.D. Const. > Article XI > § 2`
 
 ### English
-Constitutional structure barring state individual income taxes without statewide voter referendum in South Dakota.
+Empowers the South Dakota Legislature to levy graduated personal income taxes; the state currently imposes no personal income tax by legislative policy.
 
 ### Español
-Estructura constitucional que impide impuestos estatales sobre el ingreso individual sin referéndum electoral en Dakota del Sur.
+Faculta a la Legislatura a imponer impuestos graduales sobre la renta individual; Dakota del Sur no cobra impuesto sobre ingresos por política legislativa.
 
 ## Tenn. Const. art. II, § 28: Prohibition of Tax on Personal Income
 `Tenn. Const. > Article II > § 28`
@@ -936,11 +945,11 @@ Imposes graduated individual income tax rates: 3.50%, 4.40%, 5.30%, and top rate
 ### Español
 Impone tasas de impuesto individual sobre ingresos: 3.50%, 4.40%, 5.30% y tasa máxima de 7.65% en Wisconsin.
 
-## Wyo. Const. art. 15, § 18: Prohibition of Individual Income Tax
+## Wyo. Const. art. 15, § 18: Full Tax Credit Requirement for Any Individual Income Tax
 `Wyo. Const. > Article 15 > § 18`
 
 ### English
-Constitutional guarantee prohibiting individual income taxes with full credit for sales and use taxes paid in Wyoming.
+Constitutional guarantee conditioning any income tax upon full credit for sales, use, and ad valorem property taxes paid in Wyoming.
 
 ### Español
-Garantía constitucional que prohíbe impuestos sobre la renta individual con crédito por impuestos sobre ventas pagados en Wyoming.
+Garantía constitucional que condiciona cualquier impuesto sobre la renta a acreditar el 100% de impuestos sobre ventas, uso y ad valorem pagados en Wyoming.

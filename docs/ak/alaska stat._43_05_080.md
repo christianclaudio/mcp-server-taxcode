@@ -1,4 +1,4 @@
-# Alaska Stat. § 43.05.080 — Administration of Revenue Laws and Absence of Personal Income Tax
+# Alaska Stat. § 43.05.080 — Revenue Administration and Absence of Individual Income Tax
 
 - **Jurisdiction:** AK
 - **Corpus:** Alaska Stat.
@@ -10,8 +10,8 @@
 
 ## Operative Statutory Language (English)
 
-Codifies state tax administration under the Department of Revenue following the 1980 repeal of the Alaska individual income tax.
+Empowers the Department of Revenue to administer tax laws, operating alongside the historic repeal of former AS 43.20 individual income tax by Ch. 1, SLA 1980.
 
 ## Texto Estatutario Oficial (Español)
 
-Codifica la administración tributaria estatal bajo el Departamento de Ingresos tras la derogación en 1980 del impuesto estatal sobre la renta individual de Alaska.
+Faculta al Departamento de Ingresos a reglamentar la administración tributaria estatal, tras la histórica derogación del impuesto individual por el Cap. 1, SLA 1980.

@@ -37,6 +37,15 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert statute_ga_2024["data"]["effective_year"] == 2024
     assert statute_ga_2024["data"]["superseded_year"] == 2025
 
+    # 2b2. Lookup Louisiana 2024 vs 2025 temporal transition
+    stat_la_2024 = await server.lookup_statute("La. Rev. Stat. Ann. § 47:32", tax_year=2024)
+    assert stat_la_2024["status"] == "success"
+    assert stat_la_2024["data"]["superseded_year"] == 2025
+
+    stat_la_2025 = await server.lookup_statute("La. Rev. Stat. Ann. § 47:32 (2025)", tax_year=2025)
+    assert stat_la_2025["status"] == "success"
+    assert stat_la_2025["data"]["effective_year"] == 2025
+
     # 2c. Lookup statute not found with tax_year and jurisdiction
     statute_miss = await server.lookup_statute("Nonexistent 9999", jurisdiction="GA", tax_year=2024)
     assert statute_miss["status"] == "not_found"
@@ -1169,14 +1178,22 @@ def test_evaluate_state_residency_cases() -> None:
     assert in_nonres["is_resident"] is False
     assert in_nonres["tax_computation"]["estimated_state_tax"] == 0.0
 
-    # 24. New Mexico (NM) - requires_abode = False
-    nm_no_abode = server.evaluate_state_residency(
+    # 24. New Mexico (NM) - requires_abode = False & inclusive threshold (185 days or more)
+    nm_day_185 = server.evaluate_state_residency(
         jurisdiction="NM",
-        days_in_state=190,
+        days_in_state=185,
         is_domiciled=False,
         maintains_permanent_abode=False,
     )
-    assert nm_no_abode["is_resident"] is True
+    assert nm_day_185["is_resident"] is True
+
+    nm_day_184 = server.evaluate_state_residency(
+        jurisdiction="NM",
+        days_in_state=184,
+        is_domiciled=False,
+        maintains_permanent_abode=False,
+    )
+    assert nm_day_184["is_resident"] is False
 
     # Compare with a state requiring abode (e.g. UT)
     ut_no_abode = server.evaluate_state_residency(
@@ -1187,7 +1204,120 @@ def test_evaluate_state_residency_cases() -> None:
     )
     assert ut_no_abode["is_resident"] is False
 
-    # 25. All 51 jurisdictions can be called without exception
+    # 25. North Dakota (ND) - 0% zero-rate bottom bracket ($44,725 single)
+    nd_zero = server.evaluate_state_residency(
+        jurisdiction="ND",
+        days_in_state=250,
+        maintains_permanent_abode=True,
+        federal_agi=30000.0,
+        filing_status="single",
+    )
+    assert nd_zero["is_resident"] is True
+    assert nd_zero["tax_computation"]["estimated_state_tax"] == 0.0
+
+    nd_mid = server.evaluate_state_residency(
+        jurisdiction="ND",
+        days_in_state=250,
+        maintains_permanent_abode=True,
+        federal_agi=70000.0,
+        filing_status="single",
+    )
+    # Taxable: 70,000 - 14,600 = 55,400. Above zero bracket (44,725)
+    expected_nd_mid = round((55400.0 - 44725.0) * (0.025 * 0.65), 2)
+    assert nd_mid["tax_computation"]["estimated_state_tax"] == expected_nd_mid
+
+    nd_top = server.evaluate_state_residency(
+        jurisdiction="ND",
+        days_in_state=250,
+        maintains_permanent_abode=True,
+        federal_agi=300000.0,
+        filing_status="single",
+    )
+    # Taxable: 300,000 - 14,600 = 285,400. Above top bracket (225,975)
+    base_nd = (225975.0 - 44725.0) * (0.025 * 0.65)
+    expected_nd_top = round(base_nd + 0.025 * (285400.0 - 225975.0), 2)
+    assert nd_top["tax_computation"]["estimated_state_tax"] == expected_nd_top
+
+    # 26. Iowa (IA) - 2024 graduated vs 2025 flat 3.80%
+    ia_2024 = server.evaluate_state_residency(
+        jurisdiction="IA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2024,
+    )
+    # 2024 taxable: 100,000 - 14,600 = 85,400 (> 31,590) -> graduated
+    base_ia = 31590.0 * (0.057 * 0.65)
+    expected_ia_2024 = round(base_ia + 0.057 * (85400.0 - 31590.0), 2)
+    assert ia_2024["tax_computation"]["estimated_state_tax"] == expected_ia_2024
+
+    ia_2025 = server.evaluate_state_residency(
+        jurisdiction="IA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2025,
+    )
+    assert ia_2025["tax_computation"]["estimated_state_tax"] == round(85400.0 * 0.038, 2)
+
+    # 27. Louisiana (LA) - 2024 graduated vs 2025 flat 3.00%
+    la_2024 = server.evaluate_state_residency(
+        jurisdiction="LA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2024,
+    )
+    # Taxable: 100,000 - 4500 = 95,500 (> 50,000)
+    base_la = 50000.0 * (0.0425 * 0.65)
+    expected_la_2024 = round(base_la + 0.0425 * (95500.0 - 50000.0), 2)
+    assert la_2024["tax_computation"]["estimated_state_tax"] == expected_la_2024
+
+    la_2025 = server.evaluate_state_residency(
+        jurisdiction="LA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2025,
+    )
+    assert la_2025["tax_computation"]["estimated_state_tax"] == round(95500.0 * 0.03, 2)
+
+    # 28. Indiana (IN) - multi-year rates (2024=3.05%, 2025=3.00%, 2026=2.95%)
+    in_2024 = server.evaluate_state_residency(
+        jurisdiction="IN",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2024,
+    )
+    assert in_2024["tax_computation"]["estimated_state_tax"] == round(99000.0 * 0.0305, 2)
+
+    in_2025 = server.evaluate_state_residency(
+        jurisdiction="IN",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2025,
+    )
+    assert in_2025["tax_computation"]["estimated_state_tax"] == round(99000.0 * 0.03, 2)
+
+    in_2026 = server.evaluate_state_residency(
+        jurisdiction="IN",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2026,
+    )
+    assert in_2026["tax_computation"]["estimated_state_tax"] == round(99000.0 * 0.0295, 2)
+
+    # 29. All 51 jurisdictions can be called without exception
     for jur in server.SUPPORTED_STATE_JURISDICTIONS:
         res = server.evaluate_state_residency(
             jurisdiction=jur,

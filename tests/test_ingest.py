@@ -177,6 +177,8 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "de" / "del. code_1102.md").exists()
     assert (docs_out / "ut" / "utah code_59_10_104.md").exists()
     assert (docs_out / "wy" / "wyo. const._art__15,_§_18.md").exists()
+    assert (docs_out / "la" / "la. r.s._47_32.md").exists()
+    assert (docs_out / "la" / "la. r.s._47_32_2022.md").exists()
 
 
 def test_check_upstream_endpoints() -> None:

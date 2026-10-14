@@ -395,23 +395,28 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
         "deduction_mfj": 29200.0,
     },
     "IN": {
-        "statutory_basis": "Ind. Code §§ 6-3-1-12, 6-3-2-1",
+        "statutory_basis": "Ind. Code §§ 6-3-1-3.5, 6-3-2-1",
         "rate_authority": "Ind. Code § 6-3-2-1",
-        "rate_desc": "Flat state rate 3.05% plus county local income tax",
+        "rate_desc": "Flat state rate 3.05% (2024), 3.00% (2025), 2.95% (2026+) plus county LIT",
         "regime": "flat",
         "rate": 0.0305,
+        "rate_2025": 0.03,
+        "rate_2026": 0.0295,
         "deduction_single": 1000.0,
         "deduction_mfj": 2000.0,
     },
     "IA": {
         "statutory_basis": "Iowa Code §§ 422.4, 422.5A",
         "rate_authority": "Iowa Code § 422.5A",
-        "rate_desc": "Flat tax: 5.70% (2024) transitioning to 3.80% (2025+ under SF 2442)",
-        "regime": "flat",
-        "rate": 0.057,
-        "rate_2025": 0.038,
+        "rate_desc": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
+        "regime": "graduated",
+        "top_bracket_single": 31590.0,
+        "top_bracket_mfj": 63180.0,
+        "top_rate": 0.057,
         "deduction_single": 14600.0,
         "deduction_mfj": 29200.0,
+        "regime_2025": "flat",
+        "rate_2025": 0.038,
     },
     "KS": {
         "statutory_basis": "Kan. Stat. Ann. §§ 79-32,109, 79-32,110",
@@ -434,13 +439,15 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
     "LA": {
         "statutory_basis": "La. Rev. Stat. Ann. §§ 47:31, 47:32",
         "rate_authority": "La. Rev. Stat. Ann. § 47:32",
-        "rate_desc": "Graduated rates of 1.85%, 3.50%, and 4.25%",
+        "rate_desc": "Graduated rates of 1.85%, 3.50%, and 4.25% (2024); flat 3.00% (2025+ Act 1)",
         "regime": "graduated",
         "deduction_single": 4500.0,
         "deduction_mfj": 9000.0,
         "top_bracket_single": 50000.0,
         "top_bracket_mfj": 100000.0,
         "top_rate": 0.0425,
+        "regime_2025": "flat",
+        "rate_2025": 0.03,
     },
     "ME": {
         "statutory_basis": "36 M.R.S. §§ 5102, 5111",
@@ -526,7 +533,9 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
     "NH": {
         "statutory_basis": "N.H. Rev. Stat. Ann. § 77:1",
         "rate_authority": "N.H. Rev. Stat. Ann. § 77:1",
-        "rate_desc": "No personal wage income tax (3% on interest and dividends only)",
+        "rate_desc": (
+            "No wage income tax; 3% on interest/dividends in 2024, fully repealed 2025+ (HB 2)"
+        ),
         "regime": "none",
     },
     "NM": {
@@ -536,6 +545,7 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
         "regime": "graduated",
         "day_threshold": 185,
         "requires_abode": False,
+        "inclusive_threshold": True,
         "deduction_single": 14600.0,
         "deduction_mfj": 29200.0,
         "top_bracket_single": 210000.0,
@@ -548,6 +558,8 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
         "rate_desc": "0% under $44,725; 1.95% to $225,975; top rate 2.50% (HB 1158)",
         "regime": "graduated",
         "day_threshold": 210,
+        "zero_bracket_single": 44725.0,
+        "zero_bracket_mfj": 74750.0,
         "deduction_single": 14600.0,
         "deduction_mfj": 29200.0,
         "top_bracket_single": 225975.0,
@@ -1035,16 +1047,17 @@ def evaluate_state_residency(
         statutory_basis = str(info["statutory_basis"])
         rate_authority = str(info["rate_authority"])
         rate_desc = str(info["rate_desc"])
-        regime = str(info["regime"])
         day_threshold = int(info.get("day_threshold", 183))
         requires_abode = bool(info.get("requires_abode", True))
+        inclusive_threshold = bool(info.get("inclusive_threshold", False))
 
+        presence_met = (
+            days_in_state >= day_threshold if inclusive_threshold else days_in_state > day_threshold
+        )
         if requires_abode:
-            is_resident = is_domiciled or (
-                days_in_state > day_threshold and maintains_permanent_abode
-            )
+            is_resident = is_domiciled or (presence_met and maintains_permanent_abode)
         else:
-            is_resident = is_domiciled or (days_in_state > day_threshold)
+            is_resident = is_domiciled or presence_met
 
         if state in ("DE", "NE") and telecommuting_days_out_of_state > 0:
             basis_prefix = statutory_basis.split(";")[0]
@@ -1058,6 +1071,12 @@ def evaluate_state_residency(
                 "from 0.5% to 3.0% in addition to state base rate."
             )
 
+        # Year-aware regime and rate selection
+        if tax_year >= 2025 and "regime_2025" in info:
+            regime = str(info["regime_2025"])
+        else:
+            regime = str(info["regime"])
+
         if regime == "none":
             taxable_income = 0.0
             estimated_tax = 0.0
@@ -1065,7 +1084,12 @@ def evaluate_state_residency(
             ded_key = "deduction_mfj" if is_mfj else "deduction_single"
             ded = float(info.get(ded_key, 0.0))
             taxable_income = max(0.0, federal_agi - ded)
-            flat_rate = float(info.get("rate", 0.0))
+            if tax_year >= 2026 and "rate_2026" in info:
+                flat_rate = float(info["rate_2026"])
+            elif tax_year >= 2025 and "rate_2025" in info:
+                flat_rate = float(info["rate_2025"])
+            else:
+                flat_rate = float(info.get("rate", 0.0))
             estimated_tax = round(taxable_income * flat_rate, 2) if is_resident else 0.0
         else:  # graduated
             ded_key = "deduction_mfj" if is_mfj else "deduction_single"
@@ -1074,12 +1098,16 @@ def evaluate_state_residency(
             tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
             top_bracket = float(info.get(tb_key, 0.0))
             top_rate = float(info.get("top_rate", 0.0))
+            zb_key = "zero_bracket_mfj" if is_mfj else "zero_bracket_single"
+            zero_bracket = float(info.get(zb_key, 0.0))
             if is_resident:
-                if taxable_income > top_bracket:
-                    base_est = top_bracket * (top_rate * 0.65)
+                if taxable_income <= zero_bracket:
+                    estimated_tax = 0.0
+                elif taxable_income > top_bracket:
+                    base_est = (top_bracket - zero_bracket) * (top_rate * 0.65)
                     estimated_tax = round(base_est + top_rate * (taxable_income - top_bracket), 2)
                 else:
-                    estimated_tax = round(taxable_income * (top_rate * 0.65), 2)
+                    estimated_tax = round((taxable_income - zero_bracket) * (top_rate * 0.65), 2)
             else:
                 estimated_tax = 0.0
 

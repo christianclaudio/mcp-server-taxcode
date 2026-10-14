@@ -1,4 +1,4 @@
-# Wyo. Const. art. 15, § 18 — Prohibition of Individual Income Tax
+# Wyo. Const. art. 15, § 18 — Full Tax Credit Requirement for Any Individual Income Tax
 
 - **Jurisdiction:** WY
 - **Corpus:** Wyo. Const.
@@ -10,8 +10,8 @@
 
 ## Operative Statutory Language (English)
 
-Constitutional guarantee prohibiting individual income taxes with full credit for sales and use taxes paid in Wyoming.
+Constitutional guarantee conditioning any income tax upon full credit for sales, use, and ad valorem property taxes paid in Wyoming.
 
 ## Texto Estatutario Oficial (Español)
 
-Garantía constitucional que prohíbe impuestos sobre la renta individual con crédito por impuestos sobre ventas pagados en Wyoming.
+Garantía constitucional que condiciona cualquier impuesto sobre la renta a acreditar el 100% de impuestos sobre ventas, uso y ad valorem pagados en Wyoming.
