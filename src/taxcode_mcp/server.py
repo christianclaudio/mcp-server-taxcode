@@ -42,6 +42,7 @@ from taxcode_mcp.profiles import (
     validate_allowlist,
 )
 from taxcode_mcp.tools import (
+    SUPPORTED_STATE_JURISDICTIONS,
     calculate_built_in_gain_sourcing,
     compliance_server,
     cross_border_tax_analysis,
@@ -63,6 +64,7 @@ __all__ = [
     "ParentAuditMiddleware",
     "ReadOnlyGateMiddleware",
     "SafetyViolationError",
+    "SUPPORTED_STATE_JURISDICTIONS",
     "TemplateClient",
     "calculate_built_in_gain_sourcing",
     "client",

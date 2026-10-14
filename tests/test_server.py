@@ -1074,3 +1074,125 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert oh_res["is_resident"] is True
         assert oh_res["tax_computation"]["estimated_state_tax"] == expected_calc
+
+    # 20. Alaska (AK) - No personal income tax
+    ak_res = server.evaluate_state_residency(
+        jurisdiction="AK",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=250000.0,
+        filing_status="single",
+    )
+    assert ak_res["is_resident"] is True
+    assert ak_res["tax_computation"]["taxable_net_income"] == 0.0
+    assert ak_res["tax_computation"]["estimated_state_tax"] == 0.0
+
+    # 21. Delaware (DE) - Graduated & Convenience of Employer Rule
+    de_telecommute = server.evaluate_state_residency(
+        jurisdiction="DE",
+        days_in_state=50,
+        is_domiciled=False,
+        telecommuting_days_out_of_state=40,
+    )
+    assert de_telecommute["is_resident"] is False
+    assert any(
+        "DE Convenience of the Employer Doctrine" in f
+        for f in de_telecommute["domicile_audit_risk"]["flags"]
+    )
+    assert de_telecommute["tax_computation"]["estimated_state_tax"] == 0.0
+
+    de_res_sub = server.evaluate_state_residency(
+        jurisdiction="DE",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=50000.0,
+        filing_status="single",
+    )
+    assert de_res_sub["is_resident"] is True
+    # Taxable: 50,000 - 3250 = 46,750 (<= 60,000 top bracket) -> 46,750 * (0.066 * 0.65)
+    expected_de_sub = round(46750.0 * (0.066 * 0.65), 2)
+    assert de_res_sub["tax_computation"]["estimated_state_tax"] == expected_de_sub
+
+    de_res_top = server.evaluate_state_residency(
+        jurisdiction="DE",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=150000.0,
+        filing_status="married_joint",
+    )
+    assert de_res_top["is_resident"] is True
+    # Taxable: 150,000 - 6500 = 143,500 (> 60,000 top bracket)
+    base_de = 60000.0 * (0.066 * 0.65)
+    expected_de_top = round(base_de + 0.066 * (143500.0 - 60000.0), 2)
+    assert de_res_top["tax_computation"]["estimated_state_tax"] == expected_de_top
+
+    # 22. Nebraska (NE) - Convenience of Employer Rule
+    ne_telecommute = server.evaluate_state_residency(
+        jurisdiction="NE",
+        days_in_state=30,
+        is_domiciled=False,
+        telecommuting_days_out_of_state=15,
+    )
+    assert any(
+        "NE Convenience of the Employer Doctrine" in f
+        for f in ne_telecommute["domicile_audit_risk"]["flags"]
+    )
+
+    # 23. Indiana (IN) - Flat rate & LIT county tax flag
+    in_res = server.evaluate_state_residency(
+        jurisdiction="IN",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+    )
+    assert in_res["is_resident"] is True
+    assert any("IN Local Income Tax" in f for f in in_res["domicile_audit_risk"]["flags"])
+    # Taxable: 100,000 - 1000 = 99,000 * 0.0305
+    assert in_res["tax_computation"]["estimated_state_tax"] == round(99000.0 * 0.0305, 2)
+
+    in_res_mfj = server.evaluate_state_residency(
+        jurisdiction="IN",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="mfj",
+    )
+    # Taxable: 100,000 - 2000 = 98,000 * 0.0305
+    assert in_res_mfj["tax_computation"]["estimated_state_tax"] == round(98000.0 * 0.0305, 2)
+
+    in_nonres = server.evaluate_state_residency(
+        jurisdiction="IN",
+        days_in_state=30,
+        is_domiciled=False,
+    )
+    assert in_nonres["is_resident"] is False
+    assert in_nonres["tax_computation"]["estimated_state_tax"] == 0.0
+
+    # 24. New Mexico (NM) - requires_abode = False
+    nm_no_abode = server.evaluate_state_residency(
+        jurisdiction="NM",
+        days_in_state=190,
+        is_domiciled=False,
+        maintains_permanent_abode=False,
+    )
+    assert nm_no_abode["is_resident"] is True
+
+    # Compare with a state requiring abode (e.g. UT)
+    ut_no_abode = server.evaluate_state_residency(
+        jurisdiction="UT",
+        days_in_state=190,
+        is_domiciled=False,
+        maintains_permanent_abode=False,
+    )
+    assert ut_no_abode["is_resident"] is False
+
+    # 25. All 51 jurisdictions can be called without exception
+    for jur in server.SUPPORTED_STATE_JURISDICTIONS:
+        res = server.evaluate_state_residency(
+            jurisdiction=jur,
+            days_in_state=10,
+            is_domiciled=False,
+        )
+        assert res["jurisdiction"] == jur
+        assert res["status"] == "success"

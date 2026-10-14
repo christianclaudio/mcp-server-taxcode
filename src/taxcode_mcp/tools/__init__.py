@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from taxcode_mcp.tools.compliance import (
+    SUPPORTED_STATE_JURISDICTIONS,
     calculate_built_in_gain_sourcing,
     compliance_server,
     cross_border_tax_analysis,
@@ -24,6 +25,7 @@ from taxcode_mcp.tools.system import (
 )
 
 __all__ = [
+    "SUPPORTED_STATE_JURISDICTIONS",
     "calculate_built_in_gain_sourcing",
     "compliance_server",
     "cross_border_tax_analysis",

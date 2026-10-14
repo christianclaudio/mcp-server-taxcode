@@ -173,6 +173,10 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "co" / "c.r.s._39_22_104.md").exists()
     assert (docs_out / "az" / "a.r.s._43_1011.md").exists()
     assert (docs_out / "oh" / "r.c._5747_02.md").exists()
+    assert (docs_out / "ak" / "alaska stat._43_05_080.md").exists()
+    assert (docs_out / "de" / "del. code_1102.md").exists()
+    assert (docs_out / "ut" / "utah code_59_10_104.md").exists()
+    assert (docs_out / "wy" / "wyo. const._art__15,_§_18.md").exists()
 
 
 def test_check_upstream_endpoints() -> None:

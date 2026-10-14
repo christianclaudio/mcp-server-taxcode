@@ -1602,6 +1602,717 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         cross_references=["Ohio Rev. Code § 5747.02"],
         breadcrumbs="R.C. > Title 57 > Chapter 5747 > § 5747.24",
     ),
+    # State of Alaska
+    StatuteRecord(
+        id="ak-stat-43-05-080",
+        jurisdiction="AK",
+        corpus="Alaska Stat.",
+        citation="Alaska Stat. § 43.05.080",
+        section="43.05.080",
+        title="Administration of Revenue Laws and Absence of Personal Income Tax",
+        text_en=(
+            "Codifies state tax administration under the Department of Revenue following the 1980 "
+            "repeal of the Alaska individual income tax."
+        ),
+        text_es=(
+            "Codifica la administración tributaria estatal bajo el Departamento de Ingresos tras "
+            "la derogación en 1980 del impuesto estatal sobre la renta individual de Alaska."
+        ),
+        effective_year=1980,
+        source_url="https://www.akleg.gov/basis/statutes.asp#43.05.080",
+        cross_references=[],
+        breadcrumbs="Alaska Stat. > Title 43 > Chapter 05 > § 43.05.080",
+    ),
+    # State of Alabama
+    StatuteRecord(
+        id="al-code-40-18-2",
+        jurisdiction="AL",
+        corpus="Ala. Code",
+        citation="Ala. Code § 40-18-2",
+        section="40-18-2",
+        title="Tax on Individuals",
+        text_en=(
+            "Imposes graduated individual income tax rates of 2%, 4%, and 5% on taxable net "
+            "income of individuals in Alabama."
+        ),
+        text_es=(
+            "Impone tasas impositivas individuales graduadas del 2%, 4% y 5% sobre el ingreso "
+            "neto gravable de individuos en Alabama."
+        ),
+        effective_year=2024,
+        source_url="https://alison.legislature.state.al.us/code-of-alabama",
+        cross_references=[],
+        breadcrumbs="Ala. Code > Title 40 > Chapter 18 > § 40-18-2",
+    ),
+    # State of Arkansas
+    StatuteRecord(
+        id="ar-code-26-51-201",
+        jurisdiction="AR",
+        corpus="A.C.A.",
+        citation="Ark. Code Ann. § 26-51-201",
+        section="26-51-201",
+        title="Tax on Individuals, Trusts, and Estates",
+        text_en=(
+            "Imposes individual income tax with graduated brackets and top rate of 3.90% under "
+            "Arkansas Act 1 of 2024."
+        ),
+        text_es=(
+            "Impone impuesto sobre el ingreso individual con tramos graduados y tasa máxima de "
+            "3.90% bajo la Ley 1 de 2024 de Arkansas."
+        ),
+        effective_year=2024,
+        source_url="https://www.arkleg.state.ar.us/",
+        cross_references=[],
+        breadcrumbs="A.C.A. > Title 26 > Subtitle 5 > Chapter 51 > Subchapter 2 > § 26-51-201",
+    ),
+    # District of Columbia
+    StatuteRecord(
+        id="dc-code-47-1806-03",
+        jurisdiction="DC",
+        corpus="D.C. Code",
+        citation="D.C. Code § 47-1806.03",
+        section="47-1806.03",
+        title="Tax on Residents - Rates",
+        text_en=(
+            "Imposes graduated personal income tax rates from 4.0% to top rate 10.75% for "
+            "taxable income exceeding $1,000,000 in the District of Columbia."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre ingresos personales graduadas desde 4.0% hasta tasa "
+            "máxima de 10.75% sobre ingresos superiores a $1,000,000 en el Distrito de Columbia."
+        ),
+        effective_year=2024,
+        source_url="https://code.dccouncil.gov/us/dc/council/code/sections/47-1806.03",
+        cross_references=[],
+        breadcrumbs="D.C. Code > Title 47 > Chapter 18 > Subchapter VI > § 47-1806.03",
+    ),
+    # State of Delaware
+    StatuteRecord(
+        id="de-code-30-1102",
+        jurisdiction="DE",
+        corpus="Del. Code",
+        citation="30 Del. C. § 1102",
+        section="1102",
+        title="Levy and Rates of Personal Income Tax",
+        text_en=(
+            "Imposes graduated income tax rates from 2.2% to 6.6% and applies convenience of "
+            "employer rules to nonresident compensation."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre la renta graduadas del 2.2% al 6.6% y aplica reglas de "
+            "conveniencia del empleador a remuneraciones de no residentes."
+        ),
+        effective_year=2024,
+        source_url="https://delcode.delaware.gov/title30/c011/sc01/index.html",
+        cross_references=[],
+        breadcrumbs="Del. Code > Title 30 > Part II > Chapter 11 > Subchapter I > § 1102",
+    ),
+    # State of Hawaii
+    StatuteRecord(
+        id="hi-rev-stat-235-51",
+        jurisdiction="HI",
+        corpus="HRS",
+        citation="Haw. Rev. Stat. § 235-51",
+        section="235-51",
+        title="Tax on Individuals, Estates, and Trusts",
+        text_en=(
+            "Imposes graduated individual income tax rates up to 11.0% under Act 97 (2024 Hawaii "
+            "tax reform)."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre la renta individual graduadas de hasta 11.0% bajo la "
+            "Ley 97 (reforma contributiva de Hawaii de 2024)."
+        ),
+        effective_year=2024,
+        source_url="https://www.capitol.hawaii.gov/docs/hrs.htm",
+        cross_references=[],
+        breadcrumbs="HRS > Title 14 > Chapter 235 > Part I > § 235-51",
+    ),
+    # State of Idaho
+    StatuteRecord(
+        id="id-code-63-3024",
+        jurisdiction="ID",
+        corpus="Idaho Code",
+        citation="Idaho Code § 63-3024",
+        section="63-3024",
+        title="Individuals' Tax and Tax on Estates and Trusts",
+        text_en=(
+            "Imposes a flat individual income tax rate of 5.695% on taxable income under HB 521 "
+            "in Idaho."
+        ),
+        text_es=(
+            "Impone una tasa impositiva individual fija del 5.695% sobre el ingreso gravable de "
+            "individuos bajo HB 521 en Idaho."
+        ),
+        effective_year=2024,
+        source_url="https://legislature.idaho.gov/statutesrules/idstat/title63/t63ch30/sect63-3024/",
+        cross_references=[],
+        breadcrumbs="Idaho Code > Title 63 > Chapter 30 > § 63-3024",
+    ),
+    # State of Indiana
+    StatuteRecord(
+        id="in-code-6-3-2-1",
+        jurisdiction="IN",
+        corpus="Ind. Code",
+        citation="Ind. Code § 6-3-2-1",
+        section="6-3-2-1",
+        title="Imposition of Adjusted Gross Income Tax",
+        text_en=(
+            "Imposes flat adjusted gross income tax of 3.05% for 2024 alongside county local "
+            "income taxes (LIT) in Indiana."
+        ),
+        text_es=(
+            "Impone una tasa fija de impuesto sobre el ingreso bruto ajustado del 3.05% para 2024 "
+            "junto a impuestos locales de condado (LIT) en Indiana."
+        ),
+        effective_year=2024,
+        source_url="http://iga.in.gov/legislative/laws/current/ic/title/6/article/3/chapter/2/",
+        cross_references=[],
+        breadcrumbs="Ind. Code > Title 6 > Article 3 > Chapter 2 > § 6-3-2-1",
+    ),
+    # State of Iowa
+    StatuteRecord(
+        id="ia-code-422-5",
+        jurisdiction="IA",
+        corpus="Iowa Code",
+        citation="Iowa Code § 422.5",
+        section="422.5",
+        title="Tax Imposed - Rates",
+        text_en=(
+            "Imposes personal income tax transitioning to a flat 3.80% rate under SF 2442 in Iowa."
+        ),
+        text_es=(
+            "Impone impuesto sobre la renta personal en transición hacia una tasa fija uniforme "
+            "del 3.80% bajo SF 2442 en Iowa."
+        ),
+        effective_year=2024,
+        source_url="https://www.legis.iowa.gov/law/statutory",
+        cross_references=[],
+        breadcrumbs="Iowa Code > Title X > Subtitle 2 > Chapter 422 > Subchapter II > § 422.5",
+    ),
+    # State of Kansas
+    StatuteRecord(
+        id="ks-stat-79-32-110",
+        jurisdiction="KS",
+        corpus="K.S.A.",
+        citation="Kan. Stat. Ann. § 79-32,110",
+        section="79-32,110",
+        title="Tax Imposed - Classes of Taxpayers",
+        text_en=(
+            "Imposes individual income tax at rates of 5.20% and 5.58% under 2024 Special Session "
+            "SB 1 in Kansas."
+        ),
+        text_es=(
+            "Impone impuesto sobre el ingreso individual a tasas del 5.20% y 5.58% bajo la sesión "
+            "extraordinaria de 2024 SB 1 en Kansas."
+        ),
+        effective_year=2024,
+        source_url="http://www.kslegislature.org/li/b2023_24/statute/079_000_0000_chapter/079_032_0000_article/079_032_0110_section/079_032_0110_k/",
+        cross_references=[],
+        breadcrumbs="K.S.A. > Chapter 79 > Article 32 > § 79-32,110",
+    ),
+    # Commonwealth of Kentucky
+    StatuteRecord(
+        id="ky-rev-stat-141-020",
+        jurisdiction="KY",
+        corpus="KRS",
+        citation="Ky. Rev. Stat. Ann. § 141.020",
+        section="141.020",
+        title="Levy of Tax on Individuals",
+        text_en=(
+            "Imposes flat individual income tax rate of 4.0% on net income under statutory "
+            "rate-reduction triggers in Kentucky."
+        ),
+        text_es=(
+            "Impone una tasa fija de impuesto sobre la renta del 4.0% sobre el ingreso neto bajo "
+            "criterios estatutarios de reducción en Kentucky."
+        ),
+        effective_year=2024,
+        source_url="https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=53235",
+        cross_references=[],
+        breadcrumbs="KRS > Title XI > Chapter 141 > § 141.020",
+    ),
+    # State of Louisiana
+    StatuteRecord(
+        id="la-rev-stat-47-32",
+        jurisdiction="LA",
+        corpus="La. R.S.",
+        citation="La. Rev. Stat. Ann. § 47:32",
+        section="47:32",
+        title="Rates of Tax",
+        text_en=(
+            "Imposes graduated personal income tax rates of 1.85%, 3.50%, and 4.25% in Louisiana."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre la renta personal graduadas de 1.85%, 3.50% y 4.25% en "
+            "Luisiana."
+        ),
+        effective_year=2024,
+        source_url="http://www.legis.la.gov/legis/Law.aspx?d=102146",
+        cross_references=[],
+        breadcrumbs="La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32",
+    ),
+    # State of Maine
+    StatuteRecord(
+        id="me-rev-stat-36-5111",
+        jurisdiction="ME",
+        corpus="36 M.R.S.",
+        citation="Me. Rev. Stat. tit. 36, § 5111",
+        section="5111",
+        title="Imposition and Rate of Tax",
+        text_en=(
+            "Imposes graduated individual income tax rates of 5.80%, 6.75%, and top rate 7.15% in "
+            "Maine."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre ingresos individuales graduadas del 5.80%, 6.75% y "
+            "tasa máxima de 7.15% en Maine."
+        ),
+        effective_year=2024,
+        source_url="https://legislature.maine.gov/statutes/36/title36sec5111.html",
+        cross_references=[],
+        breadcrumbs="36 M.R.S. > Part 8 > Chapter 803 > § 5111",
+    ),
+    # State of Michigan
+    StatuteRecord(
+        id="mi-comp-laws-206-51",
+        jurisdiction="MI",
+        corpus="MCL",
+        citation="Mich. Comp. Laws § 206.51",
+        section="206.51",
+        title="Tax Rate on Taxable Income of Individuals",
+        text_en=(
+            "Imposes a flat individual income tax rate of 4.25% on taxable net income in Michigan."
+        ),
+        text_es=(
+            "Impone una tasa uniforme de impuesto sobre ingresos individuales del 4.25% sobre el "
+            "ingreso neto gravable en Michigan."
+        ),
+        effective_year=2024,
+        source_url="http://legislature.mi.gov/doc.aspx?mcl-206-51",
+        cross_references=[],
+        breadcrumbs="MCL > Chapter 206 > Act 281 of 1967 > Part 1 > Chapter 2 > § 206.51",
+    ),
+    # State of Minnesota
+    StatuteRecord(
+        id="mn-stat-290-06",
+        jurisdiction="MN",
+        corpus="Minn. Stat.",
+        citation="Minn. Stat. § 290.06",
+        section="290.06",
+        title="Rates of Tax - Individuals",
+        text_en=(
+            "Imposes graduated individual income tax rates: 5.35%, 6.80%, 7.85%, and top rate "
+            "9.85% in Minnesota."
+        ),
+        text_es=(
+            "Impone tasas impositivas individuales graduadas: 5.35%, 6.80%, 7.85% y tasa máxima "
+            "de 9.85% en Minnesota."
+        ),
+        effective_year=2024,
+        source_url="https://www.revisor.mn.gov/statutes/cite/290.06",
+        cross_references=[],
+        breadcrumbs="Minn. Stat. > Chapter 290 > § 290.06",
+    ),
+    # State of Mississippi
+    StatuteRecord(
+        id="ms-code-27-7-5",
+        jurisdiction="MS",
+        corpus="Miss. Code",
+        citation="Miss. Code Ann. § 27-7-5",
+        section="27-7-5",
+        title="Imposition and Rates of Tax",
+        text_en=(
+            "Imposes individual income tax with 0% on the first $10,000 and flat 4.70% on excess "
+            "income under the Mississippi Tax Freedom Act."
+        ),
+        text_es=(
+            "Impone impuesto sobre la renta individual con 0% en los primeros $10,000 y 4.70% fijo "
+            "sobre el exceso bajo la Ley de Libertad Tributaria de Mississippi."
+        ),
+        effective_year=2024,
+        source_url="https://advance.lexis.com/container?config=00JAAzNzA5ZmEtMDMxMi00YTRkLThjMTMtNDU5YTU1ZjJmYjM1CgkJcFJvY2Vzc2luZ8tX",
+        cross_references=[],
+        breadcrumbs="Miss. Code > Title 27 > Chapter 7 > Article 1 > § 27-7-5",
+    ),
+    # State of Missouri
+    StatuteRecord(
+        id="mo-rev-stat-143-011",
+        jurisdiction="MO",
+        corpus="RSMo",
+        citation="Mo. Rev. Stat. § 143.011",
+        section="143.011",
+        title="Tax on Resident Individuals",
+        text_en=(
+            "Imposes graduated individual income tax rates with a top marginal rate of 4.80% in "
+            "Missouri under SB 3 and SB 5."
+        ),
+        text_es=(
+            "Impone tasas de impuesto individual graduadas con una tasa marginal máxima de 4.80% "
+            "en Missouri bajo SB 3 y SB 5."
+        ),
+        effective_year=2024,
+        source_url="https://revisor.mo.gov/main/OneSection.aspx?section=143.011",
+        cross_references=[],
+        breadcrumbs="RSMo > Title X > Chapter 143 > § 143.011",
+    ),
+    # State of Montana
+    StatuteRecord(
+        id="mt-code-15-30-2103",
+        jurisdiction="MT",
+        corpus="MCA",
+        citation="Mont. Code Ann. § 15-30-2103",
+        section="15-30-2103",
+        title="Rate of Tax - Net Income",
+        text_en=(
+            "Imposes restructured individual income tax with two brackets at 4.7% and top rate "
+            "5.9% under SB 399 in Montana."
+        ),
+        text_es=(
+            "Impone impuesto individual reestructurado con dos tramos al 4.7% y tasa máxima del "
+            "5.9% bajo SB 399 en Montana."
+        ),
+        effective_year=2024,
+        source_url="https://leg.mt.gov/bills/mca/title_0150/chapter_0300/part_0210/section_0030/0150-0300-0210-0030.html",
+        cross_references=[],
+        breadcrumbs="MCA > Title 15 > Chapter 30 > Part 21 > § 15-30-2103",
+    ),
+    # State of Nebraska
+    StatuteRecord(
+        id="ne-rev-stat-77-2715-03",
+        jurisdiction="NE",
+        corpus="Neb. Rev. Stat.",
+        citation="Neb. Rev. Stat. § 77-2715.03",
+        section="77-2715.03",
+        title="Income Tax - Rates",
+        text_en=(
+            "Imposes graduated personal income tax rates with top rate of 5.84% and enforces the "
+            "convenience of the employer doctrine in Nebraska."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre ingresos personales con tasa máxima de 5.84% y aplica "
+            "la doctrina de conveniencia del empleador en Nebraska."
+        ),
+        effective_year=2024,
+        source_url="https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03",
+        cross_references=[],
+        breadcrumbs="Neb. Rev. Stat. > Chapter 77 > Article 27 > § 77-2715.03",
+    ),
+    # State of Nevada
+    StatuteRecord(
+        id="nv-const-art-10-sec-1",
+        jurisdiction="NV",
+        corpus="Nev. Const.",
+        citation="Nev. Const. art. 10, § 1",
+        section="Art. 10, § 1",
+        title="Prohibition of Personal Income Tax",
+        text_en=(
+            "Constitutional prohibition against state personal income, estate, or inheritance "
+            "taxes in Nevada."
+        ),
+        text_es=(
+            "Prohibición constitucional contra impuestos estatales sobre el ingreso personal, "
+            "herencias o sucesiones en Nevada."
+        ),
+        effective_year=1989,
+        source_url="https://www.leg.state.nv.us/const/nvconst.html#Art10Sec1",
+        cross_references=[],
+        breadcrumbs="Nev. Const. > Article 10 > § 1",
+    ),
+    # State of New Hampshire
+    StatuteRecord(
+        id="nh-rev-stat-77-1",
+        jurisdiction="NH",
+        corpus="RSA",
+        citation="N.H. Rev. Stat. Ann. § 77:1",
+        section="77:1",
+        title="Rate of Tax on Interest and Dividends",
+        text_en=(
+            "Levies tax strictly on dividend and interest income (phasing out by 2027) while "
+            "exempting individual earned wage income in New Hampshire."
+        ),
+        text_es=(
+            "Grava dividendos e intereses (eliminándose para 2027) eximiendo sueldos y salarios "
+            "individuales en New Hampshire."
+        ),
+        effective_year=2024,
+        source_url="https://www.gencourt.state.nh.us/rsa/html/v/77/77-1.htm",
+        cross_references=[],
+        breadcrumbs="RSA > Title V > Chapter 77 > § 77:1",
+    ),
+    # State of New Mexico
+    StatuteRecord(
+        id="nm-stat-7-2-7",
+        jurisdiction="NM",
+        corpus="NMSA",
+        citation="N.M. Stat. Ann. § 7-2-7",
+        section="7-2-7",
+        title="Individual Income Tax Rates",
+        text_en=(
+            "Imposes graduated individual income tax rates from 1.7% to top rate 5.9% in "
+            "New Mexico."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre la renta individual graduadas desde 1.7% hasta tasa "
+            "máxima de 5.9% en Nuevo México."
+        ),
+        effective_year=2024,
+        source_url="https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7",
+        cross_references=[],
+        breadcrumbs="NMSA > Chapter 7 > Article 2 > § 7-2-7",
+    ),
+    # State of North Dakota
+    StatuteRecord(
+        id="nd-cent-code-57-38-30-3",
+        jurisdiction="ND",
+        corpus="N.D.C.C.",
+        citation="N.D. Cent. Code § 57-38-30.3",
+        section="57-38-30.3",
+        title="Simplified Method for Computing Individual Income Tax",
+        text_en=(
+            "Imposes individual income tax at 0% up to $44,725; 1.95% to $225,975; and top rate "
+            "2.50% (HB 1158) in North Dakota."
+        ),
+        text_es=(
+            "Impone impuesto sobre la renta individual de 0% hasta $44,725; 1.95% a $225,975; y "
+            "tasa máxima de 2.50% (HB 1158) en Dakota del Norte."
+        ),
+        effective_year=2024,
+        source_url="https://www.ndlegis.gov/cencode/t57c38.pdf",
+        cross_references=[],
+        breadcrumbs="N.D.C.C. > Title 57 > Chapter 57-38 > § 57-38-30.3",
+    ),
+    # State of Oklahoma
+    StatuteRecord(
+        id="ok-stat-68-2355",
+        jurisdiction="OK",
+        corpus="68 O.S.",
+        citation="Okla. Stat. tit. 68, § 2355",
+        section="2355",
+        title="Tax Rates - Individuals",
+        text_en=(
+            "Imposes graduated individual income tax rates from 0.25% to top rate 4.75% in "
+            "Oklahoma."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre ingresos individuales graduadas desde 0.25% hasta tasa "
+            "máxima de 4.75% en Oklahoma."
+        ),
+        effective_year=2024,
+        source_url="https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=440316",
+        cross_references=[],
+        breadcrumbs="68 O.S. > Chapter 1 > Article 23 > § 2355",
+    ),
+    # State of Oregon
+    StatuteRecord(
+        id="or-rev-stat-316-037",
+        jurisdiction="OR",
+        corpus="ORS",
+        citation="Or. Rev. Stat. § 316.037",
+        section="316.037",
+        title="Imposition and Rate of Personal Income Tax",
+        text_en=(
+            "Imposes graduated individual income tax rates of 4.75%, 6.75%, 8.75%, and top rate "
+            "9.90% in Oregon."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre la renta individual graduadas de 4.75%, 6.75%, 8.75% "
+            "y tasa máxima de 9.90% en Oregón."
+        ),
+        effective_year=2024,
+        source_url="https://www.oregonlegislature.gov/bills_laws/ors/ors316.html",
+        cross_references=[],
+        breadcrumbs="ORS > Title 29 > Chapter 316 > § 316.037",
+    ),
+    # State of Rhode Island
+    StatuteRecord(
+        id="ri-gen-laws-44-30-1",
+        jurisdiction="RI",
+        corpus="R.I.G.L.",
+        citation="R.I. Gen. Laws § 44-30-1",
+        section="44-30-1",
+        title="Persons Subject to Tax - Rates",
+        text_en=(
+            "Imposes graduated individual income tax rates of 3.75%, 4.75%, and 5.99% on federal "
+            "adjusted gross income in Rhode Island."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre el ingreso individual del 3.75%, 4.75% y 5.99% "
+            "sobre el ingreso bruto ajustado federal en Rhode Island."
+        ),
+        effective_year=2024,
+        source_url="http://webserver.rilin.state.ri.us/Statutes/TITLE44/44-30/44-30-1.htm",
+        cross_references=[],
+        breadcrumbs="R.I.G.L. > Title 44 > Chapter 44-30 > § 44-30-1",
+    ),
+    # State of South Carolina
+    StatuteRecord(
+        id="sc-code-12-6-510",
+        jurisdiction="SC",
+        corpus="S.C. Code",
+        citation="S.C. Code Ann. § 12-6-510",
+        section="12-6-510",
+        title="Tax Rates for Individuals",
+        text_en=(
+            "Imposes individual income tax with 0% on initial income and a top marginal rate of "
+            "6.40% in South Carolina."
+        ),
+        text_es=(
+            "Impone impuesto individual sobre ingresos con 0% en tramo inicial y tasa marginal "
+            "máxima del 6.40% en Carolina del Sur."
+        ),
+        effective_year=2024,
+        source_url="https://www.scstatehouse.gov/code/t12c006.php",
+        cross_references=[],
+        breadcrumbs="S.C. Code > Title 12 > Chapter 6 > Article 5 > § 12-6-510",
+    ),
+    # State of South Dakota
+    StatuteRecord(
+        id="sd-const-art-11-sec-2",
+        jurisdiction="SD",
+        corpus="S.D. Const.",
+        citation="S.D. Const. art. XI, § 2",
+        section="Art. XI, § 2",
+        title="Equality and Uniformity of Property - Prohibition of Income Tax",
+        text_en=(
+            "Constitutional structure barring state individual income taxes without statewide "
+            "voter referendum in South Dakota."
+        ),
+        text_es=(
+            "Estructura constitucional que impide impuestos estatales sobre el ingreso individual "
+            "sin referéndum electoral en Dakota del Sur."
+        ),
+        effective_year=1978,
+        source_url="https://sdlegislature.gov/Statutes/Constitution/2042898",
+        cross_references=[],
+        breadcrumbs="S.D. Const. > Article XI > § 2",
+    ),
+    # State of Tennessee
+    StatuteRecord(
+        id="tn-const-art-2-sec-28",
+        jurisdiction="TN",
+        corpus="Tenn. Const.",
+        citation="Tenn. Const. art. II, § 28",
+        section="Art. II, § 28",
+        title="Prohibition of Tax on Personal Income",
+        text_en=(
+            "Constitutional amendment prohibiting any state or local tax upon payroll or earned "
+            "personal income in Tennessee."
+        ),
+        text_es=(
+            "Enmienda constitucional que prohíbe cualquier impuesto estatal o local sobre nómina "
+            "o ingresos individuales del trabajo en Tennessee."
+        ),
+        effective_year=2014,
+        source_url="https://www.capitol.tn.gov/about/docs/TN-Constitution.pdf",
+        cross_references=[],
+        breadcrumbs="Tenn. Const. > Article II > § 28",
+    ),
+    # State of Utah
+    StatuteRecord(
+        id="ut-code-59-10-104",
+        jurisdiction="UT",
+        corpus="Utah Code",
+        citation="Utah Code Ann. § 59-10-104",
+        section="59-10-104",
+        title="Tax Basis - Rates for Individuals",
+        text_en=(
+            "Imposes a flat individual income tax rate of 4.65% on state taxable income under "
+            "SB 69 in Utah."
+        ),
+        text_es=(
+            "Impone una tasa fija de impuesto sobre ingresos individuales del 4.65% sobre el "
+            "ingreso gravable bajo SB 69 en Utah."
+        ),
+        effective_year=2024,
+        source_url="https://le.utah.gov/xcode/Title59/Chapter10/59-10-S104.html",
+        cross_references=[],
+        breadcrumbs="Utah Code > Title 59 > Chapter 10 > Part 1 > § 59-10-104",
+    ),
+    # State of Vermont
+    StatuteRecord(
+        id="vt-stat-32-5822",
+        jurisdiction="VT",
+        corpus="32 V.S.A.",
+        citation="32 V.S.A. § 5822",
+        section="5822",
+        title="Tax on Income of Individuals, Estates, and Trusts",
+        text_en=(
+            "Imposes graduated individual income tax rates: 3.35%, 6.60%, 7.60%, and top rate "
+            "8.75% in Vermont."
+        ),
+        text_es=(
+            "Impone tasas de impuesto individual sobre la renta: 3.35%, 6.60%, 7.60% y tasa "
+            "máxima de 8.75% en Vermont."
+        ),
+        effective_year=2024,
+        source_url="https://legislature.vermont.gov/statutes/section/32/151/05822",
+        cross_references=[],
+        breadcrumbs="32 V.S.A. > Part 3 > Chapter 151 > Subchapter 2 > § 5822",
+    ),
+    # State of West Virginia
+    StatuteRecord(
+        id="wv-code-11-21-4e",
+        jurisdiction="WV",
+        corpus="W. Va. Code",
+        citation="W. Va. Code § 11-21-4e",
+        section="11-21-4e",
+        title="Rate of Tax - Taxable Years Beginning After 2022",
+        text_en=(
+            "Imposes graduated individual income tax rates from 2.36% to top rate 5.12% enacted "
+            "under HB 2526 in West Virginia."
+        ),
+        text_es=(
+            "Impone tasas de impuesto sobre ingresos individuales graduadas del 2.36% a tasa "
+            "máxima de 5.12% bajo HB 2526 en West Virginia."
+        ),
+        effective_year=2024,
+        source_url="http://www.wvlegislature.gov/WVCODE/Code.cfm?chap=11&art=21#21-4e",
+        cross_references=[],
+        breadcrumbs="W. Va. Code > Chapter 11 > Article 21 > Part I > § 11-21-4e",
+    ),
+    # State of Wisconsin
+    StatuteRecord(
+        id="wi-stat-71-06",
+        jurisdiction="WI",
+        corpus="Wis. Stat.",
+        citation="Wis. Stat. § 71.06",
+        section="71.06",
+        title="Rates of Tax - Individuals",
+        text_en=(
+            "Imposes graduated individual income tax rates: 3.50%, 4.40%, 5.30%, and top rate "
+            "7.65% in Wisconsin."
+        ),
+        text_es=(
+            "Impone tasas de impuesto individual sobre ingresos: 3.50%, 4.40%, 5.30% y tasa "
+            "máxima de 7.65% en Wisconsin."
+        ),
+        effective_year=2024,
+        source_url="https://docs.legis.wisconsin.gov/statutes/statutes/71/iii/06",
+        cross_references=[],
+        breadcrumbs="Wis. Stat. > Chapter 71 > Subchapter I > § 71.06",
+    ),
+    # State of Wyoming
+    StatuteRecord(
+        id="wy-const-art-15-sec-18",
+        jurisdiction="WY",
+        corpus="Wyo. Const.",
+        citation="Wyo. Const. art. 15, § 18",
+        section="Art. 15, § 18",
+        title="Prohibition of Individual Income Tax",
+        text_en=(
+            "Constitutional guarantee prohibiting individual income taxes with full credit for "
+            "sales and use taxes paid in Wyoming."
+        ),
+        text_es=(
+            "Garantía constitucional que prohíbe impuestos sobre la renta individual con crédito "
+            "por impuestos sobre ventas pagados en Wyoming."
+        ),
+        effective_year=1974,
+        source_url="https://wyoleg.gov/statutes/compress/title97.pdf",
+        cross_references=[],
+        breadcrumbs="Wyo. Const. > Article 15 > § 18",
+    ),
 ]
 
 PUBLICATIONS_CATALOG: list[PublicationRecord] = [

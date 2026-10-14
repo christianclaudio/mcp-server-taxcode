@@ -8,7 +8,7 @@
 [![CodeRabbit Reviews](https://img.shields.io/coderabbit/prs/github/christianclaudio/mcp-server-taxcode?labelColor=171717&color=FF570A&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
 > **Enterprise-grade Model Context Protocol (MCP) server for Federal, Territorial, and Multi-State Tax Law.**  
-> Reference statutory catalog covering United States Federal (IRC/CFR), Puerto Rico (Act 60/Ley 1), and state tax corridors (GA, CA, NY, FL, TX, WA, MA, NJ, IL) with computational residency and capital gains models.
+> Reference statutory catalog covering United States Federal (IRC/CFR), Puerto Rico (Act 60/Ley 1), and all 50 US States + District of Columbia with computational residency and capital gains models.
 
 > [!WARNING]
 > **NOT TAX OR LEGAL ADVICE / NO CONSTITUYE ASESORAMIENTO CONTRIBUTIVO NI LEGAL**  
@@ -27,7 +27,7 @@ graph TD
     SysSub["System Sub-server (mount: 'system')<br>• system_get_health_status<br>• taxcode://system/reference/capabilities"]
     StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications"]
     CompSub["Compliance Sub-server (mount: 'compliance')<br>• compliance_evaluate_pr_bona_fide_residency<br>• compliance_calculate_built_in_gain_sourcing<br>• compliance_evaluate_georgia_residency<br>• compliance_evaluate_state_residency"]
-    DuckDB["DuckDB In-Memory & File Engine<br>(71 Statutes, 12 Publications, Full-Text Search, Temporal Versions)"]
+    DuckDB["DuckDB In-Memory & File Engine<br>(105 Statutes, 12 Publications, Full-Text Search, Temporal Versions)"]
 
     Client <-->|"JSON-RPC (tools/list, tools/call)"| Gateway
     Gateway --> ParentMW
@@ -45,12 +45,12 @@ graph TD
 * **Authoritative Multi-Jurisdiction Statutory Catalog**:
   * **Federal (`US`)**: IRC § 933, § 937, § 865, 26 CFR § 1.937-1/2.
   * **Puerto Rico (`PR`)**: Act 60-2019 (Resident Individual Investors & Export Services), Ley 1-2011, Act 22-2012 predecessor versions, and administrative circulars (CC RI 21-10, DA 23-04, CC RI 26-13).
-  * **Key State Corridors**: Georgia (O.C.G.A. Title 48), California (RTC § 17014, § 17041, 18 CCR § 17014), New York (Tax Law § 605, § 601, Convenience Rule § 132.18, 5 Primary Domicile Factors § 105.20), Florida (Const. Art. VII § 5, § 222.17 Domicile, § 196.031 Homestead), Texas (Const. art. VIII § 24-a, Franchise Tax § 171.001), Washington (RCW 82.87 Capital Gains Excise Tax), Massachusetts (M.G.L. c. 62 § 4 & Fair Share Surtax), New Jersey (N.J.S.A. 54A & Reciprocal Convenience Rule), Illinois (35 ILCS 5 Flat Tax), Pennsylvania (72 P.S. § 7302 Flat Tax & Convenience Rule § 109.8), Connecticut (C.G.S. § 12-700 Brackets & § 12-711 Convenience Rule), North Carolina (N.C.G.S. § 105-153.7 Phased Flat Tax & 183-Day Presumption § 105-153.3), Virginia (Va. Code § 58.1-320 Brackets & Commuter Reciprocity § 58.1-342), Maryland (Tax-Gen. § 10-105 & County Piggyback Tax § 10-106), Colorado (C.R.S. § 39-22-104 Proposition 121 Flat Tax), Arizona (A.R.S. § 43-1011 Flat Tax & 9-Month Presumption § 43-104), and Ohio (R.C. § 5747.02 Phased Rates & Bright-Line Contact Periods § 5747.24).
+  * **All 50 US States + District of Columbia**: Comprehensive statutory definitions and tax computations covering no-income-tax states (AK, FL, NV, NH, SD, TN, TX, WA, WY), flat-tax regimes (AZ, CO, GA, ID, IL, IN, IA, KS, KY, MI, MS, NC, PA, UT), and graduated/surtax jurisdictions (AL, AR, CA, CT, DE, DC, HI, LA, ME, MD, MA, MN, MO, MT, NE, NJ, NM, NY, ND, OH, OK, OR, RI, SC, VT, VA, WV, WI) including Convenience of the Employer rules (NY, PA, NJ, CT, DE, NE) and local piggyback taxes (MD, IN, OH, NY).
 * **Temporal Statutory Versioning**: Point-in-time statutory lookup with `superseded_year` filtering and descending historical ordering (`tax_year` parameter).
 * **Deterministic Compliance Engines**:
   * `evaluate_pr_bona_fide_residency`: Evaluates IRC § 937 presence (183-day, 549-day 3-year, 90-day US), tax home, and closer connection tests.
   * `calculate_built_in_gain_sourcing`: Allocates Section 937 / Act 60 capital gains across pre-move and post-move holding periods.
-  * `evaluate_state_residency`: Multi-state statutory presence day-counter, permanent place of abode (PPA), domicile audit risk flags, and tax liability computation across 17 states (GA, NY, CA, FL, TX, WA, MA, NJ, IL, PA, CT, NC, VA, MD, CO, AZ, OH).
+  * `evaluate_state_residency`: Multi-state statutory presence day-counter, permanent place of abode (PPA), domicile audit risk flags, and tax liability computation across all 50 US states and District of Columbia (51 jurisdictions total).
 * **Profiles & Opt-in ToolSearch**:
   * Domain-mount profiles: `full`, `system`, `statutes`, `compliance`, `readonly`.
   * Job-shaped allowlist profiles: `researcher` (statutes + circulars), `advisor` (cross-border residency + BIG calculations).
