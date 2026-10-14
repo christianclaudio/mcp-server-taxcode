@@ -1,4 +1,4 @@
-# S.D. Const. art. XI, § 2 — Equality and Uniformity of Property - Prohibition of Income Tax
+# S.D. Const. art. XI, § 2 — Constitutional Taxation Power - Incomes and Property
 
 - **Jurisdiction:** SD
 - **Corpus:** S.D. Const.
@@ -10,8 +10,8 @@
 
 ## Operative Statutory Language (English)
 
-Constitutional structure barring state individual income taxes without statewide voter referendum in South Dakota.
+Empowers the South Dakota Legislature to levy graduated personal income taxes; the state currently imposes no personal income tax by legislative policy.
 
 ## Texto Estatutario Oficial (Español)
 
-Estructura constitucional que impide impuestos estatales sobre el ingreso individual sin referéndum electoral en Dakota del Sur.
+Faculta a la Legislatura a imponer impuestos graduales sobre la renta individual; Dakota del Sur no cobra impuesto sobre ingresos por política legislativa.

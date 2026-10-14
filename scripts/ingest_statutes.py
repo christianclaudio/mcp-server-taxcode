@@ -1609,14 +1609,14 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="Alaska Stat.",
         citation="Alaska Stat. § 43.05.080",
         section="43.05.080",
-        title="Administration of Revenue Laws and Absence of Personal Income Tax",
+        title="Revenue Administration and Absence of Individual Income Tax",
         text_en=(
-            "Codifies state tax administration under the Department of Revenue following the 1980 "
-            "repeal of the Alaska individual income tax."
+            "Empowers the Department of Revenue to administer tax laws, operating alongside the "
+            "historic repeal of former AS 43.20 individual income tax by Ch. 1, SLA 1980."
         ),
         text_es=(
-            "Codifica la administración tributaria estatal bajo el Departamento de Ingresos tras "
-            "la derogación en 1980 del impuesto estatal sobre la renta individual de Alaska."
+            "Faculta al Departamento de Ingresos a reglamentar la administración tributaria "
+            "estatal, tras la histórica derogación del impuesto individual por el Cap. 1, SLA 1980."
         ),
         effective_year=1980,
         source_url="https://www.akleg.gov/basis/statutes.asp#43.05.080",
@@ -1839,18 +1839,40 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="La. R.S.",
         citation="La. Rev. Stat. Ann. § 47:32",
         section="47:32",
-        title="Rates of Tax",
+        title="Rates of Tax (Graduated Schedule through 2024)",
         text_en=(
-            "Imposes graduated personal income tax rates of 1.85%, 3.50%, and 4.25% in Louisiana."
+            "Imposes graduated personal income tax rates of 1.85%, 3.50%, and 4.25% in Louisiana "
+            "applicable through tax year 2024."
         ),
         text_es=(
             "Impone tasas de impuesto sobre la renta personal graduadas de 1.85%, 3.50% y 4.25% en "
-            "Luisiana."
+            "Luisiana aplicables hasta el año contributivo 2024."
         ),
-        effective_year=2024,
+        effective_year=2022,
+        superseded_year=2025,
         source_url="http://www.legis.la.gov/legis/Law.aspx?d=102146",
-        cross_references=[],
+        cross_references=["La. Rev. Stat. Ann. § 47:32 (2025)"],
         breadcrumbs="La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32",
+    ),
+    StatuteRecord(
+        id="la-rev-stat-47-32-2025",
+        jurisdiction="LA",
+        corpus="La. R.S.",
+        citation="La. Rev. Stat. Ann. § 47:32 (2025)",
+        section="47:32",
+        title="Flat Individual Income Tax Rate (Act 1 of 2024 3rd Ex. Sess.)",
+        text_en=(
+            "Imposes a flat individual income tax rate of 3.00% on net taxable income effective "
+            "for tax periods beginning on or after January 1, 2025 (Act 1 of 2024)."
+        ),
+        text_es=(
+            "Impone una tasa fija de impuesto sobre la renta del 3.00% sobre el ingreso neto "
+            "gravable de individuos a partir del 1 de enero de 2025 (Act 1 de 2024)."
+        ),
+        effective_year=2025,
+        source_url="http://www.legis.la.gov/legis/Law.aspx?d=102146",
+        cross_references=["La. Rev. Stat. Ann. § 47:32"],
+        breadcrumbs="La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32 (2025)",
     ),
     # State of Maine
     StatuteRecord(
@@ -2026,16 +2048,17 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="RSA",
         citation="N.H. Rev. Stat. Ann. § 77:1",
         section="77:1",
-        title="Rate of Tax on Interest and Dividends",
+        title="Rate of Tax on Interest and Dividends (Repealed Effective 2025)",
         text_en=(
-            "Levies tax strictly on dividend and interest income (phasing out by 2027) while "
-            "exempting individual earned wage income in New Hampshire."
+            "Imposed 3.0% tax on dividend and interest income for 2024, fully repealed for tax "
+            "periods beginning January 1, 2025 under 2023 HB 2 in New Hampshire."
         ),
         text_es=(
-            "Grava dividendos e intereses (eliminándose para 2027) eximiendo sueldos y salarios "
-            "individuales en New Hampshire."
+            "Impuso 3.0% sobre dividendos e intereses en 2024, totalmente derogado a partir del "
+            "1 de enero de 2025 bajo la ley HB 2 de 2023 de New Hampshire."
         ),
         effective_year=2024,
+        superseded_year=2025,
         source_url="https://www.gencourt.state.nh.us/rsa/html/v/77/77-1.htm",
         cross_references=[],
         breadcrumbs="RSA > Title V > Chapter 77 > § 77:1",
@@ -2173,14 +2196,14 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="S.D. Const.",
         citation="S.D. Const. art. XI, § 2",
         section="Art. XI, § 2",
-        title="Equality and Uniformity of Property - Prohibition of Income Tax",
+        title="Constitutional Taxation Power - Incomes and Property",
         text_en=(
-            "Constitutional structure barring state individual income taxes without statewide "
-            "voter referendum in South Dakota."
+            "Empowers the South Dakota Legislature to levy graduated personal income taxes; "
+            "the state currently imposes no personal income tax by legislative policy."
         ),
         text_es=(
-            "Estructura constitucional que impide impuestos estatales sobre el ingreso individual "
-            "sin referéndum electoral en Dakota del Sur."
+            "Faculta a la Legislatura a imponer impuestos graduales sobre la renta individual; "
+            "Dakota del Sur no cobra impuesto sobre ingresos por política legislativa."
         ),
         effective_year=1978,
         source_url="https://sdlegislature.gov/Statutes/Constitution/2042898",
@@ -2299,14 +2322,14 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="Wyo. Const.",
         citation="Wyo. Const. art. 15, § 18",
         section="Art. 15, § 18",
-        title="Prohibition of Individual Income Tax",
+        title="Full Tax Credit Requirement for Any Individual Income Tax",
         text_en=(
-            "Constitutional guarantee prohibiting individual income taxes with full credit for "
-            "sales and use taxes paid in Wyoming."
+            "Constitutional guarantee conditioning any income tax upon full credit for sales, "
+            "use, and ad valorem property taxes paid in Wyoming."
         ),
         text_es=(
-            "Garantía constitucional que prohíbe impuestos sobre la renta individual con crédito "
-            "por impuestos sobre ventas pagados en Wyoming."
+            "Garantía constitucional que condiciona cualquier impuesto sobre la renta a acreditar "
+            "el 100% de impuestos sobre ventas, uso y ad valorem pagados en Wyoming."
         ),
         effective_year=1974,
         source_url="https://wyoleg.gov/statutes/compress/title97.pdf",
