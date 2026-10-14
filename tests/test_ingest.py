@@ -51,7 +51,7 @@ def test_run_ingest_source_filters() -> None:
 
     pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
     assert pr_stats["statutes_considered"] > 0
-    assert pr_stats["publications_considered"] == 5
+    assert pr_stats["publications_considered"] == 6
 
     cfr_stats = run_ingest(db_path=":memory:", sources="cfr", dry_run=True)
     assert cfr_stats["statutes_considered"] > 0

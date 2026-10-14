@@ -56,9 +56,19 @@
 - [35 ILCS 5/201 (2024) — Illinois Individual Income Tax Rate](./il/ilcs_5_201.md): 35 ILCS 5/ > Article 2 > Section 201
 - [35 ILCS 5/1501(a)(20) (2024) — Definition of Resident](./il/ilcs_5_1501_a_20.md): 35 ILCS 5/ > Article 15 > Section 1501(a)(20)
 - [35 ILCS 5/301 (2024) — Compensation and Nonresident Income Sourcing](./il/ilcs_5_301.md): 35 ILCS 5/ > Article 3 > Section 301
+- [72 P.S. § 7302 (2024) — Imposition of Tax](./pa/p.s._7302.md): 72 P.S. > Chapter 73 > § 7302
+- [72 P.S. § 7301 (2024) — Definitions - Resident Individual](./pa/p.s._7301.md): 72 P.S. > Chapter 73 > § 7301
+- [61 Pa. Code § 109.8 (2024) — Convenience of the Employer Rule](./pa/pa. code_109_8.md): 61 Pa. Code > Chapter 109 > § 109.8
+- [Conn. Gen. Stat. § 12-700 (2024) — Imposition of Income Tax and Rates](./ct/c.g.s._12_700.md): C.G.S. > Title 12 > Chapter 229 > § 12-700
+- [Conn. Gen. Stat. § 12-701 (2024) — Definitions - Resident and Sourcing](./ct/c.g.s._12_701.md): C.G.S. > Title 12 > Chapter 229 > § 12-701
+- [Conn. Gen. Stat. § 12-711 (2024) — Convenience of Employer Rule](./ct/c.g.s._12_711.md): C.G.S. > Title 12 > Chapter 229 > § 12-711
+- [N.C. Gen. Stat. § 105-153.7 (2024) — Individual Income Tax Imposition and Rate](./nc/n.c.g.s._105_153_7.md): N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.7
+- [N.C. Gen. Stat. § 105-153.3 (2024) — Definitions - Resident Individual](./nc/n.c.g.s._105_153_3.md): N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.3
 
 ## Administrative Publications (Hacienda SURI & Georgia DOR)
 
+- **CC RI 21-10** (2021-03-31) — Tratamiento contributivo del teletrabajo y servicios prestados por no residentes: Directrices oficiales del Departamento de Hacienda sobre la fuente de ingresos por servicios laborales remotos, retención en el origen y establecimiento permanente en Puerto Rico.
+- **PA REV-BULL 2021-01** (2021-06-15) — Pennsylvania Personal Income Tax Telework and Sourcing Guidance: Guidance from the Pennsylvania Department of Revenue concerning the convenience of the employer doctrine and withholding obligations for telecommuting employees.
 - **CC RI 26-13** (2026-06-30) — Radicación electrónica obligatoria de planillas de individuos: Instrucciones y requisitos técnicos para la radicación compulsoria a través de SURI de las planillas de contribución sobre ingresos de individuos para el año contributivo 2026.
 - **DA 23-04** (2023-08-15) — Tratamiento contributivo de transferencias de propiedad bajo Ley 60: Determinación administrativa sobre exenciones contributivas en la enajenación de activos de capital por parte de inversionistas residentes con decreto bajo Ley 60.
 - **DA 21-04** (2021-04-12) — Procedimiento de cumplimiento anual para decretos de individuos: Directrices para la presentación de informes anuales de cumplimiento y comprobantes de donaciones benéficas requeridas por el Código de Incentivos de Puerto Rico.

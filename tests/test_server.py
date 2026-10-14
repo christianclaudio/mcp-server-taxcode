@@ -853,3 +853,89 @@ def test_evaluate_state_residency_cases() -> None:
     assert il_res["is_resident"] is True
     # Taxable: 100k - 5550 = 94450 * 0.0495
     assert il_res["tax_computation"]["estimated_state_tax"] == round(94450.0 * 0.0495, 2)
+
+    # 12. Pennsylvania (PA) - flat 3.07% rate and convenience rule
+    pa_nonres = server.evaluate_state_residency(
+        jurisdiction="PA",
+        days_in_state=30,
+        is_domiciled=False,
+        telecommuting_days_out_of_state=80,
+    )
+    assert pa_nonres["is_resident"] is False
+    assert any(
+        "PA Convenience of the Employer Rule" in f
+        for f in pa_nonres["domicile_audit_risk"]["flags"]
+    )
+    assert pa_nonres["tax_computation"]["estimated_state_tax"] == 0.0
+
+    pa_res = server.evaluate_state_residency(
+        jurisdiction="PA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+    )
+    assert pa_res["is_resident"] is True
+    assert pa_res["tax_computation"]["estimated_state_tax"] == round(100000.0 * 0.0307, 2)
+
+    # 13. Connecticut (CT) - brackets and reciprocal convenience rule
+    ct_nonres = server.evaluate_state_residency(
+        jurisdiction="CT",
+        days_in_state=40,
+        is_domiciled=False,
+        telecommuting_days_out_of_state=90,
+    )
+    assert ct_nonres["is_resident"] is False
+    assert any(
+        "CT Reciprocal Convenience Rule" in f for f in ct_nonres["domicile_audit_risk"]["flags"]
+    )
+
+    for inc, expected_ct_pct in [
+        (600000.0, 0.0699),
+        (200000.0, 0.06),
+        (80000.0, 0.05),
+        (20000.0, 0.03),
+    ]:
+        ct_res = server.evaluate_state_residency(
+            jurisdiction="CT",
+            days_in_state=200,
+            maintains_permanent_abode=True,
+            federal_agi=inc,
+            filing_status="single",
+        )
+        assert ct_res["is_resident"] is True
+        taxable_ct = inc - 15000.0
+        assert ct_res["tax_computation"]["estimated_state_tax"] == round(
+            taxable_ct * expected_ct_pct, 2
+        )
+
+    # 14. North Carolina (NC) - 183-day presumption and rate phase-ins
+    nc_presumed = server.evaluate_state_residency(
+        jurisdiction="NC",
+        days_in_state=190,
+        federal_agi=100000.0,
+        filing_status="married_joint",
+        tax_year=2024,
+    )
+    assert nc_presumed["is_resident"] is True
+    # Taxable: 100k - 25,500 = 74,500 * 0.045
+    assert nc_presumed["tax_computation"]["estimated_state_tax"] == round(74500.0 * 0.045, 2)
+
+    nc_2025 = server.evaluate_state_residency(
+        jurisdiction="NC",
+        days_in_state=190,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2025,
+    )
+    # Taxable: 100k - 12,750 = 87,250 * 0.0425
+    assert nc_2025["tax_computation"]["estimated_state_tax"] == round(87250.0 * 0.0425, 2)
+
+    nc_2026 = server.evaluate_state_residency(
+        jurisdiction="NC",
+        days_in_state=190,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2026,
+    )
+    # Taxable: 100k - 12,750 = 87,250 * 0.0399
+    assert nc_2026["tax_computation"]["estimated_state_tax"] == round(87250.0 * 0.0399, 2)
