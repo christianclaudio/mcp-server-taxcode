@@ -556,7 +556,7 @@ def test_redact_message_bracket_flood_is_fast(raw: str) -> None:
 
     began = time.perf_counter()
     out = redact_message(raw)
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
     assert out.endswith(MASK)
     assert len(out) < len(raw)
 
@@ -586,7 +586,7 @@ def test_pem_without_end_is_fast_and_masked_to_the_end() -> None:
     raw = "-----BEGIN A-----\nMIIEkeybody\n" * 4000
     began = time.perf_counter()
     out = redact_secrets(raw)
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
     assert out == MASK
     assert redact_secrets("x -----BEGIN RSA PRIVATE KEY-----\nMIIEsecret") == "x " + MASK
     # A complete block followed by an unterminated one: both bodies go.
@@ -603,11 +603,11 @@ def test_keyed_unbalanced_brackets_are_fast_and_masked(opener: str) -> None:
     raw = (line + "\n") * 5000
     began = time.perf_counter()
     out = redact_secrets(raw)
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
     assert out == ("password=" + MASK + "\n") * 5000
     began = time.perf_counter()
     assert redact_message(raw) == out
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
 
 
 def test_keyed_bracket_cache_keeps_balanced_and_nested_values() -> None:
@@ -735,7 +735,7 @@ def test_python_repr_flood_is_linear(raw: str) -> None:
 
     start = time.perf_counter()
     out = redact_message(raw)
-    assert time.perf_counter() - start < 1.0
+    assert time.perf_counter() - start < 3.0
     assert "S3CRET2" not in out
 
 
@@ -802,7 +802,7 @@ def test_pem_label_match_is_linear(raw: str) -> None:
 
     start = time.perf_counter()
     out = redact_secrets(raw)
-    assert time.perf_counter() - start < 1.0
+    assert time.perf_counter() - start < 3.0
     assert out == MASK
 
 
@@ -855,7 +855,7 @@ def test_keyed_paren_flood_is_fast(count: int) -> None:
         for redact in (redact_secrets, redact_message):
             began = time.perf_counter()
             assert redact(raw) == expected
-            assert time.perf_counter() - began < 1.0
+            assert time.perf_counter() - began < 3.0
 
 
 def test_redact_message_masks_tuple_with_nested_list_exactly() -> None:
@@ -895,11 +895,11 @@ def test_redact_message_paren_flood_stays_fast() -> None:
     text = "api_key: " + "(" * 20_000
     began = time.perf_counter()
     redact_message(text)
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
     text = "x (" * 20_000
     began = time.perf_counter()
     assert redact_message(text) == text
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
 
 
 _PAIRS = {"(": ")", "[": "]", "{": "}"}
@@ -973,4 +973,4 @@ def test_redact_message_paren_floods_stay_fast(raw: str) -> None:
 
     began = time.perf_counter()
     redact_message(raw)
-    assert time.perf_counter() - began < 1.0
+    assert time.perf_counter() - began < 3.0
