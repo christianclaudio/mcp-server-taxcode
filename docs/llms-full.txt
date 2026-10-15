@@ -1,4 +1,4 @@
-# Full Statutory Corpus: US, Puerto Rico & Georgia Tax Intelligence
+# Full Statutory Corpus: US Federal, Puerto Rico & Multi-State Tax Intelligence
 
 ## 26 U.S.C. § 933: Income from sources within Puerto Rico
 `Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 933`

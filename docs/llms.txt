@@ -1,7 +1,7 @@
 # TaxCode MCP Intelligence Corpus
 
 > Authoritative statutory and regulatory references for United States Federal Tax Law,
-> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and Georgia State Tax Law (O.C.G.A. Title 48).
+> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and all 50 US States + District of Columbia.
 
 ## Statutory Catalog
 
@@ -112,7 +112,7 @@
 - [Wis. Stat. § 71.06 (2024) — Rates of Tax - Individuals](./wi/wis. stat._71_06.md): Wis. Stat. > Chapter 71 > Subchapter I > § 71.06
 - [Wyo. Const. art. 15, § 18 (1974) — Full Tax Credit Requirement for Any Individual Income Tax](./wy/wyo. const._art__15,_§_18.md): Wyo. Const. > Article 15 > § 18
 
-## Administrative Publications (Hacienda SURI & Georgia DOR)
+## Administrative Publications & Guidance
 
 - **CC RI 21-10** (2021-03-31) — Tratamiento contributivo del teletrabajo y servicios prestados por no residentes: Directrices oficiales del Departamento de Hacienda sobre la fuente de ingresos por servicios laborales remotos, retención en el origen y establecimiento permanente en Puerto Rico.
 - **PA REV-BULL 2021-01** (2021-06-15) — Pennsylvania Personal Income Tax Telework and Sourcing Guidance: Guidance from the Pennsylvania Department of Revenue concerning the convenience of the employer doctrine and withholding obligations for telecommuting employees.

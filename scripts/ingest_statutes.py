@@ -2566,7 +2566,7 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
         "# TaxCode MCP Intelligence Corpus",
         "",
         "> Authoritative statutory and regulatory references for United States Federal Tax Law,",
-        "> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and Georgia State Tax Law (O.C.G.A. Title 48).",
+        "> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and all 50 US States + District of Columbia.",
         "",
         "## Statutory Catalog",
         "",
@@ -2580,7 +2580,7 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
     llms_summary.extend(
         [
             "",
-            "## Administrative Publications (Hacienda SURI & Georgia DOR)",
+            "## Administrative Publications & Guidance",
             "",
         ]
     )
@@ -2591,7 +2591,9 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
 
     # Generate llms-full.txt
     llms_full_path = output_dir / "llms-full.txt"
-    llms_full_content = ["# Full Statutory Corpus: US, Puerto Rico & Georgia Tax Intelligence\n"]
+    llms_full_content = [
+        "# Full Statutory Corpus: US Federal, Puerto Rico & Multi-State Tax Intelligence\n"
+    ]
     for s in STATUTES_CATALOG:
         llms_full_content.append(
             f"## {s.citation}: {s.title}\n`{s.breadcrumbs}`\n\n### English\n{s.text_en}\n\n### Español\n{s.text_es}\n"
