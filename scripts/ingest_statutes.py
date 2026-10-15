@@ -1850,29 +1850,29 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         ),
         effective_year=2022,
         superseded_year=2025,
-        source_url="http://www.legis.la.gov/legis/Law.aspx?d=102146",
-        cross_references=["La. Rev. Stat. Ann. § 47:32 (2025)"],
+        source_url="https://www.legis.la.gov/legis/Law.aspx?d=101946",
+        cross_references=["La. Rev. Stat. Ann. § 47:32"],
         breadcrumbs="La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32",
     ),
     StatuteRecord(
         id="la-rev-stat-47-32-2025",
         jurisdiction="LA",
         corpus="La. R.S.",
-        citation="La. Rev. Stat. Ann. § 47:32 (2025)",
+        citation="La. Rev. Stat. Ann. § 47:32",
         section="47:32",
-        title="Flat Individual Income Tax Rate (Act 1 of 2024 3rd Ex. Sess.)",
+        title="Flat Individual Income Tax Rate (Act 11 of 2024 3rd Ex. Sess.)",
         text_en=(
             "Imposes a flat individual income tax rate of 3.00% on net taxable income effective "
-            "for tax periods beginning on or after January 1, 2025 (Act 1 of 2024)."
+            "for tax periods beginning on or after January 1, 2025 (Act 11 of 2024)."
         ),
         text_es=(
             "Impone una tasa fija de impuesto sobre la renta del 3.00% sobre el ingreso neto "
-            "gravable de individuos a partir del 1 de enero de 2025 (Act 1 de 2024)."
+            "gravable de individuos a partir del 1 de enero de 2025 (Act 11 de 2024)."
         ),
         effective_year=2025,
-        source_url="http://www.legis.la.gov/legis/Law.aspx?d=102146",
+        source_url="https://www.legis.la.gov/legis/Law.aspx?d=101946",
         cross_references=["La. Rev. Stat. Ann. § 47:32"],
-        breadcrumbs="La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32 (2025)",
+        breadcrumbs="La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32",
     ),
     # State of Maine
     StatuteRecord(

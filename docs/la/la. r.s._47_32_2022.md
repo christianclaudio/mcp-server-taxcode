@@ -4,9 +4,9 @@
 - **Corpus:** La. R.S.
 - **Effective Year:** 2022
 - **Superseded Year:** 2025
-- **Source:** [http://www.legis.la.gov/legis/Law.aspx?d=102146](http://www.legis.la.gov/legis/Law.aspx?d=102146)
+- **Source:** [https://www.legis.la.gov/legis/Law.aspx?d=101946](https://www.legis.la.gov/legis/Law.aspx?d=101946)
 - **Hierarchy:** `La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32`
-- **Cross References:** `La. Rev. Stat. Ann. § 47:32 (2025)`
+- **Cross References:** `La. Rev. Stat. Ann. § 47:32`
 
 ## Operative Statutory Language (English)
 

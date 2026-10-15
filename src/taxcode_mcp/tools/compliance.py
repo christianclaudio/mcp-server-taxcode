@@ -397,11 +397,15 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
     "IN": {
         "statutory_basis": "Ind. Code §§ 6-3-1-3.5, 6-3-2-1",
         "rate_authority": "Ind. Code § 6-3-2-1",
-        "rate_desc": "Flat state rate 3.05% (2024), 3.00% (2025), 2.95% (2026+) plus county LIT",
+        "rate_desc": (
+            "Flat state rate 3.05% (2024), 3.00% (2025), 2.95% (2026), 2.90% (2027+) "
+            "plus county LIT"
+        ),
         "regime": "flat",
         "rate": 0.0305,
         "rate_2025": 0.03,
         "rate_2026": 0.0295,
+        "rate_2027": 0.029,
         "deduction_single": 1000.0,
         "deduction_mfj": 2000.0,
     },
@@ -439,10 +443,17 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
     "LA": {
         "statutory_basis": "La. Rev. Stat. Ann. §§ 47:31, 47:32",
         "rate_authority": "La. Rev. Stat. Ann. § 47:32",
-        "rate_desc": "Graduated rates of 1.85%, 3.50%, and 4.25% (2024); flat 3.00% (2025+ Act 1)",
+        "rate_desc": (
+            "Graduated rates 1.85%-4.25% (2024); flat 3.00% with $12.5k/$25k deduction "
+            "(2025+ Act 11)"
+        ),
         "regime": "graduated",
         "deduction_single": 4500.0,
         "deduction_mfj": 9000.0,
+        "deduction_single_2025": 12500.0,
+        "deduction_mfj_2025": 25000.0,
+        "deduction_single_2026": 12838.0,
+        "deduction_mfj_2026": 25676.0,
         "top_bracket_single": 50000.0,
         "top_bracket_mfj": 100000.0,
         "top_rate": 0.0425,
@@ -555,15 +566,22 @@ STATE_REGISTRY: dict[str, dict[str, Any]] = {
     "ND": {
         "statutory_basis": "N.D. Cent. Code §§ 57-38-01, 57-38-30.3",
         "rate_authority": "N.D. Cent. Code § 57-38-30.3",
-        "rate_desc": "0% under $44,725; 1.95% to $225,975; top rate 2.50% (HB 1158)",
+        "rate_desc": (
+            "0% under threshold ($47,150 in 2024 / $48,475 in 2025); top rate 2.50% (HB 1158)"
+        ),
         "regime": "graduated",
         "day_threshold": 210,
-        "zero_bracket_single": 44725.0,
-        "zero_bracket_mfj": 74750.0,
+        "zero_bracket_single": 47150.0,
+        "zero_bracket_mfj": 78775.0,
+        "zero_bracket_single_2025": 48475.0,
+        "zero_bracket_mfj_2025": 80975.0,
+        "middle_rate": 0.0195,
         "deduction_single": 14600.0,
         "deduction_mfj": 29200.0,
-        "top_bracket_single": 225975.0,
-        "top_bracket_mfj": 275100.0,
+        "top_bracket_single": 238200.0,
+        "top_bracket_mfj": 289975.0,
+        "top_bracket_single_2025": 244825.0,
+        "top_bracket_mfj_2025": 298075.0,
         "top_rate": 0.025,
     },
     "OK": {
@@ -1070,21 +1088,48 @@ def evaluate_state_residency(
                 "IN Local Income Tax (LIT, Ind. Code § 6-3.6): County income taxes range "
                 "from 0.5% to 3.0% in addition to state base rate."
             )
+        if state == "LA":
+            if tax_year == 2026:
+                audit_flags.append(
+                    "LA Standard Deduction (Act 11 of 2024 / RIB 26-019): Adjusted for CPI-U "
+                    "inflation to $12,838 single / $25,676 joint for 2026."
+                )
+            elif tax_year >= 2027:
+                rate_desc = (
+                    f"{rate_desc} [PROVISIONAL: 2027+ standard deduction pending statutory CPI-U]"
+                )
+                audit_flags.append(
+                    "LA Standard Deduction (Act 11 of 2024): 2027+ estimates are provisional "
+                    "and use the 2026 baseline ($12,838 / $25,676) pending annual CPI-U release."
+                )
 
-        # Year-aware regime and rate selection
+        # Year-aware regime selection
         if tax_year >= 2025 and "regime_2025" in info:
             regime = str(info["regime_2025"])
         else:
             regime = str(info["regime"])
 
+        # Year-aware standard deduction selection
+        if tax_year >= 2026 and (
+            "deduction_mfj_2026" in info if is_mfj else "deduction_single_2026" in info
+        ):
+            ded_key = "deduction_mfj_2026" if is_mfj else "deduction_single_2026"
+        elif tax_year >= 2025 and (
+            "deduction_mfj_2025" in info if is_mfj else "deduction_single_2025" in info
+        ):
+            ded_key = "deduction_mfj_2025" if is_mfj else "deduction_single_2025"
+        else:
+            ded_key = "deduction_mfj" if is_mfj else "deduction_single"
+        ded = float(info.get(ded_key, 0.0))
+        taxable_income = max(0.0, federal_agi - ded)
+
         if regime == "none":
             taxable_income = 0.0
             estimated_tax = 0.0
         elif regime == "flat":
-            ded_key = "deduction_mfj" if is_mfj else "deduction_single"
-            ded = float(info.get(ded_key, 0.0))
-            taxable_income = max(0.0, federal_agi - ded)
-            if tax_year >= 2026 and "rate_2026" in info:
+            if tax_year >= 2027 and "rate_2027" in info:
+                flat_rate = float(info["rate_2027"])
+            elif tax_year >= 2026 and "rate_2026" in info:
                 flat_rate = float(info["rate_2026"])
             elif tax_year >= 2025 and "rate_2025" in info:
                 flat_rate = float(info["rate_2025"])
@@ -1092,22 +1137,30 @@ def evaluate_state_residency(
                 flat_rate = float(info.get("rate", 0.0))
             estimated_tax = round(taxable_income * flat_rate, 2) if is_resident else 0.0
         else:  # graduated
-            ded_key = "deduction_mfj" if is_mfj else "deduction_single"
-            ded = float(info.get(ded_key, 0.0))
-            taxable_income = max(0.0, federal_agi - ded)
-            tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
+            if tax_year >= 2025 and (
+                "top_bracket_mfj_2025" in info if is_mfj else "top_bracket_single_2025" in info
+            ):
+                tb_key = "top_bracket_mfj_2025" if is_mfj else "top_bracket_single_2025"
+            else:
+                tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
             top_bracket = float(info.get(tb_key, 0.0))
             top_rate = float(info.get("top_rate", 0.0))
-            zb_key = "zero_bracket_mfj" if is_mfj else "zero_bracket_single"
+            mid_rate = float(info.get("middle_rate", top_rate * 0.65))
+            if tax_year >= 2025 and (
+                "zero_bracket_mfj_2025" in info if is_mfj else "zero_bracket_single_2025" in info
+            ):
+                zb_key = "zero_bracket_mfj_2025" if is_mfj else "zero_bracket_single_2025"
+            else:
+                zb_key = "zero_bracket_mfj" if is_mfj else "zero_bracket_single"
             zero_bracket = float(info.get(zb_key, 0.0))
             if is_resident:
                 if taxable_income <= zero_bracket:
                     estimated_tax = 0.0
                 elif taxable_income > top_bracket:
-                    base_est = (top_bracket - zero_bracket) * (top_rate * 0.65)
+                    base_est = (top_bracket - zero_bracket) * mid_rate
                     estimated_tax = round(base_est + top_rate * (taxable_income - top_bracket), 2)
                 else:
-                    estimated_tax = round((taxable_income - zero_bracket) * (top_rate * 0.65), 2)
+                    estimated_tax = round((taxable_income - zero_bracket) * mid_rate, 2)
             else:
                 estimated_tax = 0.0
 
