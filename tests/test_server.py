@@ -1226,7 +1226,7 @@ def test_evaluate_state_residency_cases() -> None:
         tax_year=2024,
     )
     # Taxable: 70,000 - 14,600 = 55,400. Above zero bracket (47,150)
-    expected_nd_mid = round((55400.0 - 47150.0) * (0.025 * 0.65), 2)
+    expected_nd_mid = round((55400.0 - 47150.0) * 0.0195, 2)
     assert nd_mid["tax_computation"]["estimated_state_tax"] == expected_nd_mid
 
     nd_top = server.evaluate_state_residency(
@@ -1237,9 +1237,9 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2024,
     )
-    # Taxable: 300,000 - 14,600 = 285,400. Above top bracket (225,975)
-    base_nd = (225975.0 - 47150.0) * (0.025 * 0.65)
-    expected_nd_top = round(base_nd + 0.025 * (285400.0 - 225975.0), 2)
+    # Taxable: 300,000 - 14,600 = 285,400. Above top bracket (238,200)
+    base_nd = (238200.0 - 47150.0) * 0.0195
+    expected_nd_top = round(base_nd + 0.025 * (285400.0 - 238200.0), 2)
     assert nd_top["tax_computation"]["estimated_state_tax"] == expected_nd_top
 
     # 2025 ND: Zero-rate threshold rises to $48,475
@@ -1263,7 +1263,7 @@ def test_evaluate_state_residency_cases() -> None:
         tax_year=2025,
     )
     # Taxable: 300,000 - 14,600 = 285,400 (> 244,825)
-    base_nd_2025 = (244825.0 - 48475.0) * (0.025 * 0.65)
+    base_nd_2025 = (244825.0 - 48475.0) * 0.0195
     expected_nd_top_2025 = round(base_nd_2025 + 0.025 * (285400.0 - 244825.0), 2)
     assert nd_top_2025["tax_computation"]["estimated_state_tax"] == expected_nd_top_2025
 
@@ -1324,9 +1324,21 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2026,
     )
-    # Taxable: 100,000 - 12850 (2026 CPI-U indexed) = 87,150 * 0.03 = 2,614.50
-    assert la_2026["tax_computation"]["estimated_state_tax"] == 2614.5
-    assert any("CPI-U inflation" in flag for flag in la_2026["domicile_audit_risk"]["flags"])
+    # Taxable: 100,000 - 12838 (RIB 26-019) = 87,162 * 0.03 = 2,614.86
+    assert la_2026["tax_computation"]["estimated_state_tax"] == 2614.86
+    assert any("RIB 26-019" in flag for flag in la_2026["domicile_audit_risk"]["flags"])
+
+    la_2027 = server.evaluate_state_residency(
+        jurisdiction="LA",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=100000.0,
+        filing_status="single",
+        tax_year=2027,
+    )
+    assert la_2027["tax_computation"]["estimated_state_tax"] == 2614.86
+    assert "PROVISIONAL" in la_2027["tax_computation"]["rate_description"]
+    assert any("provisional" in flag.lower() for flag in la_2027["domicile_audit_risk"]["flags"])
 
     # 28. Indiana (IN) - multi-year rates (2024=3.05%, 2025=3.00%, 2026=2.95%, 2027+=2.90%)
     in_2024 = server.evaluate_state_residency(
