@@ -94,7 +94,7 @@ TAXCODE_MCP_AUTH_TOKEN="$(openssl rand -hex 32)" \
 The image's default command is stdio, so it works as a stdio server out of the box:
 
 ```bash
-docker run -i --rm -e TAXCODE_API_KEY=your-api-key ghcr.io/christianclaudio/<name>
+docker run -i --rm -e TAXCODE_API_KEY=your-api-key ghcr.io/christianclaudio/mcp-server-taxcode:latest
 ```
 
 To serve Streamable HTTP from the container, bind `0.0.0.0` inside it and pass a token:
@@ -103,7 +103,7 @@ To serve Streamable HTTP from the container, bind `0.0.0.0` inside it and pass a
 docker run --rm -p 8000:8000 \
   -e TAXCODE_API_KEY=your-api-key \
   -e TAXCODE_MCP_AUTH_TOKEN=your-long-random-token \
-  ghcr.io/christianclaudio/<name> \
+  ghcr.io/christianclaudio/mcp-server-taxcode:latest \
   --transport streamable-http --host 0.0.0.0 --port 8000 --allowed-host mcp.example.com
 ```
 
@@ -114,7 +114,7 @@ docker run --rm -p 8000:8000 \
 
 This server works out-of-the-box with all major AI assistants, IDEs, and CLI tools via standard `stdio` or `streamable-http`.
 
-The template is not published to PyPI, so these configs run its `taxcode-mcp` console script from a local clone with `uv run --directory`. Replace `/absolute/path/to/mcp-server-taxcode` with the path of your clone. After `uv tool install .` (or `pip install .`) puts both console scripts, `taxcode-mcp` and `mcp-server-taxcode` (the same server), on your `PATH`, `"command": "taxcode-mcp"` with no `args` works too.
+The server is published on PyPI as [`mcp-server-taxcode`](https://pypi.org/project/mcp-server-taxcode/), so you can run it directly with `uvx mcp-server-taxcode` without cloning or manually managing environments. Alternatively, run from a local clone with `uv run --directory /path/to/mcp-server-taxcode taxcode-mcp`.
 
 <details open>
 <summary><b>🧡 Claude Desktop & Claude Code</b></summary>
@@ -125,11 +125,20 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 {
   "mcpServers": {
     "taxcode": {
+      "command": "uvx",
+      "args": ["mcp-server-taxcode"]
+    }
+  }
+}
+```
+
+For local development from a clone:
+```json
+{
+  "mcpServers": {
+    "taxcode": {
       "command": "uv",
-      "args": ["run", "--directory", "/absolute/path/to/mcp-server-taxcode", "taxcode-mcp"],
-      "env": {
-        "TAXCODE_API_KEY": "your-api-key"
-      }
+      "args": ["run", "--directory", "/absolute/path/to/mcp-server-taxcode", "taxcode-mcp"]
     }
   }
 }
@@ -137,7 +146,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
 For **Claude Code CLI**:
 ```bash
-claude mcp add taxcode -- uv run --directory /absolute/path/to/mcp-server-taxcode taxcode-mcp
+claude mcp add taxcode -- uvx mcp-server-taxcode
 ```
 </details>
 
@@ -150,11 +159,8 @@ Add to `.agents/mcp_config.json` (or global `~/.gemini/config/mcp_config.json`):
 {
   "mcpServers": {
     "taxcode": {
-      "command": "uv",
-      "args": ["run", "--directory", "/absolute/path/to/mcp-server-taxcode", "taxcode-mcp"],
-      "env": {
-        "TAXCODE_API_KEY": "your-api-key"
-      }
+      "command": "uvx",
+      "args": ["mcp-server-taxcode"]
     }
   }
 }
@@ -170,8 +176,8 @@ Add to `~/.snowflake/cortex/mcp.json`:
 {
   "mcpServers": {
     "taxcode": {
-      "command": "uv",
-      "args": ["run", "--directory", "/absolute/path/to/mcp-server-taxcode", "taxcode-mcp"]
+      "command": "uvx",
+      "args": ["mcp-server-taxcode"]
     }
   }
 }
@@ -187,8 +193,8 @@ Add to `~/.cursor/mcp.json`:
 {
   "mcpServers": {
     "taxcode": {
-      "command": "uv",
-      "args": ["run", "--directory", "/absolute/path/to/mcp-server-taxcode", "taxcode-mcp"]
+      "command": "uvx",
+      "args": ["mcp-server-taxcode"]
     }
   }
 }
@@ -204,8 +210,8 @@ Add to `cline_mcp_settings.json`:
 {
   "mcpServers": {
     "taxcode": {
-      "command": "uv",
-      "args": ["run", "--directory", "/absolute/path/to/mcp-server-taxcode", "taxcode-mcp"]
+      "command": "uvx",
+      "args": ["mcp-server-taxcode"]
     }
   }
 }

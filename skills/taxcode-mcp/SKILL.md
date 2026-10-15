@@ -1,6 +1,6 @@
 ---
 name: taxcode-mcp
-description: Enterprise Agent Skill template for operating MCP server tools, safety gates, and client recipes.
+description: Operational playbooks, statutory lookup patterns, and compliance workflows for the Tax Code MCP Server (US Federal, Puerto Rico Act 60, and 50 US States + DC).
 ---
 
 # Tax Code MCP Server (`mcp-server-taxcode`) Agent Skill
@@ -11,44 +11,45 @@ This skill provides operational playbooks, safety constraints, and client recipe
 
 ## 🎯 Core Agent Recipes & Playbooks
 
-### 1. Resource Inspection & Discovery
-- **Step 1**: Discover capabilities by querying `server/discover` or reading the system resource `taxcode://system/reference/capabilities`.
-- **Step 2**: Inspect items using `items_get_item(item_id=...)` (read-only, cached).
+### 1. Statutory Research & Full-Text Search
+- **Search Tax Code**: Use `statutes_search_tax_code(query="convenience of employer", jurisdiction="NY")` to locate relevant statutory provisions, regulatory citations, and enacted language.
+- **Point-in-Time Statutory Lookup**: Use `statutes_lookup_statute(citation="26 U.S.C. § 933", tax_year=2024)` to retrieve historical or current statutory text with bilingual summaries (English and Spanish).
+- **Administrative Publications**: Use `statutes_list_publications(jurisdiction="PR")` or `jurisdiction="GA"` to retrieve binding circular letters, revenue bulletins, and administrative determination numbers.
 
-### 2. Gated Mutations & Destructive Operations
-- **Single Destructive Deletions**: Deleting single resources requires explicit operator confirmation (`confirm=True`). If `confirm=False`, the server initiates an MCP 2.0 Modern Roots Tool Run (MRTR) elicitation request when supported by the client.
-- **Bulk Operations**: Bulk mutations require setting `MCP_ALLOW_BULK_DESTRUCTIVE=1` in the server environment, setting `confirm=True`, and default to `dry_run=True`.
+### 2. Cross-Border & Multi-State Compliance Workflows
+- **Puerto Rico Bona Fide Residency (IRC § 937)**: Use `compliance_evaluate_pr_bona_fide_residency(presence_days_pr=184, presence_days_us=30, tax_home_pr=True, closer_connection_pr=True)` to assess compliance with the physical presence tests (183-day, 549-day 3-year, 90-day US), tax home requirement, and closer connection standard.
+- **Built-In Gain Sourcing (Act 60 / IRC § 937)**: Use `compliance_calculate_built_in_gain_sourcing(cost_basis=100000, value_at_move=500000, sale_price=800000, holding_period_years=5)` to compute mandatory allocation between pre-move built-in gains and post-move Puerto Rico exempt gains.
+- **Multi-State Residency & Tax Liabilities**: Use `compliance_evaluate_state_residency(state="NY", days_in_state=190, permanent_abode=True, taxable_income=250000, filing_status="single", tax_year=2024)` to evaluate statutory residency (e.g. 183-day rule + permanent place of abode), domicile audit risk flags, and calculate estimated state tax liability across all 50 US states and District of Columbia.
+- **Georgia Residency (Specialized Engine)**: Use `compliance_evaluate_georgia_residency(months_in_georgia=8, legal_domicile=True, taxable_income=100000, filing_status="single", tax_year=2025)` for Georgia-specific 183-day/month presence calculations and flat-rate transitions.
 
 ---
 
 ## 🛠️ Tool Suite Reference
 
+The server exposes exactly **8 lean, read-only MCP tools**, all annotated with `readOnlyHint=True`:
+
 | Tool | Purpose | Annotations | Key Parameters |
 | :--- | :--- | :--- | :--- |
-| `system_get_health_status` | Check API connectivity & health | `readOnlyHint=True` | None |
-| `items_get_item` | Fetch resource by ID | `readOnlyHint=True` | `item_id` |
-| `items_list_items` | List available resources | `readOnlyHint=True` | `limit`, `offset` |
-| `items_create_item`| Create new resource (client_id injected) | `readOnlyHint=False` | `name`, `payload` |
-| `items_delete_item`| Delete single resource (Gated) | `destructiveHint=True` | `item_id`, `confirm` |
-| `items_bulk_delete_items` | Bulk resource cleanup (Gated) | `destructiveHint=True` | `item_ids`, `dry_run`, `confirm` |
-
+| `system_get_health_status` | Check server and database engine health | `readOnlyHint=True` | None |
+| `statutes_lookup_statute` | Point-in-time statutory lookup by citation | `readOnlyHint=True` | `citation`, `jurisdiction`, `tax_year` |
+| `statutes_search_tax_code` | Full-text statutory search across catalog | `readOnlyHint=True` | `query`, `jurisdiction`, `limit` |
+| `statutes_list_publications` | List administrative circulars and bulletins | `readOnlyHint=True` | `jurisdiction`, `limit` |
+| `compliance_evaluate_pr_bona_fide_residency` | IRC § 937 Bona Fide Residency test engine | `readOnlyHint=True` | `presence_days_pr`, `presence_days_us`, `tax_home_pr`, `closer_connection_pr` |
+| `compliance_calculate_built_in_gain_sourcing`| Section 937 / Act 60 capital gains allocation | `readOnlyHint=True` | `cost_basis`, `value_at_move`, `sale_price`, `holding_period_years` |
+| `compliance_evaluate_georgia_residency` | Georgia O.C.G.A. Title 48 residency & tax liability | `readOnlyHint=True` | `months_in_georgia`, `legal_domicile`, `taxable_income`, `filing_status`, `tax_year` |
+| `compliance_evaluate_state_residency` | 50-State + DC statutory residency & tax engine | `readOnlyHint=True` | `state`, `days_in_state`, `permanent_abode`, `taxable_income`, `filing_status`, `tax_year` |
 
 ---
 
 ## ⚡ Agent Operating Guidelines
 
-1. **Read-Only Mode Respect**:
-   When `TAXCODE_MCP_READONLY=1` or `--profile readonly` is active, only tools annotated `readOnlyHint=True` are listed or callable; calls to any other tool (directly, or through `call_tool` when Tool Search is on) are refused with `isError: true`. A name that does not exist returns `Unknown tool`; without Tool Search that includes `call_tool` itself. The `readOnlyHint` annotation is the single source of truth. Agents must switch to query-only workflows.
-2. **Deterministic Caching (SEP-2549)**:
-   Catalog endpoints are cached with `ttl_ms=3600000` (1 hr). Avoid rapid redundant re-queries.
-3. **Graceful Fail-Closed Handling**:
-   A failed call (upstream API error, a safety-gate refusal, or a live bulk delete in which every item failed, `"type": "batch_failed"`) returns `isError: true` with a sanitized message. Check `isError` before using the result; a successful result carries `status: "success"`, `"dry_run"` for a bulk-delete preview, or `"partial_success"` for a live bulk delete in which some items failed (check `failed_count` and `errors`).
-
-4. **Pick a profile first**:
-   Pick the profile that matches the job. Domain-mount profiles: `system`, `items`, `readonly`. Job-shaped allowlist profiles span domains: `intake` (confirm upstream health, look up items, create new ones). `full` is the complete catalog; `items_delete_item` and `items_bulk_delete_items` are in no job profile and are reachable in `full` (and `items`).
-5. **Discovery only on `full`**:
-   Tool Search (`search_tools` + `call_tool`) and experimental Code Mode attach only when `profile=full` and explicitly enabled. Do not expect search meta-tools on curated profiles. Do not enable Tool Search and Code Mode together. Code Mode needs the package's `code-mode` extra (install `mcp-server-taxcode[code-mode]`, which pulls `fastmcp[code-mode]`); without it the server logs a warning, skips Code Mode, and serves the flat catalog, so `execute` is not listed.
-6. **Hybrid A+B tool names**:
-   Wired names are domain-mounted (`system_*`, `items_*`). Do not invent a product-wide `template_*` stamp on every tool.
-7. **No stub tools / no full-catalog dump**:
-   Every tool must back a real client method. Large catalogs use Tool Search or Code Mode — not guidance to dump the entire catalog into the prompt.
+1. **Strict Read-Only Server**:
+   All 8 tools are read-only (`readOnlyHint=True`). The server performs no mutations, deletions, or external writes. When `TAXCODE_MCP_READONLY=1` or `--profile readonly` is active, all real inspection tools remain fully available.
+2. **Profiles**:
+   Select the profile that fits the job:
+   - **Domain-mount profiles**: `full` (all domains), `system` (`system_*`), `statutes` (`statutes_*`), `compliance` (`compliance_*`), `readonly` (all read-only tools).
+   - **Job-shaped allowlist profiles**: `researcher` (`statutes_lookup_statute`, `statutes_search_tax_code`, `statutes_list_publications`), `advisor` (`compliance_evaluate_pr_bona_fide_residency`, `compliance_calculate_built_in_gain_sourcing`, `compliance_evaluate_state_residency`).
+3. **Statutory Integrity & Temporal Versioning**:
+   Always pass `tax_year` when querying statutes or evaluating tax liabilities to guarantee point-in-time accuracy against historical amendments or scheduled rate changes (e.g., Indiana flat rate 2024–2027+, Louisiana Act 11 standard deduction indexing, North Dakota zero brackets).
+4. **Non-Binding Guidance Disclaimer**:
+   Computational models and statutory summaries returned by this server are for informational and research purposes only and do not constitute formal legal or tax opinions. Official statutory and administrative sources in their enacted language control.
