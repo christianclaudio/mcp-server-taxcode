@@ -88,7 +88,7 @@
 - [Kan. Stat. Ann. § 79-32,110 (2024) — Tax Imposed - Classes of Taxpayers](./ks/k.s.a._79_32,110.md): K.S.A. > Chapter 79 > Article 32 > § 79-32,110
 - [Ky. Rev. Stat. Ann. § 141.020 (2024) — Levy of Tax on Individuals](./ky/krs_141_020.md): KRS > Title XI > Chapter 141 > § 141.020
 - [La. Rev. Stat. Ann. § 47:32 (2022) — Rates of Tax (Graduated Schedule through 2024)](./la/la. r.s._47_32_2022.md): La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32
-- [La. Rev. Stat. Ann. § 47:32 (2025) (2025) — Flat Individual Income Tax Rate (Act 1 of 2024 3rd Ex. Sess.)](./la/la. r.s._47_32.md): La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32 (2025)
+- [La. Rev. Stat. Ann. § 47:32 (2025) — Flat Individual Income Tax Rate (Act 11 of 2024 3rd Ex. Sess.)](./la/la. r.s._47_32.md): La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32
 - [Me. Rev. Stat. tit. 36, § 5111 (2024) — Imposition and Rate of Tax](./me/36 m.r.s._5111.md): 36 M.R.S. > Part 8 > Chapter 803 > § 5111
 - [Mich. Comp. Laws § 206.51 (2024) — Tax Rate on Taxable Income of Individuals](./mi/mcl_206_51.md): MCL > Chapter 206 > Act 281 of 1967 > Part 1 > Chapter 2 > § 206.51
 - [Minn. Stat. § 290.06 (2024) — Rates of Tax - Individuals](./mn/minn. stat._290_06.md): Minn. Stat. > Chapter 290 > § 290.06
