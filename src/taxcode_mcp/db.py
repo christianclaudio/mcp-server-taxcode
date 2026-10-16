@@ -5093,16 +5093,35 @@ def is_official_text(source_url: str | None) -> bool:
     return source_url == USLM_TITLE26_SOURCE_URL
 
 
-def validity_label(effective_year: int, superseded_year: int | None) -> dict[str, str]:
-    """Bilingual effective/superseded label for a statute row."""
+def _year_is_known(value: Any) -> bool:
+    """True when ``value`` is a year that parses as an integer."""
+    try:
+        int(str(value).strip())
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def validity_label(effective_year: Any, superseded_year: int | None) -> dict[str, str]:
+    """Bilingual effective/superseded label for a statute row.
+
+    An empty, NULL or non-numeric ``effective_year`` gets an explicit
+    "unknown" label instead of printing the raw value. Known years are unchanged.
+    """
+    if _year_is_known(effective_year):
+        en_from = f"Effective {effective_year}"
+        es_from = f"Vigente desde {effective_year}"
+    else:
+        en_from = "Effective year unknown"
+        es_from = "Año de vigencia desconocido"
     if superseded_year is None:
         return {
-            "en": f"Effective {effective_year}; current",
-            "es": f"Vigente desde {effective_year}; en vigor",
+            "en": f"{en_from}; current",
+            "es": f"{es_from}; en vigor",
         }
     return {
-        "en": f"Effective {effective_year}; superseded {superseded_year}",
-        "es": f"Vigente desde {effective_year}; sustituida en {superseded_year}",
+        "en": f"{en_from}; superseded {superseded_year}",
+        "es": f"{es_from}; sustituida en {superseded_year}",
     }
 
 

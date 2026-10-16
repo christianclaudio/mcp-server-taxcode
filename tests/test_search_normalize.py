@@ -17,6 +17,7 @@ from taxcode_mcp.db import (
     normalize_category,
     resolve_jurisdiction,
     search_terms,
+    validity_label,
     year_sort_key,
 )
 
@@ -260,3 +261,53 @@ def test_section_sign_terms_find_933(db: TaxDatabase, query: str) -> None:
     assert "§" not in search_terms(query) and "§933" not in search_terms(query)
     rows = db.search_statutes(query=query, jurisdiction="US", limit=5)
     assert "us-irc-933" in [r["id"] for r in rows]
+
+
+# --- validity labels for unknown years ----------------------------------------
+
+UNKNOWN_CURRENT = {
+    "en": "Effective year unknown; current",
+    "es": "Año de vigencia desconocido; en vigor",
+}
+
+
+@pytest.mark.parametrize("year", [None, "", "  ", "abc"])
+def test_validity_label_unknown_year(year: object) -> None:
+    assert validity_label(year, None) == UNKNOWN_CURRENT
+    assert validity_label(year, 2023) == {
+        "en": "Effective year unknown; superseded 2023",
+        "es": "Año de vigencia desconocido; sustituida en 2023",
+    }
+
+
+def test_validity_label_known_years_unchanged() -> None:
+    assert validity_label(2020, None) == {
+        "en": "Effective 2020; current",
+        "es": "Vigente desde 2020; en vigor",
+    }
+    assert validity_label(2017, 2023) == {
+        "en": "Effective 2017; superseded 2023",
+        "es": "Vigente desde 2017; sustituida en 2023",
+    }
+
+
+async def test_empty_year_row_gets_unknown_label_everywhere(
+    db: TaxDatabase, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Search, lookup (and its version history) and the resource all show it."""
+    db.insert_statute(_row("zz-null", effective_year=None, citation="RCW zz.null"))
+    rows = db.search_statutes(query="zebra quokka levy", limit=5)
+    hit = next(r for r in rows if r["id"] == "zz-null")
+    assert hit["validity"] == UNKNOWN_CURRENT
+
+    found = db.lookup_statute("RCW zz.null", jurisdiction="WA")
+    assert found is not None
+    assert found["validity"] == UNKNOWN_CURRENT
+    assert found["available_versions"][0]["validity"] == UNKNOWN_CURRENT
+
+    from taxcode_mcp.tools import statutes
+
+    monkeypatch.setattr(statutes, "db", db)
+    text = await statutes.get_statute_resource("WA", "RCW zz.null")
+    assert "Validity: Effective year unknown; current" in text
+    assert "Vigencia: Año de vigencia desconocido; en vigor" in text
