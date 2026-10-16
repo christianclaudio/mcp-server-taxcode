@@ -271,6 +271,11 @@ async def test_server_resources_and_prompts():
 
     res = await server.get_statute_resource("US", "933")
     assert "933" in res
+    assert "Superseded Year / Año de sustitución: current / vigente" in res
+    assert "Vigencia: Vigente desde" in res
+
+    old = await server.get_statute_resource("GA", "48-7-20")
+    assert "Superseded Year" in old
 
     p = server.cross_border_tax_analysis(taxpayer_scenario="Scenario 456")
     assert "Scenario 456" in p

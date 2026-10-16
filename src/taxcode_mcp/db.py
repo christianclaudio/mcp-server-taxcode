@@ -2189,6 +2189,19 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
 ]
 
 
+def validity_label(effective_year: int, superseded_year: int | None) -> dict[str, str]:
+    """Bilingual effective/superseded label for a statute row."""
+    if superseded_year is None:
+        return {
+            "en": f"Effective {effective_year}; current",
+            "es": f"Vigente desde {effective_year}; vigente",
+        }
+    return {
+        "en": f"Effective {effective_year}; superseded {superseded_year}",
+        "es": f"Vigente desde {effective_year}; sustituida en {superseded_year}",
+    }
+
+
 class TaxDatabase:
     """Thread-safe DuckDB manager for tax statutes and administrative guidance."""
 
@@ -2378,6 +2391,7 @@ class TaxDatabase:
                         "effective_year": h[0],
                         "superseded_year": h[1],
                         "is_current": h[1] is None,
+                        "validity": validity_label(h[0], h[1]),
                         "id": h[2],
                     }
                     for h in history_rows
@@ -2396,6 +2410,7 @@ class TaxDatabase:
                     "effective_year": result[8],
                     "superseded_year": result[9],
                     "is_current": result[9] is None,
+                    "validity": validity_label(result[8], result[9]),
                     "available_versions": available_versions,
                     "source_url": result[10],
                     "cross_references": result[11] or [],
@@ -2466,6 +2481,7 @@ class TaxDatabase:
                             "effective_year": r[8],
                             "superseded_year": r[9],
                             "is_current": r[9] is None,
+                            "validity": validity_label(r[8], r[9]),
                             "source_url": r[10],
                             "cross_references": r[11] or [],
                             **reference_labels(),

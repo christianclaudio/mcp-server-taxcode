@@ -367,3 +367,39 @@ def test_file_db_refreshes_changed_seed_rows_on_startup(tmp_path: Path) -> None:
     assert row["text_es"] == seeds["pr-ley60-2022-01"]["text_es"]
     old = refreshed.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2020)
     assert old is not None and old["id"] == "pr-ley60-2022-01-2019"
+
+
+def test_search_without_tax_year_shows_years_on_both_2022_01_rows() -> None:
+    """Both Sec. 2022.01 rows return with years; the 2019 row reads superseded 2026."""
+    test_db = TaxDatabase(":memory:")
+    results = test_db.search_statutes("Sec. 2022.01", jurisdiction="PR", limit=50)
+    rows = {r["id"]: r for r in results if r["section"] == "2022.01"}
+    assert set(rows) == {"pr-ley60-2022-01", "pr-ley60-2022-01-2019"}
+
+    old = rows["pr-ley60-2022-01-2019"]
+    assert old["effective_year"] == 2019
+    assert old["superseded_year"] == 2026
+    assert old["is_current"] is False
+    assert old["validity"] == {
+        "en": "Effective 2019; superseded 2026",
+        "es": "Vigente desde 2019; sustituida en 2026",
+    }
+
+    new = rows["pr-ley60-2022-01"]
+    assert new["effective_year"] == 2026
+    assert new["superseded_year"] is None
+    assert new["validity"] == {
+        "en": "Effective 2026; current",
+        "es": "Vigente desde 2026; vigente",
+    }
+
+
+def test_lookup_versions_carry_validity_labels() -> None:
+    """Lookup output and each available version carry the bilingual validity label."""
+    test_db = TaxDatabase(":memory:")
+    res = test_db.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2020)
+    assert res is not None
+    assert res["validity"]["en"] == "Effective 2019; superseded 2026"
+    labels = {v["id"]: v["validity"]["es"] for v in res["available_versions"]}
+    assert labels["pr-ley60-2022-01"] == "Vigente desde 2026; vigente"
+    assert labels["pr-ley60-2022-01-2019"] == "Vigente desde 2019; sustituida en 2026"
