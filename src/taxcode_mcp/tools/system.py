@@ -9,6 +9,7 @@ from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
 from taxcode_mcp.db import db
+from taxcode_mcp.disclaimers import output_notice
 from taxcode_mcp.errors import tool_error
 
 logger = logging.getLogger(__name__)
@@ -53,6 +54,7 @@ async def get_health_status() -> dict[str, Any]:
                 "statutes_indexed": statutes_count,
                 "publications_indexed": pubs_count,
             },
+            **output_notice(),
         }
     except Exception as exc:
         failure = tool_error(exc)
