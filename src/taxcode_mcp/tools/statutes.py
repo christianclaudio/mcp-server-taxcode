@@ -3,18 +3,26 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Annotated, Any
 
 from fastmcp import FastMCP
 from fastmcp.server.transforms import ToolTransform
 from fastmcp.tools.tool_transform import ArgTransformConfig, ToolTransformConfig
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from taxcode_mcp.db import db
+from taxcode_mcp.db import PUBLICATION_CATEGORIES, db
 from taxcode_mcp.disclaimers import output_notice, reference_labels
 from taxcode_mcp.errors import tool_error
 
 logger = logging.getLogger(__name__)
+
+CATEGORY_DESCRIPTION = (
+    "Optional publication category. Valid values: "
+    + ", ".join(PUBLICATION_CATEGORIES)
+    + ". Case, spaces, hyphens and underscores are ignored ('carta circular' matches "
+    "'carta-circular'); an unknown category returns no results."
+)
 
 ANNOTATION_READ_ONLY = ToolAnnotations(
     read_only_hint=True,
@@ -88,16 +96,33 @@ async def lookup_statute(
 @statutes_server.tool(
     name="search_tax_code",
     description=(
-        "Keyword and concept search across Federal and State statutory corpora, "
-        "ordered by tax year descending."
+        "Keyword and concept search across Federal and State statutory corpora. "
+        "Multi-word queries match individual terms: rows with the whole phrase rank "
+        "first, then by how many terms match, then by tax year descending."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},
 )
 async def search_tax_code(
     query: str,
-    jurisdiction: str | None = None,
-    corpus: str | None = None,
+    jurisdiction: Annotated[
+        str | None,
+        Field(
+            description=(
+                "Optional jurisdiction code or full name, e.g. 'WA' or 'Washington', "
+                "'PR' or 'Puerto Rico', 'US' or 'federal'."
+            )
+        ),
+    ] = None,
+    corpus: Annotated[
+        str | None,
+        Field(
+            description=(
+                "Optional corpus code, e.g. 'IRC', 'RCW', 'LEY60'. A jurisdiction code "
+                "or name ('washington') is also accepted and filters by jurisdiction."
+            )
+        ),
+    ] = None,
     tax_year: int | None = None,
     limit: int = 5,
     client_id: str = "taxcode-client-default",
@@ -133,7 +158,7 @@ async def search_tax_code(
     tags={"statutes", "publications", "read_only"},
 )
 async def list_publications(
-    category: str | None = None,
+    category: Annotated[str | None, Field(description=CATEGORY_DESCRIPTION)] = None,
     since_date: str | None = None,
     limit: int = 10,
 ) -> dict[str, Any]:

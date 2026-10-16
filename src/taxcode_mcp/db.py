@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import threading
 from typing import Any
 
@@ -5105,6 +5106,142 @@ def validity_label(effective_year: int, superseded_year: int | None) -> dict[str
     }
 
 
+_CATEGORY_SEPARATORS = re.compile(r"[\s_-]+")
+
+
+def normalize_category(category: str) -> str:
+    """Fold a publication category to its stored slug form.
+
+    Case, whitespace, hyphens and underscores are interchangeable, so
+    ``"carta circular"``, ``"Carta-Circular"`` and ``"CARTA_CIRCULAR"`` all
+    become ``"carta-circular"``.
+    """
+    return _CATEGORY_SEPARATORS.sub("-", category.strip().lower()).strip("-")
+
+
+PUBLICATION_CATEGORIES: tuple[str, ...] = tuple(
+    sorted({normalize_category(str(p["category"])) for p in INITIAL_PUBLICATIONS})
+)
+
+# Full names (lowercase, single-spaced) accepted wherever a jurisdiction code is.
+JURISDICTION_NAMES: dict[str, str] = {
+    "federal": "US",
+    "united states": "US",
+    "usa": "US",
+    "puerto rico": "PR",
+    "district of columbia": "DC",
+    "washington dc": "DC",
+    "washington d.c.": "DC",
+    "alabama": "AL",
+    "alaska": "AK",
+    "arizona": "AZ",
+    "arkansas": "AR",
+    "california": "CA",
+    "colorado": "CO",
+    "connecticut": "CT",
+    "delaware": "DE",
+    "florida": "FL",
+    "georgia": "GA",
+    "hawaii": "HI",
+    "idaho": "ID",
+    "illinois": "IL",
+    "indiana": "IN",
+    "iowa": "IA",
+    "kansas": "KS",
+    "kentucky": "KY",
+    "louisiana": "LA",
+    "maine": "ME",
+    "maryland": "MD",
+    "massachusetts": "MA",
+    "michigan": "MI",
+    "minnesota": "MN",
+    "mississippi": "MS",
+    "missouri": "MO",
+    "montana": "MT",
+    "nebraska": "NE",
+    "nevada": "NV",
+    "new hampshire": "NH",
+    "new jersey": "NJ",
+    "new mexico": "NM",
+    "new york": "NY",
+    "north carolina": "NC",
+    "north dakota": "ND",
+    "ohio": "OH",
+    "oklahoma": "OK",
+    "oregon": "OR",
+    "pennsylvania": "PA",
+    "rhode island": "RI",
+    "south carolina": "SC",
+    "south dakota": "SD",
+    "tennessee": "TN",
+    "texas": "TX",
+    "utah": "UT",
+    "vermont": "VT",
+    "virginia": "VA",
+    "washington": "WA",
+    "west virginia": "WV",
+    "wisconsin": "WI",
+    "wyoming": "WY",
+}
+
+STATUTE_CORPORA: frozenset[str] = frozenset(str(s["corpus"]).upper() for s in INITIAL_STATUTES)
+KNOWN_JURISDICTIONS: frozenset[str] = frozenset(JURISDICTION_NAMES.values())
+
+
+def resolve_jurisdiction(value: str) -> str:
+    """Map a jurisdiction code or full name to its code (``"washington"`` -> ``"WA"``).
+
+    Unknown values are returned upper-cased so they simply match nothing.
+    """
+    key = " ".join(value.strip().lower().replace("_", " ").replace("-", " ").split())
+    return JURISDICTION_NAMES.get(key, key.upper())
+
+
+# Very common words that would match nearly every row; dropped from multi-term search.
+SEARCH_STOPWORDS: frozenset[str] = frozenset(
+    {
+        "the",
+        "and",
+        "for",
+        "with",
+        "from",
+        "that",
+        "this",
+        "under",
+        "about",
+        "what",
+        "del",
+        "las",
+        "los",
+        "para",
+        "por",
+        "con",
+        "que",
+        "una",
+    }
+)
+_TERM_STRIP = ".,;:!?\"'()[]{}"
+
+
+def search_terms(query: str) -> list[str]:
+    """Split a query into distinct lowercase terms for ranked matching.
+
+    Terms shorter than 3 characters (unless they contain a digit, e.g. ``"1"``
+    or ``"§1"``) and :data:`SEARCH_STOPWORDS` are dropped so they don't flood
+    results. Order of first appearance is kept.
+    """
+    terms: list[str] = []
+    for raw in query.lower().split():
+        term = raw.strip(_TERM_STRIP)
+        if not term or term in SEARCH_STOPWORDS:
+            continue
+        if len(term) < 3 and not any(ch.isdigit() for ch in term):
+            continue
+        if term not in terms:
+            terms.append(term)
+    return terms
+
+
 class TaxDatabase:
     """Thread-safe DuckDB manager for tax statutes and administrative guidance."""
 
@@ -5334,30 +5471,48 @@ class TaxDatabase:
         lang: str = "en",
         limit: int = 5,
     ) -> list[dict[str, Any]]:
-        """Search statutes across title, citation, and multilingual operative text."""
-        q = f"%{query.strip().lower()}%"
+        """Search statutes across title, citation, and multilingual operative text.
+
+        Ranking: rows containing the whole query phrase come first, then rows by
+        how many distinct query terms (see :func:`search_terms`) they contain,
+        then newest ``effective_year``, then ``id``. A row must match the phrase
+        or at least one term. ``jurisdiction`` accepts codes or full names, and a
+        ``corpus`` that is not a known corpus code but names a jurisdiction
+        (``"washington"``) filters by that jurisdiction instead.
+        """
+        phrase = " ".join(query.strip().lower().split())
+        terms = search_terms(phrase)
+        # An empty query keeps the old behaviour of matching every row ("%%").
+        patterns = [f"%{t}%" for t in dict.fromkeys([phrase, *terms])]
+        jur = resolve_jurisdiction(jurisdiction) if jurisdiction else None
+        corpus_code = corpus.strip().upper() if corpus else None
+        if corpus and corpus_code not in STATUTE_CORPORA:
+            named = resolve_jurisdiction(corpus)
+            if named in KNOWN_JURISDICTIONS:
+                # A jurisdiction passed as corpus; conflicting filters match nothing.
+                jur = named if jur in (None, named) else ""
+                corpus_code = None
         with self._lock:
             conn = self._get_read_conn()
             try:
-                sql = """
+                haystack = (
+                    "LOWER(title || ' ' || citation || ' ' || "
+                    "COALESCE(text_en, '') || ' ' || COALESCE(text_es, ''))"
+                )
+                sql = f"""
                     SELECT id, jurisdiction, corpus, citation, section, title,
                            text_es, text_en, effective_year, superseded_year,
-                           source_url, cross_references
+                           source_url, cross_references, {haystack} AS hay
                     FROM statutes
-                    WHERE (
-                        LOWER(title) LIKE ?
-                        OR LOWER(citation) LIKE ?
-                        OR LOWER(text_en) LIKE ?
-                        OR LOWER(text_es) LIKE ?
-                    )
+                    WHERE ({" OR ".join(f"{haystack} LIKE ?" for _ in patterns)})
                 """
-                params: list[Any] = [q, q, q, q]
-                if jurisdiction:
-                    sql += " AND UPPER(jurisdiction) = UPPER(?)"
-                    params.append(jurisdiction.strip())
-                if corpus:
-                    sql += " AND UPPER(corpus) = UPPER(?)"
-                    params.append(corpus.strip())
+                params: list[Any] = list(patterns)
+                if jur is not None:
+                    sql += " AND UPPER(jurisdiction) = ?"
+                    params.append(jur)
+                if corpus_code:
+                    sql += " AND UPPER(corpus) = ?"
+                    params.append(corpus_code)
                 if tax_year is not None:
                     sql += (
                         " AND effective_year <= ? "
@@ -5365,12 +5520,16 @@ class TaxDatabase:
                     )
                     params.extend([tax_year, tax_year])
 
-                sql += " ORDER BY effective_year DESC, id LIMIT ?;"
-                params.append(limit)
-
                 rows = conn.execute(sql, params).fetchall()
+
+                def rank(r: tuple[Any, ...]) -> tuple[int, int, int, str]:
+                    hay: str = r[12]
+                    hits = sum(1 for t in terms if t in hay)
+                    return (0 if phrase in hay else 1, -hits, -int(r[8]), str(r[0]))
+
+                rows.sort(key=rank)
                 output: list[dict[str, Any]] = []
-                for r in rows:
+                for r in rows[: max(limit, 0)]:
                     text = r[7] if lang.lower() == "en" else r[6]
                     output.append(
                         {
@@ -5412,8 +5571,10 @@ class TaxDatabase:
                 """
                 params: list[Any] = []
                 if category:
-                    sql += " AND LOWER(category) = LOWER(?)"
-                    params.append(category.strip())
+                    sql += (
+                        " AND TRIM(REGEXP_REPLACE(LOWER(category), '[\\s_-]+', '-', 'g'), '-') = ?"
+                    )
+                    params.append(normalize_category(category))
                 if since_date:
                     sql += " AND doc_date >= ?"
                     params.append(since_date.strip())
