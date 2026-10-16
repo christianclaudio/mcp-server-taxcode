@@ -251,3 +251,12 @@ def test_row_without_title_or_citation_still_matches(db: TaxDatabase) -> None:
     db.insert_statute(_row("zz-bare", title=None, citation=None))
     rows = db.search_statutes(query="quokka", limit=10)
     assert [r["id"] for r in rows] == ["zz-bare"]
+
+
+@pytest.mark.parametrize("query", ["income from §933 Puerto Rico", "income from § 933 Puerto Rico"])
+def test_section_sign_terms_find_933(db: TaxDatabase, query: str) -> None:
+    """A leading '§' is stripped from terms, and a lone '§' token is dropped."""
+    assert "933" in search_terms(query)
+    assert "§" not in search_terms(query) and "§933" not in search_terms(query)
+    rows = db.search_statutes(query=query, jurisdiction="US", limit=5)
+    assert "us-irc-933" in [r["id"] for r in rows]

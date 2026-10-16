@@ -5238,13 +5238,15 @@ def year_sort_key(value: Any) -> tuple[int, int]:
 def search_terms(query: str) -> list[str]:
     """Split a query into distinct lowercase terms for ranked matching.
 
-    Terms shorter than 3 characters (unless they contain a digit, e.g. ``"1"``
-    or ``"§1"``) and :data:`SEARCH_STOPWORDS` are dropped so they don't flood
-    results. Order of first appearance is kept.
+    A leading ``§`` is stripped from each term (``"§933"`` -> ``"933"``; a lone
+    ``"§"`` is dropped). Terms shorter than 3 characters (unless they contain a
+    digit, e.g. ``"1"``) and :data:`SEARCH_STOPWORDS` are dropped so they don't
+    flood results. Order of first appearance is kept.
     """
     terms: list[str] = []
     for raw in query.lower().split():
-        term = raw.strip(_TERM_STRIP)
+        # A leading section sign is not part of the term: '§933' -> '933', '§' -> ''.
+        term = raw.strip(_TERM_STRIP).lstrip("§").lstrip().strip(_TERM_STRIP)
         if not term or term in SEARCH_STOPWORDS:
             continue
         if len(term) < 3 and not any(ch.isdigit() for ch in term):
