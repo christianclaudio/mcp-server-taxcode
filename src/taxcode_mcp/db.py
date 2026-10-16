@@ -5087,6 +5087,11 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
 ]
 
 
+def is_official_text(source_url: str | None) -> bool:
+    """True for rows holding official US Code text from the pinned OLRC release point."""
+    return source_url == USLM_TITLE26_SOURCE_URL
+
+
 def validity_label(effective_year: int, superseded_year: int | None) -> dict[str, str]:
     """Bilingual effective/superseded label for a statute row."""
     if superseded_year is None:
@@ -5314,7 +5319,7 @@ class TaxDatabase:
                     "cross_references": result[11] or [],
                     "language": lang.lower(),
                     "official_language": "es" if result[1] == "PR" else "en",
-                    **reference_labels(),
+                    **reference_labels(official_text=is_official_text(result[10])),
                 }
             finally:
                 if self._mem_conn is None:
@@ -5382,7 +5387,7 @@ class TaxDatabase:
                             "validity": validity_label(r[8], r[9]),
                             "source_url": r[10],
                             "cross_references": r[11] or [],
-                            **reference_labels(),
+                            **reference_labels(official_text=is_official_text(r[10])),
                         }
                     )
                 return output

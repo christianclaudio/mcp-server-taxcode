@@ -6,11 +6,13 @@ import httpx
 import pytest
 
 from taxcode_mcp import server
-from taxcode_mcp.db import INITIAL_STATUTES
+from taxcode_mcp.db import INITIAL_STATUTES, USLM_TITLE26_SOURCE_URL
 from taxcode_mcp.disclaimers import (
     BILINGUAL_DISCLAIMER,
     CONTENT_NOTICE,
     ESTIMATE_NOTE,
+    OFFICIAL_TEXT_LABEL,
+    OFFICIAL_TEXT_TRANSLATION_DISCLAIMER,
     REFERENCE_SUMMARY_LABEL,
     STATUTE_TRANSLATION_DISCLAIMER,
 )
@@ -27,6 +29,31 @@ def _assert_labels(item: dict[str, Any]) -> None:
     assert item["content_label"] == REFERENCE_SUMMARY_LABEL
     assert item["unofficial_summary"] is True
     assert item["translation_disclaimer"] == STATUTE_TRANSLATION_DISCLAIMER
+
+
+def _assert_official(item: dict[str, Any]) -> None:
+    assert item["content_type"] == "official_text"
+    assert item["content_label"] == OFFICIAL_TEXT_LABEL
+    assert item["unofficial_summary"] is False
+    assert item["translation_disclaimer"] == OFFICIAL_TEXT_TRANSLATION_DISCLAIMER
+
+
+def _assert_item(item: dict[str, Any]) -> None:
+    if item["source_url"] == USLM_TITLE26_SOURCE_URL:
+        _assert_official(item)
+    else:
+        _assert_labels(item)
+
+
+def test_official_text_label_is_bilingual() -> None:
+    assert set(OFFICIAL_TEXT_LABEL) == {"en", "es"}
+    assert "OLRC release point 119-121" in OFFICIAL_TEXT_LABEL["en"]
+    assert "119-121" in OFFICIAL_TEXT_LABEL["es"]
+    assert "Spanish summary is an unofficial" in OFFICIAL_TEXT_TRANSLATION_DISCLAIMER
+    assert "English statutory text controls" in OFFICIAL_TEXT_TRANSLATION_DISCLAIMER
+    assert "prevalece el texto estatutario oficial en inglés" in (
+        OFFICIAL_TEXT_TRANSLATION_DISCLAIMER
+    )
 
 
 def test_statute_translation_disclaimer_is_bilingual() -> None:
@@ -47,7 +74,11 @@ async def test_health_status_has_disclaimer(mock_transport, monkeypatch) -> None
 async def test_statute_outputs_have_disclaimer_and_labels() -> None:
     found = await server.lookup_statute("26 U.S.C. § 933")
     _assert_notice(found)
-    _assert_labels(found["data"])
+    _assert_official(found["data"])
+
+    reg = await server.lookup_statute("26 CFR § 1.937-1")
+    _assert_notice(reg)
+    _assert_labels(reg["data"])
 
     missing = await server.lookup_statute("Nonexistent 9999")
     assert missing["status"] == "not_found"
@@ -56,8 +87,11 @@ async def test_statute_outputs_have_disclaimer_and_labels() -> None:
 
     search = await server.search_tax_code("bona fide resident")
     _assert_notice(search)
+    kinds = set()
     for item in search["results"]:
-        _assert_labels(item)
+        _assert_item(item)
+        kinds.add(item["content_type"])
+    assert "official_text" in kinds
 
 
 @pytest.mark.asyncio
