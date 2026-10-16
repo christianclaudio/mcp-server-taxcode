@@ -13,7 +13,7 @@ from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES, TaxDatabase
 def test_initial_db_seeds_statutes_and_publications() -> None:
     """A fresh in-memory database initializes with default seed data."""
     test_db = TaxDatabase(":memory:")
-    statutes = test_db.search_statutes(query="", limit=100)
+    statutes = test_db.search_statutes(query="", limit=500)
     assert len(statutes) == len(INITIAL_STATUTES)
 
     pubs = test_db.list_publications(limit=100)
@@ -36,9 +36,9 @@ def test_lookup_statute_by_citation_and_section() -> None:
     assert "bona fide resident" in res_en["operative_text"]
     assert res_en["language"] == "en"
     assert res_en["official_language"] == "en"
-    assert res_en["content_type"] == "reference_summary"
-    assert res_en["unofficial_summary"] is True
-    assert "Unofficial translation/summary" in res_en["translation_disclaimer"]
+    assert res_en["content_type"] == "official_text"
+    assert res_en["unofficial_summary"] is False
+    assert "English statutory text controls" in res_en["translation_disclaimer"]
 
     # Spanish language lookup
     res_es = test_db.lookup_statute("933", lang="es")
@@ -158,20 +158,20 @@ def test_insert_and_delete_statute() -> None:
         "id": "custom-1",
         "jurisdiction": "US",
         "corpus": "IRC",
-        "citation": "26 U.S.C. § 1",
-        "section": "1",
-        "title": "Tax imposed",
+        "citation": "26 U.S.C. § 9999",
+        "section": "9999",
+        "title": "Test section",
     }
 
     test_db.insert_statute(new_statute)
-    found = test_db.lookup_statute("26 U.S.C. § 1")
+    found = test_db.lookup_statute("26 U.S.C. § 9999")
     assert found is not None
     assert found["id"] == "custom-1"
     assert found["effective_year"] == 2026
 
     deleted = test_db.delete_statute("custom-1")
     assert deleted is True
-    assert test_db.lookup_statute("26 U.S.C. § 1") is None
+    assert test_db.lookup_statute("26 U.S.C. § 9999") is None
 
     # Deleting non-existent ID returns False
     assert test_db.delete_statute("non-existent") is False
@@ -191,7 +191,7 @@ def test_file_based_duckdb_lifecycle(tmp_path: Path) -> None:
 
     # Re-instantiating on the same file does not re-insert duplicate seeds
     second_db = TaxDatabase(db_file)
-    assert len(second_db.search_statutes(query="", limit=100)) == len(INITIAL_STATUTES)
+    assert len(second_db.search_statutes(query="", limit=500)) == len(INITIAL_STATUTES)
 
     # Insert on file db
     second_db.insert_statute(
@@ -205,7 +205,7 @@ def test_file_based_duckdb_lifecycle(tmp_path: Path) -> None:
         }
     )
     assert second_db.lookup_statute("26 U.S.C. § 2") is not None
-    assert len(second_db.list_publications()) == len(INITIAL_PUBLICATIONS)
+    assert len(second_db.list_publications(limit=100)) == len(INITIAL_PUBLICATIONS)
     assert second_db.delete_statute("file-1") is True
 
     # Test publication on file db

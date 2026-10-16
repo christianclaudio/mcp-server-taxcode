@@ -83,7 +83,7 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert residency["is_bona_fide_resident"] is True
     assert "NOT TAX OR LEGAL ADVICE" in residency["disclaimer"]["en"]
     assert "NO CONSTITUYE ASESORAMIENTO CONTRIBUTIVO NI LEGAL" in residency["disclaimer"]["es"]
-    assert "unofficial statutory reference summaries" in residency["content_notice"]
+    assert "official text or an unofficial summary" in residency["content_notice"]
 
     # 6. Calculate built-in gain sourcing
     big = server.calculate_built_in_gain_sourcing(
@@ -730,7 +730,7 @@ def test_evaluate_state_residency_cases() -> None:
     assert len(flagged["domicile_audit_risk"]["flags"]) == 3
     assert flagged["tax_computation"]["estimated_state_tax"] == 0.0
     assert "NOT TAX OR LEGAL ADVICE" in flagged["disclaimer"]["en"]
-    assert "unofficial statutory reference summaries" in flagged["content_notice"]
+    assert "official text or an unofficial summary" in flagged["content_notice"]
 
     # 4. Georgia (GA)
     ga_sr = server.evaluate_state_residency(

@@ -48,7 +48,7 @@ def test_run_ingest_source_filters() -> None:
     """Filter by specific jurisdiction or corpus subsets."""
     us_stats = run_ingest(db_path=":memory:", sources="us", dry_run=True)
     assert us_stats["statutes_considered"] > 0
-    assert us_stats["publications_considered"] == 0
+    assert us_stats["publications_considered"] == 6
 
     pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
     assert pr_stats["statutes_considered"] > 0

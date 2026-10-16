@@ -22,7 +22,10 @@ BILINGUAL_DISCLAIMER: dict[str, str] = {
     ),
 }
 
-CONTENT_NOTICE = "Computational heuristic model with unofficial statutory reference summaries."
+CONTENT_NOTICE = (
+    "Computational heuristic model with statutory reference content; each item's "
+    "content_type says whether it is official text or an unofficial summary."
+)
 
 # Kept a plain string (English, then Spanish) so the existing field type does not change.
 STATUTE_TRANSLATION_DISCLAIMER = (
@@ -39,6 +42,19 @@ REFERENCE_SUMMARY_LABEL: dict[str, str] = {
     "es": "Resumen de referencia no oficial; no es el texto estatutario oficial.",
 }
 
+CONTENT_TYPE_OFFICIAL_TEXT = "official_text"
+
+OFFICIAL_TEXT_LABEL: dict[str, str] = {
+    "en": "Official statutory text (US Code, OLRC release point 119-121).",
+    "es": "Texto estatutario oficial (Código de los EE. UU., punto de publicación OLRC 119-121).",
+}
+
+OFFICIAL_TEXT_TRANSLATION_DISCLAIMER = (
+    "The Spanish summary is an unofficial translation for reference only; the official "
+    "English statutory text controls. / El resumen en español es una traducción no oficial "
+    "solo para fines de referencia; prevalece el texto estatutario oficial en inglés."
+)
+
 ESTIMATE_NOTE: dict[str, str] = {
     "en": (
         "Estimate only, from a simplified heuristic model. Not a final tax liability; actual "
@@ -52,8 +68,15 @@ ESTIMATE_NOTE: dict[str, str] = {
 }
 
 
-def reference_labels() -> dict[str, Any]:
-    """Per-item labels for statute and publication summaries."""
+def reference_labels(*, official_text: bool = False) -> dict[str, Any]:
+    """Per-item labels; official_text marks rows holding the official statutory text."""
+    if official_text:
+        return {
+            "content_type": CONTENT_TYPE_OFFICIAL_TEXT,
+            "content_label": dict(OFFICIAL_TEXT_LABEL),
+            "unofficial_summary": False,
+            "translation_disclaimer": OFFICIAL_TEXT_TRANSLATION_DISCLAIMER,
+        }
     return {
         "content_type": CONTENT_TYPE_REFERENCE_SUMMARY,
         "content_label": dict(REFERENCE_SUMMARY_LABEL),
