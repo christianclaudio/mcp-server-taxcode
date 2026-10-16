@@ -77,6 +77,16 @@ def test_built_in_gain_early_return_has_disclaimer() -> None:
     _assert_notice(out)
 
 
+def test_built_in_gain_early_return_states_5_percent_rate() -> None:
+    out = server.calculate_built_in_gain_sourcing(
+        is_marketable=True, total_gain=1000.0, years_since_residency=10.0
+    )
+    treatment = out["applicable_pr_treatment"]
+    assert "5%" in treatment
+    assert "Section 2022.02" in treatment
+    assert "0% or 4%" not in treatment
+
+
 def test_pr_residency_reports_tax_year_and_gross_income() -> None:
     out = server.evaluate_pr_bona_fide_residency(200, 30, tax_year=2025)
     assert out["tax_year"] == 2025

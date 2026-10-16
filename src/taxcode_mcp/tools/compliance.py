@@ -145,7 +145,10 @@ def calculate_built_in_gain_sourcing(
                 "applicable_federal_treatment": (
                     "100% PR-source; excluded from gross income under IRC § 933"
                 ),
-                "applicable_pr_treatment": "Subject to Act 60 capital gains rate (0% or 4%)",
+                "applicable_pr_treatment": (
+                    "Net long-term capital gain attributable to pre-residency appreciation and "
+                    "recognized after 10 years of residency is taxed at 5% (Section 2022.02)"
+                ),
                 "disclaimer": BILINGUAL_DISCLAIMER,
                 "content_notice": CONTENT_NOTICE,
             }
