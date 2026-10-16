@@ -403,3 +403,25 @@ def test_lookup_versions_carry_validity_labels() -> None:
     labels = {v["id"]: v["validity"]["es"] for v in res["available_versions"]}
     assert labels["pr-ley60-2022-01"] == "Vigente desde 2026; en vigor"
     assert labels["pr-ley60-2022-01-2019"] == "Vigente desde 2019; sustituida en 2026"
+
+
+def test_available_versions_prefer_unsuperseded_on_equal_effective_year() -> None:
+    """available_versions orders by effective_year desc, then current before superseded."""
+    test_db = TaxDatabase(":memory:")
+    base = dict(INITIAL_STATUTES[0])
+    citation = "Test Tie Sec. 1"
+    for rid, sup in (("tie-old", 2030), ("tie-new", None)):
+        test_db.upsert_statute(
+            {
+                **base,
+                "id": rid,
+                "citation": citation,
+                "section": "tie-1",
+                "effective_year": 2025,
+                "superseded_year": sup,
+            }
+        )
+    res = test_db.lookup_statute(citation)
+    assert res is not None
+    assert res["id"] == "tie-new"
+    assert [v["id"] for v in res["available_versions"]] == ["tie-new", "tie-old"]

@@ -6,6 +6,7 @@ import urllib.error
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import duckdb
 import pytest
 
 from scripts.ingest_statutes import (
@@ -231,6 +232,28 @@ def test_ingest_writes_both_2022_01_rows_and_lookup_prefers_current(tmp_path: Pa
 
     db_file = tmp_path / "ingest.duckdb"
     run_ingest(db_path=str(db_file), sources="pr", dry_run=False)
+
+    # Read ingest's rows straight from DuckDB before TaxDatabase reopens and re-seeds.
+    raw = duckdb.connect(str(db_file), read_only=True)
+    try:
+        raw_rows = raw.execute(
+            "SELECT id, effective_year, superseded_year, source_url, text_en, cross_references "
+            "FROM statutes WHERE section = '2022.01' ORDER BY id;"
+        ).fetchall()
+    finally:
+        raw.close()
+    expected = {r.id: r for r in STATUTES_CATALOG if r.section == "2022.01"}
+    assert [r[0] for r in raw_rows] == ["pr-ley60-2022-01", "pr-ley60-2022-01-2019"]
+    for rid, eff, sup, url, text_en, xrefs in raw_rows:
+        rec = expected[rid]
+        assert (eff, sup, url, text_en) == (
+            rec.effective_year,
+            rec.superseded_year,
+            rec.source_url,
+            rec.text_en,
+        )
+        assert list(xrefs) == rec.cross_references
+
     target = TaxDatabase(str(db_file))
 
     current = target.lookup_statute("2022.01", jurisdiction="PR")
@@ -249,3 +272,23 @@ def test_ingest_writes_both_2022_01_rows_and_lookup_prefers_current(tmp_path: Pa
     later = target.lookup_statute("2022.01", jurisdiction="PR", tax_year=2027)
     assert later is not None
     assert later["id"] == "pr-ley60-2022-01"
+
+
+def test_seed_and_ingest_records_match_for_shared_ids() -> None:
+    """Every statute id present in both the seeds and ingest has identical fields."""
+    from taxcode_mcp.db import INITIAL_STATUTES
+
+    seeds = {s["id"]: {"superseded_year": None, **s} for s in INITIAL_STATUTES}
+    shared = 0
+    for rec in STATUTES_CATALOG:
+        if rec.id in seeds:
+            shared += 1
+            assert seeds[rec.id] == rec.to_dict(), rec.id
+    assert shared > 0
+
+
+def test_pr_act60_sources_use_pdf_urls() -> None:
+    """Act 60 records cite the OGP PDFs, not the library homepage."""
+    for rec in STATUTES_CATALOG:
+        if rec.citation.startswith("Ley 60-2019"):
+            assert rec.source_url.endswith(".pdf"), rec.id

@@ -29,15 +29,23 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "text_es": (
             "En el caso de un individuo que sea residente de buena fe de Puerto Rico durante todo "
             "el año tributario, el ingreso bruto no incluirá ingresos derivados de fuentes dentro "
-            "de Puerto Rico (excepto cantidades por servicios prestados a los Estados Unidos)."
+            "de Puerto Rico (excepto cantidades recibidas por servicios prestados como empleado "
+            "de los Estados Unidos o cualquiera de sus agencias); no permitiéndose deducciones "
+            "atribuibles a dicho ingreso."
         ),
         "text_en": (
             "In the case of an individual who is a bona fide resident of Puerto Rico during the "
-            "entire taxable year, gross income does not include income derived from sources within "
-            "Puerto Rico (except amounts received for services performed as an employee of the US)."
+            "entire taxable year, gross income does not include income derived from sources "
+            "within Puerto Rico (except amounts received for services performed as an employee of "
+            "the United States or any agency thereof); but such individual shall not be allowed "
+            "as a deduction from his gross income any deductions (other than the deduction under "
+            "section 151, relating to personal exemptions) or any credit properly allocable to or "
+            "chargeable against amounts excluded from gross income."
         ),
         "effective_year": 1954,
-        "source_url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section933",
+        "source_url": (
+            "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section933"
+        ),
         "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-1", "26 U.S.C. § 865"],
     },
     {
@@ -49,15 +57,23 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Residence and source rules involving possessions",
         "text_es": (
             "Establece los requisitos estatutarios para determinar residencia de buena fe en "
-            "posesiones (presencia física, centro tributario 'tax home' y conexión más cercana), "
-            "así como las reglas de fuente de ingresos aplicables a posesiones."
+            "posesiones (presencia física de 183 días, centro de actividad tributaria 'tax home' "
+            "y conexión más cercana), así como las reglas de fuente de ingresos aplicables a "
+            "posesiones y territorios."
         ),
         "text_en": (
-            "Rules for determining bona fide residency in possessions (presence test, tax home "
-            "test, and closer connection test) and statutory principles for sourcing income."
+            "Rules for determining bona fide residency in possessions: (a) An individual is a "
+            "bona fide resident if present in the possession for at least 183 days during the "
+            "taxable year, does not have a tax home outside the possession, and does not have a "
+            "closer connection to the United States or a foreign country. (b) Source rules: "
+            "Principles for determining whether income is derived from sources within a "
+            "possession or effectively connected with the conduct of a trade or business within a "
+            "possession."
         ),
         "effective_year": 2004,
-        "source_url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section937",
+        "source_url": (
+            "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section937"
+        ),
         "cross_references": ["26 U.S.C. § 933", "26 CFR § 1.937-1", "26 CFR § 1.937-2"],
     },
     {
@@ -69,16 +85,19 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Source rules for personal property sales",
         "text_es": (
             "Salvo disposición expresa en contrario, el ingreso derivado de la venta de bienes "
-            "personales (incluyendo valores negociables y acciones) se atribuirá a la residencia "
+            "personales (incluyendo acciones y valores negociables) se atribuirá a la residencia "
             "del vendedor."
         ),
         "text_en": (
             "Except as otherwise provided in this section, income from the sale of personal "
-            "property (including corporate stock and marketable securities) is sourced to the "
-            "residence of the seller."
+            "property (including corporate stock, debt securities, and marketable assets) by a "
+            "United States resident shall be sourced in the United States, and by a non-resident "
+            "shall be sourced outside the United States."
         ),
         "effective_year": 1986,
-        "source_url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section865",
+        "source_url": (
+            "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section865"
+        ),
         "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-2"],
     },
     {
@@ -89,13 +108,16 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "1.937-1",
         "title": "Bona fide residency in a possession",
         "text_es": (
-            "Reglamentación del Tesoro que articula las cinco alternativas de presencia física "
-            "(regla de 183 días, regla de 549 días en 3 años, límite de 90 días en EE.UU.), "
-            "el requisito de no mantener tax home fuera, y los factores de conexión más cercana."
+            "Reglamentación del Tesoro que detalla las cinco alternativas de presencia física "
+            "(regla de 183 días, regla de 549 días en 3 años, límite de 90 días en EE.UU.), el "
+            "requisito de no mantener tax home fuera, y los factores de conexión más cercana para "
+            "calificar como residente de buena fe."
         ),
         "text_en": (
-            "Treasury Regulation detailing the presence test alternatives (183-day rule, 549-day "
-            "3-year rule, 90-day US presence limit), the tax home rule, and closer connection."
+            "Treasury Regulation detailing the physical presence test alternatives (183-day rule, "
+            "549-day 3-year rule with 60 days minimum per year, 90-day US limit rule), the tax "
+            "home test, and closer connection evaluation factors for determining bona fide "
+            "residency under 26 U.S.C. § 937."
         ),
         "effective_year": 2006,
         "source_url": "https://www.ecfr.gov/current/title-26/section-1.937-1",
@@ -110,15 +132,19 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Income from sources within a possession",
         "text_es": (
             "Reglas de fuente para posesiones y regla de lookback de 10 años para ganancias "
-            "acumuladas (built-in gains) sobre bienes adquiridos antes de establecer residencia."
+            "acumuladas (built-in gains) sobre bienes adquiridos antes de establecer residencia "
+            "bajo Treas. Reg. § 1.937-2(f), permitiendo elección para segregar valor acumulado "
+            "previo y posterior."
         ),
         "text_en": (
-            "Sourcing rules for possessions and 10-year built-in gain lookback rules under "
-            "Treas. Reg. § 1.937-2(f) for property held prior to establishing bona fide residency."
+            "Sourcing rules for possessions and 10-year built-in gain lookback rules under Treas. "
+            "Reg. § 1.937-2(f) for property held prior to establishing bona fide residency. "
+            "Allows election under § 1.937-2(f)(1)(vi) to allocate gain based on FMV on residency "
+            "date (marketable securities) or linear time apportionment."
         ),
         "effective_year": 2006,
         "source_url": "https://www.ecfr.gov/current/title-26/section-1.937-2",
-        "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-1"],
+        "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-1", "26 U.S.C. § 865"],
     },
     {
         "id": "pr-cri-1010-01",
@@ -128,15 +154,19 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "1010.01",
         "title": "Definiciones generales / General Definitions",
         "text_es": (
-            "Define términos fundamentales bajo el Código de Rentas Internas de Puerto Rico "
-            "(Ley 1-2011), incluyendo individuo residente, corporación foránea y año contributivo."
+            "Define términos fundamentales bajo el Código de Rentas Internas de Puerto Rico (Ley "
+            "1-2011), incluyendo individuo residente (domiciliado en PR o presente durante el año "
+            "contributivo), corporación foránea y año contributivo."
         ),
         "text_en": (
             "Defines fundamental statutory terms under the PR Internal Revenue Code (Ley 1-2011), "
-            "including resident individual, foreign corporation, taxable year, and person."
+            "including resident individual (domiciled in PR or present for entire tax year), "
+            "foreign corporation, taxable year, and person."
         ),
         "effective_year": 2011,
-        "source_url": "https://hacienda.pr.gov/publicaciones/codigo-de-rentas-internas-de-puerto-rico-de-2011",
+        "source_url": (
+            "https://hacienda.pr.gov/publicaciones/codigo-de-rentas-internas-de-puerto-rico-de-2011"
+        ),
         "cross_references": ["PR CRI Sec. 1031.01", "PR CRI Sec. 1062.01"],
     },
     {
@@ -148,14 +178,18 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Ingreso bruto / Gross Income",
         "text_es": (
             "Incluye ganancias, beneficios e ingresos derivados de sueldos, profesiones, "
-            "comercio o ventas en propiedad, y excluye partidas estatutariamente exentas."
+            "comercio, negocios o ventas de bienes y propiedades, excluyendo aquellas partidas "
+            "estatutariamente exentas."
         ),
         "text_en": (
-            "Includes gains, profits, and income derived from salaries, professions, commerce, "
-            "or sales of property, while excluding statutory exclusions."
+            "Statutory definition of gross income including gains, profits, and income derived "
+            "from salaries, professions, commerce, trades, or sales of property, while excluding "
+            "statutory exclusions."
         ),
         "effective_year": 2011,
-        "source_url": "https://hacienda.pr.gov/publicaciones/codigo-de-rentas-internas-de-puerto-rico-de-2011",
+        "source_url": (
+            "https://hacienda.pr.gov/publicaciones/codigo-de-rentas-internas-de-puerto-rico-de-2011"
+        ),
         "cross_references": ["PR CRI Sec. 1010.01", "PR CRI Sec. 1031.02"],
     },
     {
@@ -166,13 +200,14 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "2021.01",
         "title": "Individuos Residentes Inversionistas - Cualificación",
         "text_es": (
-            "Establece requisitos para acogerse al Capítulo 2 del Código de Incentivos, "
-            "incluyendo no haber sido residente de PR en los 10 años anteriores y "
-            "adquirir una residencia principal."
+            "Establece requisitos para acogerse al Capítulo 2 del Código de Incentivos (ex-Ley "
+            "22), incluyendo no haber sido residente de Puerto Rico durante los 10 años "
+            "anteriores y adquirir una residencia principal en la isla."
         ),
         "text_en": (
             "Establishes eligibility criteria for Individual Resident Investors under Act 60 "
-            "Chapter 2 (formerly Act 22), including 10-year non-residency and home purchase."
+            "Chapter 2 (formerly Act 22), requiring non-residency in Puerto Rico during the 10 "
+            "preceding years and acquisition of primary residential property."
         ),
         "effective_year": 2019,
         "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
@@ -244,12 +279,14 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "2031.01",
         "title": "Exportación de Servicios y Comercio - Cualificación",
         "text_es": (
-            "Cualifica negocios dedicados a la exportación de servicios elegibles prestados "
-            "desde Puerto Rico hacia mercados exteriores sin nexo previo en la isla (ex-Ley 20)."
+            "Cualifica negocios dedicados a la exportación de servicios elegibles prestados desde "
+            "Puerto Rico hacia mercados exteriores sin nexo comercial previo en la isla (antigua "
+            "Ley 20)."
         ),
         "text_en": (
             "Qualifies businesses engaged in export services conducted from Puerto Rico to "
-            "foreign or mainland markets with no prior nexus in the island (formerly Act 20)."
+            "foreign or mainland markets with no prior commercial nexus on the island (formerly "
+            "Act 20)."
         ),
         "effective_year": 2019,
         "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
@@ -263,13 +300,14 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "2032.01",
         "title": "Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo",
         "text_es": (
-            "Fija una tasa del 4% sobre el ingreso neto de desarrollo para exportación, "
-            "100% de exención sobre dividendos, y 75% de exención en contribución "
-            "sobre la propiedad."
+            "Fija una tasa preferencial del 4 por ciento sobre el ingreso neto de desarrollo para "
+            "exportación, 100 por ciento de exención sobre distribuciones y dividendos, y 75 por "
+            "ciento de exención en contribuciones sobre la propiedad."
         ),
         "text_en": (
-            "Establishes a 4% corporate rate on export net income, 100% exemption on dividends, "
-            "and 75% exemption on property taxes."
+            "Establishes a 4 percent flat corporate income tax rate on net export service "
+            "development income, 100 percent exemption on distributions and dividends, and 75 "
+            "percent exemption on municipal and real property taxes."
         ),
         "effective_year": 2019,
         "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
@@ -303,14 +341,15 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "48-7-1",
         "title": "Income Tax Definitions / Residency Rules",
         "text_es": (
-            "Define residente de Georgia como todo individuo con residencia legal en "
-            "Georgia el día de pago del impuesto, que resida en el estado al menos "
-            "183 días del año contributivo, o que mantenga una vivienda permanente en Georgia."
+            "Define residente de Georgia como todo individuo con residencia legal en Georgia el "
+            "día de pago del impuesto, que resida en el estado al menos 183 días del año "
+            "contributivo, o que mantenga una vivienda permanente."
         ),
         "text_en": (
             "Defines Georgia resident as any individual who is a legal resident of Georgia on "
             "income tax day, who resides within the state for 183 days or more in the aggregate "
-            "during the taxable year, or who maintains a permanent place of abode within the state."
+            "during the taxable year, or who maintains a permanent place of abode within the "
+            "state."
         ),
         "effective_year": 2024,
         "source_url": "https://dor.georgia.gov/",
@@ -389,13 +428,13 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Computation of Georgia Taxable Net Income",
         "text_es": (
             "Dispone el cálculo del ingreso neto gravable a partir del AGI federal, deducción "
-            "estándar de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 "
-            "en ingresos de jubilación para mayores de 65 años."
+            "estándar de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 en "
+            "ingresos de jubilación para mayores de 65 años."
         ),
         "text_en": (
-            "Calculates Georgia taxable net income from Federal AGI, allowing standard "
-            "deductions of $12,000 (single) or $24,000 (married filing jointly), and a "
-            "retirement income exclusion of up to $65,000 for age 65+ ($35,000 for ages 62-64)."
+            "Calculates Georgia taxable net income from Federal AGI, allowing standard deductions "
+            "of $12,000 (single) or $24,000 (married filing jointly), and a retirement income "
+            "exclusion of up to $65,000 for individuals age 65 or older ($35,000 for ages 62-64)."
         ),
         "effective_year": 2024,
         "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
@@ -888,12 +927,13 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Convenience of the Employer Rule (Reciprocal Sourcing)",
         "text_es": (
             "Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no "
-            "residentes que teletrabajen si su estado aplica regla similar (ej. Nueva York)."
+            "residentes que teletrabajen si su estado de residencia aplica una regla similar (ej. "
+            "Nueva York)."
         ),
         "text_en": (
             "Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing "
-            "telecommuting compensation of nonresidents to NJ if their resident state "
-            "imposes a convenience rule."
+            "telecommuting compensation of nonresidents to NJ if their resident state imposes a "
+            "convenience rule."
         ),
         "effective_year": 2023,
         "source_url": "https://www.nj.gov/treasury/taxation/",
@@ -1065,12 +1105,13 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Convenience of Employer Rule",
         "text_es": (
             "Aplica la regla de conveniencia del patrono para determinar la fuente de ingresos "
-            "salariales de no residentes que teletrabajan si su estado aplica una regla similar."
+            "salariales de no residentes que teletrabajan si su estado de residencia aplica una "
+            "regla similar."
         ),
         "text_en": (
             "Applies a reciprocal convenience of the employer test to nonresident compensation "
-            "earned while telecommuting for a Connecticut employer if employee's state applies "
-            "a convenience rule."
+            "earned while telecommuting for a Connecticut employer if employee's state applies a "
+            "convenience rule."
         ),
         "effective_year": 2024,
         "source_url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-711",
@@ -1104,15 +1145,18 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Definitions - Resident Individual",
         "text_es": (
             "Define individuo residente como quien reside o tiene domicilio en Carolina del "
-            "Norte, o quien pasa más de 183 días en el estado presumiendo residencia."
+            "Norte, o quien pasa más de 183 días en el estado durante el año contributivo "
+            "presumiendo residencia."
         ),
         "text_en": (
             "Defines resident individual as one domiciled in North Carolina or who resides in "
             "state for more than 183 days during the taxable year creating a rebuttable "
-            "presumption."
+            "presumption of residency."
         ),
         "effective_year": 2024,
-        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/Section_105-153.3.html",
+        "source_url": (
+            "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/Section_105-153.3.html"
+        ),
         "cross_references": ["N.C. Gen. Stat. § 105-153.7"],
     },
     {
@@ -2387,7 +2431,7 @@ class TaxDatabase:
                     SELECT effective_year, superseded_year, id
                     FROM statutes
                     WHERE LOWER(citation) = LOWER(?)
-                    ORDER BY effective_year DESC;
+                    ORDER BY effective_year DESC, (superseded_year IS NULL) DESC;
                     """,
                     [matched_citation],
                 ).fetchall()

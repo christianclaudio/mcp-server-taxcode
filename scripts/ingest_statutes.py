@@ -403,7 +403,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "residente de Puerto Rico durante los 10 años anteriores y adquirir una residencia principal en la isla."
         ),
         effective_year=2019,
-        source_url="https://bvirtualogp.pr.gov/",
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01",
     ),
@@ -484,7 +484,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "mercados exteriores sin nexo comercial previo en la isla (antigua Ley 20)."
         ),
         effective_year=2019,
-        source_url="https://bvirtualogp.pr.gov/",
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2032.01", "26 U.S.C. § 957"],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2031.01",
     ),
@@ -504,7 +504,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "de exención sobre distribuciones y dividendos, y 75 por ciento de exención en contribuciones sobre la propiedad."
         ),
         effective_year=2019,
-        source_url="https://bvirtualogp.pr.gov/",
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01",
     ),
@@ -524,7 +524,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "la aportación benéfica compulsoria de $10,000 anuales distribuida entre entidades sin fines de lucro certificadas."
         ),
         effective_year=2019,
-        source_url="https://bvirtualogp.pr.gov/",
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2021.01", "Ley 60-2019 Sec. 2022.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55",
     ),
