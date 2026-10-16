@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uscDoc xmlns="http://xml.house.gov/schemas/uslm/1.0" xmlns:xhtml="http://www.w3.org/1999/xhtml" identifier="/us/usc/t26">
+<meta><docNumber>26</docNumber><docPublicationName>Online@119-121</docPublicationName></meta>
+<main><title identifier="/us/usc/t26"><subtitle identifier="/us/usc/t26/stA"><chapter identifier="/us/usc/t26/stA/ch1">
+<section style="-uslm-lc:I80" id="id5f9a6b21-b817-11f1-b546-9af1a4ad3589" identifier="/us/usc/t26/s933"><num value="933">§ 933.</num><heading> Income from sources within Puerto Rico</heading>
+<chapeau style="-uslm-lc:I11" class="indent0">The following items shall not be included in gross income and shall be exempt from taxation under this subtitle:</chapeau><paragraph style="-uslm-lc:I79" class="indent3 firstIndent-2" id="id5f9a6b22-b817-11f1-b546-9af1a4ad3589" identifier="/us/usc/t26/s933/1"><num value="1" class="bold">(1)</num><heading class="bold"> Resident of Puerto Rico for entire taxable year</heading><content><p style="-uslm-lc:I12" class="indent1">In the case of an individual who is a bona fide resident of Puerto Rico during the entire taxable year, income derived from sources within Puerto Rico (except amounts received for services performed as an employee of the United States or any agency thereof); but such individual shall not be allowed as a deduction from his gross income any deductions (other than the deduction under section 151, relating to personal exemptions), or any credit, properly allocable to or chargeable against amounts excluded from gross income under this paragraph.</p>
+</content>
+</paragraph>
+<paragraph style="-uslm-lc:I79" class="indent3 firstIndent-2" id="id5f9a6b23-b817-11f1-b546-9af1a4ad3589" identifier="/us/usc/t26/s933/2"><num value="2" class="bold">(2)</num><heading class="bold"> Taxable year of change of residence from Puerto Rico</heading><content><p style="-uslm-lc:I12" class="indent1">In the case of an individual citizen of the United States who has been a bona fide resident of Puerto Rico for a period of at least 2 years before the date on which he changes his residence from Puerto Rico, income derived from sources therein (except amounts received for services performed as an employee of the United States or any agency thereof) which is attributable to that part of such period of Puerto Rican residence before such date; but such individual shall not be allowed as a deduction from his gross income any deductions (other than the deduction for personal exemptions under section 151), or any credit, properly allocable to or chargeable against amounts excluded from gross income under this paragraph.</p>
+</content>
+</paragraph>
+<sourceCredit id="id5f9a6b24-b817-11f1-b546-9af1a4ad3589">(<ref href="/us/act/1954-08-16/ch736">Aug. 16, 1954, ch. 736</ref>, <ref href="/us/stat/68A/293">68A Stat. 293</ref>; <ref href="/us/pl/99/514/tXII/s1272/d/3">Pub. L. 99–514, title XII, § 1272(d)(3)</ref>, <date date="1986-10-22">Oct. 22, 1986</date>, <ref href="/us/stat/100/2594">100 Stat. 2594</ref>.)</sourceCredit>
+</section>
+
+<section identifier="/us/usc/t26/s9001"><num value="9001">§ 9001.</num><heading> Fixture table section</heading>
+<subsection identifier="/us/usc/t26/s9001/a"><num value="a">(a)</num><heading> Rates</heading>
+<chapeau>The rate is determined as follows:</chapeau>
+<xhtml:table><xhtml:tr><xhtml:th><xhtml:p>Income</xhtml:p><xhtml:p>bracket</xhtml:p></xhtml:th><xhtml:th>Rate</xhtml:th></xhtml:tr>
+<xhtml:tr><xhtml:td>Not over $10</xhtml:td><xhtml:td>1%</xhtml:td></xhtml:tr></xhtml:table>
+</subsection>
+<subsection identifier="/us/usc/t26/s9001/b"><num value="b">(b)</num><heading> Nested</heading>
+<paragraph><num value="1">(1)</num><subparagraph><num value="A">(A)</num><content>First nested item.</content></subparagraph></paragraph>
+</subsection>
+<sourceCredit>(Added Pub. L. 999–1, Jan. 2, 2030.)</sourceCredit>
+<notes type="uscNote"><note><p>Editorial note that must not appear.</p></note></notes>
+</section>
+<section identifier="/us/usc/t26/s9002"><num value="9002">§ 9002.</num><heading> Fixture section without credit year</heading>
+<content>Text.</content><sourceCredit>(No year.)</sourceCredit></section>
+<section identifier="/us/usc/t26/s9003"><num value="9003">§ 9003.</num><heading> Not allowlisted</heading><content>Ignored.</content><sourceCredit>(Jan. 1, 1999.)</sourceCredit></section>
+</chapter></subtitle></title></main>
+</uscDoc>
