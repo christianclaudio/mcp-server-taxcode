@@ -9,13 +9,13 @@ from typing import Any
 import duckdb
 
 from taxcode_mcp.config import settings
+from taxcode_mcp.disclaimers import (
+    STATUTE_TRANSLATION_DISCLAIMER,  # noqa: F401  (re-exported for compatibility)
+    reference_labels,
+)
 
 logger = logging.getLogger(__name__)
 
-STATUTE_TRANSLATION_DISCLAIMER = (
-    "Unofficial translation/summary for reference purposes only. Official "
-    "statutory text in the jurisdiction's authoritative language controls."
-)
 
 # Canonical initial seed data for US Federal and Puerto Rico tax provisions
 INITIAL_STATUTES: list[dict[str, Any]] = [
@@ -175,7 +175,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "Chapter 2 (formerly Act 22), including 10-year non-residency and home purchase."
         ),
         "effective_year": 2019,
-        "source_url": "https://bvirtualogp.pr.gov/",
+        "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         "cross_references": ["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
     },
     {
@@ -186,15 +186,25 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "2022.01",
         "title": "Exención Contributiva sobre Ganancias de Capital e Intereses",
         "text_es": (
-            "Dispone exención total (100%) sobre ganancias de capital e intereses para decretos "
-            "previos a 2027 (y tasa del 4% para decretos solicitados desde 2027)."
+            "Dispone exención total (0%) sobre intereses, dividendos y ganancias de capital "
+            "posteriores a la residencia para solicitudes de decreto radicadas en o antes del "
+            "31 de diciembre de 2026 (hasta el 1 de enero de 2036). Según la Ley 38-2026, las "
+            "solicitudes radicadas desde el 1 de enero de 2027 tributan a una tasa fija del 4% "
+            "sobre intereses, dividendos y ganancias de capital posteriores a la residencia "
+            "(hasta el 1 de enero de 2056). La ganancia neta de capital a largo plazo atribuible "
+            "a apreciación previa a la residencia, reconocida luego de 10 años de residencia, "
+            "tributa al 5% (Sección 2022.02)."
         ),
         "text_en": (
-            "Provides 100% tax exemption on capital gains, dividends, and interest post-residency "
-            "(4% capital gains rate for decrees requested on or after Jan 1, 2027)."
+            "Provides full (0%) exemption on post-residency interest, dividends, and capital "
+            "gains for decree applications filed on or before Dec 31, 2026 (through Jan 1, 2036). "
+            "Under Act 38-2026, applications filed on or after Jan 1, 2027 pay a 4% fixed rate on "
+            "post-residency interest, dividends, and capital gains (through Jan 1, 2056). Net "
+            "long-term capital gain attributable to pre-residency appreciation and recognized "
+            "after 10 years of residency is taxed at 5% (Section 2022.02)."
         ),
         "effective_year": 2019,
-        "source_url": "https://bvirtualogp.pr.gov/",
+        "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
         "cross_references": ["Ley 60-2019 Sec. 2021.01", "26 CFR § 1.937-2"],
     },
     {
@@ -213,7 +223,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "foreign or mainland markets with no prior nexus in the island (formerly Act 20)."
         ),
         "effective_year": 2019,
-        "source_url": "https://bvirtualogp.pr.gov/",
+        "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         "cross_references": ["Ley 60-2019 Sec. 2032.01", "26 U.S.C. § 957"],
     },
     {
@@ -233,7 +243,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "and 75% exemption on property taxes."
         ),
         "effective_year": 2019,
-        "source_url": "https://bvirtualogp.pr.gov/",
+        "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         "cross_references": ["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
     },
     {
@@ -2369,9 +2379,7 @@ class TaxDatabase:
                     "cross_references": result[11] or [],
                     "language": lang.lower(),
                     "official_language": "es" if result[1] == "PR" else "en",
-                    "content_type": "reference_summary",
-                    "unofficial_summary": True,
-                    "translation_disclaimer": STATUTE_TRANSLATION_DISCLAIMER,
+                    **reference_labels(),
                 }
             finally:
                 if self._mem_conn is None:
@@ -2438,9 +2446,7 @@ class TaxDatabase:
                             "is_current": r[9] is None,
                             "source_url": r[10],
                             "cross_references": r[11] or [],
-                            "content_type": "reference_summary",
-                            "unofficial_summary": True,
-                            "translation_disclaimer": STATUTE_TRANSLATION_DISCLAIMER,
+                            **reference_labels(),
                         }
                     )
                 return output
@@ -2484,6 +2490,7 @@ class TaxDatabase:
                         "title": r[4],
                         "summary": r[5],
                         "source_url": r[6],
+                        **reference_labels(),
                     }
                     for r in rows
                 ]

@@ -11,6 +11,7 @@ from fastmcp.tools.tool_transform import ArgTransformConfig, ToolTransformConfig
 from mcp.types import ToolAnnotations
 
 from taxcode_mcp.db import db
+from taxcode_mcp.disclaimers import output_notice, reference_labels
 from taxcode_mcp.errors import tool_error
 
 logger = logging.getLogger(__name__)
@@ -75,8 +76,10 @@ async def lookup_statute(
                 "tax_year": tax_year,
                 "jurisdiction": jurisdiction,
                 "message": f"{msg} not found in indexed corpora.",
+                **reference_labels(),
+                **output_notice(),
             }
-        return {"status": "success", "data": result}
+        return {"status": "success", "data": result, **output_notice()}
     except Exception as exc:
         failure = tool_error(exc)
     raise failure from None
@@ -116,6 +119,7 @@ async def search_tax_code(
             "count": len(matches),
             "results": matches,
             "client_id": client_id,
+            **output_notice(),
         }
     except Exception as exc:
         failure = tool_error(exc)
@@ -136,7 +140,12 @@ async def list_publications(
     """List administrative publications from DuckDB."""
     try:
         pubs = db.list_publications(category=category, since_date=since_date, limit=limit)
-        return {"status": "success", "count": len(pubs), "publications": pubs}
+        return {
+            "status": "success",
+            "count": len(pubs),
+            "publications": pubs,
+            **output_notice(),
+        }
     except Exception as exc:
         failure = tool_error(exc)
     raise failure from None

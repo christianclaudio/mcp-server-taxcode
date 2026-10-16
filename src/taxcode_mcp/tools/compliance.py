@@ -8,29 +8,10 @@ from typing import Any
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
+from taxcode_mcp.disclaimers import BILINGUAL_DISCLAIMER, CONTENT_NOTICE, ESTIMATE_NOTE
 from taxcode_mcp.errors import SafetyViolationError, tool_error
 
 logger = logging.getLogger(__name__)
-
-BILINGUAL_DISCLAIMER: dict[str, str] = {
-    "en": (
-        "NOT TAX OR LEGAL ADVICE. This computational determination is for reference and "
-        "informational purposes only based on statutory heuristic models. It does not constitute "
-        "formal legal or tax advice, an official opinion, or an audit defense. Any translations "
-        "or statutory summaries are unofficial and non-binding; official enacted statutory text "
-        "and administrative rulings in their original language control."
-    ),
-    "es": (
-        "NO CONSTITUYE ASESORAMIENTO CONTRIBUTIVO NI LEGAL. Esta determinación computacional es "
-        "para fines informativos y de referencia únicamente, basada en modelos heurísticos "
-        "estatutarios. No constituye asesoramiento legal o contributivo formal, opinión oficial "
-        "ni defensa de auditoría. Todas las traducciones o resúmenes estatutarios son no "
-        "oficiales y no vinculantes; el texto estatutario oficial promulgado y las determinaciones "
-        "administrativas en su idioma original prevalecen."
-    ),
-}
-
-CONTENT_NOTICE = "Computational heuristic model with unofficial statutory reference summaries."
 
 ANNOTATION_READ_ONLY = ToolAnnotations(
     read_only_hint=True,
@@ -61,6 +42,7 @@ def evaluate_pr_bona_fide_residency(
     prior_year_2_pr_days: int = 0,
     has_us_tax_home: bool = False,
     closer_connection_jurisdiction: str = "PR",
+    tax_year: int | None = None,
 ) -> dict[str, Any]:
     """Evaluate IRC § 937 presence, tax home, and closer connection tests."""
     if days_present_pr < 0 or days_present_us < 0:
@@ -89,7 +71,8 @@ def evaluate_pr_bona_fide_residency(
 
     # Regulatory guidance and reporting triggers
     reporting_triggers = [
-        "IRS Form 8898 (Beginning/Ending Bona Fide Residence) required if worldwide income > $75k",
+        "IRS Form 8898 (Beginning/Ending Bona Fide Residence) required if worldwide gross "
+        "income > $75k",
         "PR Form 480.20 (Individual Income Tax Return / Planilla) required for PR income",
     ]
     if not is_bona_fide:
@@ -100,6 +83,7 @@ def evaluate_pr_bona_fide_residency(
 
     return {
         "status": "success",
+        "tax_year": tax_year,
         "is_bona_fide_resident": is_bona_fide,
         "presence_test": {
             "satisfied": presence_satisfied,
@@ -162,6 +146,8 @@ def calculate_built_in_gain_sourcing(
                     "100% PR-source; excluded from gross income under IRC § 933"
                 ),
                 "applicable_pr_treatment": "Subject to Act 60 capital gains rate (0% or 4%)",
+                "disclaimer": BILINGUAL_DISCLAIMER,
+                "content_notice": CONTENT_NOTICE,
             }
 
         if is_marketable:
@@ -313,6 +299,8 @@ def evaluate_georgia_residency(
             "retirement_exclusion_applied": retirement_exclusion_applied,
             "georgia_taxable_net_income": taxable_income,
             "estimated_georgia_tax": estimated_tax,
+            "is_estimate": True,
+            "estimate_note": ESTIMATE_NOTE,
             "statutory_rate_authority": "O.C.G.A. § 48-7-20 (HB 1023 / HB 1015 flat tax)",
         },
         "disclaimer": BILINGUAL_DISCLAIMER,
@@ -1182,6 +1170,8 @@ def evaluate_state_residency(
         "tax_computation": {
             "taxable_net_income": taxable_income,
             "estimated_state_tax": estimated_tax,
+            "is_estimate": True,
+            "estimate_note": ESTIMATE_NOTE,
             "rate_description": rate_desc,
             "statutory_rate_authority": rate_authority,
         },
@@ -1193,8 +1183,9 @@ def evaluate_state_residency(
 @compliance_server.prompt("cross_border_tax_analysis")
 def cross_border_tax_analysis(taxpayer_scenario: str) -> str:
     """Generate structured analytical prompt for dual-jurisdiction US and PR tax analysis."""
-    return f"""You are an elite cross-border tax attorney and computational legal analyst.
-Analyze the following taxpayer scenario involving US federal tax law and Puerto Rico statutes:
+    return f"""You are a research assistant for cross-border tax law. You help organize
+statutory research; you do not give legal or tax advice. Outline the research questions for
+the following taxpayer scenario involving US federal tax law and Puerto Rico statutes:
 
 SCENARIO:
 {taxpayer_scenario}
@@ -1206,5 +1197,8 @@ ANALYTICAL FRAMEWORK:
 4. Local PR tax incentives: Apply Puerto Rico Incentives Code (Ley 60-2019, Chapter 2/3).
 5. Federal filing obligations: Assess required IRS reporting (Form 8898, Form 1040, Form 8960).
 
-Cite all operative code sections and regulations precisely.
+Cite all operative code sections and regulations precisely. State that the result is
+research for reference only, not legal or tax advice, and that a licensed professional
+should review it. / Indique que el resultado es investigación de referencia únicamente, no
+asesoramiento legal ni contributivo, y que un profesional licenciado debe revisarlo.
 """
