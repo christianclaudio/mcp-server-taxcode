@@ -71,8 +71,9 @@ def evaluate_pr_bona_fide_residency(
 
     # Regulatory guidance and reporting triggers
     reporting_triggers = [
-        "IRS Form 8898 (Beginning/Ending Bona Fide Residence) required if worldwide gross "
-        "income > $75k",
+        "Conditional: IRS Form 8898 (Beginning/Ending Bona Fide Residence) is required only "
+        "if you became or stopped being a bona fide PR resident in this tax year and your "
+        "worldwide gross income > $75k",
         "PR Form 480.20 (Individual Income Tax Return / Planilla) required for PR income",
     ]
     if not is_bona_fide:
@@ -147,7 +148,16 @@ def calculate_built_in_gain_sourcing(
                 ),
                 "applicable_pr_treatment": (
                     "Net long-term capital gain attributable to pre-residency appreciation and "
-                    "recognized after 10 years of residency is taxed at 5% (Section 2022.02)"
+                    "recognized after 10 years of residency is taxed at 5% (Section 2022.02) "
+                    "if recognized before Jan 1, 2036 (applications filed through 2026) or "
+                    "before Jan 1, 2056 (applications filed from 2027)"
+                ),
+                "applicable_pr_treatment_es": (
+                    "La ganancia neta de capital a largo plazo atribuible a apreciación previa a "
+                    "la residencia y reconocida luego de 10 años de residencia tributa al 5% "
+                    "(Sección 2022.02) si se reconoce antes del 1 de enero de 2036 (solicitudes "
+                    "radicadas hasta 2026) o antes del 1 de enero de 2056 (solicitudes radicadas "
+                    "desde 2027)"
                 ),
                 "disclaimer": BILINGUAL_DISCLAIMER,
                 "content_notice": CONTENT_NOTICE,

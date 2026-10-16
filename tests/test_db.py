@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+import duckdb
+
 from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES, TaxDatabase
 
 
@@ -332,3 +334,36 @@ def test_search_statutes_temporal_and_descending_order() -> None:
     for r in results_2024:
         if r["citation"] == "O.C.G.A. § 48-7-20":
             assert r["effective_year"] == 2024
+
+
+def test_ley60_2022_01_lookup_by_tax_year_splits_on_act_38_2026() -> None:
+    test_db = TaxDatabase(":memory:")
+    old = test_db.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2020)
+    assert old is not None
+    assert old["id"] == "pr-ley60-2022-01-2019"
+    assert old["effective_year"] == 2019 and old["superseded_year"] == 2026
+    assert old["text_en"].startswith("Provides 100% tax exemption")
+    new = test_db.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2027)
+    assert new is not None
+    assert new["id"] == "pr-ley60-2022-01"
+    assert new["effective_year"] == 2026 and new["superseded_year"] is None
+    assert "Act 38-2026" in new["text_en"]
+
+
+def test_file_db_refreshes_changed_seed_rows_on_startup(tmp_path: Path) -> None:
+    db_file = str(tmp_path / "stale.duckdb")
+    TaxDatabase(db_file)
+    conn = duckdb.connect(db_file)
+    conn.execute(
+        "UPDATE statutes SET text_en = 'stale', text_es = 'viejo' WHERE id = 'pr-ley60-2022-01';"
+    )
+    conn.execute("DELETE FROM statutes WHERE id = 'pr-ley60-2022-01-2019';")
+    conn.close()
+    refreshed = TaxDatabase(db_file)
+    seeds = {s["id"]: s for s in INITIAL_STATUTES}
+    row = refreshed.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2027)
+    assert row is not None
+    assert row["text_en"] == seeds["pr-ley60-2022-01"]["text_en"]
+    assert row["text_es"] == seeds["pr-ley60-2022-01"]["text_es"]
+    old = refreshed.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2020)
+    assert old is not None and old["id"] == "pr-ley60-2022-01-2019"

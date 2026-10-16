@@ -179,6 +179,26 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "cross_references": ["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
     },
     {
+        "id": "pr-ley60-2022-01-2019",
+        "jurisdiction": "PR",
+        "corpus": "LEY60",
+        "citation": "Ley 60-2019 Sec. 2022.01",
+        "section": "2022.01",
+        "title": "Exención Contributiva sobre Ganancias de Capital e Intereses",
+        "text_es": (
+            "Dispone exención total (100%) sobre ganancias de capital e intereses para decretos "
+            "previos a 2027 (y tasa del 4% para decretos solicitados desde 2027)."
+        ),
+        "text_en": (
+            "Provides 100% tax exemption on capital gains, dividends, and interest post-residency "
+            "(4% capital gains rate for decrees requested on or after Jan 1, 2027)."
+        ),
+        "effective_year": 2019,
+        "superseded_year": 2026,
+        "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        "cross_references": ["Ley 60-2019 Sec. 2021.01", "26 CFR § 1.937-2"],
+    },
+    {
         "id": "pr-ley60-2022-01",
         "jurisdiction": "PR",
         "corpus": "LEY60",
@@ -193,7 +213,9 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "sobre intereses, dividendos y ganancias de capital posteriores a la residencia "
             "(hasta el 1 de enero de 2056). La ganancia neta de capital a largo plazo atribuible "
             "a apreciación previa a la residencia, reconocida luego de 10 años de residencia, "
-            "tributa al 5% (Sección 2022.02)."
+            "tributa al 5% (Sección 2022.02) si se reconoce antes del 1 de enero de 2036 "
+            "(solicitudes radicadas hasta 2026) o antes del 1 de enero de 2056 (solicitudes "
+            "radicadas desde 2027)."
         ),
         "text_en": (
             "Provides full (0%) exemption on post-residency interest, dividends, and capital "
@@ -201,9 +223,11 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "Under Act 38-2026, applications filed on or after Jan 1, 2027 pay a 4% fixed rate on "
             "post-residency interest, dividends, and capital gains (through Jan 1, 2056). Net "
             "long-term capital gain attributable to pre-residency appreciation and recognized "
-            "after 10 years of residency is taxed at 5% (Section 2022.02)."
+            "after 10 years of residency is taxed at 5% (Section 2022.02) if recognized before "
+            "Jan 1, 2036 (applications filed through 2026) or before Jan 1, 2056 (applications "
+            "filed from 2027)."
         ),
-        "effective_year": 2019,
+        "effective_year": 2026,
         "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
         "cross_references": ["Ley 60-2019 Sec. 2021.01", "26 CFR § 1.937-2"],
     },
@@ -2223,33 +2247,31 @@ class TaxDatabase:
                     """
                 )
 
-                # Seed initial statutes if table is empty
-                statute_count = conn.execute("SELECT COUNT(*) FROM statutes;").fetchone()
-                if statute_count and statute_count[0] == 0:
-                    for s in INITIAL_STATUTES:
-                        conn.execute(
-                            """
-                            INSERT INTO statutes (
-                                id, jurisdiction, corpus, citation, section,
-                                title, text_es, text_en, effective_year,
-                                superseded_year, source_url, cross_references
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-                            """,
-                            [
-                                s["id"],
-                                s["jurisdiction"],
-                                s["corpus"],
-                                s["citation"],
-                                s["section"],
-                                s["title"],
-                                s["text_es"],
-                                s["text_en"],
-                                s["effective_year"],
-                                s.get("superseded_year"),
-                                s["source_url"],
-                                s["cross_references"],
-                            ],
-                        )
+                # Upsert seed statutes by id so file-backed DBs pick up changed seed rows
+                for s in INITIAL_STATUTES:
+                    conn.execute(
+                        """
+                        INSERT OR REPLACE INTO statutes (
+                            id, jurisdiction, corpus, citation, section,
+                            title, text_es, text_en, effective_year,
+                            superseded_year, source_url, cross_references
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                        """,
+                        [
+                            s["id"],
+                            s["jurisdiction"],
+                            s["corpus"],
+                            s["citation"],
+                            s["section"],
+                            s["title"],
+                            s["text_es"],
+                            s["text_en"],
+                            s["effective_year"],
+                            s.get("superseded_year"),
+                            s["source_url"],
+                            s["cross_references"],
+                        ],
+                    )
 
                 # Seed initial publications if table is empty
                 pub_count = conn.execute("SELECT COUNT(*) FROM publications;").fetchone()

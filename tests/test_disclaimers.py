@@ -85,6 +85,13 @@ def test_built_in_gain_early_return_states_5_percent_rate() -> None:
     assert "5%" in treatment
     assert "Section 2022.02" in treatment
     assert "0% or 4%" not in treatment
+    assert "before Jan 1, 2036 (applications filed through 2026)" in treatment
+    assert "before Jan 1, 2056 (applications filed from 2027)" in treatment
+    treatment_es = out["applicable_pr_treatment_es"]
+    assert "5%" in treatment_es
+    assert "Sección 2022.02" in treatment_es
+    assert "antes del 1 de enero de 2036 (solicitudes radicadas hasta 2026)" in treatment_es
+    assert "antes del 1 de enero de 2056 (solicitudes radicadas desde 2027)" in treatment_es
 
 
 def test_pr_residency_reports_tax_year_and_gross_income() -> None:
@@ -92,6 +99,15 @@ def test_pr_residency_reports_tax_year_and_gross_income() -> None:
     assert out["tax_year"] == 2025
     assert any("worldwide gross income > $75k" in r for r in out["reporting_requirements"])
     assert server.evaluate_pr_bona_fide_residency(200, 30)["tax_year"] is None
+
+
+def test_form_8898_is_a_conditional_check_with_both_conditions() -> None:
+    out = server.evaluate_pr_bona_fide_residency(200, 30, tax_year=2025)
+    form = [r for r in out["reporting_requirements"] if "Form 8898" in r]
+    assert len(form) == 1
+    assert form[0].startswith("Conditional:")
+    assert "became or stopped being a bona fide PR resident in this tax year" in form[0]
+    assert "worldwide gross income > $75k" in form[0]
 
 
 def test_state_estimates_are_labeled() -> None:
@@ -118,3 +134,6 @@ def test_act60_seeds_cite_primary_sources() -> None:
     assert iri["source_url"].endswith("/PDF/2020/0038-2026.pdf")
     assert "interest, dividends, and capital gains" in iri["text_en"]
     assert "5%" in iri["text_en"] and "5%" in iri["text_es"]
+    assert "before Jan 1, 2036" in iri["text_en"] and "before Jan 1, 2056" in iri["text_en"]
+    assert "antes del 1 de enero de 2036" in iri["text_es"]
+    assert "antes del 1 de enero de 2056" in iri["text_es"]
