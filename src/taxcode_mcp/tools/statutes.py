@@ -98,7 +98,8 @@ async def lookup_statute(
     description=(
         "Keyword and concept search across Federal and State statutory corpora. "
         "Multi-word queries match individual terms: rows with the whole phrase rank "
-        "first, then by how many terms match, then by tax year descending."
+        "first, then by how many terms match, then newer effective year first "
+        "(empty or non-numeric years last), then id."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},

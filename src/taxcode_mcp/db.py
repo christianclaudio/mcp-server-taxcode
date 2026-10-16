@@ -5223,6 +5223,18 @@ SEARCH_STOPWORDS: frozenset[str] = frozenset(
 _TERM_STRIP = ".,;:!?\"'()[]{}"
 
 
+def year_sort_key(value: Any) -> tuple[int, int]:
+    """Sort key for ``effective_year``: newest first, empty or non-numeric last.
+
+    ``effective_year`` can be NULL (the column is nullable) or, in an older or
+    hand-built database, a non-numeric value; neither may crash the search.
+    """
+    try:
+        return (0, -int(str(value).strip()))
+    except (TypeError, ValueError):
+        return (1, 0)
+
+
 def search_terms(query: str) -> list[str]:
     """Split a query into distinct lowercase terms for ranked matching.
 
@@ -5496,7 +5508,7 @@ class TaxDatabase:
             conn = self._get_read_conn()
             try:
                 haystack = (
-                    "LOWER(title || ' ' || citation || ' ' || "
+                    "LOWER(COALESCE(title, '') || ' ' || COALESCE(citation, '') || ' ' || "
                     "COALESCE(text_en, '') || ' ' || COALESCE(text_es, ''))"
                 )
                 sql = f"""
@@ -5522,10 +5534,10 @@ class TaxDatabase:
 
                 rows = conn.execute(sql, params).fetchall()
 
-                def rank(r: tuple[Any, ...]) -> tuple[int, int, int, str]:
+                def rank(r: tuple[Any, ...]) -> tuple[int, int, tuple[int, int], str]:
                     hay: str = r[12]
                     hits = sum(1 for t in terms if t in hay)
-                    return (0 if phrase in hay else 1, -hits, -int(r[8]), str(r[0]))
+                    return (0 if phrase in hay else 1, -hits, year_sort_key(r[8]), str(r[0]))
 
                 rows.sort(key=rank)
                 output: list[dict[str, Any]] = []

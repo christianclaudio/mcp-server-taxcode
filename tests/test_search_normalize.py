@@ -17,6 +17,7 @@ from taxcode_mcp.db import (
     normalize_category,
     resolve_jurisdiction,
     search_terms,
+    year_sort_key,
 )
 
 WA_CAPITAL_GAINS = {"RCW 82.87.020", "RCW 82.87.040"}
@@ -198,3 +199,55 @@ def test_stopword_only_query_uses_phrase(db: TaxDatabase) -> None:
 async def test_search_tool_accepts_names() -> None:
     res = await server.search_tax_code(query="capital gains tax RCW", corpus="washington")
     assert set(_citations(res["results"])[:2]) == WA_CAPITAL_GAINS
+
+
+# --- empty years and missing titles -------------------------------------------
+
+
+def _row(sid: str, **over: object) -> dict[str, object]:
+    base: dict[str, object] = {
+        "id": sid,
+        "jurisdiction": "WA",
+        "corpus": "RCW",
+        "citation": f"RCW zz.{sid}",
+        "section": sid,
+        "title": "Zebra levy",
+        "text_es": None,
+        "text_en": "zebra quokka levy text",
+        "effective_year": 2020,
+        "superseded_year": None,
+        "source_url": "https://example.test",
+        "cross_references": [],
+    }
+    base.update(over)
+    return base
+
+
+def test_empty_effective_year_sorts_last_without_crash(db: TaxDatabase) -> None:
+    db.insert_statute(_row("zz-new", effective_year=2024))
+    db.insert_statute(_row("zz-null", effective_year=None))
+    db.insert_statute(_row("zz-old", effective_year=2001))
+    rows = db.search_statutes(query="zebra quokka levy", limit=10)
+    # All three match every term, so year decides; real rows match fewer terms.
+    assert [r["id"] for r in rows][:3] == ["zz-new", "zz-old", "zz-null"]
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [
+        ([2001, None, 2024, "abc", "", " 2010 "], [2024, " 2010 ", 2001]),
+    ],
+)
+def test_year_sort_key_puts_empty_and_non_numeric_last(
+    values: list[object], expected: list[object]
+) -> None:
+    ordered = sorted(values, key=year_sort_key)
+    assert ordered[:3] == expected
+    assert set(map(str, ordered[3:])) == {"None", "abc", ""}
+    assert year_sort_key(None) == year_sort_key("abc") == year_sort_key("")
+
+
+def test_row_without_title_or_citation_still_matches(db: TaxDatabase) -> None:
+    db.insert_statute(_row("zz-bare", title=None, citation=None))
+    rows = db.search_statutes(query="quokka", limit=10)
+    assert [r["id"] for r in rows] == ["zz-bare"]
