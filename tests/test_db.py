@@ -390,7 +390,7 @@ def test_search_without_tax_year_shows_years_on_both_2022_01_rows() -> None:
     assert new["superseded_year"] is None
     assert new["validity"] == {
         "en": "Effective 2026; current",
-        "es": "Vigente desde 2026; vigente",
+        "es": "Vigente desde 2026; en vigor",
     }
 
 
@@ -401,5 +401,5 @@ def test_lookup_versions_carry_validity_labels() -> None:
     assert res is not None
     assert res["validity"]["en"] == "Effective 2019; superseded 2026"
     labels = {v["id"]: v["validity"]["es"] for v in res["available_versions"]}
-    assert labels["pr-ley60-2022-01"] == "Vigente desde 2026; vigente"
+    assert labels["pr-ley60-2022-01"] == "Vigente desde 2026; en vigor"
     assert labels["pr-ley60-2022-01-2019"] == "Vigente desde 2019; sustituida en 2026"

@@ -186,17 +186,22 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "section": "2022.01",
         "title": "Exención Contributiva sobre Ganancias de Capital e Intereses",
         "text_es": (
-            "Dispone exención total (100%) sobre ganancias de capital e intereses para decretos "
-            "previos a 2027 (y tasa del 4% para decretos solicitados desde 2027)."
+            "Dispone exención total (100%) sobre intereses, dividendos y ganancias de capital "
+            "posteriores a la residencia reconocidos antes del 1 de enero de 2036. La ganancia "
+            "neta de capital a largo plazo atribuible a apreciación previa a la residencia, "
+            "reconocida luego de 10 años de residencia, tributa al 5% (Sección 2022.02) si se "
+            "reconoce antes del 1 de enero de 2036."
         ),
         "text_en": (
-            "Provides 100% tax exemption on capital gains, dividends, and interest post-residency "
-            "(4% capital gains rate for decrees requested on or after Jan 1, 2027)."
+            "Provides 100% tax exemption on post-residency interest, dividends, and capital "
+            "gains recognized before Jan 1, 2036. Net long-term capital gain attributable to "
+            "pre-residency appreciation and recognized after 10 years of residency is taxed at "
+            "5% (Section 2022.02) if recognized before Jan 1, 2036."
         ),
         "effective_year": 2019,
         "superseded_year": 2026,
         "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
-        "cross_references": ["Ley 60-2019 Sec. 2021.01", "26 CFR § 1.937-2"],
+        "cross_references": ["Ley 60-2019 Sec. 2022.02", "26 CFR § 1.937-2"],
     },
     {
         "id": "pr-ley60-2022-01",
@@ -2194,7 +2199,7 @@ def validity_label(effective_year: int, superseded_year: int | None) -> dict[str
     if superseded_year is None:
         return {
             "en": f"Effective {effective_year}; current",
-            "es": f"Vigente desde {effective_year}; vigente",
+            "es": f"Vigente desde {effective_year}; en vigor",
         }
     return {
         "en": f"Effective {effective_year}; superseded {superseded_year}",
@@ -2369,7 +2374,7 @@ class TaxDatabase:
                     )
                     params.extend([tax_year, tax_year])
 
-                sql += " ORDER BY effective_year DESC LIMIT 1;"
+                sql += " ORDER BY effective_year DESC, (superseded_year IS NULL) DESC LIMIT 1;"
                 result = conn.execute(sql, params).fetchone()
                 if not result:
                     return None

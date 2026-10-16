@@ -408,6 +408,32 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01",
     ),
     StatuteRecord(
+        id="pr-ley60-2022-01-2019",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 2022.01",
+        section="2022.01",
+        title="Exención Contributiva sobre Ganancias de Capital e Intereses",
+        text_en=(
+            "Provides 100% tax exemption on post-residency interest, dividends, and capital "
+            "gains recognized before Jan 1, 2036. Net long-term capital gain attributable to "
+            "pre-residency appreciation and recognized after 10 years of residency is taxed at "
+            "5% (Section 2022.02) if recognized before Jan 1, 2036."
+        ),
+        text_es=(
+            "Dispone exención total (100%) sobre intereses, dividendos y ganancias de capital "
+            "posteriores a la residencia reconocidos antes del 1 de enero de 2036. La ganancia "
+            "neta de capital a largo plazo atribuible a apreciación previa a la residencia, "
+            "reconocida luego de 10 años de residencia, tributa al 5% (Sección 2022.02) si se "
+            "reconoce antes del 1 de enero de 2036."
+        ),
+        effective_year=2019,
+        superseded_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=["Ley 60-2019 Sec. 2022.02", "26 CFR § 1.937-2"],
+        breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01",
+    ),
+    StatuteRecord(
         id="pr-ley60-2022-01",
         jurisdiction="PR",
         corpus="LEY60",
@@ -415,15 +441,30 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         section="2022.01",
         title="Exención Contributiva sobre Ganancias de Capital e Intereses",
         text_en=(
-            "Provides 100% tax exemption on qualifying capital gains, dividends, and interest recognized after establishing "
-            "residency for decrees requested prior to 2027 (4% rate for decrees requested on or after Jan 1, 2027)."
+            "Provides full (0%) exemption on post-residency interest, dividends, and capital "
+            "gains for decree applications filed on or before Dec 31, 2026 (through Jan 1, "
+            "2036). Under Act 38-2026, applications filed on or after Jan 1, 2027 pay a 4% fixed "
+            "rate on post-residency interest, dividends, and capital gains (through Jan 1, "
+            "2056). Net long-term capital gain attributable to pre-residency appreciation and "
+            "recognized after 10 years of residency is taxed at 5% (Section 2022.02) if "
+            "recognized before Jan 1, 2036 (applications filed through 2026) or before Jan 1, "
+            "2056 (applications filed from 2027)."
         ),
         text_es=(
-            "Dispone exención total (100%) sobre ganancias de capital e intereses devengados tras establecer residencia "
-            "para decretos previos a 2027 (y tasa preferencial del 4% para decretos solicitados desde el 1 de enero de 2027)."
+            "Dispone exención total (0%) sobre intereses, dividendos y ganancias de capital "
+            "posteriores a la residencia para solicitudes de decreto radicadas en o antes del 31 "
+            "de diciembre de 2026 (hasta el 1 de enero de 2036). Según la Ley 38-2026, las "
+            "solicitudes radicadas desde el 1 de enero de 2027 tributan a una tasa fija del 4% "
+            "sobre intereses, dividendos y ganancias de capital posteriores a la residencia "
+            "(hasta el 1 de enero de 2056). La ganancia neta de capital a largo plazo atribuible "
+            "a apreciación previa a la residencia, reconocida luego de 10 años de residencia, "
+            "tributa al 5% (Sección 2022.02) si se reconoce antes del 1 de enero de 2036 "
+            "(solicitudes radicadas hasta 2026) o antes del 1 de enero de 2056 (solicitudes "
+            "radicadas desde 2027)."
         ),
-        effective_year=2019,
-        source_url="https://bvirtualogp.pr.gov/",
+        effective_year=2026,
+        superseded_year=None,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
         cross_references=["Ley 60-2019 Sec. 2021.01", "26 CFR § 1.937-2"],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01",
     ),

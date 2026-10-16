@@ -158,7 +158,7 @@ async def get_statute_resource(jurisdiction: str, section: str) -> str:
     if not res:
         return f"Statute '{section}' in jurisdiction '{jurisdiction}' not found."
     sup = res["superseded_year"]
-    superseded = "current / vigente" if sup is None else str(sup)
+    superseded = "current / en vigor" if sup is None else str(sup)
     return (
         f"{res['citation']} - {res['title']}\n"
         f"Jurisdiction: {res['jurisdiction']} ({res['corpus']})\n"

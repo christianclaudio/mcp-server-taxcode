@@ -223,3 +223,29 @@ def test_main_cli_invocations(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     code_full = main(["--db-path", db_file, "--export-docs", docs_dir])
     assert code_full == 0
     assert (tmp_path / "cli_docs" / "llms.txt").exists()
+
+
+def test_ingest_writes_both_2022_01_rows_and_lookup_prefers_current(tmp_path: Path) -> None:
+    """Ingest into a file DB writes both 2022.01 rows; lookups pick by tax year."""
+    from taxcode_mcp.db import TaxDatabase
+
+    db_file = tmp_path / "ingest.duckdb"
+    run_ingest(db_path=str(db_file), sources="pr", dry_run=False)
+    target = TaxDatabase(str(db_file))
+
+    current = target.lookup_statute("2022.01", jurisdiction="PR")
+    assert current is not None
+    assert current["id"] == "pr-ley60-2022-01"
+    assert current["superseded_year"] is None
+    assert "Act 38-2026" in current["text_en"]
+
+    old = target.lookup_statute("2022.01", jurisdiction="PR", tax_year=2020)
+    assert old is not None
+    assert old["id"] == "pr-ley60-2022-01-2019"
+    assert old["superseded_year"] == 2026
+    assert "4%" not in old["text_en"] and "4%" not in old["text_es"]
+    assert old["cross_references"] == ["Ley 60-2019 Sec. 2022.02", "26 CFR § 1.937-2"]
+
+    later = target.lookup_statute("2022.01", jurisdiction="PR", tax_year=2027)
+    assert later is not None
+    assert later["id"] == "pr-ley60-2022-01"
