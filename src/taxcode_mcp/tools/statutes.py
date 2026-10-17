@@ -11,7 +11,7 @@ from fastmcp.tools.tool_transform import ArgTransformConfig, ToolTransformConfig
 from mcp.types import ToolAnnotations
 from pydantic import Field
 
-from taxcode_mcp.db import PUBLICATION_CATEGORIES, db
+from taxcode_mcp.db import PUBLICATION_CATEGORIES, SNIPPET_MAX_CHARS, db
 from taxcode_mcp.disclaimers import output_notice, reference_labels
 from taxcode_mcp.errors import tool_error
 
@@ -23,6 +23,21 @@ CATEGORY_DESCRIPTION = (
     + ". Case, spaces, hyphens and underscores are ignored ('carta circular' matches "
     "'carta-circular'); an unknown category returns no results."
 )
+
+# Search returns snippets; this tells the model how to get one result's full text.
+FULL_TEXT_HINT: dict[str, str] = {
+    "tool": "statutes_lookup_statute",
+    "argument": "citation_or_section",
+    "value_from": "id",
+    "en": (
+        "Results are snippets. For a result's full text, call statutes_lookup_statute "
+        "with citation_or_section set to its id."
+    ),
+    "es": (
+        "Los resultados son extractos. Para el texto completo de un resultado, llame a "
+        "statutes_lookup_statute con citation_or_section igual a su id."
+    ),
+}
 
 ANNOTATION_READ_ONLY = ToolAnnotations(
     read_only_hint=True,
@@ -53,18 +68,27 @@ statutes_server.add_transform(
     name="lookup_statute",
     description=(
         "Retrieve exact statutory language, temporal version, and metadata by "
-        "citation or section code."
+        "citation, section code, or the record id from statutes_search_tax_code "
+        "(pass a result's id as citation_or_section to get its full text)."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "read_only"},
 )
 async def lookup_statute(
-    citation_or_section: str,
+    citation_or_section: Annotated[
+        str,
+        Field(
+            description=(
+                "Citation ('26 U.S.C. § 933'), section code ('933'), or a record id "
+                "from statutes_search_tax_code results ('us-irc-933')."
+            )
+        ),
+    ],
     jurisdiction: str | None = None,
     tax_year: int | None = None,
     lang: str = "en",
 ) -> dict[str, Any]:
-    """Find a statute by exact citation or section code in DuckDB."""
+    """Find a statute by record id, exact citation, or section code in DuckDB."""
     try:
         result = db.lookup_statute(
             citation_or_section=citation_or_section,
@@ -99,7 +123,11 @@ async def lookup_statute(
         "Keyword and concept search across Federal and State statutory corpora. "
         "Multi-word queries match individual terms: rows with the whole phrase rank "
         "first, then by how many terms match, then newer effective year first "
-        "(empty or non-numeric years last), then id."
+        "(empty or non-numeric years last), then id. Each result is a short snippet "
+        f"(up to {SNIPPET_MAX_CHARS} characters around the first matched term) with its "
+        "id, citation, title, jurisdiction, year, validity and content labels, not the "
+        "full text: call statutes_lookup_statute with citation_or_section set to the "
+        "result's id to read the full text."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},
@@ -144,6 +172,7 @@ async def search_tax_code(
             "jurisdiction": jurisdiction,
             "count": len(matches),
             "results": matches,
+            "full_text": FULL_TEXT_HINT,
             "client_id": client_id,
             **output_notice(),
         }

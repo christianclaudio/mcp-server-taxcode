@@ -5275,6 +5275,82 @@ def search_terms(query: str) -> list[str]:
     return terms
 
 
+# Search results carry a short snippet instead of the full text (the full text
+# of one statute can run 10-23K tokens); statutes_lookup_statute returns it by id.
+SNIPPET_MAX_CHARS = 300
+SNIPPET_LEAD_CHARS = 80
+_ELLIPSIS = "\u2026"
+
+
+def _first_match(text_lower: str, phrase: str, terms: list[str]) -> tuple[int, int] | None:
+    """Return ``(position, length)`` of the phrase, else of the earliest matched term."""
+    if phrase:
+        pos = text_lower.find(phrase)
+        if pos >= 0:
+            return pos, len(phrase)
+    hits = [(text_lower.find(t), len(t)) for t in terms]
+    found = [h for h in hits if h[0] >= 0]
+    return min(found) if found else None
+
+
+def make_snippet(
+    text: str | None, phrase: str, terms: list[str], max_chars: int = SNIPPET_MAX_CHARS
+) -> tuple[str, bool]:
+    """Return ``(snippet, matched)``: up to ``max_chars`` of ``text`` around the first match.
+
+    Whitespace is collapsed. The window opens about :data:`SNIPPET_LEAD_CHARS`
+    before the whole phrase, or else the earliest matched term, and is cut on word
+    boundaries; ``\u2026`` marks text cut at either end and counts toward
+    ``max_chars``. With no match in ``text`` the snippet is its opening words and
+    ``matched`` is ``False``.
+    """
+    flat = " ".join((text or "").split())
+    match = _first_match(flat.lower(), phrase, terms)
+    if len(flat) <= max_chars:
+        return flat, match is not None
+    pos, length = match or (0, 0)
+    budget = max_chars - 2 * len(_ELLIPSIS)
+    start = max(0, pos - SNIPPET_LEAD_CHARS)
+    if length > budget:
+        start = pos  # a match longer than the window is cut at the window's end
+    elif pos + length > start + budget:
+        start = pos + length - budget
+    # Near the end of the text, open earlier so the window stays full.
+    start = min(start, len(flat) - budget)
+    if start > 0 and flat[start - 1] != " ":
+        space = flat.find(" ", start, pos)
+        if space >= 0:
+            start = space + 1
+    end = start + budget
+    if end < len(flat) and flat[end] != " ":
+        space = flat.rfind(" ", max(pos + length, start), end)
+        if space >= 0:
+            end = space
+    body = flat[start:end].strip()
+    prefix = _ELLIPSIS if start > 0 else ""
+    suffix = _ELLIPSIS if end < len(flat) else ""
+    return f"{prefix}{body}{suffix}", match is not None
+
+
+def pick_snippet(
+    texts: list[tuple[str, str | None]], phrase: str, terms: list[str]
+) -> tuple[str, str]:
+    """Return ``(snippet, language)`` from the first text that matches, else the first non-empty.
+
+    ``texts`` is ``[(language, text), ...]`` in preference order. A row can match
+    on its title, citation or other-language text only, so the fallback is the
+    opening of the preferred text.
+    """
+    built = [(lang, *make_snippet(text, phrase, terms)) for lang, text in texts]
+    for lang, snippet, matched in built:
+        if matched:
+            return snippet, lang
+    for lang, snippet, _ in built:
+        if snippet:
+            return snippet, lang
+    return "", texts[0][0]
+
+
 class TaxDatabase:
     """Thread-safe DuckDB manager for tax statutes and administrative guidance."""
 
@@ -5414,7 +5490,11 @@ class TaxDatabase:
         tax_year: int | None = None,
         lang: str = "en",
     ) -> dict[str, Any] | None:
-        """Find a statute by exact citation or section code and optional tax year."""
+        """Find a statute by record id, exact citation or section code, and optional tax year.
+
+        The record id is the ``id`` that :meth:`search_statutes` returns; it names
+        one version, so it is preferred over a citation match.
+        """
         query_val = citation_or_section.strip()
         with self._lock:
             conn = self._get_read_conn()
@@ -5425,12 +5505,13 @@ class TaxDatabase:
                            source_url, cross_references
                     FROM statutes
                     WHERE (
-                        LOWER(citation) = LOWER(?)
+                        LOWER(id) = LOWER(?)
+                        OR LOWER(citation) = LOWER(?)
                         OR LOWER(section) = LOWER(?)
                         OR LOWER(REPLACE(citation, ' ', '')) = LOWER(REPLACE(?, ' ', ''))
                     )
                 """
-                params: list[Any] = [query_val, query_val, query_val]
+                params: list[Any] = [query_val, query_val, query_val, query_val]
                 if jurisdiction:
                     sql += " AND UPPER(jurisdiction) = UPPER(?)"
                     params.append(jurisdiction.strip())
@@ -5442,7 +5523,12 @@ class TaxDatabase:
                     )
                     params.extend([tax_year, tax_year])
 
-                sql += " ORDER BY effective_year DESC, (superseded_year IS NULL) DESC LIMIT 1;"
+                # An exact record id (from search results) names one version; it wins.
+                sql += (
+                    " ORDER BY (LOWER(id) = LOWER(?)) DESC, effective_year DESC, "
+                    "(superseded_year IS NULL) DESC LIMIT 1;"
+                )
+                params.append(query_val)
                 result = conn.execute(sql, params).fetchone()
                 if not result:
                     return None
@@ -5512,6 +5598,10 @@ class TaxDatabase:
         or at least one term. ``jurisdiction`` accepts codes or full names, and a
         ``corpus`` that is not a known corpus code but names a jurisdiction
         (``"washington"``) filters by that jurisdiction instead.
+
+        Each row carries a ``snippet`` (see :func:`make_snippet`) in place of the
+        full text, plus ``snippet_language``; ``lookup_statute(id)`` returns the
+        full text. Matching and ranking read the full text as before.
         """
         phrase = " ".join(query.strip().lower().split())
         terms = search_terms(phrase)
@@ -5562,8 +5652,15 @@ class TaxDatabase:
 
                 rows.sort(key=rank)
                 output: list[dict[str, Any]] = []
+                preferred = "en" if lang.lower() == "en" else "es"
                 for r in rows[: max(limit, 0)]:
-                    text = r[7] if lang.lower() == "en" else r[6]
+                    by_lang = {"en": r[7], "es": r[6]}
+                    other = "es" if preferred == "en" else "en"
+                    snippet, snippet_lang = pick_snippet(
+                        [(preferred, by_lang[preferred]), (other, by_lang[other])],
+                        phrase,
+                        terms,
+                    )
                     output.append(
                         {
                             "id": r[0],
@@ -5572,7 +5669,8 @@ class TaxDatabase:
                             "citation": r[3],
                             "section": r[4],
                             "title": r[5],
-                            "operative_text": text,
+                            "snippet": snippet,
+                            "snippet_language": snippet_lang,
                             "effective_year": r[8],
                             "superseded_year": r[9],
                             "is_current": r[9] is None,
