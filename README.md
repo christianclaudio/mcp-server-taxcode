@@ -27,7 +27,7 @@ graph TD
     SysSub["System Sub-server (mount: 'system')<br>• system_get_health_status<br>• taxcode://system/reference/capabilities"]
     StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications"]
     CompSub["Compliance Sub-server (mount: 'compliance')<br>• compliance_evaluate_pr_bona_fide_residency<br>• compliance_calculate_built_in_gain_sourcing<br>• compliance_evaluate_georgia_residency<br>• compliance_evaluate_state_residency"]
-    DuckDB["DuckDB In-Memory & File Engine<br>(115 Statutes, 18 Publications, Full-Text Search, Temporal Versions)"]
+    DuckDB["DuckDB In-Memory & File Engine<br>(117 Statutes, 18 Publications, Full-Text Search, Temporal Versions)"]
 
     Client <-->|"JSON-RPC (tools/list, tools/call)"| Gateway
     Gateway --> ParentMW
@@ -44,7 +44,7 @@ graph TD
 
 * **Authoritative Multi-Jurisdiction Statutory Catalog**:
   * **Federal (`US`)**: IRC § 1, § 24, § 32, § 61, § 62, § 63, § 865, § 911, § 933, § 937, § 957, § 1411, § 6012, § 6688, 26 CFR § 1.937-1/2/3, and IRS publications (Pub. 17, Pub. 54, Pub. 501, Pub. 505, Pub. 570, Pub. 1321).
-  * **Puerto Rico (`PR`)**: Act 60-2019 (Resident Individual Investors, Export Services & Opportunity Zone definitions), Ley 1-2011 (including Sec. 1031.02 exemptions and Sec. 1062.01 wage withholding), Act 22-2012 predecessor versions, and administrative publications (CC RI 21-10, CC RI 25-12, CC RI 26-13, DA 21-04, DA 23-04, BI RI 26-02).
+  * **Puerto Rico (`PR`)**: Act 60-2019 (Resident Individual Investors, Export Services & Opportunity Zone definitions, Sec. 6020.10 annual reports), Ley 1-2011 (including Sec. 1031.02 exemptions and Sec. 1062.01 wage withholding and Sec. 1062.03 withholding on payments for services), Act 22-2012 predecessor versions, and administrative publications (CC RI 21-10, CC RI 25-12, CC RI 26-13, DA 21-04, DA 23-04, BI RI 26-02).
   * **All 50 US States + District of Columbia**: Comprehensive statutory definitions and tax computations covering no-income-tax states (AK, FL, NV, NH, SD, TN, TX, WA, WY), flat-tax regimes (AZ, CO, GA, ID, IL, IN, IA, KS, KY, MI, MS, NC, PA, UT), and graduated/surtax jurisdictions (AL, AR, CA, CT, DE, DC, HI, LA, ME, MD, MA, MN, MO, MT, NE, NJ, NM, NY, ND, OH, OK, OR, RI, SC, VT, VA, WV, WI) including Convenience of the Employer rules (NY, PA, NJ, CT, DE, NE) and local piggyback taxes (MD, IN, OH, NY).
 * **Snippet Search, Full Text by Id**: `statutes_search_tax_code` matches and ranks on the full text but returns a short snippet (up to 300 characters around the first matched term) plus each result's `id`, citation, title, jurisdiction, year, validity and content labels. Pass an `id` to `statutes_lookup_statute` as `citation_or_section` for the full text.
 * **Temporal Statutory Versioning**: Point-in-time statutory lookup with `superseded_year` filtering and descending historical ordering (`tax_year` parameter).

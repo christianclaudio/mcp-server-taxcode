@@ -173,6 +173,8 @@ SEEDED_AFTER_735477D = frozenset(
         "pr-cri-1031-02",
         "pr-cri-1062-01",
         "pr-ley60-6070-55",
+        "pr-ley60-6020-10",
+        "pr-cri-1062-03",
     }
 )
 

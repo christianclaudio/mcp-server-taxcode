@@ -314,7 +314,7 @@ def test_catalog_ids_equal_seed_ids() -> None:
 
 
 def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
-    """The eight entries once missing from the seeds match the catalog and cite pinned sources."""
+    """Entries seeded or corrected from pinned sources match the catalog and cite those sources."""
     from taxcode_mcp.db import (
         ECFR_TITLE26_DATE,
         INITIAL_PUBLICATIONS,
@@ -332,17 +332,24 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
         "us-cfr-1-937-3": (f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-3"),
         "pr-cri-1031-02": cri_pdf,
         "pr-cri-1062-01": cri_pdf,
+        "pr-cri-1062-03": cri_pdf,
+        "pr-cri-1010-01": cri_pdf,
+        "pr-cri-1031-01": cri_pdf,
         "pr-ley60-6070-55": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        "pr-ley60-6020-10": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
     }
     seeds = {s["id"]: {"superseded_year": None, **s} for s in INITIAL_STATUTES}
     catalog = {r.id: r.to_dict() for r in STATUTES_CATALOG}
     for sid, url in statute_sources.items():
         assert seeds[sid] == catalog[sid], sid
         assert seeds[sid]["source_url"] == url, sid
+    for sid, seed in seeds.items():
+        if seed["corpus"] == "CRI":
+            assert seed["source_url"] == cri_pdf, sid
 
     pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
     pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
-    for pid in ("pr-bi-26-02", "pr-cc-ri-25-12"):
+    for pid in ("pr-bi-26-02", "pr-cc-ri-25-12", "pr-cc-ri-21-10", "pr-cc-ri-26-13"):
         assert pubs[pid] == pub_catalog[pid], pid
         assert pubs[pid]["source_url"].startswith(
             "https://hacienda.pr.gov/sites/default/files/publicaciones/"

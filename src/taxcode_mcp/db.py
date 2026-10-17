@@ -3163,18 +3163,18 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "title": "Definiciones generales / General Definitions",
         "text_es": (
             "Define términos fundamentales bajo el Código de Rentas Internas de Puerto Rico (Ley "
-            "1-2011), incluyendo individuo residente (domiciliado en PR o presente durante el año "
-            "contributivo), corporación foránea y año contributivo."
+            "1-2011), incluyendo individuo residente (domiciliado en Puerto Rico; se presume "
+            "residente si estuvo presente en Puerto Rico 183 días durante el año natural), "
+            "corporación extranjera y año contributivo."
         ),
         "text_en": (
             "Defines fundamental statutory terms under the PR Internal Revenue Code (Ley 1-2011), "
-            "including resident individual (domiciled in PR or present for entire tax year), "
-            "foreign corporation, taxable year, and person."
+            "including resident individual (domiciled in Puerto Rico; presumed resident if present "
+            "in Puerto Rico 183 days during the calendar year), foreign corporation, taxable year, "
+            "and person."
         ),
         "effective_year": 2011,
-        "source_url": (
-            "https://hacienda.pr.gov/publicaciones/codigo-de-rentas-internas-de-puerto-rico-de-2011"
-        ),
+        "source_url": "https://hacienda.pr.gov/sites/default/files/codigo_de_rentas_internas_2011_segun_enmendado_28.08.2026.pdf",
         "cross_references": ["PR CRI Sec. 1031.01", "PR CRI Sec. 1062.01"],
     },
     {
@@ -3195,9 +3195,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "statutory exclusions."
         ),
         "effective_year": 2011,
-        "source_url": (
-            "https://hacienda.pr.gov/publicaciones/codigo-de-rentas-internas-de-puerto-rico-de-2011"
-        ),
+        "source_url": "https://hacienda.pr.gov/sites/default/files/codigo_de_rentas_internas_2011_segun_enmendado_28.08.2026.pdf",
         "cross_references": ["PR CRI Sec. 1010.01", "PR CRI Sec. 1031.02"],
     },
     {
@@ -4454,6 +4452,299 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "cross_references": ["PR CRI Sec. 1010.01", "PR CRI Sec. 1031.02"],
     },
     {
+        "id": "pr-cri-1062-03",
+        "jurisdiction": "PR",
+        "corpus": "CRI",
+        "citation": "PR CRI Sec. 1062.03",
+        "section": "1062.03",
+        "title": (
+            "Retención en el Origen Sobre Pagos por Servicios Prestados / Withholding at "
+            "Source on Payments for Services Rendered"
+        ),
+        "text_es": (
+            "(a) Regla General. — El Gobierno de Puerto Rico y toda persona, natural o "
+            "jurídica, que en el ejercicio de una actividad de industria o negocio o para "
+            "la producción de ingresos en Puerto Rico, efectúe pagos a otra persona por "
+            "concepto de servicios prestados y todo pagador que efectúe pagos a un "
+            "proveedor de servicios de salud por servicios de salud prestados por dicho "
+            "proveedor a cualquier persona, deducirá y retendrá, para pagos realizados "
+            "antes de 1 de enero de 2019, el siete (7) por ciento y, para pagos realizados "
+            "después del 31 de diciembre de 2018, el diez (10) por ciento de dichos pagos. "
+            "No obstante, a elección del proveedor de servicios, el pagador podrá deducir y "
+            "retener, una cantidad mayor, equivalente al diez (10) por ciento, al quince "
+            "(15) por ciento, o al veinte (20) por ciento de dichos pagos. Disponiéndose "
+            "que, para pagos efectuados después del 31 de diciembre de 2018, el pagador "
+            "podrá, a opción del proveedor de servicios, retener sobre la totalidad del "
+            "ingreso pagado la tasa máxima aplicable en la Sección 1021.06. El término "
+            "“Gobierno de Puerto Rico” incluye al Gobierno de Puerto Rico, sus agencias, "
+            "instrumentalidades, corporaciones públicas y subdivisiones políticas. El "
+            "término “pagador” significa aseguradores, asociaciones con fines no "
+            "pecuniarios, cooperativas de seguros de salud, organizaciones de servicios de "
+            "salud y cualquier otra persona que realice pagos a nombre de las personas aquí "
+            "mencionadas. El término servicios y la retención aquí definida no incluye el "
+            "pago de primas de seguro, arrendamiento o venta de propiedad mueble tangible o "
+            "inmueble, imprenta, venta de periódicos, revistas y otras publicaciones "
+            "(incluyendo colocación de anuncios) y contratación de tiempo de radio o "
+            "televisión. No obstante, el pago de la comisión sobre la prima de seguro al "
+            "agente sí estará sujeta a la retención impuesta por esta Sección. La excepción "
+            "de retención dispuesta en la oración anterior, no exime al pagador de informar "
+            "las cantidades pagadas, por servicios recibidos, en una declaración "
+            "informativa sujeto a lo dispuesto en la Sección 1063.01.\n"
+            "(b) Reglas Especiales. — La obligación de deducción y retención dispuesta en "
+            "el apartado (a) de esta Sección no aplicará a:\n"
+            "(1) En el caso de pagos efectuados antes del 1 de enero de 2019, los primeros "
+            "mil quinientos (1,500) dólares pagados durante el año natural a la persona que "
+            "prestó el servicio. En el caso de corporaciones o sociedades que operen en "
+            "Puerto Rico por medio de sucursales, el límite de mil quinientos (1,500) "
+            "dólares aquí dispuesto aplicará a cada sucursal por separado, a opción del "
+            "agente retenedor. Disponiéndose que, para años contributivos comenzados luego "
+            "del 31 de diciembre de 2018, la exención sobre la retención dispuesta en esta "
+            "sección será sobre los primeros quinientos (500) dólares pagados durante el "
+            "año natural a la persona que prestó el servicio.\n"
+            "(2) Pagos efectuados a hospitales, clínicas, laboratorios clínicos, hogares de "
+            "pacientes con enfermedades terminales, hogares de ancianos e instituciones "
+            "para incapacitados.\n"
+            "(3) Pagos efectuados a organizaciones exentas según lo dispuesto en la Sección "
+            "1101.01.\n"
+            "(4) Ingreso o ganancia generada por vendedores directos por la venta de "
+            "productos de consumo. El término “vendedores directos” significa un individuo "
+            "que:\n"
+            "(A) Está dedicado a la venta (o solicitación de venta) de productos de consumo "
+            "a cualquier comprador a base de un acuerdo de compraventa, comisión por "
+            "depósito, o cualquier arreglo similar según el Secretario determine por "
+            "reglamento, para la reventa (por el comprador o cualquier otra persona) en el "
+            "hogar u otro lugar que no sea un establecimiento de ventas al por menor, o\n"
+            "(B) está dedicado a la venta (o solicitación de venta de) productos de consumo "
+            "en el hogar u otro lugar que no sea un establecimiento de ventas al por menor. "
+            "El término “vendedor directo” no incluye aquella persona que recibe comisiones "
+            "o cualquier otro tipo de pagos que representen, en todo o en parte, el ingreso "
+            "o la ganancia generada por un “vendedor directo” u otro tipo de vendedor que "
+            "esté bajo la supervisión, el control, la dirección, o sea miembro de la red de "
+            "distribución de dicha persona.\n"
+            "(5) Pagos efectuados a contratistas o subcontratistas por la construcción de "
+            "obras. El término “construcción de obras” no incluye servicios de "
+            "arquitectura, ingeniería, diseño, consultoría, electricistas, plomeros, "
+            "pintores, personal de mantenimiento, persona que provee servicios de mano de "
+            "obra, seguridad y otros servicios de naturaleza similar.\n"
+            "(6) Pagos por servicios prestados por individuos no residentes o corporaciones "
+            "o sociedades extranjeras no dedicadas a industria o negocios en Puerto Rico "
+            "que estén sujetos a la retención dispuesta en las Secciones 1062.08 y 1062.11.\n"
+            "(7) Pagos de salarios sujetos a la retención dispuesta en la Sección 1062.01.\n"
+            "(8) Pagos por servicios a individuos, corporaciones y sociedades durante los "
+            "primeros tres (3) años del comienzo de una actividad de prestación de "
+            "servicios. Esta exención podrá ser disfrutada por el contribuyente bajo las "
+            "disposiciones del párrafo (4) del apartado (g) de esta Sección.\n"
+            "(9) Pagos al Gobierno de Puerto Rico, sus agencias, corporaciones públicas y "
+            "subdivisiones políticas.\n"
+            "(10) Pagos por servicios a un agricultor bona fide que cumpla con los "
+            "requisitos para la deducción dispuesta en la Sección 1033.12 o en cualquier "
+            "otra disposición de ley especial equivalente.\n"
+            "(11) Pagos efectuados directamente, o a través de agentes, representantes u "
+            "otros intermediarios, a un porteador elegible. El término “porteador elegible” "
+            "significa una persona cuya industria o negocio principal es el transporte "
+            "aéreo, el transporte marítimo de carga o pasajeros o el servicio de "
+            "comunicaciones telefónicas entre Puerto Rico y cualquier punto fuera de Puerto "
+            "Rico. No obstante, el pago de la comisión al agente sí estará sujeto a la "
+            "retención impuesta por esta Sección.\n"
+            "(12) Pagos efectuados por un porteador elegible (según dicho término se define "
+            "en el párrafo (11) a entidades con fines no pecuniarios, con el propósito de "
+            "llevar a cabo la contabilidad, registro, informe y cobro de ventas de pasajes "
+            "de transportación aérea o marítima y otros servicios relacionados a nombre de "
+            "o para beneficio de dicho porteador elegible.\n"
+            "(13) Pagos por servicios eclesiásticos prestados por sacerdotes u otros "
+            "ministros del evangelio, debidamente autorizados u ordenados, incluyendo "
+            "rabinos hebreos.\n"
+            "(14) Pagos por servicios prestados fuera de Puerto Rico.\n"
+            "(15) Pagos efectuados por una sociedad, sociedad especial o corporación de "
+            "individuos dedicadas a la prestación de servicios sujetos a retención bajo el "
+            "apartado (a) de esta Sección, a un individuo que sea socio, accionista o dueño "
+            "de dicha entidad por concepto de servicios prestados por dicho individuo a la "
+            "entidad. Disponiéndose que, esta exención no exime de la obligación de retener "
+            "sobre la participación distribuible del socio o dueño bajo las Secciones "
+            "1062.04, 1062.05 y 1062.07 de este Código.\n"
+            "(16) Pagos efectuados por una persona dedicada al ejercicio de una actividad "
+            "de industria o negocio o para la producción de ingresos en Puerto Rico a otra "
+            "persona dedicada al ejercicio de una actividad de industria o negocio o para "
+            "la producción de ingresos en Puerto Rico y que forma parte de un grupo "
+            "controlado de corporaciones o de un grupo de entidades relacionadas, según "
+            "definido en las Secciones 1010.04 y 1010.05 de este Código.\n"
+            "(17) Los servicios de educación continua descritos en el párrafo (11) del "
+            "apartado (ll) de la Sección 4010.01.\n"
+            "(c) Responsabilidad del Pagador. — Salvo que se disponga lo contrario, toda "
+            "persona que venga obligada a deducir y retener cualquier contribución bajo las "
+            "disposiciones de esta Sección será responsable al Secretario del pago de dicha "
+            "contribución y no será responsable a persona otra alguna por el monto de "
+            "cualesquiera de dichos pagos. Toda persona que al momento de rendir su "
+            "planilla de contribución sobre ingresos no haya remitido al Departamento de "
+            "Hacienda la totalidad del monto retenido sobre pagos descritos en el apartado "
+            "(a) de esta Sección y no haya radicado ante el Departamento de Hacienda las "
+            "declaraciones informativas requeridas en los apartados (h), (i) y (j) de esta "
+            "Sección, no podrá reclamar dichos pagos como gastos de operación. "
+            "Disponiéndose que, en el caso de personas bajo el método de acumulación o con "
+            "un año económico, podrán reclamar la deducción, según reflejada en sus libros "
+            "de contabilidad, siempre y cuando presenten junto a su planilla una "
+            "reconciliación entre el gasto reclamado y la cantidad informada en la "
+            "declaración. No obstante, no se requerirá que las personas bajo el método de "
+            "acumulación o con un año económico sometan junto con su planilla una "
+            "reconciliación entre el gasto reclamado y la cantidad informada en las "
+            "declaraciones informativas para que puedan reclamar la deducción, cuando dicha "
+            "persona radique junto con su planilla de contribución sobre ingresos el estado "
+            "financiero auditado conforme a lo dispuesto en la Sección 1061.15(a) y radique "
+            "la Información Suplementaria requerida en la Sección 1061.15(b).\n"
+            "(d) Planilla y Pago de la Contribución Retenida. — Todo pagador que venga "
+            "obligado a deducir y retener la contribución dispuesta en el apartado (a) "
+            "rendirá una planilla y pagará o depositará la misma no más tarde del "
+            "decimoquinto (15to) día del mes siguiente al cierre del mes natural en el cual "
+            "la contribución fue deducida y retenida. Dicha planilla será rendida al "
+            "Secretario y contendrá aquella información y será hecha en la forma que el "
+            "Secretario establezca mediante reglamento. El Secretario podrá requerir que "
+            "dicha planilla y el pago correspondiente se realicen a través de medios "
+            "electrónicos únicamente.\n"
+            "(e) Si se Dejare de Retener. — Si el agente retenedor dejare de efectuar la "
+            "retención a que se refiere el apartado (a), la cantidad que debió ser deducida "
+            "y retenida, a menos que el contribuyente pague la contribución al Secretario, "
+            "le será cobrada directamente a la instrumentalidad gubernamental o a aquella "
+            "persona a quien se le haya delegado la obligación de deducir y retener la "
+            "contribución sobre ingresos.\n"
+            "(f) Cualquier persona que dejare de cumplir con su responsabilidad de deducir "
+            "y retener la contribución sobre ingresos descrita en el apartado (a) de esta "
+            "Sección, estará sujeta a las penalidades dispuestas en las Secciones 6030.12 y "
+            "6041.01 del Subtítulo F, a menos que el contribuyente pague la contribución al "
+            "Secretario.\n"
+            "(g) Relevos. —\n"
+            "(1) En el caso de entidades, según dicho término se define en la Sección "
+            "1010.05(c), que estén al día con sus responsabilidades contributivas, en lugar "
+            "de la retención dispuesta en el apartado (a), se deducirá y retendrá el tres "
+            "(3) por ciento, en pagos realizados antes del 1 de enero de 2019 y seis (6) "
+            "por ciento en pagos realizados después del 31 de diciembre de 2018, siempre y "
+            "cuando haya sometido con su planilla el Informe de Procedimientos Previamente "
+            "Acordados requerido o Estados Financieros Auditados requeridos conforme a lo "
+            "dispuesto en la Sección 1061.15.\n"
+            "(2) En el caso de entidades según dicho término se define en la Sección "
+            "1010.05(c), con volumen de negocios de un millón (1,000,000) de dólares o más "
+            "que estén al día con sus responsabilidades contributivas y sometan estados "
+            "financieros acompañados por un Informe de Auditor, sujeto a lo dispuesto en la "
+            "Sección 1061.15, en lugar de la retención dispuesta en el apartado (a), no se "
+            "hará retención alguna por concepto de pagos por servicios prestados por estas "
+            "entidades.\n"
+            "(3) En el caso de individuos y entidades no incluidas en el párrafo (2) de "
+            "este apartado, con volumen de negocios de un millón (1,000,000) de dólares o "
+            "más, que estén al día con sus responsabilidades contributivas y sometan "
+            "estados financieros acompañados por un Informe de Auditor, sujeto a lo "
+            "dispuesto en la Sección 1061.15, el porciento de retención aplicable será seis "
+            "(6) por ciento, en lugar de la retención dispuesta en el apartado (a).\n"
+            "(4) En los casos de otros sectores o categorías de empresas o negocios en que "
+            "se demuestre a satisfacción del Secretario, o en que el propio Secretario "
+            "determine, que la obligación de esta sección ocasionará contratiempos "
+            "indebidos a dichos sectores o categorías de empresas o negocios, sin conducir "
+            "a fin práctico alguno, debido a que las cantidades así retenidas tendrán que "
+            "ser reintegradas a los contribuyentes, o que dicha retención resultará "
+            "excesiva, el Secretario podrá, bajo aquellas reglas y reglamentos que "
+            "promulgue, relevar al agente retenedor de realizar tal retención en todo o en "
+            "parte, a todas las empresas o negocios incluidos en el sector o categoría. El "
+            "Secretario podrá utilizar los criterios antes mencionados para relevar, en "
+            "todo o en parte, al agente retenedor de realizar la retención dispuesta en el "
+            "apartado (a) o en este apartado, en los casos de corporaciones o sociedades "
+            "que arrastren una cantidad sustancial de pérdida neta en operaciones, en "
+            "relación con el volumen anual de negocios de dicha corporación.\n"
+            "(A) Disponiéndose que, en las circunstancias descritas a continuación, se "
+            "entenderá que el contribuyente ha probado que la retención le causa "
+            "contratiempos indebidos sin conducir a un fin práctico:\n"
+            "(i) Una persona que se encuentra en los primeros tres (3) años de operaciones "
+            "de una actividad económica y no haya obtenido un relevo de dicha actividad "
+            "económica bajo las disposiciones del párrafo (8) del apartado (b) de esta "
+            "sección. Para estos propósitos, el hecho de que un contribuyente haya llevado "
+            "a cabo la misma actividad económica en otra jurisdicción o haber realizado "
+            "otra actividad económica en o fuera de Puerto Rico no será tomado en "
+            "consideración;\n"
+            "(I) el Secretario podrá denegar el relevo a aquellas personas que lleven a "
+            "cabo sustancialmente la misma actividad por la cual ya habían recibido un "
+            "relevo anteriormente;\n"
+            "(ii) Un Médico Cualificado, según definido en la Ley 14-2017, a quien se le "
+            "haya otorgado y tenga vigente un decreto de exención bajo dicha ley; y\n"
+            "(I) Disponiéndose que en el caso de que la totalidad de los accionistas, "
+            "socios o dueños de un Negocio de Servicios Médicos, según definido en la Ley "
+            "14-2017, que tribute bajo las disposiciones del Capítulo 7 o el Subcapítulo E "
+            "del Capítulo 11 de este Subtítulo, sean Médicos Cualificados a quienes se les "
+            "haya otorgado y tengan vigente un decreto de exención bajo dicha ley, se le "
+            "otorgará un relevo total de retención.\n"
+            "(iii) Una persona que haya terminado su año contributivo anterior con una "
+            "pérdida neta en sus operaciones en Puerto Rico y no haya estado sujeto a "
+            "Contribución Básica Alterna o Contribución Alternativa Mínima para cualquiera "
+            "de los últimos tres (3) años.\n"
+            "(I) No obstante, el Secretario podrá denegar el relevo a toda persona que haya "
+            "reflejado pérdidas en sus operaciones por más de tres (3) años contributivos "
+            "consecutivos.\n"
+            "(5) En el caso de individuos o entidades que, para un año contributivo "
+            "particular opten por tributar sus ingresos bajo la contribución opcional "
+            "establecida en las Sección 1021.06 o 1022.07 y el total de ingreso bruto "
+            "basado en la planilla del año contributivo anterior no exceda de cien mil "
+            "(100,000) podrán obtener un relevo parcial para que la retención dispuesta en "
+            "el apartado (a) de esta Sección sea seis (6) por ciento en lugar de la "
+            "cantidad dispuesta en el apartado (a) de esta Sección. Todo individuo que "
+            "obtenga este relevo parcial de retención se obliga a tributar bajo la "
+            "contribución opcional dispuesta en la Sección 1021.06 para el año contributivo "
+            "para el cual se solicitó dicho relevo, siempre y cuando durante dicho año "
+            "contributivo cumpla con los requisitos de la Sección 1021.06 o 1022.07.\n"
+            "(h) Planilla Trimestral de reconciliación. — Toda persona obligada a deducir y "
+            "retener cualquier contribución bajo esta Sección deberá, en o antes del último "
+            "día del mes siguiente al cierre de cada uno de los trimestres terminados el "
+            "treinta y uno (31) de marzo, treinta (30) de junio, treinta (30) de septiembre "
+            "y treinta y uno (31) de diciembre de cada año, rendir una planilla en la que "
+            "detalle los pagos efectuados, la contribución retenida y depositada durante el "
+            "trimestre y pague aquella parte de la misma que no haya sido pagada o "
+            "depositada conforme se establece en la forma y manera dispuesta en el "
+            "Subtítulo F. Dicha planilla contendrá aquella información, y será hecha en "
+            "aquella forma que el Secretario establezca mediante reglamento al efecto. El "
+            "Secretario podrá requerir que la planilla trimestral de reconciliación, así "
+            "como cualquier balance adeudado con esta se sometan únicamente a través de "
+            "medios electrónicos. Disponiéndose que la Planilla Trimestral aquí dispuesta "
+            "no deberá contener información sobre los pagos a proveedores de servicios de "
+            "telecomunicaciones, servicios de acceso a internet, servicios de televisión "
+            "por cable o satélite, anuncios o primas de seguro.\n"
+            "(i) Estado de Reconciliación Anual. — Todo pagador que venga obligado a "
+            "efectuar la deducción y retención dispuesta en el apartado (a) y a rendir una "
+            "planilla por las cantidades deducidas y retenidas según se establece en el "
+            "apartado (d), deberá someter, no más tarde del 28 de febrero del año "
+            "siguiente, un estado de reconciliación anual en el que conste el monto de las "
+            "cantidades retenidas bajo esta sección con respecto a los pagos por servicios "
+            "prestados efectuados durante el año.\n"
+            "(j) Declaraciones Informativas. — Todo pagador que venga obligado a efectuar "
+            "la deducción y retención dispuesta en el apartado (a) y a rendir una planilla "
+            "por las cantidades deducidas y retenidas según se establece en el apartado "
+            "(d), deberá someter, no más tarde del 28 de febrero del año siguiente, una "
+            "declaración informativa en la que conste el monto total pagado y la "
+            "contribución retenida durante el año natural anterior y el nombre, dirección y "
+            "número de cuenta del receptor de tales pagos. El Secretario establecerá "
+            "mediante reglamento el modo de informar los pagos descritos en esta Sección y "
+            "las cantidades retenidas de acuerdo con lo dispuesto en el apartado (a). El "
+            "Secretario podrá exigir que las declaraciones requeridas bajo este apartado "
+            "sean radicadas ante el Departamento de Hacienda a través de medios "
+            "electrónicos. Asimismo, se autoriza al agente retenedor a someter las "
+            "declaraciones informativas a sus proveedores de servicios a través de medios "
+            "electrónicos."
+        ),
+        "text_en": (
+            "English summary; the official text is in Spanish. The Government of Puerto "
+            "Rico and every person who, in a trade or business or for the production of "
+            "income in Puerto Rico, makes payments to another person for services rendered "
+            "must deduct and withhold 7 percent of payments made before January 1, 2019 and "
+            "10 percent of payments made after December 31, 2018; at the service provider's "
+            "election, 10, 15 or 20 percent may be withheld instead (a). Lists the payments "
+            "not subject to this withholding (b), including the first $500 paid during the "
+            "calendar year to the service provider for taxable years beginning after "
+            "December 31, 2018 (the first $1,500 for payments made before January 1, 2019), "
+            "wages subject to withholding under Section 1062.01, and payments for services "
+            "rendered outside Puerto Rico. Also covers the payer's liability (c), the "
+            "return and payment of the tax withheld (d), failure to withhold (e)-(f), "
+            "waivers (g), and quarterly and annual reconciliation and informative returns "
+            "(h)-(j)."
+        ),
+        "effective_year": 2011,
+        "source_url": "https://hacienda.pr.gov/sites/default/files/codigo_de_rentas_internas_2011_segun_enmendado_28.08.2026.pdf",
+        "cross_references": ["PR CRI Sec. 1062.01"],
+    },
+    {
         "id": "pr-ley60-2021-01",
         "jurisdiction": "PR",
         "corpus": "LEY60",
@@ -4573,6 +4864,163 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         "effective_year": 2019,
         "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         "cross_references": ["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
+    },
+    {
+        "id": "pr-ley60-6020-10",
+        "jurisdiction": "PR",
+        "corpus": "LEY60",
+        "citation": "Ley 60-2019 Sec. 6020.10",
+        "section": "6020.10",
+        "title": "Informes",
+        "text_es": (
+            "(a) Informes Requeridos a Negocios Exentos y a sus Accionistas:\n"
+            "(1) Todo Negocio Exento que posea un Decreto bajo este Código, radicará "
+            "anualmente ante el Secretario de Hacienda una planilla de contribución sobre "
+            "ingresos, independientemente de la cantidad de su ingreso bruto o neto, "
+            "separada de cualquier otra planilla que por otros motivos esté obligado a "
+            "rendir con relación a las operaciones de la industria cubiertas por los "
+            "beneficios provistos en este Código, y de acuerdo con el Código de Rentas de "
+            "Puerto Rico. El Secretario de Hacienda podrá compartir con el Secretario del "
+            "DDEC la información así recibida, siempre y cuando se proteja la "
+            "confidencialidad de la información.\n"
+            "(2) Todo Accionista de un Negocio Exento que posea un Decreto concedido bajo "
+            "este Código, deberá rendir anualmente ante el Departamento de Hacienda una "
+            "planilla de contribución sobre ingresos conforme a las disposiciones del "
+            "Código de Rentas Internas, siempre que bajo las disposiciones del Código de "
+            "Rentas Internas tuviera la obligación de así hacerlo.\n"
+            "(3) Todo Negocio Exento que posea un Decreto bajo este Código o cualquier Ley "
+            "de Incentivos Anteriores, anualmente radicará electrónicamente con la Oficina "
+            "de Incentivos, no más tarde del quince (15) de noviembre siguiente al cierre "
+            "del año natural, en el caso de Negocios Exentos con un año natural o el "
+            "decimoquinto (15to) día del undécimo (11mo) mes siguiente al cierre del año "
+            "contributivo, en el caso de Negocio Exento, un informe de cumplimiento.\n"
+            "(4) Todo Negocio Exento que posea un Decreto bajo este Código, anualmente "
+            "radicará electrónicamente con la Oficina de Incentivos, no más tarde de "
+            "treinta (30) días después de la fecha prescrita por ley para la radicación de "
+            "la correspondiente planilla de contribución sobre ingresos, incluyendo las "
+            "prórrogas concedidas para este propósito, un informe de cumplimiento.\n"
+            "(i) Este informe deberá venir acompañado por los derechos que se dispongan por "
+            "reglamento, y los mismos serán pagados mediante transferencia electrónica a "
+            "través del Portal electrónico de la forma y manera que para estos propósitos "
+            "establezca la Oficina de Incentivos. La información ofrecida en este informe "
+            "anual será utilizada para propósitos de estadísticas y estudios económicos, "
+            "así como para la evaluación que deberá realizar el Profesional de Cumplimiento "
+            "cada dos (2) años para conceder o denegar el Certificado de Cumplimiento "
+            "relacionado, excepto en el caso de los Negocios Exentos exceptuados del "
+            "cumplimiento con el apartado (c) de la Sección 6011.04.\n"
+            "(ii) Este informe deberá venir acompañado por los derechos que se dispongan "
+            "por reglamento, y los mismos serán pagados mediante transferencia electrónica "
+            "a través del Portal electrónico de la forma y manera que para estos propósitos "
+            "establezca la Oficina de Incentivos. La información ofrecida en este informe "
+            "anual será utilizada para propósitos de estadísticas y estudios económicos, "
+            "así como para la evaluación que deberá realizar el Profesional de Cumplimiento "
+            "cada dos (2) años para conceder o denegar el Certificado de Cumplimiento "
+            "relacionado.\n"
+            "(iii) Este informe se radicará electrónicamente en el Portal electrónico que "
+            "para estos propósitos establecerá la Oficina de Incentivos.\n"
+            "(iv) El Secretario del DDEC establecerá mediante reglamento, orden "
+            "administrativa o cualquier otra comunicación de naturaleza similar, la "
+            "información y documentación que se requiera para completar este informe.\n"
+            "(b) Los informes anuales que requiere este Código para Negocios Exentos bajo "
+            "la Sección 2021.01 deberán estar acompañados con evidencia de una aportación "
+            "anual mínima de diez mil dólares (10,000), que serán destinados a entidades "
+            "sin fines de lucro operando en Puerto Rico bajo la Sección 1101.01 del Código "
+            "de Rentas Internas de Puerto Rico, incluyendo al Fondo Especial para la "
+            "Igualdad Social, que no sea controlada por la misma persona, ni por su "
+            "descendientes o ascendientes, cónyuges o socios. Independientemente de la "
+            "cantidad aportada sobre el mínimo dispuesto en este apartado, cinco mil "
+            "dólares ($5,000) estarán destinados a entidades sin fines de lucro que tengan "
+            "servicios dirigidos a atender la erradicación de la pobreza infantil, que "
+            "operen en la jurisdicción de Puerto Rico bajo la Sección 1101.01 del Código de "
+            "Rentas Internas, que no sea controlada por la misma persona, ni por su "
+            "descendientes o ascendientes, cónyuges o socios, y que se encuentre en la "
+            "lista que publicará la “Comisión Especial Conjunta de Fondos Legislativos para "
+            "Impacto Comunitario” en o antes del 31 de diciembre de cada año de conformidad "
+            "con las disposiciones de este Código. Nada impedirá que el cien por ciento "
+            "(100%) de la aportación anual sea destinada a las entidades sin fines de lucro "
+            "que se encuentren en la citada lista. Dos mil quinientos (2,500) dólares "
+            "deberán ser destinados a cualquier otra entidad sin fines de lucro operando en "
+            "Puerto Rico bajo la Sección 1101.01 del Código de Rentas Internas de Puerto "
+            "Rico, incluyendo al Fondo Especial para la Igualdad Social, que no sea "
+            "controlada por la misma persona, ni por su descendientes o ascendientes, "
+            "cónyuges o socios y que no se encuentre en la lista publicada por la Comisión "
+            "Especial de Fondos Legislativos para Impacto Comunitario. El Negocio Exento "
+            "tendrá que evidenciarle a la Oficina de Exención que la entidad sin fines de "
+            "lucro seleccionada es una entidad que brinda servicios directos a la "
+            "comunidad. La aportación se realizará de forma directa a la entidad sin fines "
+            "de lucro seleccionada por el Negocio Exento bajo la Sección 2021.01 que "
+            "realiza la aportación anual. No obstante, la Oficina de Exención enviará, no "
+            "más tarde de treinta (30) días a la Comisión Especial de Fondos Legislativos "
+            "para Impacto Comunitario un informe detallado de las entidades sin fines de "
+            "lucro que reciban la aportación. Los restantes dos mil quinientos (2,500) "
+            "dólares deberán ser destinados al Fondo Especial para la Igualdad Social.\n"
+            "(c) En lo que concierne al Individuo Residente Inversionista, deberá someter "
+            "evidencia de haber adquirido, como único dueño, o en conjunto con su cónyuge, "
+            "por compra, dentro de los dos (2) años después de la obtención del Decreto "
+            "bajo las disposiciones de este Código, la titularidad de propiedad inmueble en "
+            "Puerto Rico, adquiriendo de un dueño, sea una persona o empresa totalmente "
+            "desvinculada y ajena a la persona con el Decreto bajo este Código, para que "
+            "constituya su residencia principal en la jurisdicción de Puerto Rico y "
+            "acreditar en el Informe anual, que mantiene el exclusivo y completo dominio de "
+            "un bien inmueble como residencia principal, sea de forma exclusiva o junto a "
+            "su cónyuge, durante toda la vigencia del Decreto. Para el Individuo que radicó "
+            "una solicitud para un decreto de Individuo Residente Inversionista del 1 de "
+            "enero de 2027 en adelante, dicha evidencia acreditará que la titularidad en "
+            "pleno dominio del bien inmueble que constituye la residencia principal del "
+            "Individuo Residente Inversionista consta inscrita, o pendiente de inscripción, "
+            "en el Registro de la Propiedad de Puerto Rico a nombre del Individuo Residente "
+            "Inversionista, o en conjunto con su cónyuge, o a nombre de un fideicomiso "
+            "descrito en la Sección 2022.07.\n"
+            "(d) La radicación de los informes anuales requeridos para Negocios Exentos "
+            "bajo la Sección 2021.01 de este Código, o bajo la Ley 22-2012, según "
+            "enmendada, conocida como la “Ley Para Incentivar el Traslado de Individuos "
+            "Inversionistas a Puerto Rico”, estará sujeta a un cargo anual de cinco mil "
+            "(5,000) dólares, de los cuales trescientos (300) dólares serán pagaderos a "
+            "favor del Secretario de Hacienda y nutrirán un Fondo Especial administrado por "
+            "el DDEC, y cuatro mil setecientos (4,700) dólares serán pagaderos a favor del "
+            "Secretario de Hacienda que serán destinados al Fondo General del Gobierno de "
+            "Puerto Rico.\n"
+            "(e) El Secretario del DDEC, luego de serle informado por la agencia "
+            "concernida, podrá imponer una multa administrativa de hasta un máximo de diez "
+            "mil (10,000) dólares a cualquier Negocio Exento que posea un Decreto concedido "
+            "bajo este Código y que deje de radicar alguno de los informes que el "
+            "Secretario de Hacienda, el Secretario del DDEC o el Comisionado de Seguros le "
+            "requiera, o que radique los mismos después de la fecha de su vencimiento. La "
+            "radicación de un informe incompleto se considerará como no radicado, si la "
+            "agencia concernida notifica al Negocio Exento de alguna omisión en el informe "
+            "requerido y dicho Negocio Exento no somete la información que falta dentro de "
+            "quince (15) días de haber sido notificada, o no justifica razonablemente la "
+            "falta de la misma.\n"
+            "(f) Todo informe requerido por esta Sección, incluyendo el informe de "
+            "cumplimiento, para años contributivos comenzados luego del 31 de diciembre de "
+            "2024, deberá ser radicado electrónicamente ante el Secretario de Hacienda como "
+            "parte de la planilla de contribución sobre ingresos del Negocio Exento, junto "
+            "al pago de derechos correspondiente. El Secretario de Hacienda podrá posponer "
+            "la entrada en vigor de las disposiciones de este apartado por un año adicional "
+            "para todos o algunos concesionarios mediante publicación de carácter general."
+        ),
+        "text_en": (
+            "English summary; the official text is in Spanish. Requires every exempt "
+            "business holding a decree to file an annual income tax return and annual "
+            "compliance reports (a). The annual reports of exempt businesses under Section "
+            "2021.01 (resident individual investors) must be accompanied by evidence of a "
+            "minimum annual contribution of $10,000 to nonprofit entities operating in "
+            "Puerto Rico; $5,000 goes to nonprofits that address child poverty and appear "
+            "on the list published by the Comisión Especial Conjunta de Fondos Legislativos "
+            "para Impacto Comunitario, $2,500 to another nonprofit not on that list, and "
+            "$2,500 to the Fondo Especial para la Igualdad Social (b). A resident "
+            "individual investor must show the purchase of real property in Puerto Rico as "
+            "principal residence within two years after obtaining the decree (c). Filing "
+            "the annual reports under Section 2021.01 or Act 22-2012 carries an annual fee "
+            "of $5,000: $300 to a special fund administered by the DDEC and $4,700 to the "
+            "General Fund (d). Failing to file a required report, or filing it late, can "
+            "bring an administrative fine of up to $10,000 (e). For taxable years beginning "
+            "after December 31, 2024, the reports are filed electronically with the "
+            "Secretary of the Treasury as part of the income tax return (f)."
+        ),
+        "effective_year": 2019,
+        "source_url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        "cross_references": ["Ley 60-2019 Sec. 2021.01"],
     },
     {
         "id": "pr-ley60-6070-55",
@@ -6647,25 +7095,44 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
         "id": "pr-cc-ri-21-10",
         "category": "carta-circular",
         "doc_number": "CC RI 21-10",
-        "doc_date": "2021-03-31",
-        "title": "Tratamiento contributivo del teletrabajo y servicios prestados por no residentes",
+        "doc_date": "2021-03-25",
+        "title": "Centros de Orientación y Preparación de Planillas",
         "summary": (
-            "Directrices oficiales del Departamento de Hacienda sobre la fuente de ingresos "
-            "por servicios laborales remotos, retención y establecimiento permanente en PR."
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el "
+            "propósito de establecer el procedimiento para la preparación y radicación "
+            "electrónica de la Planilla del año contributivo 2020 en los Centros."
         ),
-        "source_url": "https://hacienda.pr.gov/publicaciones/carta-circular-de-rentas-internas-num-21-10",
+        "source_url": (
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/2021/03/cc_ri_21-10_centros_de_orientacion_y_preparacion_de_planillas_2020_signed_25-mar-2021.pdf"
+        ),
     },
     {
         "id": "pr-cc-ri-26-13",
         "category": "carta-circular",
         "doc_number": "CC RI 26-13",
         "doc_date": "2026-06-30",
-        "title": "Radicación electrónica obligatoria de planillas de individuos",
-        "summary": (
-            "Instrucciones y requisitos técnicos para la radicación compulsoria a través de SURI "
-            "de las planillas de contribución sobre ingresos de individuos."
+        "title": (
+            "Integración del Impuesto sobre Ventas y Uso Municipal en el Sistema Unificado "
+            "de Rentas Internas y nueva versión de la Planilla Mensual de Impuesto sobre "
+            "Ventas y Uso y sobre Importaciones (Modelo SC 2915)"
         ),
-        "source_url": "https://hacienda.pr.gov/publicaciones/carta-circular-de-rentas-internas-num-26-13",
+        "summary": (
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el "
+            "propósito de establecer: (i) el nuevo procedimiento en SURI relacionado a la "
+            "integración del IVU Municipal, incluyendo la radicación de la Planilla Mensual "
+            "de IVU y el pago del IVU Estatal y del IVU Municipal correspondiente y el "
+            "cambio en la remisión del IVU Municipal en las transacciones de venta de "
+            "partidas tributables no atribuibles a una localidad en Puerto Rico, a negocios "
+            "multinivel y sobre partidas importadas para uso, entre otros; (ii) el uso de "
+            "la nueva versión de la Planilla Mensual de IVU para incluir las partidas "
+            "tributables y exentas que deben informarse para propósitos del IVU Municipal; "
+            "(iii) el tratamiento aplicable a los municipios que no participan del proceso "
+            "de radicación consolidada en SURI, y (iv) la fecha de vigencia de estos nuevos "
+            "requisitos."
+        ),
+        "source_url": (
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-13_-_integracion_cofim_y_nueva_planilla_mensual_ivu_signed.pdf"
+        ),
     },
     {
         "id": "pr-da-23-04",
@@ -7158,26 +7625,26 @@ class TaxDatabase:
                         ],
                     )
 
-                # Seed initial publications if table is empty
-                pub_count = conn.execute("SELECT COUNT(*) FROM publications;").fetchone()
-                if pub_count and pub_count[0] == 0:
-                    for p in INITIAL_PUBLICATIONS:
-                        conn.execute(
-                            """
-                            INSERT INTO publications (
-                                id, category, doc_number, doc_date, title, summary, source_url
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?);
-                            """,
-                            [
-                                p["id"],
-                                p["category"],
-                                p["doc_number"],
-                                p["doc_date"],
-                                p["title"],
-                                p["summary"],
-                                p["source_url"],
-                            ],
-                        )
+                # Add seed publications missing from the table, so existing file-backed DBs
+                # pick up new seed rows. Rows already present (same id or doc_number) are kept.
+                for p in INITIAL_PUBLICATIONS:
+                    conn.execute(
+                        """
+                        INSERT INTO publications (
+                            id, category, doc_number, doc_date, title, summary, source_url
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                        ON CONFLICT DO NOTHING;
+                        """,
+                        [
+                            p["id"],
+                            p["category"],
+                            p["doc_number"],
+                            p["doc_date"],
+                            p["title"],
+                            p["summary"],
+                            p["source_url"],
+                        ],
+                    )
             finally:
                 if self._mem_conn is None:
                     conn.close()
