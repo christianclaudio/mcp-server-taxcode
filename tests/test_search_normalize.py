@@ -72,7 +72,7 @@ async def test_list_publications_schema_lists_categories() -> None:
 
 async def test_list_publications_tool_normalizes_category() -> None:
     res = await server.list_publications(category="carta circular")
-    assert res["count"] == 2
+    assert res["count"] == 3
 
 
 # --- jurisdiction names -------------------------------------------------------

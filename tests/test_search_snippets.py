@@ -164,6 +164,19 @@ def test_search_spanish_preference(db: TaxDatabase) -> None:
     assert (row["snippet_language"], "933" in row["snippet"]) == ("en", True)
 
 
+# Catalog-only rows seeded after the orders below were recorded.
+SEEDED_AFTER_735477D = frozenset(
+    {
+        "us-irc-957",
+        "us-irc-6688",
+        "us-cfr-1-937-3",
+        "pr-cri-1031-02",
+        "pr-cri-1062-01",
+        "pr-ley60-6070-55",
+    }
+)
+
+
 @pytest.mark.parametrize(
     ("query", "expected"),
     [
@@ -180,8 +193,12 @@ def test_search_spanish_preference(db: TaxDatabase) -> None:
     ],
 )
 def test_ranking_unchanged(db: TaxDatabase, query: str, expected: list[str]) -> None:
-    """Orders recorded on main 735477d, before snippets; matching reads the full text."""
-    assert [r["id"] for r in db.search_statutes(query=query, limit=5)][: len(expected)] == expected
+    """Orders recorded on main 735477d, before snippets; matching reads the full text.
+
+    Rows seeded later slot in between; the earlier rows keep their relative order.
+    """
+    ids = [r["id"] for r in db.search_statutes(query=query, limit=10)]
+    assert [i for i in ids if i not in SEEDED_AFTER_735477D][: len(expected)] == expected
 
 
 # --- id round-trip --------------------------------------------------------------

@@ -141,9 +141,9 @@ def test_federal_irc_rows_in_seeds_and_ingest() -> None:
 
 
 def test_treasury_regulation_rows_cite_ecfr_date() -> None:
-    """The two kept §1.937 regulations cite the dated eCFR point-in-time URL."""
+    """The three §1.937 regulations cite the dated eCFR point-in-time URL."""
     seeds = {s["id"]: s for s in INITIAL_STATUTES}
-    for sid in ("us-cfr-1-937-1", "us-cfr-1-937-2"):
+    for sid in ("us-cfr-1-937-1", "us-cfr-1-937-2", "us-cfr-1-937-3"):
         url = seeds[sid]["source_url"]
         assert urlparse(url).netloc == "www.ecfr.gov"
         assert f"/on/{ECFR_TITLE26_DATE}/" in url
