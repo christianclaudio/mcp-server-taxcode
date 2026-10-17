@@ -361,6 +361,22 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
         "14 de enero de 2025."
     )
 
+    # English summaries state the conditions their sources set.
+    summaries = {sid: seeds[sid]["text_en"] for sid in seeds}
+    assert "by a United States citizen who establishes" in summaries["pr-cri-1031-02"]
+    assert "nothing prevents the entire (100%) annual contribution" in summaries["pr-ley60-6020-10"]
+    assert "may postpone this requirement by one additional year" in summaries["pr-ley60-6020-10"]
+    assert (
+        "Núm. 26-01 / Orden Administrativa Núm. DDEC 2026-01 of February 5, 2026"
+        in (summaries["pr-ley60-6020-10"])
+    )
+    assert "beginning after December 31, 2025" in summaries["pr-ley60-6020-10"]
+    assert (
+        "payments made after December 31, 2021 for services performed by a remote worker"
+        in (summaries["pr-cri-1062-01"])
+    )
+    assert "2003.." not in seeds["pr-cri-1031-02"]["text_es"]
+
     pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
     pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
     for pid in (
