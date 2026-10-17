@@ -30,7 +30,10 @@ compliance_server = FastMCP(
     name="evaluate_pr_bona_fide_residency",
     description=(
         "Evaluate statutory criteria for PR bona fide residency under "
-        "IRC § 937 and 26 CFR § 1.937-1."
+        "IRC § 937 and 26 CFR § 1.937-1. Its reporting_requirements say when IRS "
+        "Form 8898 must be filed: in the tax year you became or stopped being a bona fide "
+        "PR resident, if your worldwide gross income is more than $75,000 "
+        "(IRS Instructions for Form 8898)."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"compliance", "residency", "read_only"},
@@ -69,7 +72,9 @@ def evaluate_pr_bona_fide_residency(
     # Overall statutory bona fide residency determination
     is_bona_fide = presence_satisfied and tax_home_satisfied and closer_connection_satisfied
 
-    # Regulatory guidance and reporting triggers
+    # Regulatory guidance and reporting triggers. Form 8898 threshold (worldwide
+    # gross income more than $75,000 in the year residence begins or ends):
+    # https://www.irs.gov/forms-pubs/about-form-8898 (Instructions, Who Must File).
     reporting_triggers = [
         "Conditional: IRS Form 8898 (Beginning/Ending Bona Fide Residence) is required only "
         "if you became or stopped being a bona fide PR resident in this tax year and your "

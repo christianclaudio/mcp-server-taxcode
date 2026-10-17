@@ -46,6 +46,7 @@ graph TD
   * **Federal (`US`)**: IRC § 933, § 937, § 865, 26 CFR § 1.937-1/2.
   * **Puerto Rico (`PR`)**: Act 60-2019 (Resident Individual Investors & Export Services), Ley 1-2011, Act 22-2012 predecessor versions, and administrative circulars (CC RI 21-10, DA 23-04, CC RI 26-13).
   * **All 50 US States + District of Columbia**: Comprehensive statutory definitions and tax computations covering no-income-tax states (AK, FL, NV, NH, SD, TN, TX, WA, WY), flat-tax regimes (AZ, CO, GA, ID, IL, IN, IA, KS, KY, MI, MS, NC, PA, UT), and graduated/surtax jurisdictions (AL, AR, CA, CT, DE, DC, HI, LA, ME, MD, MA, MN, MO, MT, NE, NJ, NM, NY, ND, OH, OK, OR, RI, SC, VT, VA, WV, WI) including Convenience of the Employer rules (NY, PA, NJ, CT, DE, NE) and local piggyback taxes (MD, IN, OH, NY).
+* **Snippet Search, Full Text by Id**: `statutes_search_tax_code` matches and ranks on the full text but returns a short snippet (up to 300 characters around the first matched term) plus each result's `id`, citation, title, jurisdiction, year, validity and content labels. Pass an `id` to `statutes_lookup_statute` as `citation_or_section` for the full text.
 * **Temporal Statutory Versioning**: Point-in-time statutory lookup with `superseded_year` filtering and descending historical ordering (`tax_year` parameter).
 * **Deterministic Compliance Engines**:
   * `evaluate_pr_bona_fide_residency`: Evaluates IRC § 937 presence (183-day, 549-day 3-year, 90-day US), tax home, and closer connection tests.
