@@ -369,6 +369,46 @@ def test_file_db_refreshes_changed_seed_rows_on_startup(tmp_path: Path) -> None:
     assert old is not None and old["id"] == "pr-ley60-2022-01-2019"
 
 
+def test_file_db_upgrade_adds_new_seed_rows_without_duplicates(tmp_path: Path) -> None:
+    """An older file DB gains seed rows added since it was built, once, without clobbering."""
+    db_file = str(tmp_path / "older.duckdb")
+    TaxDatabase(db_file)
+    new_statutes = ("pr-ley60-6020-10", "pr-cri-1062-03")
+    new_pubs = ("pr-bi-26-02", "pr-cc-ri-25-12")
+    conn = duckdb.connect(db_file)
+    for sid in new_statutes:
+        conn.execute("DELETE FROM statutes WHERE id = ?;", [sid])
+    for pid in new_pubs:
+        conn.execute("DELETE FROM publications WHERE id = ?;", [pid])
+    conn.execute("UPDATE publications SET summary = 'nota local' WHERE id = 'pr-cc-ri-21-10';")
+    conn.execute(
+        "INSERT INTO publications VALUES ('local-1', 'carta-circular', 'CC RI 99-01', "
+        "'2026-01-01', 'Local', 'Local row', 'https://example.org/local');"
+    )
+    assert conn.execute("SELECT COUNT(*) FROM publications;").fetchone() == (
+        len(INITIAL_PUBLICATIONS) - len(new_pubs) + 1,
+    )
+    conn.close()
+
+    TaxDatabase(db_file)
+    TaxDatabase(db_file)
+
+    conn = duckdb.connect(db_file)
+    statute_ids = [r[0] for r in conn.execute("SELECT id FROM statutes;").fetchall()]
+    pub_ids = [r[0] for r in conn.execute("SELECT id FROM publications;").fetchall()]
+    doc_numbers = [r[0] for r in conn.execute("SELECT doc_number FROM publications;").fetchall()]
+    local_summary = conn.execute(
+        "SELECT summary FROM publications WHERE id = 'pr-cc-ri-21-10';"
+    ).fetchone()
+    conn.close()
+    assert set(new_statutes) <= set(statute_ids)
+    assert set(new_pubs) <= set(pub_ids)
+    assert len(statute_ids) == len(set(statute_ids)) == len(INITIAL_STATUTES)
+    assert len(pub_ids) == len(set(pub_ids)) == len(INITIAL_PUBLICATIONS) + 1
+    assert len(doc_numbers) == len(set(doc_numbers))
+    assert local_summary == ("nota local",)
+
+
 def test_search_without_tax_year_shows_years_on_both_2022_01_rows() -> None:
     """Both Sec. 2022.01 rows return with years; the 2019 row reads superseded 2026."""
     test_db = TaxDatabase(":memory:")

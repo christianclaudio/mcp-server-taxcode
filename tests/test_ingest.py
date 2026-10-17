@@ -292,3 +292,103 @@ def test_pr_act60_sources_use_pdf_urls() -> None:
     for rec in STATUTES_CATALOG:
         if rec.citation.startswith("Ley 60-2019"):
             assert rec.source_url.endswith(".pdf"), rec.id
+
+
+def test_catalog_ids_equal_seed_ids() -> None:
+    """The ingest catalog and the db.py seeds hold exactly the same ids, both ways."""
+    from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES
+
+    seed_statutes = {s["id"] for s in INITIAL_STATUTES}
+    catalog_statutes = {r.id for r in STATUTES_CATALOG}
+    assert catalog_statutes - seed_statutes == set()
+    assert seed_statutes - catalog_statutes == set()
+    assert len(seed_statutes) == len(INITIAL_STATUTES)
+    assert len(catalog_statutes) == len(STATUTES_CATALOG)
+
+    seed_pubs = {p["id"] for p in INITIAL_PUBLICATIONS}
+    catalog_pubs = {p.id for p in PUBLICATIONS_CATALOG}
+    assert catalog_pubs - seed_pubs == set()
+    assert seed_pubs - catalog_pubs == set()
+    assert len(seed_pubs) == len(INITIAL_PUBLICATIONS)
+    assert len(catalog_pubs) == len(PUBLICATIONS_CATALOG)
+
+
+def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
+    """Entries seeded or corrected from pinned sources match the catalog and cite those sources."""
+    from taxcode_mcp.db import (
+        ECFR_TITLE26_DATE,
+        INITIAL_PUBLICATIONS,
+        INITIAL_STATUTES,
+        USLM_TITLE26_SOURCE_URL,
+    )
+
+    cri_pdf = (
+        "https://hacienda.pr.gov/sites/default/files/"
+        "codigo_de_rentas_internas_2011_segun_enmendado_28.08.2026.pdf"
+    )
+    statute_sources = {
+        "us-irc-957": USLM_TITLE26_SOURCE_URL,
+        "us-irc-6688": USLM_TITLE26_SOURCE_URL,
+        "us-cfr-1-937-3": (f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-3"),
+        "pr-cri-1031-02": cri_pdf,
+        "pr-cri-1062-01": cri_pdf,
+        "pr-cri-1062-03": cri_pdf,
+        "pr-cri-1010-01": cri_pdf,
+        "pr-cri-1031-01": cri_pdf,
+        "pr-ley60-6070-55": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        "pr-ley60-6020-10": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+    }
+    seeds = {s["id"]: {"superseded_year": None, **s} for s in INITIAL_STATUTES}
+    catalog = {r.id: r.to_dict() for r in STATUTES_CATALOG}
+    for sid, url in statute_sources.items():
+        assert seeds[sid] == catalog[sid], sid
+        assert seeds[sid]["source_url"] == url, sid
+    for sid, seed in seeds.items():
+        if seed["corpus"] == "CRI":
+            assert seed["source_url"] == cri_pdf, sid
+    # T.D. 9391, 73 FR 19350 (Apr. 9, 2008), adopted § 1.937-3; (f) keys on the same date.
+    assert seeds["us-cfr-1-937-3"]["effective_year"] == 2008
+    assert "ending after April 9, 2008" in seeds["us-cfr-1-937-3"]["text_en"]
+    assert seeds["us-cfr-1-937-3"]["text_en"].endswith(
+        "\nAmendment history (eCFR source note): adopted by T.D. 9391, 73 FR 19374, Apr. 9, 2008; "
+        "amended by T.D. 9391, 73 FR 27728, May 14, 2008 (correction), T.D. 9921, 85 FR 79853, "
+        "Dec. 11, 2020, and T.D. 10022, 90 FR 3003, Jan. 14, 2025."
+    )
+    assert seeds["us-cfr-1-937-3"]["text_es"].endswith(
+        "Historial de enmiendas (nota de fuente del eCFR): adoptada por T.D. 9391, 73 FR 19374, "
+        "9 de abril de 2008; enmendada por T.D. 9391, 73 FR 27728, 14 de mayo de 2008 "
+        "(corrección), T.D. 9921, 85 FR 79853, 11 de diciembre de 2020, y T.D. 10022, 90 FR 3003, "
+        "14 de enero de 2025."
+    )
+
+    # English summaries state the conditions their sources set.
+    summaries = {sid: seeds[sid]["text_en"] for sid in seeds}
+    assert "by a United States citizen who establishes" in summaries["pr-cri-1031-02"]
+    assert "nothing prevents the entire (100%) annual contribution" in summaries["pr-ley60-6020-10"]
+    assert "may postpone this requirement by one additional year" in summaries["pr-ley60-6020-10"]
+    assert (
+        "Núm. 26-01 / Orden Administrativa Núm. DDEC 2026-01 of February 5, 2026"
+        in (summaries["pr-ley60-6020-10"])
+    )
+    assert "beginning after December 31, 2025" in summaries["pr-ley60-6020-10"]
+    assert (
+        "payments made after December 31, 2021 for services performed by a remote worker"
+        in (summaries["pr-cri-1062-01"])
+    )
+    assert "2003.." not in seeds["pr-cri-1031-02"]["text_es"]
+
+    pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
+    pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
+    for pid in (
+        "pr-bi-26-02",
+        "pr-cc-ri-25-12",
+        "pr-cc-ri-21-10",
+        "pr-cc-ri-26-13",
+        "pr-da-21-04",
+        "pr-da-23-04",
+    ):
+        assert pubs[pid] == pub_catalog[pid], pid
+        assert pubs[pid]["source_url"].startswith(
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/"
+        )
+        assert pubs[pid]["source_url"].endswith(".pdf")
