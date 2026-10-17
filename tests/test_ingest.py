@@ -346,10 +346,20 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
     for sid, seed in seeds.items():
         if seed["corpus"] == "CRI":
             assert seed["source_url"] == cri_pdf, sid
+    # T.D. 9391, 73 FR 19350 (Apr. 9, 2008), adopted § 1.937-3; (f) keys on the same date.
+    assert seeds["us-cfr-1-937-3"]["effective_year"] == 2008
+    assert "ending after April 9, 2008" in seeds["us-cfr-1-937-3"]["text_en"]
 
     pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
     pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
-    for pid in ("pr-bi-26-02", "pr-cc-ri-25-12", "pr-cc-ri-21-10", "pr-cc-ri-26-13"):
+    for pid in (
+        "pr-bi-26-02",
+        "pr-cc-ri-25-12",
+        "pr-cc-ri-21-10",
+        "pr-cc-ri-26-13",
+        "pr-da-21-04",
+        "pr-da-23-04",
+    ):
         assert pubs[pid] == pub_catalog[pid], pid
         assert pubs[pid]["source_url"].startswith(
             "https://hacienda.pr.gov/sites/default/files/publicaciones/"

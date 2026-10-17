@@ -7138,25 +7138,41 @@ INITIAL_PUBLICATIONS: list[dict[str, Any]] = [
         "id": "pr-da-23-04",
         "category": "determinacion-administrativa",
         "doc_number": "DA 23-04",
-        "doc_date": "2023-08-15",
-        "title": "Tratamiento contributivo de transferencias de propiedad bajo Ley 60",
-        "summary": (
-            "Determinación administrativa sobre exenciones contributivas en la enajenación de "
-            "activos de capital por parte de inversionistas residentes con decreto bajo Ley 60."
+        "doc_date": "2023-11-28",
+        "title": (
+            "Certain Rules and Tax Considerations Applicable to a Contractor Entering Into "
+            "a Partnership Contract With a Partnering Government Entity"
         ),
-        "source_url": "https://hacienda.pr.gov/publicaciones/determinacion-administrativa-num-23-04",
+        "summary": (
+            "The purpose of this Administrative Determination is to supplement AD 20-06 and "
+            "AD 22-05 by addressing certain additional income tax considerations with "
+            "respect to various matters not expressly covered in AD 20-06 or AD 22-05."
+        ),
+        "source_url": (
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/2023/11/ad_23-04_app_entidades_conducto_e_ignoradas_final_nov_28_2023.pdf"
+        ),
     },
     {
         "id": "pr-da-21-04",
         "category": "determinacion-administrativa",
         "doc_number": "DA 21-04",
-        "doc_date": "2021-04-12",
-        "title": "Procedimiento de cumplimiento anual para decretos de individuos",
-        "summary": (
-            "Directrices para la presentación de informes anuales de cumplimiento y comprobantes "
-            "de donaciones benéficas requeridas por el Código de Incentivos de Puerto Rico."
+        "doc_date": "2021-03-23",
+        "title": (
+            "Posposición de la fecha límite para radicar la Planilla de Contribución Sobre "
+            "Ingresos del Año Contributivo 2020"
         ),
-        "source_url": "https://hacienda.pr.gov/publicaciones/determinacion-administrativa-num-21-04",
+        "summary": (
+            "El Departamento emite esta Determinación Administrativa conforme a lo "
+            "dispuesto en las Secciones 1061.16(f) y 1061.17(h) del Código, con el "
+            "propósito de notificar la nueva fecha límite de radicación de la Planilla del "
+            "año contributivo 2020 de aquellos Contribuyentes cuyo cierre de periodo anual "
+            "de contabilidad sea el 31 de diciembre de 2020 (es decir, Contribuyentes que "
+            "rinden su planilla a base de año natural) y su fecha original de vencimiento "
+            "según el Código sea el 15 de abril de 2021."
+        ),
+        "source_url": (
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/2021/03/da_21_04_posposicion_planillas_de_4_15_2020_clean_final_3_22_2021_acapites_corregidos.pdf"
+        ),
     },
     {
         "id": "pr-bi-26-02",
