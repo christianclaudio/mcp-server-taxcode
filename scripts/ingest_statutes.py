@@ -2862,7 +2862,10 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "determining the Possession I territorial income tax liability of N under mirrored section 871.\n"
             "(f) Effective/applicability date. Except as otherwise provided in this paragraph (f), this section "
             "applies to income earned in taxable years ending after April 9, 2008. Taxpayers may choose to apply "
-            "paragraph (b) of this section to income earned in open taxable years ending after October 22, 2004."
+            "paragraph (b) of this section to income earned in open taxable years ending after October 22, 2004.\n"
+            "Amendment history (eCFR source note): adopted by T.D. 9391, 73 FR 19374, Apr. 9, 2008; amended by "
+            "T.D. 9391, 73 FR 27728, May 14, 2008 (correction), T.D. 9921, 85 FR 79853, Dec. 11, 2020, and "
+            "T.D. 10022, 90 FR 3003, Jan. 14, 2025."
         ),
         text_es=(
             "Resumen en español; el texto oficial está en inglés. Establece las reglas para determinar si un "
@@ -2871,7 +2874,10 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "dentro de los Estados Unidos ni efectivamente conectadas con una industria o negocio en los Estados "
             "Unidos, incluidos los arreglos de conducto (c), salvo ciertas ventas de inventario (d). Incluye "
             "ejemplos (e) y aplica a ingresos de años contributivos que terminen después del 9 de abril de 2008 "
-            "(f)."
+            "(f). "
+            "Historial de enmiendas (nota de fuente del eCFR): adoptada por T.D. 9391, 73 FR 19374, 9 de abril "
+            "de 2008; enmendada por T.D. 9391, 73 FR 27728, 14 de mayo de 2008 (corrección), T.D. 9921, 85 FR "
+            "79853, 11 de diciembre de 2020, y T.D. 10022, 90 FR 3003, 14 de enero de 2025."
         ),
         effective_year=2008,
         source_url=f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-3",

@@ -349,6 +349,17 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
     # T.D. 9391, 73 FR 19350 (Apr. 9, 2008), adopted § 1.937-3; (f) keys on the same date.
     assert seeds["us-cfr-1-937-3"]["effective_year"] == 2008
     assert "ending after April 9, 2008" in seeds["us-cfr-1-937-3"]["text_en"]
+    assert seeds["us-cfr-1-937-3"]["text_en"].endswith(
+        "\nAmendment history (eCFR source note): adopted by T.D. 9391, 73 FR 19374, Apr. 9, 2008; "
+        "amended by T.D. 9391, 73 FR 27728, May 14, 2008 (correction), T.D. 9921, 85 FR 79853, "
+        "Dec. 11, 2020, and T.D. 10022, 90 FR 3003, Jan. 14, 2025."
+    )
+    assert seeds["us-cfr-1-937-3"]["text_es"].endswith(
+        "Historial de enmiendas (nota de fuente del eCFR): adoptada por T.D. 9391, 73 FR 19374, "
+        "9 de abril de 2008; enmendada por T.D. 9391, 73 FR 27728, 14 de mayo de 2008 "
+        "(corrección), T.D. 9921, 85 FR 79853, 11 de diciembre de 2020, y T.D. 10022, 90 FR 3003, "
+        "14 de enero de 2025."
+    )
 
     pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
     pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
