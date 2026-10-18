@@ -7,7 +7,7 @@
 # frontend, so no frontend image is pulled.
 
 # ─── Stage 1: Builder ─────────────────────────────────────────────────────────
-FROM python:3.12-slim AS builder
+FROM python:3.14-slim AS builder
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM python:3.12-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 # MCP Registry ownership check for the OCI package: must equal server.json "name".
 # https://modelcontextprotocol.io/registry/package-types#docker%2Foci-images
