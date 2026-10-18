@@ -1,13 +1,13 @@
 # Multi-stage build for mcp-server-taxcode
 # Produces a minimal runtime image (~150MB) with no dev tooling.
 #
-# The base image is the Docker Official python image (python:3.12-slim), pulled
+# The base image is the Docker Official python image (python:3.14-slim), pulled
 # from Docker Hub by tag. Dependabot's docker ecosystem watches it for updates.
 # No `# syntax=` line: the Dockerfile uses only features of BuildKit's built-in
 # frontend, so no frontend image is pulled.
 
 # ─── Stage 1: Builder ─────────────────────────────────────────────────────────
-FROM python:3.12-slim AS builder
+FROM python:3.14-slim AS builder
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM python:3.12-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 # MCP Registry ownership check for the OCI package: must equal server.json "name".
 # https://modelcontextprotocol.io/registry/package-types#docker%2Foci-images
