@@ -1,10 +1,8 @@
 # Multi-stage build for mcp-server-taxcode
 # Produces a minimal runtime image (~150MB) with no dev tooling.
 #
-# The base image is the Docker Official python image served from the Amazon ECR
-# Public mirror of Docker Official Images, pinned by its multi-arch index digest
-# (the same digest Docker Hub serves), so builds do not depend on Docker Hub pulls
-# or its rate limits. Dependabot's docker ecosystem keeps the digest current.
+# The base image is the Docker Official python image (python:3.12-slim), pulled
+# from Docker Hub by tag. Dependabot's docker ecosystem watches it for updates.
 # No `# syntax=` line: the Dockerfile uses only features of BuildKit's built-in
 # frontend, so no frontend image is pulled.
 
