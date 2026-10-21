@@ -4174,6 +4174,133 @@ STATUTES_CATALOG: list[StatuteRecord] = [
     ),
     # Puerto Rico Incentives Code (Ley 60-2019)
     StatuteRecord(
+        id="pr-ley60-1020-02",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 1020.02",
+        section="1020.02",
+        title="Definiciones Aplicables a Actividades de Individuos",
+        text_en=(
+            "English summary; the official text is in Spanish. Defines the terms used for the individual activities in "
+            "Chapter 2 of Subtitle B of the Incentives Code. Paragraph (4), as amended by Act 38-2026 (approved March "
+            "10, 2026, per the approval stamp on page 1 of the Departamento de Estado certified copy, "
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in force on approval under "
+            "its Article 8), defines a Resident Individual Investor: an individual eligible for the benefits of "
+            "Sections 2022.01 and 2022.02 who is a Resident Individual of Puerto Rico, was not a Resident Individual of "
+            "Puerto Rico between January 17, 2006 and January 17, 2012, and becomes one no later than the taxable year "
+            "ending December 31, 2055. Students studying outside Puerto Rico who lived in Puerto Rico before leaving, "
+            "personnel temporarily working outside Puerto Rico for the Government of Puerto Rico, its agencies and "
+            "instrumentalities, and people in similar situations do not qualify, because their domicile stays in Puerto "
+            "Rico while they live outside it. For applications submitted after December 31, 2026, the individual must "
+            "show that they were not a resident of Puerto Rico for at least six (6) years before moving to Puerto Rico. "
+            "The other paragraphs define Special Agreement for the Creation of Businesses (1), Mi Futuro (2), Eligible "
+            "Dividends of Qualified Physicians (3), Eligible Income of a Qualified Physician (5), Institution of Higher "
+            "Education (6), Eligible Scientific Research (7), Eligible Researcher or Scientist (8), Young Entrepreneur "
+            "(9), Qualified Physician (10), Medical Services Business (11), Other Assets (12), Hard-to-Recruit "
+            "Professional (13), Professional Medical Services (14) and Full Time (15)."
+        ),
+        text_es=(
+            "(a) Para propósitos de actividades relacionadas con el Capítulo 2 del Subtítulo B de este Código "
+            "relacionado con actividades que lleven a cabo individuos, los términos, frases y palabras tendrán el "
+            "significado y alcance que se expresan a continuación:\n"
+            "(1) Acuerdo Especial para la Creación de Empresas. — Significa el Acuerdo que se lleve a cabo entre un "
+            "Joven Empresario (según se define en este apartado) y el Secretario del DDEC. El Joven Empresario deberá "
+            "comprometerse al desarrollo de su empresa, a la creación de empleos, y a otras condiciones, según aplique, "
+            "a cambio de los beneficios aplicables que se disponen en este Código. Los beneficios aplicables se "
+            "enumerarán específicamente en el Acuerdo. El Acuerdo establecerá el término de su vigencia y vencerá "
+            "cuando los beneficios que se conceden en él caduquen, según las disposiciones de este Código y las "
+            "obligaciones pactadas en el Acuerdo.\n"
+            "(2) Mi Futuro. — significa el programa de plan de ahorro para estudiantes establecido en la Sección "
+            "2026.01 de este Código.\n"
+            "(3) Dividendos Elegibles de Médicos Cualificados. — Significa los dividendos provenientes de Ingresos "
+            "Elegibles de Médicos Cualificados, que declara un Negocio de Servicios Médicos a favor de un Médico "
+            "Cualificado, computado de conformidad con el Código de Rentas Internas.\n"
+            "(4) Individuo Residente Inversionista. — Significa un individuo elegible para obtener los beneficios de "
+            "las Secciones 2022.01 y 2022.02 de este Código y que es un Individuo Residente de Puerto Rico, que no haya "
+            "sido un Individuo Residente de Puerto Rico entre el 17 de enero de 2006 y el 17 de enero de 2012, y que se "
+            "convierta en un Individuo Residente de Puerto Rico no más tarde del Año Contributivo que finaliza el 31 de "
+            "diciembre de 2055. Los estudiantes que cursen estudios fuera de Puerto Rico que residían en Puerto Rico "
+            "antes de marcharse a estudiar, el personal que trabaje fuera de Puerto Rico temporalmente para el Gobierno "
+            "de Puerto Rico, sus agencias e instrumentalidades, y personas en situaciones similares a las antes "
+            "descritas, no cualificarán para considerarse como Individuos Residentes Inversionistas, ya que su "
+            "domicilio en estos casos continúa siendo Puerto Rico por el período en que residan fuera de nuestra "
+            "jurisdicción. Para solicitudes sometidas después del 31 de diciembre de 2026, el individuo deberá "
+            "demostrar que no fue residente de Puerto Rico durante un mínimo de seis (6) años previos a la fecha de "
+            "mudarse a Puerto Rico.\n"
+            "(5) Ingreso Elegible de Médico Cualificado. — Significa el ingreso neto que se deriva de la prestación de "
+            "Servicios Médicos Profesionales que se ofrecen en Puerto Rico, computado de conformidad con el Código de "
+            "Rentas Internas.\n"
+            "(6) Institución de Educación Superior. — Significa una institución educativa, pública o privada, "
+            "acreditada conforme a la Ley 212-2018, según enmendada, conocida como “Ley de Registro y Licenciamiento de "
+            "Instituciones de Educación” o por la Middle States Commission on Higher Education de la Middle States "
+            "Association of Colleges and Schools.\n"
+            "(7) Investigaciones Científicas Elegibles. — Significa cualquier investigación que lleve a cabo la "
+            "Universidad de Puerto Rico u otra Institución de Educación Superior que reciba una concesión (grant) "
+            "obtenida mediante una propuesta revisada por pares (peer reviewed) en una competencia abierta para obtener "
+            "dicha concesión, para llevar a cabo un proyecto de investigación u otro proyecto similar incluyendo "
+            "concesiones para entrenamiento, desarrollo de capacidades profesionales o desarrollo de la fuerza "
+            "trabajadora (training, capacity development, and workforce development), de cualquiera de las "
+            "organizaciones que componen los Institutos Nacionales de Salud o bajo programas o mecanismos similares "
+            "auspiciados por cualquier otra agencia federal que promueva la investigación científica competitiva, "
+            "incluyendo pero sin limitarse a, la Fundación Nacional de Ciencia (National Science Foundation), "
+            "Departamento de Energía, Departamento de Defensa, NASA, NOAA, Agencia de Protección Ambiental, entre "
+            "otras. Incluirán, además, las concesiones resultado de propuestas competitivas que provengan de "
+            "fundaciones privadas, otras organizaciones sin fines de lucro, o empresas privadas que provean concesiones "
+            "competitivas para la investigación y desarrollo. Se consideran elegibles aquellas concesiones de "
+            "propuestas competitivas donde la competencia esté restringida a poblaciones minoritarias (underserved "
+            "minorities) según las definiciones de minorías a nivel federal. Serán elegibles también las concesiones "
+            "por subcontrato de propuestas competitivas (research subawards) donde el investigador principal del "
+            "subcontrato es una Persona Doméstica.\n"
+            "(8) Investigador o Científico Elegible. — Significa un Persona Doméstica, durante el Año Contributivo, "
+            "contratado por la Universidad de Puerto Rico u otra Institución de Educación Superior autorizada a operar "
+            "en Puerto Rico, que se dedique, entre otras funciones docentes a llevar a cabo Investigaciones Científicas "
+            "Elegibles y que haya sometido una propuesta de investigación científica una organización de las descritas "
+            "en la definición de Investigaciones Científicas Elegibles y que, con la aprobación de la propuesta, la "
+            "institución académica reciba una concesión (grant) para investigación, según la definición de "
+            "Investigaciones Científicas Elegibles, cuya cuantía cubra los costos de investigación, incluyendo, entre "
+            "otros, la compensación del Investigador y del personal clave, compra de equipos y suministros, "
+            "publicaciones y otros gastos relacionados, según sea aplicable. Salvo en el caso de Investigadores "
+            "Principales Múltiples (Multiple Principal Investigators or Multi PI’s), no habrá más de un individuo "
+            "elegible para esta deducción por concesión aprobada, según la definición de Investigaciones Científicas "
+            "Elegibles, incluyendo las concesiones por subcontrato.\n"
+            "(9) Joven Empresario. — Significará todo Individuo Residente de Puerto Rico, cuya edad fluctúe entre los "
+            "dieciséis (16) y treinta y cinco (35) años de edad, que interese crear y operar a largo plazo una nueva "
+            "empresa en Puerto Rico, por un término indefinido, y que haya obtenido su diploma de escuela superior o "
+            "una certificación equivalente del Departamento de Educación de Puerto Rico, o que aún se encuentren "
+            "cursando estudios y presenten evidencia que certifique que cursan estudios conducentes a obtener un "
+            "certificado o diploma de escuela superior conforme a los criterios que se adopten por reglamento.\n"
+            "(10) Médico Cualificado. — Significa un individuo admitido a la práctica de la medicina general o de "
+            "cualquier especialidad, de la podiatría; de la audiología; de la quiropráctica; de la optometría; sea "
+            "un(a) cirujano(a) dentista o practique alguna especialidad de la odontología y que ejerce a Tiempo "
+            "Completo su profesión. Esta definición incluye a los médicos que se encuentran cursando sus estudios de "
+            "residencia como parte de un programa acreditado.\n"
+            "(11) Negocio de Servicios Médicos. — Significa cualquier corporación de servicios profesionales o compañía "
+            "de responsabilidad limitada que preste Servicios Médicos Profesionales en Puerto Rico, ya sea una Entidad "
+            "doméstica o una Entidad foránea, y que esté autorizada para hacer negocios en Puerto Rico.\n"
+            "(12) Otros Activos. — Significa mercancías (commodities), monedas, y cualquier activo digital basado en la "
+            "tecnología de cadenas de bloques (blockchain).\n"
+            "(13) Profesional de Difícil Reclutamiento. — Significa un individuo elegible para obtener los beneficios "
+            "de la Sección 2022.03 de este Código y que es un Individuo Residente de Puerto Rico, con un empleo a "
+            "tiempo completo, cuyo talento sea indispensable por su conocimiento especializado para las operaciones de "
+            "un Negocio Exento bajo este Código o Leyes de Incentivos Anteriores. El término “difícil reclutamiento” "
+            "será definido mediante el Reglamento de Incentivos.\n"
+            "(14) Servicios Médicos Profesionales. — Significa servicios de diagnóstico y tratamiento que ofrece un "
+            "Médico Cualificado.\n"
+            "(15) Tiempo Completo. — Significa que un Médico Cualificado dedica al menos cien (100) horas mensuales a "
+            "ofrecer Servicios Médicos Profesionales en un hospital público o privado, en una agencia federal o "
+            "estatal, en una oficina privada dedicada a ofrecer Servicios Médicos Profesionales o en una escuela de "
+            "medicina acreditada.\n"
+            "[Nota: El párrafo (4) del apartado (a) fue enmendado por la Ley 38-2026, aprobada el 10 de marzo de 2026 "
+            "según el sello de aprobación en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
+        ),
+        effective_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=["Ley 60-2019 Sec. 2022.01", "Ley 60-2019 Sec. 2022.02"],
+        breadcrumbs="Ley 60-2019 > Subtítulo A > Capítulo 2 > Sección 1020.02",
+    ),
+    StatuteRecord(
         id="pr-ley60-2021-01",
         jurisdiction="PR",
         corpus="LEY60",
@@ -4322,6 +4449,130 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01",
     ),
     StatuteRecord(
+        id="pr-ley60-2022-02",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 2022.02",
+        section="2022.02",
+        title=(
+            "Contribución Especial a Individuo Residente Inversionista — Ganancia Neta de Capital"
+        ),
+        text_en=(
+            "English summary; the official text is in Spanish. Section as amended by Act 38-2026 (approved March 10, "
+            "2026, per the approval stamp on page 1 of the Departamento de Estado certified copy, "
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in force on approval under "
+            "its Article 8). (a) Pre-residency appreciation, decree applications filed on or before December 31, 2026: "
+            "the part of a Resident Individual Investor's net long-term capital gain attributable to appreciation of "
+            "Securities or Other Assets held before becoming a Puerto Rico resident, recognized more than ten (10) "
+            "years after becoming a resident and before January 1, 2036, is taxed at 5% instead of any other tax under "
+            "the Puerto Rico Internal Revenue Code and is not subject to the alternative basic tax; recognized at any "
+            "other time, it is taxed under the regular rules. The gain is limited to the appreciation accrued while the "
+            "investor lived outside Puerto Rico and, for taxable years after December 31, 2016, is income from sources "
+            "outside Puerto Rico. (b) Post-residency appreciation, applications filed on or before December 31, 2026: "
+            "all net capital gain from appreciation after becoming a resident, on assets held at the move or acquired "
+            "later, that is recognized before January 1, 2036 is fully exempt from Puerto Rico income tax, including "
+            "the alternative basic tax; recognized after December 31, 2035, it is taxed under the regular rules. (c) "
+            "Pre-residency appreciation, applications filed on or after January 1, 2027: the same 5% rule as (a), for "
+            "gains recognized more than ten years after becoming a resident and before January 1, 2056. (d) "
+            "Post-residency appreciation, applications filed on or after January 1, 2027: net capital gain recognized "
+            "before January 1, 2056 is taxed at a 4% fixed preferential rate instead of any higher income tax, "
+            "including the alternative basic tax, unless a more favorable rate applies under the Incentives Code, the "
+            "Puerto Rico Internal Revenue Code or any other law; recognized after December 31, 2055, it is taxed under "
+            "the regular rules. Each paragraph applies only while the decree has not been revoked under Section "
+            "6020.09(a)."
+        ),
+        text_es=(
+            "(a) Apreciación antes de convertirse en Individuo Residente de Puerto Rico para el Individuo que radique "
+            "una solicitud para un decreto de Individuo Residente Inversionista en o antes del 31 de diciembre de 2026. "
+            "La parte de la ganancia neta de capital a largo plazo que genere un Individuo Residente Inversionista que "
+            "sea atribuible a cualquier apreciación que tuvieran Valores u Otros Activos, que posea éste antes de "
+            "convertirse en Individuo Residente de Puerto Rico, que sea reconocida luego de transcurridos diez (10) "
+            "años de convertirse en Individuo Residente de Puerto Rico y antes del 1 de enero de 2036, estará sujeta al "
+            "pago de una contribución de cinco por ciento (5%), en lugar de cualesquiera otras contribuciones que "
+            "impone el Código de Rentas Internas de Puerto Rico, y no estará sujeta a la contribución básica alterna "
+            "provista por el Subtítulo A del Código de Rentas Internas de Puerto Rico. Si tal apreciación se reconoce "
+            "en cualquier otro momento, la ganancia neta de capital con relación a tales Valores u Otros Activos estará "
+            "sujeta al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código "
+            "de Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital a largo plazo estará limitado "
+            "a la porción de la ganancia que se relacione con la apreciación que tuvieron los Valores u Otros Activos "
+            "mientras el Individuo Residente Inversionista vivía fuera de Puerto Rico. Para años contributivos "
+            "posteriores al 31 de diciembre de 2016, la ganancia de capital se considerará ingreso de fuentes fuera de "
+            "Puerto Rico para propósitos de la contribución sobre ingresos que dispone el Código de Rentas Internas de "
+            "Puerto Rico. Este inciso (a) será aplicable exclusivamente a todo Individuo Residente Inversionista que "
+            "presentó su solicitud para obtener un Decreto concediendo los beneficios de las Secciones 2022.01 y "
+            "2022.02 de este Código en o antes del 31 de diciembre de 2026, siempre y cuando el Decreto no hubiese sido "
+            "revocado a tenor con la Sección 6020.09(a).\n"
+            "(b) Apreciación después de convertirse en Individuo Residente de Puerto Rico, para el Individuo que "
+            "radique una solicitud para un decreto de Individuo Residente Inversionista en o antes del 31 de diciembre "
+            "de 2026. La totalidad de la ganancia neta de capital que genere un Individuo Residente Inversionista "
+            "relacionada con cualquier apreciación que tuvieran Valores u Otros Activos, luego de éste convertirse en "
+            "Individuo Residente de Puerto Rico, que se reconozca antes del 1 de enero de 2036, estará totalmente "
+            "exenta del pago de contribuciones sobre ingresos de Puerto Rico, incluyendo la contribución básica alterna "
+            "que provee el Código de Rentas Internas de Puerto Rico. Si tal apreciación se reconoce luego del 31 de "
+            "diciembre de 2035, la ganancia neta de capital con relación a tales Valores u Otros Activos estará sujeta "
+            "al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código de "
+            "Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital se refiere a la porción de la "
+            "ganancia que se relacione a la apreciación que tuvieron los Valores u Otros Activos que el Individuo "
+            "Residente Inversionista poseía al momento de convertirse en Individuo Residente de Puerto Rico y a los que "
+            "éste adquiera luego de convertirse en Individuo Residente de Puerto Rico. Este inciso (b) será aplicable "
+            "exclusivamente a todo Individuo Residente Inversionista que presentó su solicitud para obtener un Decreto "
+            "concediendo los beneficios de las Secciones 2022.01 y 2022.02 de este Código en o antes del 31 de "
+            "diciembre de 2026, siempre y cuando el Decreto no hubiese sido revocado a tenor con la Sección 6020.09(a).\n"
+            "(c) Apreciación antes de convertirse en Individuo Residente de Puerto Rico, para el Individuo que radicó "
+            "una solicitud para un decreto de Individuo Residente Inversionista del 1 de enero de 2027 en adelante. La "
+            "parte de la ganancia neta de capital a largo plazo que genere un Individuo Residente Inversionista que sea "
+            "atribuible a cualquier apreciación que tuvieran Valores u Otros Activos, que posea éste antes de "
+            "convertirse en Individuo Residente de Puerto Rico, que sea reconocida luego de transcurridos diez (10) "
+            "años de convertirse en Individuo Residente de Puerto Rico y antes del 1 de enero de 2056, estará sujeta al "
+            "pago de una contribución de cinco por ciento (5%), en lugar de cualesquiera otras contribuciones que "
+            "impone el Código de Rentas Internas de Puerto Rico, y no estará sujeta a la contribución básica alterna "
+            "provista por el Subtítulo A del Código de Rentas Internas de Puerto Rico. Si tal apreciación se reconoce "
+            "en cualquier otro momento, la ganancia neta de capital con relación a tales Valores u Otros Activos estará "
+            "sujeta al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código "
+            "de Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital a largo plazo estará limitado "
+            "a la porción de la ganancia que se relacione con la apreciación que tuvieron los Valores u Otros Activos "
+            "mientras el Individuo Residente Inversionista vivía fuera de Puerto Rico. Para años contributivos "
+            "posteriores al 31 de diciembre de 2016, la ganancia de capital se considerará ingreso de fuentes fuera de "
+            "Puerto Rico para propósitos de la contribución sobre ingresos que dispone el Código de Rentas Internas de "
+            "Puerto Rico. Este inciso (c) será aplicable exclusivamente a todo Individuo Residente Inversionista que "
+            "presentó su solicitud para obtener un Decreto concediendo los beneficios de las Secciones 2022.01 y "
+            "2022.02 de este Código en o luego del 1 de enero de 2027, siempre y cuando el Decreto no hubiese sido "
+            "revocado a tenor con la Sección 6020.09(a).\n"
+            "(d) Apreciación después de convertirse en Individuo Residente de Puerto Rico, para el Individuo que radicó "
+            "una solicitud para un decreto de Individuo Residente Inversionista del 1 de enero de 2027 en adelante. La "
+            "totalidad de la ganancia neta de capital que genere un Individuo Residente Inversionista relacionada con "
+            "cualquier apreciación que tuvieran Valores u Otros Activos, luego de éste convertirse en Individuo "
+            "Residente de Puerto Rico, que se reconozca antes del 1 de enero de 2056, estará sujeta a una tasa fija "
+            "preferencial de contribución sobre ingresos de un cuatro por ciento (4%), en lugar de cualquier otra "
+            "contribución sobre ingresos mayor, si alguna, dispuesta por el Código de Rentas Internas de Puerto Rico o "
+            "cualquier otra ley, incluyendo la contribución básica alterna provista por el Subtítulo A del Código de "
+            "Rentas Internas de Puerto Rico. No obstante lo anterior, aquella ganancia neta de capital que genere un "
+            "Individuo Residente Inversionista relacionada con cualquier apreciación que tuvieran Valores u Otros "
+            "Activos, luego de éste convertirse en Individuo Residente de Puerto Rico, que se reconozca antes del 1 de "
+            "enero de 2056, que esté sujeto a una tasa contributiva más favorable por disposición de este Código, del "
+            "Código de Rentas Internas de Puerto Rico o cualquier otra ley, estará sujeta al pago de contribuciones "
+            "sobre ingresos conforme al tratamiento contributivo más favorable en lugar de aquella contribución sobre "
+            "ingresos dispuesta en la oración anterior de este apartado (d). Si tal apreciación se reconoce luego del "
+            "31 de diciembre de 2055, la ganancia neta de capital con relación a tales Valores u Otros Activos estará "
+            "sujeta al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código "
+            "de Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital se refiere a la porción de la "
+            "ganancia que se relacione a la apreciación que tuvieron los Valores u Otros Activos que el Individuo "
+            "Residente Inversionista poseía al momento de convertirse en Individuo Residente de Puerto Rico y a los que "
+            "éste adquiera luego de convertirse en Individuo Residente de Puerto Rico. Este inciso (d) será aplicable "
+            "exclusivamente a todo Individuo Residente Inversionista que presentó su solicitud para obtener un Decreto "
+            "concediendo los beneficios de las Secciones 2022.01 y 2022.02 de este Código en o luego del 1 de enero de "
+            "2027, siempre y cuando el Decreto no hubiese sido revocado a tenor con la Sección 6020.09(a).\n"
+            "[Nota: Sección enmendada por la Ley 38-2026, aprobada el 10 de marzo de 2026 según el sello de aprobación "
+            "en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
+        ),
+        effective_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
+        cross_references=["Ley 60-2019 Sec. 2022.01", "Ley 60-2019 Sec. 1020.02"],
+        breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.02",
+    ),
+    StatuteRecord(
         id="pr-ley60-2031-01",
         jurisdiction="PR",
         corpus="LEY60",
@@ -4360,6 +4611,64 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2031.01", "PR CRI Sec. 1010.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01",
+    ),
+    StatuteRecord(
+        id="pr-ley60-6020-03",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 6020.03",
+        section="6020.03",
+        title="Periodo de Exención, Renegociación y Extensión de Decreto",
+        text_en=(
+            "English summary; the official text is in Spanish. (a) An exempt business holding a decree under the "
+            "Incentives Code enjoys its benefits for fifteen (15) years while it meets the decree's requirements and "
+            "conditions, unless the Code provides otherwise. (b) An exempt business under the Code or under prior "
+            "incentive laws may ask to renegotiate its decree to receive the Code's benefits, under the procedure set "
+            "by the Incentives Regulation. (c) An exempt business that met its decree's requirements throughout its "
+            "exemption period and shows the Secretary of the DDEC that an extension serves Puerto Rico's best economic "
+            "and social interests may ask for a fifteen (15) year extension, for a total of thirty (30) years. (d) "
+            "Added by Act 38-2026 (approved March 10, 2026, per the approval stamp on page 1 of the Departamento de "
+            "Estado certified copy, https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in "
+            "force on approval under its Article 8): decree applications under Section 2021.01 filed on or before "
+            "December 31, 2026 and not yet granted or approved may, at the applicant's election, be processed under "
+            "Sections 2022.01(b) and 2022.02(c) and (d). A Resident Individual Investor who holds a decree under Act "
+            "22-2012 or a Section 2021.01 decree applied for on or before December 31, 2026 may ask to modify the "
+            "decree to reflect the terms and conditions of Sections 2022.01(b) and 2022.02(c) and (d)."
+        ),
+        text_es=(
+            "(a) Periodo de Exención. — Todo Negocio Exento que posea un Decreto bajo este Código, disfrutará de los "
+            "beneficios por un período de quince (15) años siempre que durante este término cumpla con los requisitos y "
+            "las condiciones establecidos en el Decreto, a menos que se disponga de otro modo en este Código.\n"
+            "(b) Renegociación. — Todo Negocio Exento bajo este Código, o bajo Leyes de Incentivos Anteriores, podrá "
+            "solicitar renegociar su Decreto para el disfrute de los beneficios concedidos bajo este Código. El "
+            "Reglamento de Incentivos dispondrá los requisitos y el procedimiento a seguir para la renegociación de un "
+            "Decreto bajo este Código.\n"
+            "(c) Extensión. — Todo Negocio Exento bajo este Código, o bajo las Leyes de Incentivosanteriores, que, a "
+            "través de todo su período de exención, haya cumplido con los requisitos o las condiciones establecidos en "
+            "el Decreto, y que demuestre al Secretario del DDEC que la extensión de su Decreto redundará en los mejores "
+            "intereses económicos y sociales del pueblo de Puerto Rico, podrá solicitar al Secretario una extensión de "
+            "su Decreto por quince (15) años adicionales, para un total de treinta (30) años.\n"
+            "(d) Reglas aplicables a decretos de Individuo Residente Inversionista. — Las solicitudes de Decretos bajo "
+            "la Sección 2021.01 de este Código que se hayan radicado en o antes del 31 de diciembre de 2026 que no se "
+            "hayan concedido o aprobado, podrán tramitarse, a elección del solicitante, bajo las disposiciones de las "
+            "Secciones 2022.01(b) y 2022.02(c) y (d) de este Código. Todo Individuo Residente Inversionista que (1) "
+            "haya obtenido un Decreto bajo la Ley 22-2012, según enmendada, o (2) haya obtenido un Decreto bajo la "
+            "Sección 2021.01 de este Código que fue solicitado en o antes del 31 de diciembre de 2026, podrá solicitar "
+            "una modificación a su Decreto para reflejar los términos y condiciones de las Secciones 2022.01(b) y "
+            "2022.02(c) y (d) de este Código.\n"
+            "[Nota: El apartado (d) fue añadido por la Ley 38-2026, aprobada el 10 de marzo de 2026 según el sello de "
+            "aprobación en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
+        ),
+        effective_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=[
+            "Ley 60-2019 Sec. 2021.01",
+            "Ley 60-2019 Sec. 2022.01",
+            "Ley 60-2019 Sec. 2022.02",
+        ],
+        breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.03",
     ),
     StatuteRecord(
         id="pr-ley60-6020-10",

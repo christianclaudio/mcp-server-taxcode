@@ -177,7 +177,10 @@ SEEDED_AFTER_735477D = frozenset(
         "pr-ley60-6020-10",
         "pr-ley60-6020-10-2019",
         "pr-cri-1062-03",
+        "pr-ley60-1020-02",
         "pr-ley60-2022-01",
+        "pr-ley60-2022-02",
+        "pr-ley60-6020-03",
     }
 )
 
@@ -202,7 +205,8 @@ def test_ranking_unchanged(db: TaxDatabase, query: str, expected: list[str]) -> 
 
     Rows seeded later slot in between; the earlier rows keep their relative order.
     """
-    ids = [r["id"] for r in db.search_statutes(query=query, limit=10)]
+    # Wide enough that the later rows slotting in cannot push a recorded row off the page.
+    ids = [r["id"] for r in db.search_statutes(query=query, limit=20)]
     assert [i for i in ids if i not in SEEDED_AFTER_735477D][: len(expected)] == expected
 
 

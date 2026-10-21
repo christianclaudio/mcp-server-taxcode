@@ -27,11 +27,14 @@
 - [PR CRI Sec. 1031.02 (2011) — Exenciones del Ingreso Bruto / Exemptions from Gross Income](./pr/cri_1031_02.md): Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.02
 - [PR CRI Sec. 1062.01 (2011) — Retención en el Origen de la Contribución en el Caso de Salarios / Withholding of Tax at Source on Wages](./pr/cri_1062_01.md): Ley 1-2011 > Subtítulo A > Capítulo 6 > Subcapítulo B > Sección 1062.01
 - [PR CRI Sec. 1062.03 (2011) — Retención en el Origen Sobre Pagos por Servicios Prestados / Withholding at Source on Payments for Services Rendered](./pr/cri_1062_03.md): Ley 1-2011 > Subtítulo A > Capítulo 6 > Subcapítulo B > Sección 1062.03
+- [Ley 60-2019 Sec. 1020.02 (2026) — Definiciones Aplicables a Actividades de Individuos](./pr/ley60_1020_02.md): Ley 60-2019 > Subtítulo A > Capítulo 2 > Sección 1020.02
 - [Ley 60-2019 Sec. 2021.01 (2019) — Individuos Inversionistas que se Trasladen a Puerto Rico](./pr/ley60_2021_01.md): Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01
 - [Ley 60-2019 Sec. 2022.01 (2019) — Exención al Ingreso por Intereses y Dividendos Devengados por Individuo Residente Inversionista](./pr/ley60_2022_01_2019.md): Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01
 - [Ley 60-2019 Sec. 2022.01 (2026) — Exención al Ingreso por Intereses y Dividendos Devengados por Individuo Residente Inversionista](./pr/ley60_2022_01.md): Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01
+- [Ley 60-2019 Sec. 2022.02 (2026) — Contribución Especial a Individuo Residente Inversionista — Ganancia Neta de Capital](./pr/ley60_2022_02.md): Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.02
 - [Ley 60-2019 Sec. 2031.01 (2019) — Exportación de Servicios y Comercio - Cualificación](./pr/ley60_2031_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2031.01
 - [Ley 60-2019 Sec. 2032.01 (2019) — Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo](./pr/ley60_2032_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01
+- [Ley 60-2019 Sec. 6020.03 (2026) — Periodo de Exención, Renegociación y Extensión de Decreto](./pr/ley60_6020_03.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.03
 - [Ley 60-2019 Sec. 6020.10 (2026) — Informes](./pr/ley60_6020_10.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
 - [Ley 60-2019 Sec. 6020.10 (2019) — Informes](./pr/ley60_6020_10_2019.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
 - [Ley 60-2019 Sec. 6070.55 (2019) — Definiciones aplicables a las Zonas de Oportunidad](./pr/ley60_6070_55.md): Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55

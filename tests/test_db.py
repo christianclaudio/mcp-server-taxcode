@@ -336,6 +336,24 @@ def test_search_statutes_temporal_and_descending_order() -> None:
             assert r["effective_year"] == 2024
 
 
+def test_ley60_sections_amended_by_act_38_2026_are_current_from_2026() -> None:
+    """The other sections Act 38-2026 amended carry its text from tax year 2026 on."""
+    test_db = TaxDatabase(":memory:")
+    expected = {
+        "1020.02": "durante un mínimo de seis (6) años previos a la fecha de mudarse",
+        "2022.02": "antes del 1 de enero de 2056, estará sujeta a una tasa fija preferencial",
+        "6020.03": "(d) Reglas aplicables a decretos de Individuo Residente Inversionista.",
+        "6020.10": "a nombre de un fideicomiso descrito en la Sección 2022.07.",
+    }
+    for section, phrase in expected.items():
+        row = test_db.lookup_statute(f"Ley 60-2019 Sec. {section}", tax_year=2026)
+        assert row is not None, section
+        assert row["effective_year"] == 2026 and row["superseded_year"] is None, section
+        assert phrase in row["text_es"], section
+        assert "Ley 38-2026" in row["text_es"] and "Act 38-2026" in row["text_en"], section
+        assert row["text_en"].startswith("English summary; the official text is in Spanish.")
+
+
 def test_ley60_6020_10_lookup_by_tax_year_splits_on_act_38_2026() -> None:
     """Before 2026 the 2019 row answers; from 2026 the Act 38-2026 row does."""
     test_db = TaxDatabase(":memory:")
