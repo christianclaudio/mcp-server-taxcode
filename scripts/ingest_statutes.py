@@ -7071,6 +7071,329 @@ PUBLICATIONS_CATALOG: list[PublicationRecord] = [
         source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-13_-_integracion_cofim_y_nueva_planilla_mensual_ivu_signed.pdf",
     ),
     PublicationRecord(
+        id="pr-ddec-cc-2026-001",
+        category="carta-circular",
+        doc_number="CC DDEC 2026-001",
+        doc_date="2026-01-12",
+        title=(
+            "Donaciones requeridas a Individuos Residentes Inversionistas y evidencia de adquisición de propiedad "
+            "residencial"
+        ),
+        summary=(
+            "En consideración a lo anterior, el Director de la OIN, en consulta con la Comisión Especial, con la "
+            "Oficina de Gerencia y Presupuesto y la Comisión para Combatir la Pobreza Infantil y la Desigualdad Social "
+            "en Puerto Rico adscrita al Departamento de la Familia, emite la presente Carta Circular con el propósito "
+            "de establecer las instancias en las que se reconocerán ciertas donaciones y aclarar la interpretación "
+            "administrativa con relación a la evidencia de adquisición de propiedad inmueble residencial en Puerto "
+            "Rico."
+        ),
+        source_url="https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Carta%20Circular%20DDEC%20N%C3%9AM.%202026-001%20(OIN)%20Donaciones%20IRI%20-%201.12.26.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-01",
+        category="carta-circular",
+        doc_number="CC RI 26-01",
+        doc_date="2026-02-05",
+        title=(
+            "Radicación del Formulario Modelo SC 2644, Solicitud de Prórroga para Rendir la Planilla de Contribución "
+            "sobre Ingresos, para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el "
+            "propósito de establecer el procedimiento de radicación electrónica de la Solicitud de Prórroga Automática "
+            "para el año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/cc_ri_26-01_radicacion_del_formulario_modelo_sc_2644_del_ano_contributivo_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-02",
+        category="carta-circular",
+        doc_number="CC RI 26-02",
+        doc_date="2026-02-05",
+        title=(
+            "Radicación de la Planilla de Contribución sobre Ingresos de Individuos correspondiente al año contributivo "
+            "2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el "
+            "propósito de establecer el procedimiento de radicación electrónica de la Planilla de Individuos para el "
+            "año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/cc_ri_26-02_radicacion_electronica_planillas_de_individuos_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-da-26-01",
+        category="determinacion-administrativa",
+        doc_number="DA 26-01 / OA DDEC 2026-01",
+        doc_date="2026-02-05",
+        title=(
+            "Requisito de radicar electrónicamente el Informe de Cumplimiento Anual de las Secciones 6020.10 y 6070.66 "
+            "del Código de Incentivos de Puerto Rico, según enmendado, junto con la planilla de contribución sobre "
+            "ingresos correspondiente"
+        ),
+        summary=(
+            "A tales efectos, el Departamento de Hacienda (“Departamento”) junto con el DDEC emiten esta Determinación "
+            "Administrativa con el propósito de posponer la entrada en vigor de la radicación electrónica del IANE a "
+            "incluirse con la planilla de contribución sobre ingresos correspondiente a los años contributivos que "
+            "comiencen después del 31 de diciembre de 2024."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/da_26-01_posposicion_de_la_integracion_del_informe_anual_exento_ley_65-2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-01",
+        category="boletin-informativo",
+        doc_number="BI RI 26-01",
+        doc_date="2026-02-17",
+        title=(
+            "Notificación de ajuste por inflación al Crédito por Trabajo para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite este Boletín Informativo, conforme a las disposiciones de "
+            "la Sección 1052.01(i) del Código, con el propósito de notificar los nuevos umbrales de ingreso bruto "
+            "ganando y el Crédito máximo a considerarse en el Anejo CT Individuo – Crédito por Trabajo de la Planilla "
+            "de Contribución sobre Ingresos de Individuos (“Planilla”) correspondiente al año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/bi_ri_26-01_ajuste_por_inflacion_al_credito_por_trabajo_para_el_ano_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-03",
+        category="carta-circular",
+        doc_number="CC RI 26-03",
+        doc_date="2026-02-19",
+        title=(
+            "Límites aplicables para el año 2026 a planes de retiro cualificados bajo la Sección 1081.01(a) del Código "
+            "de Rentas Internas de Puerto Rico de 2011, según enmendado"
+        ),
+        summary=(
+            "A tales efectos, el Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el propósito "
+            "de establecer los límites aplicables a los planes de retiro cualificados bajo la Sección 1081.01(a) del "
+            "Código para el año contributivo 2026."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/cc_ri_26-03_limites_planes_de_pensiones_2026_rev._ley_179-2025_signed_19-feb-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-04",
+        category="carta-circular",
+        doc_number="CC RI 26-04",
+        doc_date="2026-02-27",
+        title=(
+            "Radicación de la Planilla Informativa sobre Ingresos de Entidades Conducto, Formulario 480.2(EC), para el "
+            "año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Entidad Conducto para el año contributivo 2025 y "
+            "de los Formularios 480.6EC que se emitan exclusivamente para dicha planilla."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/03/cc_ri_26_04_radicacio_n_electro_nica_planillas_de_entidades_conducto.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-05",
+        category="carta-circular",
+        doc_number="CC RI 26-05",
+        doc_date="2026-02-27",
+        title=("Centros de Preparación y Radicación de Planillas Electrónicas"),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer: (i) la "
+            "fecha de comienzo de los servicios en los Centros de Preparación y Radicación de Planillas Electrónicas "
+            "del año contributivo 2025 (“Centros”), y (ii) los requisitos para la preparación y radicación electrónica "
+            "de la Planilla de Individuos y la Planilla Federal para reclamar el CTC, correspondientes al año "
+            "contributivo 2025, en dichos Centros."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/03/cc_ri_26_05_centros_de_preparacio_n_y_radicacio_n_de_planillas_2025.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-06",
+        category="carta-circular",
+        doc_number="CC RI 26-06",
+        doc_date="2026-03-13",
+        title=(
+            "Radicación de la Planilla de Contribución sobre Ingresos de Corporaciones correspondiente al año "
+            "contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Corporación para el año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/03/cc_ri_26-06_radicacion_electronica_planillas_de_corporaciones_2025_signed_13-marzo-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-03",
+        category="boletin-informativo",
+        doc_number="BI RI 26-03",
+        doc_date="2026-04-15",
+        title=(
+            "Nueva versión del Formulario Modelo SC 2745 “Poder y Declaración de Representación”"
+        ),
+        summary=(
+            "El Departamento emite este Boletín Informativo con el propósito de: (i) notificar la emisión de la nueva "
+            "versión del Modelo SC 2745, y (ii) notificar las reglas de transición para la utilización de esta nueva "
+            "versión."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/04/bi_ri_26-03_nueva_version_del_modelo_sc_2745_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-07",
+        category="carta-circular",
+        doc_number="CC RI 26-07",
+        doc_date="2026-04-17",
+        title=(
+            "Radicación de la Planilla Informativa de Organización Exenta de Contribución sobre Ingresos "
+            "correspondiente al año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Organización Exenta para el año contributivo "
+            "2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/04/cc_ri_26-07_radicacion_electronica_planilla_organizacion_sin_fines_2025_signed_17-abril-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-da-26-02",
+        category="determinacion-administrativa",
+        doc_number="DA 26-02",
+        doc_date="2026-04-23",
+        title=(
+            "Posposición de la fecha límite para pagar la contribución sobre ingresos adeudada del año contributivo "
+            "2025"
+        ),
+        summary=(
+            "A tales efectos, el Departamento de Hacienda (“Departamento”) emite esta Determinación Administrativa con "
+            "el propósito de posponer la fecha límite para el pago de la contribución sobre ingresos adeudada con la "
+            "Planilla de Contribución sobre Ingresos de Individuos, Formulario 482, correspondiente al año contributivo "
+            "2025 (“Planilla 2025”), para los empleados del DHS afectados."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/04/da_26-02_posposicion_fecha_limite_planilla_empleados_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-ddec-ib-2026-004",
+        category="boletin-informativo",
+        doc_number="IB DDEC 2026-004",
+        doc_date="2026-04-24",
+        title=(
+            "Clarifications and Frequently Asked Questions Regarding Amendments Enacted under Act No. 38-2026"
+        ),
+        summary=(
+            "This Informative Bulletin seeks to clarify the interpretation of certain amendments to the Incentives Code "
+            "upon the enactment of Act No. 38-2026 on March 10, 2026, particularly on the income tax rate and "
+            "alternatives applicable to individual resident investor (“IRI”) applications pending approval, "
+            "applications filed on or before December 31, 2026, updated requirements for compliance with the primary "
+            "residential property acquisition commitment under the tax exemption decrees, and on the prospective "
+            "applicability of Circular Letter No. DDEC 2026-001 issued by the OIN on January 12, 2026 (“CC 26-001”)."
+        ),
+        source_url="https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Informative%20Bulletin%20DDEC%20NO.%202026-004%20Final.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-08",
+        category="carta-circular",
+        doc_number="CC RI 26-08",
+        doc_date="2026-05-01",
+        title=(
+            "Periodo libre de Impuesto sobre Ventas y Uso por artículos y equipos para la temporada de huracanes"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer: (i) el "
+            "periodo de Exención del IVU en la compra de artículos y equipos de preparación para la temporada de "
+            "huracanes para el año natural 2026, y (ii) los artículos y equipos de preparación que estarán exentos del "
+            "IVU durante dicho periodo."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/cc_ri_26-08_exencion_anual_ivu_articulos_y_equipo_huracanes_2026_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-04",
+        category="boletin-informativo",
+        doc_number="BI RI 26-04",
+        doc_date="2026-05-08",
+        title=(
+            "Enlace para confirmar la cuenta de la institución financiera a ser utilizada para recibir el Alivio "
+            "Contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite este Boletín Informativo para notificar a los "
+            "contribuyentes que, a partir del lunes, 11 de mayo de 2026, el enlace para informar la cuenta de la "
+            "institución financiera (“Enlace”) estará disponible en SURI."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/bi_ri_26-04_alivio_contributivo_-_confirmacion_de_la_cuenta_de_banco_v.5.7.2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-09",
+        category="carta-circular",
+        doc_number="CC RI 26-09",
+        doc_date="2026-05-15",
+        title=(
+            "Radicación de la planilla de contribución sobre ingresos para negocios con decretos de exención "
+            "contributiva (Formulario 480.3(II)) para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Negocio Exento para el año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/cc_ri_26-09_radicacio_n_electro_nica_planillas_incentivos_2025.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-10",
+        category="carta-circular",
+        doc_number="CC RI 26-10",
+        doc_date="2026-05-20",
+        title=(
+            "Reglas aplicables al Cheque de Alivio Contributivo para los Trabajadores y la Clase Media para el año "
+            "contributivo 2025 conforme a la Resolución Conjunta 6-2026"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular para establecer los parámetros de "
+            "elegibilidad del Alivio Contributivo y la forma en que se efectuará el pago a los individuos elegibles."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/cc_ri_26-10_alivio_contributivo_2025_rc_6-2026_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-11",
+        category="carta-circular",
+        doc_number="CC RI 26-11",
+        doc_date="2026-06-01",
+        title=(
+            "Periodo libre de Impuesto sobre Ventas y Uso por regreso a la escuela para el año fiscal 2026-2027"
+        ),
+        summary=(
+            "El Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el propósito de establecer: (i) "
+            "el periodo de Exención del IVU en la compra de uniformes y materiales escolares para el año fiscal "
+            "2026-2027, y (ii) los artículos que estarán exentos del IVU durante dicho periodo."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-11_back_to_school_2026-2027_signed_1-junio-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-12",
+        category="carta-circular",
+        doc_number="CC RI 26-12",
+        doc_date="2026-06-26",
+        title=(
+            "Formulario 481.1, Planilla de Crédito para Personas de 65 años o más y Crédito Compensatorio para "
+            "Pensionados de Bajos Recursos, para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de: (i) notificar la "
+            "emisión de la nueva versión del Formulario 481.1 para el año contributivo 2025, y (ii) establecer el "
+            "procedimiento de radicación electrónica compulsoria a través de SURI de dicho formulario."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-12_formulario_481.1_seniors_-_ano_contributivo_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-05",
+        category="boletin-informativo",
+        doc_number="BI RI 26-05",
+        doc_date="2026-07-14",
+        title=(
+            "Compilación del Reglamento Núm. 8049 del Código de Rentas Internas de Puerto Rico de 2011 y sus enmiendas "
+            "en un solo documento de referencia"
+        ),
+        summary=(
+            "A tales efectos, el Departamento emite este Boletín Informativo con el propósito de notificar que ya está "
+            "disponible la Compilación de Reglamentos del Código y se puede acceder en nuestra página de internet: "
+            "www.hacienda.pr.gov, en la sección Reglamentos de Hacienda bajo el Código de Rentas Internas que se "
+            "encuentra ubicada en el área de Publicaciones."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/07/bi_ri_26-05_publicacion_de_la_compilacion_del_reglamento_8049_signed_13-julio-2026.pdf",
+    ),
+    PublicationRecord(
         id="pr-da-23-04",
         category="determinacion-administrativa",
         doc_number="DA 23-04",

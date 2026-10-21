@@ -52,7 +52,7 @@ def test_run_ingest_source_filters() -> None:
 
     pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
     assert pr_stats["statutes_considered"] > 0
-    assert pr_stats["publications_considered"] == 6
+    assert pr_stats["publications_considered"] == 26
 
     cfr_stats = run_ingest(db_path=":memory:", sources="cfr", dry_run=True)
     assert cfr_stats["statutes_considered"] > 0
@@ -180,6 +180,28 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "wy" / "wyo. const._art__15,_§_18.md").exists()
     assert (docs_out / "la" / "la. r.s._47_32.md").exists()
     assert (docs_out / "la" / "la. r.s._47_32_2022.md").exists()
+
+
+def test_2026_publications_cite_the_issuing_agency_pdf() -> None:
+    """Every 2026 Hacienda and DDEC publication in the seeds matches the catalog and its PDF."""
+    from taxcode_mcp.db import INITIAL_PUBLICATIONS
+
+    pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
+    pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
+    hacienda = [f"pr-cc-ri-26-{n:02d}" for n in range(1, 14)]
+    hacienda += [f"pr-bi-26-{n:02d}" for n in range(1, 6)] + ["pr-da-26-01", "pr-da-26-02"]
+    ddec = ["pr-ddec-cc-2026-001", "pr-ddec-ib-2026-004"]
+    for pid in hacienda + ddec:
+        assert pubs[pid] == pub_catalog[pid], pid
+        assert pubs[pid]["doc_date"].startswith("2026-"), pid
+        assert pubs[pid]["source_url"].endswith(".pdf"), pid
+    for pid in hacienda:
+        assert pubs[pid]["source_url"].startswith(
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/2026/"
+        ), pid
+    for pid in ddec:
+        assert pubs[pid]["source_url"].startswith("https://docs.pr.gov/files/DDEC/"), pid
+    assert "Act No. 38-2026" in pubs["pr-ddec-ib-2026-004"]["summary"]
 
 
 def test_check_upstream_endpoints() -> None:
