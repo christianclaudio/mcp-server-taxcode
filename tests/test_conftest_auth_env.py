@@ -18,3 +18,18 @@ def test_auth_env_cleared_for_each_test() -> None:
 
 def test_module_level_server_has_no_auth() -> None:
     assert server.mcp.auth is None
+
+
+def test_real_network_connects_are_refused() -> None:
+    """The autouse guard refuses any real socket connect, so no test can reach a host."""
+    import socket
+
+    import pytest
+
+    with pytest.raises(AssertionError, match="real network connection"):
+        socket.create_connection(("192.0.2.1", 443), timeout=0.01)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        with pytest.raises(AssertionError, match="real network connection"):
+            sock.connect(("192.0.2.1", 443))
+        with pytest.raises(AssertionError, match="real network connection"):
+            sock.connect_ex(("192.0.2.1", 443))

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import urllib.error
+import asyncio
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import duckdb
 import pytest
@@ -12,10 +12,13 @@ import pytest
 from scripts.ingest_statutes import (
     PUBLICATIONS_CATALOG,
     STATUTES_CATALOG,
+    UPSTREAM_ENDPOINTS,
+    _probe_upstream_endpoints,
     check_upstream_endpoints,
     main,
     run_ingest,
 )
+from tests.fake_network import FakeNetwork, answer
 
 
 def test_statute_and_publication_records_serialization() -> None:
@@ -52,7 +55,7 @@ def test_run_ingest_source_filters() -> None:
 
     pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
     assert pr_stats["statutes_considered"] > 0
-    assert pr_stats["publications_considered"] == 6
+    assert pr_stats["publications_considered"] == 26
 
     cfr_stats = run_ingest(db_path=":memory:", sources="cfr", dry_run=True)
     assert cfr_stats["statutes_considered"] > 0
@@ -157,6 +160,34 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     # Verify markdown subdirectories
     assert (docs_out / "us" / "irc_933.md").exists()
     assert (docs_out / "pr" / "ley60_2021_01.md").exists()
+    # A row with a source note says where its text came from; rows without one keep the bare URL.
+    source_2019 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10_2019.md")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.startswith("- **Source:**")
+    )
+    assert (
+        "— Text taken from the OGP compilation of Ley 60-2019 as revised with later" in source_2019
+    )
+    assert "Ley 65-2025's (e) and (f) removed; (d) checked against Ley 40-2020" in source_2019
+    assert "which added it effective April 16, 2020 (Section 97)" in source_2019
+    assert source_2019.endswith("its exact earlier wording is not on file.")
+    source_2025 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10_2025.md")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.startswith("- **Source:**")
+    )
+    assert "(d), (e) and (f) checked against Ley 65-2025, Article 31" in source_2025
+    source_2026 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10.md").read_text(encoding="utf-8").splitlines()
+        if line.startswith("- **Source:**")
+    )
+    assert source_2026.endswith("60-2019.pdf)")
     assert (docs_out / "ga" / "ocga_48_7_1.md").exists()
     assert (docs_out / "ca" / "rtc_17014.md").exists()
     assert (docs_out / "ny" / "nytax_605.md").exists()
@@ -182,24 +213,109 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "la" / "la. r.s._47_32_2022.md").exists()
 
 
-def test_check_upstream_endpoints() -> None:
-    """Test upstream endpoint health check with mocked responses."""
-    mock_resp = MagicMock()
-    mock_resp.getcode.return_value = 200
-    mock_resp.__enter__.return_value = mock_resp
-    mock_resp.__exit__.return_value = None
+def test_2026_publications_cite_the_issuing_agency_pdf() -> None:
+    """Every 2026 Hacienda and DDEC publication in the seeds matches the catalog and its PDF."""
+    from taxcode_mcp.db import INITIAL_PUBLICATIONS
 
-    with patch("urllib.request.urlopen", return_value=mock_resp):
+    pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
+    pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
+    hacienda = [f"pr-cc-ri-26-{n:02d}" for n in range(1, 14)]
+    hacienda += [f"pr-bi-26-{n:02d}" for n in range(1, 6)] + ["pr-da-26-01", "pr-da-26-02"]
+    ddec = ["pr-ddec-cc-2026-001", "pr-ddec-ib-2026-004"]
+    for pid in hacienda + ddec:
+        assert pubs[pid] == pub_catalog[pid], pid
+        assert pubs[pid]["doc_date"].startswith("2026-"), pid
+        assert pubs[pid]["source_url"].endswith(".pdf"), pid
+    for pid in hacienda:
+        assert pubs[pid]["source_url"].startswith(
+            "https://hacienda.pr.gov/sites/default/files/publicaciones/2026/"
+        ), pid
+    for pid in ddec:
+        assert pubs[pid]["source_url"].startswith("https://docs.pr.gov/files/DDEC/"), pid
+    assert "Act No. 38-2026" in pubs["pr-ddec-ib-2026-004"]["summary"]
+
+
+UPSTREAM_HOSTS = [
+    "uscode.house.gov",
+    "www.ecfr.gov",
+    "hacienda.pr.gov",
+    "bvirtualogp.pr.gov",
+    "dor.georgia.gov",
+]
+PUBLIC_IP = "93.184.215.14"
+
+
+def test_check_upstream_endpoints_connects_only_to_checked_addresses() -> None:
+    """Each host is looked up once and dialled at the checked IP; SNI and Host keep the name."""
+    net = FakeNetwork()
+    with net.patches(), patch("socket.getaddrinfo", return_value=answer(PUBLIC_IP)) as dns:
         res = check_upstream_endpoints()
-        assert "OLRC_USLM" in res
-        assert "Georgia_DOR" in res
-        assert res["OLRC_USLM"]["status"] == "reachable"
-        assert res["Georgia_DOR"]["status"] == "reachable"
+    assert set(res) == set(UPSTREAM_ENDPOINTS)
+    assert all(r["status"] == "reachable" and r["code"] == 200 for r in res.values())
+    assert [c.args[0] for c in dns.call_args_list] == UPSTREAM_HOSTS
+    # One connection per hostname, even though every host shares the address.
+    assert net.connects == [(PUBLIC_IP, 443)] * len(UPSTREAM_HOSTS)
+    assert net.tls_server_names == UPSTREAM_HOSTS
+    for host in UPSTREAM_HOSTS:
+        assert f"\r\nHost: {host}\r\n".encode() in net.sent
+    assert b"\r\nUser-Agent: TaxCode-MCP-Sync/1.0 " in net.sent
 
-    with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("Connection refused")):
-        res_err = check_upstream_endpoints()
-        assert "OLRC_USLM" in res_err
-        assert res_err["OLRC_USLM"]["status"] == "unreachable_or_blocked"
+
+def test_check_upstream_endpoints_ignores_environment_proxies(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("HTTPS_PROXY", "http://proxy.vendor.test:3128")
+    monkeypatch.setenv("ALL_PROXY", "http://proxy.vendor.test:3128")
+    net = FakeNetwork()
+    with net.patches(), patch("socket.getaddrinfo", return_value=answer(PUBLIC_IP)):
+        res = check_upstream_endpoints()
+    assert all(r["status"] == "reachable" for r in res.values())
+    assert net.connects == [(PUBLIC_IP, 443)] * len(UPSTREAM_HOSTS)
+    assert b"CONNECT " not in net.sent
+
+
+@pytest.mark.parametrize("reserved", ["10.0.0.5", "198.18.0.1", "169.254.169.254"])
+def test_check_upstream_endpoints_refuses_reserved_addresses(reserved: str) -> None:
+    """A host resolving to a non-global address is reported blocked and never dialled."""
+    net = FakeNetwork()
+    with net.patches(), patch("socket.getaddrinfo", return_value=answer(PUBLIC_IP, reserved)):
+        res = check_upstream_endpoints()
+    assert net.attempts == []
+    for r in res.values():
+        assert r["status"] == "unreachable_or_blocked"
+        assert "SSRF validation blocked request" in r["error"] and reserved in r["error"]
+
+
+def test_check_upstream_endpoints_refuses_a_literal_reserved_url() -> None:
+    """The URL check runs before the transport: a literal metadata address is never fetched."""
+    net = FakeNetwork()
+    endpoints = {"meta": "http://169.254.169.254/latest/meta-data"}
+    with net.patches(), patch("socket.getaddrinfo") as dns:
+        res = asyncio.run(_probe_upstream_endpoints(endpoints))
+    dns.assert_not_called()
+    assert net.attempts == []
+    assert res["meta"]["status"] == "unreachable_or_blocked"
+
+
+def test_check_upstream_endpoints_does_not_follow_redirects() -> None:
+    """A 3xx is reported, not followed to a target the SSRF check never saw."""
+    net = FakeNetwork(status=302)
+    with net.patches(), patch("socket.getaddrinfo", return_value=answer(PUBLIC_IP)) as dns:
+        res = check_upstream_endpoints()
+    assert dns.call_count == len(UPSTREAM_HOSTS)
+    assert len(net.connects) == len(UPSTREAM_HOSTS)
+    assert len(net.requests_by_connection()[0]) == 1
+    for r in res.values():
+        assert r["status"] == "redirect_not_followed" and r["code"] == 302
+
+
+def test_check_upstream_endpoints_reports_http_errors() -> None:
+    net = FakeNetwork(status=503)
+    with net.patches(), patch("socket.getaddrinfo", return_value=answer(PUBLIC_IP)):
+        res = check_upstream_endpoints()
+    for r in res.values():
+        assert r["status"] == "unreachable_or_blocked"
+        assert "503" in r["error"]
 
 
 def test_main_cli_invocations(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:

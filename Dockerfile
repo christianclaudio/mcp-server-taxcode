@@ -1,13 +1,32 @@
 # Multi-stage build for mcp-server-taxcode
 # Produces a minimal runtime image (~150MB) with no dev tooling.
 #
-# The base image is the Docker Official python image (python:3.14-slim), pulled
-# from Docker Hub by tag. Dependabot's docker ecosystem watches it for updates.
+# The base image is the Docker Official python image pulled from Docker Hub,
+# pinned by its multi-arch index digest. Dependabot's docker ecosystem keeps the
+# digest current.
 # No `# syntax=` line: the Dockerfile uses only features of BuildKit's built-in
 # frontend, so no frontend image is pulled.
 
+# FastMCP's October 2026 certificate authority incident notice says to update the
+# container's OS trust store: older base images ship a ca-certificates that predates the fix.
+# Debian shipped 20250419+deb13u1 in trixie-security. Both stages upgrade the package and
+# fail the build if the installed version is older than this floor, so a base image change
+# cannot drop the fix. The builder does it before any pip runs, because pip trusts the OS
+# store as well as its bundled certifi.
+# https://github.com/PrefectHQ/fastmcp/pull/5945 (notice) and
+# https://security-tracker.debian.org/tracker/DSA-6572-1 (Debian floor)
+ARG CA_CERTIFICATES_FLOOR=20250419+deb13u1
+
 # ─── Stage 1: Builder ─────────────────────────────────────────────────────────
-FROM python:3.14-slim AS builder
+FROM python:3.14-slim@sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a AS builder
+
+ARG CA_CERTIFICATES_FLOOR
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends --only-upgrade ca-certificates && \
+    rm -rf /var/lib/apt/lists/* && \
+    installed="$(dpkg-query -W -f='${Version}' ca-certificates)" && \
+    { dpkg --compare-versions "$installed" ge "$CA_CERTIFICATES_FLOOR" || \
+      { echo "ca-certificates $installed is older than the floor $CA_CERTIFICATES_FLOOR" >&2; exit 1; }; }
 
 WORKDIR /app
 
@@ -15,6 +34,7 @@ WORKDIR /app
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+COPY docker/pip-bootstrap.txt /tmp/pip-bootstrap.txt
 COPY pyproject.toml README.md LICENSE ./
 COPY src/ src/
 
@@ -24,15 +44,30 @@ COPY src/ src/
 ARG UV_DYNAMIC_VERSIONING_BYPASS
 ENV UV_DYNAMIC_VERSIONING_BYPASS=${UV_DYNAMIC_VERSIONING_BYPASS}
 
-RUN pip install --no-cache-dir --upgrade pip && \
+# pip 26.2.2 updates the certificates pip bundles, per FastMCP's October 2026 certificate
+# authority incident notice. This image builds with pip, not uv, so pip carries the floor.
+# https://github.com/PrefectHQ/fastmcp/blob/main/SECURITY.md#certificate-authority-incident-october-2026
+# The bootstrap installs pip from a hash-pinned wheel (docker/pip-bootstrap.txt, --require-hashes),
+# so it does not depend on the TLS trust of the base image's older pip and certifi; the maintainer
+# who raises the pip floor updates that pin and its sha256 (Dependabot does not track the file).
+RUN pip install --no-cache-dir --require-hashes --only-binary=:all: -r /tmp/pip-bootstrap.txt && \
     pip install --no-cache-dir .
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM python:3.14-slim AS runtime
+FROM python:3.14-slim@sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a AS runtime
 
 # MCP Registry ownership check for the OCI package: must equal server.json "name".
 # https://modelcontextprotocol.io/registry/package-types#docker%2Foci-images
 LABEL io.modelcontextprotocol.server.name="io.github.christianclaudio/taxcode"
+
+# OS trust store update and floor check, the same as the builder (see CA_CERTIFICATES_FLOOR).
+ARG CA_CERTIFICATES_FLOOR
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends --only-upgrade ca-certificates && \
+    rm -rf /var/lib/apt/lists/* && \
+    installed="$(dpkg-query -W -f='${Version}' ca-certificates)" && \
+    { dpkg --compare-versions "$installed" ge "$CA_CERTIFICATES_FLOOR" || \
+      { echo "ca-certificates $installed is older than the floor $CA_CERTIFICATES_FLOOR" >&2; exit 1; }; }
 
 # Security: run as non-root
 RUN useradd --create-home --shell /bin/bash mcp

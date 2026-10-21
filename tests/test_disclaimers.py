@@ -167,7 +167,11 @@ def test_act60_seeds_cite_primary_sources() -> None:
     iri = seeds["pr-ley60-2022-01"]
     assert iri["source_url"].endswith("/PDF/2020/0038-2026.pdf")
     assert "interest, dividends, and capital gains" in iri["text_en"]
-    assert "5%" in iri["text_en"] and "5%" in iri["text_es"]
+    assert "5%" in iri["text_en"] and "cuatro por ciento (4%)" in iri["text_es"]
+    # The 5% capital gain rate is in Section 2022.02, which Act 38-2026 also restates.
+    gains = seeds["pr-ley60-2022-02"]
+    assert gains["source_url"] == iri["source_url"]
+    assert "cinco por ciento (5%)" in gains["text_es"]
     assert "before Jan 1, 2036" in iri["text_en"] and "before Jan 1, 2056" in iri["text_en"]
     assert "antes del 1 de enero de 2036" in iri["text_es"]
     assert "antes del 1 de enero de 2056" in iri["text_es"]

@@ -164,7 +164,8 @@ def test_search_spanish_preference(db: TaxDatabase) -> None:
     assert (row["snippet_language"], "933" in row["snippet"]) == ("en", True)
 
 
-# Catalog-only rows seeded after the orders below were recorded.
+# Catalog-only rows seeded after the orders below were recorded, and rows whose summary
+# was later replaced by the full statutory text (pr-ley60-2022-01, by Act 38-2026).
 SEEDED_AFTER_735477D = frozenset(
     {
         "us-irc-957",
@@ -174,7 +175,13 @@ SEEDED_AFTER_735477D = frozenset(
         "pr-cri-1062-01",
         "pr-ley60-6070-55",
         "pr-ley60-6020-10",
+        "pr-ley60-6020-10-2019",
+        "pr-ley60-6020-10-2025",
         "pr-cri-1062-03",
+        "pr-ley60-1020-02",
+        "pr-ley60-2022-01",
+        "pr-ley60-2022-02",
+        "pr-ley60-6020-03",
     }
 )
 
@@ -199,7 +206,8 @@ def test_ranking_unchanged(db: TaxDatabase, query: str, expected: list[str]) -> 
 
     Rows seeded later slot in between; the earlier rows keep their relative order.
     """
-    ids = [r["id"] for r in db.search_statutes(query=query, limit=10)]
+    # Wide enough that the later rows slotting in cannot push a recorded row off the page.
+    ids = [r["id"] for r in db.search_statutes(query=query, limit=20)]
     assert [i for i in ids if i not in SEEDED_AFTER_735477D][: len(expected)] == expected
 
 

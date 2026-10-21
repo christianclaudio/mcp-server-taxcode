@@ -14,7 +14,8 @@ obscured IPv4 forms (decimal, octal, hex, and short dotted forms).
 DNS rebinding is a separate, request-time check. Use
 :func:`validate_resolved_host` (off the event loop; see
 ``SSRFSafeAsyncTransport``) so a public name cannot resolve to an internal
-address at connect time.
+address at connect time. It returns the addresses it checked; connect to one of
+them rather than resolving the name again.
 """
 
 from __future__ import annotations
@@ -165,15 +166,17 @@ def validate_outbound_url(
     return candidate
 
 
-def validate_resolved_host(hostname: str) -> None:
+def validate_resolved_host(hostname: str) -> tuple[str, ...]:
     """Reject a hostname that is, or resolves to, a non-global address.
 
-    ``example.com`` and names under it skip DNS so placeholder templates stay
-    usable offline. Run this in a worker thread when calling from an event loop.
+    Returns the checked addresses in resolver order: the address itself for an IP
+    literal, and an empty tuple for ``example.com`` and names under it, which skip
+    DNS so placeholder templates stay usable offline. Run this in a worker thread
+    when calling from an event loop.
     """
     host = hostname.rstrip(".").lower()
     if host == "example.com" or host.endswith(".example.com"):
-        return
+        return ()
 
     literal = _literal_ip(host)
     if literal is not None:
@@ -183,7 +186,7 @@ def validate_resolved_host(hostname: str) -> None:
                 reason="blocked_ip",
                 hostname=host,
             )
-        return
+        return (str(literal),)
 
     try:
         resolved = socket.getaddrinfo(host, None)
@@ -194,9 +197,8 @@ def validate_resolved_host(hostname: str) -> None:
             hostname=host,
         ) from exc
 
-    found = False
+    checked: list[str] = []
     for _, _, _, _, sockaddr in resolved:
-        found = True
         resolved_ip = ipaddress.ip_address(sockaddr[0])
         if _ip_is_blocked(resolved_ip):
             raise SSRFValidationError(
@@ -205,12 +207,15 @@ def validate_resolved_host(hostname: str) -> None:
                 hostname=host,
                 resolved_ip=str(sockaddr[0]),
             )
-    if not found:
+        if str(resolved_ip) not in checked:
+            checked.append(str(resolved_ip))
+    if not checked:
         raise SSRFValidationError(
             f"Could not resolve hostname: {host}",
             reason="dns_failure",
             hostname=host,
         )
+    return tuple(checked)
 
 
 def _host_set(hosts: Collection[str] | str | None) -> frozenset[str] | None:

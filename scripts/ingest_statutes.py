@@ -9,25 +9,28 @@ and generates standardized llms.txt documentation files.
 from __future__ import annotations
 
 import argparse
+import asyncio
 import hashlib
 import json
 import logging
 import os
 import re
 import sys
-import urllib.error
-import urllib.request
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
+import httpx
+
+from taxcode_mcp.client import SSRFSafeAsyncTransport
 from taxcode_mcp.db import (
     ECFR_TITLE26_DATE,
     USLM_TITLE26_RELEASE_POINT,
     USLM_TITLE26_SOURCE_URL,
     TaxDatabase,
 )
+from taxcode_mcp.ssrf import validate_outbound_url
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("ingest_statutes")
@@ -50,6 +53,8 @@ class StatuteRecord:
     superseded_year: int | None = None
     cross_references: list[str] = field(default_factory=list)
     breadcrumbs: str = ""
+    # Export-only provenance note appended to the docs Source line; not stored in the database.
+    source_note: str = ""
 
     def content_hash(self) -> str:
         """Compute a SHA-256 checksum of the bilingual text payload."""
@@ -4174,23 +4179,161 @@ STATUTES_CATALOG: list[StatuteRecord] = [
     ),
     # Puerto Rico Incentives Code (Ley 60-2019)
     StatuteRecord(
+        id="pr-ley60-1020-02",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 1020.02",
+        section="1020.02",
+        title="Definiciones Aplicables a Actividades de Individuos",
+        text_en=(
+            "English summary; the official text is in Spanish. Defines the terms used for the individual activities in "
+            "Chapter 2 of Subtitle B of the Incentives Code. Paragraph (4), as amended by Act 38-2026 (approved March "
+            "10, 2026, per the approval stamp on page 1 of the Departamento de Estado certified copy, "
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in force on approval under "
+            "its Article 8), defines a Resident Individual Investor: an individual eligible for the benefits of "
+            "Sections 2022.01 and 2022.02 who is a Resident Individual of Puerto Rico, was not a Resident Individual of "
+            "Puerto Rico between January 17, 2006 and January 17, 2012, and becomes one no later than the taxable year "
+            "ending December 31, 2055. Students studying outside Puerto Rico who lived in Puerto Rico before leaving, "
+            "personnel temporarily working outside Puerto Rico for the Government of Puerto Rico, its agencies and "
+            "instrumentalities, and people in similar situations do not qualify, because their domicile stays in Puerto "
+            "Rico while they live outside it. For applications submitted after December 31, 2026, the individual must "
+            "show that they were not a resident of Puerto Rico for at least six (6) years before moving to Puerto Rico. "
+            "The other paragraphs define Special Agreement for the Creation of Businesses (1), Mi Futuro (2), Eligible "
+            "Dividends of Qualified Physicians (3), Eligible Income of a Qualified Physician (5), Institution of Higher "
+            "Education (6), Eligible Scientific Research (7), Eligible Researcher or Scientist (8), Young Entrepreneur "
+            "(9), Qualified Physician (10), Medical Services Business (11), Other Assets (12), Hard-to-Recruit "
+            "Professional (13), Professional Medical Services (14) and Full Time (15)."
+        ),
+        text_es=(
+            "(a) Para propósitos de actividades relacionadas con el Capítulo 2 del Subtítulo B de este Código "
+            "relacionado con actividades que lleven a cabo individuos, los términos, frases y palabras tendrán el "
+            "significado y alcance que se expresan a continuación:\n"
+            "(1) Acuerdo Especial para la Creación de Empresas. — Significa el Acuerdo que se lleve a cabo entre un "
+            "Joven Empresario (según se define en este apartado) y el Secretario del DDEC. El Joven Empresario deberá "
+            "comprometerse al desarrollo de su empresa, a la creación de empleos, y a otras condiciones, según aplique, "
+            "a cambio de los beneficios aplicables que se disponen en este Código. Los beneficios aplicables se "
+            "enumerarán específicamente en el Acuerdo. El Acuerdo establecerá el término de su vigencia y vencerá "
+            "cuando los beneficios que se conceden en él caduquen, según las disposiciones de este Código y las "
+            "obligaciones pactadas en el Acuerdo.\n"
+            "(2) Mi Futuro. — significa el programa de plan de ahorro para estudiantes establecido en la Sección "
+            "2026.01 de este Código.\n"
+            "(3) Dividendos Elegibles de Médicos Cualificados. — Significa los dividendos provenientes de Ingresos "
+            "Elegibles de Médicos Cualificados, que declara un Negocio de Servicios Médicos a favor de un Médico "
+            "Cualificado, computado de conformidad con el Código de Rentas Internas.\n"
+            "(4) Individuo Residente Inversionista. — Significa un individuo elegible para obtener los beneficios de "
+            "las Secciones 2022.01 y 2022.02 de este Código y que es un Individuo Residente de Puerto Rico, que no haya "
+            "sido un Individuo Residente de Puerto Rico entre el 17 de enero de 2006 y el 17 de enero de 2012, y que se "
+            "convierta en un Individuo Residente de Puerto Rico no más tarde del Año Contributivo que finaliza el 31 de "
+            "diciembre de 2055. Los estudiantes que cursen estudios fuera de Puerto Rico que residían en Puerto Rico "
+            "antes de marcharse a estudiar, el personal que trabaje fuera de Puerto Rico temporalmente para el Gobierno "
+            "de Puerto Rico, sus agencias e instrumentalidades, y personas en situaciones similares a las antes "
+            "descritas, no cualificarán para considerarse como Individuos Residentes Inversionistas, ya que su "
+            "domicilio en estos casos continúa siendo Puerto Rico por el período en que residan fuera de nuestra "
+            "jurisdicción. Para solicitudes sometidas después del 31 de diciembre de 2026, el individuo deberá "
+            "demostrar que no fue residente de Puerto Rico durante un mínimo de seis (6) años previos a la fecha de "
+            "mudarse a Puerto Rico.\n"
+            "(5) Ingreso Elegible de Médico Cualificado. — Significa el ingreso neto que se deriva de la prestación de "
+            "Servicios Médicos Profesionales que se ofrecen en Puerto Rico, computado de conformidad con el Código de "
+            "Rentas Internas.\n"
+            "(6) Institución de Educación Superior. — Significa una institución educativa, pública o privada, "
+            "acreditada conforme a la Ley 212-2018, según enmendada, conocida como “Ley de Registro y Licenciamiento de "
+            "Instituciones de Educación” o por la Middle States Commission on Higher Education de la Middle States "
+            "Association of Colleges and Schools.\n"
+            "(7) Investigaciones Científicas Elegibles. — Significa cualquier investigación que lleve a cabo la "
+            "Universidad de Puerto Rico u otra Institución de Educación Superior que reciba una concesión (grant) "
+            "obtenida mediante una propuesta revisada por pares (peer reviewed) en una competencia abierta para obtener "
+            "dicha concesión, para llevar a cabo un proyecto de investigación u otro proyecto similar incluyendo "
+            "concesiones para entrenamiento, desarrollo de capacidades profesionales o desarrollo de la fuerza "
+            "trabajadora (training, capacity development, and workforce development), de cualquiera de las "
+            "organizaciones que componen los Institutos Nacionales de Salud o bajo programas o mecanismos similares "
+            "auspiciados por cualquier otra agencia federal que promueva la investigación científica competitiva, "
+            "incluyendo pero sin limitarse a, la Fundación Nacional de Ciencia (National Science Foundation), "
+            "Departamento de Energía, Departamento de Defensa, NASA, NOAA, Agencia de Protección Ambiental, entre "
+            "otras. Incluirán, además, las concesiones resultado de propuestas competitivas que provengan de "
+            "fundaciones privadas, otras organizaciones sin fines de lucro, o empresas privadas que provean concesiones "
+            "competitivas para la investigación y desarrollo. Se consideran elegibles aquellas concesiones de "
+            "propuestas competitivas donde la competencia esté restringida a poblaciones minoritarias (underserved "
+            "minorities) según las definiciones de minorías a nivel federal. Serán elegibles también las concesiones "
+            "por subcontrato de propuestas competitivas (research subawards) donde el investigador principal del "
+            "subcontrato es una Persona Doméstica.\n"
+            "(8) Investigador o Científico Elegible. — Significa un Persona Doméstica, durante el Año Contributivo, "
+            "contratado por la Universidad de Puerto Rico u otra Institución de Educación Superior autorizada a operar "
+            "en Puerto Rico, que se dedique, entre otras funciones docentes a llevar a cabo Investigaciones Científicas "
+            "Elegibles y que haya sometido una propuesta de investigación científica una organización de las descritas "
+            "en la definición de Investigaciones Científicas Elegibles y que, con la aprobación de la propuesta, la "
+            "institución académica reciba una concesión (grant) para investigación, según la definición de "
+            "Investigaciones Científicas Elegibles, cuya cuantía cubra los costos de investigación, incluyendo, entre "
+            "otros, la compensación del Investigador y del personal clave, compra de equipos y suministros, "
+            "publicaciones y otros gastos relacionados, según sea aplicable. Salvo en el caso de Investigadores "
+            "Principales Múltiples (Multiple Principal Investigators or Multi PI’s), no habrá más de un individuo "
+            "elegible para esta deducción por concesión aprobada, según la definición de Investigaciones Científicas "
+            "Elegibles, incluyendo las concesiones por subcontrato.\n"
+            "(9) Joven Empresario. — Significará todo Individuo Residente de Puerto Rico, cuya edad fluctúe entre los "
+            "dieciséis (16) y treinta y cinco (35) años de edad, que interese crear y operar a largo plazo una nueva "
+            "empresa en Puerto Rico, por un término indefinido, y que haya obtenido su diploma de escuela superior o "
+            "una certificación equivalente del Departamento de Educación de Puerto Rico, o que aún se encuentren "
+            "cursando estudios y presenten evidencia que certifique que cursan estudios conducentes a obtener un "
+            "certificado o diploma de escuela superior conforme a los criterios que se adopten por reglamento.\n"
+            "(10) Médico Cualificado. — Significa un individuo admitido a la práctica de la medicina general o de "
+            "cualquier especialidad, de la podiatría; de la audiología; de la quiropráctica; de la optometría; sea "
+            "un(a) cirujano(a) dentista o practique alguna especialidad de la odontología y que ejerce a Tiempo "
+            "Completo su profesión. Esta definición incluye a los médicos que se encuentran cursando sus estudios de "
+            "residencia como parte de un programa acreditado.\n"
+            "(11) Negocio de Servicios Médicos. — Significa cualquier corporación de servicios profesionales o compañía "
+            "de responsabilidad limitada que preste Servicios Médicos Profesionales en Puerto Rico, ya sea una Entidad "
+            "doméstica o una Entidad foránea, y que esté autorizada para hacer negocios en Puerto Rico.\n"
+            "(12) Otros Activos. — Significa mercancías (commodities), monedas, y cualquier activo digital basado en la "
+            "tecnología de cadenas de bloques (blockchain).\n"
+            "(13) Profesional de Difícil Reclutamiento. — Significa un individuo elegible para obtener los beneficios "
+            "de la Sección 2022.03 de este Código y que es un Individuo Residente de Puerto Rico, con un empleo a "
+            "tiempo completo, cuyo talento sea indispensable por su conocimiento especializado para las operaciones de "
+            "un Negocio Exento bajo este Código o Leyes de Incentivos Anteriores. El término “difícil reclutamiento” "
+            "será definido mediante el Reglamento de Incentivos.\n"
+            "(14) Servicios Médicos Profesionales. — Significa servicios de diagnóstico y tratamiento que ofrece un "
+            "Médico Cualificado.\n"
+            "(15) Tiempo Completo. — Significa que un Médico Cualificado dedica al menos cien (100) horas mensuales a "
+            "ofrecer Servicios Médicos Profesionales en un hospital público o privado, en una agencia federal o "
+            "estatal, en una oficina privada dedicada a ofrecer Servicios Médicos Profesionales o en una escuela de "
+            "medicina acreditada.\n"
+            "[Nota: El párrafo (4) del apartado (a) fue enmendado por la Ley 38-2026, aprobada el 10 de marzo de 2026 "
+            "según el sello de aprobación en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
+        ),
+        effective_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=["Ley 60-2019 Sec. 2022.01", "Ley 60-2019 Sec. 2022.02"],
+        breadcrumbs="Ley 60-2019 > Subtítulo A > Capítulo 2 > Sección 1020.02",
+    ),
+    StatuteRecord(
         id="pr-ley60-2021-01",
         jurisdiction="PR",
         corpus="LEY60",
         citation="Ley 60-2019 Sec. 2021.01",
         section="2021.01",
-        title="Individuos Residentes Inversionistas - Cualificación",
+        title="Individuos Inversionistas que se Trasladen a Puerto Rico",
         text_en=(
-            "Establishes eligibility criteria for Individual Resident Investors under Act 60 Chapter 2 (formerly Act 22), "
-            "requiring non-residency in Puerto Rico during the 10 preceding years and acquisition of primary residential property."
+            "English summary; the official text is in Spanish. Any Resident Individual Investor, as defined in Section "
+            "1020.02(a)(4), may ask the Secretary of the DDEC for the economic benefits of Subchapter B of Chapter 2 "
+            "(Sections 2022.01 to 2022.07: interest and dividends, the Resident Individual Investor's capital gains, "
+            "Hard-to-Recruit Professionals, Qualified Physicians, researchers or scientists, the student loan repayment "
+            "program for physicians or dentists, and Resident Individual Investor trusts), subject to the limitation in "
+            "Section 2022.03(b): a Hard-to-Recruit Professional who takes the Section 2022.03 benefit cannot also "
+            "benefit from Sections 2022.01 and 2022.02."
         ),
         text_es=(
-            "Establece requisitos para acogerse al Capítulo 2 del Código de Incentivos (ex-Ley 22), incluyendo no haber sido "
-            "residente de Puerto Rico durante los 10 años anteriores y adquirir una residencia principal en la isla."
+            "Cualquier Individuo Residente Inversionista podrá solicitarle al Secretario del DDEC los beneficios "
+            "económicos que se proveen en el Subcapítulo B de este Capítulo, sujeto a la limitación provista en la "
+            "Sección 2022.03(b)."
         ),
         effective_year=2019,
         source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
-        cross_references=["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
+        cross_references=[
+            "Ley 60-2019 Sec. 2022.01",
+            "26 U.S.C. § 933",
+            "Ley 60-2019 Sec. 1020.02",
+            "Ley 60-2019 Sec. 6020.10",
+        ],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2021.01",
     ),
     StatuteRecord(
@@ -4199,19 +4342,27 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="LEY60",
         citation="Ley 60-2019 Sec. 2022.01",
         section="2022.01",
-        title="Exención Contributiva sobre Ganancias de Capital e Intereses",
+        title=(
+            "Exención al Ingreso por Intereses y Dividendos Devengados por Individuo Residente Inversionista"
+        ),
         text_en=(
-            "Provides 100% tax exemption on post-residency interest, dividends, and capital "
-            "gains recognized before Jan 1, 2036. Net long-term capital gain attributable to "
-            "pre-residency appreciation and recognized after 10 years of residency is taxed at "
-            "5% (Section 2022.02) if recognized before Jan 1, 2036."
+            "English summary; the text of this version is not in the catalog. Interest and dividends from all sources "
+            "that a Resident Individual Investor earns after becoming a Puerto Rico resident and before January 1, "
+            "2036, including those from a registered investment company described in Section 1112.01 of the Puerto Rico "
+            "Internal Revenue Code, are fully exempt from Puerto Rico income tax, including the alternative basic tax. "
+            "So are interest, financing charges, dividends and partnership distributive shares received in that period "
+            "from International Banking Entities authorized under the International Banking Center Act. Capital gains "
+            "are governed by Section 2022.02, not by this section."
         ),
         text_es=(
-            "Dispone exención total (100%) sobre intereses, dividendos y ganancias de capital "
-            "posteriores a la residencia reconocidos antes del 1 de enero de 2036. La ganancia "
-            "neta de capital a largo plazo atribuible a apreciación previa a la residencia, "
-            "reconocida luego de 10 años de residencia, tributa al 5% (Sección 2022.02) si se "
-            "reconoce antes del 1 de enero de 2036."
+            "Resumen. Los intereses y dividendos de todas las fuentes que devengue un Individuo Residente Inversionista "
+            "luego de advenir residente de Puerto Rico y antes del 1 de enero de 2036, incluidos los de una compañía "
+            "inscrita de inversiones descrita en la Sección 1112.01 del Código de Rentas Internas de Puerto Rico, están "
+            "totalmente exentos de la contribución sobre ingresos de Puerto Rico, incluida la contribución básica "
+            "alterna. También lo están los intereses, cargos por financiamiento, dividendos y participaciones en "
+            "beneficios de sociedades recibidos en ese periodo de Entidades Bancarias Internacionales autorizadas "
+            "conforme a la “Ley del Centro Bancario”. La ganancia de capital se rige por la Sección 2022.02, no por "
+            "esta sección."
         ),
         effective_year=2019,
         superseded_year=2026,
@@ -4225,34 +4376,208 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         corpus="LEY60",
         citation="Ley 60-2019 Sec. 2022.01",
         section="2022.01",
-        title="Exención Contributiva sobre Ganancias de Capital e Intereses",
+        title=(
+            "Exención al Ingreso por Intereses y Dividendos Devengados por Individuo Residente Inversionista"
+        ),
         text_en=(
-            "Provides full (0%) exemption on post-residency interest, dividends, and capital "
-            "gains for decree applications filed on or before Dec 31, 2026 (through Jan 1, "
-            "2036). Under Act 38-2026, applications filed on or after Jan 1, 2027 pay a 4% fixed "
-            "rate on post-residency interest, dividends, and capital gains (through Jan 1, "
-            "2056). Net long-term capital gain attributable to pre-residency appreciation and "
-            "recognized after 10 years of residency is taxed at 5% (Section 2022.02) if "
-            "recognized before Jan 1, 2036 (applications filed through 2026) or before Jan 1, "
-            "2056 (applications filed from 2027)."
+            "English summary; the official text is in Spanish. Section as amended by Act 38-2026 (approved March 10, "
+            "2026, per the approval stamp on page 1 of the Departamento de Estado certified copy, "
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in force on approval under "
+            "its Article 8). (a) For a Resident Individual Investor who applied for a decree under Sections 2022.01 and "
+            "2022.02 on or before December 31, 2026: interest and dividends from all sources earned after becoming a "
+            "Puerto Rico resident but before January 1, 2036, including those from a registered investment company "
+            "described in Section 1112.01 of the Puerto Rico Internal Revenue Code, are fully exempt from Puerto Rico "
+            "income tax, including the alternative basic tax; so are interest, financing charges, dividends and "
+            "partnership distributive shares received from International Banking Entities authorized under the "
+            "International Banking Center Act, earned in the same period. (b) For an investor who applied on or after "
+            "January 1, 2027: such interest and dividends earned after becoming a resident but before January 1, 2056 "
+            "are taxed at a 4% fixed preferential rate instead of any higher income tax, including the alternative "
+            "basic tax (1), unless a more favorable rate applies under the Incentives Code, the Puerto Rico Internal "
+            "Revenue Code or any other law (2). Either way, the treatment applies only while the decree has not been "
+            "revoked under Section 6020.09(a). Section 2022.02 sets the companion capital gain rules, so the decree "
+            "covers interest, dividends, and capital gains: for applications filed through 2026, 5% on pre-residency "
+            "appreciation recognized after ten years of residency and before Jan 1, 2036 and full exemption on "
+            "post-residency appreciation recognized before Jan 1, 2036; for applications filed from 2027, 5% on "
+            "pre-residency appreciation recognized after ten years of residency and before Jan 1, 2056 and 4% on "
+            "post-residency appreciation recognized before Jan 1, 2056."
         ),
         text_es=(
-            "Dispone exención total (0%) sobre intereses, dividendos y ganancias de capital "
-            "posteriores a la residencia para solicitudes de decreto radicadas en o antes del 31 "
-            "de diciembre de 2026 (hasta el 1 de enero de 2036). Según la Ley 38-2026, las "
-            "solicitudes radicadas desde el 1 de enero de 2027 tributan a una tasa fija del 4% "
-            "sobre intereses, dividendos y ganancias de capital posteriores a la residencia "
-            "(hasta el 1 de enero de 2056). La ganancia neta de capital a largo plazo atribuible "
-            "a apreciación previa a la residencia, reconocida luego de 10 años de residencia, "
-            "tributa al 5% (Sección 2022.02) si se reconoce antes del 1 de enero de 2036 "
-            "(solicitudes radicadas hasta 2026) o antes del 1 de enero de 2056 (solicitudes "
-            "radicadas desde 2027)."
+            "(a) El ingreso de todas las fuentes que devengue un Individuo Residente Inversionista, luego de haber "
+            "advenido residente de Puerto Rico, pero antes del 1 de enero de 2036, que conste de intereses y "
+            "dividendos, incluyendo, pero sin limitarse a, intereses y dividendos que provengan de una compañía "
+            "inscrita de inversiones, según descrita en la Sección 1112.01 del Código de Rentas Internas de Puerto "
+            "Rico, estará totalmente exento del pago de contribuciones sobre ingresos de Puerto Rico, incluyendo la "
+            "contribución básica alterna provista en el Código de Rentas Internas de Puerto Rico. Además, el ingreso "
+            "derivado por un Individuo Residente Inversionista luego de haber advenido residente de Puerto Rico, pero "
+            "antes del 1 de enero de 2036, que conste de intereses, cargos por financiamiento, dividendos o "
+            "participación en beneficio de sociedades recibidos de Entidades Bancarias Internacionales autorizadas "
+            "conforme a la “Ley del Centro Bancario”, estará totalmente exento del pago de contribuciones sobre "
+            "ingresos en Puerto Rico, incluyendo la contribución básica alterna provista en el Código de Rentas "
+            "Internas de Puerto Rico. Este inciso (a) será aplicable exclusivamente a todo Individuo Residente "
+            "Inversionista que presentó su solicitud para obtener un Decreto concediendo los beneficios de las "
+            "Secciones 2022.01 y 2022.02 de este Código en o antes del 31 de diciembre de 2026, siempre y cuando el "
+            "Decreto no hubiese sido revocado a tenor con la Sección 6020.09(a).\n"
+            "(b) Fuentes que devengue un Individuo Residente Inversionista-\n"
+            "(1) El ingreso de todas las fuentes que devengue un Individuo Residente Inversionista, luego de haber "
+            "advenido residente de Puerto Rico, pero antes del 1 de enero de 2056, que conste de intereses y "
+            "dividendos, incluyendo, pero sin limitarse a, intereses y dividendos que provengan de una compañía "
+            "inscrita de inversiones, según descrita en la Sección 1112.01 del Código de Rentas Internas de Puerto "
+            "Rico, estará sujeto a una tasa fija preferencial de contribución sobre ingresos de un cuatro por ciento "
+            "(4%), en lugar de cualquier otra contribución sobre ingresos mayor, si alguna, dispuesta por el Código de "
+            "Rentas Internas de Puerto Rico o cualquier otra ley, incluyendo la contribución básica alterna provista "
+            "por el Subtítulo A del Código de Rentas Internas de Puerto Rico.\n"
+            "(2) No obstante lo generalmente dispuesto en el párrafo (1) de este apartado (b), aquel ingreso de todas "
+            "las fuentes que devengue un Individuo Residente Inversionista, luego de haber advenido residente de Puerto "
+            "Rico, pero antes del 1 de enero de 2056, que conste de intereses y dividendos, incluyendo, pero sin "
+            "limitarse a, intereses y dividendos que provengan de una compañía inscrita de inversiones, según descrita "
+            "en la Sección 1112.01 del Código de Rentas Internas de Puerto Rico, que esté sujeto a una tasa "
+            "contributiva más favorable por disposición de este Código, del Código de Rentas Internas de Puerto Rico o "
+            "cualquier otra ley, estará sujeta al pago de contribuciones sobre ingresos conforme al tratamiento "
+            "contributivo más favorable en lugar de aquella contribución sobre ingresos dispuesta en el párrafo (1) de "
+            "este apartado (b).\n"
+            "(3) Los párrafos (1) y (2) de este apartado (b) serán aplicable exclusivamente a todo Individuo Residente "
+            "Inversionista que presentó su solicitud para obtener un Decreto concediendo los beneficios de las "
+            "Secciones 2022.01 y 2022.02 de este Código en o luego del 1 de enero de 2027, siempre y cuando el Decreto "
+            "no hubiese sido revocado a tenor con la Sección 6020.09(a).\n"
+            "[Nota: Sección enmendada por la Ley 38-2026, aprobada el 10 de marzo de 2026 según el sello de aprobación "
+            "en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
         ),
         effective_year=2026,
         superseded_year=None,
         source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
-        cross_references=["Ley 60-2019 Sec. 2021.01", "26 CFR § 1.937-2"],
+        cross_references=[
+            "Ley 60-2019 Sec. 2021.01",
+            "26 CFR § 1.937-2",
+            "Ley 60-2019 Sec. 2022.02",
+            "Ley 60-2019 Sec. 1020.02",
+        ],
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.01",
+    ),
+    StatuteRecord(
+        id="pr-ley60-2022-02",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 2022.02",
+        section="2022.02",
+        title=(
+            "Contribución Especial a Individuo Residente Inversionista — Ganancia Neta de Capital"
+        ),
+        text_en=(
+            "English summary; the official text is in Spanish. Section as amended by Act 38-2026 (approved March 10, "
+            "2026, per the approval stamp on page 1 of the Departamento de Estado certified copy, "
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in force on approval under "
+            "its Article 8). (a) Pre-residency appreciation, decree applications filed on or before December 31, 2026: "
+            "the part of a Resident Individual Investor's net long-term capital gain attributable to appreciation of "
+            "Securities or Other Assets held before becoming a Puerto Rico resident, recognized more than ten (10) "
+            "years after becoming a resident and before January 1, 2036, is taxed at 5% instead of any other tax under "
+            "the Puerto Rico Internal Revenue Code and is not subject to the alternative basic tax; recognized at any "
+            "other time, it is taxed under the regular rules. The gain is limited to the appreciation accrued while the "
+            "investor lived outside Puerto Rico and, for taxable years after December 31, 2016, is income from sources "
+            "outside Puerto Rico. (b) Post-residency appreciation, applications filed on or before December 31, 2026: "
+            "all net capital gain from appreciation after becoming a resident, on assets held at the move or acquired "
+            "later, that is recognized before January 1, 2036 is fully exempt from Puerto Rico income tax, including "
+            "the alternative basic tax; recognized after December 31, 2035, it is taxed under the regular rules. (c) "
+            "Pre-residency appreciation, applications filed on or after January 1, 2027: the same 5% rule as (a), for "
+            "gains recognized more than ten years after becoming a resident and before January 1, 2056. (d) "
+            "Post-residency appreciation, applications filed on or after January 1, 2027: net capital gain recognized "
+            "before January 1, 2056 is taxed at a 4% fixed preferential rate instead of any higher income tax, "
+            "including the alternative basic tax, unless a more favorable rate applies under the Incentives Code, the "
+            "Puerto Rico Internal Revenue Code or any other law; recognized after December 31, 2055, it is taxed under "
+            "the regular rules. Each paragraph applies only while the decree has not been revoked under Section "
+            "6020.09(a)."
+        ),
+        text_es=(
+            "(a) Apreciación antes de convertirse en Individuo Residente de Puerto Rico para el Individuo que radique "
+            "una solicitud para un decreto de Individuo Residente Inversionista en o antes del 31 de diciembre de 2026. "
+            "La parte de la ganancia neta de capital a largo plazo que genere un Individuo Residente Inversionista que "
+            "sea atribuible a cualquier apreciación que tuvieran Valores u Otros Activos, que posea éste antes de "
+            "convertirse en Individuo Residente de Puerto Rico, que sea reconocida luego de transcurridos diez (10) "
+            "años de convertirse en Individuo Residente de Puerto Rico y antes del 1 de enero de 2036, estará sujeta al "
+            "pago de una contribución de cinco por ciento (5%), en lugar de cualesquiera otras contribuciones que "
+            "impone el Código de Rentas Internas de Puerto Rico, y no estará sujeta a la contribución básica alterna "
+            "provista por el Subtítulo A del Código de Rentas Internas de Puerto Rico. Si tal apreciación se reconoce "
+            "en cualquier otro momento, la ganancia neta de capital con relación a tales Valores u Otros Activos estará "
+            "sujeta al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código "
+            "de Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital a largo plazo estará limitado "
+            "a la porción de la ganancia que se relacione con la apreciación que tuvieron los Valores u Otros Activos "
+            "mientras el Individuo Residente Inversionista vivía fuera de Puerto Rico. Para años contributivos "
+            "posteriores al 31 de diciembre de 2016, la ganancia de capital se considerará ingreso de fuentes fuera de "
+            "Puerto Rico para propósitos de la contribución sobre ingresos que dispone el Código de Rentas Internas de "
+            "Puerto Rico. Este inciso (a) será aplicable exclusivamente a todo Individuo Residente Inversionista que "
+            "presentó su solicitud para obtener un Decreto concediendo los beneficios de las Secciones 2022.01 y "
+            "2022.02 de este Código en o antes del 31 de diciembre de 2026, siempre y cuando el Decreto no hubiese sido "
+            "revocado a tenor con la Sección 6020.09(a).\n"
+            "(b) Apreciación después de convertirse en Individuo Residente de Puerto Rico, para el Individuo que "
+            "radique una solicitud para un decreto de Individuo Residente Inversionista en o antes del 31 de diciembre "
+            "de 2026. La totalidad de la ganancia neta de capital que genere un Individuo Residente Inversionista "
+            "relacionada con cualquier apreciación que tuvieran Valores u Otros Activos, luego de éste convertirse en "
+            "Individuo Residente de Puerto Rico, que se reconozca antes del 1 de enero de 2036, estará totalmente "
+            "exenta del pago de contribuciones sobre ingresos de Puerto Rico, incluyendo la contribución básica alterna "
+            "que provee el Código de Rentas Internas de Puerto Rico. Si tal apreciación se reconoce luego del 31 de "
+            "diciembre de 2035, la ganancia neta de capital con relación a tales Valores u Otros Activos estará sujeta "
+            "al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código de "
+            "Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital se refiere a la porción de la "
+            "ganancia que se relacione a la apreciación que tuvieron los Valores u Otros Activos que el Individuo "
+            "Residente Inversionista poseía al momento de convertirse en Individuo Residente de Puerto Rico y a los que "
+            "éste adquiera luego de convertirse en Individuo Residente de Puerto Rico. Este inciso (b) será aplicable "
+            "exclusivamente a todo Individuo Residente Inversionista que presentó su solicitud para obtener un Decreto "
+            "concediendo los beneficios de las Secciones 2022.01 y 2022.02 de este Código en o antes del 31 de "
+            "diciembre de 2026, siempre y cuando el Decreto no hubiese sido revocado a tenor con la Sección 6020.09(a).\n"
+            "(c) Apreciación antes de convertirse en Individuo Residente de Puerto Rico, para el Individuo que radicó "
+            "una solicitud para un decreto de Individuo Residente Inversionista del 1 de enero de 2027 en adelante. La "
+            "parte de la ganancia neta de capital a largo plazo que genere un Individuo Residente Inversionista que sea "
+            "atribuible a cualquier apreciación que tuvieran Valores u Otros Activos, que posea éste antes de "
+            "convertirse en Individuo Residente de Puerto Rico, que sea reconocida luego de transcurridos diez (10) "
+            "años de convertirse en Individuo Residente de Puerto Rico y antes del 1 de enero de 2056, estará sujeta al "
+            "pago de una contribución de cinco por ciento (5%), en lugar de cualesquiera otras contribuciones que "
+            "impone el Código de Rentas Internas de Puerto Rico, y no estará sujeta a la contribución básica alterna "
+            "provista por el Subtítulo A del Código de Rentas Internas de Puerto Rico. Si tal apreciación se reconoce "
+            "en cualquier otro momento, la ganancia neta de capital con relación a tales Valores u Otros Activos estará "
+            "sujeta al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código "
+            "de Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital a largo plazo estará limitado "
+            "a la porción de la ganancia que se relacione con la apreciación que tuvieron los Valores u Otros Activos "
+            "mientras el Individuo Residente Inversionista vivía fuera de Puerto Rico. Para años contributivos "
+            "posteriores al 31 de diciembre de 2016, la ganancia de capital se considerará ingreso de fuentes fuera de "
+            "Puerto Rico para propósitos de la contribución sobre ingresos que dispone el Código de Rentas Internas de "
+            "Puerto Rico. Este inciso (c) será aplicable exclusivamente a todo Individuo Residente Inversionista que "
+            "presentó su solicitud para obtener un Decreto concediendo los beneficios de las Secciones 2022.01 y "
+            "2022.02 de este Código en o luego del 1 de enero de 2027, siempre y cuando el Decreto no hubiese sido "
+            "revocado a tenor con la Sección 6020.09(a).\n"
+            "(d) Apreciación después de convertirse en Individuo Residente de Puerto Rico, para el Individuo que radicó "
+            "una solicitud para un decreto de Individuo Residente Inversionista del 1 de enero de 2027 en adelante. La "
+            "totalidad de la ganancia neta de capital que genere un Individuo Residente Inversionista relacionada con "
+            "cualquier apreciación que tuvieran Valores u Otros Activos, luego de éste convertirse en Individuo "
+            "Residente de Puerto Rico, que se reconozca antes del 1 de enero de 2056, estará sujeta a una tasa fija "
+            "preferencial de contribución sobre ingresos de un cuatro por ciento (4%), en lugar de cualquier otra "
+            "contribución sobre ingresos mayor, si alguna, dispuesta por el Código de Rentas Internas de Puerto Rico o "
+            "cualquier otra ley, incluyendo la contribución básica alterna provista por el Subtítulo A del Código de "
+            "Rentas Internas de Puerto Rico. No obstante lo anterior, aquella ganancia neta de capital que genere un "
+            "Individuo Residente Inversionista relacionada con cualquier apreciación que tuvieran Valores u Otros "
+            "Activos, luego de éste convertirse en Individuo Residente de Puerto Rico, que se reconozca antes del 1 de "
+            "enero de 2056, que esté sujeto a una tasa contributiva más favorable por disposición de este Código, del "
+            "Código de Rentas Internas de Puerto Rico o cualquier otra ley, estará sujeta al pago de contribuciones "
+            "sobre ingresos conforme al tratamiento contributivo más favorable en lugar de aquella contribución sobre "
+            "ingresos dispuesta en la oración anterior de este apartado (d). Si tal apreciación se reconoce luego del "
+            "31 de diciembre de 2055, la ganancia neta de capital con relación a tales Valores u Otros Activos estará "
+            "sujeta al pago de contribuciones sobre ingresos conforme al tratamiento contributivo que provee el Código "
+            "de Rentas Internas de Puerto Rico. El monto de esta ganancia neta de capital se refiere a la porción de la "
+            "ganancia que se relacione a la apreciación que tuvieron los Valores u Otros Activos que el Individuo "
+            "Residente Inversionista poseía al momento de convertirse en Individuo Residente de Puerto Rico y a los que "
+            "éste adquiera luego de convertirse en Individuo Residente de Puerto Rico. Este inciso (d) será aplicable "
+            "exclusivamente a todo Individuo Residente Inversionista que presentó su solicitud para obtener un Decreto "
+            "concediendo los beneficios de las Secciones 2022.01 y 2022.02 de este Código en o luego del 1 de enero de "
+            "2027, siempre y cuando el Decreto no hubiese sido revocado a tenor con la Sección 6020.09(a).\n"
+            "[Nota: Sección enmendada por la Ley 38-2026, aprobada el 10 de marzo de 2026 según el sello de aprobación "
+            "en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
+        ),
+        effective_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
+        cross_references=["Ley 60-2019 Sec. 2022.01", "Ley 60-2019 Sec. 1020.02"],
+        breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 2 > Sección 2022.02",
     ),
     StatuteRecord(
         id="pr-ley60-2031-01",
@@ -4295,6 +4620,64 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         breadcrumbs="Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01",
     ),
     StatuteRecord(
+        id="pr-ley60-6020-03",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 6020.03",
+        section="6020.03",
+        title="Periodo de Exención, Renegociación y Extensión de Decreto",
+        text_en=(
+            "English summary; the official text is in Spanish. (a) An exempt business holding a decree under the "
+            "Incentives Code enjoys its benefits for fifteen (15) years while it meets the decree's requirements and "
+            "conditions, unless the Code provides otherwise. (b) An exempt business under the Code or under prior "
+            "incentive laws may ask to renegotiate its decree to receive the Code's benefits, under the procedure set "
+            "by the Incentives Regulation. (c) An exempt business that met its decree's requirements throughout its "
+            "exemption period and shows the Secretary of the DDEC that an extension serves Puerto Rico's best economic "
+            "and social interests may ask for a fifteen (15) year extension, for a total of thirty (30) years. (d) "
+            "Added by Act 38-2026 (approved March 10, 2026, per the approval stamp on page 1 of the Departamento de "
+            "Estado certified copy, https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; in "
+            "force on approval under its Article 8): decree applications under Section 2021.01 filed on or before "
+            "December 31, 2026 and not yet granted or approved may, at the applicant's election, be processed under "
+            "Sections 2022.01(b) and 2022.02(c) and (d). A Resident Individual Investor who holds a decree under Act "
+            "22-2012 or a Section 2021.01 decree applied for on or before December 31, 2026 may ask to modify the "
+            "decree to reflect the terms and conditions of Sections 2022.01(b) and 2022.02(c) and (d)."
+        ),
+        text_es=(
+            "(a) Periodo de Exención. — Todo Negocio Exento que posea un Decreto bajo este Código, disfrutará de los "
+            "beneficios por un período de quince (15) años siempre que durante este término cumpla con los requisitos y "
+            "las condiciones establecidos en el Decreto, a menos que se disponga de otro modo en este Código.\n"
+            "(b) Renegociación. — Todo Negocio Exento bajo este Código, o bajo Leyes de Incentivos Anteriores, podrá "
+            "solicitar renegociar su Decreto para el disfrute de los beneficios concedidos bajo este Código. El "
+            "Reglamento de Incentivos dispondrá los requisitos y el procedimiento a seguir para la renegociación de un "
+            "Decreto bajo este Código.\n"
+            "(c) Extensión. — Todo Negocio Exento bajo este Código, o bajo las Leyes de Incentivosanteriores, que, a "
+            "través de todo su período de exención, haya cumplido con los requisitos o las condiciones establecidos en "
+            "el Decreto, y que demuestre al Secretario del DDEC que la extensión de su Decreto redundará en los mejores "
+            "intereses económicos y sociales del pueblo de Puerto Rico, podrá solicitar al Secretario una extensión de "
+            "su Decreto por quince (15) años adicionales, para un total de treinta (30) años.\n"
+            "(d) Reglas aplicables a decretos de Individuo Residente Inversionista. — Las solicitudes de Decretos bajo "
+            "la Sección 2021.01 de este Código que se hayan radicado en o antes del 31 de diciembre de 2026 que no se "
+            "hayan concedido o aprobado, podrán tramitarse, a elección del solicitante, bajo las disposiciones de las "
+            "Secciones 2022.01(b) y 2022.02(c) y (d) de este Código. Todo Individuo Residente Inversionista que (1) "
+            "haya obtenido un Decreto bajo la Ley 22-2012, según enmendada, o (2) haya obtenido un Decreto bajo la "
+            "Sección 2021.01 de este Código que fue solicitado en o antes del 31 de diciembre de 2026, podrá solicitar "
+            "una modificación a su Decreto para reflejar los términos y condiciones de las Secciones 2022.01(b) y "
+            "2022.02(c) y (d) de este Código.\n"
+            "[Nota: El apartado (d) fue añadido por la Ley 38-2026, aprobada el 10 de marzo de 2026 según el sello de "
+            "aprobación en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
+        ),
+        effective_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=[
+            "Ley 60-2019 Sec. 2021.01",
+            "Ley 60-2019 Sec. 2022.01",
+            "Ley 60-2019 Sec. 2022.02",
+        ],
+        breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.03",
+    ),
+    StatuteRecord(
         id="pr-ley60-6020-10",
         jurisdiction="PR",
         corpus="LEY60",
@@ -4302,26 +4685,34 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         section="6020.10",
         title="Informes",
         text_en=(
-            "English summary; the official text is in Spanish. Requires every exempt business holding a decree "
-            "to file an annual income tax return and annual compliance reports (a). The annual reports of "
-            "exempt businesses under Section 2021.01 (resident individual investors) must be accompanied by "
-            "evidence of a minimum annual contribution of $10,000 to nonprofit entities operating in Puerto "
-            "Rico; $5,000 goes to nonprofits that address child poverty and appear on the list published by "
-            "the Comisión Especial Conjunta de Fondos Legislativos para Impacto Comunitario, $2,500 to another "
-            "nonprofit not on that list, and $2,500 to the Fondo Especial para la Igualdad Social, although "
-            "nothing prevents the entire (100%) annual contribution from going to nonprofits on that list (b). "
-            "A resident individual investor must show the purchase of real property in Puerto Rico as "
-            "principal residence within two years after obtaining the decree (c). Filing the annual reports "
-            "under Section 2021.01 or Act 22-2012 carries an annual fee of $5,000: $300 to a special fund "
-            "administered by the DDEC and $4,700 to the General Fund (d). Failing to file a required report, "
-            "or filing it late, can bring an administrative fine of up to $10,000 (e). For taxable years "
-            "beginning after December 31, 2024, every report required by the section, including the compliance "
-            "report, must be filed electronically with the Secretary of the Treasury as part of the exempt "
-            "business's income tax return, together with the corresponding fee; the Secretary may postpone "
-            "this requirement by one additional year for all or some decree holders through a publication of "
-            "general applicability (f). Hacienda and the DDEC postponed it in Determinación Administrativa "
-            "Núm. 26-01 / Orden Administrativa Núm. DDEC 2026-01 of February 5, 2026, so electronic filing "
-            "with the income tax return applies to taxable years beginning after December 31, 2025."
+            "English summary; the official text is in Spanish. Requires every exempt business holding a decree to file "
+            "an annual income tax return and annual compliance reports (a). The annual reports of exempt businesses "
+            "under Section 2021.01 (resident individual investors) must be accompanied by evidence of a minimum annual "
+            "contribution of $10,000 to nonprofit entities operating in Puerto Rico; $5,000 goes to nonprofits that "
+            "address child poverty and appear on the list published by the Comisión Especial Conjunta de Fondos "
+            "Legislativos para Impacto Comunitario, $2,500 to another nonprofit not on that list, and $2,500 to the "
+            "Fondo Especial para la Igualdad Social, although nothing prevents the entire (100%) annual contribution "
+            "from going to nonprofits on that list (b). A resident individual investor must submit evidence that, "
+            "within two years after obtaining the decree, they bought title to real property in Puerto Rico, as sole "
+            "owner or jointly with their spouse, from an owner (a person or business) wholly unrelated to and "
+            "independent of the decree holder (“totalmente desvinculada y ajena”), to be their principal residence, and "
+            "must certify in the annual report that they keep exclusive and complete ownership (“exclusivo y completo "
+            "dominio”) of real property as principal residence, alone or jointly with their spouse, for the life of the "
+            "decree; under Act 38-2026 (approved March 10, 2026, per the approval stamp on page 1 of the Departamento "
+            "de Estado certified copy, https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf; "
+            "in force on approval under its Article 8), for an individual who applied for the decree on or after "
+            "January 1, 2027, that evidence must show that full ownership of the principal residence is recorded, or "
+            "pending recording, in the Puerto Rico Property Registry in the investor's name, jointly with the spouse, "
+            "or in the name of a trust described in Section 2022.07 (c). Filing the annual reports under Section "
+            "2021.01 or Act 22-2012 carries an annual fee of $5,000: $300 to a special fund administered by the DDEC "
+            "and $4,700 to the General Fund (d). Failing to file a required report, or filing it late, can bring an "
+            "administrative fine of up to $10,000 (e). For taxable years beginning after December 31, 2024, every "
+            "report required by the section, including the compliance report, must be filed electronically with the "
+            "Secretary of the Treasury as part of the exempt business's income tax return, together with the "
+            "corresponding fee; the Secretary may postpone this requirement by one additional year for all or some "
+            "decree holders through a publication of general applicability (f). Hacienda and the DDEC postponed it in "
+            "Determinación Administrativa Núm. 26-01 / Orden Administrativa Núm. DDEC 2026-01 of February 5, 2026, so "
+            "electronic filing with the income tax return applies to taxable years beginning after December 31, 2025."
         ),
         text_es=(
             "(a) Informes Requeridos a Negocios Exentos y a sus Accionistas:\n"
@@ -4423,12 +4814,298 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "ante el Secretario de Hacienda como parte de la planilla de contribución sobre ingresos del Negocio "
             "Exento, junto al pago de derechos correspondiente. El Secretario de Hacienda podrá posponer la "
             "entrada en vigor de las disposiciones de este apartado por un año adicional para todos o algunos "
-            "concesionarios mediante publicación de carácter general."
+            "concesionarios mediante publicación de carácter general.\n"
+            "[Nota: El apartado (c) fue enmendado por la Ley 38-2026, aprobada el 10 de marzo de 2026 según el sello de "
+            "aprobación en la página 1 de la copia certificada por el Departamento de Estado "
+            "(https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf), que comenzó a regir "
+            "inmediatamente después de su aprobación (Art. 8).]"
         ),
-        effective_year=2019,
+        effective_year=2026,
         source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2021.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10",
+    ),
+    StatuteRecord(
+        id="pr-ley60-6020-10-2025",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 6020.10",
+        section="6020.10",
+        title="Informes",
+        text_en=(
+            "English summary; the official text is in Spanish. Requires every exempt business holding a decree to "
+            "file an annual income tax return and annual compliance reports (a). The annual reports of exempt "
+            "businesses under Section 2021.01 (resident individual investors) must be accompanied by evidence of a "
+            "minimum annual contribution of $10,000 to nonprofit entities operating in Puerto Rico; $5,000 goes to "
+            "nonprofits that address child poverty and appear on the list published by the Comisión Especial Conjunta "
+            "de Fondos Legislativos para Impacto Comunitario, $2,500 to another nonprofit not on that list, and "
+            "$2,500 to the Fondo Especial para la Igualdad Social, although nothing prevents the entire (100%) annual "
+            "contribution from going to nonprofits on that list (b). A resident individual investor must submit "
+            "evidence that, within two years after obtaining the decree, they bought title to real property in Puerto "
+            "Rico, as sole owner or jointly with their spouse, from an owner (a person or business) wholly unrelated "
+            "to and independent of the decree holder (“totalmente desvinculada y ajena”), to be their principal "
+            "residence, and must certify in the annual report that they keep exclusive and complete ownership "
+            "(“exclusivo y completo dominio”) of real property as principal residence, alone or jointly with their "
+            "spouse, for the life of the decree (c). Filing the annual reports under Section 2021.01 or Act 22-2012 "
+            "carries an annual fee of $5,000: $300 to a special fund administered by the DDEC and $4,700 to the "
+            "General Fund (d). Failing to file a required report, or filing it late, can bring an administrative fine "
+            "of up to $10,000 (e). For taxable years beginning after December 31, 2024, every report required by the "
+            "section, including the compliance report, must be filed electronically with the Secretary of the "
+            "Treasury as part of the exempt business's income tax return, together with the corresponding fee; the "
+            "Secretary may postpone this requirement by one additional year for all or some decree holders through a "
+            "publication of general applicability (f). Hacienda and the DDEC deferred (f) in Determinación "
+            "Administrativa Núm. 26-01 / Orden Administrativa Núm. DDEC 2026-01 of February 5, 2026, to taxable years "
+            "beginning after December 31, 2025, so electronic filing with the income tax return under (f) was not "
+            "required for taxable year 2025; the taxable year 2025 annual report is filed with the DDEC under the "
+            "rules in force before Ley 65-2025. Ley 65-2025 (approved July 17, 2025, per the approval stamp on page 1 "
+            "of the Departamento de Estado certified copy, "
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0065-2025.pdf; in force on approval "
+            "under its Article 37) amended (d), moved part of (d) into a new (e), and added (f) (Article 31). Because "
+            "Ley 65-2025 took effect on July 17, 2025, the (d)/(e) split dates from then, not from January 1, 2025, "
+            "even though this row is keyed to 2025. This version was superseded in 2026 by the text as amended by Act "
+            "38-2026 (pr-ley60-6020-10)."
+        ),
+        text_es=(
+            "(a) Informes Requeridos a Negocios Exentos y a sus Accionistas:\n"
+            "(1) Todo Negocio Exento que posea un Decreto bajo este Código, radicará anualmente ante el Secretario de "
+            "Hacienda una planilla de contribución sobre ingresos, independientemente de la cantidad de su ingreso "
+            "bruto o neto, separada de cualquier otra planilla que por otros motivos esté obligado a rendir con "
+            "relación a las operaciones de la industria cubiertas por los beneficios provistos en este Código, y de "
+            "acuerdo con el Código de Rentas de Puerto Rico. El Secretario de Hacienda podrá compartir con el "
+            "Secretario del DDEC la información así recibida, siempre y cuando se proteja la confidencialidad de la "
+            "información.\n"
+            "(2) Todo Accionista de un Negocio Exento que posea un Decreto concedido bajo este Código, deberá rendir "
+            "anualmente ante el Departamento de Hacienda una planilla de contribución sobre ingresos conforme a las "
+            "disposiciones del Código de Rentas Internas, siempre que bajo las disposiciones del Código de Rentas "
+            "Internas tuviera la obligación de así hacerlo.\n"
+            "(3) Todo Negocio Exento que posea un Decreto bajo este Código o cualquier Ley de Incentivos Anteriores, "
+            "anualmente radicará electrónicamente con la Oficina de Incentivos, no más tarde del quince (15) de "
+            "noviembre siguiente al cierre del año natural, en el caso de Negocios Exentos con un año natural o el "
+            "decimoquinto (15to) día del undécimo (11mo) mes siguiente al cierre del año contributivo, en el caso de "
+            "Negocio Exento, un informe de cumplimiento.\n"
+            "(4) Todo Negocio Exento que posea un Decreto bajo este Código, anualmente radicará electrónicamente con "
+            "la Oficina de Incentivos, no más tarde de treinta (30) días después de la fecha prescrita por ley para "
+            "la radicación de la correspondiente planilla de contribución sobre ingresos, incluyendo las prórrogas "
+            "concedidas para este propósito, un informe de cumplimiento.\n"
+            "(i) Este informe deberá venir acompañado por los derechos que se dispongan por reglamento, y los mismos "
+            "serán pagados mediante transferencia electrónica a través del Portal electrónico de la forma y manera "
+            "que para estos propósitos establezca la Oficina de Incentivos. La información ofrecida en este informe "
+            "anual será utilizada para propósitos de estadísticas y estudios económicos, así como para la evaluación "
+            "que deberá realizar el Profesional de Cumplimiento cada dos (2) años para conceder o denegar el "
+            "Certificado de Cumplimiento relacionado, excepto en el caso de los Negocios Exentos exceptuados del "
+            "cumplimiento con el apartado (c) de la Sección 6011.04.\n"
+            "(ii) Este informe deberá venir acompañado por los derechos que se dispongan por reglamento, y los mismos "
+            "serán pagados mediante transferencia electrónica a través del Portal electrónico de la forma y manera "
+            "que para estos propósitos establezca la Oficina de Incentivos. La información ofrecida en este informe "
+            "anual será utilizada para propósitos de estadísticas y estudios económicos, así como para la evaluación "
+            "que deberá realizar el Profesional de Cumplimiento cada dos (2) años para conceder o denegar el "
+            "Certificado de Cumplimiento relacionado.\n"
+            "(iii) Este informe se radicará electrónicamente en el Portal electrónico que para estos propósitos "
+            "establecerá la Oficina de Incentivos.\n"
+            "(iv) El Secretario del DDEC establecerá mediante reglamento, orden administrativa o cualquier otra "
+            "comunicación de naturaleza similar, la información y documentación que se requiera para completar este "
+            "informe.\n"
+            "(b) Los informes anuales que requiere este Código para Negocios Exentos bajo la Sección 2021.01 deberán "
+            "estar acompañados con evidencia de una aportación anual mínima de diez mil dólares (10,000), que serán "
+            "destinados a entidades sin fines de lucro operando en Puerto Rico bajo la Sección 1101.01 del Código de "
+            "Rentas Internas de Puerto Rico, incluyendo al Fondo Especial para la Igualdad Social, que no sea "
+            "controlada por la misma persona, ni por su descendientes o ascendientes, cónyuges o socios. "
+            "Independientemente de la cantidad aportada sobre el mínimo dispuesto en este apartado, cinco mil dólares "
+            "($5,000) estarán destinados a entidades sin fines de lucro que tengan servicios dirigidos a atender la "
+            "erradicación de la pobreza infantil, que operen en la jurisdicción de Puerto Rico bajo la Sección "
+            "1101.01 del Código de Rentas Internas, que no sea controlada por la misma persona, ni por su "
+            "descendientes o ascendientes, cónyuges o socios, y que se encuentre en la lista que publicará la "
+            "“Comisión Especial Conjunta de Fondos Legislativos para Impacto Comunitario” en o antes del 31 de "
+            "diciembre de cada año de conformidad con las disposiciones de este Código. Nada impedirá que el cien por "
+            "ciento (100%) de la aportación anual sea destinada a las entidades sin fines de lucro que se encuentren "
+            "en la citada lista. Dos mil quinientos (2,500) dólares deberán ser destinados a cualquier otra entidad "
+            "sin fines de lucro operando en Puerto Rico bajo la Sección 1101.01 del Código de Rentas Internas de "
+            "Puerto Rico, incluyendo al Fondo Especial para la Igualdad Social, que no sea controlada por la misma "
+            "persona, ni por su descendientes o ascendientes, cónyuges o socios y que no se encuentre en la lista "
+            "publicada por la Comisión Especial de Fondos Legislativos para Impacto Comunitario. El Negocio Exento "
+            "tendrá que evidenciarle a la Oficina de Exención que la entidad sin fines de lucro seleccionada es una "
+            "entidad que brinda servicios directos a la comunidad. La aportación se realizará de forma directa a la "
+            "entidad sin fines de lucro seleccionada por el Negocio Exento bajo la Sección 2021.01 que realiza la "
+            "aportación anual. No obstante, la Oficina de Exención enviará, no más tarde de treinta (30) días a la "
+            "Comisión Especial de Fondos Legislativos para Impacto Comunitario un informe detallado de las entidades "
+            "sin fines de lucro que reciban la aportación. Los restantes dos mil quinientos (2,500) dólares deberán "
+            "ser destinados al Fondo Especial para la Igualdad Social.\n"
+            "(c) En lo que concierne al Individuo Residente Inversionista, deberá someter evidencia de haber "
+            "adquirido, como único dueño, o en conjunto con su cónyuge, por compra, dentro de los dos (2) años "
+            "después de la obtención del Decreto bajo las disposiciones de este Código, la titularidad de propiedad "
+            "inmueble en Puerto Rico, adquiriendo de un dueño, sea una persona o empresa totalmente desvinculada y "
+            "ajena a la persona con el Decreto bajo este Código, para que constituya su residencia principal en la "
+            "jurisdicción de Puerto Rico y acreditar en el Informe anual, que mantiene el exclusivo y completo "
+            "dominio de un bien inmueble como residencia principal, sea de forma exclusiva o junto a su cónyuge, "
+            "durante toda la vigencia del Decreto.\n"
+            "(d) La radicación de los informes anuales requeridos para Negocios Exentos bajo la Sección 2021.01 de "
+            "este Código, o bajo la Ley 22-2012, según enmendada, conocida como la “Ley Para Incentivar el Traslado "
+            "de Individuos Inversionistas a Puerto Rico”, estará sujeta a un cargo anual de cinco mil (5,000) "
+            "dólares, de los cuales trescientos (300) dólares serán pagaderos a favor del Secretario de Hacienda y "
+            "nutrirán un Fondo Especial administrado por el DDEC, y cuatro mil setecientos (4,700) dólares serán "
+            "pagaderos a favor del Secretario de Hacienda que serán destinados al Fondo General del Gobierno de "
+            "Puerto Rico.\n"
+            "(e) El Secretario del DDEC, luego de serle informado por la agencia concernida, podrá imponer una multa "
+            "administrativa de hasta un máximo de diez mil (10,000) dólares a cualquier Negocio Exento que posea un "
+            "Decreto concedido bajo este Código y que deje de radicar alguno de los informes que el Secretario de "
+            "Hacienda, el Secretario del DDEC o el Comisionado de Seguros le requiera, o que radique los mismos "
+            "después de la fecha de su vencimiento. La radicación de un informe incompleto se considerará como no "
+            "radicado, si la agencia concernida notifica al Negocio Exento de alguna omisión en el informe requerido "
+            "y dicho Negocio Exento no somete la información que falta dentro de quince (15) días de haber sido "
+            "notificada, o no justifica razonablemente la falta de la misma.\n"
+            "(f) Todo informe requerido por esta Sección, incluyendo el informe de cumplimiento, para años "
+            "contributivos comenzados luego del 31 de diciembre de 2024, deberá ser radicado electrónicamente ante el "
+            "Secretario de Hacienda como parte de la planilla de contribución sobre ingresos del Negocio Exento, "
+            "junto al pago de derechos correspondiente. El Secretario de Hacienda podrá posponer la entrada en vigor "
+            "de las disposiciones de este apartado por un año adicional para todos o algunos concesionarios mediante "
+            "publicación de carácter general.\n"
+            "[Nota: Los apartados (d), (e) y (f) se leen según el Artículo 31 de la Ley 65-2025, aprobada el 17 de "
+            "julio de 2025 según el sello de aprobación en la página 1 de la copia certificada por el Departamento de "
+            "Estado (https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0065-2025.pdf), que comenzó a "
+            "regir inmediatamente después de su aprobación (Art. 37). Esa ley enmendó el apartado (d), renumeró parte "
+            "del apartado (d) como el nuevo apartado (e) y añadió el apartado (f), por lo que esa división rige desde "
+            "el 17 de julio de 2025 y no desde el 1 de enero de 2025. Versión sustituida en 2026.]"
+        ),
+        effective_year=2025,
+        superseded_year=2026,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=["Ley 60-2019 Sec. 2021.01"],
+        breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10",
+        source_note=(
+            "Text taken from the OGP compilation of Ley 60-2019 as revised with later amendments (revised July 16, "
+            "2026), with Act 38-2026's amendment to (c) removed; (d), (e) and (f) checked against Ley 65-2025, "
+            "Article 31 (https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0065-2025.pdf)."
+        ),
+    ),
+    StatuteRecord(
+        id="pr-ley60-6020-10-2019",
+        jurisdiction="PR",
+        corpus="LEY60",
+        citation="Ley 60-2019 Sec. 6020.10",
+        section="6020.10",
+        title="Informes",
+        text_en=(
+            "English summary; the official text is in Spanish. Requires every exempt business holding a decree to "
+            "file an annual income tax return and annual compliance reports (a). The annual reports of exempt "
+            "businesses under Section 2021.01 (resident individual investors) must be accompanied by evidence of a "
+            "minimum annual contribution of $10,000 to nonprofit entities operating in Puerto Rico; $5,000 goes to "
+            "nonprofits that address child poverty and appear on the list published by the Comisión Especial Conjunta "
+            "de Fondos Legislativos para Impacto Comunitario, $2,500 to another nonprofit not on that list, and "
+            "$2,500 to the Fondo Especial para la Igualdad Social, although nothing prevents the entire (100%) annual "
+            "contribution from going to nonprofits on that list (b). A resident individual investor must submit "
+            "evidence that, within two years after obtaining the decree, they bought title to real property in Puerto "
+            "Rico, as sole owner or jointly with their spouse, from an owner (a person or business) wholly unrelated "
+            "to and independent of the decree holder (“totalmente desvinculada y ajena”), to be their principal "
+            "residence, and must certify in the annual report that they keep exclusive and complete ownership "
+            "(“exclusivo y completo dominio”) of real property as principal residence, alone or jointly with their "
+            "spouse, for the life of the decree (c). Filing the annual reports under Section 2021.01 or Act 22-2012 "
+            "carries an annual fee of $5,000: $300 to a special fund administered by the DDEC and $4,700 to the "
+            "General Fund (d). Before Ley 65-2025, the DDEC's administrative fine for failing to file a required "
+            "report, or filing it late, was part of (d); its exact earlier wording is not on file, so it is not "
+            "reproduced here. The fee in (d) is cited to Ley 40-2020, Section 89, which added (d) to the section "
+            "effective April 16, 2020 (in force on approval under its Section 97), so (d) does not apply to taxable "
+            "year 2019 lookups even though this row starts in 2019. This is the version in force before 2025; it was "
+            "superseded in 2025 by the text as amended by Ley 65-2025 (pr-ley60-6020-10-2025)."
+        ),
+        text_es=(
+            "(a) Informes Requeridos a Negocios Exentos y a sus Accionistas:\n"
+            "(1) Todo Negocio Exento que posea un Decreto bajo este Código, radicará anualmente ante el Secretario de "
+            "Hacienda una planilla de contribución sobre ingresos, independientemente de la cantidad de su ingreso "
+            "bruto o neto, separada de cualquier otra planilla que por otros motivos esté obligado a rendir con "
+            "relación a las operaciones de la industria cubiertas por los beneficios provistos en este Código, y de "
+            "acuerdo con el Código de Rentas de Puerto Rico. El Secretario de Hacienda podrá compartir con el "
+            "Secretario del DDEC la información así recibida, siempre y cuando se proteja la confidencialidad de la "
+            "información.\n"
+            "(2) Todo Accionista de un Negocio Exento que posea un Decreto concedido bajo este Código, deberá rendir "
+            "anualmente ante el Departamento de Hacienda una planilla de contribución sobre ingresos conforme a las "
+            "disposiciones del Código de Rentas Internas, siempre que bajo las disposiciones del Código de Rentas "
+            "Internas tuviera la obligación de así hacerlo.\n"
+            "(3) Todo Negocio Exento que posea un Decreto bajo este Código o cualquier Ley de Incentivos Anteriores, "
+            "anualmente radicará electrónicamente con la Oficina de Incentivos, no más tarde del quince (15) de "
+            "noviembre siguiente al cierre del año natural, en el caso de Negocios Exentos con un año natural o el "
+            "decimoquinto (15to) día del undécimo (11mo) mes siguiente al cierre del año contributivo, en el caso de "
+            "Negocio Exento, un informe de cumplimiento.\n"
+            "(4) Todo Negocio Exento que posea un Decreto bajo este Código, anualmente radicará electrónicamente con "
+            "la Oficina de Incentivos, no más tarde de treinta (30) días después de la fecha prescrita por ley para "
+            "la radicación de la correspondiente planilla de contribución sobre ingresos, incluyendo las prórrogas "
+            "concedidas para este propósito, un informe de cumplimiento.\n"
+            "(i) Este informe deberá venir acompañado por los derechos que se dispongan por reglamento, y los mismos "
+            "serán pagados mediante transferencia electrónica a través del Portal electrónico de la forma y manera "
+            "que para estos propósitos establezca la Oficina de Incentivos. La información ofrecida en este informe "
+            "anual será utilizada para propósitos de estadísticas y estudios económicos, así como para la evaluación "
+            "que deberá realizar el Profesional de Cumplimiento cada dos (2) años para conceder o denegar el "
+            "Certificado de Cumplimiento relacionado, excepto en el caso de los Negocios Exentos exceptuados del "
+            "cumplimiento con el apartado (c) de la Sección 6011.04.\n"
+            "(ii) Este informe deberá venir acompañado por los derechos que se dispongan por reglamento, y los mismos "
+            "serán pagados mediante transferencia electrónica a través del Portal electrónico de la forma y manera "
+            "que para estos propósitos establezca la Oficina de Incentivos. La información ofrecida en este informe "
+            "anual será utilizada para propósitos de estadísticas y estudios económicos, así como para la evaluación "
+            "que deberá realizar el Profesional de Cumplimiento cada dos (2) años para conceder o denegar el "
+            "Certificado de Cumplimiento relacionado.\n"
+            "(iii) Este informe se radicará electrónicamente en el Portal electrónico que para estos propósitos "
+            "establecerá la Oficina de Incentivos.\n"
+            "(iv) El Secretario del DDEC establecerá mediante reglamento, orden administrativa o cualquier otra "
+            "comunicación de naturaleza similar, la información y documentación que se requiera para completar este "
+            "informe.\n"
+            "(b) Los informes anuales que requiere este Código para Negocios Exentos bajo la Sección 2021.01 deberán "
+            "estar acompañados con evidencia de una aportación anual mínima de diez mil dólares (10,000), que serán "
+            "destinados a entidades sin fines de lucro operando en Puerto Rico bajo la Sección 1101.01 del Código de "
+            "Rentas Internas de Puerto Rico, incluyendo al Fondo Especial para la Igualdad Social, que no sea "
+            "controlada por la misma persona, ni por su descendientes o ascendientes, cónyuges o socios. "
+            "Independientemente de la cantidad aportada sobre el mínimo dispuesto en este apartado, cinco mil dólares "
+            "($5,000) estarán destinados a entidades sin fines de lucro que tengan servicios dirigidos a atender la "
+            "erradicación de la pobreza infantil, que operen en la jurisdicción de Puerto Rico bajo la Sección "
+            "1101.01 del Código de Rentas Internas, que no sea controlada por la misma persona, ni por su "
+            "descendientes o ascendientes, cónyuges o socios, y que se encuentre en la lista que publicará la "
+            "“Comisión Especial Conjunta de Fondos Legislativos para Impacto Comunitario” en o antes del 31 de "
+            "diciembre de cada año de conformidad con las disposiciones de este Código. Nada impedirá que el cien por "
+            "ciento (100%) de la aportación anual sea destinada a las entidades sin fines de lucro que se encuentren "
+            "en la citada lista. Dos mil quinientos (2,500) dólares deberán ser destinados a cualquier otra entidad "
+            "sin fines de lucro operando en Puerto Rico bajo la Sección 1101.01 del Código de Rentas Internas de "
+            "Puerto Rico, incluyendo al Fondo Especial para la Igualdad Social, que no sea controlada por la misma "
+            "persona, ni por su descendientes o ascendientes, cónyuges o socios y que no se encuentre en la lista "
+            "publicada por la Comisión Especial de Fondos Legislativos para Impacto Comunitario. El Negocio Exento "
+            "tendrá que evidenciarle a la Oficina de Exención que la entidad sin fines de lucro seleccionada es una "
+            "entidad que brinda servicios directos a la comunidad. La aportación se realizará de forma directa a la "
+            "entidad sin fines de lucro seleccionada por el Negocio Exento bajo la Sección 2021.01 que realiza la "
+            "aportación anual. No obstante, la Oficina de Exención enviará, no más tarde de treinta (30) días a la "
+            "Comisión Especial de Fondos Legislativos para Impacto Comunitario un informe detallado de las entidades "
+            "sin fines de lucro que reciban la aportación. Los restantes dos mil quinientos (2,500) dólares deberán "
+            "ser destinados al Fondo Especial para la Igualdad Social.\n"
+            "(c) En lo que concierne al Individuo Residente Inversionista, deberá someter evidencia de haber "
+            "adquirido, como único dueño, o en conjunto con su cónyuge, por compra, dentro de los dos (2) años "
+            "después de la obtención del Decreto bajo las disposiciones de este Código, la titularidad de propiedad "
+            "inmueble en Puerto Rico, adquiriendo de un dueño, sea una persona o empresa totalmente desvinculada y "
+            "ajena a la persona con el Decreto bajo este Código, para que constituya su residencia principal en la "
+            "jurisdicción de Puerto Rico y acreditar en el Informe anual, que mantiene el exclusivo y completo "
+            "dominio de un bien inmueble como residencia principal, sea de forma exclusiva o junto a su cónyuge, "
+            "durante toda la vigencia del Decreto.\n"
+            "(d) La radicación de los informes anuales requeridos para Negocios Exentos bajo la Sección 2021.01 de "
+            "este Código, o bajo la Ley 22-2012, según enmendada, conocida como la “Ley Para Incentivar el Traslado "
+            "de Individuos Inversionistas a Puerto Rico”, estará sujeta a un cargo anual de cinco mil (5,000) "
+            "dólares, de los cuales trescientos (300) dólares serán pagaderos a favor del Secretario de Hacienda y "
+            "nutrirán un Fondo Especial administrado por el DDEC, y cuatro mil setecientos (4,700) dólares serán "
+            "pagaderos a favor del Secretario de Hacienda que serán destinados al Fondo General del Gobierno de "
+            "Puerto Rico.\n"
+            "[Nota sobre la multa: Antes de la Ley 65-2025, la disposición de multa administrativa del DDEC (hoy "
+            "apartado (e)) formaba parte del apartado (d); su texto exacto anterior no consta en las fuentes "
+            "oficiales disponibles, por lo que no se reproduce.]\n"
+            "[Nota: El apartado (d) fue añadido por la Sección 89 de la Ley 40-2020, vigente desde su aprobación el "
+            "16 de abril de 2020 (Sección 97); no aplica a 2019. Versión sustituida en 2025 por la Ley 65-2025 "
+            "(pr-ley60-6020-10-2025).]"
+        ),
+        effective_year=2019,
+        superseded_year=2025,
+        source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
+        cross_references=["Ley 60-2019 Sec. 2021.01"],
+        breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10",
+        source_note=(
+            "Text taken from the OGP compilation of Ley 60-2019 as revised with later amendments (revised July 16, "
+            "2026), with Act 38-2026's amendment to (c) and Ley 65-2025's (e) and (f) removed; (d) checked against "
+            "Ley 40-2020, Section 89, which added it effective April 16, 2020 (Section 97), so it does not apply to "
+            "2019. Before Ley 65-2025 the DDEC fine provision, now (e), formed part of (d); its exact earlier wording "
+            "is not on file."
+        ),
     ),
     StatuteRecord(
         id="pr-ley60-6070-55",
@@ -6567,6 +7244,329 @@ PUBLICATIONS_CATALOG: list[PublicationRecord] = [
         source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-13_-_integracion_cofim_y_nueva_planilla_mensual_ivu_signed.pdf",
     ),
     PublicationRecord(
+        id="pr-ddec-cc-2026-001",
+        category="carta-circular",
+        doc_number="CC DDEC 2026-001",
+        doc_date="2026-01-12",
+        title=(
+            "Donaciones requeridas a Individuos Residentes Inversionistas y evidencia de adquisición de propiedad "
+            "residencial"
+        ),
+        summary=(
+            "En consideración a lo anterior, el Director de la OIN, en consulta con la Comisión Especial, con la "
+            "Oficina de Gerencia y Presupuesto y la Comisión para Combatir la Pobreza Infantil y la Desigualdad Social "
+            "en Puerto Rico adscrita al Departamento de la Familia, emite la presente Carta Circular con el propósito "
+            "de establecer las instancias en las que se reconocerán ciertas donaciones y aclarar la interpretación "
+            "administrativa con relación a la evidencia de adquisición de propiedad inmueble residencial en Puerto "
+            "Rico."
+        ),
+        source_url="https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Carta%20Circular%20DDEC%20N%C3%9AM.%202026-001%20(OIN)%20Donaciones%20IRI%20-%201.12.26.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-01",
+        category="carta-circular",
+        doc_number="CC RI 26-01",
+        doc_date="2026-02-05",
+        title=(
+            "Radicación del Formulario Modelo SC 2644, Solicitud de Prórroga para Rendir la Planilla de Contribución "
+            "sobre Ingresos, para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el "
+            "propósito de establecer el procedimiento de radicación electrónica de la Solicitud de Prórroga Automática "
+            "para el año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/cc_ri_26-01_radicacion_del_formulario_modelo_sc_2644_del_ano_contributivo_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-02",
+        category="carta-circular",
+        doc_number="CC RI 26-02",
+        doc_date="2026-02-05",
+        title=(
+            "Radicación de la Planilla de Contribución sobre Ingresos de Individuos correspondiente al año contributivo "
+            "2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el "
+            "propósito de establecer el procedimiento de radicación electrónica de la Planilla de Individuos para el "
+            "año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/cc_ri_26-02_radicacion_electronica_planillas_de_individuos_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-da-26-01",
+        category="determinacion-administrativa",
+        doc_number="DA 26-01 / OA DDEC 2026-01",
+        doc_date="2026-02-05",
+        title=(
+            "Requisito de radicar electrónicamente el Informe de Cumplimiento Anual de las Secciones 6020.10 y 6070.66 "
+            "del Código de Incentivos de Puerto Rico, según enmendado, junto con la planilla de contribución sobre "
+            "ingresos correspondiente"
+        ),
+        summary=(
+            "A tales efectos, el Departamento de Hacienda (“Departamento”) junto con el DDEC emiten esta Determinación "
+            "Administrativa con el propósito de posponer la entrada en vigor de la radicación electrónica del IANE a "
+            "incluirse con la planilla de contribución sobre ingresos correspondiente a los años contributivos que "
+            "comiencen después del 31 de diciembre de 2024."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/da_26-01_posposicion_de_la_integracion_del_informe_anual_exento_ley_65-2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-01",
+        category="boletin-informativo",
+        doc_number="BI RI 26-01",
+        doc_date="2026-02-17",
+        title=(
+            "Notificación de ajuste por inflación al Crédito por Trabajo para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite este Boletín Informativo, conforme a las disposiciones de "
+            "la Sección 1052.01(i) del Código, con el propósito de notificar los nuevos umbrales de ingreso bruto "
+            "ganando y el Crédito máximo a considerarse en el Anejo CT Individuo – Crédito por Trabajo de la Planilla "
+            "de Contribución sobre Ingresos de Individuos (“Planilla”) correspondiente al año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/bi_ri_26-01_ajuste_por_inflacion_al_credito_por_trabajo_para_el_ano_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-03",
+        category="carta-circular",
+        doc_number="CC RI 26-03",
+        doc_date="2026-02-19",
+        title=(
+            "Límites aplicables para el año 2026 a planes de retiro cualificados bajo la Sección 1081.01(a) del Código "
+            "de Rentas Internas de Puerto Rico de 2011, según enmendado"
+        ),
+        summary=(
+            "A tales efectos, el Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el propósito "
+            "de establecer los límites aplicables a los planes de retiro cualificados bajo la Sección 1081.01(a) del "
+            "Código para el año contributivo 2026."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/02/cc_ri_26-03_limites_planes_de_pensiones_2026_rev._ley_179-2025_signed_19-feb-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-04",
+        category="carta-circular",
+        doc_number="CC RI 26-04",
+        doc_date="2026-02-27",
+        title=(
+            "Radicación de la Planilla Informativa sobre Ingresos de Entidades Conducto, Formulario 480.2(EC), para el "
+            "año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Entidad Conducto para el año contributivo 2025 y "
+            "de los Formularios 480.6EC que se emitan exclusivamente para dicha planilla."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/03/cc_ri_26_04_radicacio_n_electro_nica_planillas_de_entidades_conducto.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-05",
+        category="carta-circular",
+        doc_number="CC RI 26-05",
+        doc_date="2026-02-27",
+        title=("Centros de Preparación y Radicación de Planillas Electrónicas"),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer: (i) la "
+            "fecha de comienzo de los servicios en los Centros de Preparación y Radicación de Planillas Electrónicas "
+            "del año contributivo 2025 (“Centros”), y (ii) los requisitos para la preparación y radicación electrónica "
+            "de la Planilla de Individuos y la Planilla Federal para reclamar el CTC, correspondientes al año "
+            "contributivo 2025, en dichos Centros."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/03/cc_ri_26_05_centros_de_preparacio_n_y_radicacio_n_de_planillas_2025.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-06",
+        category="carta-circular",
+        doc_number="CC RI 26-06",
+        doc_date="2026-03-13",
+        title=(
+            "Radicación de la Planilla de Contribución sobre Ingresos de Corporaciones correspondiente al año "
+            "contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Corporación para el año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/03/cc_ri_26-06_radicacion_electronica_planillas_de_corporaciones_2025_signed_13-marzo-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-03",
+        category="boletin-informativo",
+        doc_number="BI RI 26-03",
+        doc_date="2026-04-15",
+        title=(
+            "Nueva versión del Formulario Modelo SC 2745 “Poder y Declaración de Representación”"
+        ),
+        summary=(
+            "El Departamento emite este Boletín Informativo con el propósito de: (i) notificar la emisión de la nueva "
+            "versión del Modelo SC 2745, y (ii) notificar las reglas de transición para la utilización de esta nueva "
+            "versión."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/04/bi_ri_26-03_nueva_version_del_modelo_sc_2745_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-07",
+        category="carta-circular",
+        doc_number="CC RI 26-07",
+        doc_date="2026-04-17",
+        title=(
+            "Radicación de la Planilla Informativa de Organización Exenta de Contribución sobre Ingresos "
+            "correspondiente al año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Organización Exenta para el año contributivo "
+            "2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/04/cc_ri_26-07_radicacion_electronica_planilla_organizacion_sin_fines_2025_signed_17-abril-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-da-26-02",
+        category="determinacion-administrativa",
+        doc_number="DA 26-02",
+        doc_date="2026-04-23",
+        title=(
+            "Posposición de la fecha límite para pagar la contribución sobre ingresos adeudada del año contributivo "
+            "2025"
+        ),
+        summary=(
+            "A tales efectos, el Departamento de Hacienda (“Departamento”) emite esta Determinación Administrativa con "
+            "el propósito de posponer la fecha límite para el pago de la contribución sobre ingresos adeudada con la "
+            "Planilla de Contribución sobre Ingresos de Individuos, Formulario 482, correspondiente al año contributivo "
+            "2025 (“Planilla 2025”), para los empleados del DHS afectados."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/04/da_26-02_posposicion_fecha_limite_planilla_empleados_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-ddec-ib-2026-004",
+        category="boletin-informativo",
+        doc_number="IB DDEC 2026-004",
+        doc_date="2026-04-24",
+        title=(
+            "Clarifications and Frequently Asked Questions Regarding Amendments Enacted under Act No. 38-2026"
+        ),
+        summary=(
+            "This Informative Bulletin seeks to clarify the interpretation of certain amendments to the Incentives Code "
+            "upon the enactment of Act No. 38-2026 on March 10, 2026, particularly on the income tax rate and "
+            "alternatives applicable to individual resident investor (“IRI”) applications pending approval, "
+            "applications filed on or before December 31, 2026, updated requirements for compliance with the primary "
+            "residential property acquisition commitment under the tax exemption decrees, and on the prospective "
+            "applicability of Circular Letter No. DDEC 2026-001 issued by the OIN on January 12, 2026 (“CC 26-001”)."
+        ),
+        source_url="https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Informative%20Bulletin%20DDEC%20NO.%202026-004%20Final.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-08",
+        category="carta-circular",
+        doc_number="CC RI 26-08",
+        doc_date="2026-05-01",
+        title=(
+            "Periodo libre de Impuesto sobre Ventas y Uso por artículos y equipos para la temporada de huracanes"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer: (i) el "
+            "periodo de Exención del IVU en la compra de artículos y equipos de preparación para la temporada de "
+            "huracanes para el año natural 2026, y (ii) los artículos y equipos de preparación que estarán exentos del "
+            "IVU durante dicho periodo."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/cc_ri_26-08_exencion_anual_ivu_articulos_y_equipo_huracanes_2026_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-04",
+        category="boletin-informativo",
+        doc_number="BI RI 26-04",
+        doc_date="2026-05-08",
+        title=(
+            "Enlace para confirmar la cuenta de la institución financiera a ser utilizada para recibir el Alivio "
+            "Contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite este Boletín Informativo para notificar a los "
+            "contribuyentes que, a partir del lunes, 11 de mayo de 2026, el enlace para informar la cuenta de la "
+            "institución financiera (“Enlace”) estará disponible en SURI."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/bi_ri_26-04_alivio_contributivo_-_confirmacion_de_la_cuenta_de_banco_v.5.7.2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-09",
+        category="carta-circular",
+        doc_number="CC RI 26-09",
+        doc_date="2026-05-15",
+        title=(
+            "Radicación de la planilla de contribución sobre ingresos para negocios con decretos de exención "
+            "contributiva (Formulario 480.3(II)) para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de establecer el "
+            "procedimiento de radicación electrónica de la Planilla de Negocio Exento para el año contributivo 2025."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/cc_ri_26-09_radicacio_n_electro_nica_planillas_incentivos_2025.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-10",
+        category="carta-circular",
+        doc_number="CC RI 26-10",
+        doc_date="2026-05-20",
+        title=(
+            "Reglas aplicables al Cheque de Alivio Contributivo para los Trabajadores y la Clase Media para el año "
+            "contributivo 2025 conforme a la Resolución Conjunta 6-2026"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular para establecer los parámetros de "
+            "elegibilidad del Alivio Contributivo y la forma en que se efectuará el pago a los individuos elegibles."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/05/cc_ri_26-10_alivio_contributivo_2025_rc_6-2026_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-11",
+        category="carta-circular",
+        doc_number="CC RI 26-11",
+        doc_date="2026-06-01",
+        title=(
+            "Periodo libre de Impuesto sobre Ventas y Uso por regreso a la escuela para el año fiscal 2026-2027"
+        ),
+        summary=(
+            "El Departamento de Hacienda (“Departamento”) emite esta Carta Circular con el propósito de establecer: (i) "
+            "el periodo de Exención del IVU en la compra de uniformes y materiales escolares para el año fiscal "
+            "2026-2027, y (ii) los artículos que estarán exentos del IVU durante dicho periodo."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-11_back_to_school_2026-2027_signed_1-junio-2026.pdf",
+    ),
+    PublicationRecord(
+        id="pr-cc-ri-26-12",
+        category="carta-circular",
+        doc_number="CC RI 26-12",
+        doc_date="2026-06-26",
+        title=(
+            "Formulario 481.1, Planilla de Crédito para Personas de 65 años o más y Crédito Compensatorio para "
+            "Pensionados de Bajos Recursos, para el año contributivo 2025"
+        ),
+        summary=(
+            "A tenor con lo anterior, el Departamento emite esta Carta Circular con el propósito de: (i) notificar la "
+            "emisión de la nueva versión del Formulario 481.1 para el año contributivo 2025, y (ii) establecer el "
+            "procedimiento de radicación electrónica compulsoria a través de SURI de dicho formulario."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/06/cc_ri_26-12_formulario_481.1_seniors_-_ano_contributivo_2025_signed.pdf",
+    ),
+    PublicationRecord(
+        id="pr-bi-26-05",
+        category="boletin-informativo",
+        doc_number="BI RI 26-05",
+        doc_date="2026-07-14",
+        title=(
+            "Compilación del Reglamento Núm. 8049 del Código de Rentas Internas de Puerto Rico de 2011 y sus enmiendas "
+            "en un solo documento de referencia"
+        ),
+        summary=(
+            "A tales efectos, el Departamento emite este Boletín Informativo con el propósito de notificar que ya está "
+            "disponible la Compilación de Reglamentos del Código y se puede acceder en nuestra página de internet: "
+            "www.hacienda.pr.gov, en la sección Reglamentos de Hacienda bajo el Código de Rentas Internas que se "
+            "encuentra ubicada en el área de Publicaciones."
+        ),
+        source_url="https://hacienda.pr.gov/sites/default/files/publicaciones/2026/07/bi_ri_26-05_publicacion_de_la_compilacion_del_reglamento_8049_signed_13-julio-2026.pdf",
+    ),
+    PublicationRecord(
         id="pr-da-23-04",
         category="determinacion-administrativa",
         doc_number="DA 23-04",
@@ -6863,29 +7863,65 @@ def apply_uslm_title26(
     return refreshed, changed
 
 
-def check_upstream_endpoints() -> dict[str, Any]:
-    """Verify live connectivity to official digital tax publishing authorities."""
-    endpoints = {
-        "OLRC_USLM": "https://uscode.house.gov/",
-        "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/versions.json",
-        "Hacienda_PR": "https://hacienda.pr.gov/",
-        "OGP_PR": "https://bvirtualogp.pr.gov/",
-        "Georgia_DOR": "https://dor.georgia.gov/",
-    }
+UPSTREAM_ENDPOINTS: dict[str, str] = {
+    "OLRC_USLM": "https://uscode.house.gov/",
+    "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/versions.json",
+    "Hacienda_PR": "https://hacienda.pr.gov/",
+    "OGP_PR": "https://bvirtualogp.pr.gov/",
+    "Georgia_DOR": "https://dor.georgia.gov/",
+}
+UPSTREAM_USER_AGENT = (
+    "TaxCode-MCP-Sync/1.0 (+https://github.com/christianclaudio/mcp-server-taxcode)"
+)
+UPSTREAM_TIMEOUT_SECONDS = 5.0
+
+
+async def _probe_upstream_endpoints(endpoints: dict[str, str]) -> dict[str, Any]:
+    """Probe each endpoint once through the client's SSRF transport.
+
+    Every URL passes ``validate_outbound_url`` first. The transport then checks every
+    address the host resolves to and connects only to a checked one, keeping the
+    hostname for the Host header, TLS SNI and certificate verification. Redirects are
+    not followed: a 3xx target would skip the check, so it is reported, not fetched.
+    httpx ignores env proxies whenever a transport is passed
+    (``allow_env_proxies = trust_env and transport is None``), so the probe always
+    connects direct through the pin; egress-proxy deployments need a proxy-aware
+    transport, which isn't provided. ``trust_env=False`` is belt-and-braces.
+    """
     results: dict[str, Any] = {}
-    for name, url in endpoints.items():
-        try:
-            req = urllib.request.Request(
-                url,
-                headers={
-                    "User-Agent": "TaxCode-MCP-Sync/1.0 (+https://github.com/christianclaudio/mcp-server-taxcode)"
-                },
-            )
-            with urllib.request.urlopen(req, timeout=5) as resp:
-                results[name] = {"status": "reachable", "code": resp.getcode(), "url": url}
-        except Exception as exc:
-            results[name] = {"status": "unreachable_or_blocked", "error": str(exc), "url": url}
+    async with httpx.AsyncClient(
+        transport=SSRFSafeAsyncTransport(verify=True),
+        timeout=UPSTREAM_TIMEOUT_SECONDS,
+        follow_redirects=False,
+        trust_env=False,
+        headers={"User-Agent": UPSTREAM_USER_AGENT},
+    ) as client:
+        for name, url in endpoints.items():
+            try:
+                safe_url = validate_outbound_url(url)
+                resp = await client.get(safe_url)
+                if resp.is_redirect:
+                    results[name] = {
+                        "status": "redirect_not_followed",
+                        "code": resp.status_code,
+                        "location": resp.headers.get("location", ""),
+                        "url": url,
+                    }
+                    continue
+                resp.raise_for_status()
+                results[name] = {"status": "reachable", "code": resp.status_code, "url": url}
+            except Exception as exc:
+                results[name] = {"status": "unreachable_or_blocked", "error": str(exc), "url": url}
     return results
+
+
+def check_upstream_endpoints() -> dict[str, Any]:
+    """Verify live connectivity to official digital tax publishing authorities.
+
+    Each probe goes through the pinned, redirect-free fetch in
+    ``_probe_upstream_endpoints``; a refused host is reported as blocked.
+    """
+    return asyncio.run(_probe_upstream_endpoints(UPSTREAM_ENDPOINTS))
 
 
 def _statute_file_base(s: StatuteRecord) -> str:
@@ -6916,13 +7952,14 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
 
         file_base = _statute_file_base(s)
         filename = f"{file_base}.md"
+        source_note = f" — {s.source_note}" if s.source_note else ""
         content = f"""# {s.citation} — {s.title}
 
 - **Jurisdiction:** {s.jurisdiction}
 - **Corpus:** {s.corpus}
 - **Effective Year:** {s.effective_year}
 - **Superseded Year:** {s.superseded_year or "Current / In Force"}
-- **Source:** [{s.source_url}]({s.source_url})
+- **Source:** [{s.source_url}]({s.source_url}){source_note}
 - **Hierarchy:** `{s.breadcrumbs}`
 - **Cross References:** {", ".join(f"`{ref}`" for ref in s.cross_references)}
 

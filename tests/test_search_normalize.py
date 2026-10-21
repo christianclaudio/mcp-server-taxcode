@@ -71,8 +71,9 @@ async def test_list_publications_schema_lists_categories() -> None:
 
 
 async def test_list_publications_tool_normalizes_category() -> None:
-    res = await server.list_publications(category="carta circular")
-    assert res["count"] == 3
+    res = await server.list_publications(category="carta circular", limit=50)
+    # 3 earlier letters, Hacienda's CC RI 26-01 to 26-12 and DDEC's CC 2026-001.
+    assert res["count"] == 16
 
 
 # --- jurisdiction names -------------------------------------------------------
