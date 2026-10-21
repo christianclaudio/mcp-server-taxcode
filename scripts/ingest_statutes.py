@@ -53,6 +53,8 @@ class StatuteRecord:
     superseded_year: int | None = None
     cross_references: list[str] = field(default_factory=list)
     breadcrumbs: str = ""
+    # Export-only provenance note appended to the docs Source line; not stored in the database.
+    source_note: str = ""
 
     def content_hash(self) -> str:
         """Compute a SHA-256 checksum of the bilingual text payload."""
@@ -4846,7 +4848,12 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "dominio”) of real property as principal residence, alone or jointly with their spouse, for the life of the "
             "decree (c). Filing the annual reports under Section 2021.01 or Act 22-2012 carries an annual fee of "
             "$5,000: $300 to a special fund administered by the DDEC and $4,700 to the General Fund (d). Failing to "
-            "file a required report, or filing it late, can bring an administrative fine of up to $10,000 (e). This is "
+            "file a required report, or filing it late, can bring an administrative fine of up to $10,000 (e). For "
+            "taxable years beginning after December 31, 2024, every report required by the section, including the "
+            "compliance report, must be filed electronically with the Secretary of the Treasury as part of the exempt "
+            "business's income tax return, together with the corresponding fee; the Secretary may postpone this "
+            "requirement by one additional year for all or some decree holders through a publication of general "
+            "applicability (f). Neither Act 38-2026 nor the OGP compilation names the law that added (f). This is "
             "the version in force before 2026; it was superseded in 2026 by the text as amended by Act 38-2026 "
             "(pr-ley60-6020-10)."
         ),
@@ -4939,6 +4946,12 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "considerará como no radicado, si la agencia concernida notifica al Negocio Exento de alguna omisión "
             "en el informe requerido y dicho Negocio Exento no somete la información que falta dentro de quince "
             "(15) días de haber sido notificada, o no justifica razonablemente la falta de la misma.\n"
+            "(f) Todo informe requerido por esta Sección, incluyendo el informe de cumplimiento, para años "
+            "contributivos comenzados luego del 31 de diciembre de 2024, deberá ser radicado electrónicamente "
+            "ante el Secretario de Hacienda como parte de la planilla de contribución sobre ingresos del Negocio "
+            "Exento, junto al pago de derechos correspondiente. El Secretario de Hacienda podrá posponer la "
+            "entrada en vigor de las disposiciones de este apartado por un año adicional para todos o algunos "
+            "concesionarios mediante publicación de carácter general.\n"
             "[Nota: Versión sustituida en 2026.]"
         ),
         effective_year=2019,
@@ -4946,6 +4959,10 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         source_url="https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
         cross_references=["Ley 60-2019 Sec. 2021.01"],
         breadcrumbs="Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10",
+        source_note=(
+            "Text taken from the OGP compilation of Ley 60-2019 as revised with later amendments (revised "
+            "July 16, 2026), with Act 38-2026's amendment to (c) removed."
+        ),
     ),
     StatuteRecord(
         id="pr-ley60-6070-55",
@@ -7792,13 +7809,14 @@ def export_documentation(output_dir: Path) -> tuple[int, int]:
 
         file_base = _statute_file_base(s)
         filename = f"{file_base}.md"
+        source_note = f" — {s.source_note}" if s.source_note else ""
         content = f"""# {s.citation} — {s.title}
 
 - **Jurisdiction:** {s.jurisdiction}
 - **Corpus:** {s.corpus}
 - **Effective Year:** {s.effective_year}
 - **Superseded Year:** {s.superseded_year or "Current / In Force"}
-- **Source:** [{s.source_url}]({s.source_url})
+- **Source:** [{s.source_url}]({s.source_url}){source_note}
 - **Hierarchy:** `{s.breadcrumbs}`
 - **Cross References:** {", ".join(f"`{ref}`" for ref in s.cross_references)}
 

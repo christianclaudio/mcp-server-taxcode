@@ -160,6 +160,24 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     # Verify markdown subdirectories
     assert (docs_out / "us" / "irc_933.md").exists()
     assert (docs_out / "pr" / "ley60_2021_01.md").exists()
+    # A row with a source note says where its text came from; rows without one keep the bare URL.
+    source_2019 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10_2019.md")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.startswith("- **Source:**")
+    )
+    assert source_2019.endswith(
+        "— Text taken from the OGP compilation of Ley 60-2019 as revised with later amendments "
+        "(revised July 16, 2026), with Act 38-2026's amendment to (c) removed."
+    )
+    source_2026 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10.md").read_text(encoding="utf-8").splitlines()
+        if line.startswith("- **Source:**")
+    )
+    assert source_2026.endswith("60-2019.pdf)")
     assert (docs_out / "ga" / "ocga_48_7_1.md").exists()
     assert (docs_out / "ca" / "rtc_17014.md").exists()
     assert (docs_out / "ny" / "nytax_605.md").exists()

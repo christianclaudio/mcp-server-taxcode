@@ -5702,6 +5702,13 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "requerido y dicho Negocio Exento no somete la información que falta dentro de "
             "quince (15) días de haber sido notificada, o no justifica razonablemente la "
             "falta de la misma.\n"
+            "(f) Todo informe requerido por esta Sección, incluyendo el informe de "
+            "cumplimiento, para años contributivos comenzados luego del 31 de diciembre de "
+            "2024, deberá ser radicado electrónicamente ante el Secretario de Hacienda como "
+            "parte de la planilla de contribución sobre ingresos del Negocio Exento, junto "
+            "al pago de derechos correspondiente. El Secretario de Hacienda podrá posponer "
+            "la entrada en vigor de las disposiciones de este apartado por un año adicional "
+            "para todos o algunos concesionarios mediante publicación de carácter general.\n"
             "[Nota: Versión sustituida en 2026.]"
         ),
         "text_en": (
@@ -5728,8 +5735,15 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "carries an annual fee of $5,000: $300 to a special fund administered by "
             "the DDEC and $4,700 to the General Fund (d). Failing to file a required "
             "report, or filing it late, can bring an administrative fine of up to "
-            "$10,000 (e). This is the version in force before 2026; it was superseded "
-            "in 2026 by the text as amended by Act 38-2026 (pr-ley60-6020-10)."
+            "$10,000 (e). For taxable years beginning after December 31, 2024, every "
+            "report required by the section, including the compliance report, must be "
+            "filed electronically with the Secretary of the Treasury as part of the "
+            "exempt business's income tax return, together with the corresponding fee; "
+            "the Secretary may postpone this requirement by one additional year for all "
+            "or some decree holders through a publication of general applicability (f). "
+            "Neither Act 38-2026 nor the OGP compilation names the law that added (f). "
+            "This is the version in force before 2026; it was superseded in 2026 by the "
+            "text as amended by Act 38-2026 (pr-ley60-6020-10)."
         ),
         "effective_year": 2019,
         "superseded_year": 2026,
