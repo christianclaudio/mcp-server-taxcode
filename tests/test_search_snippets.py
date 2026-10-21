@@ -164,7 +164,8 @@ def test_search_spanish_preference(db: TaxDatabase) -> None:
     assert (row["snippet_language"], "933" in row["snippet"]) == ("en", True)
 
 
-# Catalog-only rows seeded after the orders below were recorded.
+# Catalog-only rows seeded after the orders below were recorded, and rows whose summary
+# was later replaced by the full statutory text (pr-ley60-2022-01, by Act 38-2026).
 SEEDED_AFTER_735477D = frozenset(
     {
         "us-irc-957",
@@ -174,7 +175,9 @@ SEEDED_AFTER_735477D = frozenset(
         "pr-cri-1062-01",
         "pr-ley60-6070-55",
         "pr-ley60-6020-10",
+        "pr-ley60-6020-10-2019",
         "pr-cri-1062-03",
+        "pr-ley60-2022-01",
     }
 )
 

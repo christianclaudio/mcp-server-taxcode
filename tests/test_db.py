@@ -336,13 +336,34 @@ def test_search_statutes_temporal_and_descending_order() -> None:
             assert r["effective_year"] == 2024
 
 
+def test_ley60_6020_10_lookup_by_tax_year_splits_on_act_38_2026() -> None:
+    """Before 2026 the 2019 row answers; from 2026 the Act 38-2026 row does."""
+    test_db = TaxDatabase(":memory:")
+    for year in (2020, 2025):
+        old = test_db.lookup_statute("Ley 60-2019 Sec. 6020.10", tax_year=year)
+        assert old is not None, year
+        assert old["id"] == "pr-ley60-6020-10-2019"
+        assert old["effective_year"] == 2019 and old["superseded_year"] == 2026
+        assert old["text_es"].endswith("[Nota: Versión sustituida en 2026.]")
+        # Act 38-2026's 2027 registry rule and (f) (attributed to Ley 65-2025) are not in it.
+        assert "1 de enero de 2027" not in old["text_es"] and "2022.07" not in old["text_es"]
+        assert "\n(f)" not in old["text_es"] and "Ley 38-2026" not in old["text_es"]
+    new = test_db.lookup_statute("Ley 60-2019 Sec. 6020.10", tax_year=2026)
+    assert new is not None
+    assert new["id"] == "pr-ley60-6020-10"
+    assert new["effective_year"] == 2026 and new["superseded_year"] is None
+    assert "Act 38-2026" in new["text_en"]
+    assert "1 de enero de 2027" in new["text_es"] and "\n(f)" in new["text_es"]
+
+
 def test_ley60_2022_01_lookup_by_tax_year_splits_on_act_38_2026() -> None:
     test_db = TaxDatabase(":memory:")
     old = test_db.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2020)
     assert old is not None
     assert old["id"] == "pr-ley60-2022-01-2019"
     assert old["effective_year"] == 2019 and old["superseded_year"] == 2026
-    assert old["text_en"].startswith("Provides 100% tax exemption")
+    assert "before January 1, 2036" in old["text_en"]
+    assert "Capital gains are governed by Section 2022.02" in old["text_en"]
     new = test_db.lookup_statute("Ley 60-2019 Sec. 2022.01", tax_year=2027)
     assert new is not None
     assert new["id"] == "pr-ley60-2022-01"
