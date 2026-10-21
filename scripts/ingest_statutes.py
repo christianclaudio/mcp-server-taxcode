@@ -9,25 +9,28 @@ and generates standardized llms.txt documentation files.
 from __future__ import annotations
 
 import argparse
+import asyncio
 import hashlib
 import json
 import logging
 import os
 import re
 import sys
-import urllib.error
-import urllib.request
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
+import httpx
+
+from taxcode_mcp.client import SSRFSafeAsyncTransport
 from taxcode_mcp.db import (
     ECFR_TITLE26_DATE,
     USLM_TITLE26_RELEASE_POINT,
     USLM_TITLE26_SOURCE_URL,
     TaxDatabase,
 )
+from taxcode_mcp.ssrf import validate_outbound_url
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("ingest_statutes")
@@ -7700,29 +7703,65 @@ def apply_uslm_title26(
     return refreshed, changed
 
 
-def check_upstream_endpoints() -> dict[str, Any]:
-    """Verify live connectivity to official digital tax publishing authorities."""
-    endpoints = {
-        "OLRC_USLM": "https://uscode.house.gov/",
-        "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/versions.json",
-        "Hacienda_PR": "https://hacienda.pr.gov/",
-        "OGP_PR": "https://bvirtualogp.pr.gov/",
-        "Georgia_DOR": "https://dor.georgia.gov/",
-    }
+UPSTREAM_ENDPOINTS: dict[str, str] = {
+    "OLRC_USLM": "https://uscode.house.gov/",
+    "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/versions.json",
+    "Hacienda_PR": "https://hacienda.pr.gov/",
+    "OGP_PR": "https://bvirtualogp.pr.gov/",
+    "Georgia_DOR": "https://dor.georgia.gov/",
+}
+UPSTREAM_USER_AGENT = (
+    "TaxCode-MCP-Sync/1.0 (+https://github.com/christianclaudio/mcp-server-taxcode)"
+)
+UPSTREAM_TIMEOUT_SECONDS = 5.0
+
+
+async def _probe_upstream_endpoints(endpoints: dict[str, str]) -> dict[str, Any]:
+    """Probe each endpoint once through the client's SSRF transport.
+
+    Every URL passes ``validate_outbound_url`` first. The transport then checks every
+    address the host resolves to and connects only to a checked one, keeping the
+    hostname for the Host header, TLS SNI and certificate verification. Redirects are
+    not followed: a 3xx target would skip the check, so it is reported, not fetched.
+    httpx ignores env proxies whenever a transport is passed
+    (``allow_env_proxies = trust_env and transport is None``), so the probe always
+    connects direct through the pin; egress-proxy deployments need a proxy-aware
+    transport, which isn't provided. ``trust_env=False`` is belt-and-braces.
+    """
     results: dict[str, Any] = {}
-    for name, url in endpoints.items():
-        try:
-            req = urllib.request.Request(
-                url,
-                headers={
-                    "User-Agent": "TaxCode-MCP-Sync/1.0 (+https://github.com/christianclaudio/mcp-server-taxcode)"
-                },
-            )
-            with urllib.request.urlopen(req, timeout=5) as resp:
-                results[name] = {"status": "reachable", "code": resp.getcode(), "url": url}
-        except Exception as exc:
-            results[name] = {"status": "unreachable_or_blocked", "error": str(exc), "url": url}
+    async with httpx.AsyncClient(
+        transport=SSRFSafeAsyncTransport(verify=True),
+        timeout=UPSTREAM_TIMEOUT_SECONDS,
+        follow_redirects=False,
+        trust_env=False,
+        headers={"User-Agent": UPSTREAM_USER_AGENT},
+    ) as client:
+        for name, url in endpoints.items():
+            try:
+                safe_url = validate_outbound_url(url)
+                resp = await client.get(safe_url)
+                if resp.is_redirect:
+                    results[name] = {
+                        "status": "redirect_not_followed",
+                        "code": resp.status_code,
+                        "location": resp.headers.get("location", ""),
+                        "url": url,
+                    }
+                    continue
+                resp.raise_for_status()
+                results[name] = {"status": "reachable", "code": resp.status_code, "url": url}
+            except Exception as exc:
+                results[name] = {"status": "unreachable_or_blocked", "error": str(exc), "url": url}
     return results
+
+
+def check_upstream_endpoints() -> dict[str, Any]:
+    """Verify live connectivity to official digital tax publishing authorities.
+
+    Each probe goes through the pinned, redirect-free fetch in
+    ``_probe_upstream_endpoints``; a refused host is reported as blocked.
+    """
+    return asyncio.run(_probe_upstream_endpoints(UPSTREAM_ENDPOINTS))
 
 
 def _statute_file_base(s: StatuteRecord) -> str:

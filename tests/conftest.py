@@ -2,7 +2,9 @@
 
 import importlib.util
 import os
+import socket
 from collections.abc import Iterator
+from typing import Any
 
 import httpx
 import pytest
@@ -32,6 +34,33 @@ def _clear_template_auth_env(monkeypatch: pytest.MonkeyPatch) -> None:
 
     if getattr(server_mod, "mcp", None) is not None:
         monkeypatch.setattr(server_mod.mcp, "auth", None)
+
+
+class RealNetworkUsedError(AssertionError):
+    """A test opened a real socket connection instead of using the fake network."""
+
+
+def _refuse_real_connect(*args: Any, **_kwargs: Any) -> Any:
+    raise RealNetworkUsedError(
+        f"test tried to open a real network connection {args[1:] or args!r}; "
+        "use tests.fake_network or a mock transport"
+    )
+
+
+@pytest.fixture(autouse=True)
+def _no_real_network(request: pytest.FixtureRequest, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Fail any test that dials a real host (live ``e2e`` tests excepted).
+
+    ``socket.socket.connect`` / ``connect_ex`` sit under every client stack (httpx and
+    httpcore through anyio and asyncio, ``urllib``, ``socket.create_connection``), so an
+    unmocked path fails here instead of reaching the network. The fake network patches
+    httpcore's backends above this layer and never opens a socket.
+    """
+    if request.node.get_closest_marker("e2e") is not None:
+        return
+    monkeypatch.setattr(socket.socket, "connect", _refuse_real_connect)
+    monkeypatch.setattr(socket.socket, "connect_ex", _refuse_real_connect)
+    monkeypatch.setattr(socket, "create_connection", _refuse_real_connect)
 
 
 def code_mode_ci_guard_error(environ: dict[str, str] | None = None) -> str | None:

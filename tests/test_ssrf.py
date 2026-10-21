@@ -151,9 +151,9 @@ def test_malformed_numeric_hosts_do_not_pass() -> None:
 
 def test_validate_resolved_host_blocks_rebinding_and_literals() -> None:
     """Resolver checks fail closed for private answers, empty answers, and literals."""
-    validate_resolved_host("example.com")
-    validate_resolved_host("api.example.com")
-    validate_resolved_host("93.184.216.34")
+    assert validate_resolved_host("example.com") == ()
+    assert validate_resolved_host("api.example.com") == ()
+    assert validate_resolved_host("93.184.216.34") == ("93.184.216.34",)
 
     with pytest.raises(SSRFValidationError, match="Blocked"):
         validate_resolved_host("10.0.0.1")
@@ -164,7 +164,21 @@ def test_validate_resolved_host_blocks_rebinding_and_literals() -> None:
         "socket.getaddrinfo",
         return_value=[(socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", 443))],
     ):
-        validate_resolved_host("api.customdomain.org")
+        assert validate_resolved_host("api.customdomain.org") == ("93.184.216.34",)
+
+    with patch(
+        "socket.getaddrinfo",
+        return_value=[
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", 443)),
+            (socket.AF_INET, socket.SOCK_DGRAM, 17, "", ("93.184.216.34", 443)),
+            (socket.AF_INET6, socket.SOCK_STREAM, 6, "", ("2606:2800:220:1::248", 443, 0, 0)),
+        ],
+    ):
+        # Every answer is checked; each address is returned once, in resolver order.
+        assert validate_resolved_host("multi.customdomain.org") == (
+            "93.184.216.34",
+            "2606:2800:220:1::248",
+        )
 
     with patch(
         "socket.getaddrinfo",
