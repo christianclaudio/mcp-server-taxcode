@@ -369,6 +369,12 @@ def test_ley60_6020_10_lookup_by_tax_year_splits_on_act_38_2026() -> None:
     new = test_db.lookup_statute("Ley 60-2019 Sec. 6020.10", tax_year=2026)
     assert new is not None
     assert new["id"] == "pr-ley60-6020-10"
+    # Both summaries of (c) carry the seller and ownership conditions of the Spanish text.
+    for row in (old, new):
+        assert "totalmente desvinculada y ajena" in row["text_es"]
+        assert "exclusivo y completo dominio" in row["text_es"]
+        assert "wholly unrelated to and independent of the decree holder" in row["text_en"]
+        assert "keep exclusive and complete ownership" in row["text_en"]
     assert new["effective_year"] == 2026 and new["superseded_year"] is None
     assert "Act 38-2026" in new["text_en"]
     assert "1 de enero de 2027" in new["text_es"] and "\n(f)" in new["text_es"]
