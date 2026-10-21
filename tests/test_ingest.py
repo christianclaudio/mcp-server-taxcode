@@ -168,10 +168,20 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
         .splitlines()
         if line.startswith("- **Source:**")
     )
-    assert source_2019.endswith(
-        "— Text taken from the OGP compilation of Ley 60-2019 as revised with later amendments "
-        "(revised July 16, 2026), with Act 38-2026's amendment to (c) removed."
+    assert (
+        "— Text taken from the OGP compilation of Ley 60-2019 as revised with later" in source_2019
     )
+    assert "Ley 65-2025's (e) and (f) removed; (d) checked against Ley 40-2020" in source_2019
+    assert "which added it effective April 16, 2020 (Section 97)" in source_2019
+    assert source_2019.endswith("its exact earlier wording is not on file.")
+    source_2025 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10_2025.md")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.startswith("- **Source:**")
+    )
+    assert "(d), (e) and (f) checked against Ley 65-2025, Article 31" in source_2025
     source_2026 = next(
         line
         for line in (docs_out / "pr" / "ley60_6020_10.md").read_text(encoding="utf-8").splitlines()

@@ -36,6 +36,7 @@
 - [Ley 60-2019 Sec. 2032.01 (2019) — Tasa Fija Preferencial de 4% sobre Ingreso de Desarrollo](./pr/ley60_2032_01.md): Ley 60-2019 > Subtítulo B > Capítulo 3 > Sección 2032.01
 - [Ley 60-2019 Sec. 6020.03 (2026) — Periodo de Exención, Renegociación y Extensión de Decreto](./pr/ley60_6020_03.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.03
 - [Ley 60-2019 Sec. 6020.10 (2026) — Informes](./pr/ley60_6020_10.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
+- [Ley 60-2019 Sec. 6020.10 (2025) — Informes](./pr/ley60_6020_10_2025.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
 - [Ley 60-2019 Sec. 6020.10 (2019) — Informes](./pr/ley60_6020_10_2019.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
 - [Ley 60-2019 Sec. 6070.55 (2019) — Definiciones aplicables a las Zonas de Oportunidad](./pr/ley60_6070_55.md): Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55
 - [Act 22-2012 Sec. 3 (2012) — Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)](./pr/ley22_3_2012.md): Ley 22-2012 > Sección 3
