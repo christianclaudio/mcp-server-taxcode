@@ -137,6 +137,7 @@ When translating an API documentation page, `llm.txt`, or OpenAPI specification 
    - An unknown tool stays FastMCP 4.0.11's tool result (`isError: true`). The spec's JSON-RPC `-32602` (`Unknown tool: invalid_tool_name`) is a known gap; do not change the wire format. See `COOKBOOK.md` Recipe 12.
 3. **Multi-Stage Non-Root Containers**:
    - The `Dockerfile` must use a multi-stage build (`python:3.14-slim AS builder` $\rightarrow$ runtime, pulled from Docker Hub by tag) creating and executing under non-root `USER mcp` with virtual environment `/opt/venv`. The runtime stage carries `LABEL io.modelcontextprotocol.server.name` equal to the `server.json` `name` (MCP Registry OCI ownership check), and the default command stays stdio.
+   - Trust stores follow FastMCP's [certificate authority incident notice (October 2026)](https://github.com/PrefectHQ/fastmcp/blob/main/SECURITY.md#certificate-authority-incident-october-2026): the builder installs with `pip>=26.2.2`, the runtime stage upgrades the OS `ca-certificates` package and fails the build below the patched Debian version, and `certifi>=2026.10.19` is a direct dependency.
 4. **Registry Metadata Constraint**:
    - In `server.json`, the root `description` must be **strictly $\le$ 100 characters** to pass MCP Registry schema validation (longer strings trigger HTTP 422 errors).
    - The default package transport is `stdio`, and packages must specify `"runtimeHint": "uvx"`.
@@ -162,6 +163,8 @@ When translating an API documentation page, `llm.txt`, or OpenAPI specification 
 ---
 
 ## 🛠️ Development & Verification Commands
+
+uv 0.13.4 or later is required (`[tool.uv] required-version` in `pyproject.toml`, from FastMCP's certificate authority incident notice); older uv refuses to run, and CI's `setup-uv` installs from that setting.
 
 ```bash
 # Install editable with dev dependencies
