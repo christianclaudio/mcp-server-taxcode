@@ -1,0 +1,28 @@
+# Full Statutory Corpus: CT
+
+## Conn. Gen. Stat. § 12-700: Imposition of Income Tax and Rates
+`C.G.S. > Title 12 > Chapter 229 > § 12-700`
+
+### English
+Imposes graduated personal income tax rates from 3.0% to 6.99% on resident Connecticut taxable income with benefit phase-out recaptures for high earners.
+
+### Español
+Impone tasas impositivas graduadas del 3.0% al 6.99% sobre el ingreso neto de residentes, con eliminación progresiva de tramos de exención en ingresos altos.
+
+## Conn. Gen. Stat. § 12-701: Definitions - Resident and Sourcing
+`C.G.S. > Title 12 > Chapter 229 > § 12-701`
+
+### English
+Defines resident as an individual domiciled in Connecticut or who maintains a permanent place of abode and spends in the aggregate more than 183 days of the taxable year in state.
+
+### Español
+Define residente statutario como quien mantiene un lugar permanente de morada en Connecticut y pasa en total más de 183 días en el año contributivo.
+
+## Conn. Gen. Stat. § 12-711: Convenience of Employer Rule
+`C.G.S. > Title 12 > Chapter 229 > § 12-711`
+
+### English
+Applies a reciprocal convenience of the employer test to nonresident compensation earned while telecommuting for a Connecticut employer if employee's state applies a convenience rule.
+
+### Español
+Aplica la regla de conveniencia del patrono para determinar la fuente de ingresos salariales de no residentes que teletrabajan si su estado de residencia aplica una regla similar.

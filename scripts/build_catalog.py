@@ -5,8 +5,9 @@ The data files under ``src/taxcode_mcp/data`` are the single source of truth for
 statute and publication rows (see ``taxcode_mcp.catalog``). This script:
 
 - rewrites each data file in its canonical JSON form, so diffs stay small and stable;
-- regenerates ``docs/<jurisdiction>/*.md``, ``docs/llms.txt`` and ``docs/llms-full.txt``,
-  and deletes generated pages whose row is gone.
+- regenerates ``docs/<jurisdiction>/*.md``, ``docs/<jurisdiction>/llms-full.txt`` (that
+  jurisdiction's full text), ``docs/llms.txt`` and ``docs/llms-full.txt`` (the index of the
+  per-jurisdiction files), and deletes generated files whose rows are gone.
 
 ``--check`` writes nothing. It fails (exit 1) when a data file breaks the schema or is
 not in canonical form, a manifest entry is missing, incomplete or disagrees with its
@@ -48,7 +49,11 @@ def expected_files(data_dir: Path) -> tuple[dict[Path, str], dict[str, str]]:
 
 
 def _generated_docs(docs_dir: Path) -> set[str]:
-    found = {p.relative_to(docs_dir).as_posix() for p in docs_dir.glob("*/*.md")}
+    found = {
+        p.relative_to(docs_dir).as_posix()
+        for pattern in ("*/*.md", "*/llms-full.txt")
+        for p in docs_dir.glob(pattern)
+    }
     found |= {name for name in ("llms.txt", "llms-full.txt") if (docs_dir / name).is_file()}
     return found
 

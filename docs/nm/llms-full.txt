@@ -1,0 +1,10 @@
+# Full Statutory Corpus: NM
+
+## N.M. Stat. Ann. § 7-2-7: Individual Income Tax Rates
+`NMSA > Chapter 7 > Article 2 > § 7-2-7`
+
+### English
+Imposes graduated individual income tax rates from 1.7% to top rate 5.9% in New Mexico.
+
+### Español
+Impone tasas de impuesto sobre la renta individual graduadas desde 1.7% hasta tasa máxima de 5.9% en Nuevo México.

@@ -1,0 +1,10 @@
+# Full Statutory Corpus: MT
+
+## Mont. Code Ann. § 15-30-2103: Rate of Tax - Net Income
+`MCA > Title 15 > Chapter 30 > Part 21 > § 15-30-2103`
+
+### English
+Imposes restructured individual income tax with two brackets at 4.7% and top rate 5.9% under SB 399 in Montana.
+
+### Español
+Impone impuesto individual reestructurado con dos tramos al 4.7% y tasa máxima del 5.9% bajo SB 399 en Montana.

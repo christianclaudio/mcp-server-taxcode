@@ -1,0 +1,10 @@
+# Full Statutory Corpus: KY
+
+## Ky. Rev. Stat. Ann. § 141.020: Levy of Tax on Individuals
+`KRS > Title XI > Chapter 141 > § 141.020`
+
+### English
+Imposes flat individual income tax rate of 4.0% on net income under statutory rate-reduction triggers in Kentucky.
+
+### Español
+Impone una tasa fija de impuesto sobre la renta del 4.0% sobre el ingreso neto bajo criterios estatutarios de reducción en Kentucky.

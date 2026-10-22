@@ -1,0 +1,10 @@
+# Full Statutory Corpus: ID
+
+## Idaho Code § 63-3024: Individuals' Tax and Tax on Estates and Trusts
+`Idaho Code > Title 63 > Chapter 30 > § 63-3024`
+
+### English
+Imposes a flat individual income tax rate of 5.695% on taxable income under HB 521 in Idaho.
+
+### Español
+Impone una tasa impositiva individual fija del 5.695% sobre el ingreso gravable de individuos bajo HB 521 en Idaho.

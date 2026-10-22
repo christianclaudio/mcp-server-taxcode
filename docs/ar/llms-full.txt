@@ -1,0 +1,10 @@
+# Full Statutory Corpus: AR
+
+## Ark. Code Ann. § 26-51-201: Tax on Individuals, Trusts, and Estates
+`A.C.A. > Title 26 > Subtitle 5 > Chapter 51 > Subchapter 2 > § 26-51-201`
+
+### English
+Imposes individual income tax with graduated brackets and top rate of 3.90% under Arkansas Act 1 of 2024.
+
+### Español
+Impone impuesto sobre el ingreso individual con tramos graduados y tasa máxima de 3.90% bajo la Ley 1 de 2024 de Arkansas.

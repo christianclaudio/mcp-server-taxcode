@@ -352,7 +352,7 @@ def _statute_doc_fields(s: StatuteRecord) -> dict[str, Any]:
 
 
 def export_documentation(output_dir: Path) -> tuple[int, int]:
-    """Write the generated Markdown pages, llms.txt and llms-full.txt into ``output_dir``.
+    """Write the generated docs (pages, llms.txt, the llms-full files) into ``output_dir``.
 
     The files are the ones ``scripts/build_catalog.py`` keeps in ``docs/``
     (``taxcode_mcp.catalog.render_docs``).

@@ -1,0 +1,19 @@
+# Full Statutory Corpus: OH
+
+## Ohio Rev. Code § 5747.02: Taxation of Personal Income - Rates
+`R.C. > Title 57 > Chapter 5747 > § 5747.02`
+
+### English
+Levies Ohio personal income tax with phased rate consolidation: 0% up to $26,050; 2.75% from $26,051 to $100,000; and 3.50% on non-business taxable income exceeding $100,000 for tax year 2024+.
+
+### Español
+Grava el ingreso personal en Ohio con consolidación de tasas: 0% hasta $26,050; 2.75% de $26,051 a $100,000; y 3.50% sobre el ingreso no comercial que exceda $100,000 para el año 2024+.
+
+## Ohio Rev. Code § 5747.24: Bright-Line Presumption of Domicile - Contact Periods
+`R.C. > Title 57 > Chapter 5747 > § 5747.24`
+
+### English
+Establishes bright-line residency rules: an individual with <= 212 Ohio contact periods is presumed non-resident if filing Form IT-NRS affidavit by October 15; an individual with >= 213 contact periods is presumed an Ohio resident.
+
+### Español
+Establece regla objetiva de periodos de contacto: quien tenga <= 212 periodos de contacto se presume no residente si radica declaración jurada IT-NRS antes del 15 de octubre; >= 213 periodos presume residencia.

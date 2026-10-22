@@ -154,8 +154,9 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert llms_txt.exists()
     assert llms_full_txt.exists()
     assert "TaxCode MCP Intelligence Corpus" in llms_txt.read_text(encoding="utf-8")
-    assert "26 U.S.C. § 933" in llms_full_txt.read_text(encoding="utf-8")
-    assert "O.C.G.A. § 48-7-1" in llms_full_txt.read_text(encoding="utf-8")
+    assert "(./us/llms-full.txt): " in llms_full_txt.read_text(encoding="utf-8")
+    assert "26 U.S.C. § 933" in (docs_out / "us" / "llms-full.txt").read_text(encoding="utf-8")
+    assert "O.C.G.A. § 48-7-1" in (docs_out / "ga" / "llms-full.txt").read_text(encoding="utf-8")
 
     # Verify markdown subdirectories
     assert (docs_out / "us" / "irc_933.md").exists()

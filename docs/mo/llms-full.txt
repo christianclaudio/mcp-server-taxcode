@@ -1,0 +1,10 @@
+# Full Statutory Corpus: MO
+
+## Mo. Rev. Stat. § 143.011: Tax on Resident Individuals
+`RSMo > Title X > Chapter 143 > § 143.011`
+
+### English
+Imposes graduated individual income tax rates with a top marginal rate of 4.80% in Missouri under SB 3 and SB 5.
+
+### Español
+Impone tasas de impuesto individual graduadas con una tasa marginal máxima de 4.80% en Missouri bajo SB 3 y SB 5.

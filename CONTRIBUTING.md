@@ -39,7 +39,7 @@ To add or change a row:
 
 1. Edit the row in `statutes/<code>.json` or `publications/<code>.json`. A new prior-year version is a new row with its own `id` and `effective_year`; set `superseded_year` on the version it replaces. Never copy current text into an earlier year.
 2. Add or update its entry in `manifest/<code>.json`.
-3. Run `uv run python scripts/build_catalog.py`. It rewrites the data files in canonical form and regenerates `docs/<code>/*.md`, `docs/llms.txt` and `docs/llms-full.txt`.
+3. Run `uv run python scripts/build_catalog.py`. It rewrites the data files in canonical form and regenerates `docs/<code>/*.md`, `docs/<code>/llms-full.txt` (that jurisdiction's full text), `docs/llms.txt` and `docs/llms-full.txt` (an index of the per-jurisdiction files), so a content PR only changes the full-text file of the jurisdictions it touches.
 4. Run `uv run python scripts/build_catalog.py --check` and the test suite. CI runs the same check and fails if a data file, a manifest entry or a generated docs file is out of step.
 
 A new jurisdiction also needs its code in `jurisdictions.json` and, for its name to resolve, in `JURISDICTION_NAMES` (`src/taxcode_mcp/db.py`). Content-only PRs touch just the data files, the manifest and the generated docs; keep code changes in their own PR.

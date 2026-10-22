@@ -1,0 +1,28 @@
+# Full Statutory Corpus: IL
+
+## 35 ILCS 5/201: Illinois Individual Income Tax Rate
+`35 ILCS 5/ > Article 2 > Section 201`
+
+### English
+Constitutionally mandated non-graduated flat income tax rate of 4.95% on net income of individuals, trusts, and estates.
+
+### Español
+Impuesto estatal no graduado a tasa fija del 4.95% sobre el ingreso neto de personas naturales, mandatado por la Constitución de Illinois.
+
+## 35 ILCS 5/1501(a)(20): Definition of Resident
+`35 ILCS 5/ > Article 15 > Section 1501(a)(20)`
+
+### English
+Defines resident as an individual who is in Illinois for other than a temporary or transitory purpose during the taxable year or who is domiciled in Illinois.
+
+### Español
+Define residente como persona en Illinois para fines no transitorios o temporales, o domiciliada en Illinois ausente temporalmente.
+
+## 35 ILCS 5/301: Compensation and Nonresident Income Sourcing
+`35 ILCS 5/ > Article 3 > Section 301`
+
+### English
+Rules for allocating and sourcing compensation and business income of nonresidents based on physical days of services performed within Illinois.
+
+### Español
+Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado.

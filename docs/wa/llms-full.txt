@@ -1,0 +1,28 @@
+# Full Statutory Corpus: WA
+
+## RCW 82.87.040: Tax Imposed on Long-Term Capital Gains
+`RCW > Title 82 > Chapter 82.87 > Section 82.87.040`
+
+### English
+7% excise tax on individual annual net long-term capital gains allocated to Washington in excess of statutory standard deduction ($250,000 indexed for inflation).
+
+### Español
+Impuesto especial del 7% sobre ganancias de capital a largo plazo de individuos que excedan la deducción estándar anual ($250,000 indexada por inflación).
+
+## RCW 82.87.020: Capital Gains Tax Definitions and Resident Sourcing
+`RCW > Title 82 > Chapter 82.87 > Section 82.87.020`
+
+### English
+Defines resident for Washington capital gains excise tax purposes as an individual domiciled in Washington at the time the long-term capital asset was sold or exchanged.
+
+### Español
+Define residente de Washington para el impuesto de ganancias de capital como persona natural domiciliada en el estado al momento de la venta o intercambio.
+
+## Wash. Const. art. VII § 1: Constitutional Uniformity and Prohibition of Net Income Tax
+`Wash. Const. > Article VII > Section 1`
+
+### English
+Constitutional requirement that all taxes be uniform upon the same class of property, historically interpreted to prohibit graduated net income taxes.
+
+### Español
+Disposición constitucional de tributación uniforme que prohíbe impuestos progresivos sobre el ingreso neto según interpretado en doctrina judicial histórica.

@@ -1,0 +1,10 @@
+# Full Statutory Corpus: DE
+
+## 30 Del. C. § 1102: Levy and Rates of Personal Income Tax
+`Del. Code > Title 30 > Part II > Chapter 11 > Subchapter I > § 1102`
+
+### English
+Imposes graduated income tax rates from 2.2% to 6.6% and applies convenience of employer rules to nonresident compensation.
+
+### Español
+Impone tasas de impuesto sobre la renta graduadas del 2.2% al 6.6% y aplica reglas de conveniencia del empleador a remuneraciones de no residentes.

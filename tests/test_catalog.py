@@ -136,7 +136,36 @@ def test_a_new_row_regenerates_only_its_pages(tree: tuple[Path, Path]) -> None:
     _edit(data / "statutes" / "wa.json", add_row)
     _edit(data / "manifest" / "wa.json", add_entry)
     changed = build_catalog.write(data, docs)
-    assert changed == ["docs/wa/rcw_82_87_050.md", "docs/llms.txt", "docs/llms-full.txt"]
+    # Only Washington's full-text file and the two indexes change with it.
+    assert changed == [
+        "docs/wa/rcw_82_87_050.md",
+        "docs/llms.txt",
+        "docs/wa/llms-full.txt",
+        "docs/llms-full.txt",
+    ]
+
+
+def test_llms_full_is_an_index_of_per_jurisdiction_files() -> None:
+    catalog = load_catalog()
+    index = (REPO / "docs" / "llms-full.txt").read_text(encoding="utf-8")
+    lines = [line for line in index.splitlines() if line.startswith("- [")]
+    assert [line.split("]")[0][3:] for line in lines] == catalog.jurisdictions
+    for code in catalog.jurisdictions:
+        rows = [s for s in catalog.statutes if s["jurisdiction"] == code]
+        assert f"- [{code}](./{code.lower()}/llms-full.txt): {len(rows)} sections" in lines
+        text = (REPO / "docs" / code.lower() / "llms-full.txt").read_text(encoding="utf-8")
+        assert text.startswith(f"# Full Statutory Corpus: {code}\n")
+        assert text.count("\n### English\n") == len(rows)
+        for s in rows:
+            assert s["text_en"] in text and s["text_es"] in text
+
+
+def test_a_removed_jurisdiction_full_text_file_is_deleted(tree: tuple[Path, Path]) -> None:
+    data, docs = tree
+    (docs / "zz").mkdir()
+    (docs / "zz" / "llms-full.txt").write_text("stale\n", encoding="utf-8")
+    assert "docs: zz/llms-full.txt has no row in the data files" in build_catalog.check(data, docs)
+    assert build_catalog.write(data, docs) == ["docs/zz/llms-full.txt (deleted)"]
 
 
 def test_check_reports_schema_and_manifest_errors(tree: tuple[Path, Path]) -> None:

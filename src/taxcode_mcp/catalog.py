@@ -339,7 +339,11 @@ def statute_doc_path(statute: Mapping[str, Any]) -> str:
 def render_docs(
     statutes: Sequence[Mapping[str, Any]], publications: Sequence[Mapping[str, Any]]
 ) -> dict[str, str]:
-    """Every generated docs file, keyed by its path relative to ``docs/``."""
+    """Every generated docs file, keyed by its path relative to ``docs/``.
+
+    That is one page per statute, ``llms.txt``, one ``<code>/llms-full.txt`` per
+    jurisdiction with its full text, and ``llms-full.txt`` as the index of those files.
+    """
     files: dict[str, str] = {}
     for s in statutes:
         note = f" — {s['source_note']}" if s["source_note"] else ""
@@ -376,12 +380,35 @@ def render_docs(
     summary.extend(["", "## Administrative Publications & Guidance", ""])
     for p in publications:
         summary.append(f"- **{p['doc_number']}** ({p['doc_date']}) — {p['title']}: {p['summary']}")
+    summary.extend(
+        [
+            "",
+            "## Full Statutory Text",
+            "",
+            "- [Full-text index](./llms-full.txt): one `<code>/llms-full.txt` file per "
+            "jurisdiction with the full English and Spanish text of every section.",
+        ]
+    )
     files["llms.txt"] = "\n".join(summary)
-    full = ["# Full Statutory Corpus: US Federal, Puerto Rico & Multi-State Tax Intelligence\n"]
+    by_code: dict[str, list[Mapping[str, Any]]] = {}
     for s in statutes:
-        full.append(
-            f"## {s['citation']}: {s['title']}\n`{s['breadcrumbs']}`\n\n"
-            f"### English\n{s['text_en']}\n\n### Español\n{s['text_es']}\n"
-        )
-    files["llms-full.txt"] = "\n".join(full)
+        by_code.setdefault(str(s["jurisdiction"]), []).append(s)
+    index = [
+        "# Full Statutory Corpus: US Federal, Puerto Rico & Multi-State Tax Intelligence",
+        "",
+        "Full statutory text is split by jurisdiction. Each file holds every section of one "
+        "jurisdiction, in catalog order.",
+        "",
+    ]
+    for code, rows in by_code.items():
+        stem = file_stem(code)
+        index.append(f"- [{code}](./{stem}/llms-full.txt): {len(rows)} sections")
+        full = [f"# Full Statutory Corpus: {code}\n"]
+        for s in rows:
+            full.append(
+                f"## {s['citation']}: {s['title']}\n`{s['breadcrumbs']}`\n\n"
+                f"### English\n{s['text_en']}\n\n### Español\n{s['text_es']}\n"
+            )
+        files[f"{stem}/llms-full.txt"] = "\n".join(full)
+    files["llms-full.txt"] = "\n".join(index) + "\n"
     return files

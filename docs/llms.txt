@@ -168,3 +168,7 @@
 - **VA TB 05-7** (2005-08-25) — Virginia Guidelines for Determining Residency: Official guidance from the Virginia Department of Taxation regarding domiciliary and actual residency tests, temporary absences, and reciprocal commuter provisions.
 - **MD AR-34** (2023-01-10) — Maryland Domicile and Statutory Residency Physical Presence Guidelines: Administrative guidance issued by the Comptroller of Maryland detailing the 183-day rule, permanent place of abode factors, and county local income tax calculation.
 - **OH IT 2007-08** (2007-09-01) — Ohio Residency Guidelines and Bright-Line Contact Period Test: Comprehensive information release from the Ohio Department of Taxation explaining contact periods, the bright-line test, and instructions for filing Form IT-NRS non-domicile affidavit.
+
+## Full Statutory Text
+
+- [Full-text index](./llms-full.txt): one `<code>/llms-full.txt` file per jurisdiction with the full English and Spanish text of every section.
