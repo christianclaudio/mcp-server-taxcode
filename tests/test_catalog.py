@@ -152,7 +152,8 @@ def test_llms_full_is_an_index_of_per_jurisdiction_files() -> None:
     assert [line.split("]")[0][3:] for line in lines] == catalog.jurisdictions
     for code in catalog.jurisdictions:
         rows = [s for s in catalog.statutes if s["jurisdiction"] == code]
-        assert f"- [{code}](./{code.lower()}/llms-full.txt): {len(rows)} sections" in lines
+        noun = "section" if len(rows) == 1 else "sections"
+        assert f"- [{code}](./{code.lower()}/llms-full.txt): {len(rows)} {noun}" in lines
         text = (REPO / "docs" / code.lower() / "llms-full.txt").read_text(encoding="utf-8")
         assert text.startswith(f"# Full Statutory Corpus: {code}\n")
         assert text.count("\n### English\n") == len(rows)
@@ -187,6 +188,18 @@ def test_build_catalog_main_reports_problems(
     monkeypatch.setattr(build_catalog, "write", lambda: ["docs/x"])
     assert build_catalog.main([]) == 0
     assert "1 file(s) changed" in capsys.readouterr().out
+    # Write mode also reports manifest errors, which it can't fix itself.
+    monkeypatch.setattr(build_catalog, "manifest_problems", lambda: ["manifest/ga.json: bad"])
+    assert build_catalog.main([]) == 1
+    out = capsys.readouterr().out
+    assert "[x] manifest/ga.json: bad" in out and "1 manifest problem(s)" in out
+
+
+def test_write_mode_reports_a_real_manifest_error(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    _edit(data / "manifest" / "ga.json", lambda d: d["entries"][0].update(edition="x"))
+    assert any("edition must be one of" in p for p in build_catalog.manifest_problems(data))
+    assert build_catalog.manifest_problems() == []
 
 
 def _statute(doc: Any) -> dict[str, Any]:
@@ -286,6 +299,11 @@ def test_a_jurisdiction_may_have_no_files_and_folders_are_optional(
         ({"licence": ""}, "licence must be a non-empty string"),
         ({"official": "yes"}, "official must be true, false or 'not_recorded'"),
         ({"retrieved": "21 Oct 2026"}, "retrieved must be YYYY-MM-DD"),
+        ({"retrieved": "2025-02-30"}, "retrieved must be YYYY-MM-DD"),
+        ({"retrieved": "2025-13-01"}, "retrieved must be YYYY-MM-DD"),
+        ({"effective_date": "2025-00-10"}, "effective_date must be YYYY-MM-DD"),
+        ({"effective_date": "20250101"}, "effective_date must be YYYY-MM-DD"),
+        ({"effective_date": "2025-01-01\n"}, "effective_date must be YYYY-MM-DD"),
         ({"effective_date": 2026}, "effective_date must be YYYY-MM-DD"),
         ({"content_sha256": "ABC"}, "content_sha256 must be 64 lowercase hex"),
         ({"verification": "checked"}, "verification must be one of"),
@@ -331,6 +349,9 @@ def test_a_fully_recorded_verbatim_entry_passes(tree: tuple[Path, Path]) -> None
         "verification": "verified_verbatim",
     }
     _edit(data / "manifest" / "ga.json", lambda d: d["entries"][0].update(record))
+    assert manifest_errors(load_catalog(data, with_manifest=True)) == []
+    # Leap days are real dates.
+    _edit(data / "manifest" / "ga.json", lambda d: d["entries"][0].update(retrieved="2024-02-29"))
     assert manifest_errors(load_catalog(data, with_manifest=True)) == []
 
 

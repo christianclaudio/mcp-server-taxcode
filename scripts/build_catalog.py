@@ -7,7 +7,9 @@ statute and publication rows (see ``taxcode_mcp.catalog``). This script:
 - rewrites each data file in its canonical JSON form, so diffs stay small and stable;
 - regenerates ``docs/<jurisdiction>/*.md``, ``docs/<jurisdiction>/llms-full.txt`` (that
   jurisdiction's full text), ``docs/llms.txt`` and ``docs/llms-full.txt`` (the index of the
-  per-jurisdiction files), and deletes generated files whose rows are gone.
+  per-jurisdiction files), and deletes generated files whose rows are gone;
+- then reports every manifest error (exit 1), since a manifest entry can't be rewritten
+  into shape.
 
 ``--check`` writes nothing. It fails (exit 1) when a data file breaks the schema or is
 not in canonical form, a manifest entry is missing, incomplete or disagrees with its
@@ -81,6 +83,11 @@ def check(data_dir: Path = DATA_DIR, docs_dir: Path = DOCS_DIR) -> list[str]:
     return problems
 
 
+def manifest_problems(data_dir: Path = DATA_DIR) -> list[str]:
+    """Manifest errors after a write: missing, incomplete or mismatched entries."""
+    return manifest_errors(load_catalog(data_dir, with_manifest=True))
+
+
 def write(data_dir: Path = DATA_DIR, docs_dir: Path = DOCS_DIR) -> list[str]:
     """Rewrite data files canonically and regenerate docs; return the paths changed."""
     data, docs = expected_files(data_dir)
@@ -125,6 +132,12 @@ def main(argv: list[str] | None = None) -> int:
     for path in changed:
         print(f"[*] wrote {path}")
     print(f"[✓] {len(changed)} file(s) changed.")
+    problems = manifest_problems()
+    for problem in problems:
+        print(f"[x] {problem}")
+    if problems:
+        print(f"[x] {len(problems)} manifest problem(s) to fix by hand in data/manifest/.")
+        return 1
     return 0
 
 

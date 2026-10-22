@@ -23,6 +23,7 @@ import json
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -95,7 +96,7 @@ _STR_FIELDS = frozenset(
     {"id", "jurisdiction", "corpus", "citation", "section", "title", "source_url"}
     | {"breadcrumbs", "source_note", "category", "doc_number", "doc_date", "summary"}
 )
-_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+_DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -265,6 +266,17 @@ def publication_stem(publication: Mapping[str, Any]) -> str:
     return str(publication["id"]).split("-", 1)[0]
 
 
+def _is_calendar_date(value: Any) -> bool:
+    """``YYYY-MM-DD`` naming a real day: 2025-02-30 and 2025-13-01 are rejected."""
+    if not (isinstance(value, str) and _DATE_RE.fullmatch(value)):
+        return False
+    try:
+        date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
+
+
 def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
     where = f"manifest/{file_stem(entry['_jurisdiction'])}.json entry {entry['id']!r}"
     errors: list[str] = []
@@ -279,7 +291,7 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
         errors.append(f"{where}: official must be true, false or {NOT_RECORDED!r}")
     for name in ("retrieved", "effective_date"):
         value = entry[name]
-        if value != NOT_RECORDED and not (isinstance(value, str) and _DATE_RE.match(value)):
+        if value != NOT_RECORDED and not _is_calendar_date(value):
             errors.append(f"{where}: {name} must be YYYY-MM-DD or {NOT_RECORDED!r}")
     sha = entry["content_sha256"]
     if sha != NOT_RECORDED and not (isinstance(sha, str) and _SHA256_RE.match(sha)):
@@ -408,7 +420,8 @@ def render_docs(
     ]
     for code, rows in by_code.items():
         stem = file_stem(code)
-        index.append(f"- [{code}](./{stem}/llms-full.txt): {len(rows)} sections")
+        sections = "section" if len(rows) == 1 else "sections"
+        index.append(f"- [{code}](./{stem}/llms-full.txt): {len(rows)} {sections}")
         full = [f"# Full Statutory Corpus: {code}\n"]
         for s in rows:
             full.append(
