@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "NM",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "nm-stat-7-2-7",
+      "url": "https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7",
+      "official": "not_recorded",
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

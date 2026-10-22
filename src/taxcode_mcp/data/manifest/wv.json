@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "WV",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "wv-code-11-21-4e",
+      "url": "http://www.wvlegislature.gov/WVCODE/Code.cfm?chap=11&art=21#21-4e",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

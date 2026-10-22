@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "IN",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "in-code-6-3-2-1",
+      "url": "http://iga.in.gov/legislative/laws/current/ic/title/6/article/3/chapter/2/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

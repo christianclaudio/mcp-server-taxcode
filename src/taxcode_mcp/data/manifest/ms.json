@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "MS",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ms-code-27-7-5",
+      "url": "https://advance.lexis.com/container?config=00JAAzNzA5ZmEtMDMxMi00YTRkLThjMTMtNDU5YTU1ZjJmYjM1CgkJcFJvY2Vzc2luZ8tX",
+      "official": "not_recorded",
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

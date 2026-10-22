@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "jurisdiction": "FL",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "fl-const-7-5",
+      "url": "https://www.flsenate.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "fl-stat-222-17",
+      "url": "https://www.flsenate.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "fl-stat-196-031",
+      "url": "https://www.flsenate.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

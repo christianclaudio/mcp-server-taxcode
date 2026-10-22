@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "jurisdiction": "OH",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "oh-stat-5747-02",
+      "url": "https://codes.ohio.gov/ohio-revised-code/section-5747.02",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "oh-stat-5747-24",
+      "url": "https://codes.ohio.gov/ohio-revised-code/section-5747.24",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "oh-tax-info-it-2007-08",
+      "url": "https://tax.ohio.gov/individual/resources/information-releases",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

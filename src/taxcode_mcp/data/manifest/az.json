@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "jurisdiction": "AZ",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "az-stat-43-1011",
+      "url": "https://www.azleg.gov/ars/43/01011.htm",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "az-stat-43-104",
+      "url": "https://www.azleg.gov/ars/43/00104.htm",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

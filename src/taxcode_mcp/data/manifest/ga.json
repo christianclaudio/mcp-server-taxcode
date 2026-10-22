@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "jurisdiction": "GA",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ga-ocga-48-7-1",
+      "url": "https://dor.georgia.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ga-ocga-48-7-20-2024",
+      "url": "https://dor.georgia.gov/taxes/taxes-individuals",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ga-ocga-48-7-20-2025",
+      "url": "https://dor.georgia.gov/taxes/taxes-individuals",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ga-ocga-48-7-20-2026",
+      "url": "https://dor.georgia.gov/taxes/taxes-individuals",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ga-ocga-48-7-27",
+      "url": "https://dor.georgia.gov/taxes/taxes-individuals",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ga-ocga-48-7-30",
+      "url": "https://dor.georgia.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ga-reg-560-7-3-01",
+      "url": "https://rules.sos.ga.gov/gac/560-7-3-.01",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "ga-dor-pb-it-2024-01",
+      "url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2024-01/download",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "ga-dor-pb-it-2022-02",
+      "url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

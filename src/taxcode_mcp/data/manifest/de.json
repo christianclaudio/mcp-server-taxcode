@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "DE",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "de-code-30-1102",
+      "url": "https://delcode.delaware.gov/title30/c011/sc01/index.html",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "jurisdiction": "CT",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ct-stat-cgs-12-700",
+      "url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-700",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ct-stat-cgs-12-701",
+      "url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-701",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ct-stat-cgs-12-711",
+      "url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-711",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

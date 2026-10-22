@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "AK",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ak-stat-43-05-080",
+      "url": "https://www.akleg.gov/basis/statutes.asp#43.05.080",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

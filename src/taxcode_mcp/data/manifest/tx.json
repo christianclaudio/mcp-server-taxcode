@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "jurisdiction": "TX",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "tx-const-8-24a",
+      "url": "https://statutes.capitol.texas.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "tx-tax-171-001",
+      "url": "https://statutes.capitol.texas.gov/",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

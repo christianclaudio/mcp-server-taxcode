@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "VT",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "vt-stat-32-5822",
+      "url": "https://legislature.vermont.gov/statutes/section/32/151/05822",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}
