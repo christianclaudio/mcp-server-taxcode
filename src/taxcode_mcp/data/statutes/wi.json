@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "WI",
+  "statutes": [
+    {
+      "id": "wi-stat-71-06",
+      "jurisdiction": "WI",
+      "corpus": "Wis. Stat.",
+      "citation": "Wis. Stat. § 71.06",
+      "section": "71.06",
+      "title": "Rates of Tax - Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://docs.legis.wisconsin.gov/statutes/statutes/71/iii/06",
+      "cross_references": [],
+      "breadcrumbs": "Wis. Stat. > Chapter 71 > Subchapter I > § 71.06",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates: 3.50%, 4.40%, 5.30%, and top rate 7.65% in Wisconsin."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto individual sobre ingresos: 3.50%, 4.40%, 5.30% y tasa máxima de 7.65% en Wisconsin."
+      ]
+    }
+  ]
+}

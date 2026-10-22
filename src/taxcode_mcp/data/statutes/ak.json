@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "AK",
+  "statutes": [
+    {
+      "id": "ak-stat-43-05-080",
+      "jurisdiction": "AK",
+      "corpus": "Alaska Stat.",
+      "citation": "Alaska Stat. § 43.05.080",
+      "section": "43.05.080",
+      "title": "Revenue Administration and Absence of Individual Income Tax",
+      "effective_year": 1980,
+      "superseded_year": null,
+      "source_url": "https://www.akleg.gov/basis/statutes.asp#43.05.080",
+      "cross_references": [],
+      "breadcrumbs": "Alaska Stat. > Title 43 > Chapter 05 > § 43.05.080",
+      "source_note": "",
+      "text_en": [
+        "Empowers the Department of Revenue to administer tax laws, operating alongside the historic repeal of former AS 43.20 individual income tax by Ch. 1, SLA 1980."
+      ],
+      "text_es": [
+        "Faculta al Departamento de Ingresos a reglamentar la administración tributaria estatal, tras la histórica derogación del impuesto individual por el Cap. 1, SLA 1980."
+      ]
+    }
+  ]
+}

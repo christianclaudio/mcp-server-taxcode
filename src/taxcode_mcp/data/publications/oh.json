@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "OH",
+  "publications": [
+    {
+      "id": "oh-tax-info-it-2007-08",
+      "category": "policy-bulletin",
+      "doc_number": "OH IT 2007-08",
+      "doc_date": "2007-09-01",
+      "title": "Ohio Residency Guidelines and Bright-Line Contact Period Test",
+      "summary": "Comprehensive information release from the Ohio Department of Taxation explaining contact periods, the bright-line test, and instructions for filing Form IT-NRS non-domicile affidavit.",
+      "source_url": "https://tax.ohio.gov/individual/resources/information-releases"
+    }
+  ]
+}

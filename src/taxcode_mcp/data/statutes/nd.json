@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "ND",
+  "statutes": [
+    {
+      "id": "nd-cent-code-57-38-30-3",
+      "jurisdiction": "ND",
+      "corpus": "N.D.C.C.",
+      "citation": "N.D. Cent. Code § 57-38-30.3",
+      "section": "57-38-30.3",
+      "title": "Simplified Method for Computing Individual Income Tax",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ndlegis.gov/cencode/t57c38.pdf",
+      "cross_references": [],
+      "breadcrumbs": "N.D.C.C. > Title 57 > Chapter 57-38 > § 57-38-30.3",
+      "source_note": "",
+      "text_en": [
+        "Imposes individual income tax at 0% up to $44,725; 1.95% to $225,975; and top rate 2.50% (HB 1158) in North Dakota."
+      ],
+      "text_es": [
+        "Impone impuesto sobre la renta individual de 0% hasta $44,725; 1.95% a $225,975; y tasa máxima de 2.50% (HB 1158) en Dakota del Norte."
+      ]
+    }
+  ]
+}

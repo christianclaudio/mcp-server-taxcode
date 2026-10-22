@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "jurisdiction": "CA",
+  "statutes": [
+    {
+      "id": "ca-rtc-17014",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17014",
+      "section": "17014",
+      "title": "Definition of Resident (Non-Temporary Purpose Test)",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17041",
+        "18 CCR § 17014"
+      ],
+      "breadcrumbs": "Cal. Rev. & Tax Code > Part 10 > Chapter 1 > § 17014",
+      "source_note": "",
+      "text_en": [
+        "Defines resident as every individual who is in California for other than a temporary or transitory purpose, and every individual domiciled in California who is outside the state for a temporary or transitory purpose. Presumption under § 17016 at 9 months."
+      ],
+      "text_es": [
+        "Define residente como todo individuo que permanezca en California para fines que no sean temporales o transitorios, y todo domiciliado que esté fuera del estado de forma temporal. Aplica el criterio de conexión más cercana."
+      ]
+    },
+    {
+      "id": "ca-rtc-17041",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17041",
+      "section": "17041",
+      "title": "Individual Income Tax Rates and Brackets",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17014"
+      ],
+      "breadcrumbs": "Cal. Rev. & Tax Code > Part 10 > Chapter 2 > § 17041",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated income tax rates on California taxable income ranging from 1% to 12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income exceeding $1,000,000, creating a top marginal individual rate of 13.3%."
+      ],
+      "text_es": [
+        "Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M (Proposición 63), para una tasa marginal máxima de 13.3%."
+      ]
+    },
+    {
+      "id": "ca-rtc-17951",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17951",
+      "section": "17951",
+      "title": "Gross Income of Nonresidents and Sourcing",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17014",
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "Cal. Rev. & Tax Code > Part 10 > Chapter 9 > § 17951",
+      "source_note": "",
+      "text_en": [
+        "In the case of nonresidents, gross income includes only gross income from sources within California, including income from a business, trade, or profession conducted in the state, and compensation for personal services performed in California."
+      ],
+      "text_es": [
+        "Para no residentes, el ingreso bruto comprende únicamente ingresos derivados de fuentes en California, incluyendo negocios, profesiones y servicios personales realizados dentro del estado."
+      ]
+    },
+    {
+      "id": "ca-ccr-17014",
+      "jurisdiction": "CA",
+      "corpus": "CACCR",
+      "citation": "18 CCR § 17014",
+      "section": "17014",
+      "title": "FTB Residence and Domicile Guidelines",
+      "effective_year": 2023,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17014"
+      ],
+      "breadcrumbs": "18 CCR > Division 3 > Chapter 2.5 > Subchapter 1 > § 17014",
+      "source_note": "",
+      "text_en": [
+        "FTB regulation detailing domicile and residence determination. A person may have multiple residences but only one domicile. Applies the closest connection test evaluating real property, family, bank accounts, business affiliations, and licenses."
+      ],
+      "text_es": [
+        "Reglamento de la FTB sobre residencia y domicilio. Aplica el criterio de conexión más cercana evaluando propiedades inmuebles, familia, cuentas bancarias, licencias profesionales y afiliaciones comerciales."
+      ]
+    }
+  ]
+}

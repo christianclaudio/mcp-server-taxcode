@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "VA",
+  "publications": [
+    {
+      "id": "va-tax-bulletin-05-7",
+      "category": "policy-bulletin",
+      "doc_number": "VA TB 05-7",
+      "doc_date": "2005-08-25",
+      "title": "Virginia Guidelines for Determining Residency",
+      "summary": "Official guidance from the Virginia Department of Taxation regarding domiciliary and actual residency tests, temporary absences, and reciprocal commuter provisions.",
+      "source_url": "https://www.tax.virginia.gov/laws-rules-decisions/tax-bulletins/05-7"
+    }
+  ]
+}

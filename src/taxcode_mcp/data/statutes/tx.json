@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "TX",
+  "statutes": [
+    {
+      "id": "tx-const-8-24a",
+      "jurisdiction": "TX",
+      "corpus": "TXCONST",
+      "citation": "Tex. Const. art. VIII § 24-a",
+      "section": "Art. VIII Sec. 24-a",
+      "title": "Constitutional Prohibition of Personal Income Tax",
+      "effective_year": 2019,
+      "superseded_year": null,
+      "source_url": "https://statutes.capitol.texas.gov/",
+      "cross_references": [
+        "Tex. Tax Code § 171.001"
+      ],
+      "breadcrumbs": "Tex. Const. > Article VIII > Section 24-a",
+      "source_note": "",
+      "text_en": [
+        "Constitutional amendment approved by voters in 2019 prohibiting the Texas legislature from imposing a tax on the net incomes of individuals, including an individual's share of partnership and unincorporated association income."
+      ],
+      "text_es": [
+        "Enmienda constitucional aprobada en 2019 que prohíbe a la legislatura de Texas imponer impuestos sobre el ingreso neto de individuos o su participación en sociedades y asociaciones no incorporadas."
+      ]
+    },
+    {
+      "id": "tx-tax-171-001",
+      "jurisdiction": "TX",
+      "corpus": "TXTAX",
+      "citation": "Tex. Tax Code § 171.001",
+      "section": "171.001",
+      "title": "Texas Franchise Tax (Entity Level)",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://statutes.capitol.texas.gov/",
+      "cross_references": [
+        "Tex. Const. art. VIII § 24-a"
+      ],
+      "breadcrumbs": "Tex. Tax Code > Title 2 > Subtitle F > Chapter 171 > § 171.001",
+      "source_note": "",
+      "text_en": [
+        "Imposes franchise tax on each taxable entity chartered or organized in Texas or doing business in Texas based on gross margin, maintaining zero taxation on individuals."
+      ],
+      "text_es": [
+        "Impone el impuesto de franquicia únicamente a entidades comerciales organizadas o con negocios en Texas sobre su margen bruto, sin gravar a personas naturales."
+      ]
+    }
+  ]
+}

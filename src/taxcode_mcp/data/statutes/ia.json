@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "IA",
+  "statutes": [
+    {
+      "id": "ia-code-422-5",
+      "jurisdiction": "IA",
+      "corpus": "Iowa Code",
+      "citation": "Iowa Code § 422.5",
+      "section": "422.5",
+      "title": "Tax Imposed - Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.legis.iowa.gov/law/statutory",
+      "cross_references": [],
+      "breadcrumbs": "Iowa Code > Title X > Subtitle 2 > Chapter 422 > Subchapter II > § 422.5",
+      "source_note": "",
+      "text_en": [
+        "Imposes personal income tax transitioning to a flat 3.80% rate under SF 2442 in Iowa."
+      ],
+      "text_es": [
+        "Impone impuesto sobre la renta personal en transición hacia una tasa fija uniforme del 3.80% bajo SF 2442 en Iowa."
+      ]
+    }
+  ]
+}

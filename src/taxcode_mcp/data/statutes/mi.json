@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "MI",
+  "statutes": [
+    {
+      "id": "mi-comp-laws-206-51",
+      "jurisdiction": "MI",
+      "corpus": "MCL",
+      "citation": "Mich. Comp. Laws § 206.51",
+      "section": "206.51",
+      "title": "Tax Rate on Taxable Income of Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "http://legislature.mi.gov/doc.aspx?mcl-206-51",
+      "cross_references": [],
+      "breadcrumbs": "MCL > Chapter 206 > Act 281 of 1967 > Part 1 > Chapter 2 > § 206.51",
+      "source_note": "",
+      "text_en": [
+        "Imposes a flat individual income tax rate of 4.25% on taxable net income in Michigan."
+      ],
+      "text_es": [
+        "Impone una tasa uniforme de impuesto sobre ingresos individuales del 4.25% sobre el ingreso neto gravable en Michigan."
+      ]
+    }
+  ]
+}

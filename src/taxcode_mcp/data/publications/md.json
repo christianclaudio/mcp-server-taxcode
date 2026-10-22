@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "MD",
+  "publications": [
+    {
+      "id": "md-admin-release-34",
+      "category": "policy-bulletin",
+      "doc_number": "MD AR-34",
+      "doc_date": "2023-01-10",
+      "title": "Maryland Domicile and Statutory Residency Physical Presence Guidelines",
+      "summary": "Administrative guidance issued by the Comptroller of Maryland detailing the 183-day rule, permanent place of abode factors, and county local income tax calculation.",
+      "source_url": "https://www.marylandtaxes.gov/forms/tax_publications/administrative_releases.php"
+    }
+  ]
+}

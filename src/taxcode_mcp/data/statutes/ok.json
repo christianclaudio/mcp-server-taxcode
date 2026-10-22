@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "OK",
+  "statutes": [
+    {
+      "id": "ok-stat-68-2355",
+      "jurisdiction": "OK",
+      "corpus": "68 O.S.",
+      "citation": "Okla. Stat. tit. 68, § 2355",
+      "section": "2355",
+      "title": "Tax Rates - Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=440316",
+      "cross_references": [],
+      "breadcrumbs": "68 O.S. > Chapter 1 > Article 23 > § 2355",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates from 0.25% to top rate 4.75% in Oklahoma."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre ingresos individuales graduadas desde 0.25% hasta tasa máxima de 4.75% en Oklahoma."
+      ]
+    }
+  ]
+}

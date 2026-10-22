@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "WV",
+  "statutes": [
+    {
+      "id": "wv-code-11-21-4e",
+      "jurisdiction": "WV",
+      "corpus": "W. Va. Code",
+      "citation": "W. Va. Code § 11-21-4e",
+      "section": "11-21-4e",
+      "title": "Rate of Tax - Taxable Years Beginning After 2022",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "http://www.wvlegislature.gov/WVCODE/Code.cfm?chap=11&art=21#21-4e",
+      "cross_references": [],
+      "breadcrumbs": "W. Va. Code > Chapter 11 > Article 21 > Part I > § 11-21-4e",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates from 2.36% to top rate 5.12% enacted under HB 2526 in West Virginia."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre ingresos individuales graduadas del 2.36% a tasa máxima de 5.12% bajo HB 2526 en West Virginia."
+      ]
+    }
+  ]
+}

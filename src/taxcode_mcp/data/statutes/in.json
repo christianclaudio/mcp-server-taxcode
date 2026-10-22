@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "IN",
+  "statutes": [
+    {
+      "id": "in-code-6-3-2-1",
+      "jurisdiction": "IN",
+      "corpus": "Ind. Code",
+      "citation": "Ind. Code § 6-3-2-1",
+      "section": "6-3-2-1",
+      "title": "Imposition of Adjusted Gross Income Tax",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "http://iga.in.gov/legislative/laws/current/ic/title/6/article/3/chapter/2/",
+      "cross_references": [],
+      "breadcrumbs": "Ind. Code > Title 6 > Article 3 > Chapter 2 > § 6-3-2-1",
+      "source_note": "",
+      "text_en": [
+        "Imposes flat adjusted gross income tax of 3.05% for 2024 alongside county local income taxes (LIT) in Indiana."
+      ],
+      "text_es": [
+        "Impone una tasa fija de impuesto sobre el ingreso bruto ajustado del 3.05% para 2024 junto a impuestos locales de condado (LIT) en Indiana."
+      ]
+    }
+  ]
+}

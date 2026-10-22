@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "HI",
+  "statutes": [
+    {
+      "id": "hi-rev-stat-235-51",
+      "jurisdiction": "HI",
+      "corpus": "HRS",
+      "citation": "Haw. Rev. Stat. § 235-51",
+      "section": "235-51",
+      "title": "Tax on Individuals, Estates, and Trusts",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.capitol.hawaii.gov/docs/hrs.htm",
+      "cross_references": [],
+      "breadcrumbs": "HRS > Title 14 > Chapter 235 > Part I > § 235-51",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates up to 11.0% under Act 97 (2024 Hawaii tax reform)."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre la renta individual graduadas de hasta 11.0% bajo la Ley 97 (reforma contributiva de Hawaii de 2024)."
+      ]
+    }
+  ]
+}

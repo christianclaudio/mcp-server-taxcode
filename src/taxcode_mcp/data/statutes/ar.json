@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "AR",
+  "statutes": [
+    {
+      "id": "ar-code-26-51-201",
+      "jurisdiction": "AR",
+      "corpus": "A.C.A.",
+      "citation": "Ark. Code Ann. § 26-51-201",
+      "section": "26-51-201",
+      "title": "Tax on Individuals, Trusts, and Estates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.arkleg.state.ar.us/",
+      "cross_references": [],
+      "breadcrumbs": "A.C.A. > Title 26 > Subtitle 5 > Chapter 51 > Subchapter 2 > § 26-51-201",
+      "source_note": "",
+      "text_en": [
+        "Imposes individual income tax with graduated brackets and top rate of 3.90% under Arkansas Act 1 of 2024."
+      ],
+      "text_es": [
+        "Impone impuesto sobre el ingreso individual con tramos graduados y tasa máxima de 3.90% bajo la Ley 1 de 2024 de Arkansas."
+      ]
+    }
+  ]
+}

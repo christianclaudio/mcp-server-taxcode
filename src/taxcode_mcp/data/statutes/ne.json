@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "NE",
+  "statutes": [
+    {
+      "id": "ne-rev-stat-77-2715-03",
+      "jurisdiction": "NE",
+      "corpus": "Neb. Rev. Stat.",
+      "citation": "Neb. Rev. Stat. § 77-2715.03",
+      "section": "77-2715.03",
+      "title": "Income Tax - Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03",
+      "cross_references": [],
+      "breadcrumbs": "Neb. Rev. Stat. > Chapter 77 > Article 27 > § 77-2715.03",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated personal income tax rates with top rate of 5.84% and enforces the convenience of the employer doctrine in Nebraska."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre ingresos personales con tasa máxima de 5.84% y aplica la doctrina de conveniencia del empleador en Nebraska."
+      ]
+    }
+  ]
+}

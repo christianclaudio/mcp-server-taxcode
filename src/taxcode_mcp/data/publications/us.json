@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "jurisdiction": "US",
+  "publications": [
+    {
+      "id": "us-irs-pub-17",
+      "category": "irs-publication",
+      "doc_number": "IRS Pub. 17 (2025)",
+      "doc_date": "2026-01-13",
+      "title": "Your Federal Income Tax (For Individuals) / Su impuesto federal sobre los ingresos (para individuos)",
+      "summary": "IRS general guide for preparing 2025 individual Form 1040 returns: filing requirements, income, adjustments, standard deduction, and credits. / Guía general del IRS para preparar las planillas individuales del Formulario 1040 de 2025: requisitos de radicación, ingresos, ajustes, deducción estándar y créditos.",
+      "source_url": "https://www.irs.gov/pub/irs-pdf/p17.pdf"
+    },
+    {
+      "id": "us-irs-pub-501",
+      "category": "irs-publication",
+      "doc_number": "IRS Pub. 501 (2025)",
+      "doc_date": "2026-02-04",
+      "title": "Dependents, Standard Deduction, and Filing Information / Dependientes, deducción estándar e información sobre la radicación",
+      "summary": "Explains who must file a 2025 return, filing status, who qualifies as a dependent, and the standard deduction amounts. / Explica quién debe radicar la planilla de 2025, el estado civil para efectos de la planilla, quién califica como dependiente y las cantidades de la deducción estándar.",
+      "source_url": "https://www.irs.gov/pub/irs-pdf/p501.pdf"
+    },
+    {
+      "id": "us-irs-pub-505",
+      "category": "irs-publication",
+      "doc_number": "IRS Pub. 505 (2026)",
+      "doc_date": "2026-03-31",
+      "title": "Tax Withholding and Estimated Tax / Retención de impuestos e impuesto estimado",
+      "summary": "Explains federal income tax withholding on wages and other income and how to figure and pay estimated tax for 2026. / Explica la retención del impuesto federal sobre salarios y otros ingresos, y cómo calcular y pagar el impuesto estimado de 2026.",
+      "source_url": "https://www.irs.gov/pub/irs-pdf/p505.pdf"
+    },
+    {
+      "id": "us-irs-pub-570",
+      "category": "irs-publication",
+      "doc_number": "IRS Pub. 570 (2025)",
+      "doc_date": "2026-02-26",
+      "title": "Tax Guide for Individuals With Income From U.S. Territories / Guía tributaria para individuos con ingresos de territorios de EE.UU.",
+      "summary": "Federal filing rules for 2025 for individuals with income from Puerto Rico and the other U.S. territories, including bona fide residence and source rules. / Reglas federales de radicación para 2025 aplicables a individuos con ingresos de Puerto Rico y los demás territorios de EE.UU., incluidas la residencia de buena fe y las reglas de fuente.",
+      "source_url": "https://www.irs.gov/pub/irs-pdf/p570.pdf"
+    },
+    {
+      "id": "us-irs-pub-1321",
+      "category": "irs-publication",
+      "doc_number": "IRS Pub. 1321 (Rev. October 2025)",
+      "doc_date": "2025-10-01",
+      "title": "Special Instructions for Bona Fide Residents of Puerto Rico Who Must File a U.S. Individual Income Tax Return / Instrucciones especiales para residentes de buena fe de Puerto Rico que deben radicar una planilla federal individual",
+      "summary": "How bona fide residents of Puerto Rico who exclude Puerto Rico-source income adjust Form 1040 or Form 1040-SR. / Cómo los residentes de buena fe de Puerto Rico que excluyen ingresos de fuentes de Puerto Rico ajustan el Formulario 1040 o 1040-SR.",
+      "source_url": "https://www.irs.gov/pub/irs-pdf/p1321.pdf"
+    },
+    {
+      "id": "us-irs-pub-54",
+      "category": "irs-publication",
+      "doc_number": "IRS Pub. 54 (Rev. December 2025)",
+      "doc_date": "2026-01-08",
+      "title": "Tax Guide for U.S. Citizens and Resident Aliens Abroad / Guía tributaria para ciudadanos y extranjeros residentes de EE.UU. en el extranjero",
+      "summary": "Federal filing rules for U.S. citizens and resident aliens living abroad, including the foreign earned income exclusion and housing exclusion or deduction. / Reglas federales de radicación para ciudadanos y extranjeros residentes de EE.UU. que viven en el extranjero, incluidas la exclusión de ingreso devengado en el extranjero y la exclusión o deducción por vivienda.",
+      "source_url": "https://www.irs.gov/pub/irs-pdf/p54.pdf"
+    }
+  ]
+}

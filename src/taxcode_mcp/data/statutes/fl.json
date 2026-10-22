@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "jurisdiction": "FL",
+  "statutes": [
+    {
+      "id": "fl-const-7-5",
+      "jurisdiction": "FL",
+      "corpus": "FLCONST",
+      "citation": "Fla. Const. Art. VII § 5",
+      "section": "Art. VII Sec. 5",
+      "title": "Constitutional Prohibition of Personal Income Tax",
+      "effective_year": 1968,
+      "superseded_year": null,
+      "source_url": "https://www.flsenate.gov/",
+      "cross_references": [
+        "Fla. Stat. § 222.17"
+      ],
+      "breadcrumbs": "Fla. Const. > Article VII > Section 5",
+      "source_note": "",
+      "text_en": [
+        "Prohibits any tax upon the income of natural persons who are residents or citizens of Florida, guaranteeing the absence of state individual income taxation."
+      ],
+      "text_es": [
+        "Prohíbe constitucionalmente cualquier impuesto sobre el ingreso de personas naturales residentes o ciudadanas de Florida, garantizando la ausencia de impuesto estatal sobre ingresos individuales."
+      ]
+    },
+    {
+      "id": "fl-stat-222-17",
+      "jurisdiction": "FL",
+      "corpus": "FLSTAT",
+      "citation": "Fla. Stat. § 222.17",
+      "section": "222.17",
+      "title": "Manifesting and Evidencing Domicile in Florida",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.flsenate.gov/",
+      "cross_references": [
+        "Fla. Const. Art. VII § 5",
+        "Fla. Stat. § 196.031"
+      ],
+      "breadcrumbs": "Fla. Stat. > Title XV > Chapter 222 > § 222.17",
+      "source_note": "",
+      "text_en": [
+        "Authorizes any person who has established a domicile in Florida to manifest that domicile by filing a sworn, notarized statement of domicile with the clerk of the circuit court in the county of residence."
+      ],
+      "text_es": [
+        "Autoriza a toda persona que haya establecido domicilio en Florida a manifestarlo formalmente mediante declaración jurada radicada ante el secretario del tribunal de circuito del condado correspondiente."
+      ]
+    },
+    {
+      "id": "fl-stat-196-031",
+      "jurisdiction": "FL",
+      "corpus": "FLSTAT",
+      "citation": "Fla. Stat. § 196.031",
+      "section": "196.031",
+      "title": "Exemption of Homesteads",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.flsenate.gov/",
+      "cross_references": [
+        "Fla. Stat. § 222.17"
+      ],
+      "breadcrumbs": "Fla. Stat. > Title XIV > Chapter 196 > § 196.031",
+      "source_note": "",
+      "text_en": [
+        "Grants up to $50,000 homestead property tax exemption to persons who maintain permanent residence. Claiming Florida homestead establishes prima facie proof of Florida domicile."
+      ],
+      "text_es": [
+        "Concede hasta $50,000 de exención contributiva sobre la propiedad principal a residentes permanentes. Solicitar la exención de 'homestead' constituye prueba prima facie de domicilio en Florida."
+      ]
+    }
+  ]
+}

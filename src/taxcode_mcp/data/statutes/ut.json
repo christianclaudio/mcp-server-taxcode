@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "UT",
+  "statutes": [
+    {
+      "id": "ut-code-59-10-104",
+      "jurisdiction": "UT",
+      "corpus": "Utah Code",
+      "citation": "Utah Code Ann. § 59-10-104",
+      "section": "59-10-104",
+      "title": "Tax Basis - Rates for Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://le.utah.gov/xcode/Title59/Chapter10/59-10-S104.html",
+      "cross_references": [],
+      "breadcrumbs": "Utah Code > Title 59 > Chapter 10 > Part 1 > § 59-10-104",
+      "source_note": "",
+      "text_en": [
+        "Imposes a flat individual income tax rate of 4.65% on state taxable income under SB 69 in Utah."
+      ],
+      "text_es": [
+        "Impone una tasa fija de impuesto sobre ingresos individuales del 4.65% sobre el ingreso gravable bajo SB 69 en Utah."
+      ]
+    }
+  ]
+}

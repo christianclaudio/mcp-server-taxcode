@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "jurisdiction": "IL",
+  "statutes": [
+    {
+      "id": "il-stat-35-ilcs-5-201",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/201",
+      "section": "5/201",
+      "title": "Illinois Individual Income Tax Rate",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "cross_references": [
+        "35 ILCS 5/1501(a)(20)",
+        "35 ILCS 5/301"
+      ],
+      "breadcrumbs": "35 ILCS 5/ > Article 2 > Section 201",
+      "source_note": "",
+      "text_en": [
+        "Constitutionally mandated non-graduated flat income tax rate of 4.95% on net income of individuals, trusts, and estates."
+      ],
+      "text_es": [
+        "Impuesto estatal no graduado a tasa fija del 4.95% sobre el ingreso neto de personas naturales, mandatado por la Constitución de Illinois."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-1501",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/1501(a)(20)",
+      "section": "5/1501(a)(20)",
+      "title": "Definition of Resident",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "cross_references": [
+        "35 ILCS 5/201"
+      ],
+      "breadcrumbs": "35 ILCS 5/ > Article 15 > Section 1501(a)(20)",
+      "source_note": "",
+      "text_en": [
+        "Defines resident as an individual who is in Illinois for other than a temporary or transitory purpose during the taxable year or who is domiciled in Illinois."
+      ],
+      "text_es": [
+        "Define residente como persona en Illinois para fines no transitorios o temporales, o domiciliada en Illinois ausente temporalmente."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-301",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/301",
+      "section": "5/301",
+      "title": "Compensation and Nonresident Income Sourcing",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "cross_references": [
+        "35 ILCS 5/201"
+      ],
+      "breadcrumbs": "35 ILCS 5/ > Article 3 > Section 301",
+      "source_note": "",
+      "text_en": [
+        "Rules for allocating and sourcing compensation and business income of nonresidents based on physical days of services performed within Illinois."
+      ],
+      "text_es": [
+        "Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado."
+      ]
+    }
+  ]
+}

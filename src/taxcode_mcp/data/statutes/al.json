@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "AL",
+  "statutes": [
+    {
+      "id": "al-code-40-18-2",
+      "jurisdiction": "AL",
+      "corpus": "Ala. Code",
+      "citation": "Ala. Code § 40-18-2",
+      "section": "40-18-2",
+      "title": "Tax on Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://alison.legislature.state.al.us/code-of-alabama",
+      "cross_references": [],
+      "breadcrumbs": "Ala. Code > Title 40 > Chapter 18 > § 40-18-2",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates of 2%, 4%, and 5% on taxable net income of individuals in Alabama."
+      ],
+      "text_es": [
+        "Impone tasas impositivas individuales graduadas del 2%, 4% y 5% sobre el ingreso neto gravable de individuos en Alabama."
+      ]
+    }
+  ]
+}

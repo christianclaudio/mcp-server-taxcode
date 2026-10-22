@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "NV",
+  "statutes": [
+    {
+      "id": "nv-const-art-10-sec-1",
+      "jurisdiction": "NV",
+      "corpus": "Nev. Const.",
+      "citation": "Nev. Const. art. 10, § 1",
+      "section": "Art. 10, § 1",
+      "title": "Prohibition of Personal Income Tax",
+      "effective_year": 1989,
+      "superseded_year": null,
+      "source_url": "https://www.leg.state.nv.us/const/nvconst.html#Art10Sec1",
+      "cross_references": [],
+      "breadcrumbs": "Nev. Const. > Article 10 > § 1",
+      "source_note": "",
+      "text_en": [
+        "Constitutional prohibition against state personal income, estate, or inheritance taxes in Nevada."
+      ],
+      "text_es": [
+        "Prohibición constitucional contra impuestos estatales sobre el ingreso personal, herencias o sucesiones en Nevada."
+      ]
+    }
+  ]
+}

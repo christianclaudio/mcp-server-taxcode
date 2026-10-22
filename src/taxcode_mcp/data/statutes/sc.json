@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "SC",
+  "statutes": [
+    {
+      "id": "sc-code-12-6-510",
+      "jurisdiction": "SC",
+      "corpus": "S.C. Code",
+      "citation": "S.C. Code Ann. § 12-6-510",
+      "section": "12-6-510",
+      "title": "Tax Rates for Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.scstatehouse.gov/code/t12c006.php",
+      "cross_references": [],
+      "breadcrumbs": "S.C. Code > Title 12 > Chapter 6 > Article 5 > § 12-6-510",
+      "source_note": "",
+      "text_en": [
+        "Imposes individual income tax with 0% on initial income and a top marginal rate of 6.40% in South Carolina."
+      ],
+      "text_es": [
+        "Impone impuesto individual sobre ingresos con 0% en tramo inicial y tasa marginal máxima del 6.40% en Carolina del Sur."
+      ]
+    }
+  ]
+}

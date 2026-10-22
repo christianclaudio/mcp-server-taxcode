@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "jurisdiction": "PA",
+  "statutes": [
+    {
+      "id": "pa-stat-72-ps-7302",
+      "jurisdiction": "PA",
+      "corpus": "P.S.",
+      "citation": "72 P.S. § 7302",
+      "section": "7302",
+      "title": "Imposition of Tax",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=72&div=0&chpt=73",
+      "cross_references": [
+        "72 P.S. § 7301",
+        "72 P.S. § 7303"
+      ],
+      "breadcrumbs": "72 P.S. > Chapter 73 > § 7302",
+      "source_note": "",
+      "text_en": [
+        "Imposes Pennsylvania personal income tax at a constitutional flat rate of 3.07% on eight specified classes of taxable income."
+      ],
+      "text_es": [
+        "Impone un impuesto sobre la renta personal con tasa uniforme y fija del 3.07% sobre ocho clases especificadas de ingresos gravables."
+      ]
+    },
+    {
+      "id": "pa-stat-72-ps-7301",
+      "jurisdiction": "PA",
+      "corpus": "P.S.",
+      "citation": "72 P.S. § 7301",
+      "section": "7301",
+      "title": "Definitions - Resident Individual",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=72&div=0&chpt=73",
+      "cross_references": [
+        "72 P.S. § 7302",
+        "61 Pa. Code § 101.1"
+      ],
+      "breadcrumbs": "72 P.S. > Chapter 73 > § 7301",
+      "source_note": "",
+      "text_en": [
+        "Defines a resident individual as one domiciled in Pennsylvania or who maintains a permanent place of abode and spends in the aggregate more than 183 days in the commonwealth."
+      ],
+      "text_es": [
+        "Define individuo residente como quien tiene domicilio en Pensilvania o mantiene un lugar permanente de morada y pasa más de 183 días en el estado."
+      ]
+    },
+    {
+      "id": "pa-code-61-109-8",
+      "jurisdiction": "PA",
+      "corpus": "Pa. Code",
+      "citation": "61 Pa. Code § 109.8",
+      "section": "109.8",
+      "title": "Convenience of the Employer Rule",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/061/chapter109/s109.8.html",
+      "cross_references": [
+        "72 P.S. § 7308"
+      ],
+      "breadcrumbs": "61 Pa. Code > Chapter 109 > § 109.8",
+      "source_note": "",
+      "text_en": [
+        "Requires compensation earned by nonresidents telecommuting for a Pennsylvania employer to be sourced to Pennsylvania unless working from home is for employer necessity."
+      ],
+      "text_es": [
+        "Dispone que la compensación por servicios remotos o de teletrabajo para un patrono de Pensilvania se considera de fuente local a menos que el teletrabajo sea por necesidad del patrono."
+      ]
+    }
+  ]
+}

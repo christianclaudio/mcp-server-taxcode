@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "jurisdiction": "VA",
+  "statutes": [
+    {
+      "id": "va-stat-58-1-320",
+      "jurisdiction": "VA",
+      "corpus": "Va. Code",
+      "citation": "Va. Code Ann. § 58.1-320",
+      "section": "58.1-320",
+      "title": "Rates of Tax on Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-320/",
+      "cross_references": [
+        "Va. Code Ann. § 58.1-302",
+        "Va. Code Ann. § 58.1-322.03"
+      ],
+      "breadcrumbs": "Va. Code > Title 58.1 > Chapter 3 > Article 2 > § 58.1-320",
+      "source_note": "",
+      "text_en": [
+        "Imposes Virginia individual income tax at graduated rates: 2.0% on the first $3,000; 3.0% on $3,001 to $5,000; 5.0% on $5,001 to $17,000; and 5.75% on taxable income exceeding $17,000."
+      ],
+      "text_es": [
+        "Impone el impuesto sobre la renta individual de Virginia con tasas graduadas: 2.0% sobre los primeros $3,000; 3.0% de $3,001 a $5,000; 5.0% de $5,001 a $17,000; y 5.75% sobre el exceso de $17,000."
+      ]
+    },
+    {
+      "id": "va-stat-58-1-302",
+      "jurisdiction": "VA",
+      "corpus": "Va. Code",
+      "citation": "Va. Code Ann. § 58.1-302",
+      "section": "58.1-302",
+      "title": "Definitions - Resident and Actual Resident",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-302/",
+      "cross_references": [
+        "Va. Code Ann. § 58.1-320",
+        "Va. Code Ann. § 58.1-342"
+      ],
+      "breadcrumbs": "Va. Code > Title 58.1 > Chapter 3 > Article 1 > § 58.1-302",
+      "source_note": "",
+      "text_en": [
+        "Defines resident individual as one domiciled in Virginia, or an actual resident who maintains a place of abode and spends in the aggregate more than 183 days of the taxable year in Virginia."
+      ],
+      "text_es": [
+        "Define individuo residente como quien tiene domicilio en Virginia, o un residente de hecho que mantiene morada y pasa más de 183 días en total del año contributivo en Virginia."
+      ]
+    },
+    {
+      "id": "va-stat-58-1-342",
+      "jurisdiction": "VA",
+      "corpus": "Va. Code",
+      "citation": "Va. Code Ann. § 58.1-342",
+      "section": "58.1-342",
+      "title": "Reciprocal Tax Agreements for Commuters",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-342/",
+      "cross_references": [
+        "Va. Code Ann. § 58.1-302"
+      ],
+      "breadcrumbs": "Va. Code > Title 58.1 > Chapter 3 > Article 8 > § 58.1-342",
+      "source_note": "",
+      "text_en": [
+        "Authorizes reciprocal agreements with contiguous jurisdictions (DC, Maryland, West Virginia, Pennsylvania, and Kentucky) exempting commuter compensation from non-resident withholding."
+      ],
+      "text_es": [
+        "Autoriza acuerdos recíprocos de exención con jurisdicciones limítrofes (DC, Maryland, West Virginia, Pensilvania y Kentucky) para salarios devengados por viajeros diarios."
+      ]
+    }
+  ]
+}
