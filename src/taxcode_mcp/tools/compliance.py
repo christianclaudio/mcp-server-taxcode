@@ -370,6 +370,24 @@ def _cumulative_tax(brackets: list[dict[str, Any]], taxable_income: float) -> fl
     return float(round(b["base"] + b["rate"] * (taxable_income - over), 2))
 
 
+def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
+    """Each bracket's rate on the slice of income between its ``over`` and the next one up."""
+    tax = 0.0
+    ceiling = taxable_income
+    for b in brackets:
+        floor = 0.0 if b["over"] is None else float(b["over"])
+        if ceiling > floor:
+            tax += b["rate"] * (ceiling - floor)
+            ceiling = floor
+    return float(round(tax, 2))
+
+
+MIDDLE_RATE_ESTIMATE_NOTE = (
+    " [ESTIMATE: no official bracket schedule is modeled for this year; income below the "
+    "top bracket is taxed at 65% of the top rate, which is not a statutory rate]"
+)
+
+
 @compliance_server.tool(
     name="evaluate_state_residency",
     description=(
@@ -435,6 +453,7 @@ def evaluate_state_residency(
     rate_desc = ""
     taxable_income = 0.0
     estimated_tax = 0.0
+    middle_rate_estimated = False
 
     if state == "GA":
         statutory_basis = "O.C.G.A. § 48-7-1(10); Ga. Comp. R. & Regs. r. 560-7-3-.01"
@@ -738,6 +757,9 @@ def evaluate_state_residency(
         if regime == "none":
             taxable_income = 0.0
             estimated_tax = 0.0
+        elif regime == "graduated" and "brackets" in info:
+            brackets = info["brackets"][_status(is_mfj)]
+            estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
         elif regime == "flat":
             if tax_year >= 2027 and "rate_2027" in info:
                 flat_rate = float(info["rate_2027"])
@@ -757,7 +779,12 @@ def evaluate_state_residency(
                 tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
             top_bracket = float(info.get(tb_key, 0.0))
             top_rate = float(info.get("top_rate", 0.0))
-            mid_rate = float(info.get("middle_rate", top_rate * 0.65))
+            if "middle_rate" in info:
+                mid_rate = float(info["middle_rate"])
+            else:  # middle_rate_estimate: no official schedule maps onto this formula
+                mid_rate = top_rate * 0.65
+                middle_rate_estimated = True
+                rate_desc = f"{rate_desc}{MIDDLE_RATE_ESTIMATE_NOTE}"
             if tax_year >= 2025 and (
                 "zero_bracket_mfj_2025" in info if is_mfj else "zero_bracket_single_2025" in info
             ):
@@ -776,6 +803,15 @@ def evaluate_state_residency(
             else:
                 estimated_tax = 0.0
 
+    tax_computation: dict[str, Any] = {
+        "taxable_net_income": taxable_income,
+        "estimated_state_tax": estimated_tax,
+        "is_estimate": True,
+        "estimate_note": ESTIMATE_NOTE,
+        "rate_description": rate_desc,
+        "statutory_rate_authority": rate_authority,
+        "middle_rate_is_estimate": middle_rate_estimated,
+    }
     return {
         "status": "success",
         "jurisdiction": state,
@@ -791,14 +827,7 @@ def evaluate_state_residency(
             "risk_level": "high" if audit_flags else "standard",
             "flags": audit_flags,
         },
-        "tax_computation": {
-            "taxable_net_income": taxable_income,
-            "estimated_state_tax": estimated_tax,
-            "is_estimate": True,
-            "estimate_note": ESTIMATE_NOTE,
-            "rate_description": rate_desc,
-            "statutory_rate_authority": rate_authority,
-        },
+        "tax_computation": tax_computation,
         "disclaimer": BILINGUAL_DISCLAIMER,
         "content_notice": CONTENT_NOTICE,
     }

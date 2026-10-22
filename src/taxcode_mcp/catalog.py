@@ -170,7 +170,18 @@ _REGISTRY_TYPES: dict[str, type] = {
     **dict.fromkeys(
         ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
     ),
+    "middle_rate_estimate": bool,
+    "brackets": dict,
 }
+# How a graduated registry table taxes income below its top bracket. ``brackets`` is the
+# state's official marginal schedule; ``middle_rate`` is one statutory rate; and
+# ``middle_rate_estimate`` (always ``true``) marks the old stand-in of 65% of the top rate,
+# kept only where no official schedule maps onto this model. Exactly one must be present.
+_REGISTRY_GRADUATED = ("brackets", "middle_rate", "middle_rate_estimate")
+# Keys of the top/zero/middle formula, which a table with ``brackets`` does not use.
+_REGISTRY_FORMULA_KEYS = frozenset(
+    name for name in _REGISTRY_TYPES if name.startswith(("top_", "zero_", "middle_"))
+)
 
 
 class CatalogError(ValueError):
@@ -427,13 +438,28 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
     for name, value in params.items():
         expected = _REGISTRY_TYPES[name]
         _check(type(value) is expected, f"{where}.{name}: must be {expected.__name__}")
-        if expected is float:
+        if name == "brackets":
+            _check_brackets(value, ("over", "rate"), f"{where}.{name}")
+        elif name == "middle_rate_estimate":
+            _check(value is True, f"{where}.{name}: must be true when present")
+        elif expected is float:
             check = _check_rate if "rate" in name else _check_amount
             check(value, f"{where}.{name}")
         elif name.startswith("regime"):
             _check(value in REGIMES, f"{where}.{name}: must be one of {sorted(REGIMES)}")
         elif expected is int:
             _check(0 < value <= 366, f"{where}.{name}: must be a day count from 1 to 366")
+    basis = [k for k in _REGISTRY_GRADUATED if k in params]
+    if "graduated" in (params["regime"], params.get("regime_2025")):
+        _check(
+            len(basis) == 1,
+            f"{where}: a graduated table needs exactly one of {list(_REGISTRY_GRADUATED)}",
+        )
+    else:
+        _check(not basis, f"{where}: {basis} apply only to a graduated table")
+    if "brackets" in params:
+        unused = sorted(_REGISTRY_FORMULA_KEYS & set(params))
+        _check(not unused, f"{where}: {unused} are unused next to brackets")
 
 
 def _check_params(model: str, params: Any, where: str) -> None:

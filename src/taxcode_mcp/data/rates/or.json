@@ -13,6 +13,7 @@
     "deduction_mfj": 5495.0,
     "top_bracket_single": 125000.0,
     "top_bracket_mfj": 250000.0,
-    "top_rate": 0.099
+    "top_rate": 0.099,
+    "middle_rate_estimate": true
   }
 }

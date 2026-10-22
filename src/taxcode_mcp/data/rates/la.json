@@ -17,6 +17,7 @@
     "top_bracket_single": 50000.0,
     "top_bracket_mfj": 100000.0,
     "top_rate": 0.0425,
+    "middle_rate_estimate": true,
     "regime_2025": "flat",
     "rate_2025": 0.03
   }
