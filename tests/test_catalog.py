@@ -417,7 +417,7 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     assert manifest_errors(catalog) == []
 
 
-SOURCED_RATE_TABLES = sorted("AL AR DC DE HI IA LA ME MN MO MT NE OK OR RI SC VT WI WV".split())
+SOURCED_RATE_TABLES = sorted("AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split())
 
 
 def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:
