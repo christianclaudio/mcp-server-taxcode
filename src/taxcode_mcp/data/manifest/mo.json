@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "mo-rates",
-      "url": "not_recorded",
+      "url": "https://dor.mo.gov/forms/MO-1040%20Instructions_2024.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "abd3cf20dedc47be63dde32ef4e7d2daa6de6daea58b8b0fc86891a6c47fccc6",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

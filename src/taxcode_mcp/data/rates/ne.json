@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "NE",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2024/2024_Tax_Calculation_Schedule.pdf",
   "params": {
     "statutory_basis": "Neb. Rev. Stat. §§ 77-2714.01, 77-2715.03; 316 Neb. Admin. Code § 22-003",
     "rate_authority": "Neb. Rev. Stat. § 77-2715.03",

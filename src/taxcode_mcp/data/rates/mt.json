@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "MT",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://revenue.mt.gov/files/Forms/Montana-Individual-Income-Tax-Return-Form-2/2024_Montana_Individual_Income_Tax_Return_Form_2_Instructions.pdf",
   "params": {
     "statutory_basis": "Mont. Code Ann. §§ 15-30-2101, 15-30-2103",
     "rate_authority": "Mont. Code Ann. § 15-30-2103",

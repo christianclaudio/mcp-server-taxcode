@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "WI",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.revenue.wi.gov/TaxForms2024/2024-Form1-Inst.pdf",
   "params": {
     "statutory_basis": "Wis. Stat. §§ 71.01, 71.06",
     "rate_authority": "Wis. Stat. § 71.06",

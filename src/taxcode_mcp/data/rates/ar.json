@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "AR",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_TaxBrackets.pdf",
   "params": {
     "statutory_basis": "Ark. Code Ann. §§ 26-51-102, 26-51-201",
     "rate_authority": "Ark. Code Ann. § 26-51-201",

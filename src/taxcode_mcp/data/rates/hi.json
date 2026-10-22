@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "HI",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://files.hawaii.gov/tax/forms/2024/n11ins.pdf",
   "params": {
     "statutory_basis": "Haw. Rev. Stat. §§ 235-1, 235-51",
     "rate_authority": "Haw. Rev. Stat. § 235-51",

@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "ri-rates",
-      "url": "not_recorded",
+      "url": "https://tax.ri.gov/sites/g/files/xkgbur541/files/2024-12/2024%20Tax%20Rate%20and%20Worksheets.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "5c7754099ba260fc2b32e777a9f835c00b316e77cf521c93095f36b154989618",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

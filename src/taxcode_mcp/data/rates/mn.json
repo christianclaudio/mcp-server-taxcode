@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "MN",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.revenue.state.mn.us/sites/default/files/2023-12/inflation-adjusted-amounts-ty-2024.pdf",
   "params": {
     "statutory_basis": "Minn. Stat. §§ 290.01, 290.06",
     "rate_authority": "Minn. Stat. § 290.06",

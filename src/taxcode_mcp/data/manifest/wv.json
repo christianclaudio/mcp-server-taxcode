@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "wv-rates",
-      "url": "not_recorded",
+      "url": "https://tax.wv.gov/Documents/PIT/2024/it140.taxRateSchedules.2024.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "d17ff3224795c3b2a12b0f666f08460d24e90067be28ecf8f0bc8d51b19627ea",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

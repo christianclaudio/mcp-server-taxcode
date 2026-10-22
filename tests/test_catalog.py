@@ -98,7 +98,9 @@ def test_manifest_records_unknowns_explicitly() -> None:
         assert [k for k in entry if k != "_jurisdiction"] == list(MANIFEST_FIELDS)
     # Nothing in the existing rows was verified word for word against a fetched copy.
     assert {e["verification"] for e in catalog.manifest} <= {"summary", NOT_RECORDED}
-    assert {e["content_sha256"] for e in catalog.manifest} == {NOT_RECORDED}
+    # Only a rate table whose schedule was read from a fetched official file records a hash.
+    hashed = {e["kind"] for e in catalog.manifest if e["content_sha256"] != NOT_RECORDED}
+    assert hashed == {"rate_table"}
 
 
 def test_check_reports_docs_drift_and_write_repairs_it(tree: tuple[Path, Path]) -> None:
@@ -391,12 +393,31 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     assert [(e["_jurisdiction"], e["id"]) for e in entries] == [
         (code, rate_table_id(code)) for code in catalog.jurisdictions if code in RATE_TABLE_MODELS
     ]
-    # No rate table cites a source yet: every field but kind and id is not_recorded,
-    # and so is each table's source_url.
+    # A table cites a source only once its brackets were read from that official file:
+    # then it records the url, official, the fetch date and (when the bytes were kept) their
+    # hash, and nothing else. Every other table records nothing at all.
+    sourced = {e["_jurisdiction"]: e for e in entries if e["url"] != NOT_RECORDED}
+    assert sorted(sourced) == SOURCED_RATE_TABLES
+    recorded = ("url", "official", "retrieved", "content_sha256")
     for e in entries:
-        assert {e[name] for name in MANIFEST_FIELDS[2:]} == {NOT_RECORDED}, e["id"]
-    assert {t["source_url"] for t in catalog.rate_tables.values()} == {NOT_RECORDED}
+        unrecorded = [
+            name
+            for name in MANIFEST_FIELDS[2:]
+            if e["_jurisdiction"] not in sourced or name not in recorded
+        ]
+        assert {e[name] for name in unrecorded} == {NOT_RECORDED}, e["id"]
+    for code, e in sourced.items():
+        assert e["url"].startswith("https://") and e["official"] is True, code
+        assert e["retrieved"] == "2026-10-22", code
+        assert (e["content_sha256"] == NOT_RECORDED) == (code in {"ME", "VT"}), code
+        assert catalog.rate_tables[code]["source_url"] == e["url"]
+    assert {t["source_url"] for c, t in catalog.rate_tables.items() if c not in sourced} == {
+        NOT_RECORDED
+    }
     assert manifest_errors(catalog) == []
+
+
+SOURCED_RATE_TABLES = sorted("AL AR DC DE HI IA LA ME MN MO MT NE OK OR RI SC VT WI WV".split())
 
 
 def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:

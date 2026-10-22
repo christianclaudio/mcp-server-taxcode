@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "VT",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2024.pdf",
   "params": {
     "statutory_basis": "32 V.S.A. §§ 5811, 5822",
     "rate_authority": "32 V.S.A. § 5822",

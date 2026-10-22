@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "WV",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://tax.wv.gov/Documents/PIT/2024/it140.taxRateSchedules.2024.pdf",
   "params": {
     "statutory_basis": "W. Va. Code §§ 11-21-4e, 11-21-7",
     "rate_authority": "W. Va. Code § 11-21-4e",

@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "de-rates",
-      "url": "not_recorded",
+      "url": "https://revenuefiles.delaware.gov/2024/PIT_2024_Forms/PIT_Instructions/PIT-RES_TY24_2024-01_Instructions.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "aabd2f4fec01ef32246fce669fc3468d0644a3c117fd9e845abcacf265750b1b",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

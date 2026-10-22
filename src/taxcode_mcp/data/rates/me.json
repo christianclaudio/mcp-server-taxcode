@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "ME",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/ind_tax_rate_sched_2024.pdf",
   "params": {
     "statutory_basis": "36 M.R.S. §§ 5102, 5111",
     "rate_authority": "36 M.R.S. § 5111",
