@@ -164,9 +164,9 @@ async def lookup_statute(
         f"(up to {SNIPPET_MAX_CHARS} characters around the first matched term) with its "
         "id, citation, title, jurisdiction, year, validity and content labels, not the "
         "full text: call statutes_lookup_statute with citation_or_section set to the "
-        f"result's id to read the full text. At most {LIST_MAX_LIMIT} results per call "
-        "(a larger limit is lowered; see limit_applied); while next_offset is not null, "
-        "call again with offset set to it for the next page."
+        f"result's id to read the full text. limit is clamped to 1..{LIST_MAX_LIMIT} "
+        "results per call (see limit_applied); while next_offset is not null, call again "
+        "with offset set to it for the next page."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},
@@ -192,7 +192,15 @@ async def search_tax_code(
         ),
     ] = None,
     tax_year: int | None = None,
-    limit: int = 5,
+    limit: Annotated[
+        int,
+        Field(
+            description=(
+                f"Results per call (default 5), clamped to 1..{LIST_MAX_LIMIT}: a value "
+                f"under 1 is raised to 1 and one over {LIST_MAX_LIMIT} is lowered."
+            )
+        ),
+    ] = 5,
     offset: Annotated[
         int, Field(ge=0, description="Optional number of ranked results to skip (paging).")
     ] = 0,
@@ -236,9 +244,8 @@ async def search_tax_code(
     name="list_publications",
     description=(
         "List administrative circulars, tax guidance publications, and bulletins, newest "
-        f"first. At most {LIST_MAX_LIMIT} per call (a larger limit is lowered; see "
-        "limit_applied); while next_offset is not null, call again with offset set to it "
-        "for the next page."
+        f"first. limit is clamped to 1..{LIST_MAX_LIMIT} per call (see limit_applied); "
+        "while next_offset is not null, call again with offset set to it for the next page."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "publications", "read_only"},
@@ -246,7 +253,15 @@ async def search_tax_code(
 async def list_publications(
     category: Annotated[str | None, Field(description=CATEGORY_DESCRIPTION)] = None,
     since_date: str | None = None,
-    limit: int = 10,
+    limit: Annotated[
+        int,
+        Field(
+            description=(
+                f"Publications per call (default 10), clamped to 1..{LIST_MAX_LIMIT}: a "
+                f"value under 1 is raised to 1 and one over {LIST_MAX_LIMIT} is lowered."
+            )
+        ),
+    ] = 10,
     offset: Annotated[
         int, Field(ge=0, description="Optional number of publications to skip (paging).")
     ] = 0,

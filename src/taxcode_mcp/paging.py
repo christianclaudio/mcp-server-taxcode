@@ -9,8 +9,9 @@ and every statute resource read under that many characters of text.
   token for the next page, or ``None`` on the last page. Joining the pages in order gives
   back the exact text.
 - ``statutes_search_tax_code`` and ``statutes_list_publications`` return at most
-  :data:`LIST_MAX_LIMIT` items per call (a larger ``limit`` is lowered and reported in
-  ``limit_applied``); ``next_offset`` is the ``offset`` for the next page, or ``None``.
+  :data:`LIST_MAX_LIMIT` items per call: ``limit`` is clamped to ``1..LIST_MAX_LIMIT``
+  and reported in ``limit_applied``. ``next_offset`` is the ``offset`` for the next page,
+  always greater than ``offset``, or ``None``.
 
 - The ``taxcode://statutes/{jurisdiction}/{section}{?page_cursor}`` resource returns the
   same :data:`TEXT_PAGE_CHARS` window of the operative text and ends a non-final page with
@@ -111,8 +112,8 @@ def page_statute(
 
 
 def applied_limit(limit: int) -> int:
-    """``limit`` clamped to ``0..LIST_MAX_LIMIT``."""
-    return min(max(limit, 0), LIST_MAX_LIMIT)
+    """``limit`` clamped to ``1..LIST_MAX_LIMIT``, so a page is never empty while rows remain."""
+    return min(max(limit, 1), LIST_MAX_LIMIT)
 
 
 def fit_items(
@@ -124,11 +125,15 @@ def fit_items(
     """Build a list result from as many leading ``items`` as fit the response cap.
 
     ``build(page_items, next_offset)`` returns the tool result. Items dropped to fit
-    the cap are reachable through ``next_offset`` like any later page.
+    the cap are reachable through ``next_offset`` like any later page. ``next_offset`` is
+    ``None`` or greater than ``offset``: a caller that follows it always advances.
     """
     count = len(items)
     while True:
         more = has_more or count < len(items)
+        # Callers fetch at least one row past a page of size >= 1, so a page with more
+        # rows after it is never empty.
+        assert count > 0 or not more, "a page with rows after it must not be empty"
         result = build(items[:count], offset + count if more else None)
         if count <= 1 or response_chars(result) <= RESPONSE_MAX_CHARS:
             return result

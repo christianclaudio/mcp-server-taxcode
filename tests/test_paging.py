@@ -63,8 +63,8 @@ def test_cursor_round_trips_and_rejects_foreign_tokens() -> None:
 
 def test_applied_limit_clamps() -> None:
     assert [applied_limit(n) for n in (-3, 0, 5, LIST_MAX_LIMIT, 10_000)] == [
-        0,
-        0,
+        1,
+        1,
         5,
         LIST_MAX_LIMIT,
         LIST_MAX_LIMIT,
@@ -180,12 +180,57 @@ async def test_publication_pages_cover_every_row_once_newest_first() -> None:
             res = await _call(client, "statutes_list_publications", {"limit": 7, "offset": offset})
             seen += res["publications"]
             offset = res["next_offset"]
-        last = await _call(client, "statutes_list_publications", {"limit": 0})
     # Newest first; ``id`` breaks doc_date ties, so pages never repeat or skip a row.
     by_id = sorted(INITIAL_PUBLICATIONS, key=lambda p: p["id"])
     expected = sorted(by_id, key=lambda p: p["doc_date"], reverse=True)
     assert [p["id"] for p in seen] == [p["id"] for p in expected]
-    assert last["count"] == 0 and last["next_offset"] == 0
+
+
+LIST_TOOLS = [
+    ("statutes_search_tax_code", {"query": ""}, "results", len(INITIAL_STATUTES)),
+    ("statutes_list_publications", {}, "publications", len(INITIAL_PUBLICATIONS)),
+]
+
+
+@pytest.mark.parametrize("limit", [0, -1])
+@pytest.mark.parametrize(("tool", "args", "key", "total"), LIST_TOOLS)
+async def test_a_limit_under_one_is_raised_to_one_and_paging_terminates(
+    tool: str, args: dict[str, Any], key: str, total: int, limit: int
+) -> None:
+    async with Client(mcp) as client:
+        seen: list[str] = []
+        offset: int | None = 0
+        while offset is not None:
+            res = await _call(client, tool, {**args, "limit": limit, "offset": offset})
+            assert res["limit_applied"] == 1 and res["count"] == 1
+            assert res["next_offset"] is None or res["next_offset"] > offset
+            seen += [item["id"] for item in res[key]]
+            offset = res["next_offset"]
+            assert len(seen) <= total
+    assert len(seen) == len(set(seen)) == total
+
+
+@pytest.mark.parametrize("limit", [-5, 0, 1, 2, 3, 7, LIST_MAX_LIMIT, LIST_MAX_LIMIT + 1])
+@pytest.mark.parametrize(("tool", "args", "key", "total"), LIST_TOOLS)
+async def test_every_page_advances_from_every_offset(
+    tool: str, args: dict[str, Any], key: str, total: int, limit: int
+) -> None:
+    """For every limit and every start offset, a page with rows left after it advances."""
+    async with Client(mcp) as client:
+        for offset in range(total + 2):
+            res = await _call(client, tool, {**args, "limit": limit, "offset": offset})
+            left = max(total - offset, 0)
+            # The response cap may shorten a page, but never to nothing while rows remain.
+            assert min(left, 1) <= res["count"] <= min(left, applied_limit(limit))
+            if res["next_offset"] is None:
+                assert offset + res["count"] >= total
+            else:
+                assert res["next_offset"] == offset + res["count"] > offset
+
+
+def test_fit_items_refuses_an_empty_page_with_rows_after_it() -> None:
+    with pytest.raises(AssertionError, match="must not be empty"):
+        fit_items([], True, 4, lambda page, nxt: {"items": page, "next_offset": nxt})
 
 
 def test_fit_items_drops_trailing_items_to_fit_and_keeps_one(
