@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "mt-rates",
-      "url": "not_recorded",
+      "url": "https://revenue.mt.gov/files/Forms/Montana-Individual-Income-Tax-Return-Form-2/2024_Montana_Individual_Income_Tax_Return_Form_2_Instructions.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "e226ab03a7d7b4db1b964a2d4641927e977cd8201e98b664853a92982e72e93d",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

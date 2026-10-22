@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "MN",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.revenue.state.mn.us/sites/default/files/2023-12/inflation-adjusted-amounts-ty-2024.pdf",
   "params": {
     "statutory_basis": "Minn. Stat. §§ 290.01, 290.06",
     "rate_authority": "Minn. Stat. § 290.06",
@@ -10,8 +10,43 @@
     "regime": "graduated",
     "deduction_single": 14575.0,
     "deduction_mfj": 29150.0,
-    "top_bracket_single": 193240.0,
-    "top_bracket_mfj": 321450.0,
-    "top_rate": 0.0985
+    "brackets": {
+      "single": [
+        {
+          "over": 193240.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 104090.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 31690.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
+      ],
+      "mfj": [
+        {
+          "over": 321450.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 184040.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 46330.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
+      ]
+    }
   }
 }

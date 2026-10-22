@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "OK",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/individuals/past-year/2024/511-Pkt-2024.pdf",
   "params": {
     "statutory_basis": "Okla. Stat. tit. 68, §§ 2353, 2355",
     "rate_authority": "Okla. Stat. tit. 68, § 2355",
@@ -10,8 +10,59 @@
     "regime": "graduated",
     "deduction_single": 6350.0,
     "deduction_mfj": 12700.0,
-    "top_bracket_single": 7200.0,
-    "top_bracket_mfj": 12200.0,
-    "top_rate": 0.0475
+    "brackets": {
+      "single": [
+        {
+          "over": 7200.0,
+          "rate": 0.0475
+        },
+        {
+          "over": 4900.0,
+          "rate": 0.0375
+        },
+        {
+          "over": 3750.0,
+          "rate": 0.0275
+        },
+        {
+          "over": 2500.0,
+          "rate": 0.0175
+        },
+        {
+          "over": 1000.0,
+          "rate": 0.0075
+        },
+        {
+          "over": null,
+          "rate": 0.0025
+        }
+      ],
+      "mfj": [
+        {
+          "over": 14400.0,
+          "rate": 0.0475
+        },
+        {
+          "over": 9800.0,
+          "rate": 0.0375
+        },
+        {
+          "over": 7500.0,
+          "rate": 0.0275
+        },
+        {
+          "over": 5000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": 2000.0,
+          "rate": 0.0075
+        },
+        {
+          "over": null,
+          "rate": 0.0025
+        }
+      ]
+    }
   }
 }

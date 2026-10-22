@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "OR",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.oregon.gov/dor/programs/individuals/Documents/2024%20rate%20charts.pdf",
   "params": {
     "statutory_basis": "Or. Rev. Stat. §§ 316.027, 316.037",
     "rate_authority": "Or. Rev. Stat. § 316.037",
@@ -11,8 +11,43 @@
     "day_threshold": 200,
     "deduction_single": 2745.0,
     "deduction_mfj": 5495.0,
-    "top_bracket_single": 125000.0,
-    "top_bracket_mfj": 250000.0,
-    "top_rate": 0.099
+    "brackets": {
+      "single": [
+        {
+          "over": 125000.0,
+          "rate": 0.099
+        },
+        {
+          "over": 10750.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 4300.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ],
+      "mfj": [
+        {
+          "over": 250000.0,
+          "rate": 0.099
+        },
+        {
+          "over": 21500.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 8600.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ]
+    }
   }
 }

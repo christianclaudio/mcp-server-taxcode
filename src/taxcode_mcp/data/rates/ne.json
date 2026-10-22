@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "NE",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2024/2024_Tax_Calculation_Schedule.pdf",
   "params": {
     "statutory_basis": "Neb. Rev. Stat. §§ 77-2714.01, 77-2715.03; 316 Neb. Admin. Code § 22-003",
     "rate_authority": "Neb. Rev. Stat. § 77-2715.03",
@@ -10,8 +10,43 @@
     "regime": "graduated",
     "deduction_single": 7900.0,
     "deduction_mfj": 15800.0,
-    "top_bracket_single": 35730.0,
-    "top_bracket_mfj": 71460.0,
-    "top_rate": 0.0584
+    "brackets": {
+      "single": [
+        {
+          "over": 37670.0,
+          "rate": 0.0584
+        },
+        {
+          "over": 23370.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 3900.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfj": [
+        {
+          "over": 75340.0,
+          "rate": 0.0584
+        },
+        {
+          "over": 46760.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 7790.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ]
+    }
   }
 }

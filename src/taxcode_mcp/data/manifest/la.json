@@ -31,12 +31,12 @@
     {
       "kind": "rate_table",
       "id": "la-rates",
-      "url": "not_recorded",
+      "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2024.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "46f455fe6e536847ce22cd7337f6ff778eff68a46cc0811b92622473e6454aa8",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

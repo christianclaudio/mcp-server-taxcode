@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "ME",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/ind_tax_rate_sched_2024.pdf",
   "params": {
     "statutory_basis": "36 M.R.S. §§ 5102, 5111",
     "rate_authority": "36 M.R.S. § 5111",
@@ -10,8 +10,35 @@
     "regime": "graduated",
     "deduction_single": 14600.0,
     "deduction_mfj": 29200.0,
-    "top_bracket_single": 61600.0,
-    "top_bracket_mfj": 123250.0,
-    "top_rate": 0.0715
+    "brackets": {
+      "single": [
+        {
+          "over": 61600.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 26050.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
+      ],
+      "mfj": [
+        {
+          "over": 123250.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 52100.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
+      ]
+    }
   }
 }

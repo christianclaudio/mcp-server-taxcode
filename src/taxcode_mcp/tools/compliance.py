@@ -370,6 +370,52 @@ def _cumulative_tax(brackets: list[dict[str, Any]], taxable_income: float) -> fl
     return float(round(b["base"] + b["rate"] * (taxable_income - over), 2))
 
 
+def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
+    """Each bracket's rate on the slice of income between its ``over`` and the next one up."""
+    tax = 0.0
+    ceiling = taxable_income
+    for b in brackets:
+        floor = 0.0 if b["over"] is None else float(b["over"])
+        if ceiling > floor:
+            tax += b["rate"] * (ceiling - floor)
+            ceiling = floor
+    return float(round(tax, 2))
+
+
+def _pct(rate: float) -> str:
+    """A rate as prose: ``0.0575`` -> ``5.75%``."""
+    return f"{rate * 100:.2f}%"
+
+
+def _money(amount: float) -> str:
+    """A whole-dollar amount as prose: ``1000000.0`` -> ``$1,000,000``."""
+    return f"${amount:,.0f}"
+
+
+def _range_desc(table: dict[str, Any], lead: str = "Graduated brackets") -> str:
+    """The lowest and highest bracket rate across both filing statuses."""
+    rates = [b["rate"] for status in ("single", "mfj") for b in table["brackets"][status]]
+    return f"{lead} from {_pct(min(rates))} to {_pct(max(rates))}"
+
+
+def _steps_desc(brackets: list[dict[str, Any]]) -> str:
+    """Every bracket of one schedule, lowest first: ``0.00% up to $X, R to $Y, R over $Y``."""
+    steps = brackets[::-1]
+    parts = [f"{_pct(steps[0]['rate'])} up to {_money(steps[1]['over'])}"]
+    for step, above in zip(steps[1:-1], steps[2:], strict=True):
+        parts.append(f"{_pct(step['rate'])} to {_money(above['over'])}")
+    parts.append(f"{_pct(steps[-1]['rate'])} over {_money(steps[-1]['over'])}")
+    return "Graduated brackets: " + ", ".join(parts)
+
+
+_FLAT_BY_CONSTITUTION = "(the state constitution requires a flat rate)"
+
+MIDDLE_RATE_ESTIMATE_NOTE = (
+    " [ESTIMATE: no official bracket schedule is modeled for this year; income below the "
+    "top bracket is taxed at 65% of the top rate, which is not a statutory rate]"
+)
+
+
 @compliance_server.tool(
     name="evaluate_state_residency",
     description=(
@@ -435,6 +481,7 @@ def evaluate_state_residency(
     rate_desc = ""
     taxable_income = 0.0
     estimated_tax = 0.0
+    middle_rate_estimated = False
 
     if state == "GA":
         statutory_basis = "O.C.G.A. § 48-7-1(10); Ga. Comp. R. & Regs. r. 560-7-3-.01"
@@ -448,7 +495,7 @@ def evaluate_state_residency(
         max_ret = _ga_retirement_cap(ga, age)
         ret_excl = min(retirement_income, max_ret)
         rate = float(_year_step(ga["rates"], tax_year)["rate"])
-        rate_desc = f"Flat {rate * 100:.2f}% income tax (HB 1023 / HB 1015)"
+        rate_desc = f"Flat {_pct(rate)} rate (HB 1023 / HB 1015)"
         rate_authority = "O.C.G.A. § 48-7-20"
         taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
         estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
@@ -463,7 +510,7 @@ def evaluate_state_residency(
                 "outside NY for a NY employer are sourced to NY unless for employer necessity."
             )
         rate_authority = "NY Tax Law § 601"
-        rate_desc = "Graduated brackets from 4.0% to 10.9%"
+        rate_desc = _range_desc(RATE_TABLES["NY"])
         std_ded = _allowance(RATE_TABLES["NY"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
@@ -482,7 +529,10 @@ def evaluate_state_residency(
             is_domiciled or presumption_9mo or (days_in_state > 183 and maintains_permanent_abode)
         )
         rate_authority = "Cal. Rev. & Tax Code § 17041"
-        rate_desc = "Graduated brackets up to 12.3% plus 1% Mental Health Services Tax (13.3%)"
+        rate_desc = (
+            f"{_range_desc(RATE_TABLES['CA'])} "
+            "(the top rate includes the 1% Mental Health Services Tax)"
+        )
         std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
@@ -493,7 +543,7 @@ def evaluate_state_residency(
         statutory_basis = "Fla. Const. Art. VII § 5; Fla. Stat. § 222.17"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
         rate_authority = "Fla. Const. Art. VII § 5"
-        rate_desc = "0.0% (Constitutional prohibition of personal income tax)"
+        rate_desc = "No personal income tax (constitutional prohibition)"
         taxable_income = 0.0
         estimated_tax = 0.0
 
@@ -501,7 +551,7 @@ def evaluate_state_residency(
         statutory_basis = "Tex. Const. art. VIII § 24-a; Tex. Tax Code § 171.001"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
         rate_authority = "Tex. Const. art. VIII § 24-a"
-        rate_desc = "0.0% (Constitutional prohibition of personal income tax)"
+        rate_desc = "No personal income tax (constitutional prohibition)"
         taxable_income = 0.0
         estimated_tax = 0.0
 
@@ -509,9 +559,12 @@ def evaluate_state_residency(
         statutory_basis = "Wash. Const. art. VII § 1; RCW 82.87.040"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
         rate_authority = "RCW 82.87.040"
-        rate_desc = "0.0% on ordinary income; 7.0% excise tax on capital gains over deduction"
         wa = RATE_TABLES["WA"]
         cap_gain_ded = float(wa["capital_gains_deduction"])
+        rate_desc = (
+            f"No ordinary income tax; {_pct(wa['rate'])} excise tax on capital gains over "
+            f"the {_money(cap_gain_ded)} deduction"
+        )
         taxable_income = max(0.0, capital_gains - cap_gain_ded)
         estimated_tax = round(taxable_income * wa["rate"], 2) if is_resident else 0.0
 
@@ -519,8 +572,11 @@ def evaluate_state_residency(
         statutory_basis = "M.G.L. c. 62 § 1(f), § 4; Mass. Const. amend. art. XLIV"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "M.G.L. c. 62 § 4 & Fair Share Amendment"
-        rate_desc = "5.0% Part B income tax plus 4.0% Fair Share surtax on income > $1,000,000"
         ma = RATE_TABLES["MA"]
+        rate_desc = (
+            f"Flat {_pct(ma['rate'])} rate plus {_pct(ma['surtax']['rate'])} Fair Share surtax "
+            f"on income over {_money(ma['surtax']['over'])}"
+        )
         std_ded = _allowance(ma, is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
@@ -538,7 +594,7 @@ def evaluate_state_residency(
                 "convenience rule."
             )
         rate_authority = "N.J.S.A. 54A:2-1"
-        rate_desc = "Graduated brackets from 1.4% to 10.75%"
+        rate_desc = _range_desc(RATE_TABLES["NJ"])
         exemption = _allowance(RATE_TABLES["NJ"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
@@ -549,7 +605,7 @@ def evaluate_state_residency(
         statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"
         is_resident = is_domiciled or (days_in_state >= 183 and maintains_permanent_abode)
         rate_authority = "35 ILCS 5/201"
-        rate_desc = "Constitutional flat 4.95% rate"
+        rate_desc = f"Flat {_pct(RATE_TABLES['IL']['rate'])} rate {_FLAT_BY_CONSTITUTION}"
         exemption = _allowance(RATE_TABLES["IL"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         estimated_tax = round(taxable_income * RATE_TABLES["IL"]["rate"], 2) if is_resident else 0.0
@@ -564,7 +620,7 @@ def evaluate_state_residency(
                 "is for the employer's necessity."
             )
         rate_authority = "72 P.S. § 7302"
-        rate_desc = "Constitutional flat 3.07% rate"
+        rate_desc = f"Flat {_pct(RATE_TABLES['PA']['rate'])} rate {_FLAT_BY_CONSTITUTION}"
         taxable_income = max(0.0, federal_agi)
         estimated_tax = round(taxable_income * RATE_TABLES["PA"]["rate"], 2) if is_resident else 0.0
 
@@ -578,7 +634,7 @@ def evaluate_state_residency(
                 "a convenience rule."
             )
         rate_authority = "Conn. Gen. Stat. § 12-700"
-        rate_desc = "Graduated brackets from 3.0% to 6.99%"
+        rate_desc = _range_desc(RATE_TABLES["CT"])
         # Standard exemption phase-out model
         exemption = _allowance(RATE_TABLES["CT"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
@@ -601,7 +657,7 @@ def evaluate_state_residency(
         statutory_basis = "Va. Code Ann. §§ 58.1-302, 58.1-320, 58.1-342"
         is_resident = is_domiciled or days_in_state > 183
         rate_authority = "Va. Code Ann. § 58.1-320"
-        rate_desc = "Graduated brackets from 2.0% to 5.75%"
+        rate_desc = _range_desc(RATE_TABLES["VA"])
         standard_ded = _allowance(RATE_TABLES["VA"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
         if is_resident:
@@ -617,7 +673,10 @@ def evaluate_state_residency(
                 "to an additional mandatory local income tax between 2.25% and 3.20%."
             )
         rate_authority = "Md. Code Ann., Tax-Gen. § 10-105"
-        rate_desc = "Graduated state rates 2.0% to 5.75% plus county piggyback tax (2.25%-3.20%)"
+        rate_desc = (
+            f"{_range_desc(RATE_TABLES['MD'], 'Graduated state brackets')} "
+            "plus county piggyback tax (2.25%-3.20%)"
+        )
         md_ded = RATE_TABLES["MD"]["standard_deduction"]
         max_ded = float(md_ded["maximum"][_status(is_mfj)])
         min_ded = float(md_ded["minimum"][_status(is_mfj)])
@@ -631,7 +690,7 @@ def evaluate_state_residency(
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "Colo. Rev. Stat. § 39-22-104"
-        rate_desc = "Proposition 121 flat 4.40% rate"
+        rate_desc = f"Flat {_pct(RATE_TABLES['CO']['rate'])} rate (Proposition 121)"
         standard_ded = _allowance(RATE_TABLES["CO"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * RATE_TABLES["CO"]["rate"], 2) if is_resident else 0.0
@@ -650,7 +709,7 @@ def evaluate_state_residency(
                 "audit scrutiny."
             )
         rate_authority = "A.R.S. § 43-1011"
-        rate_desc = "SB 1828 flat 2.50% rate"
+        rate_desc = f"Flat {_pct(RATE_TABLES['AZ']['rate'])} rate (SB 1828)"
         standard_ded = _allowance(RATE_TABLES["AZ"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * RATE_TABLES["AZ"]["rate"], 2) if is_resident else 0.0
@@ -665,7 +724,7 @@ def evaluate_state_residency(
                 "non-residency presumption."
             )
         rate_authority = "Ohio Rev. Code § 5747.02"
-        rate_desc = "Graduated brackets: 0% up to $26,050, 2.75% to $100k, 3.50% over $100k"
+        rate_desc = _steps_desc(RATE_TABLES["OH"]["brackets"][_status(is_mfj)])
         personal_exemption = _allowance(RATE_TABLES["OH"], is_mfj)
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
@@ -738,6 +797,9 @@ def evaluate_state_residency(
         if regime == "none":
             taxable_income = 0.0
             estimated_tax = 0.0
+        elif regime == "graduated" and "brackets" in info:
+            brackets = info["brackets"][_status(is_mfj)]
+            estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
         elif regime == "flat":
             if tax_year >= 2027 and "rate_2027" in info:
                 flat_rate = float(info["rate_2027"])
@@ -757,7 +819,12 @@ def evaluate_state_residency(
                 tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
             top_bracket = float(info.get(tb_key, 0.0))
             top_rate = float(info.get("top_rate", 0.0))
-            mid_rate = float(info.get("middle_rate", top_rate * 0.65))
+            if "middle_rate" in info:
+                mid_rate = float(info["middle_rate"])
+            else:  # middle_rate_estimate: no official schedule maps onto this formula
+                mid_rate = top_rate * 0.65
+                middle_rate_estimated = True
+                rate_desc = f"{rate_desc}{MIDDLE_RATE_ESTIMATE_NOTE}"
             if tax_year >= 2025 and (
                 "zero_bracket_mfj_2025" in info if is_mfj else "zero_bracket_single_2025" in info
             ):
@@ -776,6 +843,15 @@ def evaluate_state_residency(
             else:
                 estimated_tax = 0.0
 
+    tax_computation: dict[str, Any] = {
+        "taxable_net_income": taxable_income,
+        "estimated_state_tax": estimated_tax,
+        "is_estimate": True,
+        "estimate_note": ESTIMATE_NOTE,
+        "rate_description": rate_desc,
+        "statutory_rate_authority": rate_authority,
+        "middle_rate_is_estimate": middle_rate_estimated,
+    }
     return {
         "status": "success",
         "jurisdiction": state,
@@ -791,14 +867,7 @@ def evaluate_state_residency(
             "risk_level": "high" if audit_flags else "standard",
             "flags": audit_flags,
         },
-        "tax_computation": {
-            "taxable_net_income": taxable_income,
-            "estimated_state_tax": estimated_tax,
-            "is_estimate": True,
-            "estimate_note": ESTIMATE_NOTE,
-            "rate_description": rate_desc,
-            "statutory_rate_authority": rate_authority,
-        },
+        "tax_computation": tax_computation,
         "disclaimer": BILINGUAL_DISCLAIMER,
         "content_notice": CONTENT_NOTICE,
     }

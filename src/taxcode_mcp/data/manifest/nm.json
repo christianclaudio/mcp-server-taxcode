@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "nm-rates",
-      "url": "not_recorded",
+      "url": "https://www.nmlegis.gov/Sessions/19%20Regular/final/HB0006.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "62397d13abff55dbc470677e01cbbb2cac34a43eba940f075bc72f530dda6cd5",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

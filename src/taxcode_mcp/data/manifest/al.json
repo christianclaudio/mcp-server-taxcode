@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "al-rates",
-      "url": "not_recorded",
+      "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "AL",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
   "params": {
     "statutory_basis": "Ala. Code §§ 40-18-1, 40-18-2",
     "rate_authority": "Ala. Code § 40-18-2",
@@ -10,8 +10,35 @@
     "regime": "graduated",
     "deduction_single": 3000.0,
     "deduction_mfj": 8500.0,
-    "top_bracket_single": 3000.0,
-    "top_bracket_mfj": 6000.0,
-    "top_rate": 0.05
+    "brackets": {
+      "single": [
+        {
+          "over": 3000.0,
+          "rate": 0.05
+        },
+        {
+          "over": 500.0,
+          "rate": 0.04
+        },
+        {
+          "over": null,
+          "rate": 0.02
+        }
+      ],
+      "mfj": [
+        {
+          "over": 6000.0,
+          "rate": 0.05
+        },
+        {
+          "over": 1000.0,
+          "rate": 0.04
+        },
+        {
+          "over": null,
+          "rate": 0.02
+        }
+      ]
+    }
   }
 }

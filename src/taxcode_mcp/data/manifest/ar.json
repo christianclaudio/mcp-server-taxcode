@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "ar-rates",
-      "url": "not_recorded",
+      "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_TaxBrackets.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "a016d75924df4030e71a3e901da89e177cdd22fd85cc5bee8666b5e1cdad8319",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

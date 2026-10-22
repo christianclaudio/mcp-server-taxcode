@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "ok-rates",
-      "url": "not_recorded",
+      "url": "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/individuals/past-year/2024/511-Pkt-2024.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "570f7186c1f03a4c58cbe76a363979b6d366a88a0f2a293df6d815572d6dbc9f",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

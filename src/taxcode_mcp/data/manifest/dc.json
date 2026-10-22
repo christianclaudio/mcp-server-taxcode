@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "dc-rates",
-      "url": "not_recorded",
+      "url": "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2024_D40_Booklet_062325.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "6aaae5ecdda770e883e2f8bdcbacd723f44d595440ff6ae717811c594cb33de8",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

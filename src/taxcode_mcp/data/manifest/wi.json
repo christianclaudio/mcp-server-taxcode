@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "wi-rates",
-      "url": "not_recorded",
+      "url": "https://www.revenue.wi.gov/TaxForms2024/2024-Form1-Inst.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-22",
+      "content_sha256": "fbaac0937a88ba3bacee8157748af80571c854da140b911d182bd648e1cc0c18",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
