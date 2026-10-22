@@ -380,11 +380,12 @@ def _check_steps(
         _check(isinstance(step, dict), f"{at}: must be an object")
         _check_keys(step, fields, at)
         bound = step[key]
-        if i == len(steps) - 1:
-            _check(bound is None, f"{at}: the last step's {key} must be null")
+        order = f"{at}: steps out of order; sort by {key} from highest to lowest, null last"
+        if bound is None:
+            _check(i == len(steps) - 1, order)
         else:
-            _check(bound is not None, f"{at}: only the last step's {key} may be null")
-            _check(previous is None or bound < previous, f"{at}: {key} must decrease")
+            _check(previous is None or bound < previous, order)
+            _check(i < len(steps) - 1, f"{at}: the last step's {key} must be null")
             previous = bound
         check_row(step, at)
 
