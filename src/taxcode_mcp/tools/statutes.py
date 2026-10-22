@@ -18,9 +18,12 @@ from taxcode_mcp.paging import (
     LIST_MAX_LIMIT,
     RESPONSE_MAX_CHARS,
     TEXT_PAGE_CHARS,
+    PageCursorError,
     applied_limit,
     decode_cursor,
+    encode_cursor,
     fit_items,
+    page_resource_text,
     page_statute,
 )
 
@@ -272,20 +275,43 @@ async def list_publications(
     raise failure from None
 
 
-@statutes_server.resource("taxcode://statutes/{jurisdiction}/{section}")
-async def get_statute_resource(jurisdiction: str, section: str) -> str:
-    """Fetch statutory text as a resource by jurisdiction and section."""
-    res = db.lookup_statute(citation_or_section=section, jurisdiction=jurisdiction)
+@statutes_server.resource(
+    "taxcode://statutes/{jurisdiction}/{section}{?page_cursor}",
+    description=(
+        "Statutory text by jurisdiction and section. Long text comes in pages of up to "
+        f"{TEXT_PAGE_CHARS:,} characters (each read stays under {RESPONSE_MAX_CHARS:,} "
+        "characters); a page that is not the last ends with the page_cursor query for the "
+        "next page, the same cursor statutes_lookup_statute returns as next_cursor."
+    ),
+)
+async def get_statute_resource(jurisdiction: str, section: str, page_cursor: str = "") -> str:
+    """Fetch one page of statutory text as a resource by jurisdiction and section."""
+    offset = 0
+    if page_cursor:
+        try:
+            record_id, lang, offset = decode_cursor(page_cursor)
+        except PageCursorError as exc:
+            return f"{exc}."
+        res = db.lookup_statute(citation_or_section=record_id, lang=lang)
+        if res is not None and res["id"] != record_id:
+            res = None
+    else:
+        res = db.lookup_statute(citation_or_section=section, jurisdiction=jurisdiction)
     if not res:
         return f"Statute '{section}' in jurisdiction '{jurisdiction}' not found."
     sup = res["superseded_year"]
     superseded = "current / en vigor" if sup is None else str(sup)
-    return (
+    header = (
         f"{res['citation']} - {res['title']}\n"
         f"Jurisdiction: {res['jurisdiction']} ({res['corpus']})\n"
         f"Effective Year: {res['effective_year']}\n"
         f"Superseded Year / Año de sustitución: {superseded}\n"
         f"Validity: {res['validity']['en']}\n"
         f"Vigencia: {res['validity']['es']}\n\n"
-        f"{res['operative_text']}"
     )
+    record_id, lang = res["id"], res["language"]
+
+    def next_cursor(end: int) -> str:
+        return encode_cursor(record_id, lang, end)
+
+    return page_resource_text(header, res["operative_text"] or "", offset, next_cursor)

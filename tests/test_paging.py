@@ -25,6 +25,7 @@ from taxcode_mcp.paging import (
 from taxcode_mcp.server import mcp
 
 LONGEST = max(INITIAL_STATUTES, key=lambda s: max(len(s["text_en"]), len(s["text_es"])))
+LONGEST_EN = max(INITIAL_STATUTES, key=lambda s: len(s["text_en"]))
 
 
 async def _call(client: Client, tool: str, args: dict[str, Any]) -> dict[str, Any]:
@@ -205,3 +206,54 @@ def test_fit_items_drops_trailing_items_to_fit_and_keeps_one(
     res = fit_items(items, True, 0, build)
     assert len(res["items"]) == 1 and res["next_offset"] == 1
     assert fit_items([], False, 0, build) == {"items": [], "next_offset": None}
+
+
+async def _read(client: Client, uri: str) -> str:
+    contents = await client.read_resource(uri)
+    text = getattr(contents[0], "text", None)
+    assert isinstance(text, str)
+    return text
+
+
+async def test_statute_resource_pages_round_trip_under_the_cap() -> None:
+    """The resource template advertises page_cursor; following it rebuilds the exact text."""
+    base = f"taxcode://statutes/statutes/{LONGEST_EN['jurisdiction']}/{LONGEST_EN['id']}"
+    async with Client(mcp) as client:
+        templates = [t.uri_template for t in await client.list_resource_templates()]
+        assert "taxcode://statutes/statutes/{jurisdiction}/{section}{?page_cursor}" in templates
+        pages = [await _read(client, base)]
+        while "Next page: " in pages[-1]:
+            query = pages[-1].rsplit("Next page: read this resource again with ", 1)[1][:-1]
+            pages.append(await _read(client, base + query))
+    assert len(pages) > 1
+    assert all(len(page) <= RESPONSE_MAX_CHARS for page in pages)
+    assert pages[-1].endswith(f"of {len(LONGEST_EN['text_en'])}. Last page.]")
+    header = pages[0].split("\n\n", 1)[0] + "\n\n"
+    assert all(page.startswith(header) for page in pages)
+    texts = [page[len(header) :].rsplit("\n\n[Text page: ", 1)[0] for page in pages]
+    assert all(len(text) <= TEXT_PAGE_CHARS for text in texts)
+    assert "".join(texts) == LONGEST_EN["text_en"]
+
+
+async def test_statute_resource_short_text_has_no_page_note_and_bad_cursors_say_so() -> None:
+    short = min(INITIAL_STATUTES, key=lambda s: len(s["text_en"]))
+    async with Client(mcp) as client:
+        text = await _read(
+            client, f"taxcode://statutes/statutes/{short['jurisdiction']}/{short['id']}"
+        )
+        assert text.endswith(short["text_en"]) and "[Text page:" not in text
+        base = "taxcode://statutes/statutes/US/933?page_cursor="
+        bad = await _read(client, base + "not-a-cursor")
+        assert bad == "page_cursor is not a cursor from statutes_lookup_statute."
+        gone = await _read(client, base + encode_cursor("zz-missing", "en", 0))
+        assert gone == "Statute '933' in jurisdiction 'US' not found."
+        # An id that only matches as a section code is not the version the cursor named.
+        other = await _read(client, base + encode_cursor("933", "en", 0))
+        assert other == gone
+
+
+def test_statute_resource_window_shrinks_to_fit_the_cap() -> None:
+    header = "h" * (RESPONSE_MAX_CHARS - 1_000)
+    page = paging.page_resource_text(header, "x" * 20_000, 0, lambda end: f"c{end}")
+    assert len(page) <= RESPONSE_MAX_CHARS
+    assert page.endswith("Next page: read this resource again with ?page_cursor=c500]")
