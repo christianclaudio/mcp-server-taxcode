@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from typing import Annotated, Any
+from urllib.parse import quote
 
 from fastmcp import FastMCP
 from fastmcp.server.transforms import ToolTransform
@@ -290,13 +291,20 @@ async def list_publications(
     raise failure from None
 
 
+# The root mounts this server under the "statutes" namespace, and FastMCP's mount puts
+# the namespace after the scheme (taxcode://{x} becomes taxcode://statutes/{x}). So the
+# template below has no statutes/ segment of its own, and clients see
+# taxcode://statutes/{jurisdiction}/{section}{?page_cursor}.
+STATUTE_RESOURCE_BASE = "taxcode://statutes"
+
+
 @statutes_server.resource(
-    "taxcode://statutes/{jurisdiction}/{section}{?page_cursor}",
+    "taxcode://{jurisdiction}/{section}{?page_cursor}",
     description=(
         "Statutory text by jurisdiction and section. Long text comes in pages of up to "
         f"{TEXT_PAGE_CHARS:,} characters (each read stays under {RESPONSE_MAX_CHARS:,} "
-        "characters); a page that is not the last ends with the page_cursor query for the "
-        "next page, the same cursor statutes_lookup_statute returns as next_cursor."
+        "characters); a page that is not the last ends with the URI of the next page, "
+        "whose page_cursor is the same cursor statutes_lookup_statute returns as next_cursor."
     ),
 )
 async def get_statute_resource(jurisdiction: str, section: str, page_cursor: str = "") -> str:
@@ -326,7 +334,9 @@ async def get_statute_resource(jurisdiction: str, section: str, page_cursor: str
     )
     record_id, lang = res["id"], res["language"]
 
-    def next_cursor(end: int) -> str:
-        return encode_cursor(record_id, lang, end)
+    path = f"{quote(jurisdiction, safe='')}/{quote(section, safe='')}"
 
-    return page_resource_text(header, res["operative_text"] or "", offset, next_cursor)
+    def next_uri(end: int) -> str:
+        return f"{STATUTE_RESOURCE_BASE}/{path}?page_cursor={encode_cursor(record_id, lang, end)}"
+
+    return page_resource_text(header, res["operative_text"] or "", offset, next_uri)

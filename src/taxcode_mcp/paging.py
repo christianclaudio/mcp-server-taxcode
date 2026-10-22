@@ -15,7 +15,7 @@ and every statute resource read under that many characters of text.
 
 - The ``taxcode://statutes/{jurisdiction}/{section}{?page_cursor}`` resource returns the
   same :data:`TEXT_PAGE_CHARS` window of the operative text and ends a non-final page with
-  the ``page_cursor`` query for the next one (the same cursor the tool uses).
+  the full URI of the next one, whose ``page_cursor`` is the same cursor the tool uses.
 
 If a result would still exceed the cap (an unusually large title or list of versions),
 the text window or the item count shrinks until it fits.
@@ -140,15 +140,12 @@ def fit_items(
         count -= 1
 
 
-def page_resource_text(
-    header: str, text: str, offset: int, next_cursor: Callable[[int], str]
-) -> str:
+def page_resource_text(header: str, text: str, offset: int, next_uri: Callable[[int], str]) -> str:
     """One page of a statute resource: ``header``, a window of ``text``, and a page note.
 
     A text that fits one page comes back whole with no note. Otherwise the note gives
-    the character range and, unless this is the last page, the ``page_cursor`` query
-    (``next_cursor(end)``) to read the next page. The note names the query rather than
-    a full URI because the URI a client sees depends on where the server is mounted.
+    the character range and, unless this is the last page, ``next_uri(end)``: the full
+    URI of the next page, with its ``page_cursor`` query.
     """
     window = TEXT_PAGE_CHARS
     while True:
@@ -156,11 +153,7 @@ def page_resource_text(
         body = header + text[offset:end]
         if offset or end < len(text):
             body += f"\n\n[Text page: characters {offset}-{end} of {len(text)}. "
-            body += (
-                f"Next page: read this resource again with ?page_cursor={next_cursor(end)}]"
-                if end < len(text)
-                else "Last page.]"
-            )
+            body += f"Next page: {next_uri(end)}]" if end < len(text) else "Last page.]"
         if len(body) <= RESPONSE_MAX_CHARS or window <= MIN_TEXT_PAGE_CHARS:
             return body
         window = max(window // 2, MIN_TEXT_PAGE_CHARS)

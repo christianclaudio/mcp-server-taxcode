@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import json
 from typing import Any
+from urllib.parse import quote
 
 import pytest
 from fastmcp import Client
 from fastmcp.exceptions import ToolError
+from mcp.shared.exceptions import MCPError
 
 from taxcode_mcp import paging
 from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES
@@ -261,16 +263,18 @@ async def _read(client: Client, uri: str) -> str:
 
 
 async def test_statute_resource_pages_round_trip_under_the_cap() -> None:
-    """The resource template advertises page_cursor; following it rebuilds the exact text."""
-    base = f"taxcode://statutes/statutes/{LONGEST_EN['jurisdiction']}/{LONGEST_EN['id']}"
+    """Clients see one statutes segment in the template; its pages rebuild the exact text."""
+    base = f"taxcode://statutes/{LONGEST_EN['jurisdiction']}/{LONGEST_EN['id']}"
     async with Client(mcp) as client:
         templates = [t.uri_template for t in await client.list_resource_templates()]
-        assert "taxcode://statutes/statutes/{jurisdiction}/{section}{?page_cursor}" in templates
+        assert templates == ["taxcode://statutes/{jurisdiction}/{section}{?page_cursor}"]
+        uris = [base]
         pages = [await _read(client, base)]
         while "Next page: " in pages[-1]:
-            query = pages[-1].rsplit("Next page: read this resource again with ", 1)[1][:-1]
-            pages.append(await _read(client, base + query))
+            uris.append(pages[-1].rsplit("Next page: ", 1)[1][:-1])
+            pages.append(await _read(client, uris[-1]))
     assert len(pages) > 1
+    assert all(uri.startswith(base + "?page_cursor=") for uri in uris[1:])
     assert all(len(page) <= RESPONSE_MAX_CHARS for page in pages)
     assert pages[-1].endswith(f"of {len(LONGEST_EN['text_en'])}. Last page.]")
     header = pages[0].split("\n\n", 1)[0] + "\n\n"
@@ -283,11 +287,9 @@ async def test_statute_resource_pages_round_trip_under_the_cap() -> None:
 async def test_statute_resource_short_text_has_no_page_note_and_bad_cursors_say_so() -> None:
     short = min(INITIAL_STATUTES, key=lambda s: len(s["text_en"]))
     async with Client(mcp) as client:
-        text = await _read(
-            client, f"taxcode://statutes/statutes/{short['jurisdiction']}/{short['id']}"
-        )
+        text = await _read(client, f"taxcode://statutes/{short['jurisdiction']}/{short['id']}")
         assert text.endswith(short["text_en"]) and "[Text page:" not in text
-        base = "taxcode://statutes/statutes/US/933?page_cursor="
+        base = "taxcode://statutes/US/933?page_cursor="
         bad = await _read(client, base + "not-a-cursor")
         assert bad == "page_cursor is not a cursor from statutes_lookup_statute."
         gone = await _read(client, base + encode_cursor("zz-missing", "en", 0))
@@ -301,4 +303,21 @@ def test_statute_resource_window_shrinks_to_fit_the_cap() -> None:
     header = "h" * (RESPONSE_MAX_CHARS - 1_000)
     page = paging.page_resource_text(header, "x" * 20_000, 0, lambda end: f"c{end}")
     assert len(page) <= RESPONSE_MAX_CHARS
-    assert page.endswith("Next page: read this resource again with ?page_cursor=c500]")
+    assert page.endswith("Next page: c500]")
+
+
+async def test_the_old_doubled_statute_uri_no_longer_resolves() -> None:
+    async with Client(mcp) as client:
+        with pytest.raises(MCPError, match="not found"):
+            await client.read_resource("taxcode://statutes/statutes/US/933")
+
+
+async def test_next_page_uri_keeps_the_percent_encoded_path_it_was_read_with() -> None:
+    """A citation in the path is decoded for the lookup and re-encoded in the next URI."""
+    path = f"{LONGEST_EN['jurisdiction']}/{quote(LONGEST_EN['citation'], safe='')}"
+    async with Client(mcp) as client:
+        first = await _read(client, f"taxcode://statutes/{path}")
+        uri = first.rsplit("Next page: ", 1)[1][:-1]
+        assert uri.startswith(f"taxcode://statutes/{path}?page_cursor=")
+        second = await _read(client, uri)
+    assert f"[Text page: characters {TEXT_PAGE_CHARS}-" in second
