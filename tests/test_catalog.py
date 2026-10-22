@@ -17,11 +17,13 @@ from taxcode_mcp.catalog import (
     MANIFEST_FIELDS,
     NOT_RECORDED,
     PUBLICATION_FIELDS,
+    RATE_TABLE_MODELS,
     STATUTE_FIELDS,
     CatalogError,
     dump_json,
     load_catalog,
     manifest_errors,
+    rate_table_id,
     split_lines,
     statute_doc_path,
     statute_document_row,
@@ -64,7 +66,10 @@ def test_rows_load_in_catalog_order_with_every_field() -> None:
     assert positions == sorted(positions)
     assert all(list(s) == list(STATUTE_FIELDS) for s in catalog.statutes)
     assert all(list(p) == list(PUBLICATION_FIELDS) for p in catalog.publications)
-    assert len(catalog.manifest) == len(catalog.statutes) + len(catalog.publications)
+    assert len(catalog.rate_tables) == 49
+    assert len(catalog.manifest) == (
+        len(catalog.statutes) + len(catalog.publications) + len(catalog.rate_tables)
+    )
 
 
 def test_text_is_stored_as_lines_and_joined_exactly() -> None:
@@ -118,6 +123,48 @@ def test_check_reports_non_canonical_data_and_write_reformats(tree: tuple[Path, 
     path.write_text(json.dumps(json.loads(path.read_text(encoding="utf-8"))), encoding="utf-8")
     assert build_catalog.check(data, docs) == ["data: statutes/ga.json is not in canonical form"]
     assert build_catalog.write(data, docs) == ["data/statutes/ga.json"]
+    assert build_catalog.check(data, docs) == []
+
+
+def _break_rate(doc: Any) -> None:
+    doc["params"]["brackets"]["single"][0]["rate"] = 10.9
+
+
+@pytest.mark.parametrize(
+    ("damage", "message"),
+    [
+        (lambda d: _edit(d / "rates" / "ny.json", _break_rate), "data: rates/ny.json params"),
+        (lambda d: (d / "rates" / "oh.json").unlink(), "data: rates/oh.json: missing"),
+        (
+            lambda d: (d / "rates" / "ga.json").write_text("{", encoding="utf-8"),
+            "data: ga.json: invalid JSON",
+        ),
+        (
+            lambda d: shutil.copy(d / "rates" / "oh.json", d / "rates" / "fl.json"),
+            "data: files for no rate table: ['rates/fl.json']",
+        ),
+        (lambda d: shutil.rmtree(d / "rates"), "data: rates/ga.json: missing"),
+    ],
+)
+def test_check_fails_on_a_malformed_missing_or_stray_rate_table(
+    tree: tuple[Path, Path], damage: Callable[[Path], Any], message: str
+) -> None:
+    data, docs = tree
+    damage(data)
+    problems = build_catalog.check(data, docs)
+    assert len(problems) == 1 and problems[0].startswith(message), problems
+    with pytest.raises(CatalogError):
+        build_catalog.write(data, docs)
+
+
+def test_check_reports_a_non_canonical_rate_table_and_write_reformats(
+    tree: tuple[Path, Path],
+) -> None:
+    data, docs = tree
+    path = data / "rates" / "va.json"
+    path.write_text(json.dumps(json.loads(path.read_text(encoding="utf-8"))), encoding="utf-8")
+    assert build_catalog.check(data, docs) == ["data: rates/va.json is not in canonical form"]
+    assert build_catalog.write(data, docs) == ["data/rates/va.json"]
     assert build_catalog.check(data, docs) == []
 
 
@@ -332,10 +379,50 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 
 def test_act_22_cites_the_amended_compilation_and_no_other_edition_is_recorded() -> None:
     catalog = load_catalog(with_manifest=True)
-    editions = {e["id"]: e["edition"] for e in catalog.manifest}
+    editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] != "rate_table"}
     assert len(editions) == 160
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     assert set(editions.values()) == {NOT_RECORDED}
+
+
+def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None:
+    catalog = load_catalog(with_manifest=True)
+    entries = [e for e in catalog.manifest if e["kind"] == "rate_table"]
+    assert [(e["_jurisdiction"], e["id"]) for e in entries] == [
+        (code, rate_table_id(code)) for code in catalog.jurisdictions if code in RATE_TABLE_MODELS
+    ]
+    # No rate table cites a source yet: every field but kind and id is not_recorded,
+    # and so is each table's source_url.
+    for e in entries:
+        assert {e[name] for name in MANIFEST_FIELDS[2:]} == {NOT_RECORDED}, e["id"]
+    assert {t["source_url"] for t in catalog.rate_tables.values()} == {NOT_RECORDED}
+    assert manifest_errors(catalog) == []
+
+
+def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+
+    def pop_rates(doc: Any) -> None:
+        doc["entries"] = [e for e in doc["entries"] if e["kind"] != "rate_table"]
+
+    _edit(data / "manifest" / "ga.json", pop_rates)
+    _edit(data / "rates" / "ny.json", lambda d: d.update(source_url="https://example.gov/ny"))
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert "rate_table 'ga-rates': no manifest entry" in errors
+    assert (
+        "manifest/ny.json entry 'ny-rates': url 'not_recorded' != row source_url "
+        "'https://example.gov/ny'"
+    ) in errors
+
+
+def test_every_rate_table_state_must_be_a_listed_jurisdiction(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    _edit(data / "jurisdictions.json", lambda d: d.remove("WY"))
+    shutil.rmtree(data / "statutes")
+    shutil.rmtree(data / "publications")
+    shutil.rmtree(data / "manifest")
+    with pytest.raises(CatalogError, match="rate table state 'WY' is missing"):
+        load_catalog(data, with_manifest=True)
 
 
 def test_a_fully_recorded_verbatim_entry_passes(tree: tuple[Path, Path]) -> None:

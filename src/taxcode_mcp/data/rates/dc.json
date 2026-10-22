@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "DC",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "D.C. Code §§ 47-1801.04, 47-1806.03",
+    "rate_authority": "D.C. Code § 47-1806.03",
+    "rate_desc": "Graduated rates from 4.0% to 10.75%",
+    "regime": "graduated",
+    "deduction_single": 14600.0,
+    "deduction_mfj": 29200.0,
+    "top_bracket_single": 1000000.0,
+    "top_bracket_mfj": 1000000.0,
+    "top_rate": 0.1075
+  }
+}

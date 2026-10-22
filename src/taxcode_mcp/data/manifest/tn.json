@@ -14,6 +14,19 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
+    },
+    {
+      "kind": "rate_table",
+      "id": "tn-rates",
+      "url": "not_recorded",
+      "edition": "not_recorded",
+      "official": "not_recorded",
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "not_recorded"
     }
   ]
 }

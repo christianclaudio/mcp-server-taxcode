@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "MS",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Miss. Code Ann. §§ 27-7-3, 27-7-5",
+    "rate_authority": "Miss. Code Ann. § 27-7-5",
+    "rate_desc": "Flat 4.70% rate (phasing to 4.0% by 2026)",
+    "regime": "flat",
+    "rate": 0.047,
+    "deduction_single": 2300.0,
+    "deduction_mfj": 4600.0
+  }
+}

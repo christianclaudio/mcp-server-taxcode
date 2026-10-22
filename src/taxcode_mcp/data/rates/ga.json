@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "jurisdiction": "GA",
+  "model": "georgia",
+  "source_url": "not_recorded",
+  "params": {
+    "standard_deduction": {
+      "single": 12000.0,
+      "mfj": 24000.0
+    },
+    "retirement_exclusion": [
+      {
+        "min_age": 65,
+        "amount": 65000.0
+      },
+      {
+        "min_age": 62,
+        "amount": 35000.0
+      }
+    ],
+    "rates": [
+      {
+        "from_year": 2026,
+        "rate": 0.0499
+      },
+      {
+        "from_year": 2025,
+        "rate": 0.0539
+      },
+      {
+        "from_year": null,
+        "rate": 0.0549
+      }
+    ]
+  }
+}

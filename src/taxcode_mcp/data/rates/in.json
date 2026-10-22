@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "IN",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Ind. Code §§ 6-3-1-3.5, 6-3-2-1",
+    "rate_authority": "Ind. Code § 6-3-2-1",
+    "rate_desc": "Flat state rate 3.05% (2024), 3.00% (2025), 2.95% (2026), 2.90% (2027+) plus county LIT",
+    "regime": "flat",
+    "rate": 0.0305,
+    "rate_2025": 0.03,
+    "rate_2026": 0.0295,
+    "rate_2027": 0.029,
+    "deduction_single": 1000.0,
+    "deduction_mfj": 2000.0
+  }
+}

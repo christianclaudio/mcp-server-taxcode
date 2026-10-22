@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "jurisdiction": "SD",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "S.D. Const. art. XI, § 2",
+    "rate_authority": "S.D. Const. art. XI, § 2",
+    "rate_desc": "No state personal income tax",
+    "regime": "none"
+  }
+}

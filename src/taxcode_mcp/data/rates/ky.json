@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "KY",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Ky. Rev. Stat. Ann. §§ 141.010, 141.020",
+    "rate_authority": "Ky. Rev. Stat. Ann. § 141.020",
+    "rate_desc": "Flat 4.0% rate (HB 1 phase-down)",
+    "regime": "flat",
+    "rate": 0.04,
+    "deduction_single": 3160.0,
+    "deduction_mfj": 6320.0
+  }
+}

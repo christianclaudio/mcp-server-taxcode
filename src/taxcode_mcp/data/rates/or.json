@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "jurisdiction": "OR",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Or. Rev. Stat. §§ 316.027, 316.037",
+    "rate_authority": "Or. Rev. Stat. § 316.037",
+    "rate_desc": "Graduated rates: 4.75%, 6.75%, 8.75%, and top rate 9.90%",
+    "regime": "graduated",
+    "day_threshold": 200,
+    "deduction_single": 2745.0,
+    "deduction_mfj": 5495.0,
+    "top_bracket_single": 125000.0,
+    "top_bracket_mfj": 250000.0,
+    "top_rate": 0.099
+  }
+}

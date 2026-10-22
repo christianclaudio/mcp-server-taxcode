@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "CT",
+  "model": "brackets_whole_income",
+  "source_url": "not_recorded",
+  "params": {
+    "exemption": {
+      "single": 15000.0,
+      "mfj": 24000.0
+    },
+    "brackets": {
+      "single": [
+        {
+          "over": 500000.0,
+          "rate": 0.0699
+        },
+        {
+          "over": 100000.0,
+          "rate": 0.06
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.05
+        },
+        {
+          "over": null,
+          "rate": 0.03
+        }
+      ],
+      "mfj": [
+        {
+          "over": 500000.0,
+          "rate": 0.0699
+        },
+        {
+          "over": 100000.0,
+          "rate": 0.06
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.05
+        },
+        {
+          "over": null,
+          "rate": 0.03
+        }
+      ]
+    }
+  }
+}

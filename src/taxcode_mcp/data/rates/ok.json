@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "OK",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Okla. Stat. tit. 68, §§ 2353, 2355",
+    "rate_authority": "Okla. Stat. tit. 68, § 2355",
+    "rate_desc": "Graduated rates from 0.25% to top rate 4.75%",
+    "regime": "graduated",
+    "deduction_single": 6350.0,
+    "deduction_mfj": 12700.0,
+    "top_bracket_single": 7200.0,
+    "top_bracket_mfj": 12200.0,
+    "top_rate": 0.0475
+  }
+}

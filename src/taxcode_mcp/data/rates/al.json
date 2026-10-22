@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "AL",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Ala. Code §§ 40-18-1, 40-18-2",
+    "rate_authority": "Ala. Code § 40-18-2",
+    "rate_desc": "Graduated brackets from 2.0% to 5.0%",
+    "regime": "graduated",
+    "deduction_single": 3000.0,
+    "deduction_mfj": 8500.0,
+    "top_bracket_single": 3000.0,
+    "top_bracket_mfj": 6000.0,
+    "top_rate": 0.05
+  }
+}

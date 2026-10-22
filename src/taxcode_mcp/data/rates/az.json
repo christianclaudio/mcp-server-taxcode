@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "jurisdiction": "AZ",
+  "model": "flat",
+  "source_url": "not_recorded",
+  "params": {
+    "deduction": {
+      "single": 14600.0,
+      "mfj": 29200.0
+    },
+    "rate": 0.025
+  }
+}

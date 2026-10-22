@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "jurisdiction": "OH",
+  "model": "brackets_cumulative",
+  "source_url": "not_recorded",
+  "params": {
+    "exemption": {
+      "single": 2400.0,
+      "mfj": 4800.0
+    },
+    "brackets": {
+      "single": [
+        {
+          "over": 100000.0,
+          "base": 2033.63,
+          "rate": 0.035
+        },
+        {
+          "over": 26050.0,
+          "base": 0.0,
+          "rate": 0.0275
+        },
+        {
+          "over": null,
+          "base": 0.0,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 100000.0,
+          "base": 2033.63,
+          "rate": 0.035
+        },
+        {
+          "over": 26050.0,
+          "base": 0.0,
+          "rate": 0.0275
+        },
+        {
+          "over": null,
+          "base": 0.0,
+          "rate": 0.0
+        }
+      ]
+    }
+  }
+}

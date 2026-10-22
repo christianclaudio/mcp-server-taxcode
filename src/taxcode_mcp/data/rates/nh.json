@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "jurisdiction": "NH",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "N.H. Rev. Stat. Ann. § 77:1",
+    "rate_authority": "N.H. Rev. Stat. Ann. § 77:1",
+    "rate_desc": "No wage income tax; 3% on interest/dividends in 2024, fully repealed 2025+ (HB 2)",
+    "regime": "none"
+  }
+}
