@@ -12,9 +12,107 @@
     "requires_abode": false,
     "deduction_single": 2200.0,
     "deduction_mfj": 4400.0,
-    "top_bracket_single": 200000.0,
-    "top_bracket_mfj": 400000.0,
-    "top_rate": 0.11,
-    "middle_rate_estimate": true
+    "brackets": {
+      "single": [
+        {
+          "over": 200000.0,
+          "rate": 0.11
+        },
+        {
+          "over": 175000.0,
+          "rate": 0.1
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.09
+        },
+        {
+          "over": 48000.0,
+          "rate": 0.0825
+        },
+        {
+          "over": 36000.0,
+          "rate": 0.079
+        },
+        {
+          "over": 24000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 19200.0,
+          "rate": 0.072
+        },
+        {
+          "over": 14400.0,
+          "rate": 0.068
+        },
+        {
+          "over": 9600.0,
+          "rate": 0.064
+        },
+        {
+          "over": 4800.0,
+          "rate": 0.055
+        },
+        {
+          "over": 2400.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 400000.0,
+          "rate": 0.11
+        },
+        {
+          "over": 350000.0,
+          "rate": 0.1
+        },
+        {
+          "over": 300000.0,
+          "rate": 0.09
+        },
+        {
+          "over": 96000.0,
+          "rate": 0.0825
+        },
+        {
+          "over": 72000.0,
+          "rate": 0.079
+        },
+        {
+          "over": 48000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 38400.0,
+          "rate": 0.072
+        },
+        {
+          "over": 28800.0,
+          "rate": 0.068
+        },
+        {
+          "over": 19200.0,
+          "rate": 0.064
+        },
+        {
+          "over": 9600.0,
+          "rate": 0.055
+        },
+        {
+          "over": 4800.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ]
+    }
   }
 }

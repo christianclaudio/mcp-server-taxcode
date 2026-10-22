@@ -11,9 +11,43 @@
     "day_threshold": 200,
     "deduction_single": 2745.0,
     "deduction_mfj": 5495.0,
-    "top_bracket_single": 125000.0,
-    "top_bracket_mfj": 250000.0,
-    "top_rate": 0.099,
-    "middle_rate_estimate": true
+    "brackets": {
+      "single": [
+        {
+          "over": 125000.0,
+          "rate": 0.099
+        },
+        {
+          "over": 10750.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 4300.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ],
+      "mfj": [
+        {
+          "over": 250000.0,
+          "rate": 0.099
+        },
+        {
+          "over": 21500.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 8600.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ]
+    }
   }
 }

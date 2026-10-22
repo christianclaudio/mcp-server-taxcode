@@ -14,10 +14,36 @@
     "deduction_mfj_2025": 25000.0,
     "deduction_single_2026": 12838.0,
     "deduction_mfj_2026": 25676.0,
-    "top_bracket_single": 50000.0,
-    "top_bracket_mfj": 100000.0,
-    "top_rate": 0.0425,
-    "middle_rate_estimate": true,
+    "brackets": {
+      "single": [
+        {
+          "over": 50000.0,
+          "rate": 0.0425
+        },
+        {
+          "over": 12500.0,
+          "rate": 0.035
+        },
+        {
+          "over": null,
+          "rate": 0.0185
+        }
+      ],
+      "mfj": [
+        {
+          "over": 100000.0,
+          "rate": 0.0425
+        },
+        {
+          "over": 25000.0,
+          "rate": 0.035
+        },
+        {
+          "over": null,
+          "rate": 0.0185
+        }
+      ]
+    },
     "regime_2025": "flat",
     "rate_2025": 0.03
   }

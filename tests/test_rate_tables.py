@@ -287,3 +287,55 @@ def test_the_middle_rate_estimate_is_labeled_in_the_answer() -> None:
         tax = _registry_answer(code)["tax_computation"]
         assert tax["middle_rate_is_estimate"] is False, code
         assert "ESTIMATE" not in tax["rate_description"], code
+
+
+# The tax at a bracket's lower edge as the state's own 2024 schedule prints it. Schedules that
+# print whole dollars round or truncate, so those compare within a dollar.
+OFFICIAL_2024_BASES = [
+    ("DC", "single", 250000.0, 19650.0, 0.0),
+    ("DC", "mfj", 1000000.0, 91525.0, 0.0),
+    ("DE", "single", 25000.0, 1001.0, 0.0),
+    ("DE", "mfj", 60000.0, 2943.5, 0.0),
+    ("HI", "single", 200000.0, 16379.0, 1.0),
+    ("HI", "mfj", 96000.0, 6427.0, 1.0),
+    ("IA", "single", 31050.0, 1470.53, 0.0),
+    ("IA", "mfj", 12420.0, 546.48, 0.0),
+    ("ME", "single", 61600.0, 3911.0, 1.0),
+    ("ME", "mfj", 52100.0, 3022.0, 1.0),
+    ("MO", "single", 8911.0, 248.0, 1.0),
+    ("MO", "mfj", 5092.0, 95.0, 1.0),
+    ("NE", "single", 37670.0, 1495.77, 0.0),
+    ("NE", "mfj", 75340.0, 2991.34, 0.0),
+    ("NM", "single", 210000.0, 10010.5, 0.0),
+    ("NM", "mfj", 315000.0, 15027.0, 0.0),
+    ("OK", "single", 7200.0, 153.5, 0.0),
+    ("OK", "mfj", 14400.0, 307.0, 0.0),
+    ("OR", "single", 10750.0, 639.0, 1.0),
+    ("OR", "mfj", 250000.0, 21274.0, 1.0),
+    ("RI", "single", 176050.0, 7587.88, 0.0),
+    ("RI", "mfj", 77450.0, 2904.38, 0.0),
+    ("VT", "single", 242000.0, 15675.0, 1.0),
+    ("VT", "mfj", 193300.0, 10159.0, 1.0),
+    ("WI", "single", 28640.0, 1131.0, 1.0),
+    ("WI", "mfj", 420420.0, 21767.0, 1.0),
+    ("WV", "single", 40000.0, 1239.5, 0.0),
+    ("WV", "mfj", 60000.0, 2183.5, 0.0),
+]
+
+
+@pytest.mark.parametrize(("code", "status", "income", "printed", "slack"), OFFICIAL_2024_BASES)
+def test_brackets_reproduce_the_printed_2024_schedule(
+    code: str, status: str, income: float, printed: float, slack: float
+) -> None:
+    brackets = compliance.RATE_TABLES[code]["brackets"][status]
+    assert abs(compliance._marginal_tax(brackets, income) - printed) <= slack + 0.005
+
+
+def test_south_carolina_brackets_match_the_published_shortcut() -> None:
+    # SC1040TT / SC4972 (2024): 3% of income less $104 in the middle band, 6.2% less $659 above.
+    brackets = compliance.RATE_TABLES["SC"]["brackets"]["single"]
+    for income, shortcut in (
+        (10000.0, 0.03 * 10000.0 - 104.0),
+        (100000.0, 0.062 * 100000.0 - 659.0),
+    ):
+        assert abs(compliance._marginal_tax(brackets, income) - shortcut) <= 1.0

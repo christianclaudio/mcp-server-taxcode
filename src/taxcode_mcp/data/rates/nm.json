@@ -13,9 +13,51 @@
     "inclusive_threshold": true,
     "deduction_single": 14600.0,
     "deduction_mfj": 29200.0,
-    "top_bracket_single": 210000.0,
-    "top_bracket_mfj": 315000.0,
-    "top_rate": 0.059,
-    "middle_rate_estimate": true
+    "brackets": {
+      "single": [
+        {
+          "over": 210000.0,
+          "rate": 0.059
+        },
+        {
+          "over": 16000.0,
+          "rate": 0.049
+        },
+        {
+          "over": 11000.0,
+          "rate": 0.047
+        },
+        {
+          "over": 5500.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.017
+        }
+      ],
+      "mfj": [
+        {
+          "over": 315000.0,
+          "rate": 0.059
+        },
+        {
+          "over": 24000.0,
+          "rate": 0.049
+        },
+        {
+          "over": 16000.0,
+          "rate": 0.047
+        },
+        {
+          "over": 8000.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.017
+        }
+      ]
+    }
   }
 }

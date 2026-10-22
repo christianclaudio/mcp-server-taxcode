@@ -10,9 +10,43 @@
     "regime": "graduated",
     "deduction_single": 7350.0,
     "deduction_mfj": 14700.0,
-    "top_bracket_single": 229550.0,
-    "top_bracket_mfj": 279450.0,
-    "top_rate": 0.0875,
-    "middle_rate_estimate": true
+    "brackets": {
+      "single": [
+        {
+          "over": 242000.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 116000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 47900.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfj": [
+        {
+          "over": 294600.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 193300.0,
+          "rate": 0.076
+        },
+        {
+          "over": 79950.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ]
+    }
   }
 }

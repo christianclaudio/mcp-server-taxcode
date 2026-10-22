@@ -6,13 +6,13 @@
   "params": {
     "statutory_basis": "Ark. Code Ann. §§ 26-51-102, 26-51-201",
     "rate_authority": "Ark. Code Ann. § 26-51-201",
-    "rate_desc": "Graduated rates with top marginal rate 4.40%",
+    "rate_desc": "Graduated rates with top marginal rate 3.90%",
     "regime": "graduated",
     "deduction_single": 2340.0,
     "deduction_mfj": 4680.0,
-    "top_bracket_single": 24300.0,
-    "top_bracket_mfj": 24300.0,
-    "top_rate": 0.044,
+    "top_bracket_single": 25700.0,
+    "top_bracket_mfj": 25700.0,
+    "top_rate": 0.039,
     "middle_rate_estimate": true
   }
 }

@@ -6,13 +6,39 @@
   "params": {
     "statutory_basis": "S.C. Code Ann. §§ 12-6-30, 12-6-510",
     "rate_authority": "S.C. Code Ann. § 12-6-510",
-    "rate_desc": "0% on first bracket; top rate 6.40% over $17,330",
+    "rate_desc": "0% on first bracket; top rate 6.20% over $17,330",
     "regime": "graduated",
     "deduction_single": 14600.0,
     "deduction_mfj": 29200.0,
-    "top_bracket_single": 17330.0,
-    "top_bracket_mfj": 17330.0,
-    "top_rate": 0.064,
-    "middle_rate_estimate": true
+    "brackets": {
+      "single": [
+        {
+          "over": 17330.0,
+          "rate": 0.062
+        },
+        {
+          "over": 3460.0,
+          "rate": 0.03
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 17330.0,
+          "rate": 0.062
+        },
+        {
+          "over": 3460.0,
+          "rate": 0.03
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    }
   }
 }

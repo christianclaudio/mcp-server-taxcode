@@ -8,10 +8,36 @@
     "rate_authority": "Iowa Code § 422.5A",
     "rate_desc": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
     "regime": "graduated",
-    "top_bracket_single": 31590.0,
-    "top_bracket_mfj": 63180.0,
-    "top_rate": 0.057,
-    "middle_rate_estimate": true,
+    "brackets": {
+      "single": [
+        {
+          "over": 31050.0,
+          "rate": 0.057
+        },
+        {
+          "over": 6210.0,
+          "rate": 0.0482
+        },
+        {
+          "over": null,
+          "rate": 0.044
+        }
+      ],
+      "mfj": [
+        {
+          "over": 62100.0,
+          "rate": 0.057
+        },
+        {
+          "over": 12420.0,
+          "rate": 0.0482
+        },
+        {
+          "over": null,
+          "rate": 0.044
+        }
+      ]
+    },
     "deduction_single": 14600.0,
     "deduction_mfj": 29200.0,
     "regime_2025": "flat",

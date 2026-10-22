@@ -1124,9 +1124,11 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
     )
     assert de_res_sub["is_resident"] is True
-    # Taxable: 50,000 - 3250 = 46,750 (<= 60,000 top bracket) -> 46,750 * (0.066 * 0.65)
-    expected_de_sub = round(46750.0 * (0.066 * 0.65), 2)
-    assert de_res_sub["tax_computation"]["estimated_state_tax"] == expected_de_sub
+    # Taxable: 50,000 - 3250 = 46,750, taxed slice by slice on the 2024 DE schedule:
+    # 0% to 2,000, 2.2% to 5,000, 3.9% to 10,000, 4.8% to 20,000, 5.2% to 25,000, then 5.55%
+    expected_de_sub = round(66.0 + 195.0 + 480.0 + 260.0 + 0.0555 * 21750.0, 2)
+    assert de_res_sub["tax_computation"]["estimated_state_tax"] == expected_de_sub == 2208.12
+    assert de_res_sub["tax_computation"]["middle_rate_is_estimate"] is False
 
     de_res_top = server.evaluate_state_residency(
         jurisdiction="DE",
@@ -1136,9 +1138,8 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="married_joint",
     )
     assert de_res_top["is_resident"] is True
-    # Taxable: 150,000 - 6500 = 143,500 (> 60,000 top bracket)
-    base_de = 60000.0 * (0.066 * 0.65)
-    expected_de_top = round(base_de + 0.066 * (143500.0 - 60000.0), 2)
+    # Taxable: 150,000 - 6500 = 143,500 (> 60,000 top bracket): 2,943.50 on the first 60,000
+    expected_de_top = round(2943.5 + 0.066 * (143500.0 - 60000.0), 2)
     assert de_res_top["tax_computation"]["estimated_state_tax"] == expected_de_top
 
     # 22. Nebraska (NE) - Convenience of Employer Rule
@@ -1281,9 +1282,8 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2024,
     )
-    # 2024 taxable: 100,000 - 14,600 = 85,400 (> 31,590) -> graduated
-    base_ia = 31590.0 * (0.057 * 0.65)
-    expected_ia_2024 = round(base_ia + 0.057 * (85400.0 - 31590.0), 2)
+    # 2024 taxable: 100,000 - 14,600 = 85,400 -> 4.4% to 6,210, 4.82% to 31,050, then 5.7%
+    expected_ia_2024 = round(0.044 * 6210.0 + 0.0482 * 24840.0 + 0.057 * (85400.0 - 31050.0), 2)
     assert ia_2024["tax_computation"]["estimated_state_tax"] == expected_ia_2024
 
     ia_2025 = server.evaluate_state_residency(
@@ -1305,9 +1305,8 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2024,
     )
-    # Taxable: 100,000 - 4500 = 95,500 (> 50,000)
-    base_la = 50000.0 * (0.0425 * 0.65)
-    expected_la_2024 = round(base_la + 0.0425 * (95500.0 - 50000.0), 2)
+    # Taxable: 100,000 - 4500 = 95,500 -> 1.85% to 12,500, 3.5% to 50,000, then 4.25%
+    expected_la_2024 = round(231.25 + 1312.5 + 0.0425 * (95500.0 - 50000.0), 2)
     assert la_2024["tax_computation"]["estimated_state_tax"] == expected_la_2024
 
     la_2025 = server.evaluate_state_residency(
