@@ -27,6 +27,7 @@ Every manifest entry has every field below. A value we don't have is the explici
 | --- | --- |
 | `kind`, `id` | `statute` or `publication`, and the row's `id`. |
 | `url` | Must equal the row's `source_url`. |
+| `edition` | Which text the source at `url` is: `as_enacted` (the law as passed), `amended_compilation` (a compilation with later amendments folded in, such as an OGP "según enmendada" text), or `"not_recorded"`. |
 | `official` | `true` when the URL is on the issuing government body's own site, `false` for a third-party site, or `"not_recorded"`. It says nothing about whether the stored text is official. |
 | `licence` | Reuse terms of the source, or `"not_recorded"`. |
 | `retrieved` | Date the source was fetched (`YYYY-MM-DD`), or `"not_recorded"`. |

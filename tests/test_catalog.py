@@ -289,6 +289,8 @@ def test_a_jurisdiction_may_have_no_files_and_folders_are_optional(
         ({"effective_date": 2026}, "effective_date must be YYYY-MM-DD"),
         ({"content_sha256": "ABC"}, "content_sha256 must be 64 lowercase hex"),
         ({"verification": "checked"}, "verification must be one of"),
+        ({"edition": "as_amended"}, "edition must be one of"),
+        ({"edition": ["as_enacted"]}, "edition must be one of"),
         ({"verification": "verified_verbatim"}, "verified_verbatim needs a retrieved date"),
         ({"url": "https://example.gov/other"}, "url 'https://example.gov/other' != row"),
         ({"id": "ga-unknown"}, "no statute row with this id"),
@@ -303,10 +305,26 @@ def test_manifest_entries_are_checked_against_their_rows(
     assert any(message in e for e in errors), errors
 
 
+def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    _edit(data / "manifest" / "ga.json", lambda d: d["entries"][0].pop("edition"))
+    with pytest.raises(CatalogError, match="fields must be exactly"):
+        load_catalog(data, with_manifest=True)
+
+
+def test_act_22_cites_the_amended_compilation_and_no_other_edition_is_recorded() -> None:
+    catalog = load_catalog(with_manifest=True)
+    editions = {e["id"]: e["edition"] for e in catalog.manifest}
+    assert len(editions) == 160
+    assert editions.pop("pr-act22-2012") == "amended_compilation"
+    assert set(editions.values()) == {NOT_RECORDED}
+
+
 def test_a_fully_recorded_verbatim_entry_passes(tree: tuple[Path, Path]) -> None:
     data, _ = tree
     record = {
         "official": True,
+        "edition": "as_enacted",
         "retrieved": "2026-10-21",
         "content_sha256": "0" * 64,
         "effective_date": "2026-01-01",

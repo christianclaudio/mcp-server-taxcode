@@ -76,6 +76,7 @@ MANIFEST_FIELDS: tuple[str, ...] = (
     "kind",
     "id",
     "url",
+    "edition",
     "official",
     "licence",
     "retrieved",
@@ -86,6 +87,9 @@ MANIFEST_FIELDS: tuple[str, ...] = (
 )
 MANIFEST_KINDS = frozenset({"statute", "publication"})
 VERIFICATION_STATUSES = frozenset({"verified_verbatim", "summary", NOT_RECORDED})
+# Which text the source at ``url`` is: the law as enacted, or a compilation with its
+# later amendments folded in (such as an OGP "según enmendada" text).
+EDITIONS = frozenset({"as_enacted", "amended_compilation", NOT_RECORDED})
 
 _STR_FIELDS = frozenset(
     {"id", "jurisdiction", "corpus", "citation", "section", "title", "source_url"}
@@ -269,6 +273,8 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
     for name in ("id", "url", "licence", "enacting_law"):
         if not isinstance(entry[name], str) or not entry[name]:
             errors.append(f"{where}: {name} must be a non-empty string or {NOT_RECORDED!r}")
+    if not (isinstance(entry["edition"], str) and entry["edition"] in EDITIONS):
+        errors.append(f"{where}: edition must be one of {sorted(EDITIONS)}")
     if not (isinstance(entry["official"], bool) or entry["official"] == NOT_RECORDED):
         errors.append(f"{where}: official must be true, false or {NOT_RECORDED!r}")
     for name in ("retrieved", "effective_date"):
