@@ -7,4 +7,39 @@ Thank you for your interest in contributing!
 3. Ensure the test suite passes: `pytest` (coverage threshold configured in `pyproject.toml`).
 4. Validate tool contracts: `python scripts/check_tool_contract.py`.
 5. Open a Pull Request. Merges are performed via **Squash Merge** with Conventional Commit titles (`feat:`, `fix:`, `docs:`, `chore:`).
-6. Do not edit version numbers or `CHANGELOG.md`: the git tag is the version, and GitHub Releases are the changelog. The squash commit message is the PR body, so a breaking (`feat!:` / `fix!:`) PR ends its body with one `BREAKING CHANGE:` final paragraph that lists the breaking items, with no migration steps.
+6. Changing statute or publication rows? Follow "Adding or changing a row" below and run `uv run python scripts/build_catalog.py --check`.
+7. Do not edit version numbers or `CHANGELOG.md`: the git tag is the version, and GitHub Releases are the changelog. The squash commit message is the PR body, so a breaking (`feat!:` / `fix!:`) PR ends its body with one `BREAKING CHANGE:` final paragraph that lists the breaking items, with no migration steps.
+
+## Adding or changing a row
+
+Statute and publication rows live only in the data files under `src/taxcode_mcp/data/`. The server seeds its database from them, and `scripts/ingest_statutes.py` and the docs read them too. Never add rows as Python literals.
+
+| File | Holds |
+| --- | --- |
+| `jurisdictions.json` | Jurisdiction codes in catalog order. Rows load in this order, then in file order. |
+| `statutes/<code>.json` | One jurisdiction's statute rows (`us.json`, `pr.json`, `ga.json`, ...). `text_en` and `text_es` are lists of lines, joined with a newline when loaded. |
+| `publications/<code>.json` | Publications whose `id` starts with `<code>-`. |
+| `manifest/<code>.json` | One source record per statute and publication row of that jurisdiction. |
+
+Every manifest entry has every field below. A value we don't have is the explicit string `"not_recorded"`, never a missing key and never a guess.
+
+| Field | Meaning |
+| --- | --- |
+| `kind`, `id` | `statute` or `publication`, and the row's `id`. |
+| `url` | Must equal the row's `source_url`. |
+| `official` | `true` when the URL is on the issuing government body's own site, `false` for a third-party site, or `"not_recorded"`. It says nothing about whether the stored text is official. |
+| `licence` | Reuse terms of the source, or `"not_recorded"`. |
+| `retrieved` | Date the source was fetched (`YYYY-MM-DD`), or `"not_recorded"`. |
+| `content_sha256` | SHA-256 of the fetched source artifact, or `"not_recorded"`. |
+| `enacting_law` | Law that enacted or last amended the text, or `"not_recorded"`. |
+| `effective_date` | Date the text took effect (`YYYY-MM-DD`), or `"not_recorded"`. |
+| `verification` | `verified_verbatim` (checked word for word against the fetched source; needs `retrieved` and `content_sha256`), `summary` (the stored text is a summary, not a copy), or `"not_recorded"`. |
+
+To add or change a row:
+
+1. Edit the row in `statutes/<code>.json` or `publications/<code>.json`. A new prior-year version is a new row with its own `id` and `effective_year`; set `superseded_year` on the version it replaces. Never copy current text into an earlier year.
+2. Add or update its entry in `manifest/<code>.json`.
+3. Run `uv run python scripts/build_catalog.py`. It rewrites the data files in canonical form and regenerates `docs/<code>/*.md`, `docs/llms.txt` and `docs/llms-full.txt`.
+4. Run `uv run python scripts/build_catalog.py --check` and the test suite. CI runs the same check and fails if a data file, a manifest entry or a generated docs file is out of step.
+
+A new jurisdiction also needs its code in `jurisdictions.json` and, for its name to resolve, in `JURISDICTION_NAMES` (`src/taxcode_mcp/db.py`). Content-only PRs touch just the data files, the manifest and the generated docs; keep code changes in their own PR.
