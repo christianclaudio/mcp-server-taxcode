@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "jurisdiction": "WY",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Wyo. Const. art. 15, § 18",
+    "rate_authority": "Wyo. Const. art. 15, § 18",
+    "rate_desc": "No state personal income tax",
+    "regime": "none"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "jurisdiction": "IL",
+  "model": "flat",
+  "source_url": "not_recorded",
+  "params": {
+    "exemption": {
+      "single": 2775.0,
+      "mfj": 5550.0
+    },
+    "rate": 0.0495
+  }
+}

@@ -8,6 +8,7 @@ from typing import Any
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
+from taxcode_mcp.catalog import RATE_TABLE_MODELS, load_rate_tables
 from taxcode_mcp.disclaimers import BILINGUAL_DISCLAIMER, CONTENT_NOTICE, ESTIMATE_NOTE
 from taxcode_mcp.errors import SafetyViolationError, tool_error
 
@@ -218,6 +219,13 @@ def calculate_built_in_gain_sourcing(
     raise failure from None
 
 
+def _ga_retirement_cap(ga: dict[str, Any], age: int) -> float:
+    """Georgia's retirement income exclusion cap for an age; 0.0 below every listed age."""
+    return float(
+        next((s["amount"] for s in ga["retirement_exclusion"] if age >= s["min_age"]), 0.0)
+    )
+
+
 @compliance_server.tool(
     name="evaluate_georgia_residency",
     description=(
@@ -271,23 +279,15 @@ def evaluate_georgia_residency(
 
     # 3. Tax Calculation under HB 1023 / HB 1015 (O.C.G.A. § 48-7-20 & § 48-7-27)
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
-    standard_deduction = 24000.0 if is_mfj else 12000.0
+    ga = RATE_TABLES["GA"]
+    standard_deduction = float(ga["standard_deduction"][_status(is_mfj)])
 
     # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
-    max_exclusion = 0.0
-    if age >= 65:
-        max_exclusion = 65000.0
-    elif age >= 62:
-        max_exclusion = 35000.0
+    max_exclusion = _ga_retirement_cap(ga, age)
     retirement_exclusion_applied = min(retirement_income, max_exclusion)
 
     # Tax rate selection
-    if tax_year >= 2026:
-        tax_rate = 0.0499
-    elif tax_year == 2025:
-        tax_rate = 0.0539
-    else:
-        tax_rate = 0.0549
+    tax_rate = float(_year_step(ga["rates"], tax_year)["rate"])
 
     taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
     estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
@@ -326,399 +326,48 @@ def evaluate_georgia_residency(
     }
 
 
+# Rate tables (deductions, brackets, rates, per-year values) live in
+# ``taxcode_mcp/data/rates/<code>.json`` and are validated on load; see
+# ``taxcode_mcp.catalog.load_rate_tables``. The formulas below read every number from them.
+RATE_TABLES: dict[str, dict[str, Any]] = load_rate_tables()
+# Graduated/flat/none states computed by the shared registry formula, in table order.
 STATE_REGISTRY: dict[str, dict[str, Any]] = {
-    "AK": {
-        "statutory_basis": "Alaska Const. art. IX; AS § 43.05.010",
-        "rate_authority": "AS § 43.05.010",
-        "rate_desc": "No state personal income tax (repealed 1980)",
-        "regime": "none",
-    },
-    "AL": {
-        "statutory_basis": "Ala. Code §§ 40-18-1, 40-18-2",
-        "rate_authority": "Ala. Code § 40-18-2",
-        "rate_desc": "Graduated brackets from 2.0% to 5.0%",
-        "regime": "graduated",
-        "deduction_single": 3000.0,
-        "deduction_mfj": 8500.0,
-        "top_bracket_single": 3000.0,
-        "top_bracket_mfj": 6000.0,
-        "top_rate": 0.05,
-    },
-    "AR": {
-        "statutory_basis": "Ark. Code Ann. §§ 26-51-102, 26-51-201",
-        "rate_authority": "Ark. Code Ann. § 26-51-201",
-        "rate_desc": "Graduated rates with top marginal rate 4.40%",
-        "regime": "graduated",
-        "deduction_single": 2340.0,
-        "deduction_mfj": 4680.0,
-        "top_bracket_single": 24300.0,
-        "top_bracket_mfj": 24300.0,
-        "top_rate": 0.044,
-    },
-    "DC": {
-        "statutory_basis": "D.C. Code §§ 47-1801.04, 47-1806.03",
-        "rate_authority": "D.C. Code § 47-1806.03",
-        "rate_desc": "Graduated rates from 4.0% to 10.75%",
-        "regime": "graduated",
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 1000000.0,
-        "top_bracket_mfj": 1000000.0,
-        "top_rate": 0.1075,
-    },
-    "DE": {
-        "statutory_basis": "30 Del. C. §§ 1102, 1103, 1124",
-        "rate_authority": "30 Del. C. § 1102",
-        "rate_desc": "Graduated rates from 2.2% to 6.6% (Convenience Rule State)",
-        "regime": "graduated",
-        "deduction_single": 3250.0,
-        "deduction_mfj": 6500.0,
-        "top_bracket_single": 60000.0,
-        "top_bracket_mfj": 60000.0,
-        "top_rate": 0.066,
-    },
-    "HI": {
-        "statutory_basis": "Haw. Rev. Stat. §§ 235-1, 235-51",
-        "rate_authority": "Haw. Rev. Stat. § 235-51",
-        "rate_desc": "Graduated brackets from 1.4% to top rate 11.0%",
-        "regime": "graduated",
-        "day_threshold": 200,
-        "requires_abode": False,
-        "deduction_single": 2200.0,
-        "deduction_mfj": 4400.0,
-        "top_bracket_single": 200000.0,
-        "top_bracket_mfj": 400000.0,
-        "top_rate": 0.11,
-    },
-    "ID": {
-        "statutory_basis": "Idaho Code §§ 63-3013, 63-3024",
-        "rate_authority": "Idaho Code § 63-3024",
-        "rate_desc": "Flat 5.695% rate",
-        "regime": "flat",
-        "day_threshold": 270,
-        "rate": 0.05695,
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-    },
-    "IN": {
-        "statutory_basis": "Ind. Code §§ 6-3-1-3.5, 6-3-2-1",
-        "rate_authority": "Ind. Code § 6-3-2-1",
-        "rate_desc": (
-            "Flat state rate 3.05% (2024), 3.00% (2025), 2.95% (2026), 2.90% (2027+) "
-            "plus county LIT"
-        ),
-        "regime": "flat",
-        "rate": 0.0305,
-        "rate_2025": 0.03,
-        "rate_2026": 0.0295,
-        "rate_2027": 0.029,
-        "deduction_single": 1000.0,
-        "deduction_mfj": 2000.0,
-    },
-    "IA": {
-        "statutory_basis": "Iowa Code §§ 422.4, 422.5A",
-        "rate_authority": "Iowa Code § 422.5A",
-        "rate_desc": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
-        "regime": "graduated",
-        "top_bracket_single": 31590.0,
-        "top_bracket_mfj": 63180.0,
-        "top_rate": 0.057,
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "regime_2025": "flat",
-        "rate_2025": 0.038,
-    },
-    "KS": {
-        "statutory_basis": "Kan. Stat. Ann. §§ 79-32,109, 79-32,110",
-        "rate_authority": "Kan. Stat. Ann. § 79-32,110",
-        "rate_desc": "Flat 5.58% rate (SB 1 tax reform)",
-        "regime": "flat",
-        "rate": 0.0558,
-        "deduction_single": 3500.0,
-        "deduction_mfj": 8000.0,
-    },
-    "KY": {
-        "statutory_basis": "Ky. Rev. Stat. Ann. §§ 141.010, 141.020",
-        "rate_authority": "Ky. Rev. Stat. Ann. § 141.020",
-        "rate_desc": "Flat 4.0% rate (HB 1 phase-down)",
-        "regime": "flat",
-        "rate": 0.04,
-        "deduction_single": 3160.0,
-        "deduction_mfj": 6320.0,
-    },
-    "LA": {
-        "statutory_basis": "La. Rev. Stat. Ann. §§ 47:31, 47:32",
-        "rate_authority": "La. Rev. Stat. Ann. § 47:32",
-        "rate_desc": (
-            "Graduated rates 1.85%-4.25% (2024); flat 3.00% with $12.5k/$25k deduction "
-            "(2025+ Act 11)"
-        ),
-        "regime": "graduated",
-        "deduction_single": 4500.0,
-        "deduction_mfj": 9000.0,
-        "deduction_single_2025": 12500.0,
-        "deduction_mfj_2025": 25000.0,
-        "deduction_single_2026": 12838.0,
-        "deduction_mfj_2026": 25676.0,
-        "top_bracket_single": 50000.0,
-        "top_bracket_mfj": 100000.0,
-        "top_rate": 0.0425,
-        "regime_2025": "flat",
-        "rate_2025": 0.03,
-    },
-    "ME": {
-        "statutory_basis": "36 M.R.S. §§ 5102, 5111",
-        "rate_authority": "36 M.R.S. § 5111",
-        "rate_desc": "Graduated rates: 5.80%, 6.75%, and 7.15%",
-        "regime": "graduated",
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 61600.0,
-        "top_bracket_mfj": 123250.0,
-        "top_rate": 0.0715,
-    },
-    "MI": {
-        "statutory_basis": "Mich. Comp. Laws §§ 206.18, 206.51",
-        "rate_authority": "Mich. Comp. Laws § 206.51",
-        "rate_desc": "Flat 4.25% personal income tax rate",
-        "regime": "flat",
-        "rate": 0.0425,
-        "deduction_single": 5600.0,
-        "deduction_mfj": 11200.0,
-    },
-    "MN": {
-        "statutory_basis": "Minn. Stat. §§ 290.01, 290.06",
-        "rate_authority": "Minn. Stat. § 290.06",
-        "rate_desc": "Graduated rates: 5.35%, 6.80%, 7.85%, and top rate 9.85%",
-        "regime": "graduated",
-        "deduction_single": 14575.0,
-        "deduction_mfj": 29150.0,
-        "top_bracket_single": 193240.0,
-        "top_bracket_mfj": 321450.0,
-        "top_rate": 0.0985,
-    },
-    "MS": {
-        "statutory_basis": "Miss. Code Ann. §§ 27-7-3, 27-7-5",
-        "rate_authority": "Miss. Code Ann. § 27-7-5",
-        "rate_desc": "Flat 4.70% rate (phasing to 4.0% by 2026)",
-        "regime": "flat",
-        "rate": 0.047,
-        "deduction_single": 2300.0,
-        "deduction_mfj": 4600.0,
-    },
-    "MO": {
-        "statutory_basis": "Mo. Rev. Stat. §§ 143.011, 143.101",
-        "rate_authority": "Mo. Rev. Stat. § 143.011",
-        "rate_desc": "Graduated top rate 4.80%",
-        "regime": "graduated",
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 9072.0,
-        "top_bracket_mfj": 9072.0,
-        "top_rate": 0.048,
-    },
-    "MT": {
-        "statutory_basis": "Mont. Code Ann. §§ 15-30-2101, 15-30-2103",
-        "rate_authority": "Mont. Code Ann. § 15-30-2103",
-        "rate_desc": "Two-bracket simplified structure: 4.7% and 5.9% (SB 399)",
-        "regime": "graduated",
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 20500.0,
-        "top_bracket_mfj": 41000.0,
-        "top_rate": 0.059,
-    },
-    "NE": {
-        "statutory_basis": (
-            "Neb. Rev. Stat. §§ 77-2714.01, 77-2715.03; 316 Neb. Admin. Code § 22-003"
-        ),
-        "rate_authority": "Neb. Rev. Stat. § 77-2715.03",
-        "rate_desc": "Graduated top rate 5.84% (Convenience Rule State)",
-        "regime": "graduated",
-        "deduction_single": 7900.0,
-        "deduction_mfj": 15800.0,
-        "top_bracket_single": 35730.0,
-        "top_bracket_mfj": 71460.0,
-        "top_rate": 0.0584,
-    },
-    "NV": {
-        "statutory_basis": "Nev. Const. art. 10, § 1",
-        "rate_authority": "Nev. Const. art. 10, § 1",
-        "rate_desc": "No state personal income tax",
-        "regime": "none",
-    },
-    "NH": {
-        "statutory_basis": "N.H. Rev. Stat. Ann. § 77:1",
-        "rate_authority": "N.H. Rev. Stat. Ann. § 77:1",
-        "rate_desc": (
-            "No wage income tax; 3% on interest/dividends in 2024, fully repealed 2025+ (HB 2)"
-        ),
-        "regime": "none",
-    },
-    "NM": {
-        "statutory_basis": "N.M. Stat. Ann. §§ 7-2-2, 7-2-7",
-        "rate_authority": "N.M. Stat. Ann. § 7-2-7",
-        "rate_desc": "Graduated brackets from 1.7% to 5.9%",
-        "regime": "graduated",
-        "day_threshold": 185,
-        "requires_abode": False,
-        "inclusive_threshold": True,
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 210000.0,
-        "top_bracket_mfj": 315000.0,
-        "top_rate": 0.059,
-    },
-    "ND": {
-        "statutory_basis": "N.D. Cent. Code §§ 57-38-01, 57-38-30.3",
-        "rate_authority": "N.D. Cent. Code § 57-38-30.3",
-        "rate_desc": (
-            "0% under threshold ($47,150 in 2024 / $48,475 in 2025); top rate 2.50% (HB 1158)"
-        ),
-        "regime": "graduated",
-        "day_threshold": 210,
-        "zero_bracket_single": 47150.0,
-        "zero_bracket_mfj": 78775.0,
-        "zero_bracket_single_2025": 48475.0,
-        "zero_bracket_mfj_2025": 80975.0,
-        "middle_rate": 0.0195,
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 238200.0,
-        "top_bracket_mfj": 289975.0,
-        "top_bracket_single_2025": 244825.0,
-        "top_bracket_mfj_2025": 298075.0,
-        "top_rate": 0.025,
-    },
-    "OK": {
-        "statutory_basis": "Okla. Stat. tit. 68, §§ 2353, 2355",
-        "rate_authority": "Okla. Stat. tit. 68, § 2355",
-        "rate_desc": "Graduated rates from 0.25% to top rate 4.75%",
-        "regime": "graduated",
-        "deduction_single": 6350.0,
-        "deduction_mfj": 12700.0,
-        "top_bracket_single": 7200.0,
-        "top_bracket_mfj": 12200.0,
-        "top_rate": 0.0475,
-    },
-    "OR": {
-        "statutory_basis": "Or. Rev. Stat. §§ 316.027, 316.037",
-        "rate_authority": "Or. Rev. Stat. § 316.037",
-        "rate_desc": "Graduated rates: 4.75%, 6.75%, 8.75%, and top rate 9.90%",
-        "regime": "graduated",
-        "day_threshold": 200,
-        "deduction_single": 2745.0,
-        "deduction_mfj": 5495.0,
-        "top_bracket_single": 125000.0,
-        "top_bracket_mfj": 250000.0,
-        "top_rate": 0.099,
-    },
-    "RI": {
-        "statutory_basis": "R.I. Gen. Laws §§ 44-30-1, 44-30-5",
-        "rate_authority": "R.I. Gen. Laws § 44-30-1",
-        "rate_desc": "Graduated rates: 3.75%, 4.75%, and 5.99%",
-        "regime": "graduated",
-        "deduction_single": 10650.0,
-        "deduction_mfj": 21300.0,
-        "top_bracket_single": 177300.0,
-        "top_bracket_mfj": 177300.0,
-        "top_rate": 0.0599,
-    },
-    "SC": {
-        "statutory_basis": "S.C. Code Ann. §§ 12-6-30, 12-6-510",
-        "rate_authority": "S.C. Code Ann. § 12-6-510",
-        "rate_desc": "0% on first bracket; top rate 6.40% over $17,330",
-        "regime": "graduated",
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-        "top_bracket_single": 17330.0,
-        "top_bracket_mfj": 17330.0,
-        "top_rate": 0.064,
-    },
-    "SD": {
-        "statutory_basis": "S.D. Const. art. XI, § 2",
-        "rate_authority": "S.D. Const. art. XI, § 2",
-        "rate_desc": "No state personal income tax",
-        "regime": "none",
-    },
-    "TN": {
-        "statutory_basis": "Tenn. Const. art. II, § 28; Tenn. Code Ann. § 67-2-102",
-        "rate_authority": "Tenn. Const. art. II, § 28",
-        "rate_desc": "No state personal income tax (Hall Income Tax fully repealed)",
-        "regime": "none",
-    },
-    "UT": {
-        "statutory_basis": "Utah Code Ann. §§ 59-10-104, 59-10-136",
-        "rate_authority": "Utah Code Ann. § 59-10-104",
-        "rate_desc": "Flat 4.65% rate (SB 69)",
-        "regime": "flat",
-        "rate": 0.0465,
-        "deduction_single": 14600.0,
-        "deduction_mfj": 29200.0,
-    },
-    "VT": {
-        "statutory_basis": "32 V.S.A. §§ 5811, 5822",
-        "rate_authority": "32 V.S.A. § 5822",
-        "rate_desc": "Graduated rates: 3.35%, 6.60%, 7.60%, and top rate 8.75%",
-        "regime": "graduated",
-        "deduction_single": 7350.0,
-        "deduction_mfj": 14700.0,
-        "top_bracket_single": 229550.0,
-        "top_bracket_mfj": 279450.0,
-        "top_rate": 0.0875,
-    },
-    "WV": {
-        "statutory_basis": "W. Va. Code §§ 11-21-4e, 11-21-7",
-        "rate_authority": "W. Va. Code § 11-21-4e",
-        "rate_desc": "Graduated rates from 2.36% to top rate 5.12% (HB 2526)",
-        "regime": "graduated",
-        "deduction_single": 2000.0,
-        "deduction_mfj": 4000.0,
-        "top_bracket_single": 60000.0,
-        "top_bracket_mfj": 60000.0,
-        "top_rate": 0.0512,
-    },
-    "WI": {
-        "statutory_basis": "Wis. Stat. §§ 71.01, 71.06",
-        "rate_authority": "Wis. Stat. § 71.06",
-        "rate_desc": "Graduated rates: 3.50%, 4.40%, 5.30%, and top rate 7.65%",
-        "regime": "graduated",
-        "deduction_single": 13810.0,
-        "deduction_mfj": 25480.0,
-        "top_bracket_single": 315310.0,
-        "top_bracket_mfj": 420420.0,
-        "top_rate": 0.0765,
-    },
-    "WY": {
-        "statutory_basis": "Wyo. Const. art. 15, § 18",
-        "rate_authority": "Wyo. Const. art. 15, § 18",
-        "rate_desc": "No state personal income tax",
-        "regime": "none",
-    },
+    code: params for code, params in RATE_TABLES.items() if RATE_TABLE_MODELS[code] == "registry"
 }
+# FL and TX levy no personal income tax, so they have no rate table.
+SUPPORTED_STATE_JURISDICTIONS = frozenset({"FL", "TX", *RATE_TABLE_MODELS})
 
-SUPPORTED_STATE_JURISDICTIONS = frozenset(
-    {
-        "GA",
-        "NY",
-        "CA",
-        "FL",
-        "TX",
-        "WA",
-        "MA",
-        "NJ",
-        "IL",
-        "PA",
-        "CT",
-        "NC",
-        "VA",
-        "MD",
-        "CO",
-        "AZ",
-        "OH",
-        *STATE_REGISTRY.keys(),
-    }
-)
+
+def _status(is_mfj: bool) -> str:
+    return "mfj" if is_mfj else "single"
+
+
+def _allowance(params: dict[str, Any], is_mfj: bool) -> float:
+    """The filing-status deduction or exemption of a rate table."""
+    by_status = params["deduction"] if "deduction" in params else params["exemption"]
+    return float(by_status[_status(is_mfj)])
+
+
+def _year_step(steps: list[dict[str, Any]], tax_year: int) -> dict[str, Any]:
+    """The first step whose ``from_year`` is reached; the last step (``null``) otherwise."""
+    return next(s for s in steps if s["from_year"] is None or tax_year >= s["from_year"])
+
+
+def _bracket(brackets: list[dict[str, Any]], taxable_income: float) -> dict[str, Any]:
+    """The first bracket whose ``over`` the income exceeds; the last (``null``) otherwise."""
+    return next(b for b in brackets if b["over"] is None or taxable_income > b["over"])
+
+
+def _whole_income_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
+    """The bracket's rate applied to the whole taxable income (this model's simplification)."""
+    return float(round(taxable_income * _bracket(brackets, taxable_income)["rate"], 2))
+
+
+def _cumulative_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
+    """The bracket's ``base`` plus its rate on the income over its threshold."""
+    b = _bracket(brackets, taxable_income)
+    over = 0.0 if b["over"] is None else b["over"]
+    return float(round(b["base"] + b["rate"] * (taxable_income - over), 2))
 
 
 @compliance_server.tool(
@@ -794,10 +443,11 @@ def evaluate_state_residency(
             or days_in_state >= 183
             or (maintains_permanent_abode and days_in_state > 0)
         )
-        standard_ded = 24000.0 if is_mfj else 12000.0
-        max_ret = 65000.0 if age >= 65 else (35000.0 if age >= 62 else 0.0)
+        ga = RATE_TABLES["GA"]
+        standard_ded = float(ga["standard_deduction"][_status(is_mfj)])
+        max_ret = _ga_retirement_cap(ga, age)
         ret_excl = min(retirement_income, max_ret)
-        rate = 0.0499 if tax_year >= 2026 else (0.0539 if tax_year == 2025 else 0.0549)
+        rate = float(_year_step(ga["rates"], tax_year)["rate"])
         rate_desc = f"Flat {rate * 100:.2f}% income tax (HB 1023 / HB 1015)"
         rate_authority = "O.C.G.A. § 48-7-20"
         taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
@@ -814,19 +464,11 @@ def evaluate_state_residency(
             )
         rate_authority = "NY Tax Law § 601"
         rate_desc = "Graduated brackets from 4.0% to 10.9%"
-        std_ded = 16050.0 if is_mfj else 8000.0
+        std_ded = _allowance(RATE_TABLES["NY"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            if taxable_income > 5000000:
-                estimated_tax = round(taxable_income * 0.109, 2)
-            elif taxable_income > 1077550:
-                estimated_tax = round(taxable_income * 0.0965, 2)
-            elif taxable_income > 215400:
-                estimated_tax = round(taxable_income * 0.0685, 2)
-            elif taxable_income > 80650:
-                estimated_tax = round(taxable_income * 0.060, 2)
-            else:
-                estimated_tax = round(taxable_income * 0.055, 2)
+            brackets = RATE_TABLES["NY"]["brackets"][_status(is_mfj)]
+            estimated_tax = _whole_income_tax(brackets, taxable_income)
 
     elif state == "CA":
         statutory_basis = "Cal. Rev. & Tax Code § 17014, § 17016; 18 CCR § 17014"
@@ -841,17 +483,11 @@ def evaluate_state_residency(
         )
         rate_authority = "Cal. Rev. & Tax Code § 17041"
         rate_desc = "Graduated brackets up to 12.3% plus 1% Mental Health Services Tax (13.3%)"
-        std_ded = 10726.0 if is_mfj else 5363.0
+        std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            if taxable_income > 1000000:
-                estimated_tax = round(taxable_income * 0.133, 2)
-            elif taxable_income > 349137:
-                estimated_tax = round(taxable_income * 0.113, 2)
-            elif taxable_income > 68350:
-                estimated_tax = round(taxable_income * 0.093, 2)
-            else:
-                estimated_tax = round(taxable_income * 0.060, 2)
+            brackets = RATE_TABLES["CA"]["brackets"][_status(is_mfj)]
+            estimated_tax = _whole_income_tax(brackets, taxable_income)
 
     elif state == "FL":
         statutory_basis = "Fla. Const. Art. VII § 5; Fla. Stat. § 222.17"
@@ -874,20 +510,22 @@ def evaluate_state_residency(
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
         rate_authority = "RCW 82.87.040"
         rate_desc = "0.0% on ordinary income; 7.0% excise tax on capital gains over deduction"
-        cap_gain_ded = 262000.0
+        wa = RATE_TABLES["WA"]
+        cap_gain_ded = float(wa["capital_gains_deduction"])
         taxable_income = max(0.0, capital_gains - cap_gain_ded)
-        estimated_tax = round(taxable_income * 0.07, 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * wa["rate"], 2) if is_resident else 0.0
 
     elif state == "MA":
         statutory_basis = "M.G.L. c. 62 § 1(f), § 4; Mass. Const. amend. art. XLIV"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "M.G.L. c. 62 § 4 & Fair Share Amendment"
         rate_desc = "5.0% Part B income tax plus 4.0% Fair Share surtax on income > $1,000,000"
-        std_ded = 8800.0 if is_mfj else 4400.0
+        ma = RATE_TABLES["MA"]
+        std_ded = _allowance(ma, is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            base_tax = taxable_income * 0.05
-            surtax = max(0.0, taxable_income - 1000000.0) * 0.04
+            base_tax = taxable_income * ma["rate"]
+            surtax = max(0.0, taxable_income - ma["surtax"]["over"]) * ma["surtax"]["rate"]
             estimated_tax = round(base_tax + surtax, 2)
 
     elif state == "NJ":
@@ -901,26 +539,20 @@ def evaluate_state_residency(
             )
         rate_authority = "N.J.S.A. 54A:2-1"
         rate_desc = "Graduated brackets from 1.4% to 10.75%"
-        exemption = 2000.0 if is_mfj else 1000.0
+        exemption = _allowance(RATE_TABLES["NJ"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
-            if taxable_income > 1000000:
-                estimated_tax = round(taxable_income * 0.1075, 2)
-            elif taxable_income > 500000:
-                estimated_tax = round(taxable_income * 0.0897, 2)
-            elif taxable_income > 75000:
-                estimated_tax = round(taxable_income * 0.0637, 2)
-            else:
-                estimated_tax = round(taxable_income * 0.035, 2)
+            brackets = RATE_TABLES["NJ"]["brackets"][_status(is_mfj)]
+            estimated_tax = _whole_income_tax(brackets, taxable_income)
 
     elif state == "IL":
         statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"
         is_resident = is_domiciled or (days_in_state >= 183 and maintains_permanent_abode)
         rate_authority = "35 ILCS 5/201"
         rate_desc = "Constitutional flat 4.95% rate"
-        exemption = 5550.0 if is_mfj else 2775.0
+        exemption = _allowance(RATE_TABLES["IL"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
-        estimated_tax = round(taxable_income * 0.0495, 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * RATE_TABLES["IL"]["rate"], 2) if is_resident else 0.0
 
     elif state == "PA":
         statutory_basis = "72 P.S. § 7301, 72 P.S. § 7302; 61 Pa. Code § 109.8"
@@ -934,7 +566,7 @@ def evaluate_state_residency(
         rate_authority = "72 P.S. § 7302"
         rate_desc = "Constitutional flat 3.07% rate"
         taxable_income = max(0.0, federal_agi)
-        estimated_tax = round(taxable_income * 0.0307, 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * RATE_TABLES["PA"]["rate"], 2) if is_resident else 0.0
 
     elif state == "CT":
         statutory_basis = "Conn. Gen. Stat. §§ 12-700, 12-701, 12-711"
@@ -948,32 +580,20 @@ def evaluate_state_residency(
         rate_authority = "Conn. Gen. Stat. § 12-700"
         rate_desc = "Graduated brackets from 3.0% to 6.99%"
         # Standard exemption phase-out model
-        exemption = 24000.0 if is_mfj else 15000.0
+        exemption = _allowance(RATE_TABLES["CT"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
-            if taxable_income > 500000:
-                estimated_tax = round(taxable_income * 0.0699, 2)
-            elif taxable_income > 100000:
-                estimated_tax = round(taxable_income * 0.06, 2)
-            elif taxable_income > 50000:
-                estimated_tax = round(taxable_income * 0.05, 2)
-            else:
-                estimated_tax = round(taxable_income * 0.03, 2)
+            brackets = RATE_TABLES["CT"]["brackets"][_status(is_mfj)]
+            estimated_tax = _whole_income_tax(brackets, taxable_income)
 
     elif state == "NC":
         statutory_basis = "N.C. Gen. Stat. §§ 105-153.3, 105-153.7"
         is_resident = is_domiciled or (days_in_state > 183)
         rate_authority = "N.C. Gen. Stat. § 105-153.7"
-        if tax_year >= 2026:
-            nc_rate = 0.0399
-            rate_desc = "Flat 3.99% rate (2026+ statutory phase-in)"
-        elif tax_year == 2025:
-            nc_rate = 0.0425
-            rate_desc = "Flat 4.25% rate (2025 statutory rate)"
-        else:
-            nc_rate = 0.045
-            rate_desc = "Flat 4.5% rate (2024 statutory rate)"
-        exemption = 25500.0 if is_mfj else 12750.0
+        nc_step = _year_step(RATE_TABLES["NC"]["rates"], tax_year)
+        nc_rate = float(nc_step["rate"])
+        rate_desc = str(nc_step["rate_desc"])
+        exemption = _allowance(RATE_TABLES["NC"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         estimated_tax = round(taxable_income * nc_rate, 2) if is_resident else 0.0
 
@@ -982,17 +602,11 @@ def evaluate_state_residency(
         is_resident = is_domiciled or days_in_state > 183
         rate_authority = "Va. Code Ann. § 58.1-320"
         rate_desc = "Graduated brackets from 2.0% to 5.75%"
-        standard_ded = 17000.0 if is_mfj else 8500.0
+        standard_ded = _allowance(RATE_TABLES["VA"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
         if is_resident:
-            if taxable_income > 17000:
-                estimated_tax = round(720.0 + 0.0575 * (taxable_income - 17000), 2)
-            elif taxable_income > 5000:
-                estimated_tax = round(120.0 + 0.05 * (taxable_income - 5000), 2)
-            elif taxable_income > 3000:
-                estimated_tax = round(60.0 + 0.03 * (taxable_income - 3000), 2)
-            else:
-                estimated_tax = round(0.02 * taxable_income, 2)
+            brackets = RATE_TABLES["VA"]["brackets"][_status(is_mfj)]
+            estimated_tax = _cumulative_tax(brackets, taxable_income)
 
     elif state == "MD":
         statutory_basis = "Md. Code Ann., Tax-Gen. §§ 10-101, 10-105, 10-106"
@@ -1004,27 +618,23 @@ def evaluate_state_residency(
             )
         rate_authority = "Md. Code Ann., Tax-Gen. § 10-105"
         rate_desc = "Graduated state rates 2.0% to 5.75% plus county piggyback tax (2.25%-3.20%)"
-        max_ded = 5450.0 if is_mfj else 2700.0
-        min_ded = 3450.0 if is_mfj else 1700.0
-        standard_ded = min(max_ded, max(min_ded, federal_agi * 0.15))
+        md_ded = RATE_TABLES["MD"]["standard_deduction"]
+        max_ded = float(md_ded["maximum"][_status(is_mfj)])
+        min_ded = float(md_ded["minimum"][_status(is_mfj)])
+        standard_ded = min(max_ded, max(min_ded, federal_agi * md_ded["percent_of_agi"]))
         taxable_income = max(0.0, federal_agi - standard_ded)
-        top_bracket = 300000.0 if is_mfj else 250000.0
         if is_resident:
-            if taxable_income > top_bracket:
-                estimated_tax = round(taxable_income * 0.0575, 2)
-            elif taxable_income > 100000:
-                estimated_tax = round(taxable_income * 0.05, 2)
-            else:
-                estimated_tax = round(taxable_income * 0.0475, 2)
+            brackets = RATE_TABLES["MD"]["brackets"][_status(is_mfj)]
+            estimated_tax = _whole_income_tax(brackets, taxable_income)
 
     elif state == "CO":
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "Colo. Rev. Stat. § 39-22-104"
         rate_desc = "Proposition 121 flat 4.40% rate"
-        standard_ded = 29200.0 if is_mfj else 14600.0
+        standard_ded = _allowance(RATE_TABLES["CO"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
-        estimated_tax = round(taxable_income * 0.044, 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * RATE_TABLES["CO"]["rate"], 2) if is_resident else 0.0
 
     elif state == "AZ":
         statutory_basis = "A.R.S. §§ 43-104, 43-1011"
@@ -1041,9 +651,9 @@ def evaluate_state_residency(
             )
         rate_authority = "A.R.S. § 43-1011"
         rate_desc = "SB 1828 flat 2.50% rate"
-        standard_ded = 29200.0 if is_mfj else 14600.0
+        standard_ded = _allowance(RATE_TABLES["AZ"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
-        estimated_tax = round(taxable_income * 0.025, 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * RATE_TABLES["AZ"]["rate"], 2) if is_resident else 0.0
 
     elif state == "OH":
         statutory_basis = "Ohio Rev. Code §§ 5747.02, 5747.24"
@@ -1056,15 +666,11 @@ def evaluate_state_residency(
             )
         rate_authority = "Ohio Rev. Code § 5747.02"
         rate_desc = "Graduated brackets: 0% up to $26,050, 2.75% to $100k, 3.50% over $100k"
-        personal_exemption = 4800.0 if is_mfj else 2400.0
+        personal_exemption = _allowance(RATE_TABLES["OH"], is_mfj)
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
-            if taxable_income > 100000:
-                estimated_tax = round(2033.63 + 0.035 * (taxable_income - 100000), 2)
-            elif taxable_income > 26050:
-                estimated_tax = round(0.0275 * (taxable_income - 26050), 2)
-            else:
-                estimated_tax = 0.0
+            brackets = RATE_TABLES["OH"]["brackets"][_status(is_mfj)]
+            estimated_tax = _cumulative_tax(brackets, taxable_income)
 
     else:
         info = STATE_REGISTRY[state]

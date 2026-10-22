@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "MI",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Mich. Comp. Laws §§ 206.18, 206.51",
+    "rate_authority": "Mich. Comp. Laws § 206.51",
+    "rate_desc": "Flat 4.25% personal income tax rate",
+    "regime": "flat",
+    "rate": 0.0425,
+    "deduction_single": 5600.0,
+    "deduction_mfj": 11200.0
+  }
+}

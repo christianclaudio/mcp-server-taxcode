@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "jurisdiction": "PA",
+  "model": "flat_no_deduction",
+  "source_url": "not_recorded",
+  "params": {
+    "rate": 0.0307
+  }
+}

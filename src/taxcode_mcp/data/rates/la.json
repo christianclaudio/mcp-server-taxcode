@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "jurisdiction": "LA",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "La. Rev. Stat. Ann. §§ 47:31, 47:32",
+    "rate_authority": "La. Rev. Stat. Ann. § 47:32",
+    "rate_desc": "Graduated rates 1.85%-4.25% (2024); flat 3.00% with $12.5k/$25k deduction (2025+ Act 11)",
+    "regime": "graduated",
+    "deduction_single": 4500.0,
+    "deduction_mfj": 9000.0,
+    "deduction_single_2025": 12500.0,
+    "deduction_mfj_2025": 25000.0,
+    "deduction_single_2026": 12838.0,
+    "deduction_mfj_2026": 25676.0,
+    "top_bracket_single": 50000.0,
+    "top_bracket_mfj": 100000.0,
+    "top_rate": 0.0425,
+    "regime_2025": "flat",
+    "rate_2025": 0.03
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "jurisdiction": "ID",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Idaho Code §§ 63-3013, 63-3024",
+    "rate_authority": "Idaho Code § 63-3024",
+    "rate_desc": "Flat 5.695% rate",
+    "regime": "flat",
+    "day_threshold": 270,
+    "rate": 0.05695,
+    "deduction_single": 14600.0,
+    "deduction_mfj": 29200.0
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "jurisdiction": "NC",
+  "model": "flat_by_year",
+  "source_url": "not_recorded",
+  "params": {
+    "exemption": {
+      "single": 12750.0,
+      "mfj": 25500.0
+    },
+    "rates": [
+      {
+        "from_year": 2026,
+        "rate": 0.0399,
+        "rate_desc": "Flat 3.99% rate (2026+ statutory phase-in)"
+      },
+      {
+        "from_year": 2025,
+        "rate": 0.0425,
+        "rate_desc": "Flat 4.25% rate (2025 statutory rate)"
+      },
+      {
+        "from_year": null,
+        "rate": 0.045,
+        "rate_desc": "Flat 4.5% rate (2024 statutory rate)"
+      }
+    ]
+  }
+}

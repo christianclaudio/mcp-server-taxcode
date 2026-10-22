@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "WV",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "W. Va. Code §§ 11-21-4e, 11-21-7",
+    "rate_authority": "W. Va. Code § 11-21-4e",
+    "rate_desc": "Graduated rates from 2.36% to top rate 5.12% (HB 2526)",
+    "regime": "graduated",
+    "deduction_single": 2000.0,
+    "deduction_mfj": 4000.0,
+    "top_bracket_single": 60000.0,
+    "top_bracket_mfj": 60000.0,
+    "top_rate": 0.0512
+  }
+}

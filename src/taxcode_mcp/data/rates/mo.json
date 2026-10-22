@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "MO",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Mo. Rev. Stat. §§ 143.011, 143.101",
+    "rate_authority": "Mo. Rev. Stat. § 143.011",
+    "rate_desc": "Graduated top rate 4.80%",
+    "regime": "graduated",
+    "deduction_single": 14600.0,
+    "deduction_mfj": 29200.0,
+    "top_bracket_single": 9072.0,
+    "top_bracket_mfj": 9072.0,
+    "top_rate": 0.048
+  }
+}

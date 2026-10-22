@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "DE",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "30 Del. C. §§ 1102, 1103, 1124",
+    "rate_authority": "30 Del. C. § 1102",
+    "rate_desc": "Graduated rates from 2.2% to 6.6% (Convenience Rule State)",
+    "regime": "graduated",
+    "deduction_single": 3250.0,
+    "deduction_mfj": 6500.0,
+    "top_bracket_single": 60000.0,
+    "top_bracket_mfj": 60000.0,
+    "top_rate": 0.066
+  }
+}

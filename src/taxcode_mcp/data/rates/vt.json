@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "VT",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "32 V.S.A. §§ 5811, 5822",
+    "rate_authority": "32 V.S.A. § 5822",
+    "rate_desc": "Graduated rates: 3.35%, 6.60%, 7.60%, and top rate 8.75%",
+    "regime": "graduated",
+    "deduction_single": 7350.0,
+    "deduction_mfj": 14700.0,
+    "top_bracket_single": 229550.0,
+    "top_bracket_mfj": 279450.0,
+    "top_rate": 0.0875
+  }
+}

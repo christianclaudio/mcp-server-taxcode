@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "MA",
+  "model": "flat_with_surtax",
+  "source_url": "not_recorded",
+  "params": {
+    "deduction": {
+      "single": 4400.0,
+      "mfj": 8800.0
+    },
+    "rate": 0.05,
+    "surtax": {
+      "over": 1000000.0,
+      "rate": 0.04
+    }
+  }
+}

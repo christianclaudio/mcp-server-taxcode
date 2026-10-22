@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "WI",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "Wis. Stat. §§ 71.01, 71.06",
+    "rate_authority": "Wis. Stat. § 71.06",
+    "rate_desc": "Graduated rates: 3.50%, 4.40%, 5.30%, and top rate 7.65%",
+    "regime": "graduated",
+    "deduction_single": 13810.0,
+    "deduction_mfj": 25480.0,
+    "top_bracket_single": 315310.0,
+    "top_bracket_mfj": 420420.0,
+    "top_rate": 0.0765
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "jurisdiction": "WA",
+  "model": "capital_gains_excise",
+  "source_url": "not_recorded",
+  "params": {
+    "capital_gains_deduction": 262000.0,
+    "rate": 0.07
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "jurisdiction": "MD",
+  "model": "maryland",
+  "source_url": "not_recorded",
+  "params": {
+    "standard_deduction": {
+      "percent_of_agi": 0.15,
+      "minimum": {
+        "single": 1700.0,
+        "mfj": 3450.0
+      },
+      "maximum": {
+        "single": 2700.0,
+        "mfj": 5450.0
+      }
+    },
+    "brackets": {
+      "single": [
+        {
+          "over": 250000.0,
+          "rate": 0.0575
+        },
+        {
+          "over": 100000.0,
+          "rate": 0.05
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ],
+      "mfj": [
+        {
+          "over": 300000.0,
+          "rate": 0.0575
+        },
+        {
+          "over": 100000.0,
+          "rate": 0.05
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ]
+    }
+  }
+}

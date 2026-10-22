@@ -11,6 +11,9 @@ row the server serves and every generated docs page:
 - ``publications/<code>.json``: publications whose id starts with ``<code>-``.
 - ``manifest/<code>.json``: one source record per statute and publication row of
   that jurisdiction (see :data:`MANIFEST_FIELDS`).
+- ``rates/<code>.json``: the rate table the compliance tools compute that state's tax
+  from (deductions, brackets, rates, per-year values). :data:`RATE_TABLE_MODELS` names
+  every state that has one and the shape of its ``params`` (see :func:`load_rate_tables`).
 
 Every file is written in one canonical form (:func:`dump_json`), and
 ``scripts/build_catalog.py --check`` fails when a file, a generated docs page or a
@@ -21,7 +24,7 @@ from __future__ import annotations
 
 import json
 import re
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -98,6 +101,75 @@ _STR_FIELDS = frozenset(
 )
 _DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+
+
+# State -> shape of its rate table's ``params``. Every state listed needs a
+# ``rates/<code>.json`` file; the compliance tools read nothing else for these numbers.
+RATE_TABLE_MODELS: dict[str, str] = {
+    "GA": "georgia",
+    "NY": "brackets_whole_income",
+    "CA": "brackets_whole_income",
+    "WA": "capital_gains_excise",
+    "MA": "flat_with_surtax",
+    "NJ": "brackets_whole_income",
+    "IL": "flat",
+    "PA": "flat_no_deduction",
+    "CT": "brackets_whole_income",
+    "NC": "flat_by_year",
+    "VA": "brackets_cumulative",
+    "MD": "maryland",
+    "CO": "flat",
+    "AZ": "flat",
+    "OH": "brackets_cumulative",
+    **dict.fromkeys(
+        "AK AL AR DC DE HI ID IN IA KS KY LA ME MI MN MS MO MT NE NV NH NM ND OK OR RI SC "
+        "SD TN UT VT WV WI WY".split(),
+        "registry",
+    ),
+}
+RATE_TABLE_FIELDS: tuple[str, ...] = ("schema", "jurisdiction", "model", "source_url", "params")
+# Field order of ``params`` per model. ``allowance`` is the filing-status amount taken off
+# income first, stored under its statutory name: ``deduction`` or ``exemption``.
+RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
+    "georgia": ("standard_deduction", "retirement_exclusion", "rates"),
+    "brackets_whole_income": ("allowance", "brackets"),
+    "brackets_cumulative": ("allowance", "brackets"),
+    "maryland": ("standard_deduction", "brackets"),
+    "flat": ("allowance", "rate"),
+    "flat_no_deduction": ("rate",),
+    "flat_by_year": ("allowance", "rates"),
+    "flat_with_surtax": ("allowance", "rate", "surtax"),
+    "capital_gains_excise": ("capital_gains_deduction", "rate"),
+}
+ALLOWANCE_NAMES = ("deduction", "exemption")
+FILING_STATUSES = ("single", "mfj")
+REGIMES = frozenset({"none", "flat", "graduated"})
+# Registry tables keep the original key names. A ``_YYYY`` suffix is the value from that
+# tax year on; the unsuffixed key covers the years before.
+_REGISTRY_REQUIRED = ("statutory_basis", "rate_authority", "rate_desc", "regime")
+_REGISTRY_TYPES: dict[str, type] = {
+    "statutory_basis": str,
+    "rate_authority": str,
+    "rate_desc": str,
+    "regime": str,
+    "regime_2025": str,
+    "day_threshold": int,
+    "requires_abode": bool,
+    "inclusive_threshold": bool,
+    **dict.fromkeys(
+        (
+            f"{name}_{status}{year}"
+            for name in ("deduction", "top_bracket", "zero_bracket")
+            for status in FILING_STATUSES
+            for year in ("", "_2025", "_2026")
+            if not (year == "_2026" and name != "deduction")
+        ),
+        float,
+    ),
+    **dict.fromkeys(
+        ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
+    ),
+}
 
 
 class CatalogError(ValueError):
@@ -246,6 +318,189 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
                 _check_keys(entry, MANIFEST_FIELDS, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
     return catalog
+
+
+def _is_amount(value: Any) -> bool:
+    """A non-negative finite float (an int would print differently in tool output)."""
+    return type(value) is float and 0.0 <= value < float("inf")
+
+
+def _is_rate(value: Any) -> bool:
+    return type(value) is float and 0.0 <= value < 1.0
+
+
+def _check_amount(value: Any, where: str) -> None:
+    _check(_is_amount(value), f"{where}: must be a non-negative float such as 1000.0")
+
+
+def _check_rate(value: Any, where: str) -> None:
+    _check(_is_rate(value), f"{where}: must be a float rate from 0.0 up to 1.0")
+
+
+def _check_by_status(value: Any, where: str) -> None:
+    _check(isinstance(value, dict), f"{where}: must be an object")
+    _check_keys(value, FILING_STATUSES, where)
+    for status in FILING_STATUSES:
+        _check_amount(value[status], f"{where}.{status}")
+
+
+def _check_steps(
+    steps: Any,
+    fields: Sequence[str],
+    key: str,
+    where: str,
+    check_row: Callable[[Mapping[str, Any], str], None],
+) -> None:
+    """Steps tried in order: ``key`` strictly decreasing, and ``null`` (the rest) last.
+
+    ``key`` may be ``null`` only on the last step, and must be there when ``key`` is a
+    threshold (``over``/``from_year``) so every input meets exactly one step.
+    """
+    _check(isinstance(steps, list) and len(steps) > 0, f"{where}: must be a non-empty list")
+    previous: Any = None
+    for i, step in enumerate(steps):
+        at = f"{where}[{i}]"
+        _check(isinstance(step, dict), f"{at}: must be an object")
+        _check_keys(step, fields, at)
+        bound = step[key]
+        if i == len(steps) - 1:
+            _check(bound is None, f"{at}: the last step's {key} must be null")
+        else:
+            _check(bound is not None, f"{at}: only the last step's {key} may be null")
+            _check(previous is None or bound < previous, f"{at}: {key} must decrease")
+            previous = bound
+        check_row(step, at)
+
+
+def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
+    _check(isinstance(value, dict), f"{where}: must be an object")
+    _check_keys(value, FILING_STATUSES, where)
+
+    def row(step: Mapping[str, Any], at: str) -> None:
+        if step["over"] is not None:
+            _check_amount(step["over"], f"{at}.over")
+        _check_rate(step["rate"], f"{at}.rate")
+        if "base" in step:
+            _check_amount(step["base"], f"{at}.base")
+
+    for status in FILING_STATUSES:
+        _check_steps(value[status], fields, "over", f"{where}.{status}", row)
+
+
+def _check_year_steps(value: Any, fields: Sequence[str], where: str) -> None:
+    def row(step: Mapping[str, Any], at: str) -> None:
+        if step["from_year"] is not None:
+            _check(type(step["from_year"]) is int, f"{at}.from_year: must be an integer")
+        _check_rate(step["rate"], f"{at}.rate")
+        if "rate_desc" in step:
+            _check(
+                isinstance(step["rate_desc"], str) and bool(step["rate_desc"]),
+                f"{at}.rate_desc: must be a non-empty string",
+            )
+
+    _check_steps(value, fields, "from_year", where, row)
+
+
+def _check_registry(params: Mapping[str, Any], where: str) -> None:
+    unknown = sorted(set(params) - set(_REGISTRY_TYPES))
+    _check(not unknown, f"{where}: unknown keys {unknown}")
+    missing = [k for k in _REGISTRY_REQUIRED if k not in params]
+    _check(not missing, f"{where}: missing keys {missing}")
+    for name, value in params.items():
+        expected = _REGISTRY_TYPES[name]
+        _check(type(value) is expected, f"{where}.{name}: must be {expected.__name__}")
+        if expected is float:
+            check = _check_rate if "rate" in name else _check_amount
+            check(value, f"{where}.{name}")
+        elif name.startswith("regime"):
+            _check(value in REGIMES, f"{where}.{name}: must be one of {sorted(REGIMES)}")
+        elif expected is int:
+            _check(0 < value <= 366, f"{where}.{name}: must be a day count from 1 to 366")
+
+
+def _check_params(model: str, params: Any, where: str) -> None:
+    _check(isinstance(params, dict), f"{where}: params must be an object")
+    where = f"{where} params"
+    if model == "registry":
+        _check_registry(params, where)
+        return
+    fields = list(RATE_MODEL_PARAMS[model])
+    if fields[0] == "allowance":
+        first = next(iter(params), None)
+        _check(first in ALLOWANCE_NAMES, f"{where}: first key must be one of {ALLOWANCE_NAMES}")
+        fields[0] = str(first)
+    _check_keys(params, fields, where)
+    for name in fields:
+        value, at = params[name], f"{where}.{name}"
+        if name in (*ALLOWANCE_NAMES, "standard_deduction") and model != "maryland":
+            _check_by_status(value, at)
+        elif name == "standard_deduction":  # maryland: a share of AGI between two limits
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, ("percent_of_agi", "minimum", "maximum"), at)
+            _check_rate(value["percent_of_agi"], f"{at}.percent_of_agi")
+            _check_by_status(value["minimum"], f"{at}.minimum")
+            _check_by_status(value["maximum"], f"{at}.maximum")
+        elif name == "brackets":
+            cumulative = model == "brackets_cumulative"
+            _check_brackets(value, ("over", "base", "rate") if cumulative else ("over", "rate"), at)
+        elif name == "rates":
+            by_year = model == "flat_by_year"
+            _check_year_steps(
+                value, ("from_year", "rate", "rate_desc") if by_year else ("from_year", "rate"), at
+            )
+        elif name == "retirement_exclusion":
+            _check(isinstance(value, list) and len(value) > 0, f"{at}: must be a non-empty list")
+            for i, step in enumerate(value):
+                _check(isinstance(step, dict), f"{at}[{i}]: must be an object")
+                _check_keys(step, ("min_age", "amount"), f"{at}[{i}]")
+                _check(type(step["min_age"]) is int, f"{at}[{i}].min_age: must be an integer")
+                _check_amount(step["amount"], f"{at}[{i}].amount")
+            ages = [step["min_age"] for step in value]
+            _check(ages == sorted(set(ages), reverse=True), f"{at}: min_age must decrease")
+        elif name == "surtax":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, ("over", "rate"), at)
+            _check_amount(value["over"], f"{at}.over")
+            _check_rate(value["rate"], f"{at}.rate")
+        elif name == "rate":
+            _check_rate(value, at)
+        else:  # capital_gains_deduction
+            _check_amount(value, at)
+
+
+def rate_table_document(path: Path, code: str) -> dict[str, Any]:
+    """Load and validate one ``rates/<code>.json`` file; return the whole document."""
+    where = f"rates/{path.name}"
+    _check(path.is_file(), f"{where}: missing (every state in RATE_TABLE_MODELS needs one)")
+    doc = _read(path)
+    _check(isinstance(doc, dict), f"{where}: top level must be an object")
+    _check_keys(doc, RATE_TABLE_FIELDS, where)
+    _check(doc["schema"] == SCHEMA_VERSION, f"{where}: schema must be {SCHEMA_VERSION}")
+    _check(doc["jurisdiction"] == code, f"{where}: jurisdiction must be {code!r}")
+    model = RATE_TABLE_MODELS[code]
+    _check(doc["model"] == model, f"{where}: model must be {model!r}")
+    _check(
+        isinstance(doc["source_url"], str) and bool(doc["source_url"]),
+        f"{where}: source_url must be a non-empty string or {NOT_RECORDED!r}",
+    )
+    _check_params(model, doc["params"], where)
+    document: dict[str, Any] = doc
+    return document
+
+
+def load_rate_tables(root: Path = DATA_DIR) -> dict[str, dict[str, Any]]:
+    """Every state's rate table ``params``, keyed by code in :data:`RATE_TABLE_MODELS` order.
+
+    Raises :class:`CatalogError` when a file is missing, malformed or a stray file sits in
+    ``rates/``.
+    """
+    stems = {file_stem(code) for code in RATE_TABLE_MODELS}
+    stray = _stray_files(root, "rates", stems)
+    _check(not stray, f"files for no rate table: {stray}")
+    return {
+        code: rate_table_document(root / "rates" / f"{file_stem(code)}.json", code)["params"]
+        for code in RATE_TABLE_MODELS
+    }
 
 
 def statute_db_row(statute: Mapping[str, Any]) -> dict[str, Any]:

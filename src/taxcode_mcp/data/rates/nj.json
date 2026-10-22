@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "NJ",
+  "model": "brackets_whole_income",
+  "source_url": "not_recorded",
+  "params": {
+    "exemption": {
+      "single": 1000.0,
+      "mfj": 2000.0
+    },
+    "brackets": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": null,
+          "rate": 0.035
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": null,
+          "rate": 0.035
+        }
+      ]
+    }
+  }
+}

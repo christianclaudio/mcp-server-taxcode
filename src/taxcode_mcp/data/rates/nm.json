@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "jurisdiction": "NM",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "N.M. Stat. Ann. §§ 7-2-2, 7-2-7",
+    "rate_authority": "N.M. Stat. Ann. § 7-2-7",
+    "rate_desc": "Graduated brackets from 1.7% to 5.9%",
+    "regime": "graduated",
+    "day_threshold": 185,
+    "requires_abode": false,
+    "inclusive_threshold": true,
+    "deduction_single": 14600.0,
+    "deduction_mfj": 29200.0,
+    "top_bracket_single": 210000.0,
+    "top_bracket_mfj": 315000.0,
+    "top_rate": 0.059
+  }
+}

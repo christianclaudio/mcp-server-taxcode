@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "jurisdiction": "RI",
+  "model": "registry",
+  "source_url": "not_recorded",
+  "params": {
+    "statutory_basis": "R.I. Gen. Laws §§ 44-30-1, 44-30-5",
+    "rate_authority": "R.I. Gen. Laws § 44-30-1",
+    "rate_desc": "Graduated rates: 3.75%, 4.75%, and 5.99%",
+    "regime": "graduated",
+    "deduction_single": 10650.0,
+    "deduction_mfj": 21300.0,
+    "top_bracket_single": 177300.0,
+    "top_bracket_mfj": 177300.0,
+    "top_rate": 0.0599
+  }
+}

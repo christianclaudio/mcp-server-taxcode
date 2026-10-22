@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "CA",
+  "model": "brackets_whole_income",
+  "source_url": "not_recorded",
+  "params": {
+    "deduction": {
+      "single": 5363.0,
+      "mfj": 10726.0
+    },
+    "brackets": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.133
+        },
+        {
+          "over": 349137.0,
+          "rate": 0.113
+        },
+        {
+          "over": 68350.0,
+          "rate": 0.093
+        },
+        {
+          "over": null,
+          "rate": 0.06
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.133
+        },
+        {
+          "over": 349137.0,
+          "rate": 0.113
+        },
+        {
+          "over": 68350.0,
+          "rate": 0.093
+        },
+        {
+          "over": null,
+          "rate": 0.06
+        }
+      ]
+    }
+  }
+}
