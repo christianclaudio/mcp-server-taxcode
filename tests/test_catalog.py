@@ -126,6 +126,48 @@ def test_check_reports_non_canonical_data_and_write_reformats(tree: tuple[Path, 
     assert build_catalog.check(data, docs) == []
 
 
+def _break_rate(doc: Any) -> None:
+    doc["params"]["brackets"]["single"][0]["rate"] = 10.9
+
+
+@pytest.mark.parametrize(
+    ("damage", "message"),
+    [
+        (lambda d: _edit(d / "rates" / "ny.json", _break_rate), "data: rates/ny.json params"),
+        (lambda d: (d / "rates" / "oh.json").unlink(), "data: rates/oh.json: missing"),
+        (
+            lambda d: (d / "rates" / "ga.json").write_text("{", encoding="utf-8"),
+            "data: ga.json: invalid JSON",
+        ),
+        (
+            lambda d: shutil.copy(d / "rates" / "oh.json", d / "rates" / "fl.json"),
+            "data: files for no rate table: ['rates/fl.json']",
+        ),
+        (lambda d: shutil.rmtree(d / "rates"), "data: rates/ga.json: missing"),
+    ],
+)
+def test_check_fails_on_a_malformed_missing_or_stray_rate_table(
+    tree: tuple[Path, Path], damage: Callable[[Path], Any], message: str
+) -> None:
+    data, docs = tree
+    damage(data)
+    problems = build_catalog.check(data, docs)
+    assert len(problems) == 1 and problems[0].startswith(message), problems
+    with pytest.raises(CatalogError):
+        build_catalog.write(data, docs)
+
+
+def test_check_reports_a_non_canonical_rate_table_and_write_reformats(
+    tree: tuple[Path, Path],
+) -> None:
+    data, docs = tree
+    path = data / "rates" / "va.json"
+    path.write_text(json.dumps(json.loads(path.read_text(encoding="utf-8"))), encoding="utf-8")
+    assert build_catalog.check(data, docs) == ["data: rates/va.json is not in canonical form"]
+    assert build_catalog.write(data, docs) == ["data/rates/va.json"]
+    assert build_catalog.check(data, docs) == []
+
+
 def test_a_new_row_regenerates_only_its_pages(tree: tuple[Path, Path]) -> None:
     data, docs = tree
     source = "https://example.gov/rcw-82-87-050"

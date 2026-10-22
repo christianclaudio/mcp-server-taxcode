@@ -2,7 +2,8 @@
 """Build every derived catalog artifact from the data files, or check that it is current.
 
 The data files under ``src/taxcode_mcp/data`` are the single source of truth for the
-statute and publication rows (see ``taxcode_mcp.catalog``). This script:
+statute and publication rows and the compliance rate tables (see
+``taxcode_mcp.catalog``). This script:
 
 - rewrites each data file in its canonical JSON form, so diffs stay small and stable;
 - regenerates ``docs/<jurisdiction>/*.md``, ``docs/<jurisdiction>/llms-full.txt`` (that
@@ -12,8 +13,9 @@ statute and publication rows (see ``taxcode_mcp.catalog``). This script:
   into shape.
 
 ``--check`` writes nothing. It fails (exit 1) when a data file breaks the schema or is
-not in canonical form, a manifest entry is missing, incomplete or disagrees with its
-row's source record, or a committed docs file differs from what the data generates.
+not in canonical form, a rate table is missing or malformed, a manifest entry is
+missing, incomplete or disagrees with its row's or rate table's source record, or a
+committed docs file differs from what the data generates.
 CI runs it, and ``tests/test_catalog.py`` runs the same check.
 
 Usage::

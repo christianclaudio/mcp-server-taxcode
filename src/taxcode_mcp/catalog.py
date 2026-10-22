@@ -16,8 +16,9 @@ row the server serves and every generated docs page:
   every state that has one and the shape of its ``params`` (see :func:`load_rate_tables`).
 
 Every file is written in one canonical form (:func:`dump_json`), and
-``scripts/build_catalog.py --check`` fails when a file, a generated docs page or a
-manifest entry is out of step.
+``scripts/build_catalog.py --check`` fails when a file (rate tables included) is
+malformed, missing or not canonical, or a generated docs page or a manifest entry is
+out of step.
 """
 
 from __future__ import annotations
@@ -321,10 +322,13 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
                 _check_keys(entry, MANIFEST_FIELDS, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
     if with_manifest:
+        stray = _stray_files(root, "rates", {file_stem(c) for c in RATE_TABLE_MODELS})
+        _check(not stray, f"files for no rate table: {stray}")
         for code in RATE_TABLE_MODELS:
             _check(code in codes, f"jurisdictions.json: rate table state {code!r} is missing")
-            path = root / "rates" / f"{file_stem(code)}.json"
-            catalog.rate_tables[code] = rate_table_document(path, code)
+            stem = file_stem(code)
+            doc = rate_table_document(root / "rates" / f"{stem}.json", code)
+            catalog.rate_tables[code] = catalog.documents[f"rates/{stem}"] = doc
     return catalog
 
 
