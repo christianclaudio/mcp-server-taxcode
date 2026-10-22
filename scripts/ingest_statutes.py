@@ -2735,7 +2735,10 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "y los factores de conexión más cercana para calificar como residente de buena fe."
         ),
         effective_year=2006,
-        source_url=f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-1",
+        source_url=(
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-1"
+        ),
         cross_references=["26 U.S.C. § 937", "26 CFR § 1.937-2"],
         breadcrumbs="Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-1",
     ),
@@ -2757,7 +2760,10 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "elección para segregar valor acumulado previo y posterior."
         ),
         effective_year=2006,
-        source_url=f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-2",
+        source_url=(
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-2"
+        ),
         cross_references=["26 U.S.C. § 937", "26 CFR § 1.937-1", "26 U.S.C. § 865"],
         breadcrumbs="Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-2",
     ),
@@ -2885,7 +2891,10 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "79853, 11 de diciembre de 2020, y T.D. 10022, 90 FR 3003, 14 de enero de 2025."
         ),
         effective_year=2008,
-        source_url=f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-3",
+        source_url=(
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-3"
+        ),
         cross_references=["26 U.S.C. § 937", "26 CFR § 1.937-2", "26 U.S.C. § 957"],
         breadcrumbs="Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3",
     ),
@@ -5261,7 +5270,9 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         ),
         effective_year=2012,
         superseded_year=2019,
-        source_url="https://bvirtualogp.pr.gov/",
+        source_url=(
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/Desarrollo%20Econ%C3%B3mico/22-2012/22-2012.pdf"
+        ),
         cross_references=["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
         breadcrumbs="Ley 22-2012 > Sección 3",
     ),
@@ -5308,7 +5319,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         ),
         effective_year=2024,
         superseded_year=2025,
-        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        source_url="https://dor.georgia.gov/taxes/taxes-individuals",
         cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
         breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2024)",
     ),
@@ -5329,7 +5340,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         ),
         effective_year=2025,
         superseded_year=2026,
-        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        source_url="https://dor.georgia.gov/taxes/taxes-individuals",
         cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
         breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2025)",
     ),
@@ -5350,7 +5361,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
         ),
         effective_year=2026,
         superseded_year=None,
-        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        source_url="https://dor.georgia.gov/taxes/taxes-individuals",
         cross_references=["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
         breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-20 (2026)",
     ),
@@ -5371,7 +5382,7 @@ STATUTES_CATALOG: list[StatuteRecord] = [
             "de $12,000 (solteros) o $24,000 (casados), y exclusión de hasta $65,000 en ingresos de jubilación para mayores de 65 años."
         ),
         effective_year=2024,
-        source_url="https://dor.georgia.gov/taxes/individual-income-tax",
+        source_url="https://dor.georgia.gov/taxes/taxes-individuals",
         cross_references=["O.C.G.A. § 48-7-20", "26 U.S.C. § 62"],
         breadcrumbs="O.C.G.A. > Title 48 > Chapter 7 > Article 2 > § 48-7-27",
     ),
@@ -7865,9 +7876,9 @@ def apply_uslm_title26(
 
 UPSTREAM_ENDPOINTS: dict[str, str] = {
     "OLRC_USLM": "https://uscode.house.gov/",
-    "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/versions.json",
+    "eCFR_API": "https://www.ecfr.gov/api/versioner/v1/titles.json",
     "Hacienda_PR": "https://hacienda.pr.gov/",
-    "OGP_PR": "https://bvirtualogp.pr.gov/",
+    "OGP_PR": "https://bvirtualogp.pr.gov/ogp/Bvirtual/Pages/default.aspx",
     "Georgia_DOR": "https://dor.georgia.gov/",
 }
 UPSTREAM_USER_AGENT = (

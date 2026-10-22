@@ -2974,7 +2974,10 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "residency under 26 U.S.C. § 937."
         ),
         "effective_year": 2006,
-        "source_url": f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-1",
+        "source_url": (
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-1"
+        ),
         "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-2"],
     },
     {
@@ -2997,7 +3000,10 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "date (marketable securities) or linear time apportionment."
         ),
         "effective_year": 2006,
-        "source_url": f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-2",
+        "source_url": (
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-2"
+        ),
         "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-1", "26 U.S.C. § 865"],
     },
     {
@@ -3159,7 +3165,10 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "2025."
         ),
         "effective_year": 2008,
-        "source_url": f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-3",
+        "source_url": (
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-3"
+        ),
         "cross_references": ["26 U.S.C. § 937", "26 CFR § 1.937-2", "26 U.S.C. § 957"],
     },
     {
@@ -6102,7 +6111,9 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         ),
         "effective_year": 2012,
         "superseded_year": 2019,
-        "source_url": "https://bvirtualogp.pr.gov/",
+        "source_url": (
+            "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/Desarrollo%20Econ%C3%B3mico/22-2012/22-2012.pdf"
+        ),
         "cross_references": ["Ley 60-2019 Sec. 2022.01", "26 U.S.C. § 933"],
     },
     {
@@ -6148,7 +6159,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         ),
         "effective_year": 2024,
         "superseded_year": 2025,
-        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "source_url": "https://dor.georgia.gov/taxes/taxes-individuals",
         "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
     },
     {
@@ -6168,7 +6179,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         ),
         "effective_year": 2025,
         "superseded_year": 2026,
-        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "source_url": "https://dor.georgia.gov/taxes/taxes-individuals",
         "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
     },
     {
@@ -6188,7 +6199,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
         ),
         "effective_year": 2026,
         "superseded_year": None,
-        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "source_url": "https://dor.georgia.gov/taxes/taxes-individuals",
         "cross_references": ["O.C.G.A. § 48-7-1", "O.C.G.A. § 48-7-27"],
     },
     {
@@ -6209,7 +6220,7 @@ INITIAL_STATUTES: list[dict[str, Any]] = [
             "exclusion of up to $65,000 for individuals age 65 or older ($35,000 for ages 62-64)."
         ),
         "effective_year": 2024,
-        "source_url": "https://dor.georgia.gov/taxes/individual-income-tax",
+        "source_url": "https://dor.georgia.gov/taxes/taxes-individuals",
         "cross_references": ["O.C.G.A. § 48-7-20", "26 U.S.C. § 62"],
     },
     {
