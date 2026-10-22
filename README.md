@@ -25,7 +25,7 @@ graph TD
     Gateway["FastMCP Root Gateway<br>(stdio / streamable-http)"]
     ParentMW["Parent Middleware<br>(Audit Logging, Timing, Secret Redaction, ReadOnly Gate)"]
     SysSub["System Sub-server (mount: 'system')<br>• system_get_health_status<br>• taxcode://system/reference/capabilities"]
-    StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications"]
+    StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications<br>• taxcode://statutes/{jurisdiction}/{section}"]
     CompSub["Compliance Sub-server (mount: 'compliance')<br>• compliance_evaluate_pr_bona_fide_residency<br>• compliance_calculate_built_in_gain_sourcing<br>• compliance_evaluate_georgia_residency<br>• compliance_evaluate_state_residency"]
     DuckDB["DuckDB In-Memory & File Engine<br>(117 Statutes, 18 Publications, Full-Text Search, Temporal Versions)"]
 
@@ -47,6 +47,8 @@ graph TD
   * **Puerto Rico (`PR`)**: Act 60-2019 (Resident Individual Investors, Export Services & Opportunity Zone definitions, Sec. 6020.10 annual reports), Ley 1-2011 (including Sec. 1031.02 exemptions and Sec. 1062.01 wage withholding and Sec. 1062.03 withholding on payments for services), Act 22-2012 predecessor versions, and administrative publications (CC RI 21-10, CC RI 25-12, CC RI 26-13, DA 21-04, DA 23-04, BI RI 26-02).
   * **All 50 US States + District of Columbia**: Comprehensive statutory definitions and tax computations covering no-income-tax states (AK, FL, NV, NH, SD, TN, TX, WA, WY), flat-tax regimes (AZ, CO, GA, ID, IL, IN, IA, KS, KY, MI, MS, NC, PA, UT), and graduated/surtax jurisdictions (AL, AR, CA, CT, DE, DC, HI, LA, ME, MD, MA, MN, MO, MT, NE, NJ, NM, NY, ND, OH, OK, OR, RI, SC, VT, VA, WV, WI) including Convenience of the Employer rules (NY, PA, NJ, CT, DE, NE) and local piggyback taxes (MD, IN, OH, NY).
 * **Snippet Search, Full Text by Id**: `statutes_search_tax_code` matches and ranks on the full text but returns a short snippet (up to 300 characters around the first matched term) plus each result's `id`, citation, title, jurisdiction, year, validity and content labels. Pass an `id` to `statutes_lookup_statute` as `citation_or_section` for the full text.
+* **Bounded Responses with Paging**: Every statutes tool result stays under 32,000 characters of JSON. `statutes_lookup_statute` returns long text in pages of up to 8,000 characters per text field (`text_page` gives the offset and full lengths; pass `next_cursor` back as `page_cursor` for the next page). `statutes_search_tax_code` and `statutes_list_publications` clamp `limit` to 1..25 items per call, with `offset` and `next_offset` for the next page. The `taxcode://statutes/{jurisdiction}/{section}` resource (for example `taxcode://statutes/US/933`) uses the same 8,000-character pages and cap: a page that is not the last ends with the URI of the next one, which carries a `?page_cursor=` query.
+* **Versioned Data Files**: Every statute and publication row lives in per-jurisdiction JSON under `src/taxcode_mcp/data/` with a source record per row, and the docs under `docs/` are generated from them (see [`CONTRIBUTING.md`](CONTRIBUTING.md)).
 * **Temporal Statutory Versioning**: Point-in-time statutory lookup with `superseded_year` filtering and descending historical ordering (`tax_year` parameter).
 * **Deterministic Compliance Engines**:
   * `evaluate_pr_bona_fide_residency`: Evaluates IRC § 937 presence (183-day, 549-day 3-year, 90-day US), tax home, and closer connection tests.
@@ -261,6 +263,7 @@ uv run ruff format --check .
 # 4. Tool contract, protocol & drift assertions
 uv run python scripts/check_tool_contract.py
 uv run python scripts/check_openapi_drift.py
+uv run python scripts/build_catalog.py --check   # data files, source manifest, generated docs
 uv run pytest tests/test_protocol.py
 uv run pytest tests/test_e2e_live.py -m e2e   # on demand; default CI uses -m 'not e2e'
 ./scripts/check_conformance.sh

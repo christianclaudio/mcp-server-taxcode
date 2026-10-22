@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "OH",
+  "statutes": [
+    {
+      "id": "oh-stat-5747-02",
+      "jurisdiction": "OH",
+      "corpus": "R.C.",
+      "citation": "Ohio Rev. Code § 5747.02",
+      "section": "5747.02",
+      "title": "Taxation of Personal Income - Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://codes.ohio.gov/ohio-revised-code/section-5747.02",
+      "cross_references": [
+        "Ohio Rev. Code § 5747.24"
+      ],
+      "breadcrumbs": "R.C. > Title 57 > Chapter 5747 > § 5747.02",
+      "source_note": "",
+      "text_en": [
+        "Levies Ohio personal income tax with phased rate consolidation: 0% up to $26,050; 2.75% from $26,051 to $100,000; and 3.50% on non-business taxable income exceeding $100,000 for tax year 2024+."
+      ],
+      "text_es": [
+        "Grava el ingreso personal en Ohio con consolidación de tasas: 0% hasta $26,050; 2.75% de $26,051 a $100,000; y 3.50% sobre el ingreso no comercial que exceda $100,000 para el año 2024+."
+      ]
+    },
+    {
+      "id": "oh-stat-5747-24",
+      "jurisdiction": "OH",
+      "corpus": "R.C.",
+      "citation": "Ohio Rev. Code § 5747.24",
+      "section": "5747.24",
+      "title": "Bright-Line Presumption of Domicile - Contact Periods",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://codes.ohio.gov/ohio-revised-code/section-5747.24",
+      "cross_references": [
+        "Ohio Rev. Code § 5747.02"
+      ],
+      "breadcrumbs": "R.C. > Title 57 > Chapter 5747 > § 5747.24",
+      "source_note": "",
+      "text_en": [
+        "Establishes bright-line residency rules: an individual with <= 212 Ohio contact periods is presumed non-resident if filing Form IT-NRS affidavit by October 15; an individual with >= 213 contact periods is presumed an Ohio resident."
+      ],
+      "text_es": [
+        "Establece regla objetiva de periodos de contacto: quien tenga <= 212 periodos de contacto se presume no residente si radica declaración jurada IT-NRS antes del 15 de octubre; >= 213 periodos presume residencia."
+      ]
+    }
+  ]
+}

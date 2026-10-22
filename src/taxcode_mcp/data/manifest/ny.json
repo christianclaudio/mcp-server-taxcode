@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "jurisdiction": "NY",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ny-tax-605",
+      "url": "https://www.tax.ny.gov/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ny-tax-601",
+      "url": "https://www.tax.ny.gov/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ny-reg-105-20",
+      "url": "https://www.tax.ny.gov/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ny-reg-132-18",
+      "url": "https://www.tax.ny.gov/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

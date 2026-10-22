@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "NV",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "nv-const-art-10-sec-1",
+      "url": "https://www.leg.state.nv.us/const/nvconst.html#Art10Sec1",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

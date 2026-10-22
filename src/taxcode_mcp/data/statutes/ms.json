@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "MS",
+  "statutes": [
+    {
+      "id": "ms-code-27-7-5",
+      "jurisdiction": "MS",
+      "corpus": "Miss. Code",
+      "citation": "Miss. Code Ann. § 27-7-5",
+      "section": "27-7-5",
+      "title": "Imposition and Rates of Tax",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://advance.lexis.com/container?config=00JAAzNzA5ZmEtMDMxMi00YTRkLThjMTMtNDU5YTU1ZjJmYjM1CgkJcFJvY2Vzc2luZ8tX",
+      "cross_references": [],
+      "breadcrumbs": "Miss. Code > Title 27 > Chapter 7 > Article 1 > § 27-7-5",
+      "source_note": "",
+      "text_en": [
+        "Imposes individual income tax with 0% on the first $10,000 and flat 4.70% on excess income under the Mississippi Tax Freedom Act."
+      ],
+      "text_es": [
+        "Impone impuesto sobre la renta individual con 0% en los primeros $10,000 y 4.70% fijo sobre el exceso bajo la Ley de Libertad Tributaria de Mississippi."
+      ]
+    }
+  ]
+}

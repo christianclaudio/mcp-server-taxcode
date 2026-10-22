@@ -1,0 +1,37 @@
+# Full Statutory Corpus: NY
+
+## NY Tax Law § 605(b): Resident Individual and Domicile Defined
+`NY Tax Law > Article 22 > Part I > § 605`
+
+### English
+Defines resident individual as one domiciled in New York unless they maintain no permanent abode in NY and spend under 30 days in state; or one not domiciled who maintains a permanent place of abode and spends over 183 days in NY.
+
+### Español
+Define individuo residente como domiciliado en Nueva York a menos que no mantenga vivienda permanente en NY y pase menos de 30 días en el estado; o no domiciliado que mantenga vivienda permanente y pase más de 183 días en NY (Residente Estatutario).
+
+## NY Tax Law § 601: Personal Income Tax Rates
+`NY Tax Law > Article 22 > Part I > § 601`
+
+### English
+Imposes graduated income tax on New York taxable income with top marginal rates up to 10.9% for high-income earners, plus applicable New York City personal income tax (up to 3.876%) for NYC residents.
+
+### Español
+Grava el ingreso tributable de Nueva York con tasas escalonadas de hasta 10.9% para personas con altos ingresos, más el impuesto municipal de la Ciudad de Nueva York (hasta 3.876%) para residentes de NYC.
+
+## 20 NYCRR § 105.20: Rules for Determining Domicile (5 Primary Factors)
+`20 NYCRR > Chapter II > Subchapter A > Part 105 > § 105.20`
+
+### English
+New York DTF regulation establishing the 5 primary factors for domicile audit evaluation: Home, Active Business Involvement, Time Allocation, Items of Personal Significance ('Near and Dear'), and Family.
+
+### Español
+Reglamento de auditoría de domicilio de NY que establece los 5 factores primarios: Vivienda, Negocio Activo, Tiempo, Objetos de Valor Sentimental ('Near and Dear') y Familia.
+
+## 20 NYCRR § 132.18: Convenience of the Employer Rule
+`20 NYCRR > Chapter II > Subchapter A > Part 132 > § 132.18`
+
+### English
+Provides that compensation of a nonresident employee for services performed out of state is sourced to New York if the services are performed outside NY for the employee's convenience rather than by necessity of the employer.
+
+### Español
+Dispone que la compensación de empleados no residentes por servicios realizados fuera del estado se atribuye a Nueva York si el trabajo remoto se realiza por conveniencia del empleado y no por necesidad del empleador.

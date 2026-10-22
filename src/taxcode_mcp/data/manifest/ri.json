@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "RI",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ri-gen-laws-44-30-1",
+      "url": "http://webserver.rilin.state.ri.us/Statutes/TITLE44/44-30/44-30-1.htm",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

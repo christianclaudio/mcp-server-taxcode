@@ -1,0 +1,10 @@
+# Full Statutory Corpus: AL
+
+## Ala. Code § 40-18-2: Tax on Individuals
+`Ala. Code > Title 40 > Chapter 18 > § 40-18-2`
+
+### English
+Imposes graduated individual income tax rates of 2%, 4%, and 5% on taxable net income of individuals in Alabama.
+
+### Español
+Impone tasas impositivas individuales graduadas del 2%, 4% y 5% sobre el ingreso neto gravable de individuos en Alabama.

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "jurisdiction": "CO",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "co-stat-39-22-104",
+      "url": "https://leg.colorado.gov/agencies/office-legislative-legal-services/colorado-revised-statutes",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "co-stat-39-22-103",
+      "url": "https://leg.colorado.gov/agencies/office-legislative-legal-services/colorado-revised-statutes",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

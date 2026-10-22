@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "KY",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ky-rev-stat-141-020",
+      "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=53235",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

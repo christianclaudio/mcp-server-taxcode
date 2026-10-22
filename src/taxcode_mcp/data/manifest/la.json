@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "jurisdiction": "LA",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "la-rev-stat-47-32",
+      "url": "https://www.legis.la.gov/legis/Law.aspx?d=101946",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "la-rev-stat-47-32-2025",
+      "url": "https://www.legis.la.gov/legis/Law.aspx?d=101946",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

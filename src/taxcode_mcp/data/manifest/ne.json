@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "NE",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ne-rev-stat-77-2715-03",
+      "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

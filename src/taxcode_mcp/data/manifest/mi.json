@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "MI",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "mi-comp-laws-206-51",
+      "url": "http://legislature.mi.gov/doc.aspx?mcl-206-51",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

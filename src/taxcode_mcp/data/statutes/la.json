@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "LA",
+  "statutes": [
+    {
+      "id": "la-rev-stat-47-32",
+      "jurisdiction": "LA",
+      "corpus": "La. R.S.",
+      "citation": "La. Rev. Stat. Ann. § 47:32",
+      "section": "47:32",
+      "title": "Rates of Tax (Graduated Schedule through 2024)",
+      "effective_year": 2022,
+      "superseded_year": 2025,
+      "source_url": "https://www.legis.la.gov/legis/Law.aspx?d=101946",
+      "cross_references": [
+        "La. Rev. Stat. Ann. § 47:32"
+      ],
+      "breadcrumbs": "La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated personal income tax rates of 1.85%, 3.50%, and 4.25% in Louisiana applicable through tax year 2024."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre la renta personal graduadas de 1.85%, 3.50% y 4.25% en Luisiana aplicables hasta el año contributivo 2024."
+      ]
+    },
+    {
+      "id": "la-rev-stat-47-32-2025",
+      "jurisdiction": "LA",
+      "corpus": "La. R.S.",
+      "citation": "La. Rev. Stat. Ann. § 47:32",
+      "section": "47:32",
+      "title": "Flat Individual Income Tax Rate (Act 11 of 2024 3rd Ex. Sess.)",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.legis.la.gov/legis/Law.aspx?d=101946",
+      "cross_references": [
+        "La. Rev. Stat. Ann. § 47:32"
+      ],
+      "breadcrumbs": "La. R.S. > Title 47 > Subtitle II > Chapter 1 > Part I > § 47:32",
+      "source_note": "",
+      "text_en": [
+        "Imposes a flat individual income tax rate of 3.00% on net taxable income effective for tax periods beginning on or after January 1, 2025 (Act 11 of 2024)."
+      ],
+      "text_es": [
+        "Impone una tasa fija de impuesto sobre la renta del 3.00% sobre el ingreso neto gravable de individuos a partir del 1 de enero de 2025 (Act 11 de 2024)."
+      ]
+    }
+  ]
+}

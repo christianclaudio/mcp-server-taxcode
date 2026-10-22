@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "jurisdiction": "WA",
+  "statutes": [
+    {
+      "id": "wa-rcw-82-87-040",
+      "jurisdiction": "WA",
+      "corpus": "RCW",
+      "citation": "RCW 82.87.040",
+      "section": "82.87.040",
+      "title": "Tax Imposed on Long-Term Capital Gains",
+      "effective_year": 2022,
+      "superseded_year": null,
+      "source_url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.040",
+      "cross_references": [
+        "RCW 82.87.020",
+        "Wash. Const. art. VII § 1"
+      ],
+      "breadcrumbs": "RCW > Title 82 > Chapter 82.87 > Section 82.87.040",
+      "source_note": "",
+      "text_en": [
+        "7% excise tax on individual annual net long-term capital gains allocated to Washington in excess of statutory standard deduction ($250,000 indexed for inflation)."
+      ],
+      "text_es": [
+        "Impuesto especial del 7% sobre ganancias de capital a largo plazo de individuos que excedan la deducción estándar anual ($250,000 indexada por inflación)."
+      ]
+    },
+    {
+      "id": "wa-rcw-82-87-020",
+      "jurisdiction": "WA",
+      "corpus": "RCW",
+      "citation": "RCW 82.87.020",
+      "section": "82.87.020",
+      "title": "Capital Gains Tax Definitions and Resident Sourcing",
+      "effective_year": 2022,
+      "superseded_year": null,
+      "source_url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.020",
+      "cross_references": [
+        "RCW 82.87.040"
+      ],
+      "breadcrumbs": "RCW > Title 82 > Chapter 82.87 > Section 82.87.020",
+      "source_note": "",
+      "text_en": [
+        "Defines resident for Washington capital gains excise tax purposes as an individual domiciled in Washington at the time the long-term capital asset was sold or exchanged."
+      ],
+      "text_es": [
+        "Define residente de Washington para el impuesto de ganancias de capital como persona natural domiciliada en el estado al momento de la venta o intercambio."
+      ]
+    },
+    {
+      "id": "wa-const-7-1",
+      "jurisdiction": "WA",
+      "corpus": "WACONST",
+      "citation": "Wash. Const. art. VII § 1",
+      "section": "Art. VII Sec. 1",
+      "title": "Constitutional Uniformity and Prohibition of Net Income Tax",
+      "effective_year": 1889,
+      "superseded_year": null,
+      "source_url": "https://leg.wa.gov/CodeReviser/Pages/WAConstitution.aspx",
+      "cross_references": [
+        "RCW 82.87.040"
+      ],
+      "breadcrumbs": "Wash. Const. > Article VII > Section 1",
+      "source_note": "",
+      "text_en": [
+        "Constitutional requirement that all taxes be uniform upon the same class of property, historically interpreted to prohibit graduated net income taxes."
+      ],
+      "text_es": [
+        "Disposición constitucional de tributación uniforme que prohíbe impuestos progresivos sobre el ingreso neto según interpretado en doctrina judicial histórica."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "OR",
+  "statutes": [
+    {
+      "id": "or-rev-stat-316-037",
+      "jurisdiction": "OR",
+      "corpus": "ORS",
+      "citation": "Or. Rev. Stat. § 316.037",
+      "section": "316.037",
+      "title": "Imposition and Rate of Personal Income Tax",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.oregonlegislature.gov/bills_laws/ors/ors316.html",
+      "cross_references": [],
+      "breadcrumbs": "ORS > Title 29 > Chapter 316 > § 316.037",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates of 4.75%, 6.75%, 8.75%, and top rate 9.90% in Oregon."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre la renta individual graduadas de 4.75%, 6.75%, 8.75% y tasa máxima de 9.90% en Oregón."
+      ]
+    }
+  ]
+}

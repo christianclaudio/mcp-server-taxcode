@@ -1,0 +1,10 @@
+# Full Statutory Corpus: HI
+
+## Haw. Rev. Stat. § 235-51: Tax on Individuals, Estates, and Trusts
+`HRS > Title 14 > Chapter 235 > Part I > § 235-51`
+
+### English
+Imposes graduated individual income tax rates up to 11.0% under Act 97 (2024 Hawaii tax reform).
+
+### Español
+Impone tasas de impuesto sobre la renta individual graduadas de hasta 11.0% bajo la Ley 97 (reforma contributiva de Hawaii de 2024).

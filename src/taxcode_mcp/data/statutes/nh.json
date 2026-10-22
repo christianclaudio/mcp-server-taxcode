@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "NH",
+  "statutes": [
+    {
+      "id": "nh-rev-stat-77-1",
+      "jurisdiction": "NH",
+      "corpus": "RSA",
+      "citation": "N.H. Rev. Stat. Ann. § 77:1",
+      "section": "77:1",
+      "title": "Rate of Tax on Interest and Dividends (Repealed Effective 2025)",
+      "effective_year": 2024,
+      "superseded_year": 2025,
+      "source_url": "https://www.gencourt.state.nh.us/rsa/html/v/77/77-1.htm",
+      "cross_references": [],
+      "breadcrumbs": "RSA > Title V > Chapter 77 > § 77:1",
+      "source_note": "",
+      "text_en": [
+        "Imposed 3.0% tax on dividend and interest income for 2024, fully repealed for tax periods beginning January 1, 2025 under 2023 HB 2 in New Hampshire."
+      ],
+      "text_es": [
+        "Impuso 3.0% sobre dividendos e intereses en 2024, totalmente derogado a partir del 1 de enero de 2025 bajo la ley HB 2 de 2023 de New Hampshire."
+      ]
+    }
+  ]
+}

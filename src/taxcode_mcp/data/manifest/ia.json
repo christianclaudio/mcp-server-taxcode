@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "IA",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ia-code-422-5",
+      "url": "https://www.legis.iowa.gov/law/statutory",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

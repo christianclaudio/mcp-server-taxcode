@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "MT",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "mt-code-15-30-2103",
+      "url": "https://leg.mt.gov/bills/mca/title_0150/chapter_0300/part_0210/section_0030/0150-0300-0210-0030.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

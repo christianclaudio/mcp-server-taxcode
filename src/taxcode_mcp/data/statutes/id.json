@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "ID",
+  "statutes": [
+    {
+      "id": "id-code-63-3024",
+      "jurisdiction": "ID",
+      "corpus": "Idaho Code",
+      "citation": "Idaho Code § 63-3024",
+      "section": "63-3024",
+      "title": "Individuals' Tax and Tax on Estates and Trusts",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://legislature.idaho.gov/statutesrules/idstat/title63/t63ch30/sect63-3024/",
+      "cross_references": [],
+      "breadcrumbs": "Idaho Code > Title 63 > Chapter 30 > § 63-3024",
+      "source_note": "",
+      "text_en": [
+        "Imposes a flat individual income tax rate of 5.695% on taxable income under HB 521 in Idaho."
+      ],
+      "text_es": [
+        "Impone una tasa impositiva individual fija del 5.695% sobre el ingreso gravable de individuos bajo HB 521 en Idaho."
+      ]
+    }
+  ]
+}

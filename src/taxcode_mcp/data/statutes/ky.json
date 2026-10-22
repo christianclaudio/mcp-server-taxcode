@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "KY",
+  "statutes": [
+    {
+      "id": "ky-rev-stat-141-020",
+      "jurisdiction": "KY",
+      "corpus": "KRS",
+      "citation": "Ky. Rev. Stat. Ann. § 141.020",
+      "section": "141.020",
+      "title": "Levy of Tax on Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=53235",
+      "cross_references": [],
+      "breadcrumbs": "KRS > Title XI > Chapter 141 > § 141.020",
+      "source_note": "",
+      "text_en": [
+        "Imposes flat individual income tax rate of 4.0% on net income under statutory rate-reduction triggers in Kentucky."
+      ],
+      "text_es": [
+        "Impone una tasa fija de impuesto sobre la renta del 4.0% sobre el ingreso neto bajo criterios estatutarios de reducción en Kentucky."
+      ]
+    }
+  ]
+}

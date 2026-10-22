@@ -154,8 +154,9 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert llms_txt.exists()
     assert llms_full_txt.exists()
     assert "TaxCode MCP Intelligence Corpus" in llms_txt.read_text(encoding="utf-8")
-    assert "26 U.S.C. § 933" in llms_full_txt.read_text(encoding="utf-8")
-    assert "O.C.G.A. § 48-7-1" in llms_full_txt.read_text(encoding="utf-8")
+    assert "(./us/llms-full.txt): " in llms_full_txt.read_text(encoding="utf-8")
+    assert "26 U.S.C. § 933" in (docs_out / "us" / "llms-full.txt").read_text(encoding="utf-8")
+    assert "O.C.G.A. § 48-7-1" in (docs_out / "ga" / "llms-full.txt").read_text(encoding="utf-8")
 
     # Verify markdown subdirectories
     assert (docs_out / "us" / "irc_933.md").exists()
@@ -419,43 +420,11 @@ def test_ingest_writes_both_2022_01_rows_and_lookup_prefers_current(tmp_path: Pa
     assert later["id"] == "pr-ley60-2022-01"
 
 
-def test_seed_and_ingest_records_match_for_shared_ids() -> None:
-    """Every statute id present in both the seeds and ingest has identical fields."""
-    from taxcode_mcp.db import INITIAL_STATUTES
-
-    seeds = {s["id"]: {"superseded_year": None, **s} for s in INITIAL_STATUTES}
-    shared = 0
-    for rec in STATUTES_CATALOG:
-        if rec.id in seeds:
-            shared += 1
-            assert seeds[rec.id] == rec.to_dict(), rec.id
-    assert shared > 0
-
-
 def test_pr_act60_sources_use_pdf_urls() -> None:
     """Act 60 records cite the OGP PDFs, not the library homepage."""
     for rec in STATUTES_CATALOG:
         if rec.citation.startswith("Ley 60-2019"):
             assert rec.source_url.endswith(".pdf"), rec.id
-
-
-def test_catalog_ids_equal_seed_ids() -> None:
-    """The ingest catalog and the db.py seeds hold exactly the same ids, both ways."""
-    from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES
-
-    seed_statutes = {s["id"] for s in INITIAL_STATUTES}
-    catalog_statutes = {r.id for r in STATUTES_CATALOG}
-    assert catalog_statutes - seed_statutes == set()
-    assert seed_statutes - catalog_statutes == set()
-    assert len(seed_statutes) == len(INITIAL_STATUTES)
-    assert len(catalog_statutes) == len(STATUTES_CATALOG)
-
-    seed_pubs = {p["id"] for p in INITIAL_PUBLICATIONS}
-    catalog_pubs = {p.id for p in PUBLICATIONS_CATALOG}
-    assert catalog_pubs - seed_pubs == set()
-    assert seed_pubs - catalog_pubs == set()
-    assert len(seed_pubs) == len(INITIAL_PUBLICATIONS)
-    assert len(catalog_pubs) == len(PUBLICATIONS_CATALOG)
 
 
 def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:

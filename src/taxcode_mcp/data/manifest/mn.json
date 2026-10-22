@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "MN",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "mn-stat-290-06",
+      "url": "https://www.revisor.mn.gov/statutes/cite/290.06",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

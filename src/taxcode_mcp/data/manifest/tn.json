@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "TN",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "tn-const-art-2-sec-28",
+      "url": "https://www.capitol.tn.gov/about/docs/TN-Constitution.pdf",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

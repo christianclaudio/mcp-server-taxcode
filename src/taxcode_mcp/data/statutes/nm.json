@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "NM",
+  "statutes": [
+    {
+      "id": "nm-stat-7-2-7",
+      "jurisdiction": "NM",
+      "corpus": "NMSA",
+      "citation": "N.M. Stat. Ann. § 7-2-7",
+      "section": "7-2-7",
+      "title": "Individual Income Tax Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7",
+      "cross_references": [],
+      "breadcrumbs": "NMSA > Chapter 7 > Article 2 > § 7-2-7",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates from 1.7% to top rate 5.9% in New Mexico."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto sobre la renta individual graduadas desde 1.7% hasta tasa máxima de 5.9% en Nuevo México."
+      ]
+    }
+  ]
+}

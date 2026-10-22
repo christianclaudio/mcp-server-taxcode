@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "jurisdiction": "NJ",
+  "statutes": [
+    {
+      "id": "nj-stat-54a-1-2",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:1-2",
+      "section": "54A:1-2",
+      "title": "Definition of Resident Individual",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://lis.njleg.state.nj.us/",
+      "cross_references": [
+        "N.J.S.A. 54A:2-1",
+        "N.J.A.C. 18:35-5.2"
+      ],
+      "breadcrumbs": "N.J.S.A. > Title 54A > Chapter 1 > Section 54A:1-2",
+      "source_note": "",
+      "text_en": [
+        "Defines resident individual based on domicile or statutory residency (maintaining a permanent place of abode in NJ and spending more than 183 days in NJ)."
+      ],
+      "text_es": [
+        "Define residente de NJ por domicilio (salvo morada permanente exterior con <= 30 días en NJ) o residente estatutario con morada permanente en NJ y más de 183 días."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-2-1",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:2-1",
+      "section": "54A:2-1",
+      "title": "New Jersey Gross Income Tax Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://lis.njleg.state.nj.us/",
+      "cross_references": [
+        "N.J.S.A. 54A:1-2"
+      ],
+      "breadcrumbs": "N.J.S.A. > Title 54A > Chapter 2 > Section 54A:2-1",
+      "source_note": "",
+      "text_en": [
+        "Graduated gross income tax brackets ranging from 1.4% up to top marginal rate of 10.75% on taxable income exceeding $1,000,000."
+      ],
+      "text_es": [
+        "Escalas progresivas de impuesto sobre el ingreso bruto que varían entre 1.4% y una tasa marginal máxima de 10.75% para ingresos mayores a $1,000,000."
+      ]
+    },
+    {
+      "id": "nj-admin-18-35-5-2",
+      "jurisdiction": "NJ",
+      "corpus": "NJAC",
+      "citation": "N.J.A.C. 18:35-5.2",
+      "section": "18:35-5.2",
+      "title": "Convenience of the Employer Rule (Reciprocal Sourcing)",
+      "effective_year": 2023,
+      "superseded_year": null,
+      "source_url": "https://www.nj.gov/treasury/taxation/",
+      "cross_references": [
+        "N.J.S.A. 54A:5-8"
+      ],
+      "breadcrumbs": "N.J.A.C. > Title 18 > Chapter 35 > Subchapter 5 > Section 18:35-5.2",
+      "source_note": "",
+      "text_en": [
+        "Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing telecommuting compensation of nonresidents to NJ if their resident state imposes a convenience rule."
+      ],
+      "text_es": [
+        "Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no residentes que teletrabajen si su estado de residencia aplica una regla similar (ej. Nueva York)."
+      ]
+    }
+  ]
+}

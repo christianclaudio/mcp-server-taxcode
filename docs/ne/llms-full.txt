@@ -1,0 +1,10 @@
+# Full Statutory Corpus: NE
+
+## Neb. Rev. Stat. § 77-2715.03: Income Tax - Rates
+`Neb. Rev. Stat. > Chapter 77 > Article 27 > § 77-2715.03`
+
+### English
+Imposes graduated personal income tax rates with top rate of 5.84% and enforces the convenience of the employer doctrine in Nebraska.
+
+### Español
+Impone tasas de impuesto sobre ingresos personales con tasa máxima de 5.84% y aplica la doctrina de conveniencia del empleador en Nebraska.

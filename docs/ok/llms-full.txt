@@ -1,0 +1,10 @@
+# Full Statutory Corpus: OK
+
+## Okla. Stat. tit. 68, § 2355: Tax Rates - Individuals
+`68 O.S. > Chapter 1 > Article 23 > § 2355`
+
+### English
+Imposes graduated individual income tax rates from 0.25% to top rate 4.75% in Oklahoma.
+
+### Español
+Impone tasas de impuesto sobre ingresos individuales graduadas desde 0.25% hasta tasa máxima de 4.75% en Oklahoma.

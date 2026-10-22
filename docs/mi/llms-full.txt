@@ -1,0 +1,10 @@
+# Full Statutory Corpus: MI
+
+## Mich. Comp. Laws § 206.51: Tax Rate on Taxable Income of Individuals
+`MCL > Chapter 206 > Act 281 of 1967 > Part 1 > Chapter 2 > § 206.51`
+
+### English
+Imposes a flat individual income tax rate of 4.25% on taxable net income in Michigan.
+
+### Español
+Impone una tasa uniforme de impuesto sobre ingresos individuales del 4.25% sobre el ingreso neto gravable en Michigan.

@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "AR",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ar-code-26-51-201",
+      "url": "https://www.arkleg.state.ar.us/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "jurisdiction": "IL",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "il-stat-35-ilcs-5-201",
+      "url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "il-stat-35-ilcs-5-1501",
+      "url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "il-stat-35-ilcs-5-301",
+      "url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

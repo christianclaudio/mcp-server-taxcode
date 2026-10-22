@@ -1,0 +1,28 @@
+# Full Statutory Corpus: NJ
+
+## N.J.S.A. 54A:1-2: Definition of Resident Individual
+`N.J.S.A. > Title 54A > Chapter 1 > Section 54A:1-2`
+
+### English
+Defines resident individual based on domicile or statutory residency (maintaining a permanent place of abode in NJ and spending more than 183 days in NJ).
+
+### Español
+Define residente de NJ por domicilio (salvo morada permanente exterior con <= 30 días en NJ) o residente estatutario con morada permanente en NJ y más de 183 días.
+
+## N.J.S.A. 54A:2-1: New Jersey Gross Income Tax Rates
+`N.J.S.A. > Title 54A > Chapter 2 > Section 54A:2-1`
+
+### English
+Graduated gross income tax brackets ranging from 1.4% up to top marginal rate of 10.75% on taxable income exceeding $1,000,000.
+
+### Español
+Escalas progresivas de impuesto sobre el ingreso bruto que varían entre 1.4% y una tasa marginal máxima de 10.75% para ingresos mayores a $1,000,000.
+
+## N.J.A.C. 18:35-5.2: Convenience of the Employer Rule (Reciprocal Sourcing)
+`N.J.A.C. > Title 18 > Chapter 35 > Subchapter 5 > Section 18:35-5.2`
+
+### English
+Reciprocal convenience of employer sourcing rule enacted in 2023 sourcing telecommuting compensation of nonresidents to NJ if their resident state imposes a convenience rule.
+
+### Español
+Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no residentes que teletrabajen si su estado de residencia aplica una regla similar (ej. Nueva York).

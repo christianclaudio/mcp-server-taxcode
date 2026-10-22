@@ -1,0 +1,28 @@
+# Full Statutory Corpus: PA
+
+## 72 P.S. § 7302: Imposition of Tax
+`72 P.S. > Chapter 73 > § 7302`
+
+### English
+Imposes Pennsylvania personal income tax at a constitutional flat rate of 3.07% on eight specified classes of taxable income.
+
+### Español
+Impone un impuesto sobre la renta personal con tasa uniforme y fija del 3.07% sobre ocho clases especificadas de ingresos gravables.
+
+## 72 P.S. § 7301: Definitions - Resident Individual
+`72 P.S. > Chapter 73 > § 7301`
+
+### English
+Defines a resident individual as one domiciled in Pennsylvania or who maintains a permanent place of abode and spends in the aggregate more than 183 days in the commonwealth.
+
+### Español
+Define individuo residente como quien tiene domicilio en Pensilvania o mantiene un lugar permanente de morada y pasa más de 183 días en el estado.
+
+## 61 Pa. Code § 109.8: Convenience of the Employer Rule
+`61 Pa. Code > Chapter 109 > § 109.8`
+
+### English
+Requires compensation earned by nonresidents telecommuting for a Pennsylvania employer to be sourced to Pennsylvania unless working from home is for employer necessity.
+
+### Español
+Dispone que la compensación por servicios remotos o de teletrabajo para un patrono de Pensilvania se considera de fuente local a menos que el teletrabajo sea por necesidad del patrono.

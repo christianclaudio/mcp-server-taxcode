@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "TN",
+  "statutes": [
+    {
+      "id": "tn-const-art-2-sec-28",
+      "jurisdiction": "TN",
+      "corpus": "Tenn. Const.",
+      "citation": "Tenn. Const. art. II, § 28",
+      "section": "Art. II, § 28",
+      "title": "Prohibition of Tax on Personal Income",
+      "effective_year": 2014,
+      "superseded_year": null,
+      "source_url": "https://www.capitol.tn.gov/about/docs/TN-Constitution.pdf",
+      "cross_references": [],
+      "breadcrumbs": "Tenn. Const. > Article II > § 28",
+      "source_note": "",
+      "text_en": [
+        "Constitutional amendment prohibiting any state or local tax upon payroll or earned personal income in Tennessee."
+      ],
+      "text_es": [
+        "Enmienda constitucional que prohíbe cualquier impuesto estatal o local sobre nómina o ingresos individuales del trabajo en Tennessee."
+      ]
+    }
+  ]
+}

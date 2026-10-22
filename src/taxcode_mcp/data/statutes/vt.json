@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "VT",
+  "statutes": [
+    {
+      "id": "vt-stat-32-5822",
+      "jurisdiction": "VT",
+      "corpus": "32 V.S.A.",
+      "citation": "32 V.S.A. § 5822",
+      "section": "5822",
+      "title": "Tax on Income of Individuals, Estates, and Trusts",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://legislature.vermont.gov/statutes/section/32/151/05822",
+      "cross_references": [],
+      "breadcrumbs": "32 V.S.A. > Part 3 > Chapter 151 > Subchapter 2 > § 5822",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates: 3.35%, 6.60%, 7.60%, and top rate 8.75% in Vermont."
+      ],
+      "text_es": [
+        "Impone tasas de impuesto individual sobre la renta: 3.35%, 6.60%, 7.60% y tasa máxima de 8.75% en Vermont."
+      ]
+    }
+  ]
+}

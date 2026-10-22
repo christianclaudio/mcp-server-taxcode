@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "jurisdiction": "PA",
+  "publications": [
+    {
+      "id": "pa-dor-it-bulletin-2021-01",
+      "category": "policy-bulletin",
+      "doc_number": "PA REV-BULL 2021-01",
+      "doc_date": "2021-06-15",
+      "title": "Pennsylvania Personal Income Tax Telework and Sourcing Guidance",
+      "summary": "Guidance from the Pennsylvania Department of Revenue concerning the convenience of the employer doctrine and withholding obligations for telecommuting employees.",
+      "source_url": "https://www.revenue.pa.gov/FormsandPublications/FormsPublications/Pages/default.aspx"
+    }
+  ]
+}

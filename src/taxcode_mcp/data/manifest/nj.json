@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "jurisdiction": "NJ",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "nj-stat-54a-1-2",
+      "url": "https://lis.njleg.state.nj.us/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "nj-stat-54a-2-1",
+      "url": "https://lis.njleg.state.nj.us/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "nj-admin-18-35-5-2",
+      "url": "https://www.nj.gov/treasury/taxation/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

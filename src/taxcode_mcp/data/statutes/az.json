@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "jurisdiction": "AZ",
+  "statutes": [
+    {
+      "id": "az-stat-43-1011",
+      "jurisdiction": "AZ",
+      "corpus": "A.R.S.",
+      "citation": "A.R.S. § 43-1011",
+      "section": "43-1011",
+      "title": "Taxes and Tax Rates - Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.azleg.gov/ars/43/01011.htm",
+      "cross_references": [
+        "A.R.S. § 43-104"
+      ],
+      "breadcrumbs": "A.R.S. > Title 43 > Chapter 10 > Article 1 > § 43-1011",
+      "source_note": "",
+      "text_en": [
+        "Imposes a flat individual income tax rate of 2.50% on Arizona taxable income, enacted by SB 1828 to replace graduated individual tax brackets."
+      ],
+      "text_es": [
+        "Impone una tasa impositiva fija del 2.50% sobre el ingreso gravable de Arizona de individuos, promulgada bajo SB 1828 eliminando tramos graduales anteriores."
+      ]
+    },
+    {
+      "id": "az-stat-43-104",
+      "jurisdiction": "AZ",
+      "corpus": "A.R.S.",
+      "citation": "A.R.S. § 43-104",
+      "section": "43-104",
+      "title": "Definitions - Resident and Presumption of Residency",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.azleg.gov/ars/43/00104.htm",
+      "cross_references": [
+        "A.R.S. § 43-1011"
+      ],
+      "breadcrumbs": "A.R.S. > Title 43 > Chapter 1 > Article 1 > § 43-104",
+      "source_note": "",
+      "text_en": [
+        "Defines resident as every individual in Arizona for other than a temporary or transitory purpose; individuals spending in the aggregate more than nine months (270 days) of the tax year in state are presumed residents."
+      ],
+      "text_es": [
+        "Define residente como todo individuo en Arizona para fines no temporales ni transitorios; quien pase en agregado más de nueve meses (270 días) en el estado se presume residente."
+      ]
+    }
+  ]
+}

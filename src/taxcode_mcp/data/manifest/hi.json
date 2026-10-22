@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "HI",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "hi-rev-stat-235-51",
+      "url": "https://www.capitol.hawaii.gov/docs/hrs.htm",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

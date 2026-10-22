@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "ND",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "nd-cent-code-57-38-30-3",
+      "url": "https://www.ndlegis.gov/cencode/t57c38.pdf",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

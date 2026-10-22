@@ -1,0 +1,10 @@
+# Full Statutory Corpus: RI
+
+## R.I. Gen. Laws § 44-30-1: Persons Subject to Tax - Rates
+`R.I.G.L. > Title 44 > Chapter 44-30 > § 44-30-1`
+
+### English
+Imposes graduated individual income tax rates of 3.75%, 4.75%, and 5.99% on federal adjusted gross income in Rhode Island.
+
+### Español
+Impone tasas de impuesto sobre el ingreso individual del 3.75%, 4.75% y 5.99% sobre el ingreso bruto ajustado federal en Rhode Island.

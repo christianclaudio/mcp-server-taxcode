@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "SC",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "sc-code-12-6-510",
+      "url": "https://www.scstatehouse.gov/code/t12c006.php",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

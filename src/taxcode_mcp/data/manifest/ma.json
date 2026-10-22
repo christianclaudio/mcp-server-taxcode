@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "jurisdiction": "MA",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "ma-const-amend-44",
+      "url": "https://malegislature.gov/Laws/Constitution",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ma-gl-62-4",
+      "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section4",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "ma-gl-62-1f",
+      "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section1",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

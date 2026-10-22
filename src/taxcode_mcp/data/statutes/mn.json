@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "MN",
+  "statutes": [
+    {
+      "id": "mn-stat-290-06",
+      "jurisdiction": "MN",
+      "corpus": "Minn. Stat.",
+      "citation": "Minn. Stat. § 290.06",
+      "section": "290.06",
+      "title": "Rates of Tax - Individuals",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.revisor.mn.gov/statutes/cite/290.06",
+      "cross_references": [],
+      "breadcrumbs": "Minn. Stat. > Chapter 290 > § 290.06",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated individual income tax rates: 5.35%, 6.80%, 7.85%, and top rate 9.85% in Minnesota."
+      ],
+      "text_es": [
+        "Impone tasas impositivas individuales graduadas: 5.35%, 6.80%, 7.85% y tasa máxima de 9.85% en Minnesota."
+      ]
+    }
+  ]
+}

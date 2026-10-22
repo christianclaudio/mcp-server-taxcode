@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "jurisdiction": "NC",
+  "statutes": [
+    {
+      "id": "nc-stat-ncgs-105-153-7",
+      "jurisdiction": "NC",
+      "corpus": "N.C.G.S.",
+      "citation": "N.C. Gen. Stat. § 105-153.7",
+      "section": "105-153.7",
+      "title": "Individual Income Tax Imposition and Rate",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/Section_105-153.7.html",
+      "cross_references": [
+        "N.C. Gen. Stat. § 105-153.3",
+        "N.C. Gen. Stat. § 105-153.5"
+      ],
+      "breadcrumbs": "N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.7",
+      "source_note": "",
+      "text_en": [
+        "Imposes individual income tax at a decreasing flat rate: 4.5% for 2024, 4.25% for 2025, and 3.99% for taxable years beginning on or after 2026."
+      ],
+      "text_es": [
+        "Impone un impuesto sobre la renta individual de tasa fija decreciente: 4.5% en 2024, 4.25% en 2025, y 3.99% para años tributarios 2026 y posteriores."
+      ]
+    },
+    {
+      "id": "nc-stat-ncgs-105-153-3",
+      "jurisdiction": "NC",
+      "corpus": "N.C.G.S.",
+      "citation": "N.C. Gen. Stat. § 105-153.3",
+      "section": "105-153.3",
+      "title": "Definitions - Resident Individual",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/Section_105-153.3.html",
+      "cross_references": [
+        "N.C. Gen. Stat. § 105-153.7"
+      ],
+      "breadcrumbs": "N.C.G.S. > Chapter 105 > Article 4 > Part 2 > § 105-153.3",
+      "source_note": "",
+      "text_en": [
+        "Defines resident individual as one domiciled in North Carolina or who resides in state for more than 183 days during the taxable year creating a rebuttable presumption of residency."
+      ],
+      "text_es": [
+        "Define individuo residente como quien reside o tiene domicilio en Carolina del Norte, o quien pasa más de 183 días en el estado durante el año contributivo presumiendo residencia."
+      ]
+    }
+  ]
+}

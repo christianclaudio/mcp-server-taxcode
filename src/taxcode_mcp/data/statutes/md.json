@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "jurisdiction": "MD",
+  "statutes": [
+    {
+      "id": "md-stat-tg-10-105",
+      "jurisdiction": "MD",
+      "corpus": "Md. Code",
+      "citation": "Md. Code Ann., Tax-Gen. § 10-105",
+      "section": "10-105",
+      "title": "Individual State Income Tax Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-105",
+      "cross_references": [
+        "Md. Code Ann., Tax-Gen. § 10-101",
+        "Md. Code Ann., Tax-Gen. § 10-106"
+      ],
+      "breadcrumbs": "Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-105",
+      "source_note": "",
+      "text_en": [
+        "Imposes graduated Maryland state income tax rates from 2.0% up to 5.75% for taxable income exceeding $250,000 for single filers or $300,000 for married couples filing jointly."
+      ],
+      "text_es": [
+        "Impone tasas impositivas estatales graduadas desde 2.0% hasta 5.75% sobre el ingreso gravable que exceda de $250,000 (solteros) o $300,000 (casados rindiendo conjuntamente)."
+      ]
+    },
+    {
+      "id": "md-stat-tg-10-101",
+      "jurisdiction": "MD",
+      "corpus": "Md. Code",
+      "citation": "Md. Code Ann., Tax-Gen. § 10-101",
+      "section": "10-101",
+      "title": "Definitions - Resident Individual",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-101",
+      "cross_references": [
+        "Md. Code Ann., Tax-Gen. § 10-105"
+      ],
+      "breadcrumbs": "Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-101",
+      "source_note": "",
+      "text_en": [
+        "Defines a resident individual as one who is domiciled in Maryland on the last day of the taxable year, or who maintains a place of abode in Maryland for more than six months and is physically present for 183 days or more."
+      ],
+      "text_es": [
+        "Define individuo residente como quien tiene domicilio en Maryland el último día del año contributivo, o mantiene morada por más de 6 meses y está presente físicamente 183 días o más."
+      ]
+    },
+    {
+      "id": "md-stat-tg-10-106",
+      "jurisdiction": "MD",
+      "corpus": "Md. Code",
+      "citation": "Md. Code Ann., Tax-Gen. § 10-106",
+      "section": "10-106",
+      "title": "County and Local Piggyback Income Tax",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-106",
+      "cross_references": [
+        "Md. Code Ann., Tax-Gen. § 10-105"
+      ],
+      "breadcrumbs": "Md. Code > Tax-General > Title 10 > Subtitle 1 > § 10-106",
+      "source_note": "",
+      "text_en": [
+        "Mandates that each Maryland county and Baltimore City levy a local piggyback income tax rate between 2.25% and 3.20%, collected by the Comptroller on the state tax return."
+      ],
+      "text_es": [
+        "Requiere que cada condado de Maryland y la ciudad de Baltimore cobren un impuesto local sobre la renta ('piggyback') de entre 2.25% y 3.20%, recaudado en la planilla estatal."
+      ]
+    }
+  ]
+}

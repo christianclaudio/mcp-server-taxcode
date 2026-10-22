@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from typing import Annotated, Any
+from urllib.parse import quote
 
 from fastmcp import FastMCP
 from fastmcp.server.transforms import ToolTransform
@@ -14,6 +15,18 @@ from pydantic import Field
 from taxcode_mcp.db import PUBLICATION_CATEGORIES, SNIPPET_MAX_CHARS, db
 from taxcode_mcp.disclaimers import output_notice, reference_labels
 from taxcode_mcp.errors import tool_error
+from taxcode_mcp.paging import (
+    LIST_MAX_LIMIT,
+    RESPONSE_MAX_CHARS,
+    TEXT_PAGE_CHARS,
+    PageCursorError,
+    applied_limit,
+    decode_cursor,
+    encode_cursor,
+    fit_items,
+    page_resource_text,
+    page_statute,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +82,11 @@ statutes_server.add_transform(
     description=(
         "Retrieve exact statutory language, temporal version, and metadata by "
         "citation, section code, or the record id from statutes_search_tax_code "
-        "(pass a result's id as citation_or_section to get its full text)."
+        "(pass a result's id as citation_or_section to get its full text). "
+        f"Long text comes in pages of up to {TEXT_PAGE_CHARS:,} characters per text field "
+        f"(each result stays under {RESPONSE_MAX_CHARS:,} characters): data.text_page gives "
+        "the offset and full lengths, and while data.next_cursor is not null, call again "
+        "with page_cursor set to it for the next page."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "read_only"},
@@ -87,15 +104,32 @@ async def lookup_statute(
     jurisdiction: str | None = None,
     tax_year: int | None = None,
     lang: str = "en",
+    page_cursor: Annotated[
+        str | None,
+        Field(
+            description=(
+                "Optional next_cursor from a previous statutes_lookup_statute result, to "
+                "read the next page of that same version's text. When set, it decides "
+                "the version, language and position; the other arguments are ignored."
+            )
+        ),
+    ] = None,
 ) -> dict[str, Any]:
     """Find a statute by record id, exact citation, or section code in DuckDB."""
     try:
-        result = db.lookup_statute(
-            citation_or_section=citation_or_section,
-            jurisdiction=jurisdiction,
-            tax_year=tax_year,
-            lang=lang,
-        )
+        offset = 0
+        if page_cursor:
+            record_id, lang, offset = decode_cursor(page_cursor)
+            result = db.lookup_statute(citation_or_section=record_id, lang=lang)
+            if result is not None and result["id"] != record_id:
+                result = None
+        else:
+            result = db.lookup_statute(
+                citation_or_section=citation_or_section,
+                jurisdiction=jurisdiction,
+                tax_year=tax_year,
+                lang=lang,
+            )
         if result is None:
             msg = f"Statute matching '{citation_or_section}'"
             if tax_year:
@@ -111,7 +145,11 @@ async def lookup_statute(
                 **reference_labels(),
                 **output_notice(),
             }
-        return {"status": "success", "data": result, **output_notice()}
+
+        def wrap(data: dict[str, Any]) -> dict[str, Any]:
+            return {"status": "success", "data": data, **output_notice()}
+
+        return wrap(page_statute(result, offset, wrap))
     except Exception as exc:
         failure = tool_error(exc)
     raise failure from None
@@ -127,7 +165,9 @@ async def lookup_statute(
         f"(up to {SNIPPET_MAX_CHARS} characters around the first matched term) with its "
         "id, citation, title, jurisdiction, year, validity and content labels, not the "
         "full text: call statutes_lookup_statute with citation_or_section set to the "
-        "result's id to read the full text."
+        f"result's id to read the full text. limit is clamped to 1..{LIST_MAX_LIMIT} "
+        "results per call (see limit_applied); while next_offset is not null, call again "
+        "with offset set to it for the next page."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},
@@ -153,29 +193,49 @@ async def search_tax_code(
         ),
     ] = None,
     tax_year: int | None = None,
-    limit: int = 5,
+    limit: Annotated[
+        int,
+        Field(
+            description=(
+                f"Results per call (default 5), clamped to 1..{LIST_MAX_LIMIT}: a value "
+                f"under 1 is raised to 1 and one over {LIST_MAX_LIMIT} is lowered."
+            )
+        ),
+    ] = 5,
+    offset: Annotated[
+        int, Field(ge=0, description="Optional number of ranked results to skip (paging).")
+    ] = 0,
     client_id: str = "taxcode-client-default",
 ) -> dict[str, Any]:
     """Search statutes by keywords or concepts in DuckDB."""
     try:
-        matches = db.search_statutes(
+        page_size = applied_limit(limit)
+        found = db.search_statutes(
             query=query,
             jurisdiction=jurisdiction,
             corpus=corpus,
             tax_year=tax_year,
-            limit=limit,
+            limit=page_size + 1,
+            offset=offset,
         )
-        return {
-            "status": "success",
-            "query": query,
-            "tax_year": tax_year,
-            "jurisdiction": jurisdiction,
-            "count": len(matches),
-            "results": matches,
-            "full_text": FULL_TEXT_HINT,
-            "client_id": client_id,
-            **output_notice(),
-        }
+
+        def build(matches: list[dict[str, Any]], next_offset: int | None) -> dict[str, Any]:
+            return {
+                "status": "success",
+                "query": query,
+                "tax_year": tax_year,
+                "jurisdiction": jurisdiction,
+                "count": len(matches),
+                "results": matches,
+                "limit_applied": page_size,
+                "offset": offset,
+                "next_offset": next_offset,
+                "full_text": FULL_TEXT_HINT,
+                "client_id": client_id,
+                **output_notice(),
+            }
+
+        return fit_items(found[:page_size], len(found) > page_size, offset, build)
     except Exception as exc:
         failure = tool_error(exc)
     raise failure from None
@@ -183,43 +243,100 @@ async def search_tax_code(
 
 @statutes_server.tool(
     name="list_publications",
-    description="List administrative circulars, tax guidance publications, and bulletins.",
+    description=(
+        "List administrative circulars, tax guidance publications, and bulletins, newest "
+        f"first. limit is clamped to 1..{LIST_MAX_LIMIT} per call (see limit_applied); "
+        "while next_offset is not null, call again with offset set to it for the next page."
+    ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "publications", "read_only"},
 )
 async def list_publications(
     category: Annotated[str | None, Field(description=CATEGORY_DESCRIPTION)] = None,
     since_date: str | None = None,
-    limit: int = 10,
+    limit: Annotated[
+        int,
+        Field(
+            description=(
+                f"Publications per call (default 10), clamped to 1..{LIST_MAX_LIMIT}: a "
+                f"value under 1 is raised to 1 and one over {LIST_MAX_LIMIT} is lowered."
+            )
+        ),
+    ] = 10,
+    offset: Annotated[
+        int, Field(ge=0, description="Optional number of publications to skip (paging).")
+    ] = 0,
 ) -> dict[str, Any]:
     """List administrative publications from DuckDB."""
     try:
-        pubs = db.list_publications(category=category, since_date=since_date, limit=limit)
-        return {
-            "status": "success",
-            "count": len(pubs),
-            "publications": pubs,
-            **output_notice(),
-        }
+        page_size = applied_limit(limit)
+        found = db.list_publications(
+            category=category, since_date=since_date, limit=page_size + 1, offset=offset
+        )
+
+        def build(pubs: list[dict[str, Any]], next_offset: int | None) -> dict[str, Any]:
+            return {
+                "status": "success",
+                "count": len(pubs),
+                "publications": pubs,
+                "limit_applied": page_size,
+                "offset": offset,
+                "next_offset": next_offset,
+                **output_notice(),
+            }
+
+        return fit_items(found[:page_size], len(found) > page_size, offset, build)
     except Exception as exc:
         failure = tool_error(exc)
     raise failure from None
 
 
-@statutes_server.resource("taxcode://statutes/{jurisdiction}/{section}")
-async def get_statute_resource(jurisdiction: str, section: str) -> str:
-    """Fetch statutory text as a resource by jurisdiction and section."""
-    res = db.lookup_statute(citation_or_section=section, jurisdiction=jurisdiction)
+# The root mounts this server under the "statutes" namespace, and FastMCP's mount puts
+# the namespace after the scheme (taxcode://{x} becomes taxcode://statutes/{x}). So the
+# template below has no statutes/ segment of its own, and clients see
+# taxcode://statutes/{jurisdiction}/{section}{?page_cursor}.
+STATUTE_RESOURCE_BASE = "taxcode://statutes"
+
+
+@statutes_server.resource(
+    "taxcode://{jurisdiction}/{section}{?page_cursor}",
+    description=(
+        "Statutory text by jurisdiction and section. Long text comes in pages of up to "
+        f"{TEXT_PAGE_CHARS:,} characters (each read stays under {RESPONSE_MAX_CHARS:,} "
+        "characters); a page that is not the last ends with the URI of the next page, "
+        "whose page_cursor is the same cursor statutes_lookup_statute returns as next_cursor."
+    ),
+)
+async def get_statute_resource(jurisdiction: str, section: str, page_cursor: str = "") -> str:
+    """Fetch one page of statutory text as a resource by jurisdiction and section."""
+    offset = 0
+    if page_cursor:
+        try:
+            record_id, lang, offset = decode_cursor(page_cursor)
+        except PageCursorError as exc:
+            return f"{exc}."
+        res = db.lookup_statute(citation_or_section=record_id, lang=lang)
+        if res is not None and res["id"] != record_id:
+            res = None
+    else:
+        res = db.lookup_statute(citation_or_section=section, jurisdiction=jurisdiction)
     if not res:
         return f"Statute '{section}' in jurisdiction '{jurisdiction}' not found."
     sup = res["superseded_year"]
     superseded = "current / en vigor" if sup is None else str(sup)
-    return (
+    header = (
         f"{res['citation']} - {res['title']}\n"
         f"Jurisdiction: {res['jurisdiction']} ({res['corpus']})\n"
         f"Effective Year: {res['effective_year']}\n"
         f"Superseded Year / Año de sustitución: {superseded}\n"
         f"Validity: {res['validity']['en']}\n"
         f"Vigencia: {res['validity']['es']}\n\n"
-        f"{res['operative_text']}"
     )
+    record_id, lang = res["id"], res["language"]
+
+    path = f"{quote(jurisdiction, safe='')}/{quote(section, safe='')}"
+
+    def next_uri(end: int) -> str:
+        return f"{STATUTE_RESOURCE_BASE}/{path}?page_cursor={encode_cursor(record_id, lang, end)}"
+
+    return page_resource_text(header, res["operative_text"] or "", offset, next_uri)

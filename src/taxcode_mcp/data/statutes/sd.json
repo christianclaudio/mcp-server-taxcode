@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "SD",
+  "statutes": [
+    {
+      "id": "sd-const-art-11-sec-2",
+      "jurisdiction": "SD",
+      "corpus": "S.D. Const.",
+      "citation": "S.D. Const. art. XI, § 2",
+      "section": "Art. XI, § 2",
+      "title": "Constitutional Taxation Power - Incomes and Property",
+      "effective_year": 1978,
+      "superseded_year": null,
+      "source_url": "https://sdlegislature.gov/Statutes/Constitution/2042898",
+      "cross_references": [],
+      "breadcrumbs": "S.D. Const. > Article XI > § 2",
+      "source_note": "",
+      "text_en": [
+        "Empowers the South Dakota Legislature to levy graduated personal income taxes; the state currently imposes no personal income tax by legislative policy."
+      ],
+      "text_es": [
+        "Faculta a la Legislatura a imponer impuestos graduales sobre la renta individual; Dakota del Sur no cobra impuesto sobre ingresos por política legislativa."
+      ]
+    }
+  ]
+}

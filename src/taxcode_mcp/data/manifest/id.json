@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "jurisdiction": "ID",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "id-code-63-3024",
+      "url": "https://legislature.idaho.gov/statutesrules/idstat/title63/t63ch30/sect63-3024/",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "jurisdiction": "WA",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "wa-rcw-82-87-040",
+      "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.040",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "wa-rcw-82-87-020",
+      "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.020",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "wa-const-7-1",
+      "url": "https://leg.wa.gov/CodeReviser/Pages/WAConstitution.aspx",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "not_recorded",
+      "content_sha256": "not_recorded",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    }
+  ]
+}

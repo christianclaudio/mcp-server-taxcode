@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "jurisdiction": "WY",
+  "statutes": [
+    {
+      "id": "wy-const-art-15-sec-18",
+      "jurisdiction": "WY",
+      "corpus": "Wyo. Const.",
+      "citation": "Wyo. Const. art. 15, § 18",
+      "section": "Art. 15, § 18",
+      "title": "Full Tax Credit Requirement for Any Individual Income Tax",
+      "effective_year": 1974,
+      "superseded_year": null,
+      "source_url": "https://wyoleg.gov/statutes/compress/title97.pdf",
+      "cross_references": [],
+      "breadcrumbs": "Wyo. Const. > Article 15 > § 18",
+      "source_note": "",
+      "text_en": [
+        "Constitutional guarantee conditioning any income tax upon full credit for sales, use, and ad valorem property taxes paid in Wyoming."
+      ],
+      "text_es": [
+        "Garantía constitucional que condiciona cualquier impuesto sobre la renta a acreditar el 100% de impuestos sobre ventas, uso y ad valorem pagados en Wyoming."
+      ]
+    }
+  ]
+}

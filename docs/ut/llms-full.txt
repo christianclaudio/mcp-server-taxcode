@@ -1,0 +1,10 @@
+# Full Statutory Corpus: UT
+
+## Utah Code Ann. § 59-10-104: Tax Basis - Rates for Individuals
+`Utah Code > Title 59 > Chapter 10 > Part 1 > § 59-10-104`
+
+### English
+Imposes a flat individual income tax rate of 4.65% on state taxable income under SB 69 in Utah.
+
+### Español
+Impone una tasa fija de impuesto sobre ingresos individuales del 4.65% sobre el ingreso gravable bajo SB 69 en Utah.

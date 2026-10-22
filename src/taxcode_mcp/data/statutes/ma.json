@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "jurisdiction": "MA",
+  "statutes": [
+    {
+      "id": "ma-const-amend-44",
+      "jurisdiction": "MA",
+      "corpus": "MACONST",
+      "citation": "Mass. Const. amend. art. XLIV",
+      "section": "Art. XLIV",
+      "title": "Fair Share Amendment (4% Millionaires' Surtax)",
+      "effective_year": 2023,
+      "superseded_year": null,
+      "source_url": "https://malegislature.gov/Laws/Constitution",
+      "cross_references": [
+        "M.G.L. c. 62 § 4"
+      ],
+      "breadcrumbs": "Mass. Const. > Amendments > Article XLIV",
+      "source_note": "",
+      "text_en": [
+        "Constitutional amendment imposing an additional 4% surtax on the portion of annual taxable income exceeding $1,000,000, creating a top rate of 9.0%."
+      ],
+      "text_es": [
+        "Enmienda constitucional que impone una sobretasa adicional del 4% sobre la porción del ingreso imponible anual que exceda $1,000,000 (indexado por inflación)."
+      ]
+    },
+    {
+      "id": "ma-gl-62-4",
+      "jurisdiction": "MA",
+      "corpus": "MGL",
+      "citation": "M.G.L. c. 62 § 4",
+      "section": "62-4",
+      "title": "Personal Income Tax Rates",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section4",
+      "cross_references": [
+        "Mass. Const. amend. art. XLIV",
+        "M.G.L. c. 62 § 1"
+      ],
+      "breadcrumbs": "M.G.L. > Part I > Title IX > Chapter 62 > Section 4",
+      "source_note": "",
+      "text_en": [
+        "Standard 5.0% flat income tax rate on Part B taxable personal income (wages, trade, business, and interest income)."
+      ],
+      "text_es": [
+        "Tasa básica de impuesto sobre el ingreso personal de Massachusetts del 5.0% sobre ingreso imponible de Parte B (salarios, negocios y pensiones)."
+      ]
+    },
+    {
+      "id": "ma-gl-62-1f",
+      "jurisdiction": "MA",
+      "corpus": "MGL",
+      "citation": "M.G.L. c. 62 § 1(f)",
+      "section": "62-1(f)",
+      "title": "Definition of Resident (Domicile and 183-Day Rule)",
+      "effective_year": 2024,
+      "superseded_year": null,
+      "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section1",
+      "cross_references": [
+        "M.G.L. c. 62 § 4"
+      ],
+      "breadcrumbs": "M.G.L. > Part I > Title IX > Chapter 62 > Section 1(f)",
+      "source_note": "",
+      "text_en": [
+        "Defines resident as any natural person domiciled in Massachusetts, or non-domiciliary maintaining a permanent place of abode and spending more than 183 days in the state."
+      ],
+      "text_es": [
+        "Define residente como persona domiciliada en Massachusetts o no domiciliada que mantenga un lugar permanente de morada y pase más de 183 días en el estado."
+      ]
+    }
+  ]
+}

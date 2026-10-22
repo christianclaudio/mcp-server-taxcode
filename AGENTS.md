@@ -44,6 +44,9 @@ Host configuration JSON for these doc servers (`mcp_config.json` and other deskt
 - `src/<name>_mcp/auth.py` — `SharedTokenVerifier` (FastMCP `TokenVerifier`) for `<NAME>_MCP_AUTH_TOKEN` and the HTTP bind policy; the verifier is attached at server build, so `fastmcp run` and `http_app()` enforce the token too (`COOKBOOK.md` Recipe 8).
 - `src/<name>_mcp/tools/<domain>.py` — domain sub-servers (template ships `system.py`, `items.py`); re-exported from `tools/__init__.py`.
 - `src/<name>_mcp/client.py` — async HTTP client; `ssrf.py` — SSRF / DNS-rebinding guard; `errors.py` — exceptions and secret redaction; `middleware.py` — parent and child middleware; `config.py` — settings.
+- `src/taxcode_mcp/data/` — the single source of truth for statute and publication rows: `jurisdictions.json` (catalog order), `statutes/<code>.json`, `publications/<code>.json`, and `manifest/<code>.json` (one source record per row). `src/taxcode_mcp/catalog.py` loads and validates them; `db.py` seeds DuckDB from them. Row layout, manifest fields and how to add a row: `CONTRIBUTING.md` (Adding or changing a row).
+- `scripts/build_catalog.py` — rewrites the data files in canonical form and generates `docs/<code>/*.md`, `docs/<code>/llms-full.txt` (one jurisdiction's full text), `docs/llms.txt` and `docs/llms-full.txt` (the index of the per-jurisdiction files) from them; `--check` (run in CI and by `tests/test_catalog.py`) fails on a schema or canonical-form error, an incomplete or mismatched manifest entry, or docs that differ from the generated output. Never edit generated docs by hand.
+- `src/taxcode_mcp/paging.py` — hard response cap (32,000 characters of JSON) and paging for the statutes tools: `statutes_lookup_statute` pages long text (`page_cursor` / `next_cursor`), search and publications clamp `limit` to 1..25 items per call (`offset` / `next_offset`), and the `taxcode://statutes/{jurisdiction}/{section}{?page_cursor}` resource returns the same 8,000-character pages, ending a non-final page with the full URI of the next one (`...?page_cursor=`). The template has no `statutes/` segment of its own: the `statutes` mount namespace supplies it.
 - `scripts/check_tool_contract.py` — source of truth for the expected tool set and annotations. Do not hard-code tool counts elsewhere.
 - `scripts/check_openapi_drift.py`, `scripts/check_conformance.sh` + `conformance-baseline.yml` — drift and protocol conformance.
 - `tests/` — offline unit, layered-composition, and protocol tests; `test_e2e_live.py` is opt-in (`-m e2e`).
@@ -186,6 +189,9 @@ uv run python scripts/check_tool_contract.py
 
 # Upstream OpenAPI / route drift check
 uv run python scripts/check_openapi_drift.py
+
+# Data files, source manifest and generated docs are current
+uv run python scripts/build_catalog.py --check
 
 # Protocol integration tests (stdio handshake & stateless streamable HTTP)
 uv run pytest tests/test_protocol.py
