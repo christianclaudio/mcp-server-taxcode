@@ -379,6 +379,7 @@ def _check_steps(
         at = f"{where}[{i}]"
         _check(isinstance(step, dict), f"{at}: must be an object")
         _check_keys(step, fields, at)
+        check_row(step, at)
         bound = step[key]
         order = f"{at}: steps out of order; sort by {key} from highest to lowest, null last"
         if bound is None:
@@ -387,7 +388,6 @@ def _check_steps(
             _check(previous is None or bound < previous, order)
             _check(i < len(steps) - 1, f"{at}: the last step's {key} must be null")
             previous = bound
-        check_row(step, at)
 
 
 def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
