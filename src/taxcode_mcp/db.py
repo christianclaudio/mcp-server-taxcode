@@ -535,6 +535,7 @@ class TaxDatabase:
         tax_year: int | None = None,
         lang: str = "en",
         limit: int = 5,
+        offset: int = 0,
     ) -> list[dict[str, Any]]:
         """Search statutes across title, citation, and multilingual operative text.
 
@@ -547,7 +548,8 @@ class TaxDatabase:
 
         Each row carries a ``snippet`` (see :func:`make_snippet`) in place of the
         full text, plus ``snippet_language``; ``lookup_statute(id)`` returns the
-        full text. Matching and ranking read the full text as before.
+        full text. Matching and ranking read the full text as before. ``offset``
+        skips that many ranked rows (paging).
         """
         phrase = " ".join(query.strip().lower().split())
         terms = search_terms(phrase)
@@ -599,7 +601,8 @@ class TaxDatabase:
                 rows.sort(key=rank)
                 output: list[dict[str, Any]] = []
                 preferred = "en" if lang.lower() == "en" else "es"
-                for r in rows[: max(limit, 0)]:
+                start = max(offset, 0)
+                for r in rows[start : start + max(limit, 0)]:
                     by_lang = {"en": r[7], "es": r[6]}
                     other = "es" if preferred == "en" else "en"
                     snippet, snippet_lang = pick_snippet(
@@ -636,8 +639,9 @@ class TaxDatabase:
         category: str | None = None,
         since_date: str | None = None,
         limit: int = 10,
+        offset: int = 0,
     ) -> list[dict[str, Any]]:
-        """List administrative circulars and determinations."""
+        """List administrative circulars and determinations, newest first, from ``offset``."""
         with self._lock:
             conn = self._get_read_conn()
             try:
@@ -656,8 +660,9 @@ class TaxDatabase:
                     sql += " AND doc_date >= ?"
                     params.append(since_date.strip())
 
-                sql += " ORDER BY doc_date DESC LIMIT ?;"
-                params.append(limit)
+                # ``id`` breaks doc_date ties so pages never repeat or skip a row.
+                sql += " ORDER BY doc_date DESC, id LIMIT ? OFFSET ?;"
+                params.extend([limit, max(offset, 0)])
 
                 rows = conn.execute(sql, params).fetchall()
                 return [

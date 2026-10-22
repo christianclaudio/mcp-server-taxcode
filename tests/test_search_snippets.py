@@ -224,7 +224,12 @@ async def test_every_result_id_works_in_lookup_tool(query: str) -> None:
         data = found["data"]
         assert data["id"] == row["id"]
         assert data["citation"] == row["citation"]
-        text = data["text_en"] if row["snippet_language"] == "en" else data["text_es"]
+        field = "text_en" if row["snippet_language"] == "en" else "text_es"
+        # Long text comes in pages; join them to search the whole section.
+        text = data[field]
+        while data["next_cursor"]:
+            data = (await server.lookup_statute("", page_cursor=data["next_cursor"]))["data"]
+            text += data[field]
         assert _body(row["snippet"]) in _flat(text)
 
 
