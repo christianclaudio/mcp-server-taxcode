@@ -9,8 +9,8 @@ row the server serves and every generated docs page:
   ``text_es`` are stored as lists of lines (joined with ``"\\n"`` on load), so a
   change to one line of a long section shows as a one-line diff.
 - ``publications/<code>.json``: publications whose id starts with ``<code>-``.
-- ``manifest/<code>.json``: one source record per statute and publication row of
-  that jurisdiction (see :data:`MANIFEST_FIELDS`).
+- ``manifest/<code>.json``: one source record per statute and publication row and
+  per rate table of that jurisdiction (see :data:`MANIFEST_FIELDS`).
 - ``rates/<code>.json``: the rate table the compliance tools compute that state's tax
   from (deductions, brackets, rates, per-year values). :data:`RATE_TABLE_MODELS` names
   every state that has one and the shape of its ``params`` (see :func:`load_rate_tables`).
@@ -89,7 +89,7 @@ MANIFEST_FIELDS: tuple[str, ...] = (
     "effective_date",
     "verification",
 )
-MANIFEST_KINDS = frozenset({"statute", "publication"})
+MANIFEST_KINDS = frozenset({"statute", "publication", "rate_table"})
 VERIFICATION_STATUSES = frozenset({"verified_verbatim", "summary", NOT_RECORDED})
 # Which text the source at ``url`` is: the law as enacted, or a compilation with its
 # later amendments folded in (such as an OGP "según enmendada" text).
@@ -184,6 +184,8 @@ class Catalog:
     statutes: list[dict[str, Any]] = field(default_factory=list)
     publications: list[dict[str, Any]] = field(default_factory=list)
     manifest: list[dict[str, Any]] = field(default_factory=list)
+    # State code -> whole ``rates/<code>.json`` document (loaded with the manifest).
+    rate_tables: dict[str, dict[str, Any]] = field(default_factory=dict)
     # File stem -> parsed JSON document, for the canonical-form check.
     documents: dict[str, Any] = field(default_factory=dict)
 
@@ -265,7 +267,8 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
     """Load and validate every row under ``root``; raise :class:`CatalogError` on a bad file.
 
     ``with_manifest`` also loads the manifest entries (schema only; see
-    :func:`manifest_errors` for the cross-check against the rows).
+    :func:`manifest_errors` for the cross-check against the rows) and the rate tables
+    they describe.
     """
     codes = _read(root / "jurisdictions.json")
     _check(
@@ -317,7 +320,17 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
                 where = f"manifest/{stem}.json entry {entry.get('id', '?')!r}"
                 _check_keys(entry, MANIFEST_FIELDS, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
+    if with_manifest:
+        for code in RATE_TABLE_MODELS:
+            _check(code in codes, f"jurisdictions.json: rate table state {code!r} is missing")
+            path = root / "rates" / f"{file_stem(code)}.json"
+            catalog.rate_tables[code] = rate_table_document(path, code)
     return catalog
+
+
+def rate_table_id(code: str) -> str:
+    """Manifest ``id`` of a state's rate table (``"GA"`` -> ``"ga-rates"``)."""
+    return f"{file_stem(code)}-rates"
 
 
 def _is_amount(value: Any) -> bool:
@@ -566,7 +579,9 @@ def manifest_errors(catalog: Catalog) -> list[str]:
 
     Each statute and publication row needs exactly one entry, in the manifest file of
     its jurisdiction (statutes) or id prefix (publications), whose ``url`` equals the
-    row's ``source_url``. Every field must be present; an unknown value is the explicit
+    row's ``source_url``. So does each rate table (kind ``rate_table``, id
+    ``<code>-rates``, in its state's manifest file, ``url`` equal to the table's
+    ``source_url``). Every field must be present; an unknown value is the explicit
     string ``"not_recorded"``, never a missing key.
     """
     rows: dict[tuple[str, str], tuple[str, str]] = {}
@@ -574,6 +589,8 @@ def manifest_errors(catalog: Catalog) -> list[str]:
         rows[("statute", s["id"])] = (file_stem(s["jurisdiction"]), s["source_url"])
     for p in catalog.publications:
         rows[("publication", p["id"])] = (publication_stem(p), p["source_url"])
+    for code, table in catalog.rate_tables.items():
+        rows[("rate_table", rate_table_id(code))] = (file_stem(code), table["source_url"])
     errors: list[str] = []
     seen: set[tuple[str, str]] = set()
     for entry in catalog.manifest:
