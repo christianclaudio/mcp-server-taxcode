@@ -245,6 +245,35 @@ UPSTREAM_HOSTS = [
 PUBLIC_IP = "93.184.215.14"
 
 
+def test_upstream_endpoints_and_fixed_sources_avoid_dead_and_redirecting_urls() -> None:
+    """Pins that replaced a 404, a deprecated API or a redirect on main stay replaced."""
+    from taxcode_mcp.db import INITIAL_STATUTES
+
+    assert UPSTREAM_ENDPOINTS["OGP_PR"] == (
+        "https://bvirtualogp.pr.gov/ogp/Bvirtual/Pages/default.aspx"
+    )
+    assert UPSTREAM_ENDPOINTS["eCFR_API"] == "https://www.ecfr.gov/api/versioner/v1/titles.json"
+    dead = {
+        "https://bvirtualogp.pr.gov/",
+        "https://dor.georgia.gov/taxes/individual-income-tax",
+    }
+    for row in INITIAL_STATUTES:
+        assert row["source_url"] not in dead, row["id"]
+        assert "www.ecfr.gov/on/" not in row["source_url"], row["id"]
+    seeds = {s["id"]: s for s in INITIAL_STATUTES}
+    assert seeds["pr-act22-2012"]["source_url"] == (
+        "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/"
+        "Desarrollo%20Econ%C3%B3mico/22-2012/22-2012.pdf"
+    )
+    for sid in (
+        "ga-ocga-48-7-20-2024",
+        "ga-ocga-48-7-20-2025",
+        "ga-ocga-48-7-20-2026",
+        "ga-ocga-48-7-27",
+    ):
+        assert seeds[sid]["source_url"] == "https://dor.georgia.gov/taxes/taxes-individuals", sid
+
+
 def test_check_upstream_endpoints_connects_only_to_checked_addresses() -> None:
     """Each host is looked up once and dialled at the checked IP; SNI and Host keep the name."""
     net = FakeNetwork()
@@ -445,7 +474,10 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
     statute_sources = {
         "us-irc-957": USLM_TITLE26_SOURCE_URL,
         "us-irc-6688": USLM_TITLE26_SOURCE_URL,
-        "us-cfr-1-937-3": (f"https://www.ecfr.gov/on/{ECFR_TITLE26_DATE}/title-26/section-1.937-3"),
+        "us-cfr-1-937-3": (
+            "https://www.ecfr.gov/api/versioner/v1/full/"
+            f"{ECFR_TITLE26_DATE}/title-26.xml?section=1.937-3"
+        ),
         "pr-cri-1031-02": cri_pdf,
         "pr-cri-1062-01": cri_pdf,
         "pr-cri-1062-03": cri_pdf,

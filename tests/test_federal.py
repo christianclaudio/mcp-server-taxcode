@@ -141,12 +141,21 @@ def test_federal_irc_rows_in_seeds_and_ingest() -> None:
 
 
 def test_treasury_regulation_rows_cite_ecfr_date() -> None:
-    """The three §1.937 regulations cite the dated eCFR point-in-time URL."""
+    """The three §1.937 regulations cite the dated eCFR versioner XML for their section.
+
+    The eCFR HTML pages (``/on/<date>/...``) redirect automated clients to a bot check,
+    so the rows cite the official point-in-time API, which answers 200 without a redirect.
+    """
     seeds = {s["id"]: s for s in INITIAL_STATUTES}
-    for sid in ("us-cfr-1-937-1", "us-cfr-1-937-2", "us-cfr-1-937-3"):
-        url = seeds[sid]["source_url"]
-        assert urlparse(url).netloc == "www.ecfr.gov"
-        assert f"/on/{ECFR_TITLE26_DATE}/" in url
+    for sid, section in (
+        ("us-cfr-1-937-1", "1.937-1"),
+        ("us-cfr-1-937-2", "1.937-2"),
+        ("us-cfr-1-937-3", "1.937-3"),
+    ):
+        url = urlparse(seeds[sid]["source_url"])
+        assert url.scheme == "https" and url.netloc == "www.ecfr.gov"
+        assert url.path == f"/api/versioner/v1/full/{ECFR_TITLE26_DATE}/title-26.xml"
+        assert url.query == f"section={section}"
 
 
 def test_irs_publications_in_seeds_and_ingest() -> None:
