@@ -230,6 +230,21 @@ GA_PRE_FLAT_ESTIMATE_NOTE = (
 )
 
 
+# Colorado's table holds the rate from tax year 2022 on (DOR income tax guide: 4.4% for 2022
+# and 2023, 4.25% for 2024, 4.4% for 2025). An earlier year gets the oldest step, labeled.
+CO_FIRST_SOURCED_YEAR = 2022
+
+
+def _co_estimate_note(tax_year: int, rate: float) -> str:
+    """The estimate label for a Colorado tax year before the table's first sourced year."""
+    if tax_year >= CO_FIRST_SOURCED_YEAR:
+        return ""
+    return (
+        f" [ESTIMATE: this table holds Colorado's rate from tax year {CO_FIRST_SOURCED_YEAR}; "
+        f"an earlier year's rate is not in it, so the {_pct(rate)} rate is used]"
+    )
+
+
 def _ga_estimate_note(tax_year: int) -> str:
     """The estimate label for a tax year before Georgia's flat rate; empty from 2024 on."""
     return GA_PRE_FLAT_ESTIMATE_NOTE if tax_year < GA_FLAT_RATE_FIRST_YEAR else ""
@@ -735,7 +750,7 @@ def evaluate_state_residency(
         rate_authority = "Colo. Rev. Stat. § 39-22-104"
         co_step = _year_step(RATE_TABLES["CO"]["rates"], tax_year)
         co_rate = float(co_step["rate"])
-        rate_desc = str(co_step["rate_desc"])
+        rate_desc = f"{co_step['rate_desc']}{_co_estimate_note(tax_year, co_rate)}"
         standard_ded = _allowance(RATE_TABLES["CO"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * co_rate, 2) if is_resident else 0.0

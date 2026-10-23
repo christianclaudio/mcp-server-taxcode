@@ -558,3 +558,18 @@ def test_2023_keeps_the_2023_figures() -> None:
         tax = _resident_tax("MA", year, agi)
         assert tax["estimated_state_tax"] == round((threshold + 10000.0) * 0.05 + 400.0, 2)
         assert f"${threshold:,.0f}" in tax["rate_description"], year
+
+
+def test_colorado_years_before_2022_are_labeled_estimates() -> None:
+    # DOR income tax guide: 4.5% (2019), 4.55% (2020), 4.5% (2021), 4.4% (2022 and 2023).
+    # The table starts at 2022, so earlier years are labeled; 2022 on is not.
+    for tax_year in (2015, 2019, 2020, 2021):
+        description = _resident_tax("CO", tax_year, 100000.0)["rate_description"]
+        assert "[ESTIMATE: " in description, tax_year
+        assert description == (
+            "Flat 4.40% rate (Proposition 121)" + compliance._co_estimate_note(tax_year, 0.044)
+        )
+        assert "from tax year 2022" in description and "the 4.40% rate is used" in description
+    for tax_year in (2022, 2023, 2024, 2025, 2026):
+        description = _resident_tax("CO", tax_year, 100000.0)["rate_description"]
+        assert "ESTIMATE" not in description, tax_year
