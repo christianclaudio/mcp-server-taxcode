@@ -514,6 +514,10 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
             f"{first}: values: 'rate_2025' is not in the rate table",
         ),
         (
+            lambda e: e["year_sources"][0]["values"].update({"rate[0]": 0.04}),
+            f"{first}: values: 'rate[0]' is not in the rate table",
+        ),
+        (
             lambda e: e["year_sources"][0]["values"].update(deduction_single_2025=3270),
             f"{first}: values: 'deduction_single_2025' is 3270 here but 3270.0 in the table",
         ),
