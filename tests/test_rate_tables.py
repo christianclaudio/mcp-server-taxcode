@@ -463,9 +463,9 @@ def test_georgia_prose_cites_the_law_that_set_the_years_rate() -> None:
 def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
     for tax_year in (2020, 2023):
         state, authority = _georgia_answers(tax_year)
+        assert "[ESTIMATE: " in state and "[ESTIMATE: " in authority, tax_year
         assert state == f"Flat 5.39% rate (HB 1015 of 2024){compliance.GA_PRE_FLAT_ESTIMATE_NOTE}"
         assert authority.endswith(compliance.GA_PRE_FLAT_ESTIMATE_NOTE), tax_year
-        assert "ESTIMATE" in state and "ESTIMATE" in authority
     for tax_year in (2024, 2025, 2026):
         assert not any("ESTIMATE" in text for text in _georgia_answers(tax_year)), tax_year
 
