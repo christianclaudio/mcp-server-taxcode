@@ -442,7 +442,7 @@ def test_colorado_rate_follows_the_tax_year() -> None:
     for tax_year in (2023, 2025):
         tax = _resident_tax("CO", tax_year, 100000.0)
         assert tax["estimated_state_tax"] == round(85400.0 * 0.044, 2), tax_year
-        assert tax["rate_description"] == "Flat 4.40% rate (Proposition 121)", tax_year
+        assert tax["rate_description"].startswith("Flat 4.40% rate (Proposition 121) ["), tax_year
     assert _resident_tax("CO", 2024, 1.0)["rate_description"] == (
         "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
     )
@@ -560,16 +560,27 @@ def test_2023_keeps_the_2023_figures() -> None:
         assert f"${threshold:,.0f}" in tax["rate_description"], year
 
 
-def test_colorado_years_before_2022_are_labeled_estimates() -> None:
-    # DOR income tax guide: 4.5% (2019), 4.55% (2020), 4.5% (2021), 4.4% (2022 and 2023).
-    # The table starts at 2022, so earlier years are labeled; 2022 on is not.
+def test_colorado_years_off_the_held_figures_are_labeled_estimates() -> None:
+    # The table's deduction is the 2024 federal standard deduction (14,600 / 29,200), so
+    # every year but 2024 is labeled for it. DOR income tax guide: 4.5% (2019), 4.55%
+    # (2020), 4.5% (2021), 4.4% from 2022; the table's rates start at 2022, so earlier
+    # years also carry the rate reason.
+    deduction = (
+        "the deduction is the 2024 federal standard deduction; tax year {}'s federal figure "
+        "is not in this table"
+    )
+    rate = (
+        "this table holds Colorado's rate from tax year 2022; an earlier year's rate is not "
+        "in it, so the 4.40% rate is used"
+    )
+    prop_121 = "Flat 4.40% rate (Proposition 121)"
     for tax_year in (2015, 2019, 2020, 2021):
         description = _resident_tax("CO", tax_year, 100000.0)["rate_description"]
-        assert "[ESTIMATE: " in description, tax_year
-        assert description == (
-            "Flat 4.40% rate (Proposition 121)" + compliance._co_estimate_note(tax_year, 0.044)
-        )
-        assert "from tax year 2022" in description and "the 4.40% rate is used" in description
-    for tax_year in (2022, 2023, 2024, 2025, 2026):
+        expected = f"{prop_121} [ESTIMATE: {deduction.format(tax_year)}; {rate}]"
+        assert description == expected, tax_year
+    for tax_year in (2022, 2023, 2025, 2026):
         description = _resident_tax("CO", tax_year, 100000.0)["rate_description"]
-        assert "ESTIMATE" not in description, tax_year
+        assert description == f"{prop_121} [ESTIMATE: {deduction.format(tax_year)}]", tax_year
+    description = _resident_tax("CO", 2024, 100000.0)["rate_description"]
+    assert description == "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
+    assert compliance._co_estimate_note(2024, 0.0425) == ""

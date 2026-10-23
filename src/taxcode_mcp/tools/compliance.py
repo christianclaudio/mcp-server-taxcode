@@ -231,18 +231,28 @@ GA_PRE_FLAT_ESTIMATE_NOTE = (
 
 
 # Colorado's table holds the rate from tax year 2022 on (DOR income tax guide: 4.4% for 2022
-# and 2023, 4.25% for 2024, 4.4% for 2025). An earlier year gets the oldest step, labeled.
+# and 2023, 4.25% for 2024, 4.4% from 2025). An earlier year gets the oldest step, labeled.
 CO_FIRST_SOURCED_YEAR = 2022
+# Colorado starts from federal taxable income, so its deduction is the federal standard
+# deduction of each year. The table holds only the 2024 figure (14,600 / 29,200), so every
+# other year's answer is labeled until the deduction is held by year.
+CO_DEDUCTION_YEAR = 2024
 
 
 def _co_estimate_note(tax_year: int, rate: float) -> str:
-    """The estimate label for a Colorado tax year before the table's first sourced year."""
-    if tax_year >= CO_FIRST_SOURCED_YEAR:
-        return ""
-    return (
-        f" [ESTIMATE: this table holds Colorado's rate from tax year {CO_FIRST_SOURCED_YEAR}; "
-        f"an earlier year's rate is not in it, so the {_pct(rate)} rate is used]"
-    )
+    """The estimate label for a Colorado tax year the table's figures don't cover; else empty."""
+    reasons = []
+    if tax_year != CO_DEDUCTION_YEAR:
+        reasons.append(
+            f"the deduction is the {CO_DEDUCTION_YEAR} federal standard deduction; tax year "
+            f"{tax_year}'s federal figure is not in this table"
+        )
+    if tax_year < CO_FIRST_SOURCED_YEAR:
+        reasons.append(
+            f"this table holds Colorado's rate from tax year {CO_FIRST_SOURCED_YEAR}; "
+            f"an earlier year's rate is not in it, so the {_pct(rate)} rate is used"
+        )
+    return f" [ESTIMATE: {'; '.join(reasons)}]" if reasons else ""
 
 
 def _ga_estimate_note(tax_year: int) -> str:
