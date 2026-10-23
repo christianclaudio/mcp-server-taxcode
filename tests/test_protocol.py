@@ -209,3 +209,16 @@ async def test_stateless_streamable_http_standalone_post(
             assert tool_res_json["status"] == "success"
             assert tool_res_json["database"]["backend"] == "DuckDB"
             assert tool_res_json["upstream"]["status"] == "healthy"
+
+
+@pytest.mark.asyncio
+async def test_open_world_hint_marks_only_upstream_tools() -> None:
+    """openWorldHint is True only on tools that call the upstream API."""
+    tools = {tool.name: tool for tool in await mcp.list_tools()}
+    for name, expected in EXPECTED_TOOLS.items():
+        annotations = tools[name].annotations
+        assert annotations is not None
+        assert annotations.open_world_hint is expected["open_world"], name
+    assert EXPECTED_TOOLS["system_get_health_status"]["open_world"] is True
+    wire = tools["system_get_health_status"].to_mcp_tool().model_dump(by_alias=True)
+    assert wire["annotations"]["openWorldHint"] is True
