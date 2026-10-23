@@ -219,6 +219,22 @@ def calculate_built_in_gain_sourcing(
     raise failure from None
 
 
+# Georgia's flat rate applies from tax year 2024 (O.C.G.A. § 48-7-20(a.1), as amended by
+# HB 1015 (2024): "for taxable years beginning on or after January 1, 2024"). Earlier years
+# were taxed on graduated brackets that the rate table does not hold, so an earlier tax year
+# gets the table's oldest step, labeled as an estimate.
+GA_FLAT_RATE_FIRST_YEAR = 2024
+GA_PRE_FLAT_ESTIMATE_NOTE = (
+    " [ESTIMATE: Georgia's flat rate starts with tax year 2024; earlier years were taxed on "
+    "graduated brackets this table does not hold, so the 2024 rate is used]"
+)
+
+
+def _ga_estimate_note(tax_year: int) -> str:
+    """The estimate label for a tax year before Georgia's flat rate; empty from 2024 on."""
+    return GA_PRE_FLAT_ESTIMATE_NOTE if tax_year < GA_FLAT_RATE_FIRST_YEAR else ""
+
+
 def _ga_retirement_cap(ga: dict[str, Any], age: int) -> float:
     """Georgia's retirement income exclusion cap for an age; 0.0 below every listed age."""
     return float(
@@ -277,7 +293,7 @@ def evaluate_georgia_residency(
             "Active Georgia voter registration is probative evidence of continuing domicile."
         )
 
-    # 3. Tax Calculation under HB 1023 / HB 1015 (O.C.G.A. § 48-7-20 & § 48-7-27)
+    # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
     standard_deduction = float(ga["standard_deduction"][_status(is_mfj)])
@@ -287,7 +303,8 @@ def evaluate_georgia_residency(
     retirement_exclusion_applied = min(retirement_income, max_exclusion)
 
     # Tax rate selection
-    tax_rate = float(_year_step(ga["rates"], tax_year)["rate"])
+    ga_step = _year_step(ga["rates"], tax_year)
+    tax_rate = float(ga_step["rate"])
 
     taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
     estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
@@ -319,7 +336,9 @@ def evaluate_georgia_residency(
             "estimated_georgia_tax": estimated_tax,
             "is_estimate": True,
             "estimate_note": ESTIMATE_NOTE,
-            "statutory_rate_authority": "O.C.G.A. § 48-7-20 (HB 1023 / HB 1015 flat tax)",
+            "statutory_rate_authority": (
+                f"O.C.G.A. § 48-7-20 (flat tax, {ga_step['law']}){_ga_estimate_note(tax_year)}"
+            ),
         },
         "disclaimer": BILINGUAL_DISCLAIMER,
         "content_notice": CONTENT_NOTICE,
@@ -494,8 +513,9 @@ def evaluate_state_residency(
         standard_ded = float(ga["standard_deduction"][_status(is_mfj)])
         max_ret = _ga_retirement_cap(ga, age)
         ret_excl = min(retirement_income, max_ret)
-        rate = float(_year_step(ga["rates"], tax_year)["rate"])
-        rate_desc = f"Flat {_pct(rate)} rate (HB 1023 / HB 1015)"
+        ga_step = _year_step(ga["rates"], tax_year)
+        rate = float(ga_step["rate"])
+        rate_desc = f"Flat {_pct(rate)} rate ({ga_step['law']}){_ga_estimate_note(tax_year)}"
         rate_authority = "O.C.G.A. § 48-7-20"
         taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
         estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0

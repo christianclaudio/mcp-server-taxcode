@@ -21,15 +21,18 @@
     "rates": [
       {
         "from_year": 2026,
-        "rate": 0.0499
+        "rate": 0.0499,
+        "law": "HB 463 of 2026"
       },
       {
         "from_year": 2025,
-        "rate": 0.0519
+        "rate": 0.0519,
+        "law": "HB 111 of 2025"
       },
       {
         "from_year": null,
-        "rate": 0.0539
+        "rate": 0.0539,
+        "law": "HB 1015 of 2024"
       }
     ]
   }

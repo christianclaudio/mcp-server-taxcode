@@ -147,6 +147,9 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("GA", _set("params.rates.0.from_year", "2026"), "from_year: must be an integer"),
     ("GA", _set("params.rates.0.rate", -0.1), "rate: must be a float rate"),
     ("NC", _set("params.rates.0.rate_desc", ""), "rate_desc: must be a non-empty string"),
+    ("GA", _set("params.rates.0.law", ""), "rates[0].law: must be a non-empty string"),
+    ("GA", _drop("params.rates.1.law"), "rates[1]: fields must be exactly"),
+    ("CO", _drop("params.rates.0.rate_desc"), "rates[0]: fields must be exactly"),
     ("GA", _set("params.rates.2.from_year", 2024), "last step's from_year must be null"),
     # georgia retirement exclusion
     ("GA", _set("params.retirement_exclusion", {}), "must be a non-empty list"),
@@ -421,3 +424,36 @@ def test_colorado_rate_follows_the_tax_year() -> None:
     assert _resident_tax("CO", 2024, 1.0)["rate_description"] == (
         "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
     )
+
+
+def _georgia_answers(tax_year: int) -> tuple[str, str]:
+    """GA's rate prose from both tools: the state tool's description and the GA authority."""
+    state = _resident_tax("GA", tax_year, 100000.0)["rate_description"]
+    ga = compliance.evaluate_georgia_residency(
+        days_present_ga=300, federal_agi=100000.0, tax_year=tax_year
+    )
+    return state, ga["tax_computation"]["statutory_rate_authority"]
+
+
+def test_georgia_prose_cites_the_law_that_set_the_years_rate() -> None:
+    # HB 1015 (2024) sets 5.39% for 2024, HB 111 (2025) 5.19% for 2025, HB 463 (2026) 4.99%
+    # from 2026, each as signed (gov.georgia.gov).
+    for tax_year, rate, law in (
+        (2024, "5.39%", "HB 1015 of 2024"),
+        (2025, "5.19%", "HB 111 of 2025"),
+        (2026, "4.99%", "HB 463 of 2026"),
+        (2030, "4.99%", "HB 463 of 2026"),
+    ):
+        state, authority = _georgia_answers(tax_year)
+        assert state == f"Flat {rate} rate ({law})", tax_year
+        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, {law})", tax_year
+
+
+def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
+    for tax_year in (2020, 2023):
+        state, authority = _georgia_answers(tax_year)
+        assert state == f"Flat 5.39% rate (HB 1015 of 2024){compliance.GA_PRE_FLAT_ESTIMATE_NOTE}"
+        assert authority.endswith(compliance.GA_PRE_FLAT_ESTIMATE_NOTE), tax_year
+        assert "ESTIMATE" in state and "ESTIMATE" in authority
+    for tax_year in (2024, 2025, 2026):
+        assert not any("ESTIMATE" in text for text in _georgia_answers(tax_year)), tax_year

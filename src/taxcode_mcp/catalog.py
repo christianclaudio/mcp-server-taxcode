@@ -142,6 +142,9 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
     "flat_with_surtax": ("allowance", "rate", "surtax"),
     "capital_gains_excise": ("capital_gains_deduction", "rate"),
 }
+# The text each per-year step carries: ``flat_by_year`` its whole ``rate_desc``; ``georgia``
+# the ``law`` that set that year's rate, which the rate prose cites.
+YEAR_STEP_TEXT: dict[str, str] = {"flat_by_year": "rate_desc", "georgia": "law"}
 ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
 REGIMES = frozenset({"none", "flat", "graduated"})
@@ -421,11 +424,12 @@ def _check_year_steps(value: Any, fields: Sequence[str], where: str) -> None:
         if step["from_year"] is not None:
             _check(type(step["from_year"]) is int, f"{at}.from_year: must be an integer")
         _check_rate(step["rate"], f"{at}.rate")
-        if "rate_desc" in step:
-            _check(
-                isinstance(step["rate_desc"], str) and bool(step["rate_desc"]),
-                f"{at}.rate_desc: must be a non-empty string",
-            )
+        for text in ("rate_desc", "law"):
+            if text in step:
+                _check(
+                    isinstance(step[text], str) and bool(step[text]),
+                    f"{at}.{text}: must be a non-empty string",
+                )
 
     _check_steps(value, fields, "from_year", where, row)
 
@@ -488,10 +492,7 @@ def _check_params(model: str, params: Any, where: str) -> None:
             cumulative = model == "brackets_cumulative"
             _check_brackets(value, ("over", "base", "rate") if cumulative else ("over", "rate"), at)
         elif name == "rates":
-            by_year = model == "flat_by_year"
-            _check_year_steps(
-                value, ("from_year", "rate", "rate_desc") if by_year else ("from_year", "rate"), at
-            )
+            _check_year_steps(value, ("from_year", "rate", YEAR_STEP_TEXT[model]), at)
         elif name == "retirement_exclusion":
             _check(isinstance(value, list) and len(value) > 0, f"{at}: must be a non-empty list")
             for i, step in enumerate(value):
