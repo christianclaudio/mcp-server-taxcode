@@ -10,6 +10,10 @@
     "regime": "flat",
     "rate": 0.04,
     "deduction_single": 3160.0,
-    "deduction_mfj": 6320.0
+    "deduction_mfj": 3160.0,
+    "deduction_single_2025": 3270.0,
+    "deduction_mfj_2025": 3270.0,
+    "deduction_single_2026": 3360.0,
+    "deduction_mfj_2026": 3360.0
   }
 }

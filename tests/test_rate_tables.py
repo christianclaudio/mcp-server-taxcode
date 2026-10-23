@@ -378,6 +378,8 @@ OFFICIAL_2024_FIGURES = [
     ("UT", ("credit_phaseout_rate",), 0.013),
     ("MA", ("surtax", "over"), 1053750.0),
     ("WA", ("capital_gains_deduction",), 270000.0),
+    ("KY", ("deduction_single",), 3160.0),
+    ("KY", ("deduction_mfj",), 3160.0),
     ("KS", ("deduction_single",), 3605.0),
     ("KS", ("deduction_mfj",), 8240.0),
     ("NE", ("deduction_single",), 8350.0),
@@ -496,3 +498,22 @@ def test_utah_takes_the_taxpayer_tax_credit_off_the_tax() -> None:
     assert tax(200000.0, "single") == 9100.0
     table = compliance.RATE_TABLES["UT"]
     assert "deduction_single" not in table and "deduction_mfj" not in table
+
+
+def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
+    # Form 740 instructions, Line 10: "If filing a joint return, only one $3,160 standard
+    # deduction is allowed" (2024); $3,270 for 2025; DOR announced $3,360 for 2026 (KRS 141.081).
+    for year, deduction in ((2024, 3160.0), (2025, 3270.0), (2026, 3360.0)):
+        for status in ("single", "married_joint"):
+            assert _resident_tax("KY", year, deduction, status)["estimated_state_tax"] == 0.0
+            tax = _resident_tax("KY", year, deduction + 10000.0, status)["estimated_state_tax"]
+            assert tax == 400.0, (year, status)
+
+
+def test_rhode_island_2025_standard_deduction() -> None:
+    # 2025 Tax Rate and Worksheets, Standard Deduction Worksheet: $10,900 single, $21,800 joint.
+    # The 2024 figures (10,550 / 21,150) stay for 2024 and earlier.
+    for status, deduction in (("single", 10900.0), ("married_joint", 21800.0)):
+        assert _resident_tax("RI", 2025, deduction, status)["estimated_state_tax"] == 0.0
+        assert _resident_tax("RI", 2025, deduction + 1000.0, status)["estimated_state_tax"] == 37.5
+    assert _resident_tax("RI", 2024, 10550.0 + 1000.0, "single")["estimated_state_tax"] == 37.5
