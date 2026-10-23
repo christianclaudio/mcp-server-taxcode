@@ -367,6 +367,20 @@ def _allowance(params: dict[str, Any], is_mfj: bool) -> float:
     return float(by_status[_status(is_mfj)])
 
 
+def _for_year(params: dict[str, Any], name: str, tax_year: int) -> Any:
+    """``params[name]``, or its latest ``<name>_<YYYY>`` value whose year the tax year reached.
+
+    A ``_YYYY`` key holds the value from that tax year on; the unsuffixed key covers the
+    years before. ``None`` when neither applies.
+    """
+    key, latest = name, -1
+    for candidate in params:
+        year = candidate[len(name) + 1 :]
+        if candidate.startswith(f"{name}_") and year.isdigit() and latest < int(year) <= tax_year:
+            key, latest = candidate, int(year)
+    return params.get(key)
+
+
 def _year_step(steps: list[dict[str, Any]], tax_year: int) -> dict[str, Any]:
     """The first step whose ``from_year`` is reached; the last step (``null``) otherwise."""
     return next(s for s in steps if s["from_year"] is None or tax_year >= s["from_year"])
@@ -588,7 +602,7 @@ def evaluate_state_residency(
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
         rate_authority = "RCW 82.87.040"
         wa = RATE_TABLES["WA"]
-        cap_gain_ded = float(wa["capital_gains_deduction"])
+        cap_gain_ded = float(_for_year(wa, "capital_gains_deduction", tax_year))
         rate_desc = (
             f"No ordinary income tax; {_pct(wa['rate'])} excise tax on capital gains over "
             f"the {_money(cap_gain_ded)} deduction"
@@ -601,15 +615,16 @@ def evaluate_state_residency(
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "M.G.L. c. 62 § 4 & Fair Share Amendment"
         ma = RATE_TABLES["MA"]
+        ma_surtax = _for_year(ma, "surtax", tax_year)
         rate_desc = (
-            f"Flat {_pct(ma['rate'])} rate plus {_pct(ma['surtax']['rate'])} Fair Share surtax "
-            f"on income over {_money(ma['surtax']['over'])}"
+            f"Flat {_pct(ma['rate'])} rate plus {_pct(ma_surtax['rate'])} Fair Share surtax "
+            f"on income over {_money(ma_surtax['over'])}"
         )
         std_ded = _allowance(ma, is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
             base_tax = taxable_income * ma["rate"]
-            surtax = max(0.0, taxable_income - ma["surtax"]["over"]) * ma["surtax"]["rate"]
+            surtax = max(0.0, taxable_income - ma_surtax["over"]) * ma_surtax["rate"]
             estimated_tax = round(base_tax + surtax, 2)
 
     elif state == "NJ":
@@ -811,17 +826,7 @@ def evaluate_state_residency(
             regime = str(info["regime"])
 
         # Year-aware standard deduction selection
-        if tax_year >= 2026 and (
-            "deduction_mfj_2026" in info if is_mfj else "deduction_single_2026" in info
-        ):
-            ded_key = "deduction_mfj_2026" if is_mfj else "deduction_single_2026"
-        elif tax_year >= 2025 and (
-            "deduction_mfj_2025" in info if is_mfj else "deduction_single_2025" in info
-        ):
-            ded_key = "deduction_mfj_2025" if is_mfj else "deduction_single_2025"
-        else:
-            ded_key = "deduction_mfj" if is_mfj else "deduction_single"
-        ded = float(info.get(ded_key, 0.0))
+        ded = float(_for_year(info, f"deduction_{_status(is_mfj)}", tax_year) or 0.0)
         taxable_income = max(0.0, federal_agi - ded)
 
         if regime == "none":

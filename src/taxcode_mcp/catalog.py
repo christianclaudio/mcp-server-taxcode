@@ -142,6 +142,14 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
     "flat_with_surtax": ("allowance", "rate", "surtax"),
     "capital_gains_excise": ("capital_gains_deduction", "rate"),
 }
+# Model params that may also carry later-year values as ``<name>_<YYYY>`` keys after the
+# model's own fields, years ascending. Each holds the value from that tax year on, and the
+# unsuffixed key covers the years before (the registry's convention).
+YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
+    "flat_with_surtax": ("surtax",),
+    "capital_gains_excise": ("capital_gains_deduction",),
+}
+_YEARLY_KEY_RE = re.compile(r"^(?P<name>[a-z_]+?)_(?P<year>\d{4})$")
 # The text each per-year step carries: ``flat_by_year`` its whole ``rate_desc``; ``georgia``
 # the ``law`` that set that year's rate, which the rate prose cites.
 YEAR_STEP_TEXT: dict[str, str] = {"flat_by_year": "rate_desc", "georgia": "law"}
@@ -165,8 +173,8 @@ _REGISTRY_TYPES: dict[str, type] = {
             f"{name}_{status}{year}"
             for name in ("deduction", "top_bracket", "zero_bracket")
             for status in FILING_STATUSES
-            for year in ("", "_2025", "_2026")
-            if not (year == "_2026" and name != "deduction")
+            for year in ("", "_2024", "_2025", "_2026")
+            if name == "deduction" or year in ("", "_2025")
         ),
         float,
     ),
@@ -497,9 +505,21 @@ def _check_params(model: str, params: Any, where: str) -> None:
         first = next(iter(params), None)
         _check(first in ALLOWANCE_NAMES, f"{where}: first key must be one of {ALLOWANCE_NAMES}")
         fields[0] = str(first)
-    _check_keys(params, fields, where)
-    for name in fields:
-        value, at = params[name], f"{where}.{name}"
+    yearly = list(params)[len(fields) :] if model in YEARLY_PARAMS else []
+    _check_keys(dict(list(params.items())[: len(params) - len(yearly)]), fields, where)
+    years: list[int] = []
+    for key in yearly:
+        match = _YEARLY_KEY_RE.match(key)
+        _check(
+            match is not None and match["name"] in YEARLY_PARAMS[model],
+            f"{where}: unknown key {key!r}; only {list(YEARLY_PARAMS[model])} take a _YYYY value",
+        )
+        year = int(match["year"]) if match else 0
+        _check(not years or year > years[-1], f"{where}: {key} out of order; years ascend")
+        years.append(year)
+    for key in [*fields, *yearly]:
+        value, at = params[key], f"{where}.{key}"
+        name = key.rsplit("_", 1)[0] if key in yearly else key
         if name in (*ALLOWANCE_NAMES, "standard_deduction") and model != "maryland":
             _check_by_status(value, at)
         elif name == "standard_deduction":  # maryland: a share of AGI between two limits

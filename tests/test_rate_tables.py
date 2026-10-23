@@ -194,6 +194,17 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("IN", _set("params.middle_rate", 0.02), "['middle_rate'] apply only to a graduated table"),
     ("AR", _set("params.brackets", []), "brackets: must be dict"),
     ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
+    # later-year values of the non-registry models
+    ("WA", _set("params.rate_2024", 0.07), "unknown key 'rate_2024'"),
+    ("WA", _set("params.capital_gains_deduction_2024", -1.0), "must be a non-negative"),
+    ("MA", _set("params.surtax_2024", {"over": 1.0}), "surtax_2024: fields must be exactly"),
+    (
+        "MA",
+        _set("params.surtax_2022", {"over": 1.0, "rate": 0.04}),
+        "surtax_2022 out of order; years ascend",
+    ),
+    ("CO", _set("params.rates_2024", []), "fields must be exactly"),
+    ("NE", _set("params.deduction_single_2023", 1.0), "unknown keys ['deduction_single_2023']"),
     ("UT", _set("params.credit_rate", 6.0), "credit_rate: must be a float rate"),
     ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
@@ -376,14 +387,14 @@ OFFICIAL_2024_FIGURES = [
     ("UT", ("credit_phaseout_single",), 17652.0),
     ("UT", ("credit_phaseout_mfj",), 35304.0),
     ("UT", ("credit_phaseout_rate",), 0.013),
-    ("MA", ("surtax", "over"), 1053750.0),
-    ("WA", ("capital_gains_deduction",), 270000.0),
+    ("MA", ("surtax_2024", "over"), 1053750.0),
+    ("WA", ("capital_gains_deduction_2024",), 270000.0),
     ("KY", ("deduction_single",), 3160.0),
     ("KY", ("deduction_mfj",), 3160.0),
     ("KS", ("deduction_single",), 3605.0),
     ("KS", ("deduction_mfj",), 8240.0),
-    ("NE", ("deduction_single",), 8350.0),
-    ("NE", ("deduction_mfj",), 16700.0),
+    ("NE", ("deduction_single_2024",), 8350.0),
+    ("NE", ("deduction_mfj_2024",), 16700.0),
     ("RI", ("deduction_single",), 10550.0),
     ("RI", ("deduction_mfj",), 21150.0),
 ]
@@ -517,3 +528,28 @@ def test_rhode_island_2025_standard_deduction() -> None:
         assert _resident_tax("RI", 2025, deduction, status)["estimated_state_tax"] == 0.0
         assert _resident_tax("RI", 2025, deduction + 1000.0, status)["estimated_state_tax"] == 37.5
     assert _resident_tax("RI", 2024, 10550.0 + 1000.0, "single")["estimated_state_tax"] == 37.5
+
+
+def test_2023_keeps_the_2023_figures() -> None:
+    # NE: 2023 Tax Calculation Schedule and the DOR rate chronology, 7,900 / 15,800 for 2023
+    # (8,350 / 16,700 for 2024). WA: DOR "Do you owe capital gains tax", $262,000 for 2023
+    # ($270,000 for 2024). MA: DOR 4% surtax page, $1,000,000 for 2023 ($1,053,750 for 2024).
+    for year, single, joint in ((2023, 7900.0, 15800.0), (2024, 8350.0, 16700.0)):
+        assert _resident_tax("NE", year, single, "single")["estimated_state_tax"] == 0.0
+        assert _resident_tax("NE", year, single + 1000.0, "single")["estimated_state_tax"] == 24.6
+        assert _resident_tax("NE", year, joint, "married_joint")["estimated_state_tax"] == 0.0
+    for year, deduction in ((2023, 262000.0), (2024, 270000.0), (2025, 270000.0)):
+        result = compliance.evaluate_state_residency(
+            jurisdiction="WA",
+            days_in_state=300,
+            is_domiciled=True,
+            capital_gains=deduction + 10000.0,
+            tax_year=year,
+        )["tax_computation"]
+        assert result["estimated_state_tax"] == 700.0, year
+        assert f"${deduction:,.0f}" in result["rate_description"], year
+    for year, threshold in ((2023, 1000000.0), (2024, 1053750.0)):
+        agi = 4400.0 + threshold + 10000.0
+        tax = _resident_tax("MA", year, agi)
+        assert tax["estimated_state_tax"] == round((threshold + 10000.0) * 0.05 + 400.0, 2)
+        assert f"${threshold:,.0f}" in tax["rate_description"], year
