@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "GA",
   "model": "georgia",
-  "source_url": "not_recorded",
+  "source_url": "https://dor.georgia.gov/document/document/2024-it-511-individual-income-tax-booklet/download",
   "params": {
     "standard_deduction": {
       "single": 12000.0,

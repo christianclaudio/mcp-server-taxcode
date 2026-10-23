@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "WA",
   "model": "capital_gains_excise",
-  "source_url": "not_recorded",
+  "source_url": "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax",
   "params": {
     "capital_gains_deduction": 270000.0,
     "rate": 0.07

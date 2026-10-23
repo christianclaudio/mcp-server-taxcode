@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "KS",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.ksrevenue.gov/pdf/ip24.pdf",
   "params": {
     "statutory_basis": "Kan. Stat. Ann. §§ 79-32,109, 79-32,110",
     "rate_authority": "Kan. Stat. Ann. § 79-32,110",

@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "ID",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://tax.idaho.gov/wp-content/uploads/forms/EIN00046/EIN00046_10-23-2024.pdf",
   "params": {
     "statutory_basis": "Idaho Code §§ 63-3013, 63-3024",
     "rate_authority": "Idaho Code § 63-3024",

@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "UT",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://files.tax.utah.gov/tax/forms/2024/tc-40inst.pdf",
   "params": {
     "statutory_basis": "Utah Code Ann. §§ 59-10-104, 59-10-136",
     "rate_authority": "Utah Code Ann. § 59-10-104",

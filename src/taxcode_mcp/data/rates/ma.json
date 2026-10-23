@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "MA",
   "model": "flat_with_surtax",
-  "source_url": "not_recorded",
+  "source_url": "https://www.mass.gov/doc/2024-form-1-instructions/download",
   "params": {
     "deduction": {
       "single": 4400.0,

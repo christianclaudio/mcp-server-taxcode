@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "ks-rates",
-      "url": "not_recorded",
+      "url": "https://www.ksrevenue.gov/pdf/ip24.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-23",
+      "content_sha256": "771aa0205ad6da8f40e9557cc80d84029c59d1152ce538529c2078029d6283a5",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

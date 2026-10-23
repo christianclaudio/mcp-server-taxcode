@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "NC",
   "model": "flat_by_year",
-  "source_url": "not_recorded",
+  "source_url": "https://www.ncdor.gov/2024-d-401-individual-income-tax-instructions/open",
   "params": {
     "exemption": {
       "single": 12750.0,

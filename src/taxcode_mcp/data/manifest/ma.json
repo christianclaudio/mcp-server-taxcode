@@ -44,12 +44,12 @@
     {
       "kind": "rate_table",
       "id": "ma-rates",
-      "url": "not_recorded",
+      "url": "https://www.mass.gov/doc/2024-form-1-instructions/download",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-23",
+      "content_sha256": "b276bb1899422e587da1dbd64144672eab88b02f9392247609a82e9166ac4cdc",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

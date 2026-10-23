@@ -408,8 +408,8 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         assert {e[name] for name in unrecorded} == {NOT_RECORDED}, e["id"]
     for code, e in sourced.items():
         assert e["url"].startswith("https://") and e["official"] is True, code
-        assert e["retrieved"] == "2026-10-22", code
-        assert (e["content_sha256"] == NOT_RECORDED) == (code in {"ME", "VT"}), code
+        assert e["retrieved"] == RETRIEVED.get(code, "2026-10-22"), code
+        assert (e["content_sha256"] == NOT_RECORDED) == (code in READ_WITHOUT_BYTES), code
         assert catalog.rate_tables[code]["source_url"] == e["url"]
     assert {t["source_url"] for c, t in catalog.rate_tables.items() if c not in sourced} == {
         NOT_RECORDED
@@ -417,7 +417,13 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     assert manifest_errors(catalog) == []
 
 
-SOURCED_RATE_TABLES = sorted("AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split())
+SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI NC ND OH PA UT VA WA".split()
+SOURCED_RATE_TABLES = sorted(
+    "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split() + SOURCED_2026_10_23
+)
+RETRIEVED = dict.fromkeys(SOURCED_2026_10_23, "2026-10-23")
+# Sources that plain curl could not download (refused or failed), read as text: no hash.
+READ_WITHOUT_BYTES = {"ME", "VT", "KY", "MI"}
 
 
 def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:

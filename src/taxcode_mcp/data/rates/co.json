@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "CO",
   "model": "flat",
-  "source_url": "not_recorded",
+  "source_url": "https://tax.colorado.gov/sites/tax/files/documents/DR0104_book_2024.pdf",
   "params": {
     "deduction": {
       "single": 14600.0,

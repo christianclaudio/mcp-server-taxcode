@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "MI",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2024/MI-1040-Instructions.pdf",
   "params": {
     "statutory_basis": "Mich. Comp. Laws §§ 206.18, 206.51",
     "rate_authority": "Mich. Comp. Laws § 206.51",

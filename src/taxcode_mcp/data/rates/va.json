@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "VA",
   "model": "brackets_cumulative",
-  "source_url": "not_recorded",
+  "source_url": "https://www.tax.virginia.gov/sites/default/files/vatax-pdf/2024-760-instructions.pdf",
   "params": {
     "deduction": {
       "single": 8500.0,

@@ -31,12 +31,12 @@
     {
       "kind": "rate_table",
       "id": "co-rates",
-      "url": "not_recorded",
+      "url": "https://tax.colorado.gov/sites/tax/files/documents/DR0104_book_2024.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-23",
+      "content_sha256": "64e7f9a6093901466419a3ed75413ed1b1eb559e931a5e056aa73520c7abd1b6",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
