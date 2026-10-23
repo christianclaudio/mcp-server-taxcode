@@ -401,6 +401,14 @@ def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> floa
     return float(round(tax, 2))
 
 
+def _registry_credit(info: dict[str, Any], is_mfj: bool, taxable_income: float) -> float:
+    """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0."""
+    status = _status(is_mfj)
+    initial = float(info["credit_rate"]) * float(info[f"credit_base_{status}"])
+    over = max(0.0, taxable_income - float(info[f"credit_phaseout_{status}"]))
+    return max(0.0, initial - float(info["credit_phaseout_rate"]) * over)
+
+
 def _pct(rate: float) -> str:
     """A rate as prose: ``0.0575`` -> ``5.75%``."""
     return f"{rate * 100:.2f}%"
@@ -864,6 +872,10 @@ def evaluate_state_residency(
                     estimated_tax = round((taxable_income - zero_bracket) * mid_rate, 2)
             else:
                 estimated_tax = 0.0
+
+        if "credit_rate" in info and is_resident:
+            credit = _registry_credit(info, is_mfj, taxable_income)
+            estimated_tax = max(0.0, round(estimated_tax - credit, 2))
 
     tax_computation: dict[str, Any] = {
         "taxable_net_income": taxable_income,

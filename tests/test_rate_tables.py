@@ -193,6 +193,9 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("ND", _set("params.middle_rate_estimate", True), "a graduated table needs exactly one of"),
     ("IN", _set("params.middle_rate", 0.02), "['middle_rate'] apply only to a graduated table"),
     ("AR", _set("params.brackets", []), "brackets: must be dict"),
+    ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
+    ("UT", _set("params.credit_rate", 6.0), "credit_rate: must be a float rate"),
+    ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
         "AR",
         _both(_drop("params.middle_rate_estimate"), _set("params.brackets", {"single": []})),
@@ -367,6 +370,12 @@ def test_ohio_bases_match_the_2024_schedule() -> None:
 # Flat rates and allowances as each state's 2024 return instructions print them.
 OFFICIAL_2024_FIGURES = [
     ("UT", ("rate",), 0.0455),
+    ("UT", ("credit_rate",), 0.06),
+    ("UT", ("credit_base_single",), 14600.0),
+    ("UT", ("credit_base_mfj",), 29200.0),
+    ("UT", ("credit_phaseout_single",), 17652.0),
+    ("UT", ("credit_phaseout_mfj",), 35304.0),
+    ("UT", ("credit_phaseout_rate",), 0.013),
     ("MA", ("surtax", "over"), 1053750.0),
     ("WA", ("capital_gains_deduction",), 270000.0),
     ("KS", ("deduction_single",), 3605.0),
@@ -470,3 +479,20 @@ def test_mississippi_taxes_only_income_over_the_10000_band() -> None:
         tax = _resident_tax("MS", 2024, deduction + 50000.0, status)
         assert tax["estimated_state_tax"] == round(40000.0 * 0.047, 2), status
         assert tax["middle_rate_is_estimate"] is False
+
+
+def test_utah_takes_the_taxpayer_tax_credit_off_the_tax() -> None:
+    # TC-40 instructions (2024), lines 9-22: 4.55% of Utah taxable income, less the taxpayer
+    # tax credit of 6% of the federal standard deduction (lines 15-16), reduced by 1.3% of
+    # income over $17,652 single / $35,304 joint (lines 17-20), never below zero.
+    def tax(agi: float, status: str) -> float:
+        return _resident_tax("UT", 2024, agi, status)["estimated_state_tax"]
+
+    assert tax(10000.0, "single") == 0.0
+    assert tax(17652.0, "single") == 0.0  # 803.17 tax, 876 credit
+    assert tax(30000.0, "single") == round(1365.0 - (876.0 - 0.013 * 12348.0), 2)
+    assert tax(60000.0, "married_joint") == round(2730.0 - (1752.0 - 0.013 * 24696.0), 2)
+    # The credit is gone once the phase-out passes it: 876 / 0.013 = 67,385 over the base.
+    assert tax(200000.0, "single") == 9100.0
+    table = compliance.RATE_TABLES["UT"]
+    assert "deduction_single" not in table and "deduction_mfj" not in table

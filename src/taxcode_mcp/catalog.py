@@ -173,6 +173,17 @@ _REGISTRY_TYPES: dict[str, type] = {
     **dict.fromkeys(
         ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
     ),
+    **dict.fromkeys(
+        (
+            "credit_base_single",
+            "credit_base_mfj",
+            "credit_rate",
+            "credit_phaseout_single",
+            "credit_phaseout_mfj",
+            "credit_phaseout_rate",
+        ),
+        float,
+    ),
     "middle_rate_estimate": bool,
     "brackets": dict,
 }
@@ -181,6 +192,10 @@ _REGISTRY_TYPES: dict[str, type] = {
 # ``middle_rate_estimate`` (always ``true``) marks the old stand-in of 65% of the top rate,
 # kept only where no official schedule maps onto this model. Exactly one must be present.
 _REGISTRY_GRADUATED = ("brackets", "middle_rate", "middle_rate_estimate")
+# A nonrefundable credit taken off the computed tax (Utah's taxpayer tax credit):
+# ``credit_rate`` times the filing status's ``credit_base``, less ``credit_phaseout_rate``
+# times the taxable income over its ``credit_phaseout`` amount, never below zero. All or none.
+_REGISTRY_CREDIT_KEYS = tuple(name for name in _REGISTRY_TYPES if name.startswith("credit_"))
 # Keys of the top/zero/middle formula, which a table with ``brackets`` does not use.
 _REGISTRY_FORMULA_KEYS = frozenset(
     name for name in _REGISTRY_TYPES if name.startswith(("top_", "zero_", "middle_"))
@@ -461,6 +476,11 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         )
     else:
         _check(not basis, f"{where}: {basis} apply only to a graduated table")
+    credit = [k for k in _REGISTRY_CREDIT_KEYS if k in params]
+    _check(
+        credit in ([], list(_REGISTRY_CREDIT_KEYS)),
+        f"{where}: a credit needs all of {list(_REGISTRY_CREDIT_KEYS)}, got {credit}",
+    )
     if "brackets" in params:
         unused = sorted(_REGISTRY_FORMULA_KEYS & set(params))
         _check(not unused, f"{where}: {unused} are unused next to brackets")

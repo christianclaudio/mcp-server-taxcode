@@ -4,12 +4,16 @@
   "model": "registry",
   "source_url": "https://files.tax.utah.gov/tax/forms/2024/tc-40inst.pdf",
   "params": {
-    "statutory_basis": "Utah Code Ann. §§ 59-10-104, 59-10-136",
+    "statutory_basis": "Utah Code Ann. §§ 59-10-104, 59-10-1018, 59-10-136",
     "rate_authority": "Utah Code Ann. § 59-10-104",
-    "rate_desc": "Flat 4.55% rate (SB 69)",
+    "rate_desc": "Flat 4.55% rate (SB 69) less the taxpayer tax credit: 6% of the $14,600 ($29,200 joint) federal standard deduction, reduced by 1.3% of income over $17,652 ($35,304 joint)",
     "regime": "flat",
     "rate": 0.0455,
-    "deduction_single": 14600.0,
-    "deduction_mfj": 29200.0
+    "credit_base_single": 14600.0,
+    "credit_base_mfj": 29200.0,
+    "credit_rate": 0.06,
+    "credit_phaseout_single": 17652.0,
+    "credit_phaseout_mfj": 35304.0,
+    "credit_phaseout_rate": 0.013
   }
 }
