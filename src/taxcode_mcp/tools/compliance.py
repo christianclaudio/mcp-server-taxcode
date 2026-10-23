@@ -690,7 +690,7 @@ def evaluate_state_residency(
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "Colo. Rev. Stat. § 39-22-104"
-        rate_desc = f"Flat {_pct(RATE_TABLES['CO']['rate'])} rate (Proposition 121)"
+        rate_desc = f"Flat {_pct(RATE_TABLES['CO']['rate'])} rate (2024 TABOR reduction, SB 24-228)"
         standard_ded = _allowance(RATE_TABLES["CO"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * RATE_TABLES["CO"]["rate"], 2) if is_resident else 0.0

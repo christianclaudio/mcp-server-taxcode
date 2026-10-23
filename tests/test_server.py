@@ -117,7 +117,7 @@ async def test_server_tools(mock_transport, monkeypatch):
     assert ga_res["domicile_audit_risk"]["risk_level"] == "high"
     assert len(ga_res["domicile_audit_risk"]["flags"]) == 3
     assert ga_res["tax_computation"]["georgia_taxable_net_income"] == 48000.0
-    assert ga_res["tax_computation"]["estimated_georgia_tax"] == 2635.20
+    assert ga_res["tax_computation"]["estimated_georgia_tax"] == 2587.20
     assert "NOT TAX OR LEGAL ADVICE" in ga_res["disclaimer"]["en"]
 
 
@@ -663,10 +663,10 @@ def test_evaluate_georgia_residency_cases() -> None:
     assert mfj_res["is_georgia_resident"] is True
     assert mfj_res["tax_computation"]["standard_deduction"] == 24000.0
     assert mfj_res["tax_computation"]["retirement_exclusion_applied"] == 35000.0
-    assert mfj_res["tax_computation"]["applicable_rate"] == 0.0539
+    assert mfj_res["tax_computation"]["applicable_rate"] == 0.0519
     # Taxable: 100k - 24k - 35k = 41k
     assert mfj_res["tax_computation"]["georgia_taxable_net_income"] == 41000.0
-    assert mfj_res["tax_computation"]["estimated_georgia_tax"] == round(41000.0 * 0.0539, 2)
+    assert mfj_res["tax_computation"]["estimated_georgia_tax"] == round(41000.0 * 0.0519, 2)
 
     # 3. Tax year 2026+ flat rate
     ga_2026 = server.evaluate_georgia_residency(
@@ -743,9 +743,9 @@ def test_evaluate_state_residency_cases() -> None:
         tax_year=2024,
     )
     assert ga_sr["is_resident"] is True
-    # 150k - 24k - 65k = 61k * 0.0549
+    # 150k - 24k - 65k = 61k * 0.0539
     assert ga_sr["tax_computation"]["taxable_net_income"] == 61000.0
-    assert ga_sr["tax_computation"]["estimated_state_tax"] == round(61000.0 * 0.0549, 2)
+    assert ga_sr["tax_computation"]["estimated_state_tax"] == round(61000.0 * 0.0539, 2)
 
     # 5. New York (NY) - non-resident convenience rule & progressive brackets
     ny_nonres = server.evaluate_state_residency(
@@ -813,8 +813,8 @@ def test_evaluate_state_residency_cases() -> None:
         capital_gains=500000.0,
     )
     assert wa_res["is_resident"] is True
-    # Taxable: 500k - 262k = 238k * 0.07 = 16,660.0
-    assert wa_res["tax_computation"]["estimated_state_tax"] == round(238000.0 * 0.07, 2)
+    # Taxable: 500k - 270k (2024 deduction) = 230k * 0.07 = 16,100.0
+    assert wa_res["tax_computation"]["estimated_state_tax"] == round(230000.0 * 0.07, 2)
 
     # 9. Massachusetts (MA) - Fair Share Surtax
     ma_res_high = server.evaluate_state_residency(
@@ -825,9 +825,9 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
     )
     assert ma_res_high["is_resident"] is True
-    # Taxable: 2M - 4400 = 1,995,600. Base: 5%, Surtax on 995,600: 4%
+    # Taxable: 2M - 4400 = 1,995,600. Base: 5%, 4% surtax over the 2024 threshold of $1,053,750
     taxable_ma = 2000000.0 - 4400.0
-    expected_ma = round((taxable_ma * 0.05) + ((taxable_ma - 1000000.0) * 0.04), 2)
+    expected_ma = round((taxable_ma * 0.05) + ((taxable_ma - 1053750.0) * 0.04), 2)
     assert ma_res_high["tax_computation"]["estimated_state_tax"] == expected_ma
 
     # 10. New Jersey (NJ) - brackets & convenience rule
@@ -1021,7 +1021,7 @@ def test_evaluate_state_residency_cases() -> None:
             taxable_md * expected_rate, 2
         )
 
-    # 17. Colorado (CO) - Proposition 121 flat 4.40%
+    # 17. Colorado (CO) - flat 4.25% for 2024 (SB 24-228)
     co_nonres = server.evaluate_state_residency(
         jurisdiction="CO",
         days_in_state=30,
@@ -1038,8 +1038,8 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
     )
     assert co_res["is_resident"] is True
-    # Taxable: 100,000 - 14,600 = 85,400 * 0.044
-    assert co_res["tax_computation"]["estimated_state_tax"] == round(85400.0 * 0.044, 2)
+    # Taxable: 100,000 - 14,600 = 85,400 * 0.0425
+    assert co_res["tax_computation"]["estimated_state_tax"] == round(85400.0 * 0.0425, 2)
 
     # 18. Arizona (AZ) - SB 1828 flat 2.50% & 9-month presumption
     az_presumption_flag = server.evaluate_state_residency(
@@ -1077,8 +1077,8 @@ def test_evaluate_state_residency_cases() -> None:
     )
 
     for inc, expected_calc in [
-        (150000.0, round(2033.63 + 0.035 * (150000.0 - 2400.0 - 100000.0), 2)),
-        (50000.0, round(0.0275 * (50000.0 - 2400.0 - 26050.0), 2)),
+        (150000.0, round(2394.32 + 0.035 * (150000.0 - 2400.0 - 100000.0), 2)),
+        (50000.0, round(360.69 + 0.0275 * (50000.0 - 2400.0 - 26050.0), 2)),
         (25000.0, 0.0),
     ]:
         oh_res = server.evaluate_state_residency(

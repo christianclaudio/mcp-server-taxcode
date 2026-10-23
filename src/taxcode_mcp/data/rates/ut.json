@@ -6,9 +6,9 @@
   "params": {
     "statutory_basis": "Utah Code Ann. §§ 59-10-104, 59-10-136",
     "rate_authority": "Utah Code Ann. § 59-10-104",
-    "rate_desc": "Flat 4.65% rate (SB 69)",
+    "rate_desc": "Flat 4.55% rate (SB 69)",
     "regime": "flat",
-    "rate": 0.0465,
+    "rate": 0.0455,
     "deduction_single": 14600.0,
     "deduction_mfj": 29200.0
   }

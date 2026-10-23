@@ -6,10 +6,31 @@
   "params": {
     "statutory_basis": "Kan. Stat. Ann. §§ 79-32,109, 79-32,110",
     "rate_authority": "Kan. Stat. Ann. § 79-32,110",
-    "rate_desc": "Flat 5.58% rate (SB 1 tax reform)",
-    "regime": "flat",
-    "rate": 0.0558,
-    "deduction_single": 3500.0,
-    "deduction_mfj": 8000.0
+    "rate_desc": "Graduated rates: 5.20% up to $23,000 ($46,000 joint), 5.58% above (SB 1)",
+    "regime": "graduated",
+    "deduction_single": 3605.0,
+    "deduction_mfj": 8240.0,
+    "brackets": {
+      "single": [
+        {
+          "over": 23000.0,
+          "rate": 0.0558
+        },
+        {
+          "over": null,
+          "rate": 0.052
+        }
+      ],
+      "mfj": [
+        {
+          "over": 46000.0,
+          "rate": 0.0558
+        },
+        {
+          "over": null,
+          "rate": 0.052
+        }
+      ]
+    }
   }
 }

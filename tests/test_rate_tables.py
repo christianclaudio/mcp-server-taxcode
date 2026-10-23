@@ -300,6 +300,8 @@ OFFICIAL_2024_BASES = [
     ("HI", "mfj", 96000.0, 6427.0, 1.0),
     ("IA", "single", 31050.0, 1470.53, 0.0),
     ("IA", "mfj", 12420.0, 546.48, 0.0),
+    ("KS", "single", 23000.0, 1196.0, 0.0),
+    ("KS", "mfj", 46000.0, 2392.0, 0.0),
     ("ME", "single", 61600.0, 3911.0, 1.0),
     ("ME", "mfj", 52100.0, 3022.0, 1.0),
     ("MO", "single", 8911.0, 248.0, 1.0),
@@ -339,3 +341,53 @@ def test_south_carolina_brackets_match_the_published_shortcut() -> None:
         (100000.0, 0.062 * 100000.0 - 659.0),
     ):
         assert abs(compliance._marginal_tax(brackets, income) - shortcut) <= 1.0
+
+
+def test_idaho_brackets_match_the_2024_worksheet() -> None:
+    # Form 40 instructions (2024): subtract $4,673 ($9,346 joint), multiply by 5.695%.
+    for status, exempt in (("single", 4673.0), ("mfj", 9346.0)):
+        brackets = compliance.RATE_TABLES["ID"]["brackets"][status]
+        assert compliance._marginal_tax(brackets, exempt) == 0.0
+        assert compliance._marginal_tax(brackets, 50000.0) == round((50000.0 - exempt) * 0.05695, 2)
+
+
+def test_ohio_bases_match_the_2024_schedule() -> None:
+    # IT 1040 instructions and R.C. 5747.02(A)(3)(a), 2024: $360.69 plus 2.75% over $26,050;
+    # $2,394.32 plus 3.50% over $100,000.
+    for status in ("single", "mfj"):
+        brackets = compliance.RATE_TABLES["OH"]["brackets"][status]
+        assert compliance._cumulative_tax(brackets, 26050.0) == 0.0
+        assert compliance._cumulative_tax(brackets, 26050.01) == 360.69
+        assert compliance._cumulative_tax(brackets, 100000.01) == 2394.32
+
+
+# Flat rates and allowances as each state's 2024 return instructions print them.
+OFFICIAL_2024_FIGURES = [
+    ("CO", ("rate",), 0.0425),
+    ("UT", ("rate",), 0.0455),
+    ("MA", ("surtax", "over"), 1053750.0),
+    ("WA", ("capital_gains_deduction",), 270000.0),
+    ("KS", ("deduction_single",), 3605.0),
+    ("KS", ("deduction_mfj",), 8240.0),
+    ("NE", ("deduction_single",), 8350.0),
+    ("NE", ("deduction_mfj",), 16700.0),
+    ("RI", ("deduction_single",), 10550.0),
+    ("RI", ("deduction_mfj",), 21150.0),
+]
+
+
+@pytest.mark.parametrize(("code", "path", "printed"), OFFICIAL_2024_FIGURES)
+def test_tables_hold_the_printed_2024_figures(
+    code: str, path: tuple[str, ...], printed: float
+) -> None:
+    node: Any = compliance.RATE_TABLES[code]
+    for key in path:
+        node = node[key]
+    assert node == printed
+
+
+def test_georgia_rates_follow_hb_1015_and_hb_111() -> None:
+    # HB 1015 (2024): 5.39% for 2024. HB 111 (2025): 5.19% for 2025.
+    rates = compliance.RATE_TABLES["GA"]["rates"]
+    assert compliance._year_step(rates, 2024)["rate"] == 0.0539
+    assert compliance._year_step(rates, 2025)["rate"] == 0.0519

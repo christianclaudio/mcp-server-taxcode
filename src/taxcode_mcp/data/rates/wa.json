@@ -4,7 +4,7 @@
   "model": "capital_gains_excise",
   "source_url": "not_recorded",
   "params": {
-    "capital_gains_deduction": 262000.0,
+    "capital_gains_deduction": 270000.0,
     "rate": 0.07
   }
 }

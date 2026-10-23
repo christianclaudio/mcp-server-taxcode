@@ -6,11 +6,32 @@
   "params": {
     "statutory_basis": "Idaho Code §§ 63-3013, 63-3024",
     "rate_authority": "Idaho Code § 63-3024",
-    "rate_desc": "Flat 5.695% rate",
-    "regime": "flat",
+    "rate_desc": "5.695% on taxable income over $4,673 ($9,346 joint)",
+    "regime": "graduated",
     "day_threshold": 270,
-    "rate": 0.05695,
     "deduction_single": 14600.0,
-    "deduction_mfj": 29200.0
+    "deduction_mfj": 29200.0,
+    "brackets": {
+      "single": [
+        {
+          "over": 4673.0,
+          "rate": 0.05695
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 9346.0,
+          "rate": 0.05695
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    }
   }
 }
