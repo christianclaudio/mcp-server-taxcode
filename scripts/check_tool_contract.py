@@ -7,14 +7,30 @@ import sys
 from taxcode_mcp.server import mcp
 
 EXPECTED_TOOLS = {
-    "system_get_health_status": {"read_only": True, "destructive": False},
-    "statutes_lookup_statute": {"read_only": True, "destructive": False},
-    "statutes_search_tax_code": {"read_only": True, "destructive": False},
-    "statutes_list_publications": {"read_only": True, "destructive": False},
-    "compliance_evaluate_pr_bona_fide_residency": {"read_only": True, "destructive": False},
-    "compliance_calculate_built_in_gain_sourcing": {"read_only": True, "destructive": False},
-    "compliance_evaluate_georgia_residency": {"read_only": True, "destructive": False},
-    "compliance_evaluate_state_residency": {"read_only": True, "destructive": False},
+    "system_get_health_status": {"read_only": True, "destructive": False, "open_world": True},
+    "statutes_lookup_statute": {"read_only": True, "destructive": False, "open_world": False},
+    "statutes_search_tax_code": {"read_only": True, "destructive": False, "open_world": False},
+    "statutes_list_publications": {"read_only": True, "destructive": False, "open_world": False},
+    "compliance_evaluate_pr_bona_fide_residency": {
+        "read_only": True,
+        "destructive": False,
+        "open_world": False,
+    },
+    "compliance_calculate_built_in_gain_sourcing": {
+        "read_only": True,
+        "destructive": False,
+        "open_world": False,
+    },
+    "compliance_evaluate_georgia_residency": {
+        "read_only": True,
+        "destructive": False,
+        "open_world": False,
+    },
+    "compliance_evaluate_state_residency": {
+        "read_only": True,
+        "destructive": False,
+        "open_world": False,
+    },
 }
 
 
@@ -43,6 +59,17 @@ async def verify_contracts() -> int:
             if hasattr(ann, "destructive_hint")
             else getattr(ann, "destructiveHint", None)
         )
+        open_world = (
+            ann.open_world_hint
+            if hasattr(ann, "open_world_hint")
+            else getattr(ann, "openWorldHint", None)
+        )
+        if open_world != expected["open_world"]:
+            print(
+                f"[x] Error: Tool '{name}' open_world_hint mismatch: "
+                f"{open_world} != {expected['open_world']}"
+            )
+            return 1
         if read_only != expected["read_only"]:
             print(
                 f"[x] Error: Tool '{name}' read_only_hint mismatch: "
