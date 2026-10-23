@@ -147,6 +147,9 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("GA", _set("params.rates.0.from_year", "2026"), "from_year: must be an integer"),
     ("GA", _set("params.rates.0.rate", -0.1), "rate: must be a float rate"),
     ("NC", _set("params.rates.0.rate_desc", ""), "rate_desc: must be a non-empty string"),
+    ("GA", _set("params.rates.0.law", ""), "rates[0].law: must be a non-empty string"),
+    ("GA", _drop("params.rates.1.law"), "rates[1]: fields must be exactly"),
+    ("CO", _drop("params.rates.0.rate_desc"), "rates[0]: fields must be exactly"),
     ("GA", _set("params.rates.2.from_year", 2024), "last step's from_year must be null"),
     # georgia retirement exclusion
     ("GA", _set("params.retirement_exclusion", {}), "must be a non-empty list"),
@@ -190,6 +193,20 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("ND", _set("params.middle_rate_estimate", True), "a graduated table needs exactly one of"),
     ("IN", _set("params.middle_rate", 0.02), "['middle_rate'] apply only to a graduated table"),
     ("AR", _set("params.brackets", []), "brackets: must be dict"),
+    ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
+    # later-year values of the non-registry models
+    ("WA", _set("params.rate_2024", 0.07), "unknown key 'rate_2024'"),
+    ("WA", _set("params.capital_gains_deduction_2024", -1.0), "must be a non-negative"),
+    ("MA", _set("params.surtax_2024", {"over": 1.0}), "surtax_2024: fields must be exactly"),
+    (
+        "MA",
+        _set("params.surtax_2022", {"over": 1.0, "rate": 0.04}),
+        "surtax_2022 out of order; years ascend",
+    ),
+    ("CO", _set("params.rates_2024", []), "fields must be exactly"),
+    ("NE", _set("params.deduction_single_2023", 1.0), "unknown keys ['deduction_single_2023']"),
+    ("UT", _set("params.credit_rate", 6.0), "credit_rate: must be a float rate"),
+    ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
         "AR",
         _both(_drop("params.middle_rate_estimate"), _set("params.brackets", {"single": []})),
@@ -300,6 +317,8 @@ OFFICIAL_2024_BASES = [
     ("HI", "mfj", 96000.0, 6427.0, 1.0),
     ("IA", "single", 31050.0, 1470.53, 0.0),
     ("IA", "mfj", 12420.0, 546.48, 0.0),
+    ("KS", "single", 23000.0, 1196.0, 0.0),
+    ("KS", "mfj", 46000.0, 2392.0, 0.0),
     ("ME", "single", 61600.0, 3911.0, 1.0),
     ("ME", "mfj", 52100.0, 3022.0, 1.0),
     ("MO", "single", 8911.0, 248.0, 1.0),
@@ -339,3 +358,229 @@ def test_south_carolina_brackets_match_the_published_shortcut() -> None:
         (100000.0, 0.062 * 100000.0 - 659.0),
     ):
         assert abs(compliance._marginal_tax(brackets, income) - shortcut) <= 1.0
+
+
+def test_idaho_brackets_match_the_2024_worksheet() -> None:
+    # Form 40 instructions (2024): subtract $4,673 ($9,346 joint), multiply by 5.695%.
+    for status, exempt in (("single", 4673.0), ("mfj", 9346.0)):
+        brackets = compliance.RATE_TABLES["ID"]["brackets"][status]
+        assert compliance._marginal_tax(brackets, exempt) == 0.0
+        assert compliance._marginal_tax(brackets, 50000.0) == round((50000.0 - exempt) * 0.05695, 2)
+
+
+def test_ohio_bases_match_the_2024_schedule() -> None:
+    # IT 1040 instructions and R.C. 5747.02(A)(3)(a), 2024: $360.69 plus 2.75% over $26,050;
+    # $2,394.32 plus 3.50% over $100,000.
+    for status in ("single", "mfj"):
+        brackets = compliance.RATE_TABLES["OH"]["brackets"][status]
+        assert compliance._cumulative_tax(brackets, 26050.0) == 0.0
+        assert compliance._cumulative_tax(brackets, 26050.01) == 360.69
+        assert compliance._cumulative_tax(brackets, 100000.01) == 2394.32
+
+
+# Flat rates and allowances as each state's 2024 return instructions print them.
+OFFICIAL_2024_FIGURES = [
+    ("UT", ("rate",), 0.0455),
+    ("UT", ("credit_rate",), 0.06),
+    ("UT", ("credit_base_single",), 14600.0),
+    ("UT", ("credit_base_mfj",), 29200.0),
+    ("UT", ("credit_phaseout_single",), 17652.0),
+    ("UT", ("credit_phaseout_mfj",), 35304.0),
+    ("UT", ("credit_phaseout_rate",), 0.013),
+    ("MA", ("surtax_2024", "over"), 1053750.0),
+    ("WA", ("capital_gains_deduction_2024",), 270000.0),
+    ("KY", ("deduction_single",), 3160.0),
+    ("KY", ("deduction_mfj",), 3160.0),
+    ("KS", ("deduction_single",), 3605.0),
+    ("KS", ("deduction_mfj",), 8240.0),
+    ("NE", ("deduction_single_2024",), 8350.0),
+    ("NE", ("deduction_mfj_2024",), 16700.0),
+    ("RI", ("deduction_single",), 10550.0),
+    ("RI", ("deduction_mfj",), 21150.0),
+]
+
+
+@pytest.mark.parametrize(("code", "path", "printed"), OFFICIAL_2024_FIGURES)
+def test_tables_hold_the_printed_2024_figures(
+    code: str, path: tuple[str, ...], printed: float
+) -> None:
+    node: Any = compliance.RATE_TABLES[code]
+    for key in path:
+        node = node[key]
+    assert node == printed
+
+
+def test_georgia_rates_follow_hb_1015_and_hb_111() -> None:
+    # HB 1015 (2024): 5.39% for 2024. HB 111 (2025): 5.19% for 2025.
+    rates = compliance.RATE_TABLES["GA"]["rates"]
+    assert compliance._year_step(rates, 2024)["rate"] == 0.0539
+    assert compliance._year_step(rates, 2025)["rate"] == 0.0519
+
+
+def _resident_tax(code: str, tax_year: int, agi: float, status: str = "single") -> dict[str, Any]:
+    result: dict[str, Any] = compliance.evaluate_state_residency(
+        jurisdiction=code,
+        days_in_state=300,
+        is_domiciled=True,
+        maintains_permanent_abode=True,
+        federal_agi=agi,
+        filing_status=status,
+        tax_year=tax_year,
+    )
+    tax: dict[str, Any] = result["tax_computation"]
+    return tax
+
+
+def test_colorado_rate_follows_the_tax_year() -> None:
+    # DR 0104 book 2024: "currently 4.25%" (SB 24-228 lowers 2024 only). Book 104 (2025):
+    # "currently 4.4%". DOR income tax guide: 4.4% for 2022 and 2023, 4.25% for 2024.
+    rates = compliance.RATE_TABLES["CO"]["rates"]
+    for tax_year, rate in ((2022, 0.044), (2023, 0.044), (2024, 0.0425), (2025, 0.044)):
+        assert compliance._year_step(rates, tax_year)["rate"] == rate, tax_year
+    # 100,000 - 14,600 = 85,400 taxable.
+    assert _resident_tax("CO", 2024, 100000.0)["estimated_state_tax"] == round(85400.0 * 0.0425, 2)
+    for tax_year in (2023, 2025):
+        tax = _resident_tax("CO", tax_year, 100000.0)
+        assert tax["estimated_state_tax"] == round(85400.0 * 0.044, 2), tax_year
+        assert tax["rate_description"].startswith("Flat 4.40% rate (Proposition 121) ["), tax_year
+    assert _resident_tax("CO", 2024, 1.0)["rate_description"] == (
+        "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
+    )
+
+
+def _georgia_answers(tax_year: int) -> tuple[str, str]:
+    """GA's rate prose from both tools: the state tool's description and the GA authority."""
+    state = _resident_tax("GA", tax_year, 100000.0)["rate_description"]
+    ga = compliance.evaluate_georgia_residency(
+        days_present_ga=300, federal_agi=100000.0, tax_year=tax_year
+    )
+    return state, ga["tax_computation"]["statutory_rate_authority"]
+
+
+def test_georgia_prose_cites_the_law_that_set_the_years_rate() -> None:
+    # HB 1015 (2024) sets 5.39% for 2024, HB 111 (2025) 5.19% for 2025, HB 463 (2026) 4.99%
+    # from 2026, each as signed (gov.georgia.gov).
+    for tax_year, rate, law in (
+        (2024, "5.39%", "HB 1015 of 2024"),
+        (2025, "5.19%", "HB 111 of 2025"),
+        (2026, "4.99%", "HB 463 of 2026"),
+        (2030, "4.99%", "HB 463 of 2026"),
+    ):
+        state, authority = _georgia_answers(tax_year)
+        assert state == f"Flat {rate} rate ({law})", tax_year
+        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, {law})", tax_year
+
+
+def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
+    for tax_year in (2020, 2023):
+        state, authority = _georgia_answers(tax_year)
+        assert "[ESTIMATE: " in state and "[ESTIMATE: " in authority, tax_year
+        assert state == f"Flat 5.39% rate (HB 1015 of 2024){compliance.GA_PRE_FLAT_ESTIMATE_NOTE}"
+        assert authority.endswith(compliance.GA_PRE_FLAT_ESTIMATE_NOTE), tax_year
+    for tax_year in (2024, 2025, 2026):
+        assert not any("ESTIMATE" in text for text in _georgia_answers(tax_year)), tax_year
+
+
+def test_mississippi_taxes_only_income_over_the_10000_band() -> None:
+    # Form 80-100 instructions (2024): "taxable income in excess of $10,000" at 4.7% for 2024.
+    # A joint return puts all income in Column A of the Tax Computation Schedule, so it has one
+    # $10,000 band (Filing Status for Married Persons, item 1; Line 17). A combined return with
+    # both spouses' columns positive applies the schedule to each column, which needs the
+    # spouses' split that the tool does not take.
+    for status, deduction in (("single", 2300.0), ("married_joint", 4600.0)):
+        assert _resident_tax("MS", 2024, deduction + 10000.0, status)["estimated_state_tax"] == 0.0
+        tax = _resident_tax("MS", 2024, deduction + 50000.0, status)
+        assert tax["estimated_state_tax"] == round(40000.0 * 0.047, 2), status
+        assert tax["middle_rate_is_estimate"] is False
+
+
+def test_utah_takes_the_taxpayer_tax_credit_off_the_tax() -> None:
+    # TC-40 instructions (2024), lines 9-22: 4.55% of Utah taxable income, less the taxpayer
+    # tax credit of 6% of the federal standard deduction (lines 15-16), reduced by 1.3% of
+    # income over $17,652 single / $35,304 joint (lines 17-20), never below zero.
+    def tax(agi: float, status: str) -> float:
+        return _resident_tax("UT", 2024, agi, status)["estimated_state_tax"]
+
+    assert tax(10000.0, "single") == 0.0
+    assert tax(17652.0, "single") == 0.0  # 803.17 tax, 876 credit
+    assert tax(30000.0, "single") == round(1365.0 - (876.0 - 0.013 * 12348.0), 2)
+    assert tax(60000.0, "married_joint") == round(2730.0 - (1752.0 - 0.013 * 24696.0), 2)
+    # The credit is gone once the phase-out passes it: 876 / 0.013 = 67,385 over the base.
+    assert tax(200000.0, "single") == 9100.0
+    table = compliance.RATE_TABLES["UT"]
+    assert "deduction_single" not in table and "deduction_mfj" not in table
+
+
+def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
+    # Form 740 instructions, Line 10: "If filing a joint return, only one $3,160 standard
+    # deduction is allowed" (2024); $3,270 for 2025; DOR announced $3,360 for 2026 (KRS 141.081).
+    # The rate is 4% for 2024 and 2025 and 3.5% for 2026 (2026 Withholding Tax Formula).
+    for year, deduction, tax_on_10000 in (
+        (2024, 3160.0, 400.0),
+        (2025, 3270.0, 400.0),
+        (2026, 3360.0, 350.0),
+    ):
+        for status in ("single", "married_joint"):
+            assert _resident_tax("KY", year, deduction, status)["estimated_state_tax"] == 0.0
+            tax = _resident_tax("KY", year, deduction + 10000.0, status)["estimated_state_tax"]
+            assert tax == tax_on_10000, (year, status)
+
+
+def test_rhode_island_2025_standard_deduction() -> None:
+    # 2025 Tax Rate and Worksheets, Standard Deduction Worksheet: $10,900 single, $21,800 joint.
+    # The 2024 figures (10,550 / 21,150) stay for 2024 and earlier.
+    for status, deduction in (("single", 10900.0), ("married_joint", 21800.0)):
+        assert _resident_tax("RI", 2025, deduction, status)["estimated_state_tax"] == 0.0
+        assert _resident_tax("RI", 2025, deduction + 1000.0, status)["estimated_state_tax"] == 37.5
+    assert _resident_tax("RI", 2024, 10550.0 + 1000.0, "single")["estimated_state_tax"] == 37.5
+
+
+def test_2023_keeps_the_2023_figures() -> None:
+    # NE: 2023 Tax Calculation Schedule and the DOR rate chronology, 7,900 / 15,800 for 2023
+    # (8,350 / 16,700 for 2024). WA: DOR "Do you owe capital gains tax", $262,000 for 2023
+    # ($270,000 for 2024). MA: DOR 4% surtax page, $1,000,000 for 2023 ($1,053,750 for 2024).
+    for year, single, joint in ((2023, 7900.0, 15800.0), (2024, 8350.0, 16700.0)):
+        assert _resident_tax("NE", year, single, "single")["estimated_state_tax"] == 0.0
+        assert _resident_tax("NE", year, single + 1000.0, "single")["estimated_state_tax"] == 24.6
+        assert _resident_tax("NE", year, joint, "married_joint")["estimated_state_tax"] == 0.0
+    for year, deduction in ((2023, 262000.0), (2024, 270000.0)):
+        result = compliance.evaluate_state_residency(
+            jurisdiction="WA",
+            days_in_state=300,
+            is_domiciled=True,
+            capital_gains=deduction + 10000.0,
+            tax_year=year,
+        )["tax_computation"]
+        assert result["estimated_state_tax"] == 700.0, year
+        assert f"${deduction:,.0f}" in result["rate_description"], year
+    for year, threshold in ((2023, 1000000.0), (2024, 1053750.0)):
+        agi = 4400.0 + threshold + 10000.0
+        tax = _resident_tax("MA", year, agi)
+        assert tax["estimated_state_tax"] == round((threshold + 10000.0) * 0.05 + 400.0, 2)
+        assert f"${threshold:,.0f}" in tax["rate_description"], year
+
+
+def test_colorado_years_off_the_held_figures_are_labeled_estimates() -> None:
+    # The table's deduction is the 2024 federal standard deduction (14,600 / 29,200), so
+    # every year but 2024 is labeled for it. DOR income tax guide: 4.5% (2019), 4.55%
+    # (2020), 4.5% (2021), 4.4% from 2022; the table's rates start at 2022, so earlier
+    # years also carry the rate reason.
+    deduction = (
+        "the deduction is the 2024 federal standard deduction; tax year {}'s federal figure "
+        "is not in this table"
+    )
+    rate = (
+        "this table holds Colorado's rate from tax year 2022; an earlier year's rate is not "
+        "in it, so the 4.40% rate is used"
+    )
+    prop_121 = "Flat 4.40% rate (Proposition 121)"
+    for tax_year in (2015, 2019, 2020, 2021):
+        description = _resident_tax("CO", tax_year, 100000.0)["rate_description"]
+        expected = f"{prop_121} [ESTIMATE: {deduction.format(tax_year)}; {rate}]"
+        assert description == expected, tax_year
+    for tax_year in (2022, 2023, 2025, 2026):
+        description = _resident_tax("CO", tax_year, 100000.0)["rate_description"]
+        assert description == f"{prop_121} [ESTIMATE: {deduction.format(tax_year)}]", tax_year
+    description = _resident_tax("CO", 2024, 100000.0)["rate_description"]
+    assert description == "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
+    assert compliance._co_estimate_note(2024, 0.0425) == ""

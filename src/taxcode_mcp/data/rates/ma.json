@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "MA",
   "model": "flat_with_surtax",
-  "source_url": "not_recorded",
+  "source_url": "https://www.mass.gov/doc/2024-form-1-instructions/download",
   "params": {
     "deduction": {
       "single": 4400.0,
@@ -11,6 +11,10 @@
     "rate": 0.05,
     "surtax": {
       "over": 1000000.0,
+      "rate": 0.04
+    },
+    "surtax_2024": {
+      "over": 1053750.0,
       "rate": 0.04
     }
   }

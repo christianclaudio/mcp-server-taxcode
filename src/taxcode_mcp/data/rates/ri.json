@@ -8,8 +8,10 @@
     "rate_authority": "R.I. Gen. Laws § 44-30-1",
     "rate_desc": "Graduated rates: 3.75%, 4.75%, and 5.99%",
     "regime": "graduated",
-    "deduction_single": 10650.0,
-    "deduction_mfj": 21300.0,
+    "deduction_single": 10550.0,
+    "deduction_mfj": 21150.0,
+    "deduction_single_2025": 10900.0,
+    "deduction_mfj_2025": 21800.0,
     "brackets": {
       "single": [
         {

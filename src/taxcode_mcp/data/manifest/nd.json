@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "nd-rates",
-      "url": "not_recorded",
+      "url": "https://www.tax.nd.gov/sites/www/files/documents/forms/individual/2024-iit/2024-form-nd-1-tax-tables-and-rates.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-23",
+      "content_sha256": "2d68ed94fb3cfbcaa0a770072daf21b56238b8b76d75b4aa47aab87c5de28e51",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

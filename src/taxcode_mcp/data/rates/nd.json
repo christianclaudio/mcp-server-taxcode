@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "ND",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.tax.nd.gov/sites/www/files/documents/forms/individual/2024-iit/2024-form-nd-1-tax-tables-and-rates.pdf",
   "params": {
     "statutory_basis": "N.D. Cent. Code §§ 57-38-01, 57-38-30.3",
     "rate_authority": "N.D. Cent. Code § 57-38-30.3",

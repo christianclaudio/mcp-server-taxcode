@@ -219,6 +219,47 @@ def calculate_built_in_gain_sourcing(
     raise failure from None
 
 
+# Georgia's flat rate applies from tax year 2024 (O.C.G.A. § 48-7-20(a.1), as amended by
+# HB 1015 (2024): "for taxable years beginning on or after January 1, 2024"). Earlier years
+# were taxed on graduated brackets that the rate table does not hold, so an earlier tax year
+# gets the table's oldest step, labeled as an estimate.
+GA_FLAT_RATE_FIRST_YEAR = 2024
+GA_PRE_FLAT_ESTIMATE_NOTE = (
+    " [ESTIMATE: Georgia's flat rate starts with tax year 2024; earlier years were taxed on "
+    "graduated brackets this table does not hold, so the 2024 rate is used]"
+)
+
+
+# Colorado's table holds the rate from tax year 2022 on (DOR income tax guide: 4.4% for 2022
+# and 2023, 4.25% for 2024, 4.4% from 2025). An earlier year gets the oldest step, labeled.
+CO_FIRST_SOURCED_YEAR = 2022
+# Colorado starts from federal taxable income, so its deduction is the federal standard
+# deduction of each year. The table holds only the 2024 figure (14,600 / 29,200), so every
+# other year's answer is labeled until the deduction is held by year.
+CO_DEDUCTION_YEAR = 2024
+
+
+def _co_estimate_note(tax_year: int, rate: float) -> str:
+    """The estimate label for a Colorado tax year the table's figures don't cover; else empty."""
+    reasons = []
+    if tax_year != CO_DEDUCTION_YEAR:
+        reasons.append(
+            f"the deduction is the {CO_DEDUCTION_YEAR} federal standard deduction; tax year "
+            f"{tax_year}'s federal figure is not in this table"
+        )
+    if tax_year < CO_FIRST_SOURCED_YEAR:
+        reasons.append(
+            f"this table holds Colorado's rate from tax year {CO_FIRST_SOURCED_YEAR}; "
+            f"an earlier year's rate is not in it, so the {_pct(rate)} rate is used"
+        )
+    return f" [ESTIMATE: {'; '.join(reasons)}]" if reasons else ""
+
+
+def _ga_estimate_note(tax_year: int) -> str:
+    """The estimate label for a tax year before Georgia's flat rate; empty from 2024 on."""
+    return GA_PRE_FLAT_ESTIMATE_NOTE if tax_year < GA_FLAT_RATE_FIRST_YEAR else ""
+
+
 def _ga_retirement_cap(ga: dict[str, Any], age: int) -> float:
     """Georgia's retirement income exclusion cap for an age; 0.0 below every listed age."""
     return float(
@@ -277,7 +318,7 @@ def evaluate_georgia_residency(
             "Active Georgia voter registration is probative evidence of continuing domicile."
         )
 
-    # 3. Tax Calculation under HB 1023 / HB 1015 (O.C.G.A. § 48-7-20 & § 48-7-27)
+    # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
     standard_deduction = float(ga["standard_deduction"][_status(is_mfj)])
@@ -287,7 +328,8 @@ def evaluate_georgia_residency(
     retirement_exclusion_applied = min(retirement_income, max_exclusion)
 
     # Tax rate selection
-    tax_rate = float(_year_step(ga["rates"], tax_year)["rate"])
+    ga_step = _year_step(ga["rates"], tax_year)
+    tax_rate = float(ga_step["rate"])
 
     taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
     estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
@@ -319,7 +361,9 @@ def evaluate_georgia_residency(
             "estimated_georgia_tax": estimated_tax,
             "is_estimate": True,
             "estimate_note": ESTIMATE_NOTE,
-            "statutory_rate_authority": "O.C.G.A. § 48-7-20 (HB 1023 / HB 1015 flat tax)",
+            "statutory_rate_authority": (
+                f"O.C.G.A. § 48-7-20 (flat tax, {ga_step['law']}){_ga_estimate_note(tax_year)}"
+            ),
         },
         "disclaimer": BILINGUAL_DISCLAIMER,
         "content_notice": CONTENT_NOTICE,
@@ -346,6 +390,20 @@ def _allowance(params: dict[str, Any], is_mfj: bool) -> float:
     """The filing-status deduction or exemption of a rate table."""
     by_status = params["deduction"] if "deduction" in params else params["exemption"]
     return float(by_status[_status(is_mfj)])
+
+
+def _for_year(params: dict[str, Any], name: str, tax_year: int) -> Any:
+    """``params[name]``, or its latest ``<name>_<YYYY>`` value whose year the tax year reached.
+
+    A ``_YYYY`` key holds the value from that tax year on; the unsuffixed key covers the
+    years before. ``None`` when neither applies.
+    """
+    key, latest = name, -1
+    for candidate in params:
+        year = candidate[len(name) + 1 :]
+        if candidate.startswith(f"{name}_") and year.isdigit() and latest < int(year) <= tax_year:
+            key, latest = candidate, int(year)
+    return params.get(key)
 
 
 def _year_step(steps: list[dict[str, Any]], tax_year: int) -> dict[str, Any]:
@@ -380,6 +438,14 @@ def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> floa
             tax += b["rate"] * (ceiling - floor)
             ceiling = floor
     return float(round(tax, 2))
+
+
+def _registry_credit(info: dict[str, Any], is_mfj: bool, taxable_income: float) -> float:
+    """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0."""
+    status = _status(is_mfj)
+    initial = float(info["credit_rate"]) * float(info[f"credit_base_{status}"])
+    over = max(0.0, taxable_income - float(info[f"credit_phaseout_{status}"]))
+    return max(0.0, initial - float(info["credit_phaseout_rate"]) * over)
 
 
 def _pct(rate: float) -> str:
@@ -494,8 +560,9 @@ def evaluate_state_residency(
         standard_ded = float(ga["standard_deduction"][_status(is_mfj)])
         max_ret = _ga_retirement_cap(ga, age)
         ret_excl = min(retirement_income, max_ret)
-        rate = float(_year_step(ga["rates"], tax_year)["rate"])
-        rate_desc = f"Flat {_pct(rate)} rate (HB 1023 / HB 1015)"
+        ga_step = _year_step(ga["rates"], tax_year)
+        rate = float(ga_step["rate"])
+        rate_desc = f"Flat {_pct(rate)} rate ({ga_step['law']}){_ga_estimate_note(tax_year)}"
         rate_authority = "O.C.G.A. § 48-7-20"
         taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
         estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
@@ -560,7 +627,7 @@ def evaluate_state_residency(
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
         rate_authority = "RCW 82.87.040"
         wa = RATE_TABLES["WA"]
-        cap_gain_ded = float(wa["capital_gains_deduction"])
+        cap_gain_ded = float(_for_year(wa, "capital_gains_deduction", tax_year))
         rate_desc = (
             f"No ordinary income tax; {_pct(wa['rate'])} excise tax on capital gains over "
             f"the {_money(cap_gain_ded)} deduction"
@@ -573,15 +640,16 @@ def evaluate_state_residency(
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "M.G.L. c. 62 § 4 & Fair Share Amendment"
         ma = RATE_TABLES["MA"]
+        ma_surtax = _for_year(ma, "surtax", tax_year)
         rate_desc = (
-            f"Flat {_pct(ma['rate'])} rate plus {_pct(ma['surtax']['rate'])} Fair Share surtax "
-            f"on income over {_money(ma['surtax']['over'])}"
+            f"Flat {_pct(ma['rate'])} rate plus {_pct(ma_surtax['rate'])} Fair Share surtax "
+            f"on income over {_money(ma_surtax['over'])}"
         )
         std_ded = _allowance(ma, is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
             base_tax = taxable_income * ma["rate"]
-            surtax = max(0.0, taxable_income - ma["surtax"]["over"]) * ma["surtax"]["rate"]
+            surtax = max(0.0, taxable_income - ma_surtax["over"]) * ma_surtax["rate"]
             estimated_tax = round(base_tax + surtax, 2)
 
     elif state == "NJ":
@@ -690,10 +758,12 @@ def evaluate_state_residency(
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "Colo. Rev. Stat. § 39-22-104"
-        rate_desc = f"Flat {_pct(RATE_TABLES['CO']['rate'])} rate (Proposition 121)"
+        co_step = _year_step(RATE_TABLES["CO"]["rates"], tax_year)
+        co_rate = float(co_step["rate"])
+        rate_desc = f"{co_step['rate_desc']}{_co_estimate_note(tax_year, co_rate)}"
         standard_ded = _allowance(RATE_TABLES["CO"], is_mfj)
         taxable_income = max(0.0, federal_agi - standard_ded)
-        estimated_tax = round(taxable_income * RATE_TABLES["CO"]["rate"], 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * co_rate, 2) if is_resident else 0.0
 
     elif state == "AZ":
         statutory_basis = "A.R.S. §§ 43-104, 43-1011"
@@ -781,17 +851,7 @@ def evaluate_state_residency(
             regime = str(info["regime"])
 
         # Year-aware standard deduction selection
-        if tax_year >= 2026 and (
-            "deduction_mfj_2026" in info if is_mfj else "deduction_single_2026" in info
-        ):
-            ded_key = "deduction_mfj_2026" if is_mfj else "deduction_single_2026"
-        elif tax_year >= 2025 and (
-            "deduction_mfj_2025" in info if is_mfj else "deduction_single_2025" in info
-        ):
-            ded_key = "deduction_mfj_2025" if is_mfj else "deduction_single_2025"
-        else:
-            ded_key = "deduction_mfj" if is_mfj else "deduction_single"
-        ded = float(info.get(ded_key, 0.0))
+        ded = float(_for_year(info, f"deduction_{_status(is_mfj)}", tax_year) or 0.0)
         taxable_income = max(0.0, federal_agi - ded)
 
         if regime == "none":
@@ -842,6 +902,10 @@ def evaluate_state_residency(
                     estimated_tax = round((taxable_income - zero_bracket) * mid_rate, 2)
             else:
                 estimated_tax = 0.0
+
+        if "credit_rate" in info and is_resident:
+            credit = _registry_credit(info, is_mfj, taxable_income)
+            estimated_tax = max(0.0, round(estimated_tax - credit, 2))
 
     tax_computation: dict[str, Any] = {
         "taxable_net_income": taxable_income,

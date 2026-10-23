@@ -10,6 +10,8 @@
     "regime": "graduated",
     "deduction_single": 7900.0,
     "deduction_mfj": 15800.0,
+    "deduction_single_2024": 8350.0,
+    "deduction_mfj_2024": 16700.0,
     "brackets": {
       "single": [
         {

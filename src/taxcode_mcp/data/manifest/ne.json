@@ -26,7 +26,20 @@
       "content_sha256": "c7d829404e55cc4a33e2f69b6b08b2d2b547f1a4faae64382f3cdeda50466e11",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single": 7900.0,
+            "deduction_mfj": 15800.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "103fdd3ca9bc66c1c9bfc78e52f1a24cca198e2893f79e3d023bae757471ff83"
+        }
+      ]
     }
   ]
 }

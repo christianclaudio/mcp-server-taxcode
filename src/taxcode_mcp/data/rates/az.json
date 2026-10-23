@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "AZ",
   "model": "flat",
-  "source_url": "not_recorded",
+  "source_url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140i.pdf",
   "params": {
     "deduction": {
       "single": 14600.0,

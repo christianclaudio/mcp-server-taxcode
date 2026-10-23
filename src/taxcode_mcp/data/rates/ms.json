@@ -2,14 +2,35 @@
   "schema": 1,
   "jurisdiction": "MS",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100241.pdf",
   "params": {
     "statutory_basis": "Miss. Code Ann. §§ 27-7-3, 27-7-5",
     "rate_authority": "Miss. Code Ann. § 27-7-5",
-    "rate_desc": "Flat 4.70% rate (phasing to 4.0% by 2026)",
-    "regime": "flat",
-    "rate": 0.047,
+    "rate_desc": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 4.70% above (HB 531; phasing to 4.0% by 2026)",
+    "regime": "graduated",
     "deduction_single": 2300.0,
-    "deduction_mfj": 4600.0
+    "deduction_mfj": 4600.0,
+    "brackets": {
+      "single": [
+        {
+          "over": 10000.0,
+          "rate": 0.047
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 10000.0,
+          "rate": 0.047
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    }
   }
 }

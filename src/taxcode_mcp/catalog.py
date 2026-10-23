@@ -91,6 +91,18 @@ MANIFEST_FIELDS: tuple[str, ...] = (
     "verification",
 )
 MANIFEST_KINDS = frozenset({"statute", "publication", "rate_table"})
+# Optional last field of a ``rate_table`` entry: the sources of the figures for other tax
+# years than ``url``'s. Each names the table values it confirms by their path in ``params``.
+YEAR_SOURCES = "year_sources"
+YEAR_SOURCE_FIELDS: tuple[str, ...] = (
+    "tax_year",
+    "values",
+    "url",
+    "official",
+    "retrieved",
+    "content_sha256",
+)
+_PARAM_PATH_RE = re.compile(r"([a-z][a-z0-9_]*)((?:\[\d+\])*)")
 VERIFICATION_STATUSES = frozenset({"verified_verbatim", "summary", NOT_RECORDED})
 # Which text the source at ``url`` is: the law as enacted, or a compilation with its
 # later amendments folded in (such as an OGP "según enmendada" text).
@@ -119,7 +131,7 @@ RATE_TABLE_MODELS: dict[str, str] = {
     "NC": "flat_by_year",
     "VA": "brackets_cumulative",
     "MD": "maryland",
-    "CO": "flat",
+    "CO": "flat_by_year",
     "AZ": "flat",
     "OH": "brackets_cumulative",
     **dict.fromkeys(
@@ -142,6 +154,17 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
     "flat_with_surtax": ("allowance", "rate", "surtax"),
     "capital_gains_excise": ("capital_gains_deduction", "rate"),
 }
+# Model params that may also carry later-year values as ``<name>_<YYYY>`` keys after the
+# model's own fields, years ascending. Each holds the value from that tax year on, and the
+# unsuffixed key covers the years before (the registry's convention).
+YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
+    "flat_with_surtax": ("surtax",),
+    "capital_gains_excise": ("capital_gains_deduction",),
+}
+_YEARLY_KEY_RE = re.compile(r"^(?P<name>[a-z_]+?)_(?P<year>\d{4})$")
+# The text each per-year step carries: ``flat_by_year`` its whole ``rate_desc``; ``georgia``
+# the ``law`` that set that year's rate, which the rate prose cites.
+YEAR_STEP_TEXT: dict[str, str] = {"flat_by_year": "rate_desc", "georgia": "law"}
 ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
 REGIMES = frozenset({"none", "flat", "graduated"})
@@ -162,13 +185,24 @@ _REGISTRY_TYPES: dict[str, type] = {
             f"{name}_{status}{year}"
             for name in ("deduction", "top_bracket", "zero_bracket")
             for status in FILING_STATUSES
-            for year in ("", "_2025", "_2026")
-            if not (year == "_2026" and name != "deduction")
+            for year in ("", "_2024", "_2025", "_2026")
+            if name == "deduction" or year in ("", "_2025")
         ),
         float,
     ),
     **dict.fromkeys(
         ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
+    ),
+    **dict.fromkeys(
+        (
+            "credit_base_single",
+            "credit_base_mfj",
+            "credit_rate",
+            "credit_phaseout_single",
+            "credit_phaseout_mfj",
+            "credit_phaseout_rate",
+        ),
+        float,
     ),
     "middle_rate_estimate": bool,
     "brackets": dict,
@@ -178,6 +212,10 @@ _REGISTRY_TYPES: dict[str, type] = {
 # ``middle_rate_estimate`` (always ``true``) marks the old stand-in of 65% of the top rate,
 # kept only where no official schedule maps onto this model. Exactly one must be present.
 _REGISTRY_GRADUATED = ("brackets", "middle_rate", "middle_rate_estimate")
+# A nonrefundable credit taken off the computed tax (Utah's taxpayer tax credit):
+# ``credit_rate`` times the filing status's ``credit_base``, less ``credit_phaseout_rate``
+# times the taxable income over its ``credit_phaseout`` amount, never below zero. All or none.
+_REGISTRY_CREDIT_KEYS = tuple(name for name in _REGISTRY_TYPES if name.startswith("credit_"))
 # Keys of the top/zero/middle formula, which a table with ``brackets`` does not use.
 _REGISTRY_FORMULA_KEYS = frozenset(
     name for name in _REGISTRY_TYPES if name.startswith(("top_", "zero_", "middle_"))
@@ -330,7 +368,8 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
             catalog.documents[f"manifest/{stem}"], entries = _document(path, code, "entries")
             for entry in entries:
                 where = f"manifest/{stem}.json entry {entry.get('id', '?')!r}"
-                _check_keys(entry, MANIFEST_FIELDS, where)
+                fields = (*MANIFEST_FIELDS, *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()))
+                _check_keys(entry, fields, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
     if with_manifest:
         stray = _stray_files(root, "rates", {file_stem(c) for c in RATE_TABLE_MODELS})
@@ -421,11 +460,12 @@ def _check_year_steps(value: Any, fields: Sequence[str], where: str) -> None:
         if step["from_year"] is not None:
             _check(type(step["from_year"]) is int, f"{at}.from_year: must be an integer")
         _check_rate(step["rate"], f"{at}.rate")
-        if "rate_desc" in step:
-            _check(
-                isinstance(step["rate_desc"], str) and bool(step["rate_desc"]),
-                f"{at}.rate_desc: must be a non-empty string",
-            )
+        for text in ("rate_desc", "law"):
+            if text in step:
+                _check(
+                    isinstance(step[text], str) and bool(step[text]),
+                    f"{at}.{text}: must be a non-empty string",
+                )
 
     _check_steps(value, fields, "from_year", where, row)
 
@@ -457,6 +497,11 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         )
     else:
         _check(not basis, f"{where}: {basis} apply only to a graduated table")
+    credit = [k for k in _REGISTRY_CREDIT_KEYS if k in params]
+    _check(
+        credit in ([], list(_REGISTRY_CREDIT_KEYS)),
+        f"{where}: a credit needs all of {list(_REGISTRY_CREDIT_KEYS)}, got {credit}",
+    )
     if "brackets" in params:
         unused = sorted(_REGISTRY_FORMULA_KEYS & set(params))
         _check(not unused, f"{where}: {unused} are unused next to brackets")
@@ -473,9 +518,21 @@ def _check_params(model: str, params: Any, where: str) -> None:
         first = next(iter(params), None)
         _check(first in ALLOWANCE_NAMES, f"{where}: first key must be one of {ALLOWANCE_NAMES}")
         fields[0] = str(first)
-    _check_keys(params, fields, where)
-    for name in fields:
-        value, at = params[name], f"{where}.{name}"
+    yearly = list(params)[len(fields) :] if model in YEARLY_PARAMS else []
+    _check_keys(dict(list(params.items())[: len(params) - len(yearly)]), fields, where)
+    years: list[int] = []
+    for key in yearly:
+        match = _YEARLY_KEY_RE.match(key)
+        _check(
+            match is not None and match["name"] in YEARLY_PARAMS[model],
+            f"{where}: unknown key {key!r}; only {list(YEARLY_PARAMS[model])} take a _YYYY value",
+        )
+        year = int(match["year"]) if match else 0
+        _check(not years or year > years[-1], f"{where}: {key} out of order; years ascend")
+        years.append(year)
+    for key in [*fields, *yearly]:
+        value, at = params[key], f"{where}.{key}"
+        name = key.rsplit("_", 1)[0] if key in yearly else key
         if name in (*ALLOWANCE_NAMES, "standard_deduction") and model != "maryland":
             _check_by_status(value, at)
         elif name == "standard_deduction":  # maryland: a share of AGI between two limits
@@ -488,10 +545,7 @@ def _check_params(model: str, params: Any, where: str) -> None:
             cumulative = model == "brackets_cumulative"
             _check_brackets(value, ("over", "base", "rate") if cumulative else ("over", "rate"), at)
         elif name == "rates":
-            by_year = model == "flat_by_year"
-            _check_year_steps(
-                value, ("from_year", "rate", "rate_desc") if by_year else ("from_year", "rate"), at
-            )
+            _check_year_steps(value, ("from_year", "rate", YEAR_STEP_TEXT[model]), at)
         elif name == "retirement_exclusion":
             _check(isinstance(value, list) and len(value) > 0, f"{at}: must be a non-empty list")
             for i, step in enumerate(value):
@@ -605,6 +659,65 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
     return errors
 
 
+_MISSING = object()
+
+
+def _param_at(params: Any, path: str) -> Any:
+    """The value at a dotted ``params`` path such as ``rates[0].rate``; ``_MISSING`` if none."""
+    node = params
+    for part in path.split("."):
+        match = _PARAM_PATH_RE.fullmatch(part)
+        if match is None or not isinstance(node, dict) or match[1] not in node:
+            return _MISSING
+        node = node[match[1]]
+        for index in re.findall(r"\d+", match[2]):
+            if not isinstance(node, list) or int(index) >= len(node):
+                return _MISSING
+            node = node[int(index)]
+    return node
+
+
+def _year_source_errors(entry: Mapping[str, Any], params: Any, where: str) -> list[str]:
+    """Check a rate table entry's ``year_sources`` against the table's own ``params``."""
+    sources = entry[YEAR_SOURCES]
+    if entry["kind"] != "rate_table":
+        return [f"{where}: {YEAR_SOURCES} belongs only on a rate_table entry"]
+    if not isinstance(sources, list) or not sources:
+        return [f"{where}: {YEAR_SOURCES} must be a non-empty list"]
+    errors: list[str] = []
+    previous = 0
+    for i, source in enumerate(sources):
+        at = f"{where} {YEAR_SOURCES}[{i}]"
+        if not isinstance(source, dict) or list(source) != list(YEAR_SOURCE_FIELDS):
+            errors.append(f"{at}: fields must be exactly {list(YEAR_SOURCE_FIELDS)}")
+            continue
+        year = source["tax_year"]
+        if type(year) is not int or year < previous:
+            errors.append(f"{at}: tax_year must be an integer, in ascending order")
+        else:
+            previous = year
+        if not (isinstance(source["url"], str) and source["url"].startswith("https://")):
+            errors.append(f"{at}: url must be an https URL")
+        if source["official"] is not True:
+            errors.append(f"{at}: official must be true; cite only official sources")
+        if not _is_calendar_date(source["retrieved"]):
+            errors.append(f"{at}: retrieved must be YYYY-MM-DD")
+        sha = source["content_sha256"]
+        if sha != NOT_RECORDED and not (isinstance(sha, str) and _SHA256_RE.match(sha)):
+            errors.append(f"{at}: content_sha256 must be 64 lowercase hex or {NOT_RECORDED!r}")
+        values = source["values"]
+        if not isinstance(values, dict) or not values:
+            errors.append(f"{at}: values must be a non-empty object")
+            continue
+        for path, value in values.items():
+            held = _param_at(params, path)
+            if held is _MISSING:
+                errors.append(f"{at}: values: {path!r} is not in the rate table")
+            elif held != value or type(held) is not type(value):
+                errors.append(f"{at}: values: {path!r} is {value!r} here but {held!r} in the table")
+    return errors
+
+
 def manifest_errors(catalog: Catalog) -> list[str]:
     """Check every manifest entry against its row's source record, and the reverse.
 
@@ -640,6 +753,9 @@ def manifest_errors(catalog: Catalog) -> list[str]:
             errors.append(f"{where}: belongs in manifest/{stem}.json")
         if entry["url"] != url:
             errors.append(f"{where}: url {entry['url']!r} != row source_url {url!r}")
+        if YEAR_SOURCES in entry:
+            params = catalog.rate_tables.get(str(entry["_jurisdiction"]), {}).get("params")
+            errors.extend(_year_source_errors(entry, params, where))
     for kind, row_id in sorted(set(rows) - seen):
         errors.append(f"{kind} {row_id!r}: no manifest entry")
     return errors

@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "ut-rates",
-      "url": "not_recorded",
+      "url": "https://files.tax.utah.gov/tax/forms/2024/tc-40inst.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-23",
+      "content_sha256": "bc4a62fdf7bbaa1a6f6ffc4d2b111474771197d9f4b6c0859aed86434d76687c",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

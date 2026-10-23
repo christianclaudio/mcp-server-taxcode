@@ -44,15 +44,27 @@
     {
       "kind": "rate_table",
       "id": "wa-rates",
-      "url": "not_recorded",
+      "url": "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-23",
+      "content_sha256": "6c844f90dc2c38132b8e11f65605168197da2f8f32cda23e3f4e899ec8889bb3",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2023,
+          "values": {
+            "capital_gains_deduction": 262000.0
+          },
+          "url": "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "6c844f90dc2c38132b8e11f65605168197da2f8f32cda23e3f4e899ec8889bb3"
+        }
+      ]
     }
   ]
 }

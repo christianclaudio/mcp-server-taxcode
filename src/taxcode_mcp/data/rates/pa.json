@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "PA",
   "model": "flat_no_deduction",
-  "source_url": "not_recorded",
+  "source_url": "https://www.pa.gov/content/dam/copapwp-pagov/en/revenue/documents/formsandpublications/formsforindividuals/pit/documents/2024/2024_pa-40in.pdf",
   "params": {
     "rate": 0.0307
   }

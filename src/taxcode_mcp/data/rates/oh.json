@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "OH",
   "model": "brackets_cumulative",
-  "source_url": "not_recorded",
+  "source_url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2024/it1040-booklet.pdf",
   "params": {
     "exemption": {
       "single": 2400.0,
@@ -12,12 +12,12 @@
       "single": [
         {
           "over": 100000.0,
-          "base": 2033.63,
+          "base": 2394.32,
           "rate": 0.035
         },
         {
           "over": 26050.0,
-          "base": 0.0,
+          "base": 360.69,
           "rate": 0.0275
         },
         {
@@ -29,12 +29,12 @@
       "mfj": [
         {
           "over": 100000.0,
-          "base": 2033.63,
+          "base": 2394.32,
           "rate": 0.035
         },
         {
           "over": 26050.0,
-          "base": 0.0,
+          "base": 360.69,
           "rate": 0.0275
         },
         {
