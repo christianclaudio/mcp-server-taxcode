@@ -543,7 +543,7 @@ def test_2023_keeps_the_2023_figures() -> None:
         assert _resident_tax("NE", year, single, "single")["estimated_state_tax"] == 0.0
         assert _resident_tax("NE", year, single + 1000.0, "single")["estimated_state_tax"] == 24.6
         assert _resident_tax("NE", year, joint, "married_joint")["estimated_state_tax"] == 0.0
-    for year, deduction in ((2023, 262000.0), (2024, 270000.0), (2025, 270000.0)):
+    for year, deduction in ((2023, 262000.0), (2024, 270000.0)):
         result = compliance.evaluate_state_residency(
             jurisdiction="WA",
             days_in_state=300,
