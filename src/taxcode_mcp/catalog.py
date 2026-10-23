@@ -119,7 +119,7 @@ RATE_TABLE_MODELS: dict[str, str] = {
     "NC": "flat_by_year",
     "VA": "brackets_cumulative",
     "MD": "maryland",
-    "CO": "flat",
+    "CO": "flat_by_year",
     "AZ": "flat",
     "OH": "brackets_cumulative",
     **dict.fromkeys(

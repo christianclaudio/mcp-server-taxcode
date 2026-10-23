@@ -363,7 +363,6 @@ def test_ohio_bases_match_the_2024_schedule() -> None:
 
 # Flat rates and allowances as each state's 2024 return instructions print them.
 OFFICIAL_2024_FIGURES = [
-    ("CO", ("rate",), 0.0425),
     ("UT", ("rate",), 0.0455),
     ("MA", ("surtax", "over"), 1053750.0),
     ("WA", ("capital_gains_deduction",), 270000.0),
@@ -391,3 +390,34 @@ def test_georgia_rates_follow_hb_1015_and_hb_111() -> None:
     rates = compliance.RATE_TABLES["GA"]["rates"]
     assert compliance._year_step(rates, 2024)["rate"] == 0.0539
     assert compliance._year_step(rates, 2025)["rate"] == 0.0519
+
+
+def _resident_tax(code: str, tax_year: int, agi: float, status: str = "single") -> dict[str, Any]:
+    result: dict[str, Any] = compliance.evaluate_state_residency(
+        jurisdiction=code,
+        days_in_state=300,
+        is_domiciled=True,
+        maintains_permanent_abode=True,
+        federal_agi=agi,
+        filing_status=status,
+        tax_year=tax_year,
+    )
+    tax: dict[str, Any] = result["tax_computation"]
+    return tax
+
+
+def test_colorado_rate_follows_the_tax_year() -> None:
+    # DR 0104 book 2024: "currently 4.25%" (SB 24-228 lowers 2024 only). Book 104 (2025):
+    # "currently 4.4%". DOR income tax guide: 4.4% for 2022 and 2023, 4.25% for 2024.
+    rates = compliance.RATE_TABLES["CO"]["rates"]
+    for tax_year, rate in ((2022, 0.044), (2023, 0.044), (2024, 0.0425), (2025, 0.044)):
+        assert compliance._year_step(rates, tax_year)["rate"] == rate, tax_year
+    # 100,000 - 14,600 = 85,400 taxable.
+    assert _resident_tax("CO", 2024, 100000.0)["estimated_state_tax"] == round(85400.0 * 0.0425, 2)
+    for tax_year in (2023, 2025):
+        tax = _resident_tax("CO", tax_year, 100000.0)
+        assert tax["estimated_state_tax"] == round(85400.0 * 0.044, 2), tax_year
+        assert tax["rate_description"] == "Flat 4.40% rate (Proposition 121)", tax_year
+    assert _resident_tax("CO", 2024, 1.0)["rate_description"] == (
+        "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
+    )
