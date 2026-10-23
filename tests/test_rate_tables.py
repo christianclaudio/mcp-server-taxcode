@@ -514,11 +514,16 @@ def test_utah_takes_the_taxpayer_tax_credit_off_the_tax() -> None:
 def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
     # Form 740 instructions, Line 10: "If filing a joint return, only one $3,160 standard
     # deduction is allowed" (2024); $3,270 for 2025; DOR announced $3,360 for 2026 (KRS 141.081).
-    for year, deduction in ((2024, 3160.0), (2025, 3270.0), (2026, 3360.0)):
+    # The rate is 4% for 2024 and 2025 and 3.5% for 2026 (2026 Withholding Tax Formula).
+    for year, deduction, tax_on_10000 in (
+        (2024, 3160.0, 400.0),
+        (2025, 3270.0, 400.0),
+        (2026, 3360.0, 350.0),
+    ):
         for status in ("single", "married_joint"):
             assert _resident_tax("KY", year, deduction, status)["estimated_state_tax"] == 0.0
             tax = _resident_tax("KY", year, deduction + 10000.0, status)["estimated_state_tax"]
-            assert tax == 400.0, (year, status)
+            assert tax == tax_on_10000, (year, status)
 
 
 def test_rhode_island_2025_standard_deduction() -> None:

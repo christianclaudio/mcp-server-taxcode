@@ -6,9 +6,10 @@
   "params": {
     "statutory_basis": "Ky. Rev. Stat. Ann. §§ 141.010, 141.020",
     "rate_authority": "Ky. Rev. Stat. Ann. § 141.020",
-    "rate_desc": "Flat 4.0% rate (HB 1 phase-down)",
+    "rate_desc": "Flat 4.0% rate (2024 and 2025), 3.5% from 2026 (HB 1 phase-down)",
     "regime": "flat",
     "rate": 0.04,
+    "rate_2026": 0.035,
     "deduction_single": 3160.0,
     "deduction_mfj": 3160.0,
     "deduction_single_2025": 3270.0,
