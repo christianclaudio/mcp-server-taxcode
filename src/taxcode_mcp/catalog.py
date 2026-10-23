@@ -91,6 +91,18 @@ MANIFEST_FIELDS: tuple[str, ...] = (
     "verification",
 )
 MANIFEST_KINDS = frozenset({"statute", "publication", "rate_table"})
+# Optional last field of a ``rate_table`` entry: the sources of the figures for other tax
+# years than ``url``'s. Each names the table values it confirms by their path in ``params``.
+YEAR_SOURCES = "year_sources"
+YEAR_SOURCE_FIELDS: tuple[str, ...] = (
+    "tax_year",
+    "values",
+    "url",
+    "official",
+    "retrieved",
+    "content_sha256",
+)
+_PARAM_PATH_RE = re.compile(r"([a-z][a-z0-9_]*)((?:\[\d+\])*)")
 VERIFICATION_STATUSES = frozenset({"verified_verbatim", "summary", NOT_RECORDED})
 # Which text the source at ``url`` is: the law as enacted, or a compilation with its
 # later amendments folded in (such as an OGP "según enmendada" text).
@@ -356,7 +368,8 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
             catalog.documents[f"manifest/{stem}"], entries = _document(path, code, "entries")
             for entry in entries:
                 where = f"manifest/{stem}.json entry {entry.get('id', '?')!r}"
-                _check_keys(entry, MANIFEST_FIELDS, where)
+                fields = (*MANIFEST_FIELDS, *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()))
+                _check_keys(entry, fields, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
     if with_manifest:
         stray = _stray_files(root, "rates", {file_stem(c) for c in RATE_TABLE_MODELS})
@@ -646,6 +659,65 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
     return errors
 
 
+_MISSING = object()
+
+
+def _param_at(params: Any, path: str) -> Any:
+    """The value at a dotted ``params`` path such as ``rates[0].rate``; ``_MISSING`` if none."""
+    node = params
+    for part in path.split("."):
+        match = _PARAM_PATH_RE.fullmatch(part)
+        if match is None or not isinstance(node, dict) or match[1] not in node:
+            return _MISSING
+        node = node[match[1]]
+        for index in re.findall(r"\d+", match[2]):
+            if not isinstance(node, list) or int(index) >= len(node):
+                return _MISSING
+            node = node[int(index)]
+    return node
+
+
+def _year_source_errors(entry: Mapping[str, Any], params: Any, where: str) -> list[str]:
+    """Check a rate table entry's ``year_sources`` against the table's own ``params``."""
+    sources = entry[YEAR_SOURCES]
+    if entry["kind"] != "rate_table":
+        return [f"{where}: {YEAR_SOURCES} belongs only on a rate_table entry"]
+    if not isinstance(sources, list) or not sources:
+        return [f"{where}: {YEAR_SOURCES} must be a non-empty list"]
+    errors: list[str] = []
+    previous = 0
+    for i, source in enumerate(sources):
+        at = f"{where} {YEAR_SOURCES}[{i}]"
+        if not isinstance(source, dict) or list(source) != list(YEAR_SOURCE_FIELDS):
+            errors.append(f"{at}: fields must be exactly {list(YEAR_SOURCE_FIELDS)}")
+            continue
+        year = source["tax_year"]
+        if type(year) is not int or year < previous:
+            errors.append(f"{at}: tax_year must be an integer, in ascending order")
+        else:
+            previous = year
+        if not (isinstance(source["url"], str) and source["url"].startswith("https://")):
+            errors.append(f"{at}: url must be an https URL")
+        if source["official"] is not True:
+            errors.append(f"{at}: official must be true; cite only official sources")
+        if not _is_calendar_date(source["retrieved"]):
+            errors.append(f"{at}: retrieved must be YYYY-MM-DD")
+        sha = source["content_sha256"]
+        if sha != NOT_RECORDED and not (isinstance(sha, str) and _SHA256_RE.match(sha)):
+            errors.append(f"{at}: content_sha256 must be 64 lowercase hex or {NOT_RECORDED!r}")
+        values = source["values"]
+        if not isinstance(values, dict) or not values:
+            errors.append(f"{at}: values must be a non-empty object")
+            continue
+        for path, value in values.items():
+            held = _param_at(params, path)
+            if held is _MISSING:
+                errors.append(f"{at}: values: {path!r} is not in the rate table")
+            elif held != value or type(held) is not type(value):
+                errors.append(f"{at}: values: {path!r} is {value!r} here but {held!r} in the table")
+    return errors
+
+
 def manifest_errors(catalog: Catalog) -> list[str]:
     """Check every manifest entry against its row's source record, and the reverse.
 
@@ -681,6 +753,9 @@ def manifest_errors(catalog: Catalog) -> list[str]:
             errors.append(f"{where}: belongs in manifest/{stem}.json")
         if entry["url"] != url:
             errors.append(f"{where}: url {entry['url']!r} != row source_url {url!r}")
+        if YEAR_SOURCES in entry:
+            params = catalog.rate_tables.get(str(entry["_jurisdiction"]), {}).get("params")
+            errors.extend(_year_source_errors(entry, params, where))
     for kind, row_id in sorted(set(rows) - seen):
         errors.append(f"{kind} {row_id!r}: no manifest entry")
     return errors

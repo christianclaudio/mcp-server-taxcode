@@ -39,7 +39,29 @@
       "content_sha256": "64e7f9a6093901466419a3ed75413ed1b1eb559e931a5e056aa73520c7abd1b6",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2022,
+          "values": {
+            "rates[2].rate": 0.044
+          },
+          "url": "https://tax.colorado.gov/individual-income-tax-guide",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "61358b252e5e9326e2ae450335b956f40aa40230e6671d39c658e1dfd42cf47e"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rates[0].rate": 0.044
+          },
+          "url": "https://tax.colorado.gov/sites/tax/files/documents/Book104_2025.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "69c80c89118eccd21dc18e564237539e647c623a361a7f0beebed99ef5b0c7f8"
+        }
+      ]
     }
   ]
 }

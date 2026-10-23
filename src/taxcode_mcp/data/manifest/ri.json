@@ -26,7 +26,20 @@
       "content_sha256": "5c7754099ba260fc2b32e777a9f835c00b316e77cf521c93095f36b154989618",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 10900.0,
+            "deduction_mfj_2025": 21800.0
+          },
+          "url": "https://tax.ri.gov/sites/g/files/xkgbur541/files/2026-01/2025%20Tax%20Rate%20and%20Worksheets.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "1d33746ace050d28a83e3d96bca6f515049b41d2aeaff80e5347325125309a60"
+        }
+      ]
     }
   ]
 }

@@ -95,7 +95,9 @@ def test_loaded_rows_convert_back_to_their_data_file_form() -> None:
 def test_manifest_records_unknowns_explicitly() -> None:
     catalog = load_catalog(with_manifest=True)
     for entry in catalog.manifest:
-        assert [k for k in entry if k != "_jurisdiction"] == list(MANIFEST_FIELDS)
+        keys = [k for k in entry if k != "_jurisdiction"]
+        # A rate table may add its other tax years' sources as one last field.
+        assert keys in (list(MANIFEST_FIELDS), [*MANIFEST_FIELDS, "year_sources"]), entry["id"]
     # Nothing in the existing rows was verified word for word against a fetched copy.
     assert {e["verification"] for e in catalog.manifest} <= {"summary", NOT_RECORDED}
     # Only a rate table whose schedule was read from a fetched official file records a hash.
@@ -481,6 +483,67 @@ def test_manifest_duplicates_and_wrong_files_are_reported(tree: tuple[Path, Path
     errors = manifest_errors(load_catalog(data, with_manifest=True))
     assert f"manifest/ny.json entry {entry['id']!r}: belongs in manifest/ga.json" in errors
     assert f"manifest/ny.json entry {entry['id']!r}: duplicate entry" in errors
+
+
+def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    catalog = load_catalog(data, with_manifest=True)
+    ky = next(e for e in catalog.manifest if e["id"] == "ky-rates")
+    assert [s["tax_year"] for s in ky["year_sources"]] == [2025, 2026, 2026]
+    assert manifest_errors(catalog) == []
+
+    def ky_source(change: Callable[[dict[str, Any]], None]) -> str:
+        def edit(doc: Any) -> None:
+            entry = next(e for e in doc["entries"] if e["id"] == "ky-rates")
+            change(entry)
+
+        _edit(data / "manifest" / "ky.json", edit)
+        errors = manifest_errors(load_catalog(data, with_manifest=True))
+        shutil.copy(DATA_DIR / "manifest" / "ky.json", data / "manifest" / "ky.json")
+        return "\n".join(errors)
+
+    where = "manifest/ky.json entry 'ky-rates' year_sources"
+    first = f"{where}[0]"
+    cases: list[tuple[Callable[[dict[str, Any]], None], str]] = [
+        (
+            lambda e: e["year_sources"][0]["values"].update(rate=0.035),
+            f"{first}: values: 'rate' is 0.035 here but 0.04 in the table",
+        ),
+        (
+            lambda e: e["year_sources"][0]["values"].update(rate_2025=0.04),
+            f"{first}: values: 'rate_2025' is not in the rate table",
+        ),
+        (
+            lambda e: e["year_sources"][0]["values"].update(deduction_single_2025=3270),
+            f"{first}: values: 'deduction_single_2025' is 3270 here but 3270.0 in the table",
+        ),
+        (lambda e: e["year_sources"][0].update(values={}), f"{first}: values must be a non-empty"),
+        (lambda e: e["year_sources"][0].pop("official"), f"{first}: fields must be exactly"),
+        (lambda e: e["year_sources"][0].update(official=False), f"{first}: official must be true"),
+        (lambda e: e["year_sources"][0].update(url="http://x"), f"{first}: url must be an https"),
+        (lambda e: e["year_sources"][0].update(retrieved="x"), f"{first}: retrieved must be"),
+        (
+            lambda e: e["year_sources"][0].update(content_sha256="ABC"),
+            f"{first}: content_sha256 must be 64 lowercase hex",
+        ),
+        (
+            lambda e: e["year_sources"][1].update(tax_year=2024),
+            f"{where}[1]: tax_year must be an integer, in ascending order",
+        ),
+        (lambda e: e.update(year_sources=[]), f"{where[:-13]}: year_sources must be a non-empty"),
+    ]
+    for change, message in cases:
+        assert message in ky_source(change), message
+
+    # A statute entry may not carry them, and a rate table path may index into steps.
+    def statute(doc: Any) -> None:
+        doc["entries"][0]["year_sources"] = ky["year_sources"]
+
+    _edit(data / "manifest" / "ga.json", statute)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert any("year_sources belongs only on a rate_table entry" in e for e in errors), errors
+    co = next(e for e in catalog.manifest if e["id"] == "co-rates")
+    assert co["year_sources"][1]["values"] == {"rates[0].rate": 0.044}
 
 
 def test_statute_doc_path_matches_the_committed_pages() -> None:
