@@ -417,7 +417,7 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     assert manifest_errors(catalog) == []
 
 
-SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI NC ND OH PA UT VA WA".split()
+SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI MS NC ND OH PA UT VA WA".split()
 SOURCED_RATE_TABLES = sorted(
     "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split() + SOURCED_2026_10_23
 )

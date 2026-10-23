@@ -457,3 +457,16 @@ def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
         assert "ESTIMATE" in state and "ESTIMATE" in authority
     for tax_year in (2024, 2025, 2026):
         assert not any("ESTIMATE" in text for text in _georgia_answers(tax_year)), tax_year
+
+
+def test_mississippi_taxes_only_income_over_the_10000_band() -> None:
+    # Form 80-100 instructions (2024): "taxable income in excess of $10,000" at 4.7% for 2024.
+    # A joint return puts all income in Column A of the Tax Computation Schedule, so it has one
+    # $10,000 band (Filing Status for Married Persons, item 1; Line 17). A combined return with
+    # both spouses' columns positive applies the schedule to each column, which needs the
+    # spouses' split that the tool does not take.
+    for status, deduction in (("single", 2300.0), ("married_joint", 4600.0)):
+        assert _resident_tax("MS", 2024, deduction + 10000.0, status)["estimated_state_tax"] == 0.0
+        tax = _resident_tax("MS", 2024, deduction + 50000.0, status)
+        assert tax["estimated_state_tax"] == round(40000.0 * 0.047, 2), status
+        assert tax["middle_rate_is_estimate"] is False
