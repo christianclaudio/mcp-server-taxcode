@@ -61,6 +61,26 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "2127ddbf494868560f1e1bd29a2bd1fb5a80dc99f7bac464910b3778ad9d5f07"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "rate_2026": 0.0445
+          },
+          "url": "https://le.utah.gov/~2026/bills/sbillenr/SB0060.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "fb07140ca79b8f192273a0083bc02ec8b0810105acb9bd3d4a7beb1310fab45a"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "rate_2026": 0.0445
+          },
+          "url": "https://le.utah.gov/xcode/title59/chapter10/C59-10-S104_2026050620260506.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "af1195a7b3ebbd9fb4041c17e16284e7ee16c5e09254cbbc95ade864254ea5ca"
         }
       ]
     }

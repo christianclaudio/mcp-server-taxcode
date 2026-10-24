@@ -668,6 +668,51 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
     ]
 
 
+def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    catalog = load_catalog(data, with_manifest=True)
+    sources = {
+        e["id"]: e["year_sources"]
+        for e in catalog.manifest
+        if e["id"] in ("ms-rates", "ut-rates", "ne-rates")
+    }
+    dor = "https://www.dor.ms.gov/forms-resources/laws-regulations/2025-legislation"
+    hb1 = "https://billstatus.ls.state.ms.us/documents/2025/html/HB/0001-0099/HB0001SG.htm"
+    # Two sources per year from 2028 to 2030: the DOR page first, then HB 1 of 2025.
+    ms = sources["ms-rates"][4:]
+    assert [s["tax_year"] for s in ms] == [2028, 2028, 2029, 2029, 2030, 2030]
+    assert [s["url"] for s in ms] == [dor, hb1] * 3
+    assert [s["content_sha256"] for s in ms] == [
+        "984bf9bb5898fb0018274747876e47b016cb31d60f3f808ee9681943c6c9d4da",
+        "not_recorded",
+    ] * 3
+    assert [s["values"]["brackets_2029.single[0].rate"] for s in ms[2:4]] == [0.0325, 0.0325]
+    ut = sources["ut-rates"][3:]
+    assert [(s["tax_year"], s["values"]) for s in ut] == [(2026, {"rate_2026": 0.0445})] * 2
+    assert ut[0]["url"] == "https://le.utah.gov/~2026/bills/sbillenr/SB0060.pdf"
+    ne = sources["ne-rates"][-1]
+    assert ne["tax_year"] == 2027 and ne["content_sha256"] == "not_recorded"
+    assert set(ne["values"].values()) == {0.0399}
+    assert manifest_errors(catalog) == []
+
+    def edit(doc: Any) -> None:
+        ms_rates = next(e for e in doc["entries"] if e["id"] == "ms-rates")
+        ms_rates["year_sources"][6]["values"]["brackets_2029.single[0].rate"] = 0.03
+
+    _edit(data / "manifest" / "ms.json", edit)
+    assert manifest_errors(load_catalog(data, with_manifest=True)) == [
+        "manifest/ms.json entry 'ms-rates' year_sources[6]: values: "
+        "'brackets_2029.single[0].rate' is 0.03 here but 0.0325 in the table"
+    ]
+    _edit(data / "rates" / "ut.json", lambda d: d["params"].pop("rate_2026"))
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    for i in (3, 4):
+        assert (
+            f"manifest/ut.json entry 'ut-rates' year_sources[{i}]: values: "
+            "'rate_2026' is not in the rate table"
+        ) in errors
+
+
 def test_federal_table_has_one_manifest_record_with_a_source_per_year(
     tree: tuple[Path, Path],
 ) -> None:

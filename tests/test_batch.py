@@ -145,3 +145,37 @@ async def test_batch_parallel_cancellation() -> None:
         assert not res2.is_error
         data2 = json.loads(res2.content[0].text)
         assert data2["status"] == "success"
+
+
+@pytest.mark.asyncio
+async def test_batch_state_residency_matches_the_direct_call_in_out_years() -> None:
+    """Concurrent state-residency calls give the same out-year answers as a direct call."""
+    from taxcode_mcp.tools import compliance
+
+    scenarios: list[dict[str, Any]] = [
+        {"jurisdiction": code, "tax_year": year, "federal_agi": agi, "filing_status": "single"}
+        for code, year, agi in (
+            ("MS", 2028, 100000.0),
+            ("UT", 2026, 60000.0),
+            ("NE", 2027, 58850.0),
+            ("OH", 2028, 68450.0),
+        )
+    ]
+    common = {"days_in_state": 300, "is_domiciled": True, "maintains_permanent_abode": True}
+    async with Client(server.create_server()) as mcp_client:
+        results = await asyncio.gather(
+            *(
+                mcp_client.call_tool(
+                    "compliance_evaluate_state_residency", {**s, **common}, raise_on_error=False
+                )
+                for s in scenarios
+            )
+        )
+    taxes = []
+    for scenario, res in zip(scenarios, results, strict=True):
+        assert not res.is_error
+        data = json.loads(res.content[0].text)
+        direct = compliance.evaluate_state_residency(**scenario, **common)
+        assert data["tax_computation"] == direct["tax_computation"]
+        taxes.append(data["tax_computation"]["estimated_state_tax"])
+    assert taxes == [3069.50, 2268.23, 1832.79, 1432.00]

@@ -10,6 +10,7 @@
     "rate_desc_2024": "Graduated top rate 5.84% (Convenience Rule State)",
     "rate_desc_2025": "Graduated top rate 5.20% (Convenience Rule State)",
     "rate_desc_2026": "Graduated top rate 4.55% (Convenience Rule State)",
+    "rate_desc_2027": "Graduated top rate 3.99% (Convenience Rule State)",
     "regime": "graduated",
     "deduction_single": 7900.0,
     "deduction_mfj": 15800.0,
@@ -160,6 +161,44 @@
         {
           "over": 49530.0,
           "rate": 0.0455
+        },
+        {
+          "over": 8250.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ]
+    },
+    "brackets_2027": {
+      "single": [
+        {
+          "over": 39900.0,
+          "rate": 0.0399
+        },
+        {
+          "over": 24760.0,
+          "rate": 0.0399
+        },
+        {
+          "over": 4130.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfj": [
+        {
+          "over": 79800.0,
+          "rate": 0.0399
+        },
+        {
+          "over": 49530.0,
+          "rate": 0.0399
         },
         {
           "over": 8250.0,
