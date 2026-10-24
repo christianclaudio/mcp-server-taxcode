@@ -3,22 +3,13 @@
   "jurisdiction": "GA",
   "publications": [
     {
-      "id": "ga-dor-pb-it-2024-01",
+      "id": "ga-dor-hb-149-pte-tax-faq",
       "category": "policy-bulletin",
-      "doc_number": "DOR PB IT-2024-01",
-      "doc_date": "2024-04-20",
-      "title": "Georgia Flat Tax Rate and Standard Deduction Adjustments under HB 1023",
-      "summary": "Guidance from the Georgia Department of Revenue explaining the reduction in the individual income tax rate to 5.49% for tax year 2024 and elimination of graduated brackets.",
-      "source_url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2024-01/download"
-    },
-    {
-      "id": "ga-dor-pb-it-2022-02",
-      "category": "policy-bulletin",
-      "doc_number": "DOR PB IT-2022-02",
-      "doc_date": "2022-05-18",
-      "title": "Georgia Pass-Through Entity Tax (PTET) Guidance under HB 149",
-      "summary": "Technical guidelines for eligible S corporations and partnerships electing to pay tax at the entity level to mitigate the federal limitation on individual state and local tax (SALT) deductions.",
-      "source_url": "https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download"
+      "doc_number": "DOR HB 149 PTE Tax FAQ",
+      "doc_date": "2025-08-20",
+      "title": "HB 149 Pass-Through Entity Tax FAQ",
+      "summary": "Georgia Department of Revenue questions and answers on the HB 149 (2021) election: for taxable years beginning on or after January 1, 2022, S corporations and partnerships may annually make an irrevocable election to pay income tax at the entity level. Covers who may elect (all partnerships from 2023), making the election on Form 600S or Form 700, estimated tax payments, how owners report entity-taxed income (PTEDED) and loss (PTEADD) on Form 500, composite returns, and tax attributes and credits.",
+      "source_url": "https://dor.georgia.gov/hb-149-pass-through-entity-tax-faq"
     }
   ]
 }

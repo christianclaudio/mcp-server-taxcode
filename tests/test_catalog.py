@@ -106,9 +106,16 @@ def test_manifest_records_unknowns_explicitly() -> None:
         assert keys in (list(MANIFEST_FIELDS), [*MANIFEST_FIELDS, "year_sources"]), entry["id"]
     # Nothing in the existing rows was verified word for word against a fetched copy.
     assert {e["verification"] for e in catalog.manifest} <= {"summary", NOT_RECORDED}
-    # Only a table whose figures were read from a fetched official file records a hash.
+    # Only a table whose figures were read from a fetched official file, or a publication
+    # whose source page was fetched, records a hash.
     hashed = {e["kind"] for e in catalog.manifest if e["content_sha256"] != NOT_RECORDED}
-    assert hashed == {"rate_table", "federal_table"}
+    assert hashed == {"rate_table", "federal_table", "publication"}
+    hashed_pubs = {
+        e["id"]
+        for e in catalog.manifest
+        if e["kind"] == "publication" and e["content_sha256"] != NOT_RECORDED
+    }
+    assert hashed_pubs == {"ga-dor-hb-149-pte-tax-faq"}
 
 
 def test_check_reports_docs_drift_and_write_repairs_it(tree: tuple[Path, Path]) -> None:
@@ -390,7 +397,7 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 def test_act_22_cites_the_amended_compilation_and_no_other_edition_is_recorded() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 160
+    assert len(editions) == 159
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     assert set(editions.values()) == {NOT_RECORDED}
 

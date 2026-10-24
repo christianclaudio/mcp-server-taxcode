@@ -1,12 +1,16 @@
 # MCP Conformance Test Suite - Expected Failures Baseline
 # Reference: https://github.com/modelcontextprotocol/conformance
 #
-# These scenarios represent either:
-# 1. Deprecated protocol features removed per SEP-2577 / Protocol 2026-07-28
-#    (in-protocol logging/setLevel, server-initiated sampling)
-# 2. Synthetic test fixtures defined by the conformance suite specification
-#    (e.g. test_audio_content, test://static-text, test_simple_prompt)
-#    which are not part of this production server domain schema.
+# Each scenario below fails for one of two reasons, neither a defect in this server:
+# 1. It calls a feature this server does not declare, and the server answers
+#    -32601 Method not found as the spec requires: completion-complete (no
+#    completions capability) and resources-subscribe / resources-unsubscribe
+#    (resources.subscribe is false).
+# 2. It calls the conformance suite's own reference-server fixtures (e.g.
+#    test_image_content, test_audio_content, test://static-text,
+#    test_simple_prompt), which this server does not have: the other 17
+#    tools-call-*, elicitation-*, resources-read-* / resources-templates-read
+#    and prompts-get-* scenarios.
 
 server:
   - completion-complete
