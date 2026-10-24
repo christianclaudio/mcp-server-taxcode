@@ -184,7 +184,7 @@ ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
 REGIMES = frozenset({"none", "flat", "graduated"})
 # The years a registry table's ``brackets_YYYY`` and ``rate_desc_YYYY`` keys may name.
-REGISTRY_YEARS = (2024, 2025, 2026, 2027)
+REGISTRY_YEARS = (2024, 2025, 2026, 2027, 2028, 2029, 2030)
 # Registry tables keep the original key names. A ``_YYYY`` suffix is the value from that
 # tax year on; the unsuffixed key covers the years before.
 _REGISTRY_REQUIRED = ("statutory_basis", "rate_authority", "rate_desc", "regime")

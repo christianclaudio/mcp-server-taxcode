@@ -35,6 +35,9 @@
     "rate_desc_2025": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 4.40% above (HB 531)",
     "rate_desc_2026": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 4.00% above (HB 531)",
     "rate_desc_2027": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 3.75% above (HB 1 of 2025)",
+    "rate_desc_2028": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 3.50% above (HB 1 of 2025)",
+    "rate_desc_2029": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 3.25% above (HB 1 of 2025)",
+    "rate_desc_2030": "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a joint return), 3.00% above (HB 1 of 2025)",
     "brackets_2025": {
       "single": [
         {
@@ -94,6 +97,72 @@
         {
           "over": 10000.0,
           "rate": 0.0375
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2028": {
+      "single": [
+        {
+          "over": 10000.0,
+          "rate": 0.035
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 10000.0,
+          "rate": 0.035
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2029": {
+      "single": [
+        {
+          "over": 10000.0,
+          "rate": 0.0325
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 10000.0,
+          "rate": 0.0325
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2030": {
+      "single": [
+        {
+          "over": 10000.0,
+          "rate": 0.03
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 10000.0,
+          "rate": 0.03
         },
         {
           "over": null,

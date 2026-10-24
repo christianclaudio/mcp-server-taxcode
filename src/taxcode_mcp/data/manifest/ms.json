@@ -79,6 +79,84 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "984bf9bb5898fb0018274747876e47b016cb31d60f3f808ee9681943c6c9d4da"
+        },
+        {
+          "tax_year": 2028,
+          "values": {
+            "brackets_2028.single[0].over": 10000.0,
+            "brackets_2028.single[0].rate": 0.035,
+            "brackets_2028.mfj[0].over": 10000.0,
+            "brackets_2028.mfj[0].rate": 0.035
+          },
+          "url": "https://www.dor.ms.gov/forms-resources/laws-regulations/2025-legislation",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "984bf9bb5898fb0018274747876e47b016cb31d60f3f808ee9681943c6c9d4da"
+        },
+        {
+          "tax_year": 2028,
+          "values": {
+            "brackets_2028.single[0].over": 10000.0,
+            "brackets_2028.single[0].rate": 0.035,
+            "brackets_2028.mfj[0].over": 10000.0,
+            "brackets_2028.mfj[0].rate": 0.035
+          },
+          "url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/0001-0099/HB0001SG.htm",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2029,
+          "values": {
+            "brackets_2029.single[0].over": 10000.0,
+            "brackets_2029.single[0].rate": 0.0325,
+            "brackets_2029.mfj[0].over": 10000.0,
+            "brackets_2029.mfj[0].rate": 0.0325
+          },
+          "url": "https://www.dor.ms.gov/forms-resources/laws-regulations/2025-legislation",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "984bf9bb5898fb0018274747876e47b016cb31d60f3f808ee9681943c6c9d4da"
+        },
+        {
+          "tax_year": 2029,
+          "values": {
+            "brackets_2029.single[0].over": 10000.0,
+            "brackets_2029.single[0].rate": 0.0325,
+            "brackets_2029.mfj[0].over": 10000.0,
+            "brackets_2029.mfj[0].rate": 0.0325
+          },
+          "url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/0001-0099/HB0001SG.htm",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2030,
+          "values": {
+            "brackets_2030.single[0].over": 10000.0,
+            "brackets_2030.single[0].rate": 0.03,
+            "brackets_2030.mfj[0].over": 10000.0,
+            "brackets_2030.mfj[0].rate": 0.03
+          },
+          "url": "https://www.dor.ms.gov/forms-resources/laws-regulations/2025-legislation",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "984bf9bb5898fb0018274747876e47b016cb31d60f3f808ee9681943c6c9d4da"
+        },
+        {
+          "tax_year": 2030,
+          "values": {
+            "brackets_2030.single[0].over": 10000.0,
+            "brackets_2030.single[0].rate": 0.03,
+            "brackets_2030.mfj[0].over": 10000.0,
+            "brackets_2030.mfj[0].rate": 0.03
+          },
+          "url": "https://billstatus.ls.state.ms.us/documents/2025/html/HB/0001-0099/HB0001SG.htm",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "not_recorded"
         }
       ]
     }

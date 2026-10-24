@@ -118,6 +118,19 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2027,
+          "values": {
+            "brackets_2027.single[0].rate": 0.0399,
+            "brackets_2027.single[1].rate": 0.0399,
+            "brackets_2027.mfj[0].rate": 0.0399,
+            "brackets_2027.mfj[1].rate": 0.0399
+          },
+          "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "not_recorded"
         }
       ]
     }

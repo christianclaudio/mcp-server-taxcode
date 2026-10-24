@@ -205,7 +205,20 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
     # registry: later-year brackets, prose and credit amounts
     ("ID", _set("params.brackets_2023", _BRACKETS), "unknown keys ['brackets_2023']"),
-    ("ID", _set("params.rate_desc_2028", "x"), "unknown keys ['rate_desc_2028']"),
+    ("ID", _set("params.rate_desc_2031", "x"), "unknown keys ['rate_desc_2031']"),
+    ("MS", _set("params.brackets_2031", _BRACKETS), "unknown keys ['brackets_2031']"),
+    ("MS", _set("params.rate_desc_2028", None), "rate_desc_2028: must be str"),
+    ("UT", _set("params.rate_2026", "x"), "rate_2026: must be float"),
+    (
+        "NE",
+        _set("params.brackets_2027", {"single": []}),
+        "brackets_2027: fields must be exactly ['single', 'mfj'], got ['single']",
+    ),
+    (
+        "MS",
+        lambda d: d["params"].update(brackets_2028=d["params"].pop("brackets_2028")),
+        "brackets_YYYY keys must follow brackets, years ascending",
+    ),
     ("UT", _set("params.credit_rate_2025", 0.06), "unknown keys ['credit_rate_2025']"),
     ("ID", _set("params.brackets_2025", []), "brackets_2025: must be dict"),
     ("ID", _set("params.rate_desc_2025", 5.3), "rate_desc_2025: must be str"),
@@ -912,7 +925,7 @@ def test_utah_rate_and_credit_by_year() -> None:
     for tax_year, pins in (
         (2024, (649.52, 2404.52, 1299.05, 4550.00)),
         (2025, (558.23, 2298.23, 1116.46, 4500.00)),
-        (2026, (558.23, 2298.23, 1116.46, 4500.00)),
+        *((year, (543.23, 2268.23, 1086.46, 4450.00)) for year in range(2026, 2036)),
     ):
         got = (
             _tax("UT", tax_year, 30000.0),
@@ -927,9 +940,21 @@ def test_utah_rate_and_credit_by_year() -> None:
         "($36,426 joint)"
     )
     # AGI 40,000: 2024 1,820.00 less (876 - 1.3% of 22,348); 2025 1,800.00 less (945 - 1.3%
-    # of 21,787).
+    # of 21,787); 2026 1,780.00 at 4.45% (SB 60 of 2026) less the same 2025 credit.
     assert _tax("UT", 2024, 40000.0) == 1234.52
     assert _tax("UT", 2025, 40000.0) == 1138.23
+    assert _tax("UT", 2026, 40000.0) == 1118.23
+    # 4.45% from 2026 (SB 60 of 2026, retrospective to January 1, 2026); the credit amounts
+    # after 2025 are the 2025 ones, labeled.
+    ut_2026 = (
+        "Flat 4.45% rate (SB 60 of 2026) less the taxpayer tax credit: 6% of the $15,750 "
+        "($31,500 joint) federal standard deduction, reduced by 1.3% of income over $18,213 "
+        "($36,426 joint)"
+    )
+    for tax_year in (2026, 2027, 2030, 2035):
+        assert _resident_tax("UT", tax_year, 1.0)["rate_description"] == (
+            ut_2026 + _ut_note(tax_year)
+        ), tax_year
 
 
 def test_utah_credit_base_is_the_federal_standard_deduction() -> None:
@@ -980,13 +1005,33 @@ def test_mississippi_rate_by_year() -> None:
         (2025, 3858.80, 3757.60, "4.40%"),
         (2026, 3508.00, 3416.00, "4.00%"),
         (2027, 3288.75, 3202.50, "3.75%"),
+        # HB 1 of 2025: 3.5% (2028), 3.25% (2029), 3% (2030 and later, unless Section 2 cuts).
+        (2028, 3069.50, 2989.00, "3.50%"),
+        (2029, 2850.25, 2775.50, "3.25%"),
+        *((year, 2631.00, 2562.00, "3.00%") for year in range(2030, 2036)),
     ):
         answer = _resident_tax("MS", tax_year, 100000.0)
         assert answer["estimated_state_tax"] == single, tax_year
         assert _tax("MS", tax_year, 100000.0, "married_joint") == joint, tax_year
+        prose = (
+            "Graduated rates: 0% on the first $10,000 of taxable income (one $10,000 band on a "
+            f"joint return), {rate} above (HB 1 of 2025)"
+        )
+        if tax_year >= 2027:
+            assert answer["rate_description"] == prose + _ms_note(tax_year), tax_year
         assert f", {rate} above" in answer["rate_description"], tax_year
         assert "phasing" not in answer["rate_description"]
-    for tax_year, over_band in ((2025, 44.00), (2026, 40.00), (2027, 37.50)):
+        assert ("[ESTIMATE:" in answer["rate_description"]) == (tax_year >= 2031), tax_year
+    for tax_year, over_band in (
+        (2025, 44.00),
+        (2026, 40.00),
+        (2027, 37.50),
+        (2028, 35.00),
+        (2029, 32.50),
+        (2030, 30.00),
+        (2031, 30.00),
+        (2035, 30.00),
+    ):
         assert _tax("MS", tax_year, 12300.0) == 0.0, tax_year
         assert _tax("MS", tax_year, 13300.0) == over_band, tax_year
 
@@ -999,7 +1044,7 @@ def test_ohio_schedule_by_year() -> None:
         (2024, (0.0, 1460.69, 4006.07)),
         (2025, (0.0, 1442.00, 3833.38)),
         (2026, (0.0, 1432.00, 3632.00)),
-        (2027, (0.0, 1432.00, 3632.00)),
+        *((year, (0.0, 1432.00, 3632.00)) for year in range(2027, 2036)),
     ):
         got = tuple(_tax("OH", tax_year, taxable + 2400.0) for taxable in (26050, 66050, 146050))
         assert got == pins, tax_year
@@ -1009,6 +1054,12 @@ def test_ohio_schedule_by_year() -> None:
     assert _resident_tax("OH", 2026, 1.0)["rate_description"] == (
         "Graduated brackets: 0.00% up to $26,050, 2.75% over $26,050"
     )
+    # Indexing resumes for 2027 (H.B. 96 Section 757.120(A) suspended it for 2025 and 2026), so
+    # the 2026 amounts carried into a later year are labeled.
+    for tax_year in (2027, 2028, 2030, 2035):
+        assert _resident_tax("OH", tax_year, 1.0)["rate_description"] == (
+            "Graduated brackets: 0.00% up to $26,050, 2.75% over $26,050" + _oh_note(tax_year)
+        ), tax_year
 
 
 def test_ohio_bases_match_the_2025_and_2026_schedules() -> None:
@@ -1047,11 +1098,21 @@ def test_nebraska_brackets_and_deduction_by_year() -> None:
         (2024, 8350.0, 16700.0, 2215.84, 4431.48, "5.84%"),
         (2025, 8600.0, 17200.0, 2122.03, 4244.14, "5.20%"),
         (2026, 8850.0, 17700.0, 1974.13, 3948.26, "4.55%"),
+        # § 77-2715.03(2)(b)-(c): rates three and four 3.99% from 2027; the indexed 2026
+        # brackets and deduction are carried, labeled.
+        *((year, 8850.0, 17700.0, 1832.79, 3665.63, "3.99%") for year in range(2027, 2036)),
     ):
         answer = _resident_tax("NE", tax_year, deduction + 50000.0)
         assert answer["estimated_state_tax"] == single, tax_year
         assert _tax("NE", tax_year, joint_deduction + 100000.0, "married_joint") == joint
-        assert answer["rate_description"] == f"Graduated top rate {top} (Convenience Rule State)"
+        note = _ne_note(tax_year) if tax_year >= 2027 else ""
+        assert answer["rate_description"] == (
+            f"Graduated top rate {top} (Convenience Rule State){note}"
+        ), tax_year
+    # Taxable 191,150 single (AGI 200,000 less 8,850).
+    assert _tax("NE", 2026, 200000.0) == 8396.46
+    for tax_year in (2027, 2028, 2035):
+        assert _tax("NE", tax_year, 200000.0) == 7464.67, tax_year
     # The zero band before 2024 is set by the 7,900 deduction, unchanged by the 2023 brackets.
     for tax_year in (2019, 2022):
         assert _tax("NE", tax_year, 7900.0) == 0.0, tax_year
@@ -1077,3 +1138,95 @@ def test_colorado_deduction_follows_the_federal_figure() -> None:
     # Before 2019, the 2019 deduction (12,200) and the 4.40% stand-in rate.
     assert _tax("CO", 2018, 12200.0) == 0.0
     assert _tax("CO", 2018, 13000.0) == 35.20
+
+
+def _ms_note(tax_year: int) -> str:
+    if tax_year <= 2030:
+        return ""
+    return (
+        " [ESTIMATE: from tax year 2031 Mississippi's rate on taxable income over $10,000 "
+        '"shall be reduced by" 0.2%, 0.25% or 0.3% in a year the Working Cash-Stabilization '
+        "Reserve Fund is fully funded and revenue exceeds appropriations by the margins in "
+        f"HB 1 of 2025, Section 2; no reduction has been determined for tax year {tax_year}, "
+        "so the 3.00% rate is used]"
+    )
+
+
+def _ut_note(tax_year: int) -> str:
+    return (
+        f" [ESTIMATE: Utah's tax year {tax_year} taxpayer tax credit amounts are not in this "
+        "table (Utah Code § 59-10-1018: the base is that year's federal standard deduction "
+        "and the phase-out amounts are indexed); the 2025 amounts are used]"
+    )
+
+
+def _ne_note(tax_year: int) -> str:
+    return (
+        f" [ESTIMATE: Nebraska's tax year {tax_year} brackets and standard deduction are "
+        "indexed for inflation (Neb. Rev. Stat. §§ 77-2715.03(3), 77-2716.01(3)(b)) and not "
+        "yet published; the 2026 amounts are used with the enacted 3.99% rate]"
+    )
+
+
+def _oh_note(tax_year: int) -> str:
+    return (
+        " [ESTIMATE: Ohio resumes indexing its income amounts and personal exemptions for tax "
+        "year 2027 (R.C. 5747.02(A)(5), 5747.025(B)-(C); H.B. 96 of the 136th General "
+        "Assembly, Section 757.120(A), suspended it for 2025 and 2026); the tax year "
+        f"{tax_year} amounts are not published, so the 2026 amounts are used]"
+    )
+
+
+def test_outyear_estimate_notes_are_literal() -> None:
+    # One label per state, from the year after its last enacted or published figures.
+    for code, first, note in (
+        ("MS", 2031, _ms_note),
+        ("UT", 2026, _ut_note),
+        ("NE", 2027, _ne_note),
+        ("OH", 2027, _oh_note),
+    ):
+        got = compliance._outyear_estimate_note(code, first, compliance.RATE_TABLES[code])
+        assert got == note(first), code
+        assert _resident_tax(code, first, 1.0)["rate_description"].endswith(note(first)), code
+        before = _resident_tax(code, first - 1, 1.0)["rate_description"]
+        assert "[ESTIMATE:" not in before, code
+    for tax_year in (2024, 2027, 2028, 2029, 2030):
+        assert "[ESTIMATE:" not in _resident_tax("MS", tax_year, 1.0)["rate_description"]
+    for tax_year in (2024, 2025, 2026):
+        assert "[ESTIMATE:" not in _resident_tax("NE", tax_year, 1.0)["rate_description"]
+        assert "[ESTIMATE:" not in _resident_tax("OH", tax_year, 1.0)["rate_description"]
+    ms, ut = _ms_note(2031), _ut_note(2026)
+    ne, oh = _ne_note(2027), _oh_note(2027)
+    assert "HB 1 of 2025, Section 2" in ms and "3.00%" in ms
+    assert "percentage points" not in ms
+    assert "27-7-5." not in ms
+    assert "§ 59-10-1018" in ut
+    assert "3.99%" in ne and "§§ 77-2715.03(3), 77-2716.01(3)(b)" in ne
+    assert "Section 757.120(A)" in oh and "2025 and 2026" in oh
+    assert "R.C. 5747.02(A)(5), 5747.025(B)-(C)" in oh
+    # The label never reaches another registry state's prose.
+    for code in ("ID", "AL", "LA", "WA"):
+        assert compliance._outyear_estimate_note(code, 2035, compliance.RATE_TABLES[code]) == ""
+
+
+def test_outyear_constants_match_the_tables() -> None:
+    tables = compliance.RATE_TABLES
+
+    def years(code: str, base: str) -> list[int]:
+        return [
+            int(k[len(base) + 1 :])
+            for k in tables[code]
+            if k.startswith(f"{base}_") and k[len(base) + 1 :].isdigit()
+        ]
+
+    assert compliance.MS_LAST_ENACTED_RATE_YEAR == max(years("MS", "brackets")) == 2030
+    assert compliance.UT_LAST_CREDIT_AMOUNT_YEAR == max(years("UT", "credit_base_single")) == 2025
+    last_ne = compliance.NE_LAST_PUBLISHED_SCHEDULE_YEAR
+    assert last_ne == max(years("NE", "deduction_single")) == 2026
+    ne = tables["NE"]
+    for status in ("single", "mfj"):
+        held, carried = ne[f"brackets_{last_ne}"][status], ne[f"brackets_{last_ne + 1}"][status]
+        assert [s["over"] for s in carried] == [s["over"] for s in held]
+        assert [s["rate"] for s in carried[:2]] == [0.0399, 0.0399]
+        assert [s["rate"] for s in carried[2:]] == [s["rate"] for s in held[2:]]
+    assert compliance.OH_LAST_FIXED_SCHEDULE_YEAR == max(years("OH", "brackets")) == 2026

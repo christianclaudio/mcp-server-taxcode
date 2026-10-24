@@ -304,6 +304,65 @@ def _ga_estimate_note(tax_year: int) -> str:
     return ""
 
 
+# Out-year labels for registry and Ohio tables that carry their last figures forward. Each
+# constant is the last tax year whose figures the table holds from enacted law; tests tie it
+# to the table. A later year is labeled an estimate in the rate prose.
+# Mississippi: HB 1 of 2025 sets the rate through 2030 (3%); from 2031 Section 2 may cut it
+# in years the Working Cash-Stabilization Reserve Fund is fully funded and revenue clears
+# set margins, and no cut is modeled.
+MS_LAST_ENACTED_RATE_YEAR = 2030
+# Utah: the taxpayer tax credit's base (that year's federal standard deduction) and indexed
+# phase-out amounts (Utah Code § 59-10-1018) are held through 2025; the rate is not labeled.
+UT_LAST_CREDIT_AMOUNT_YEAR = 2025
+# Nebraska: the indexed brackets (§ 77-2715.03(3)) and standard deduction (§ 77-2716.01(3)(b))
+# are published through 2026; 2027 on keeps them with the enacted 3.99% rate.
+NE_LAST_PUBLISHED_SCHEDULE_YEAR = 2026
+# Ohio: H.B. 96 of the 136th General Assembly, Section 757.120(A), suspended indexing for 2025
+# and 2026 (R.C. 5747.02(A)(5), 5747.025(B)-(C)); it resumes for tax year 2027.
+OH_LAST_FIXED_SCHEDULE_YEAR = 2026
+
+
+def _top_rate(table: dict[str, Any], tax_year: int) -> float:
+    """The highest single-filer bracket rate a table applies in a tax year."""
+    return max(float(s["rate"]) for s in _for_year(table, "brackets", tax_year)["single"])
+
+
+def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> str:
+    """The estimate label for a tax year past a table's last enacted or published figures."""
+    if state == "MS" and tax_year > MS_LAST_ENACTED_RATE_YEAR:
+        return (
+            f" [ESTIMATE: from tax year {MS_LAST_ENACTED_RATE_YEAR + 1} Mississippi's rate on "
+            'taxable income over $10,000 "shall be reduced by" 0.2%, 0.25% or 0.3% in a year '
+            "the Working Cash-Stabilization Reserve Fund is fully funded and revenue exceeds "
+            "appropriations by the margins in HB 1 of 2025, Section 2; no reduction has been "
+            f"determined for tax year {tax_year}, so the {_pct(_top_rate(info, tax_year))} "
+            "rate is used]"
+        )
+    if state == "UT" and tax_year > UT_LAST_CREDIT_AMOUNT_YEAR:
+        return (
+            f" [ESTIMATE: Utah's tax year {tax_year} taxpayer tax credit amounts are not in "
+            "this table (Utah Code § 59-10-1018: the base is that year's federal standard "
+            "deduction and the phase-out amounts are indexed); the "
+            f"{UT_LAST_CREDIT_AMOUNT_YEAR} amounts are used]"
+        )
+    if state == "NE" and tax_year > NE_LAST_PUBLISHED_SCHEDULE_YEAR:
+        return (
+            f" [ESTIMATE: Nebraska's tax year {tax_year} brackets and standard deduction are "
+            "indexed for inflation (Neb. Rev. Stat. §§ 77-2715.03(3), 77-2716.01(3)(b)) and "
+            f"not yet published; the {NE_LAST_PUBLISHED_SCHEDULE_YEAR} amounts are used with "
+            f"the enacted {_pct(_top_rate(info, tax_year))} rate]"
+        )
+    if state == "OH" and tax_year > OH_LAST_FIXED_SCHEDULE_YEAR:
+        return (
+            " [ESTIMATE: Ohio resumes indexing its income amounts and personal exemptions for "
+            f"tax year {OH_LAST_FIXED_SCHEDULE_YEAR + 1} (R.C. 5747.02(A)(5), 5747.025(B)-(C); "
+            "H.B. 96 of the 136th General Assembly, Section 757.120(A), suspended it for 2025 "
+            f"and 2026); the tax year {tax_year} amounts are not published, so the "
+            f"{OH_LAST_FIXED_SCHEDULE_YEAR} amounts are used]"
+        )
+    return ""
+
+
 def _ga_retirement_cap(ga: dict[str, Any], age: int, tax_year: int) -> float:
     """Georgia's retirement income exclusion cap for an age and tax year.
 
@@ -883,7 +942,9 @@ def evaluate_state_residency(
             )
         rate_authority = "Ohio Rev. Code § 5747.02"
         oh_brackets = _for_year(RATE_TABLES["OH"], "brackets", tax_year)[_status(is_mfj)]
-        rate_desc = _steps_desc(oh_brackets)
+        rate_desc = _steps_desc(oh_brackets) + _outyear_estimate_note(
+            "OH", tax_year, RATE_TABLES["OH"]
+        )
         personal_exemption = _allowance(RATE_TABLES["OH"], is_mfj)
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
@@ -893,7 +954,9 @@ def evaluate_state_residency(
         info = STATE_REGISTRY[state]
         statutory_basis = str(info["statutory_basis"])
         rate_authority = str(info["rate_authority"])
-        rate_desc = str(_for_year(info, "rate_desc", tax_year))
+        rate_desc = str(_for_year(info, "rate_desc", tax_year)) + _outyear_estimate_note(
+            state, tax_year, info
+        )
         day_threshold = int(info.get("day_threshold", 183))
         requires_abode = bool(info.get("requires_abode", True))
         inclusive_threshold = bool(info.get("inclusive_threshold", False))
