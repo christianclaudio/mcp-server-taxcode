@@ -10,8 +10,8 @@
 
 ## Operative Statutory Language (English)
 
-Imposes a flat individual income tax rate of 5.695% on taxable income under HB 521 in Idaho.
+Imposes a flat individual income tax rate on Idaho taxable income: 5.3% for taxable years beginning on or after January 1, 2025 (HB 40 of 2025, retroactive to January 1, 2025), and 5.695% for tax year 2024 (HB 521 of 2024, retroactive to January 1, 2024).
 
 ## Texto Estatutario Oficial (Español)
 
-Impone una tasa impositiva individual fija del 5.695% sobre el ingreso gravable de individuos bajo HB 521 en Idaho.
+Impone una tasa impositiva individual fija sobre el ingreso gravable de individuos en Idaho: 5.3% para los años contributivos que comienzan el 1 de enero de 2025 o después (HB 40 de 2025, retroactiva al 1 de enero de 2025), y 5.695% para el año contributivo 2024 (HB 521 de 2024, retroactiva al 1 de enero de 2024).

@@ -10,8 +10,8 @@
 
 ## Operative Statutory Language (English)
 
-Imposes graduated personal income tax rates with top rate of 5.84% and enforces the convenience of the employer doctrine in Nebraska.
+Imposes graduated personal income tax rates with a top rate of 5.84% for tax year 2024, 5.20% for 2025, 4.55% for tax year 2026 (when the top two brackets both carry 4.55%) and 3.99% from tax year 2027 (both top brackets), and enforces the convenience of the employer doctrine in Nebraska.
 
 ## Texto Estatutario Oficial (Español)
 
-Impone tasas de impuesto sobre ingresos personales con tasa máxima de 5.84% y aplica la doctrina de conveniencia del empleador en Nebraska.
+Impone tasas graduadas de impuesto sobre ingresos personales con tasa máxima de 5.84% para el año contributivo 2024, 5.20% para 2025, 4.55% para el año contributivo 2026 (cuando los dos tramos superiores tributan al 4.55%) y 3.99% a partir del año contributivo 2027 (ambos tramos superiores), y aplica la doctrina de conveniencia del empleador en Nebraska.
