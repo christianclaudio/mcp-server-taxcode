@@ -8,7 +8,12 @@ from typing import Any
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
-from taxcode_mcp.catalog import RATE_TABLE_MODELS, load_rate_tables
+from taxcode_mcp.catalog import (
+    FEDERAL_ALLOWANCE,
+    RATE_TABLE_MODELS,
+    load_federal_standard_deduction,
+    load_rate_tables,
+)
 from taxcode_mcp.disclaimers import BILINGUAL_DISCLAIMER, CONTENT_NOTICE, ESTIMATE_NOTE
 from taxcode_mcp.errors import SafetyViolationError, tool_error
 
@@ -230,27 +235,37 @@ GA_PRE_FLAT_ESTIMATE_NOTE = (
 )
 
 
-# Colorado's table holds the rate from tax year 2022 on (DOR income tax guide: 4.4% for 2022
-# and 2023, 4.25% for 2024, 4.4% from 2025). An earlier year gets the oldest step, labeled.
-CO_FIRST_SOURCED_YEAR = 2022
-# Colorado starts from federal taxable income, so its deduction is the federal standard
-# deduction of each year. The table holds only the 2024 figure (14,600 / 29,200), so every
-# other year's answer is labeled until the deduction is held by year.
-CO_DEDUCTION_YEAR = 2024
+# Colorado's table holds the rate for tax years 2019 to 2025 (DOR income tax guide: 4.5% for
+# 2019, 4.55% for 2020, 4.5% for 2021, 4.4% for 2022 and 2023, 4.25% for 2024, 4.4% for
+# 2025). An earlier year gets the oldest step, labeled. A later year's rate isn't published:
+# under C.R.S. 39-22-627 the rate may be cut for a tax year when a TABOR excess is
+# certified, so a later year is labeled too.
+CO_FIRST_SOURCED_YEAR = 2019
+CO_LAST_PUBLISHED_RATE_YEAR = 2025
 
 
 def _co_estimate_note(tax_year: int, rate: float) -> str:
-    """The estimate label for a Colorado tax year the table's figures don't cover; else empty."""
+    """The estimate label for a Colorado tax year the table's figures don't cover; else empty.
+
+    Colorado starts from federal taxable income, so its deduction is that year's federal
+    standard deduction; a year outside the federal table uses the nearest year it holds.
+    """
     reasons = []
-    if tax_year != CO_DEDUCTION_YEAR:
+    held = _federal_year(tax_year)
+    if held != tax_year:
         reasons.append(
-            f"the deduction is the {CO_DEDUCTION_YEAR} federal standard deduction; tax year "
-            f"{tax_year}'s federal figure is not in this table"
+            f"tax year {tax_year}'s federal figure is not in this table, so the {held} "
+            "figure is used"
         )
     if tax_year < CO_FIRST_SOURCED_YEAR:
         reasons.append(
             f"this table holds Colorado's rate from tax year {CO_FIRST_SOURCED_YEAR}; "
             f"an earlier year's rate is not in it, so the {_pct(rate)} rate is used"
+        )
+    elif tax_year > CO_LAST_PUBLISHED_RATE_YEAR:
+        reasons.append(
+            f"Colorado's tax year {tax_year} rate is not published; it may be reduced under "
+            f"C.R.S. 39-22-627 (TABOR), so the {_pct(rate)} rate is used"
         )
     return f" [ESTIMATE: {'; '.join(reasons)}]" if reasons else ""
 
@@ -374,6 +389,9 @@ def evaluate_georgia_residency(
 # ``taxcode_mcp/data/rates/<code>.json`` and are validated on load; see
 # ``taxcode_mcp.catalog.load_rate_tables``. The formulas below read every number from them.
 RATE_TABLES: dict[str, dict[str, Any]] = load_rate_tables()
+# The federal standard deduction by tax year (``data/federal/standard_deduction.json``), for
+# a table whose allowance is ``"federal_standard_deduction"``.
+FEDERAL_STANDARD_DEDUCTION: dict[int, dict[str, float]] = load_federal_standard_deduction()
 # Graduated/flat/none states computed by the shared registry formula, in table order.
 STATE_REGISTRY: dict[str, dict[str, Any]] = {
     code: params for code, params in RATE_TABLES.items() if RATE_TABLE_MODELS[code] == "registry"
@@ -386,9 +404,20 @@ def _status(is_mfj: bool) -> str:
     return "mfj" if is_mfj else "single"
 
 
-def _allowance(params: dict[str, Any], is_mfj: bool) -> float:
-    """The filing-status deduction or exemption of a rate table."""
+def _federal_year(tax_year: int) -> int:
+    """The tax year itself if the federal table holds it; else the nearest year it holds."""
+    return min(max(tax_year, min(FEDERAL_STANDARD_DEDUCTION)), max(FEDERAL_STANDARD_DEDUCTION))
+
+
+def _allowance(params: dict[str, Any], is_mfj: bool, tax_year: int = 0) -> float:
+    """The filing-status deduction or exemption of a rate table.
+
+    An allowance of ``"federal_standard_deduction"`` is the tax year's federal figure (the
+    nearest year the federal table holds when it doesn't hold that year).
+    """
     by_status = params["deduction"] if "deduction" in params else params["exemption"]
+    if by_status == FEDERAL_ALLOWANCE:
+        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][_status(is_mfj)]
     return float(by_status[_status(is_mfj)])
 
 
@@ -440,11 +469,18 @@ def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> floa
     return float(round(tax, 2))
 
 
-def _registry_credit(info: dict[str, Any], is_mfj: bool, taxable_income: float) -> float:
-    """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0."""
+def _registry_credit(
+    info: dict[str, Any], is_mfj: bool, taxable_income: float, tax_year: int
+) -> float:
+    """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0.
+
+    The base and phase-out amounts are the tax year's (``_YYYY`` keys, as elsewhere).
+    """
     status = _status(is_mfj)
-    initial = float(info["credit_rate"]) * float(info[f"credit_base_{status}"])
-    over = max(0.0, taxable_income - float(info[f"credit_phaseout_{status}"]))
+    base = float(_for_year(info, f"credit_base_{status}", tax_year))
+    initial = float(info["credit_rate"]) * base
+    phaseout = float(_for_year(info, f"credit_phaseout_{status}", tax_year))
+    over = max(0.0, taxable_income - phaseout)
     return max(0.0, initial - float(info["credit_phaseout_rate"]) * over)
 
 
@@ -464,13 +500,23 @@ def _range_desc(table: dict[str, Any], lead: str = "Graduated brackets") -> str:
     return f"{lead} from {_pct(min(rates))} to {_pct(max(rates))}"
 
 
+def _exact_pct(rate: float) -> str:
+    """A rate as prose with every digit it has: ``0.0275`` -> ``2.75%``; ``0.03125`` -> ``3.125%``.
+
+    At least two decimals, as :func:`_pct`; more only when the rate has them.
+    """
+    two = f"{rate * 100:.2f}"
+    exact = round(rate * 100, 6)
+    return f"{two}%" if float(two) == exact else f"{exact:g}%"
+
+
 def _steps_desc(brackets: list[dict[str, Any]]) -> str:
     """Every bracket of one schedule, lowest first: ``0.00% up to $X, R to $Y, R over $Y``."""
     steps = brackets[::-1]
-    parts = [f"{_pct(steps[0]['rate'])} up to {_money(steps[1]['over'])}"]
+    parts = [f"{_exact_pct(steps[0]['rate'])} up to {_money(steps[1]['over'])}"]
     for step, above in zip(steps[1:-1], steps[2:], strict=True):
-        parts.append(f"{_pct(step['rate'])} to {_money(above['over'])}")
-    parts.append(f"{_pct(steps[-1]['rate'])} over {_money(steps[-1]['over'])}")
+        parts.append(f"{_exact_pct(step['rate'])} to {_money(above['over'])}")
+    parts.append(f"{_exact_pct(steps[-1]['rate'])} over {_money(steps[-1]['over'])}")
     return "Graduated brackets: " + ", ".join(parts)
 
 
@@ -633,7 +679,17 @@ def evaluate_state_residency(
             f"the {_money(cap_gain_ded)} deduction"
         )
         taxable_income = max(0.0, capital_gains - cap_gain_ded)
-        estimated_tax = round(taxable_income * wa["rate"], 2) if is_resident else 0.0
+        wa_tax = taxable_income * wa["rate"]
+        # From 2025, an additional 2.9% on Washington capital gains (after the deduction)
+        # over $1,000,000 (RCW 82.87.040(1)(b)).
+        tier = _for_year(wa, "tier", tax_year)
+        if tier is not None:
+            rate_desc = (
+                f"{rate_desc}, plus {_pct(tier['rate'])} on Washington capital gains over "
+                f"{_money(tier['over'])}"
+            )
+            wa_tax += max(0.0, taxable_income - tier["over"]) * tier["rate"]
+        estimated_tax = round(wa_tax, 2) if is_resident else 0.0
 
     elif state == "MA":
         statutory_basis = "M.G.L. c. 62 § 1(f), § 4; Mass. Const. amend. art. XLIV"
@@ -761,7 +817,7 @@ def evaluate_state_residency(
         co_step = _year_step(RATE_TABLES["CO"]["rates"], tax_year)
         co_rate = float(co_step["rate"])
         rate_desc = f"{co_step['rate_desc']}{_co_estimate_note(tax_year, co_rate)}"
-        standard_ded = _allowance(RATE_TABLES["CO"], is_mfj)
+        standard_ded = _allowance(RATE_TABLES["CO"], is_mfj, tax_year)
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * co_rate, 2) if is_resident else 0.0
 
@@ -794,18 +850,18 @@ def evaluate_state_residency(
                 "non-residency presumption."
             )
         rate_authority = "Ohio Rev. Code § 5747.02"
-        rate_desc = _steps_desc(RATE_TABLES["OH"]["brackets"][_status(is_mfj)])
+        oh_brackets = _for_year(RATE_TABLES["OH"], "brackets", tax_year)[_status(is_mfj)]
+        rate_desc = _steps_desc(oh_brackets)
         personal_exemption = _allowance(RATE_TABLES["OH"], is_mfj)
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
-            brackets = RATE_TABLES["OH"]["brackets"][_status(is_mfj)]
-            estimated_tax = _cumulative_tax(brackets, taxable_income)
+            estimated_tax = _cumulative_tax(oh_brackets, taxable_income)
 
     else:
         info = STATE_REGISTRY[state]
         statutory_basis = str(info["statutory_basis"])
         rate_authority = str(info["rate_authority"])
-        rate_desc = str(info["rate_desc"])
+        rate_desc = str(_for_year(info, "rate_desc", tax_year))
         day_threshold = int(info.get("day_threshold", 183))
         requires_abode = bool(info.get("requires_abode", True))
         inclusive_threshold = bool(info.get("inclusive_threshold", False))
@@ -858,7 +914,7 @@ def evaluate_state_residency(
             taxable_income = 0.0
             estimated_tax = 0.0
         elif regime == "graduated" and "brackets" in info:
-            brackets = info["brackets"][_status(is_mfj)]
+            brackets = _for_year(info, "brackets", tax_year)[_status(is_mfj)]
             estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
         elif regime == "flat":
             if tax_year >= 2027 and "rate_2027" in info:
@@ -904,7 +960,7 @@ def evaluate_state_residency(
                 estimated_tax = 0.0
 
         if "credit_rate" in info and is_resident:
-            credit = _registry_credit(info, is_mfj, taxable_income)
+            credit = _registry_credit(info, is_mfj, taxable_income, tax_year)
             estimated_tax = max(0.0, round(estimated_tax - credit, 2))
 
     tax_computation: dict[str, Any] = {

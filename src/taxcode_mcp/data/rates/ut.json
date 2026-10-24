@@ -14,6 +14,12 @@
     "credit_rate": 0.06,
     "credit_phaseout_single": 17652.0,
     "credit_phaseout_mfj": 35304.0,
-    "credit_phaseout_rate": 0.013
+    "credit_phaseout_rate": 0.013,
+    "rate_desc_2025": "Flat 4.50% rate (HB 106 of 2025) less the taxpayer tax credit: 6% of the $15,750 ($31,500 joint) federal standard deduction, reduced by 1.3% of income over $18,213 ($36,426 joint)",
+    "rate_2025": 0.045,
+    "credit_base_single_2025": 15750.0,
+    "credit_base_mfj_2025": 31500.0,
+    "credit_phaseout_single_2025": 18213.0,
+    "credit_phaseout_mfj_2025": 36426.0
   }
 }

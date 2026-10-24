@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "jurisdiction": "US",
+  "authority": "26 U.S.C. § 63(c)",
+  "source_url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+  "years": [
+    {
+      "tax_year": 2019,
+      "single": 12200.0,
+      "mfj": 24400.0
+    },
+    {
+      "tax_year": 2020,
+      "single": 12400.0,
+      "mfj": 24800.0
+    },
+    {
+      "tax_year": 2021,
+      "single": 12550.0,
+      "mfj": 25100.0
+    },
+    {
+      "tax_year": 2022,
+      "single": 12950.0,
+      "mfj": 25900.0
+    },
+    {
+      "tax_year": 2023,
+      "single": 13850.0,
+      "mfj": 27700.0
+    },
+    {
+      "tax_year": 2024,
+      "single": 14600.0,
+      "mfj": 29200.0
+    },
+    {
+      "tax_year": 2025,
+      "single": 15750.0,
+      "mfj": 31500.0
+    },
+    {
+      "tax_year": 2026,
+      "single": 16100.0,
+      "mfj": 32200.0
+    }
+  ]
+}

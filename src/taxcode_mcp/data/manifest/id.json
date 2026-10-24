@@ -26,7 +26,58 @@
       "content_sha256": "cc94d0ca620878fd5c44f65184ec2cb69ef5a74f62188890276f94759a3aa313",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 15750.0,
+            "deduction_mfj_2025": 31500.0,
+            "brackets_2025.single[0].over": 4811.0,
+            "brackets_2025.single[0].rate": 0.053,
+            "brackets_2025.mfj[0].over": 9622.0,
+            "brackets_2025.mfj[0].rate": 0.053
+          },
+          "url": "https://tax.idaho.gov/wp-content/uploads/forms/EIN00046/EIN00046_03-02-2026.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "952263e92f7c096b10aba50555cc7c166c78efc3b6ce6e5029d4837404553005"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 15750.0,
+            "deduction_mfj_2025": 31500.0
+          },
+          "url": "https://legislature.idaho.gov/wp-content/uploads/sessioninfo/2026/legislation/H0559.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "1abaef39d76de5bda2e5fcc5a673d0980eb2db7ff71203c37382de07d6e7f1ce"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 4811.0,
+            "brackets_2025.single[0].rate": 0.053,
+            "brackets_2025.mfj[0].over": 9622.0,
+            "brackets_2025.mfj[0].rate": 0.053
+          },
+          "url": "https://tax.idaho.gov/taxes/income-tax/individual-income/individual-income-tax-rate-schedule/",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "fef160c152646cf457358c4ec506083d48c10693bb10ad9db69508f92088fb96"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].rate": 0.053
+          },
+          "url": "https://legislature.idaho.gov/wp-content/uploads/sessioninfo/2025/legislation/H0040.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "cb34fd6aa3ac8644ced3fa2ac22c5e1eed9f79fa2bbbd29e8639a96ae1d4fb4e"
+        }
+      ]
     }
   ]
 }

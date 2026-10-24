@@ -19,9 +19,12 @@ from taxcode_mcp.catalog import (
     PUBLICATION_FIELDS,
     RATE_TABLE_MODELS,
     STATUTE_FIELDS,
+    TABLE_KINDS,
     CatalogError,
     dump_json,
+    federal_table_document,
     load_catalog,
+    load_federal_standard_deduction,
     manifest_errors,
     rate_table_id,
     split_lines,
@@ -68,7 +71,10 @@ def test_rows_load_in_catalog_order_with_every_field() -> None:
     assert all(list(p) == list(PUBLICATION_FIELDS) for p in catalog.publications)
     assert len(catalog.rate_tables) == 49
     assert len(catalog.manifest) == (
-        len(catalog.statutes) + len(catalog.publications) + len(catalog.rate_tables)
+        len(catalog.statutes)
+        + len(catalog.publications)
+        + len(catalog.rate_tables)
+        + len(catalog.federal_tables)
     )
 
 
@@ -100,9 +106,9 @@ def test_manifest_records_unknowns_explicitly() -> None:
         assert keys in (list(MANIFEST_FIELDS), [*MANIFEST_FIELDS, "year_sources"]), entry["id"]
     # Nothing in the existing rows was verified word for word against a fetched copy.
     assert {e["verification"] for e in catalog.manifest} <= {"summary", NOT_RECORDED}
-    # Only a rate table whose schedule was read from a fetched official file records a hash.
+    # Only a table whose figures were read from a fetched official file records a hash.
     hashed = {e["kind"] for e in catalog.manifest if e["content_sha256"] != NOT_RECORDED}
-    assert hashed == {"rate_table"}
+    assert hashed == {"rate_table", "federal_table"}
 
 
 def test_check_reports_docs_drift_and_write_repairs_it(tree: tuple[Path, Path]) -> None:
@@ -383,7 +389,7 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 
 def test_act_22_cites_the_amended_compilation_and_no_other_edition_is_recorded() -> None:
     catalog = load_catalog(with_manifest=True)
-    editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] != "rate_table"}
+    editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
     assert len(editions) == 160
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     assert set(editions.values()) == {NOT_RECORDED}
@@ -545,11 +551,118 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
 
     _edit(data / "manifest" / "ga.json", statute)
     errors = manifest_errors(load_catalog(data, with_manifest=True))
-    assert any("year_sources belongs only on a rate_table entry" in e for e in errors), errors
+    belongs = "year_sources belongs only on a rate_table or federal_table entry"
+    assert any(belongs in e for e in errors), errors
     co = next(e for e in catalog.manifest if e["id"] == "co-rates")
-    assert co["year_sources"][1]["values"] == {"rates[0].rate": 0.044}
+    assert co["year_sources"][4]["values"] == {"rates[0].rate": 0.044}
+    # The #32 record for 2022 still names rates[2], now the 2022 step itself.
+    assert co["year_sources"][3]["values"] == {"rates[2].rate": 0.044}
+    assert catalog.rate_tables["CO"]["params"]["rates"][2]["from_year"] == 2022
 
 
 def test_statute_doc_path_matches_the_committed_pages() -> None:
     for s in load_catalog().statutes:
         assert (REPO / "docs" / statute_doc_path(s)).is_file(), s["id"]
+
+
+def test_federal_standard_deduction_holds_each_years_irs_figure() -> None:
+    # Rev. Procs. 2018-57, 2019-44, 2020-45, 2021-45, 2022-38, 2023-34 and 2025-32; for 2025,
+    # P.L. 119-21 § 70102 (the TY2025 Form 1040 instructions print $15,750 / $31,500).
+    assert load_federal_standard_deduction() == {
+        2019: {"single": 12200.0, "mfj": 24400.0},
+        2020: {"single": 12400.0, "mfj": 24800.0},
+        2021: {"single": 12550.0, "mfj": 25100.0},
+        2022: {"single": 12950.0, "mfj": 25900.0},
+        2023: {"single": 13850.0, "mfj": 27700.0},
+        2024: {"single": 14600.0, "mfj": 29200.0},
+        2025: {"single": 15750.0, "mfj": 31500.0},
+        2026: {"single": 16100.0, "mfj": 32200.0},
+    }
+    doc = federal_table_document()
+    assert (doc["jurisdiction"], doc["authority"]) == ("US", "26 U.S.C. § 63(c)")
+    path = DATA_DIR / "federal" / "standard_deduction.json"
+    assert path.read_text(encoding="utf-8") == dump_json(doc)
+
+
+def _federal(data: Path, change: Callable[[Any], Any]) -> str:
+    path = data / "federal" / "standard_deduction.json"
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    replaced = change(doc)  # a list replaces the document; other return values are ignored
+    path.write_text(dump_json(replaced if isinstance(replaced, list) else doc), encoding="utf-8")
+    with pytest.raises(CatalogError) as raised:
+        federal_table_document(data)
+    shutil.copy(DATA_DIR / "federal" / "standard_deduction.json", path)
+    return str(raised.value)
+
+
+def test_malformed_federal_table_is_rejected(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    where = "federal/standard_deduction.json"
+    cases: list[tuple[Callable[[Any], Any], str]] = [
+        (lambda d: [d], f"{where}: top level must be an object"),
+        (lambda d: d.pop("authority"), f"{where}: fields must be exactly"),
+        (lambda d: d.update(schema=2), f"{where}: schema must be 1"),
+        (lambda d: d.update(jurisdiction="PR"), f"{where}: jurisdiction must be 'US'"),
+        (lambda d: d.update(authority=""), f"{where}: authority must be a string"),
+        (lambda d: d.update(source_url=None), f"{where}: source_url must be a string"),
+        (lambda d: d.update(years=[]), f"{where}: years must be a non-empty list"),
+        (lambda d: d["years"].__setitem__(0, 1), f"{where} years[0]: must be an object"),
+        (lambda d: d["years"][1].pop("mfj"), f"{where} years[1]: fields must be exactly"),
+        (lambda d: d["years"][0].update(tax_year="2019"), "years[0].tax_year: must be an int"),
+        (lambda d: d["years"].pop(3), "years[3].tax_year: years must be consecutive"),
+        (lambda d: d["years"].reverse(), "years[1].tax_year: years must be consecutive"),
+        (lambda d: d["years"][6].update(single=15750), "years[6].single: must be a non-neg"),
+    ]
+    for change, message in cases:
+        assert message in _federal(data, change), message
+    (data / "federal" / "standard_deduction.json").unlink()
+    with pytest.raises(CatalogError, match=f"{where}: missing"):
+        federal_table_document(data)
+    (data / "federal" / "extra.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(CatalogError, match=r"files for no federal table: \['federal/extra"):
+        federal_table_document(data)
+
+
+def test_federal_table_has_one_manifest_record_with_a_source_per_year(
+    tree: tuple[Path, Path],
+) -> None:
+    data, _ = tree
+    catalog = load_catalog(data, with_manifest=True)
+    entries = [e for e in catalog.manifest if e["kind"] == "federal_table"]
+    assert [(e["_jurisdiction"], e["id"]) for e in entries] == [("US", "us-standard-deduction")]
+    entry = entries[0]
+    assert entry["url"] == "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf"
+    assert entry["url"] == catalog.federal_tables["us-standard-deduction"]["source_url"]
+    assert entry["official"] is True and entry["retrieved"] == "2026-10-23"
+    sources = entry["year_sources"]
+    assert [s["tax_year"] for s in sources] == list(range(2019, 2027))
+    assert sources[6]["url"] == "https://www.irs.gov/pub/irs-pdf/i1040gi.pdf"
+    assert sources[6]["values"] == {"years[6].single": 15750.0, "years[6].mfj": 31500.0}
+    assert catalog.documents["federal/standard_deduction"] is catalog.federal_tables[entry["id"]]
+    assert manifest_errors(catalog) == []
+
+    def us(change: Callable[[dict[str, Any]], None]) -> list[str]:
+        def edit(doc: Any) -> None:
+            change(next(e for e in doc["entries"] if e["kind"] == "federal_table"))
+
+        _edit(data / "manifest" / "us.json", edit)
+        errors = manifest_errors(load_catalog(data, with_manifest=True))
+        shutil.copy(DATA_DIR / "manifest" / "us.json", data / "manifest" / "us.json")
+        return errors
+
+    where = "manifest/us.json entry 'us-standard-deduction'"
+    errors = us(lambda e: e["year_sources"][6]["values"].update({"years[6].single": 15000.0}))
+    assert errors == [
+        f"{where} year_sources[6]: values: 'years[6].single' is 15000.0 here but 15750.0 in "
+        "the table"
+    ]
+    errors = us(lambda e: e.update(url="https://www.irs.gov/pub/irs-drop/rp-24-40.pdf"))
+    assert errors == [
+        f"{where}: url 'https://www.irs.gov/pub/irs-drop/rp-24-40.pdf' != row source_url "
+        "'https://www.irs.gov/pub/irs-drop/rp-25-32.pdf'"
+    ]
+    errors = us(lambda e: e.update(id="us-other"))
+    assert errors == [
+        "manifest/us.json entry 'us-other': no federal_table row with this id",
+        "federal_table 'us-standard-deduction': no manifest entry",
+    ]

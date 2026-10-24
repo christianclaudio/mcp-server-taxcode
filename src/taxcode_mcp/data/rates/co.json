@@ -4,10 +4,7 @@
   "model": "flat_by_year",
   "source_url": "https://tax.colorado.gov/sites/tax/files/documents/DR0104_book_2024.pdf",
   "params": {
-    "deduction": {
-      "single": 14600.0,
-      "mfj": 29200.0
-    },
+    "deduction": "federal_standard_deduction",
     "rates": [
       {
         "from_year": 2025,
@@ -18,6 +15,26 @@
         "from_year": 2024,
         "rate": 0.0425,
         "rate_desc": "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
+      },
+      {
+        "from_year": 2022,
+        "rate": 0.044,
+        "rate_desc": "Flat 4.40% rate (Proposition 121)"
+      },
+      {
+        "from_year": 2021,
+        "rate": 0.045,
+        "rate_desc": "Flat 4.50% rate (tax year 2021)"
+      },
+      {
+        "from_year": 2020,
+        "rate": 0.0455,
+        "rate_desc": "Flat 4.55% rate (tax year 2020)"
+      },
+      {
+        "from_year": 2019,
+        "rate": 0.045,
+        "rate_desc": "Flat 4.50% rate (tax year 2019)"
       },
       {
         "from_year": null,

@@ -300,6 +300,109 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
+    },
+    {
+      "kind": "federal_table",
+      "id": "us-standard-deduction",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-23",
+      "content_sha256": "e9ada115fb43a4af5ea326ca91edd40ab0bf29b9be01d2c13d7b8fa96214635b",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2019,
+          "values": {
+            "years[0].single": 12200.0,
+            "years[0].mfj": 24400.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-18-57.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "179b2103dc52faf16c609ace65abf780ebe84c9c00d229d9c854c83f6bd48892"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "years[1].single": 12400.0,
+            "years[1].mfj": 24800.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-19-44.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "4128892f6a94ff00a911a1a8eaf1a898be68a21c57c34c36e030b5326600efc3"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "years[2].single": 12550.0,
+            "years[2].mfj": 25100.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-20-45.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "12cfb00115b86e3bb97937f1a5fc340cf98c0d61b7508c800b9a3a4674aac52d"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "years[3].single": 12950.0,
+            "years[3].mfj": 25900.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-21-45.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "405535647b6287103f5392258d4342cdb70535bf07ff05d89eebc71768083627"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "years[4].single": 13850.0,
+            "years[4].mfj": 27700.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-22-38.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "6c20f8a6c9a3bdf4251fcf50dbf2e2382abc8cbeb1e5e2d3eecdc38b2cbf6bbf"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "years[5].single": 14600.0,
+            "years[5].mfj": 29200.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-23-34.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "544ba41c7ba64f77da521e0d174a7b7394dc72b5c7c73d10adb19952d5aaae57"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "years[6].single": 15750.0,
+            "years[6].mfj": 31500.0
+          },
+          "url": "https://www.irs.gov/pub/irs-pdf/i1040gi.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "482e9c487c608f1bbeaceef35bc3c0933e8b35443cfff447e4279d590468364a"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "years[7].single": 16100.0,
+            "years[7].mfj": 32200.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "e9ada115fb43a4af5ea326ca91edd40ab0bf29b9be01d2c13d7b8fa96214635b"
+        }
+      ]
     }
   ]
 }

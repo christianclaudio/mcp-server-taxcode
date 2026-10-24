@@ -6,6 +6,11 @@
   "params": {
     "capital_gains_deduction": 262000.0,
     "rate": 0.07,
-    "capital_gains_deduction_2024": 270000.0
+    "capital_gains_deduction_2024": 270000.0,
+    "capital_gains_deduction_2025": 278000.0,
+    "tier_2025": {
+      "over": 1000000.0,
+      "rate": 0.029
+    }
   }
 }
