@@ -26,7 +26,61 @@
       "content_sha256": "35d4d7f235cbe22ad05d02ec95845c07b75af714912d8bebf18cc60397972cb7",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 10000.0,
+            "brackets_2025.single[0].rate": 0.044,
+            "brackets_2025.mfj[0].over": 10000.0,
+            "brackets_2025.mfj[0].rate": 0.044
+          },
+          "url": "https://www.dor.ms.gov/general-information",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "8b6af318b7d20acf1e91b917371afb2cc4de74be17c7306d2b9f7620ff3e0e5e"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 10000.0,
+            "brackets_2026.single[0].rate": 0.04,
+            "brackets_2026.mfj[0].over": 10000.0,
+            "brackets_2026.mfj[0].rate": 0.04
+          },
+          "url": "https://www.dor.ms.gov/general-information",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "8b6af318b7d20acf1e91b917371afb2cc4de74be17c7306d2b9f7620ff3e0e5e"
+        },
+        {
+          "tax_year": 2027,
+          "values": {
+            "brackets_2027.single[0].over": 10000.0,
+            "brackets_2027.single[0].rate": 0.0375,
+            "brackets_2027.mfj[0].over": 10000.0,
+            "brackets_2027.mfj[0].rate": 0.0375
+          },
+          "url": "https://www.dor.ms.gov/general-information",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "8b6af318b7d20acf1e91b917371afb2cc4de74be17c7306d2b9f7620ff3e0e5e"
+        },
+        {
+          "tax_year": 2027,
+          "values": {
+            "brackets_2027.single[0].over": 10000.0,
+            "brackets_2027.single[0].rate": 0.0375,
+            "brackets_2027.mfj[0].over": 10000.0,
+            "brackets_2027.mfj[0].rate": 0.0375
+          },
+          "url": "https://www.dor.ms.gov/forms-resources/laws-regulations/2025-legislation",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "984bf9bb5898fb0018274747876e47b016cb31d60f3f808ee9681943c6c9d4da"
+        }
+      ]
     }
   ]
 }

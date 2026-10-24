@@ -63,6 +63,38 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "6c844f90dc2c38132b8e11f65605168197da2f8f32cda23e3f4e899ec8889bb3"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "capital_gains_deduction_2025": 278000.0
+          },
+          "url": "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "dc14d56a331e56f9757573486ed26c2d925fac6e1f93eedb4bf39697d8fbaddd"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "tier_2025.over": 1000000.0,
+            "tier_2025.rate": 0.029
+          },
+          "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=82.87.040",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "80b86b5388f80c1df41c7f90b8feceb16ba2c50e78bd9e2b3fbe9ddac283b361"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "tier_2025.over": 1000000.0,
+            "tier_2025.rate": 0.029
+          },
+          "url": "https://dor.wa.gov/forms-publications/publications-subject/special-notices/new-tiered-rates-washingtons-capital-gains-tax",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "22422be133b53e085fc156625f55d335807d8f423a4232f59be12156d56fa575"
         }
       ]
     }

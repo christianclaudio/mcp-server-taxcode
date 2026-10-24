@@ -26,7 +26,43 @@
       "content_sha256": "bc4a62fdf7bbaa1a6f6ffc4d2b111474771197d9f4b6c0859aed86434d76687c",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.045,
+            "credit_base_single_2025": 15750.0,
+            "credit_base_mfj_2025": 31500.0,
+            "credit_phaseout_single_2025": 18213.0,
+            "credit_phaseout_mfj_2025": 36426.0
+          },
+          "url": "https://files.tax.utah.gov/tax/forms/2025/tc-40inst.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "9ea2823d81494434fb4a3d77be1ad103042ba4bdd1462dcfdca33f8a2fdcddda"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.045
+          },
+          "url": "https://incometax.utah.gov/file-pay/tax-rates/",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "873c1098bcdd1a8a1da6b2c6a72a193f3eddf87cb3651e0c8a45522102ca02f4"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.045
+          },
+          "url": "https://le.utah.gov/~2025/bills/hbillenr/HB0106.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "2127ddbf494868560f1e1bd29a2bd1fb5a80dc99f7bac464910b3778ad9d5f07"
+        }
+      ]
     }
   ]
 }

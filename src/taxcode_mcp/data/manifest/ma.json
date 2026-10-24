@@ -63,6 +63,36 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "1954d0af2d5fbbacd24ccf76191e55ac6eb1f16aa95087ee1ab466714398acee"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "surtax_2025.over": 1083150.0
+          },
+          "url": "https://www.mass.gov/doc/2025-form-1-instructions/download",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "f99acc9db3a4c83da890b7e2a26fd310f1a0ec6fa9e2744e4f975e32f64dd2cd"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "surtax_2025.over": 1083150.0
+          },
+          "url": "https://www.mass.gov/info-details/massachusetts-4-surtax-on-taxable-income",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "9c145a82cde271fbe2da64f9199e862212872f92d28209bd1491f165f4f2b2cc"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "surtax_2026.over": 1107750.0
+          },
+          "url": "https://www.mass.gov/info-details/massachusetts-4-surtax-on-taxable-income",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "9c145a82cde271fbe2da64f9199e862212872f92d28209bd1491f165f4f2b2cc"
         }
       ]
     }

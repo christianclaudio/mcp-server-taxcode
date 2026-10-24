@@ -52,7 +52,51 @@
       "content_sha256": "e87bcf677747e7b304218f1d107b8d54389acb00851727bd0d8e487d80e0f9fb",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 100000.0,
+            "brackets_2025.single[0].base": 2394.32,
+            "brackets_2025.single[0].rate": 0.03125,
+            "brackets_2025.single[1].over": 26050.0,
+            "brackets_2025.single[1].base": 342.0,
+            "brackets_2025.single[1].rate": 0.0275
+          },
+          "url": "https://codes.ohio.gov/assets/laws/revised-code/authenticated/57/5747/5747.02/9-30-2025/5747.02-9-30-2025.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "e724e3060a009686473702423de4c3c9660b3b577471b2f6fe4504396ad6de72"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 100000.0,
+            "brackets_2025.single[0].base": 2394.32,
+            "brackets_2025.single[0].rate": 0.03125,
+            "brackets_2025.single[1].over": 26050.0,
+            "brackets_2025.single[1].base": 342.0,
+            "brackets_2025.single[1].rate": 0.0275
+          },
+          "url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2025/it1040-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "931b21e7484ba96e561cf2346d8a7d2a8005bd990724b5903c9a90acede5f50e"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 26050.0,
+            "brackets_2026.single[0].base": 332.0,
+            "brackets_2026.single[0].rate": 0.0275
+          },
+          "url": "https://codes.ohio.gov/assets/laws/revised-code/authenticated/57/5747/5747.02/9-30-2025/5747.02-9-30-2025.pdf",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "e724e3060a009686473702423de4c3c9660b3b577471b2f6fe4504396ad6de72"
+        }
+      ]
     }
   ]
 }

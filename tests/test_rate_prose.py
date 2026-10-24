@@ -22,9 +22,6 @@ NOT_IN_TABLE: dict[str, set[float]] = {
     "CA": {1.0},  # the 1% Mental Health Services Tax, already inside the 13.3% top rate
     "MD": {2.25, 3.2},  # the county piggyback range; county tax is not computed
     "NH": {3.0},  # the 2024 interest and dividends tax, which this tool does not compute
-    # The scheduled cut. The table holds no 2025+ rates yet, so this one is a known gap
-    # (rates from 2025 on still need sourcing), not a figure the formula uses.
-    "MS": {4.0},
 }
 # The registry's labeled stand-in states its own factor.
 ESTIMATE_FACTOR = 65.0
@@ -50,7 +47,7 @@ def _stated(text: str) -> list[tuple[str, float]]:
 
 
 def _descriptions(code: str) -> Iterator[tuple[int, str, str]]:
-    for tax_year in (2024, 2025, 2026, 2027):
+    for tax_year in range(2018, 2028):
         for filing_status in ("single", "married_joint"):
             result = compliance.evaluate_state_residency(
                 jurisdiction=code,

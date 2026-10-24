@@ -6,13 +6,58 @@
   "params": {
     "statutory_basis": "Neb. Rev. Stat. §§ 77-2714.01, 77-2715.03; 316 Neb. Admin. Code § 22-003",
     "rate_authority": "Neb. Rev. Stat. § 77-2715.03",
-    "rate_desc": "Graduated top rate 5.84% (Convenience Rule State)",
+    "rate_desc": "Graduated top rate 6.64% (Convenience Rule State)",
+    "rate_desc_2024": "Graduated top rate 5.84% (Convenience Rule State)",
+    "rate_desc_2025": "Graduated top rate 5.20% (Convenience Rule State)",
+    "rate_desc_2026": "Graduated top rate 4.55% (Convenience Rule State)",
     "regime": "graduated",
     "deduction_single": 7900.0,
     "deduction_mfj": 15800.0,
     "deduction_single_2024": 8350.0,
     "deduction_mfj_2024": 16700.0,
+    "deduction_single_2025": 8600.0,
+    "deduction_mfj_2025": 17200.0,
+    "deduction_single_2026": 8850.0,
+    "deduction_mfj_2026": 17700.0,
     "brackets": {
+      "single": [
+        {
+          "over": 35730.0,
+          "rate": 0.0664
+        },
+        {
+          "over": 22170.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 3700.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfj": [
+        {
+          "over": 71460.0,
+          "rate": 0.0664
+        },
+        {
+          "over": 44350.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 7390.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ]
+    },
+    "brackets_2024": {
       "single": [
         {
           "over": 37670.0,
@@ -42,6 +87,82 @@
         },
         {
           "over": 7790.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ]
+    },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 38870.0,
+          "rate": 0.052
+        },
+        {
+          "over": 24120.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 4030.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfj": [
+        {
+          "over": 77730.0,
+          "rate": 0.052
+        },
+        {
+          "over": 48250.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 8040.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ]
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 39900.0,
+          "rate": 0.0455
+        },
+        {
+          "over": 24760.0,
+          "rate": 0.0455
+        },
+        {
+          "over": 4130.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfj": [
+        {
+          "over": 79800.0,
+          "rate": 0.0455
+        },
+        {
+          "over": 49530.0,
+          "rate": 0.0455
+        },
+        {
+          "over": 8250.0,
           "rate": 0.0351
         },
         {
