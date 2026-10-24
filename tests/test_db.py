@@ -290,20 +290,20 @@ def test_lookup_statute_temporal_versioning() -> None:
     assert latest["is_current"] is True
     assert len(latest["available_versions"]) == 3
 
-    # Point-in-time lookup for 2024 tax year audit returns 2024 flat rate (5.49%)
+    # Point-in-time lookup for 2024 tax year audit returns 2024 flat rate (5.39%)
     statute_2024 = test_db.lookup_statute("O.C.G.A. § 48-7-20", tax_year=2024)
     assert statute_2024 is not None
     assert statute_2024["effective_year"] == 2024
     assert statute_2024["superseded_year"] == 2025
     assert statute_2024["is_current"] is False
-    assert "5.49%" in statute_2024["title"]
+    assert "5.39%" in statute_2024["title"]
 
-    # Point-in-time lookup for 2025 tax year returns 2025 rate (5.39%)
+    # Point-in-time lookup for 2025 tax year returns 2025 rate (5.19%)
     statute_2025 = test_db.lookup_statute("O.C.G.A. § 48-7-20", tax_year=2025)
     assert statute_2025 is not None
     assert statute_2025["effective_year"] == 2025
     assert statute_2025["superseded_year"] == 2026
-    assert "5.39%" in statute_2025["title"]
+    assert "5.19%" in statute_2025["title"]
 
     # Predecessor PR Act 22 lookup for 2015 tax year
     act22 = test_db.lookup_statute("Act 22-2012 Sec. 3", tax_year=2015)

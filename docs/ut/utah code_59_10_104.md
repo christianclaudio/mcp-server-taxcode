@@ -10,8 +10,8 @@
 
 ## Operative Statutory Language (English)
 
-Imposes a flat individual income tax rate of 4.65% on state taxable income under SB 69 in Utah.
+Imposes a flat individual income tax rate on state taxable income in Utah: 4.5% for taxable years beginning on or after January 1, 2025 (HB 106 of 2025), 4.55% for tax year 2024 (SB 69 of 2024) and 4.65% for tax year 2023.
 
 ## Texto Estatutario Oficial (Español)
 
-Impone una tasa fija de impuesto sobre ingresos individuales del 4.65% sobre el ingreso gravable bajo SB 69 en Utah.
+Impone una tasa fija de impuesto sobre ingresos individuales sobre el ingreso gravable en Utah: 4.5% para los años contributivos que comienzan el 1 de enero de 2025 o después (HB 106 de 2025), 4.55% para el año contributivo 2024 (SB 69 de 2024) y 4.65% para el año contributivo 2023.
