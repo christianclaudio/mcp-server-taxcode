@@ -270,16 +270,48 @@ def _co_estimate_note(tax_year: int, rate: float) -> str:
     return f" [ESTIMATE: {'; '.join(reasons)}]" if reasons else ""
 
 
-def _ga_estimate_note(tax_year: int) -> str:
-    """The estimate label for a tax year before Georgia's flat rate; empty from 2024 on."""
-    return GA_PRE_FLAT_ESTIMATE_NOTE if tax_year < GA_FLAT_RATE_FIRST_YEAR else ""
+# The last tax year whose Georgia standard deduction and rate HB 463 of 2026 fixes without a
+# revenue test. From 2027 the deduction rises by $375 / $750 a year and the rate falls by
+# 0.125 percent a year, each only in years the tests in O.C.G.A. § 48-7-27(a)(1.1) are met
+# (§ 48-7-20(a.1) delays the rate cut with the deduction increase), so a later year carries
+# this year's figures, labeled. Tests tie it to the table's last deduction key and rate step.
+GA_LAST_FIXED_YEAR = 2026
 
 
-def _ga_retirement_cap(ga: dict[str, Any], age: int) -> float:
-    """Georgia's retirement income exclusion cap for an age; 0.0 below every listed age."""
-    return float(
-        next((s["amount"] for s in ga["retirement_exclusion"] if age >= s["min_age"]), 0.0)
+def _ga_revenue_conditional_note(ga: dict[str, Any]) -> str:
+    """The estimate label for a Georgia tax year after ``GA_LAST_FIXED_YEAR``."""
+    deduction = _for_year(ga, "standard_deduction", GA_LAST_FIXED_YEAR)
+    rate = _year_step(ga["rates"], GA_LAST_FIXED_YEAR)["rate"]
+    return (
+        f" [ESTIMATE: from tax year {GA_LAST_FIXED_YEAR + 1}, HB 463 of 2026 raises Georgia's "
+        "standard deduction and lowers its rate only in years its revenue tests are met "
+        "(O.C.G.A. §§ 48-7-20(a.1), 48-7-27(a)(1.1)), so the "
+        f"{GA_LAST_FIXED_YEAR} figures ({_money(deduction['single'])} single, "
+        f"{_money(deduction['mfj'])} joint, {_pct(rate)}) are used]"
     )
+
+
+def _ga_estimate_note(tax_year: int) -> str:
+    """The estimate label for a Georgia tax year; empty for 2024 to ``GA_LAST_FIXED_YEAR``.
+
+    Before 2024 the flat rate doesn't apply; after ``GA_LAST_FIXED_YEAR`` the deduction and
+    rate depend on Georgia's revenue tests.
+    """
+    if tax_year < GA_FLAT_RATE_FIRST_YEAR:
+        return GA_PRE_FLAT_ESTIMATE_NOTE
+    if tax_year > GA_LAST_FIXED_YEAR:
+        return _ga_revenue_conditional_note(RATE_TABLES["GA"])
+    return ""
+
+
+def _ga_retirement_cap(ga: dict[str, Any], age: int, tax_year: int) -> float:
+    """Georgia's retirement income exclusion cap for an age and tax year.
+
+    0.0 below every listed age. ``retirement_exclusion_<YYYY>`` holds the caps from that
+    tax year on.
+    """
+    caps = _for_year(ga, "retirement_exclusion", tax_year)
+    return float(next((s["amount"] for s in caps if age >= s["min_age"]), 0.0))
 
 
 @compliance_server.tool(
@@ -336,10 +368,10 @@ def evaluate_georgia_residency(
     # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
-    standard_deduction = float(ga["standard_deduction"][_status(is_mfj)])
+    standard_deduction = float(_for_year(ga, "standard_deduction", tax_year)[_status(is_mfj)])
 
     # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
-    max_exclusion = _ga_retirement_cap(ga, age)
+    max_exclusion = _ga_retirement_cap(ga, age, tax_year)
     retirement_exclusion_applied = min(retirement_income, max_exclusion)
 
     # Tax rate selection
@@ -603,8 +635,8 @@ def evaluate_state_residency(
             or (maintains_permanent_abode and days_in_state > 0)
         )
         ga = RATE_TABLES["GA"]
-        standard_ded = float(ga["standard_deduction"][_status(is_mfj)])
-        max_ret = _ga_retirement_cap(ga, age)
+        standard_ded = float(_for_year(ga, "standard_deduction", tax_year)[_status(is_mfj)])
+        max_ret = _ga_retirement_cap(ga, age, tax_year)
         ret_excl = min(retirement_income, max_ret)
         ga_step = _year_step(ga["rates"], tax_year)
         rate = float(ga_step["rate"])

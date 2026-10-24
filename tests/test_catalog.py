@@ -407,11 +407,15 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     sourced = {e["_jurisdiction"]: e for e in entries if e["url"] != NOT_RECORDED}
     assert sorted(sourced) == SOURCED_RATE_TABLES
     recorded = ("url", "official", "retrieved", "content_sha256")
+    # Georgia's table also names the law that last amended it (HB 463 of 2026) and the first
+    # tax year that law applies to.
+    recorded_by_code = {"GA": (*recorded, "enacting_law", "effective_date")}
     for e in entries:
         unrecorded = [
             name
             for name in MANIFEST_FIELDS[2:]
-            if e["_jurisdiction"] not in sourced or name not in recorded
+            if e["_jurisdiction"] not in sourced
+            or name not in recorded_by_code.get(e["_jurisdiction"], recorded)
         ]
         assert {e[name] for name in unrecorded} == {NOT_RECORDED}, e["id"]
     for code, e in sourced.items():
@@ -621,6 +625,47 @@ def test_malformed_federal_table_is_rejected(tree: tuple[Path, Path]) -> None:
     (data / "federal" / "extra.json").write_text("{}", encoding="utf-8")
     with pytest.raises(CatalogError, match=r"files for no federal table: \['federal/extra"):
         federal_table_document(data)
+
+
+def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
+    tree: tuple[Path, Path],
+) -> None:
+    data, _ = tree
+    catalog = load_catalog(data, with_manifest=True)
+    entry = next(e for e in catalog.manifest if e["id"] == "ga-rates")
+    # The entry keeps the 2024 IT-511 (the unsuffixed values); HB 463 of 2026 last amended it.
+    assert entry["url"] == (
+        "https://dor.georgia.gov/document/document/2024-it-511-individual-income-tax-booklet/download"
+    )
+    assert entry["content_sha256"] == (
+        "5907211db514b3a5c485bf372aac2b8be6f61aa61e6995b2d541005d63e8b481"
+    )
+    assert entry["enacting_law"] == "HB 463 of 2026"
+    assert entry["effective_date"] == "2026-01-01"
+    sources = entry["year_sources"]
+    assert [s["tax_year"] for s in sources] == [2025, 2026, 2027]
+    assert sources[0]["url"] == (
+        "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download"
+    )
+    for source in sources[1:]:
+        assert source["url"] == (
+            "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download"
+        )
+        assert source["content_sha256"] == (
+            "1c5fa7abcb2ab99964c09144384d774bceea9a1531ea235c7e637925459f6066"
+        )
+    assert manifest_errors(catalog) == []
+
+    def edit(doc: Any) -> None:
+        ga = next(e for e in doc["entries"] if e["id"] == "ga-rates")
+        ga["year_sources"][1]["values"]["standard_deduction_2026.mfj"] = 31000.0
+
+    _edit(data / "manifest" / "ga.json", edit)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert errors == [
+        "manifest/ga.json entry 'ga-rates' year_sources[1]: values: "
+        "'standard_deduction_2026.mfj' is 31000.0 here but 30000.0 in the table"
+    ]
 
 
 def test_federal_table_has_one_manifest_record_with_a_source_per_year(

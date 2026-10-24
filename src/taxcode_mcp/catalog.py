@@ -163,6 +163,7 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
 # model's own fields, years ascending. Each holds the value from that tax year on, and the
 # unsuffixed key covers the years before (the registry's convention).
 YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
+    "georgia": ("standard_deduction", "retirement_exclusion"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
     "brackets_cumulative": ("brackets",),

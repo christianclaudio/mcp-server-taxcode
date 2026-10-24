@@ -159,6 +159,15 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("GA", _set("params.retirement_exclusion.0.amount", 1), "amount: must be a non-negative"),
     ("GA", _set("params.retirement_exclusion.0.min_age", 60), "min_age must decrease"),
     ("GA", _set("params.standard_deduction.mfj", None), "must be a non-negative float"),
+    # georgia per-year keys (HB 463 of 2026)
+    ("GA", _set("params.standard_deduction_2026.mfj", None), "must be a non-negative float"),
+    ("GA", _set("params.retirement_exclusion_2027.0.min_age", 60), "min_age must decrease"),
+    ("GA", _set("params.rates_2027", []), "unknown key 'rates_2027'"),
+    (
+        "GA",
+        _set("params.standard_deduction_2025", {"single": 1.0, "mfj": 1.0}),
+        "standard_deduction_2025 out of order; years ascend",
+    ),
     # maryland deduction
     ("MD", _set("params.standard_deduction", 1.0), "standard_deduction: must be an object"),
     ("MD", _drop("params.standard_deduction.minimum"), "fields must be exactly"),
@@ -527,11 +536,16 @@ def test_georgia_prose_cites_the_law_that_set_the_years_rate() -> None:
         (2024, "5.39%", "HB 1015 of 2024"),
         (2025, "5.19%", "HB 111 of 2025"),
         (2026, "4.99%", "HB 463 of 2026"),
-        (2030, "4.99%", "HB 463 of 2026"),
     ):
         state, authority = _georgia_answers(tax_year)
         assert state == f"Flat {rate} rate ({law})", tax_year
         assert authority == f"O.C.G.A. § 48-7-20 (flat tax, {law})", tax_year
+    # From 2027 the deduction and rate depend on HB 463's revenue tests, so both are labeled.
+    note = compliance._ga_revenue_conditional_note(compliance.RATE_TABLES["GA"])
+    for tax_year in (2027, 2028, 2030):
+        state, authority = _georgia_answers(tax_year)
+        assert state == f"Flat 4.99% rate (HB 463 of 2026){note}", tax_year
+        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, HB 463 of 2026){note}", tax_year
 
 
 def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
@@ -542,6 +556,162 @@ def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
         assert authority.endswith(compliance.GA_PRE_FLAT_ESTIMATE_NOTE), tax_year
     for tax_year in (2024, 2025, 2026):
         assert not any("ESTIMATE" in text for text in _georgia_answers(tax_year)), tax_year
+    note = compliance._ga_revenue_conditional_note(compliance.RATE_TABLES["GA"])
+    for tax_year in (2027, 2028, 2030):
+        for text in _georgia_answers(tax_year):
+            assert text.endswith(note), tax_year
+            assert compliance.GA_PRE_FLAT_ESTIMATE_NOTE not in text, tax_year
+
+
+# HB 463 of 2026 (signed act, gov.georgia.gov): O.C.G.A. § 48-7-27(a)(1)(B) is $15,000
+# single and $30,000 joint for taxable years beginning on or after January 1, 2026 (§ 5-1),
+# and the new (a)(5)(A)(xiv) raises the 65-and-older retirement exclusion to $70,000 from
+# 2027, with $35,000 kept for ages 62 to 64. 2024 and 2025 are the IT-511 figures.
+# Each pin is (deduction or exclusion, taxable income, tax) for 2024, 2025, 2026, 2027,
+# 2028 and 2030.
+GA_YEARS = (2024, 2025, 2026, 2027, 2028, 2030)
+GA_PINS: list[tuple[str, dict[str, Any], str, tuple[tuple[float, float, float], ...]]] = [
+    (
+        "single, age 40, AGI 62,000",
+        {"federal_agi": 62000.0},
+        "standard_deduction",
+        (
+            (12000.0, 50000.0, 2695.00),
+            (12000.0, 50000.0, 2595.00),
+            (15000.0, 47000.0, 2345.30),
+            (15000.0, 47000.0, 2345.30),
+            (15000.0, 47000.0, 2345.30),
+            (15000.0, 47000.0, 2345.30),
+        ),
+    ),
+    (
+        "mfj, age 40, AGI 124,000",
+        {"federal_agi": 124000.0, "filing_status": "mfj"},
+        "standard_deduction",
+        (
+            (24000.0, 100000.0, 5390.00),
+            (24000.0, 100000.0, 5190.00),
+            (30000.0, 94000.0, 4690.60),
+            (30000.0, 94000.0, 4690.60),
+            (30000.0, 94000.0, 4690.60),
+            (30000.0, 94000.0, 4690.60),
+        ),
+    ),
+    (
+        "single, age 66, AGI 100,000, retirement 80,000",
+        {"federal_agi": 100000.0, "age": 66, "retirement_income": 80000.0},
+        "retirement_exclusion_applied",
+        (
+            (65000.0, 23000.0, 1239.70),
+            (65000.0, 23000.0, 1193.70),
+            (65000.0, 20000.0, 998.00),
+            (70000.0, 15000.0, 748.50),
+            (70000.0, 15000.0, 748.50),
+            (70000.0, 15000.0, 748.50),
+        ),
+    ),
+    (
+        "mfj, age 63, AGI 100,000, retirement 50,000",
+        {"federal_agi": 100000.0, "filing_status": "mfj", "age": 63, "retirement_income": 50000.0},
+        "retirement_exclusion_applied",
+        (
+            (35000.0, 41000.0, 2209.90),
+            (35000.0, 41000.0, 2127.90),
+            (35000.0, 35000.0, 1746.50),
+            (35000.0, 35000.0, 1746.50),
+            (35000.0, 35000.0, 1746.50),
+            (35000.0, 35000.0, 1746.50),
+        ),
+    ),
+]
+
+
+def _georgia_tax(tool: str, tax_year: int, **args: Any) -> dict[str, Any]:
+    """A Georgia resident's tax computation from either tool, under common key names."""
+    if tool == "georgia":
+        out = compliance.evaluate_georgia_residency(
+            days_present_ga=300, is_domiciled_in_ga=True, tax_year=tax_year, **args
+        )["tax_computation"]
+        return {
+            "standard_deduction": out["standard_deduction"],
+            "retirement_exclusion_applied": out["retirement_exclusion_applied"],
+            "taxable": out["georgia_taxable_net_income"],
+            "tax": out["estimated_georgia_tax"],
+            "rate": out["applicable_rate"],
+            "prose": out["statutory_rate_authority"],
+        }
+    out = compliance.evaluate_state_residency(
+        jurisdiction="GA", days_in_state=300, is_domiciled=True, tax_year=tax_year, **args
+    )["tax_computation"]
+    return {
+        "taxable": out["taxable_net_income"],
+        "tax": out["estimated_state_tax"],
+        "prose": out["rate_description"],
+    }
+
+
+@pytest.mark.parametrize("tool", ["georgia", "state"])
+@pytest.mark.parametrize(("case", "args", "field", "pins"), GA_PINS, ids=[p[0] for p in GA_PINS])
+def test_georgia_deduction_and_exclusion_follow_hb_463(
+    tool: str,
+    case: str,
+    args: dict[str, Any],
+    field: str,
+    pins: tuple[tuple[float, float, float], ...],
+) -> None:
+    for tax_year, (amount, taxable, tax) in zip(GA_YEARS, pins, strict=True):
+        answer = _georgia_tax(tool, tax_year, **args)
+        if tool == "georgia":
+            assert answer[field] == amount, (case, tax_year)
+        assert answer["taxable"] == taxable, (case, tax_year)
+        assert answer["tax"] == tax, (case, tax_year)
+        assert ("[ESTIMATE: " in answer["prose"]) is (tax_year >= 2027), (case, tax_year)
+
+
+@pytest.mark.parametrize("tool", ["georgia", "state"])
+def test_georgia_deduction_steps_at_the_2026_edge(tool: str) -> None:
+    assert _georgia_tax(tool, 2026, federal_agi=15000.0)["taxable"] == 0.0
+    assert _georgia_tax(tool, 2026, federal_agi=15000.0)["tax"] == 0.0
+    # 15,000 - 12,000 = 3,000 taxable at 5.19% in 2025.
+    assert _georgia_tax(tool, 2025, federal_agi=15000.0)["taxable"] == 3000.0
+    assert _georgia_tax(tool, 2025, federal_agi=15000.0)["tax"] == 155.70
+
+
+@pytest.mark.parametrize("tool", ["georgia", "state"])
+def test_georgia_rate_stays_4_99_percent_from_2026(tool: str) -> None:
+    # HB 463's 0.125-percent annual cuts from 2027 depend on its revenue tests, so no later
+    # year is held; 4.99% is carried, as before this change.
+    # The state tool reports no rate field, so its rate is read from the prose and the tax.
+    for tax_year in range(2026, 2036):
+        answer = _georgia_tax(tool, tax_year, federal_agi=62000.0)
+        if tool == "georgia":
+            assert answer["rate"] == 0.0499, tax_year
+        else:
+            assert answer["prose"].startswith("Flat 4.99% rate (HB 463 of 2026)"), tax_year
+        assert answer["tax"] == round(answer["taxable"] * 0.0499, 2) == 2345.30, tax_year
+
+
+def test_georgia_revenue_conditional_note_text() -> None:
+    note = compliance._ga_revenue_conditional_note(compliance.RATE_TABLES["GA"])
+    assert note == (
+        " [ESTIMATE: from tax year 2027, HB 463 of 2026 raises Georgia's standard deduction "
+        "and lowers its rate only in years its revenue tests are met (O.C.G.A. §§ 48-7-20(a.1), "
+        "48-7-27(a)(1.1)), so the 2026 figures ($15,000 single, $30,000 joint, 4.99%) are used]"
+    )
+    # § 48-7-20(a.1) has no paragraphs since HB 463, and the act is "HB 463 of 2026".
+    assert "(a.1)(" not in note
+    assert "HB 463 (2026)" not in note
+    assert compliance._ga_estimate_note(2027) == note
+    assert compliance._ga_estimate_note(2026) == ""
+
+
+def test_georgia_last_fixed_year_matches_the_table() -> None:
+    # A later fixed deduction key or rate step must move GA_LAST_FIXED_YEAR with it.
+    ga = compliance.RATE_TABLES["GA"]
+    deduction_years = [int(k[-4:]) for k in ga if k.startswith("standard_deduction_")]
+    assert compliance.GA_LAST_FIXED_YEAR == max(deduction_years) == 2026
+    rate_years = [s["from_year"] for s in ga["rates"] if s["from_year"] is not None]
+    assert compliance.GA_LAST_FIXED_YEAR == max(rate_years)
 
 
 def test_mississippi_taxes_only_income_over_the_10000_band() -> None:

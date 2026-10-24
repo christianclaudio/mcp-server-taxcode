@@ -34,6 +34,20 @@
         "rate": 0.0539,
         "law": "HB 1015 of 2024"
       }
+    ],
+    "standard_deduction_2026": {
+      "single": 15000.0,
+      "mfj": 30000.0
+    },
+    "retirement_exclusion_2027": [
+      {
+        "min_age": 65,
+        "amount": 70000.0
+      },
+      {
+        "min_age": 62,
+        "amount": 35000.0
+      }
     ]
   }
 }

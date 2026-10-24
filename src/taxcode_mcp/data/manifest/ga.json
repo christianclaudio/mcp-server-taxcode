@@ -128,9 +128,46 @@
       "licence": "not_recorded",
       "retrieved": "2026-10-23",
       "content_sha256": "5907211db514b3a5c485bf372aac2b8be6f61aa61e6995b2d541005d63e8b481",
-      "enacting_law": "not_recorded",
-      "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "enacting_law": "HB 463 of 2026",
+      "effective_date": "2026-01-01",
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "rates[1].rate": 0.0519,
+            "standard_deduction.single": 12000.0,
+            "standard_deduction.mfj": 24000.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "ae43633e68ca423609607b0f93b1ebcd6056bce06ffb91829c448292e48a693f"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "rates[0].rate": 0.0499,
+            "standard_deduction_2026.single": 15000.0,
+            "standard_deduction_2026.mfj": 30000.0
+          },
+          "url": "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "1c5fa7abcb2ab99964c09144384d774bceea9a1531ea235c7e637925459f6066"
+        },
+        {
+          "tax_year": 2027,
+          "values": {
+            "retirement_exclusion_2027[0].amount": 70000.0,
+            "retirement_exclusion_2027[1].amount": 35000.0
+          },
+          "url": "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download",
+          "official": true,
+          "retrieved": "2026-10-23",
+          "content_sha256": "1c5fa7abcb2ab99964c09144384d774bceea9a1531ea235c7e637925459f6066"
+        }
+      ]
     }
   ]
 }
