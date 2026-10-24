@@ -678,6 +678,9 @@ def test_evaluate_georgia_residency_cases() -> None:
         tax_year=2026,
     )
     assert ga_2026["tax_computation"]["applicable_rate"] == 0.0499
+    # HB 463 of 2026: $15,000 single from 2026, so 50,000 - 15,000 = 35,000 taxable.
+    assert ga_2026["tax_computation"]["standard_deduction"] == 15000.0
+    assert ga_2026["tax_computation"]["georgia_taxable_net_income"] == 35000.0
 
     # 4. Safety violations
     with pytest.raises(SafetyViolationError, match="Day count must be between 0 and 366"):
