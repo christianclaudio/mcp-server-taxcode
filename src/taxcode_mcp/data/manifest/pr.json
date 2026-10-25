@@ -43,6 +43,19 @@
     },
     {
       "kind": "statute",
+      "id": "pr-cri-1031-02-2019",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0093-2026.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "9adcfbe63b8bc9f24cce02801b836da33c229d518d22f467694166d3721cccf0",
+      "enacting_law": "Ley 93-2026, Sec. 1 (ends this version; text before it: Ley 1-2011, Sec. 1031.02, as amended through Ley 97-2023)",
+      "effective_date": "2026-07-01",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
       "id": "pr-cri-1062-01",
       "url": "https://hacienda.pr.gov/sites/default/files/codigo_de_rentas_internas_2011_segun_enmendado_28.08.2026.pdf",
       "edition": "not_recorded",
@@ -53,6 +66,19 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "pr-cri-1062-01-2019",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0040-2020.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "39f6aac5879401fc1a84c87c103277fb78f2302e86ed09632b4570e0b53637b8",
+      "enacting_law": "Ley 40-2020, Sec. 33 (ends this version; text before it: Ley 1-2011, Sec. 1062.01, as amended by Ley 257-2018, Sec. 57)",
+      "effective_date": "2020-04-16",
+      "verification": "summary"
     },
     {
       "kind": "statute",
@@ -69,6 +95,19 @@
     },
     {
       "kind": "statute",
+      "id": "pr-cri-1062-03-2019",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0040-2020.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "39f6aac5879401fc1a84c87c103277fb78f2302e86ed09632b4570e0b53637b8",
+      "enacting_law": "Ley 40-2020, Sec. 35 (ends this version; text before it: Ley 1-2011, Sec. 1062.03, as amended by Ley 257-2018 and Ley 60-2019, Sec. 6070.36)",
+      "effective_date": "2020-04-16",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
       "id": "pr-ley60-1020-02",
       "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
       "edition": "not_recorded",
@@ -79,6 +118,32 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "pr-ley60-1020-02-2019",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2019/0060-2019.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "21cd65faf8bb83e0f48a723710243401820bcaec5e0e10d96aeb69463a9485a1",
+      "enacting_law": "Ley 60-2019",
+      "effective_date": "2019-07-01",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
+      "id": "pr-ley60-1020-02-2020",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0040-2020.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "39f6aac5879401fc1a84c87c103277fb78f2302e86ed09632b4570e0b53637b8",
+      "enacting_law": "Ley 40-2020, Sec. 74; Ley 47-2020, Art. 1",
+      "effective_date": "2020-04-16",
+      "verification": "summary"
     },
     {
       "kind": "statute",
@@ -134,6 +199,19 @@
     },
     {
       "kind": "statute",
+      "id": "pr-ley60-2022-02-2019",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2019/0060-2019.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "21cd65faf8bb83e0f48a723710243401820bcaec5e0e10d96aeb69463a9485a1",
+      "enacting_law": "Ley 60-2019",
+      "effective_date": "2019-07-01",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
       "id": "pr-ley60-2031-01",
       "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
       "edition": "not_recorded",
@@ -170,6 +248,19 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "pr-ley60-6020-03-2019",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2019/0060-2019.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "21cd65faf8bb83e0f48a723710243401820bcaec5e0e10d96aeb69463a9485a1",
+      "enacting_law": "Ley 60-2019",
+      "effective_date": "2019-07-01",
+      "verification": "verified_verbatim"
     },
     {
       "kind": "statute",

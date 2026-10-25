@@ -15,6 +15,10 @@ Only these answers may change, and only in these ways:
   versions;
 * (c) ``out``: a search for a tax year from 2019 through 2025;
 * (d) ``out``: the health check, whose statute count grew.
+* (e) ``out``: a lookup that answers with a corrected row (see ``CORRECTED``): by its own id
+  with any tax year or none, and by citation or bare section for a tax year that row
+  answers; and the searches with no tax year whose results quote that row
+  (``CORRECTED_SEARCHES``).
 """
 
 from __future__ import annotations
@@ -28,15 +32,39 @@ from taxcode_mcp.catalog import load_catalog
 from taxcode_mcp.server import mcp
 from taxcode_mcp.tools.compliance import SUPPORTED_STATE_JURISDICTIONS
 
-# Section that gained versions -> (citation, bare section, current id, tax years answered by
-# a prior-year version).
-VERSIONED: dict[str, tuple[str, str, str, range]] = {
-    "1": ("26 U.S.C. § 1", "1", "us-irc-1", range(2019, 2026)),
-    "24": ("26 U.S.C. § 24", "24", "us-irc-24", range(2019, 2025)),
-    "32": ("26 U.S.C. § 32", "32", "us-irc-32", range(2019, 2021)),
-    "62": ("26 U.S.C. § 62", "62", "us-irc-62", range(2019, 2026)),
-    "63": ("26 U.S.C. § 63", "63", "us-irc-63", range(2019, 2025)),
-    "1.937-3": ("26 CFR § 1.937-3", "1.937-3", "us-cfr-1-937-3", range(2019, 2026)),
+# Section that gained versions -> (jurisdiction, citation, bare section, current id, tax
+# years answered by a prior-year version).
+VERSIONED: dict[str, tuple[str, str, str, str, range]] = {
+    "1": ("US", "26 U.S.C. § 1", "1", "us-irc-1", range(2019, 2026)),
+    "24": ("US", "26 U.S.C. § 24", "24", "us-irc-24", range(2019, 2025)),
+    "32": ("US", "26 U.S.C. § 32", "32", "us-irc-32", range(2019, 2021)),
+    "62": ("US", "26 U.S.C. § 62", "62", "us-irc-62", range(2019, 2026)),
+    "63": ("US", "26 U.S.C. § 63", "63", "us-irc-63", range(2019, 2025)),
+    "1.937-3": ("US", "26 CFR § 1.937-3", "1.937-3", "us-cfr-1-937-3", range(2019, 2026)),
+    "1031.02": ("PR", "PR CRI Sec. 1031.02", "1031.02", "pr-cri-1031-02", range(2019, 2026)),
+    "1062.01": ("PR", "PR CRI Sec. 1062.01", "1062.01", "pr-cri-1062-01", range(2019, 2020)),
+    "1062.03": ("PR", "PR CRI Sec. 1062.03", "1062.03", "pr-cri-1062-03", range(2019, 2020)),
+    "1020.02": (
+        "PR",
+        "Ley 60-2019 Sec. 1020.02",
+        "1020.02",
+        "pr-ley60-1020-02",
+        range(2019, 2026),
+    ),
+    "2022.02": (
+        "PR",
+        "Ley 60-2019 Sec. 2022.02",
+        "2022.02",
+        "pr-ley60-2022-02",
+        range(2019, 2026),
+    ),
+    "6020.03": (
+        "PR",
+        "Ley 60-2019 Sec. 6020.03",
+        "6020.03",
+        "pr-ley60-6020-03",
+        range(2019, 2026),
+    ),
 }
 PRIOR_YEAR_IDS = {
     "us-irc-1-2019",
@@ -50,7 +78,27 @@ PRIOR_YEAR_IDS = {
     "us-irc-63-2019",
     "us-irc-63-2021",
     "us-cfr-1-937-3-2019",
+    "pr-cri-1031-02-2019",
+    "pr-cri-1062-01-2019",
+    "pr-cri-1062-03-2019",
+    "pr-ley60-1020-02-2019",
+    "pr-ley60-1020-02-2020",
+    "pr-ley60-2022-02-2019",
+    "pr-ley60-6020-03-2019",
 }
+# Row whose text was corrected after the base commit -> (jurisdiction, citation, bare
+# section, tax years it answers). Ley 60-2019 Sec. 6020.10(b) wrongly carried Ley 32-2024's
+# Fondo Especial para la Igualdad Social split, which first applies in 2024, into 2019-2023.
+CORRECTED: dict[str, tuple[str, str, str, range]] = {
+    "pr-ley60-6020-10-2019": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", range(2019, 2025)),
+}
+CORRECTED_SEARCHES = frozenset(
+    {
+        "search|Puerto Rico|None|None|5",
+        "search|Puerto Rico|PR|None|5",
+        "search|residente|PR|None|5",
+    }
+)
 
 
 def _allowed(key: str) -> tuple[bool, bool]:
@@ -60,17 +108,22 @@ def _allowed(key: str) -> tuple[bool, bool]:
     kind, *rest = key.split("|")
     if kind == "search":
         year = rest[2]
-        return year != "None" and 2019 <= int(year) <= 2025, False
+        return (year != "None" and 2019 <= int(year) <= 2025) or key in CORRECTED_SEARCHES, False
     if kind != "lookup":
         return False, False
     query, jurisdiction, year = rest[0], rest[1], rest[2]
     out = versions = False
-    if jurisdiction in ("US", "None"):
-        for citation, section, current, years in VERSIONED.values():
+    for j, citation, section, current, years in VERSIONED.values():
+        if jurisdiction in (j, "None"):
             if query in (citation, section):
                 versions = True
                 out = out or (year != "None" and int(year) in years)
             versions = versions or query == current
+    for row, (j, citation, section, years) in CORRECTED.items():
+        if jurisdiction in (j, "None"):
+            out = out or query == row
+            if query in (citation, section):
+                out = out or (year != "None" and int(year) in years)
     return out, versions
 
 
@@ -101,5 +154,6 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
                 if not versions_ok:
                     unexpected.append(f"versions {key}")
     assert unexpected == []
-    # 280 in-window lookups + 167 window-year searches + the health check.
-    assert (changed_out, changed_versions) == (448, 1080)
+    # 280 US and 240 PR in-window lookups, 76 lookups of the corrected row, 277 window-year
+    # searches, 3 searches quoting the corrected row, and the health check.
+    assert (changed_out, changed_versions) == (877, 1932)

@@ -174,7 +174,10 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     )
     assert "Ley 65-2025's (e) and (f) removed; (d) checked against Ley 40-2020" in source_2019
     assert "which added it effective April 16, 2020 (Section 97)" in source_2019
-    assert source_2019.endswith("its exact earlier wording is not on file.")
+    assert "its exact earlier wording is not on file." in source_2019
+    # (b) before 2025 is Ley 40-2020, Section 89, with the Ley 32-2024 split dated 2024.
+    assert "(b) is quoted from Ley 40-2020, Section 89" in source_2019
+    assert source_2019.endswith("so it changed no text of (b).")
     source_2025 = next(
         line
         for line in (docs_out / "pr" / "ley60_6020_10_2025.md")
@@ -526,7 +529,9 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
         assert seeds[sid] == catalog[sid], sid
         assert seeds[sid]["source_url"] == url, sid
     for sid, seed in seeds.items():
-        if seed["corpus"] == "CRI":
+        # Every current Code row cites the compilation; a prior-year version cites the act
+        # that ends it.
+        if seed["corpus"] == "CRI" and seed["superseded_year"] is None:
             assert seed["source_url"] == cri_pdf, sid
     # T.D. 9391, 73 FR 19350 (Apr. 9, 2008), adopted § 1.937-3; (f) keys on the same date.
     assert seeds["us-cfr-1-937-3"]["effective_year"] == 2008

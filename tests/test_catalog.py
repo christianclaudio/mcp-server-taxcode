@@ -49,6 +49,20 @@ PRIOR_YEAR_VERBATIM = {
     "us-cfr-1-937-3-2019",
 }
 PRIOR_YEAR_IDS = PRIOR_YEAR_SUMMARIES | PRIOR_YEAR_VERBATIM
+# The prior-year Puerto Rico statute versions: each records the act it was read from, as
+# enacted. Three quote Ley 60-2019 as approved word for word; the rest are summaries.
+PR_PRIOR_YEAR_SUMMARIES = {
+    "pr-cri-1031-02-2019",
+    "pr-cri-1062-01-2019",
+    "pr-cri-1062-03-2019",
+    "pr-ley60-1020-02-2020",
+}
+PR_PRIOR_YEAR_VERBATIM = {
+    "pr-ley60-1020-02-2019",
+    "pr-ley60-2022-02-2019",
+    "pr-ley60-6020-03-2019",
+}
+PR_PRIOR_YEAR_IDS = PR_PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_VERBATIM
 
 
 @pytest.fixture
@@ -120,13 +134,13 @@ def test_manifest_records_unknowns_explicitly() -> None:
         keys = [k for k in entry if k != "_jurisdiction"]
         # A rate table may add its other tax years' sources as one last field.
         assert keys in (list(MANIFEST_FIELDS), [*MANIFEST_FIELDS, "year_sources"]), entry["id"]
-    # Only the prior-year federal versions were verified word for word against a fetched copy.
+    # Only the prior-year versions were verified word for word against a fetched copy.
     by_verification: dict[str, set[str]] = {}
     for e in catalog.manifest:
         by_verification.setdefault(e["verification"], set()).add(e["id"])
     assert set(by_verification) == {"summary", NOT_RECORDED, "verified_verbatim"}
-    assert by_verification["verified_verbatim"] == PRIOR_YEAR_VERBATIM
-    assert PRIOR_YEAR_SUMMARIES <= by_verification["summary"]
+    assert by_verification["verified_verbatim"] == PRIOR_YEAR_VERBATIM | PR_PRIOR_YEAR_VERBATIM
+    assert PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_SUMMARIES <= by_verification["summary"]
     # Besides those statute versions, only a table whose figures were read from a fetched
     # official file, or a publication whose source page was fetched, records a hash.
     statutes_hashed = {
@@ -134,11 +148,11 @@ def test_manifest_records_unknowns_explicitly() -> None:
         for e in catalog.manifest
         if e["kind"] == "statute" and e["content_sha256"] != NOT_RECORDED
     }
-    assert statutes_hashed == PRIOR_YEAR_IDS
+    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS
     hashed = {
         e["kind"]
         for e in catalog.manifest
-        if e["content_sha256"] != NOT_RECORDED and e["id"] not in PRIOR_YEAR_IDS
+        if e["content_sha256"] != NOT_RECORDED and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS
     }
     assert hashed == {"rate_table", "federal_table", "publication"}
     hashed_pubs = {
@@ -425,16 +439,19 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
         load_catalog(data, with_manifest=True)
 
 
-def test_act_22_and_the_prior_year_federal_versions_alone_record_an_edition() -> None:
+def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 170
+    assert len(editions) == 177
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     # The prior-year federal versions name theirs: an annual code edition (or the eCFR) for
     # the verbatim ones, the enacted public law for the summaries.
     for row_id in sorted(PRIOR_YEAR_IDS):
         expected = "as_enacted" if row_id in PRIOR_YEAR_SUMMARIES else "amended_compilation"
         assert editions.pop(row_id) == expected, row_id
+    # The prior-year Puerto Rico versions name the act they were read from, as enacted.
+    for row_id in sorted(PR_PRIOR_YEAR_IDS):
+        assert editions.pop(row_id) == "as_enacted", row_id
     assert set(editions.values()) == {NOT_RECORDED}
 
 
