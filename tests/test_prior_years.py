@@ -48,7 +48,7 @@ YEARS = range(2015, 2029)
 
 # id: (effective_year, superseded_year, sha256[:16] of text_en, sha256[:16] of text_es)
 PRIOR_YEAR_ROWS: dict[str, tuple[int, int, str, str]] = {
-    "us-irc-1-2019": (2019, 2020, "d0a425fab5f9fb03", "d53b16cfc91a8191"),
+    "us-irc-1-2019": (2019, 2020, "3a3526aebbe38f5d", "96385148cbd84d0c"),
     "us-irc-1-2020": (2020, 2026, "3e087ab443ea1668", "d820e918ab3a7e9f"),
     "us-irc-24-2019": (2019, 2021, "485a262862c2cac3", "949c73d352e05a8d"),
     "us-irc-24-2021": (2021, 2025, "f28f0eabee9989ce", "7b700d59c33e6268"),
@@ -133,10 +133,8 @@ F4F0D5D_DATED_IDS = {
 }
 OLD_STATUTES = [s for s in INITIAL_STATUTES if s["id"] not in PRIOR_YEAR_IDS]
 NO_YEAR_QUERIES = ["", "income", "credit", "deduction", "residente", "deducción", "ingreso"]
-FEDERAL_SUMMARY_PREFIX_EN = "Summary; the text of this version is not in the catalog. Enacted by "
-FEDERAL_SUMMARY_PREFIX_ES = (
-    "Resumen; el texto de esta versión no está en el catálogo. Promulgado por la Ley Pública "
-)
+FEDERAL_SUMMARY_PREFIX_EN = "Summary; the text of this version is not in the catalog. "
+FEDERAL_SUMMARY_PREFIX_ES = "Resumen; el texto de esta versión no está en el catálogo. "
 FEDERAL_VERBATIM_PREFIX_ES = "Resumen en español; el texto oficial está en inglés."
 
 
@@ -383,8 +381,10 @@ def _set(row_id: str, **values: Any) -> Callable[[dict[str, Any]], None]:
         (_set("us-cfr-1-937-3-2019", superseded_year=2025), "end in 2025, not 2026"),
         # Rule 4: a gap inside the span.
         (lambda rows: rows.pop("us-irc-62-2020"), "tax year 2020 is covered by 0 dated rows"),
-        # Rule 2: two current rows, and a current row in an ended group.
-        (_add_current("us-irc-24", "us-irc-24-copy", 1997), "2 current rows"),
+        # Rule 2: two current rows, no current row in a group that has not ended, and a current
+        # row in an ended group.
+        (_add_current("us-irc-24", "us-irc-24-copy", 1997), "2 current rows, expected 1"),
+        (lambda rows: rows.pop("us-irc-63"), "US 26 U.S.C. § 63: 0 current rows, expected 1"),
         (_add_current("nh-rev-stat-77-1", "nh-rev-stat-77-1-now", 2025), "but has a current row"),
         # Rule 5: a current row starting inside the span.
         (_set("us-irc-24", effective_year=2022), "starts in 2022, inside the dated span"),

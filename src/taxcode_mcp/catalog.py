@@ -746,8 +746,8 @@ def window_span_errors(
 ) -> list[str]:
     """Check the versions of every group with a dated row against its committed span.
 
-    Per (jurisdiction, citation) group: (1) dated rows never overlap; (2) at most one current
-    row, and none in an ended group; (3) the earliest dated ``effective_year`` is the span's
+    Per (jurisdiction, citation) group: (1) dated rows never overlap; (2) exactly one current
+    row, or none in an ended group; (3) the earliest dated ``effective_year`` is the span's
     start and the latest ``superseded_year`` its end; (4) each year from start to end is
     covered by exactly one dated row; (5) a current row starts no later than the span
     (layered on older text) or exactly at its end (a chain); (6) ``spans`` lists exactly the
@@ -781,8 +781,8 @@ def window_span_errors(
                 errors.append(f"{where}: {a['id']} and {b['id']} overlap")
         if key in ended and current:
             errors.append(f"{where}: ended in {end} but has a current row")
-        elif len(current) > 1:
-            errors.append(f"{where}: {len(current)} current rows")
+        elif key not in ended and len(current) != 1:
+            errors.append(f"{where}: {len(current)} current rows, expected 1")
         first = min(r["effective_year"] for r in dated)
         last = max(r["superseded_year"] for r in dated)
         if first != start:
