@@ -12,6 +12,7 @@ from taxcode_mcp.db import (
     INITIAL_PUBLICATIONS,
     INITIAL_STATUTES,
     JURISDICTION_NAMES,
+    LEGACY_DATED_STATUTE_IDS,
     PUBLICATION_CATEGORIES,
     TaxDatabase,
     normalize_category,
@@ -174,7 +175,13 @@ def test_single_term_order_unchanged(db: TaxDatabase) -> None:
 
 
 def test_empty_query_still_lists_rows(db: TaxDatabase) -> None:
-    assert len(db.search_statutes(query="", limit=500)) == len(INITIAL_STATUTES)
+    # Without a tax year, the prior-year versions added after the legacy dated rows stay out.
+    no_year = [
+        s
+        for s in INITIAL_STATUTES
+        if s["superseded_year"] is None or s["id"] in LEGACY_DATED_STATUTE_IDS
+    ]
+    assert len(db.search_statutes(query="", limit=500)) == len(no_year)
 
 
 def test_limit_zero_or_negative(db: TaxDatabase) -> None:

@@ -423,6 +423,8 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
         federal = federal_table_document(root)
         catalog.federal_tables[FEDERAL_TABLE_ID] = federal
         catalog.documents[FEDERAL_STANDARD_DEDUCTION] = federal
+    problems = window_span_errors(catalog.statutes)
+    _check(not problems, "statute versions: " + "; ".join(problems))
     return catalog
 
 
@@ -711,6 +713,93 @@ def load_federal_standard_deduction(root: Path = DATA_DIR) -> dict[int, dict[str
         row["tax_year"]: {status: row[status] for status in FILING_STATUSES}
         for row in federal_table_document(root)["years"]
     }
+
+
+# Prior-year versions. Every (jurisdiction, citation) group that has a dated row (one with a
+# superseded_year) is listed with (start, end): the first tax year its dated rows cover, and
+# the year they stop, which is the year the current text first applies or, for a group in
+# WINDOW_GROUPS_ENDED (no current row), the year its law ended. See window_span_errors.
+WINDOW_SPANS: dict[tuple[str, str], tuple[int, int]] = {
+    ("US", "26 U.S.C. § 1"): (2019, 2026),
+    ("US", "26 U.S.C. § 24"): (2019, 2025),
+    ("US", "26 U.S.C. § 32"): (2019, 2021),
+    ("US", "26 U.S.C. § 62"): (2019, 2026),
+    ("US", "26 U.S.C. § 63"): (2019, 2025),
+    ("US", "26 CFR § 1.937-3"): (2019, 2026),
+    ("PR", "Ley 60-2019 Sec. 2022.01"): (2019, 2026),
+    ("PR", "Ley 60-2019 Sec. 6020.10"): (2019, 2026),
+    ("PR", "Act 22-2012 Sec. 3"): (2012, 2019),
+    ("GA", "O.C.G.A. § 48-7-20"): (2024, 2026),
+    ("LA", "La. Rev. Stat. Ann. § 47:32"): (2022, 2025),
+    ("NH", "N.H. Rev. Stat. Ann. § 77:1"): (2024, 2025),
+}
+# Groups whose law ended: dated rows only, no current row.
+WINDOW_GROUPS_ENDED: frozenset[tuple[str, str]] = frozenset(
+    {("PR", "Act 22-2012 Sec. 3"), ("NH", "N.H. Rev. Stat. Ann. § 77:1")}
+)
+
+
+def window_span_errors(
+    statutes: Sequence[Mapping[str, Any]],
+    spans: Mapping[tuple[str, str], tuple[int, int]] = WINDOW_SPANS,
+    ended: frozenset[tuple[str, str]] = WINDOW_GROUPS_ENDED,
+) -> list[str]:
+    """Check the versions of every group with a dated row against its committed span.
+
+    Per (jurisdiction, citation) group: (1) dated rows never overlap; (2) exactly one current
+    row, or none in an ended group; (3) the earliest dated ``effective_year`` is the span's
+    start and the latest ``superseded_year`` its end; (4) each year from start to end is
+    covered by exactly one dated row; (5) a current row starts no later than the span
+    (layered on older text) or exactly at its end (a chain); (6) ``spans`` lists exactly the
+    groups that have a dated row.
+    """
+    groups: dict[tuple[str, str], list[Mapping[str, Any]]] = {}
+    for s in statutes:
+        groups.setdefault((str(s["jurisdiction"]), str(s["citation"])), []).append(s)
+    dated_groups = {
+        k for k, rows in groups.items() if any(r["superseded_year"] is not None for r in rows)
+    }
+    errors = [
+        f"{j} {c}: dated rows but no WINDOW_SPANS entry"
+        for j, c in sorted(dated_groups - set(spans))
+    ]
+    errors += [
+        f"{j} {c}: WINDOW_SPANS entry but no dated row"
+        for j, c in sorted(set(spans) - dated_groups)
+    ]
+    for key in sorted(dated_groups & set(spans)):
+        start, end = spans[key]
+        where = f"{key[0]} {key[1]}"
+        rows = groups[key]
+        dated = sorted(
+            (r for r in rows if r["superseded_year"] is not None),
+            key=lambda r: (r["effective_year"], str(r["id"])),
+        )
+        current = [r for r in rows if r["superseded_year"] is None]
+        for a, b in zip(dated, dated[1:], strict=False):
+            if b["effective_year"] < a["superseded_year"]:
+                errors.append(f"{where}: {a['id']} and {b['id']} overlap")
+        if key in ended and current:
+            errors.append(f"{where}: ended in {end} but has a current row")
+        elif key not in ended and len(current) != 1:
+            errors.append(f"{where}: {len(current)} current rows, expected 1")
+        first = min(r["effective_year"] for r in dated)
+        last = max(r["superseded_year"] for r in dated)
+        if first != start:
+            errors.append(f"{where}: dated rows start in {first}, not {start}")
+        if last != end:
+            errors.append(f"{where}: dated rows end in {last}, not {end}")
+        for year in range(start, end):
+            covering = [r for r in dated if r["effective_year"] <= year < r["superseded_year"]]
+            if len(covering) != 1:
+                errors.append(f"{where}: tax year {year} is covered by {len(covering)} dated rows")
+        for r in current:
+            if not (r["effective_year"] <= start or r["effective_year"] == end):
+                errors.append(
+                    f"{where}: current row {r['id']} starts in {r['effective_year']}, "
+                    f"inside the dated span {start}-{end}"
+                )
+    return errors
 
 
 def statute_db_row(statute: Mapping[str, Any]) -> dict[str, Any]:

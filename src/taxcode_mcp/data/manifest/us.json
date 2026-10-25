@@ -56,6 +56,32 @@
     },
     {
       "kind": "statute",
+      "id": "us-irc-1-2019",
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-116publ94/pdf/PLAW-116publ94.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "d724cc183016bdd5408a523a4fbed5326399decae4e50a4315cead2475c47aa8",
+      "enacting_law": "Pub. L. 115-97, title I, §11001(a) (added §1(j)(4)); struck by Pub. L. 116-94, div. O, title V, §501(a)",
+      "effective_date": "2017-12-22",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-1-2020",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2019-title26/html/USCODE-2019-title26-subtitleA-chap1-subchapA-partI-sec1.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "0a194dc47fb9037de655b988ced7576cc7735bab2c8319edaa6769575200fbd0",
+      "enacting_law": "Pub. L. 116-94, div. O, title V, §501(a)",
+      "effective_date": "2019-12-20",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
       "id": "us-irc-24",
       "url": "https://uscode.house.gov/download/releasepoints/us/pl/119/121/xml_usc26@119-121.zip",
       "edition": "not_recorded",
@@ -69,6 +95,32 @@
     },
     {
       "kind": "statute",
+      "id": "us-irc-24-2019",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2019-title26/html/USCODE-2019-title26-subtitleA-chap1-subchapA-partIV-subpartA-sec24.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "98c6ad10ebd32c017e451a384d55f3e5117f33e427a863615a95cf2b0235d775",
+      "enacting_law": "Pub. L. 115-141, div. U, title I, §101(i)(1), title IV, §401(a)(3)",
+      "effective_date": "2018-03-23",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-24-2021",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2021-title26/html/USCODE-2021-title26-subtitleA-chap1-subchapA-partIV-subpartA-sec24.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "474b065ef11635ea7344f0678ebfa7760b1f07fda6d3a8695d9e292d4b6e5500",
+      "enacting_law": "Pub. L. 117-2, title IX, §§9611(a), (b)(2), 9612(a)",
+      "effective_date": "2021-03-11",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
       "id": "us-irc-32",
       "url": "https://uscode.house.gov/download/releasepoints/us/pl/119/121/xml_usc26@119-121.zip",
       "edition": "not_recorded",
@@ -79,6 +131,19 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-32-2019",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2019-title26/html/USCODE-2019-title26-subtitleA-chap1-subchapA-partIV-subpartC-sec32.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "d7944b6321518e0bcd16a08d4ff606e6bb4f675f166404b807dcadb187fe9802",
+      "enacting_law": "Pub. L. 115-141, div. U, title I, §101(a), title IV, §401(b)(4)",
+      "effective_date": "2018-03-23",
+      "verification": "verified_verbatim"
     },
     {
       "kind": "statute",
@@ -108,6 +173,45 @@
     },
     {
       "kind": "statute",
+      "id": "us-irc-62-2019",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2019-title26/html/USCODE-2019-title26-subtitleA-chap1-subchapB-partI-sec62.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "441dd4916f8c4cd1a422740f9733e681cc9108245391fe9b8d656650b8a3cff8",
+      "enacting_law": "Pub. L. 116-92, div. A, title XI, §1122(d)(2)(B)",
+      "effective_date": "2019-12-20",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-62-2020",
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-116publ136/pdf/PLAW-116publ136.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "67f5deb7607b8a4d09301cbdaf6d15402f632eb1ff74f5192d17d68eba0ece5d",
+      "enacting_law": "Pub. L. 116-136, div. A, title II, §2204(a), (b)",
+      "effective_date": "2020-03-27",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-62-2021",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2021-title26/html/USCODE-2021-title26-subtitleA-chap1-subchapB-partI-sec62.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "f9a4a32ac115ee3aa418d82fa8016791f1eaa389064e854650d67ca13db28792",
+      "enacting_law": "Pub. L. 116-260, div. EE, title I, §104(b)(2)(A), title II, §212(c)",
+      "effective_date": "2020-12-27",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
       "id": "us-irc-63",
       "url": "https://uscode.house.gov/download/releasepoints/us/pl/119/121/xml_usc26@119-121.zip",
       "edition": "not_recorded",
@@ -118,6 +222,32 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-63-2019",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2019-title26/html/USCODE-2019-title26-subtitleA-chap1-subchapB-partI-sec63.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "304ed0ae5ba981a9f6b335acde39814e5cdb2d4cd4da9891b62995a96d94b22f",
+      "enacting_law": "Pub. L. 115-141, div. T, §101(a)(2)(A)",
+      "effective_date": "2018-03-23",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
+      "id": "us-irc-63-2021",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2021-title26/html/USCODE-2021-title26-subtitleA-chap1-subchapB-partI-sec63.htm",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "563e6fda638fe6b253621170de583a4de96784d980eba11820ec9cacb9ccff22",
+      "enacting_law": "Pub. L. 116-260, div. EE, title II, §212(b)",
+      "effective_date": "2020-12-27",
+      "verification": "verified_verbatim"
     },
     {
       "kind": "statute",
@@ -222,6 +352,19 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "us-cfr-1-937-3-2019",
+      "url": "https://www.ecfr.gov/api/versioner/v1/full/2025-01-13/title-26.xml?section=1.937-3",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-10-24",
+      "content_sha256": "d617a70245485679a7f577a9726eca33dbe2e8888d6fcfbf277e97f021f00d2d",
+      "enacting_law": "T.D. 9921, 85 FR 79853",
+      "effective_date": "2020-12-11",
+      "verification": "verified_verbatim"
     },
     {
       "kind": "publication",

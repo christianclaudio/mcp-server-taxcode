@@ -12,7 +12,7 @@ from fastmcp.exceptions import ToolError
 from mcp.shared.exceptions import MCPError
 
 from taxcode_mcp import paging
-from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES
+from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES, LEGACY_DATED_STATUTE_IDS
 from taxcode_mcp.paging import (
     LIST_MAX_LIMIT,
     RESPONSE_MAX_CHARS,
@@ -28,6 +28,13 @@ from taxcode_mcp.server import mcp
 
 LONGEST = max(INITIAL_STATUTES, key=lambda s: max(len(s["text_en"]), len(s["text_es"])))
 LONGEST_EN = max(INITIAL_STATUTES, key=lambda s: len(s["text_en"]))
+# What a search without a tax year lists: current rows and the dated rows that predate the
+# prior-year versions.
+NO_YEAR_IDS = sorted(
+    s["id"]
+    for s in INITIAL_STATUTES
+    if s["superseded_year"] is None or s["id"] in LEGACY_DATED_STATUTE_IDS
+)
 
 
 async def _call(client: Client, tool: str, args: dict[str, Any]) -> dict[str, Any]:
@@ -170,7 +177,7 @@ async def test_search_pages_cover_every_match_once() -> None:
             assert res["offset"] == offset and res["limit_applied"] == 10
             seen += [r["id"] for r in res["results"]]
             offset = res["next_offset"]
-    assert sorted(seen) == sorted(s["id"] for s in INITIAL_STATUTES)
+    assert sorted(seen) == NO_YEAR_IDS
     assert len(seen) == len(set(seen))
 
 
@@ -189,7 +196,7 @@ async def test_publication_pages_cover_every_row_once_newest_first() -> None:
 
 
 LIST_TOOLS = [
-    ("statutes_search_tax_code", {"query": ""}, "results", len(INITIAL_STATUTES)),
+    ("statutes_search_tax_code", {"query": ""}, "results", len(NO_YEAR_IDS)),
     ("statutes_list_publications", {}, "publications", len(INITIAL_PUBLICATIONS)),
 ]
 

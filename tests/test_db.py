@@ -7,14 +7,27 @@ from typing import Any
 
 import duckdb
 
-from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES, TaxDatabase
+from taxcode_mcp.db import (
+    INITIAL_PUBLICATIONS,
+    INITIAL_STATUTES,
+    LEGACY_DATED_STATUTE_IDS,
+    TaxDatabase,
+)
+
+# Rows a search or lookup without a tax year can return: every current row and the dated
+# rows that predate the prior-year versions. Newer dated rows answer only for their years.
+NO_YEAR_STATUTES = [
+    s
+    for s in INITIAL_STATUTES
+    if s["superseded_year"] is None or s["id"] in LEGACY_DATED_STATUTE_IDS
+]
 
 
 def test_initial_db_seeds_statutes_and_publications() -> None:
     """A fresh in-memory database initializes with default seed data."""
     test_db = TaxDatabase(":memory:")
     statutes = test_db.search_statutes(query="", limit=500)
-    assert len(statutes) == len(INITIAL_STATUTES)
+    assert len(statutes) == len(NO_YEAR_STATUTES)
 
     pubs = test_db.list_publications(limit=100)
     assert len(pubs) == len(INITIAL_PUBLICATIONS)
@@ -191,7 +204,7 @@ def test_file_based_duckdb_lifecycle(tmp_path: Path) -> None:
 
     # Re-instantiating on the same file does not re-insert duplicate seeds
     second_db = TaxDatabase(db_file)
-    assert len(second_db.search_statutes(query="", limit=500)) == len(INITIAL_STATUTES)
+    assert len(second_db.search_statutes(query="", limit=500)) == len(NO_YEAR_STATUTES)
 
     # Insert on file db
     second_db.insert_statute(

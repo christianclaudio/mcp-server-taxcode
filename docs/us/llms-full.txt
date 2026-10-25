@@ -559,6 +559,415 @@ Section 15 shall not apply to any change in a rate of tax by reason of this subs
 ### Español
 Resumen en español; el texto oficial está en inglés. Impone el impuesto sobre el ingreso tributable de individuos, caudales y fideicomisos mediante tablas según el estado civil: casados que rinden conjuntamente y cónyuges supérstites (a), jefes de familia (b), solteros (c), casados que rinden por separado (d) y caudales y fideicomisos (e). Incluye los ajustes por inflación (f), el impuesto sobre ingreso no devengado de ciertos menores (g), las tasas máximas para ganancias de capital y dividendos calificados (h) y las modificaciones para años contributivos que comienzan después de 2017 (j).
 
+## 26 U.S.C. § 1: Tax imposed / Imposición del impuesto
+`Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part I > § 1 (summary for tax year 2019)`
+
+### English
+Summary; the text of this version is not in the catalog. Subsection (j) added by Pub. L. 115-97, §11001(a); paragraph (j)(4) struck by Pub. L. 116-94, div. O, §501(a).
+For taxable years beginning in 2019, section 1 read as in the version for tax years 2020 through 2025 (id us-irc-1-2020), with one more paragraph: subsection (j)(4), "Special rules for certain children with unearned income", added by Pub. L. 115-97, title I, §11001(a).
+For a child to whom subsection (g) applies, paragraph (j)(4) applied in place of the rule of subsection (g)(1). The child's rate table was modified so that the taxable income taxed below the 24-, 35- and 37-percent rates could not exceed the child's earned taxable income plus the minimum taxable income for that rate in the table for estates and trusts in subsection (j)(2)(E). The maximum zero rate amount and maximum 15-percent rate amount for capital gains were limited the same way, using the amounts for an estate or trust in subsection (j)(5)(B). Earned taxable income was the child's taxable income reduced (but not below zero) by the child's net unearned income (as defined in subsection (g)(4)).
+Pub. L. 116-94, div. O, title V, §501(a) amended section 1(j) "by striking paragraph (4)", for taxable years beginning after December 31, 2019 (§501(c)(1)). Under §501(c)(3), a taxpayer could elect for that amendment to also apply to taxable years beginning in 2018, 2019, or both; for a taxpayer who so elected for 2019, the 2020 version of the text applies to tax year 2019.
+
+### Español
+Resumen; el texto de esta versión no está en el catálogo. Subsección (j) añadida por la Ley Pública 115-97, §11001(a); el párrafo (j)(4) fue suprimido por la Ley Pública 116-94, div. O, §501(a).
+Para los años contributivos que comenzaron en 2019, la sección 1 decía lo mismo que la versión de los años 2020 a 2025 (id us-irc-1-2020), más el párrafo (j)(4), reglas especiales para ciertos menores con ingreso no devengado (Ley Pública 115-97, §11001(a)). Para un menor al que aplica la subsección (g), la tabla de tasas se modificaba de modo que el ingreso tributable sujeto a tasas inferiores al 24, 35 y 37 por ciento, y las cantidades máximas de las tasas de 0 y 15 por ciento para ganancias de capital, no excedieran el ingreso tributable devengado del menor más los umbrales de la tabla de caudales y fideicomisos.
+La Ley Pública 116-94, div. O, título V, §501(a) enmendó la sección 1(j) suprimiendo el párrafo (4), para años contributivos que comiencen después del 31 de diciembre de 2019 (§501(c)(1)). Bajo el §501(c)(3), el contribuyente podía elegir que esa enmienda aplicara también a los años que comenzaron en 2018, 2019 o ambos; para quien así lo eligió para 2019, la versión de 2020 aplica al año contributivo 2019.
+
+## 26 U.S.C. § 1: Tax imposed / Imposición del impuesto
+`Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part I > § 1 (U.S. Code 2019 ed.)`
+
+### English
+(a) Married individuals filing joint returns and surviving spouses
+There is hereby imposed on the taxable income of—
+(1) every married individual (as defined in section 7703) who makes a single return jointly with his spouse under section 6013, and
+(2) every surviving spouse (as defined in section 2(a)),
+a tax determined in accordance with the following table:
+If taxable income is: | The tax is:
+Not over $36,900 | 15% of taxable income.
+Over $36,900 but not over $89,150 | $5,535, plus 28% of the excess over $36,900.
+Over $89,150 but not over $140,000 | $20,165, plus 31% of the excess over $89,150.
+Over $140,000 but not over $250,000 | $35,928.50, plus 36% of the excess over $140,000.
+Over $250,000 | $75,528.50, plus 39.6% of the excess over $250,000.
+(b) Heads of households
+There is hereby imposed on the taxable income of every head of a household (as defined in section 2(b)) a tax determined in accordance with the following table:
+If taxable income is: | The tax is:
+Not over $29,600 | 15% of taxable income.
+Over $29,600 but not over $76,400 | $4,440, plus 28% of the excess over $29,600.
+Over $76,400 but not over $127,500 | $17,544, plus 31% of the excess over $76,400.
+Over $127,500 but not over $250,000 | $33,385, plus 36% of the excess over $127,500.
+Over $250,000 | $77,485, plus 39.6% of the excess over $250,000.
+(c) Unmarried individuals (other than surviving spouses and heads of households)
+There is hereby imposed on the taxable income of every individual (other than a surviving spouse as defined in section 2(a) or the head of a household as defined in section 2(b)) who is not a married individual (as defined in section 7703) a tax determined in accordance with the following table:
+If taxable income is: | The tax is:
+Not over $22,100 | 15% of taxable income.
+Over $22,100 but not over $53,500 | $3,315, plus 28% of the excess over $22,100.
+Over $53,500 but not over $115,000 | $12,107, plus 31% of the excess over $53,500.
+Over $115,000 but not over $250,000 | $31,172, plus 36% of the excess over $115,000.
+Over $250,000 | $79,772, plus 39.6% of the excess over $250,000.
+(d) Married individuals filing separate returns
+There is hereby imposed on the taxable income of every married individual (as defined in section 7703) who does not make a single return jointly with his spouse under section 6013, a tax determined in accordance with the following table:
+If taxable income is: | The tax is:
+Not over $18,450 | 15% of taxable income.
+Over $18,450 but not over $44,575 | $2,767.50, plus 28% of the excess over $18,450.
+Over $44,575 but not over $70,000 | $10,082.50, plus 31% of the excess over $44,575.
+Over $70,000 but not over $125,000 | $17,964.25, plus 36% of the excess over $70,000.
+Over $125,000 | $37,764.25, plus 39.6% of the excess over $125,000.
+(e) Estates and trusts
+There is hereby imposed on the taxable income of—
+(1) every estate, and
+(2) every trust,
+taxable under this subsection a tax determined in accordance with the following table:
+If taxable income is: | The tax is:
+Not over $1,500 | 15% of taxable income.
+Over $1,500 but not over $3,500 | $225, plus 28% of the excess over $1,500.
+Over $3,500 but not over $5,500 | $785, plus 31% of the excess over $3,500.
+Over $5,500 but not over $7,500 | $1,405, plus 36% of the excess over $5,500.
+Over $7,500 | $2,125, plus 39.6% of the excess over $7,500.
+(f) Phaseout of marriage penalty in 15-percent bracket; adjustments in tax tables so that inflation will not result in tax increases
+(1) In general
+Not later than December 15 of 1993, and each subsequent calendar year, the Secretary shall prescribe tables which shall apply in lieu of the tables contained in subsections (a), (b), (c), (d), and (e) with respect to taxable years beginning in the succeeding calendar year.
+(2) Method of prescribing tables
+The table which under paragraph (1) is to apply in lieu of the table contained in subsection (a), (b), (c), (d), or (e), as the case may be, with respect to taxable years beginning in any calendar year shall be prescribed—
+(A) except as provided in paragraph (8), by increasing the minimum and maximum dollar amounts for each bracket for which a tax is imposed under such table by the cost-of-living adjustment for such calendar year, determined—
+(i) except as provided in clause (ii), by substituting "1992" for "2016" in paragraph (3)(A)(ii), and
+(ii) in the case of adjustments to the dollar amounts at which the 36 percent rate bracket begins or at which the 39.6 percent rate bracket begins, by substituting "1993" for "2016" in paragraph (3)(A)(ii),
+(B) by not changing the rate applicable to any rate bracket as adjusted under subparagraph (A), and
+(C) by adjusting the amounts setting forth the tax to the extent necessary to reflect the adjustments in the rate brackets.
+(3) Cost-of-living adjustment
+For purposes of this subsection—
+(A) In general
+The cost-of-living adjustment for any calendar year is the percentage (if any) by which—
+(i) the C-CPI-U for the preceding calendar year, exceeds
+(ii) the CPI for calendar year 2016, multiplied by the amount determined under subparagraph (B).
+(B) Amount determined
+The amount determined under this clause is the amount obtained by dividing—
+(i) the C-CPI-U for calendar year 2016, by
+(ii) the CPI for calendar year 2016.
+(C) Special rule for adjustments with a base year after 2016
+For purposes of any provision of this title which provides for the substitution of a year after 2016 for "2016" in subparagraph (A)(ii), subparagraph (A) shall be applied by substituting "the C-CPI-U for calendar year 2016" for "the CPI for calendar year 2016" and all that follows in clause (ii) thereof.
+(4) CPI for any calendar year
+For purposes of paragraph (3), the CPI for any calendar year is the average of the Consumer Price Index as of the close of the 12-month period ending on August 31 of such calendar year.
+(5) Consumer Price Index
+For purposes of paragraph (4), the term "Consumer Price Index" means the last Consumer Price Index for all-urban consumers published by the Department of Labor. For purposes of the preceding sentence, the revision of the Consumer Price Index which is most consistent with the Consumer Price Index for calendar year 1986 shall be used.
+(6) C-CPI-U
+For purposes of this subsection—
+(A) In general
+The term "C-CPI-U" means the Chained Consumer Price Index for All Urban Consumers (as published by the Bureau of Labor Statistics of the Department of Labor). The values of the Chained Consumer Price Index for All Urban Consumers taken into account for purposes of determining the cost-of-living adjustment for any calendar year under this subsection shall be the latest values so published as of the date on which such Bureau publishes the initial value of the Chained Consumer Price Index for All Urban Consumers for the month of August for the preceding calendar year.
+(B) Determination for calendar year
+The C-CPI-U for any calendar year is the average of the C-CPI-U as of the close of the 12-month period ending on August 31 of such calendar year.
+(7) Rounding
+(A) In general
+If any increase determined under paragraph (2)(A), section 63(c)(4), section 68(b)(2) or section 151(d)(4) is not a multiple of $50, such increase shall be rounded to the next lowest multiple of $50.
+(B) Table for married individuals filing separately
+In the case of a married individual filing a separate return, subparagraph (A) (other than with respect to sections 63(c)(4) and 151(d)(4)(A)) shall be applied by substituting "$25" for "$50" each place it appears.
+(8) Elimination of marriage penalty in 15-percent bracket
+With respect to taxable years beginning after December 31, 2003, in prescribing the tables under paragraph (1)—
+(A) the maximum taxable income in the 15-percent rate bracket in the table contained in subsection (a) (and the minimum taxable income in the next higher taxable income bracket in such table) shall be 200 percent of the maximum taxable income in the 15-percent rate bracket in the table contained in subsection (c) (after any other adjustment under this subsection), and
+(B) the comparable taxable income amounts in the table contained in subsection (d) shall be ½ of the amounts determined under subparagraph (A).
+(g) Certain unearned income of children taxed as if parent's income
+(1) In general
+In the case of any child to whom this subsection applies, the tax imposed by this section shall be equal to the greater of—
+(A) the tax imposed by this section without regard to this subsection, or
+(B) the sum of—
+(i) the tax which would be imposed by this section if the taxable income of such child for the taxable year were reduced by the net unearned income of such child, plus
+(ii) such child's share of the allocable parental tax.
+(2) Child to whom subsection applies
+This subsection shall apply to any child for any taxable year if—
+(A) such child—
+(i) has not attained age 18 before the close of the taxable year, or
+(ii)(I) has attained age 18 before the close of the taxable year and meets the age requirements of section 152(c)(3) (determined without regard to subparagraph (B) thereof), and
+(II) whose earned income (as defined in section 911(d)(2)) for such taxable year does not exceed one-half of the amount of the individual's support (within the meaning of section 152(c)(1)(D) after the application of section 152(f)(5) (without regard to subparagraph (A) thereof)) for such taxable year,
+(B) either parent of such child is alive at the close of the taxable year, and
+(C) such child does not file a joint return for the taxable year.
+(3) Allocable parental tax
+For purposes of this subsection—
+(A) In general
+The term "allocable parental tax" means the excess of—
+(i) the tax which would be imposed by this section on the parent's taxable income if such income included the net unearned income of all children of the parent to whom this subsection applies, over
+(ii) the tax imposed by this section on the parent without regard to this subsection.
+For purposes of clause (i), net unearned income of all children of the parent shall not be taken into account in computing any exclusion, deduction, or credit of the parent.
+(B) Child's share
+A child's share of any allocable parental tax of a parent shall be equal to an amount which bears the same ratio to the total allocable parental tax as the child's net unearned income bears to the aggregate net unearned income of all children of such parent to whom this subsection applies.
+(C) Special rule where parent has different taxable year
+Except as provided in regulations, if the parent does not have the same taxable year as the child, the allocable parental tax shall be determined on the basis of the taxable year of the parent ending in the child's taxable year.
+(4) Net unearned income
+For purposes of this subsection—
+(A) In general
+The term "net unearned income" means the excess of—
+(i) the portion of the adjusted gross income for the taxable year which is not attributable to earned income (as defined in section 911(d)(2)), over
+(ii) the sum of—
+(I) the amount in effect for the taxable year under section 63(c)(5)(A) (relating to limitation on standard deduction in the case of certain dependents), plus
+(II) the greater of the amount described in subclause (I) or, if the child itemizes his deductions for the taxable year, the amount of the itemized deductions allowed by this chapter for the taxable year which are directly connected with the production of the portion of adjusted gross income referred to in clause (i).
+(B) Limitation based on taxable income
+The amount of the net unearned income for any taxable year shall not exceed the individual's taxable income for such taxable year.
+(C) Treatment of distributions from qualified disability trusts
+For purposes of this subsection, in the case of any child who is a beneficiary of a qualified disability trust (as defined in section 642(b)(2)(C)(ii)), any amount included in the income of such child under sections 652 and 662 during a taxable year shall be considered earned income of such child for such taxable year.
+(5) Special rules for determining parent to whom subsection applies
+For purposes of this subsection, the parent whose taxable income shall be taken into account shall be—
+(A) in the case of parents who are not married (within the meaning of section 7703), the custodial parent (within the meaning of section 152(e)) of the child, and
+(B) in the case of married individuals filing separately, the individual with the greater taxable income.
+(6) Providing of parent's TIN
+The parent of any child to whom this subsection applies for any taxable year shall provide the TIN of such parent to such child and such child shall include such TIN on the child's return of tax imposed by this section for such taxable year.
+(7) Election to claim certain unearned income of child on parent's return
+(A) In general
+If—
+(i) any child to whom this subsection applies has gross income for the taxable year only from interest and dividends (including Alaska Permanent Fund dividends),
+(ii) such gross income is more than the amount described in paragraph (4)(A)(ii)(I) and less than 10 times the amount so described,
+(iii) no estimated tax payments for such year are made in the name and TIN of such child, and no amount has been deducted and withheld under section 3406, and
+(iv) the parent of such child (as determined under paragraph (5)) elects the application of subparagraph (B),
+such child shall be treated (other than for purposes of this paragraph) as having no gross income for such year and shall not be required to file a return under section 6012.
+(B) Income included on parent's return
+In the case of a parent making the election under this paragraph—
+(i) the gross income of each child to whom such election applies (to the extent the gross income of such child exceeds twice the amount described in paragraph (4)(A)(ii)(I)) shall be included in such parent's gross income for the taxable year,
+(ii) the tax imposed by this section for such year with respect to such parent shall be the amount equal to the sum of—
+(I) the amount determined under this section after the application of clause (i), plus
+(II) for each such child, 10 percent of the lesser of the amount described in paragraph (4)(A)(ii)(I) or the excess of the gross income of such child over the amount so described, and
+(iii) any interest which is an item of tax preference under section 57(a)(5) of the child shall be treated as an item of tax preference of such parent (and not of such child).
+(C) Regulations
+The Secretary shall prescribe such regulations as may be necessary or appropriate to carry out the purposes of this paragraph.
+(h) Maximum capital gains rate
+(1) In general
+If a taxpayer has a net capital gain for any taxable year, the tax imposed by this section for such taxable year shall not exceed the sum of—
+(A) a tax computed at the rates and in the same manner as if this subsection had not been enacted on the greater of—
+(i) taxable income reduced by the net capital gain; or
+(ii) the lesser of—
+(I) the amount of taxable income taxed at a rate below 25 percent; or
+(II) taxable income reduced by the adjusted net capital gain;
+(B) 0 percent of so much of the adjusted net capital gain (or, if less, taxable income) as does not exceed the excess (if any) of—
+(i) the amount of taxable income which would (without regard to this paragraph) be taxed at a rate below 25 percent, over
+(ii) the taxable income reduced by the adjusted net capital gain;
+(C) 15 percent of the lesser of—
+(i) so much of the adjusted net capital gain (or, if less, taxable income) as exceeds the amount on which a tax is determined under subparagraph (B), or
+(ii) the excess of—
+(I) the amount of taxable income which would (without regard to this paragraph) be taxed at a rate below 39.6 percent, over
+(II) the sum of the amounts on which a tax is determined under subparagraphs (A) and (B),
+(D) 20 percent of the adjusted net capital gain (or, if less, taxable income) in excess of the sum of the amounts on which tax is determined under subparagraphs (B) and (C),
+(E) 25 percent of the excess (if any) of—
+(i) the unrecaptured section 1250 gain (or, if less, the net capital gain (determined without regard to paragraph (11))), over
+(ii) the excess (if any) of—
+(I) the sum of the amount on which tax is determined under subparagraph (A) plus the net capital gain, over
+(II) taxable income; and
+(F) 28 percent of the amount of taxable income in excess of the sum of the amounts on which tax is determined under the preceding subparagraphs of this paragraph.
+(2) Net capital gain taken into account as investment income
+For purposes of this subsection, the net capital gain for any taxable year shall be reduced (but not below zero) by the amount which the taxpayer takes into account as investment income under section 163(d)(4)(B)(iii).
+(3) Adjusted net capital gain
+For purposes of this subsection, the term "adjusted net capital gain" means the sum of—
+(A) net capital gain (determined without regard to paragraph (11)) reduced (but not below zero) by the sum of—
+(i) unrecaptured section 1250 gain, and
+(ii) 28-percent rate gain, plus
+(B) qualified dividend income (as defined in paragraph (11)).
+(4) 28-percent rate gain
+For purposes of this subsection, the term "28-percent rate gain" means the excess (if any) of—
+(A) the sum of—
+(i) collectibles gain; and
+(ii) section 1202 gain, over
+(B) the sum of—
+(i) collectibles loss;
+(ii) the net short-term capital loss; and
+(iii) the amount of long-term capital loss carried under section 1212(b)(1)(B) to the taxable year.
+(5) Collectibles gain and loss
+For purposes of this subsection—
+(A) In general
+The terms "collectibles gain" and "collectibles loss" mean gain or loss (respectively) from the sale or exchange of a collectible (as defined in section 408(m) without regard to paragraph (3) thereof) which is a capital asset held for more than 1 year but only to the extent such gain is taken into account in computing gross income and such loss is taken into account in computing taxable income.
+(B) Partnerships, etc.
+For purposes of subparagraph (A), any gain from the sale of an interest in a partnership, S corporation, or trust which is attributable to unrealized appreciation in the value of collectibles shall be treated as gain from the sale or exchange of a collectible. Rules similar to the rules of section 751 shall apply for purposes of the preceding sentence.
+(6) Unrecaptured section 1250 gain
+For purposes of this subsection—
+(A) In general
+The term "unrecaptured section 1250 gain" means the excess (if any) of—
+(i) the amount of long-term capital gain (not otherwise treated as ordinary income) which would be treated as ordinary income if section 1250(b)(1) included all depreciation and the applicable percentage under section 1250(a) were 100 percent, over
+(ii) the excess (if any) of—
+(I) the amount described in paragraph (4)(B); over
+(II) the amount described in paragraph (4)(A).
+(B) Limitation with respect to section 1231 property
+The amount described in subparagraph (A)(i) from sales, exchanges, and conversions described in section 1231(a)(3)(A) for any taxable year shall not exceed the net section 1231 gain (as defined in section 1231(c)(3)) for such year.
+(7) Section 1202 gain
+For purposes of this subsection, the term "section 1202 gain" means the excess of—
+(A) the gain which would be excluded from gross income under section 1202 but for the percentage limitation in section 1202(a), over
+(B) the gain excluded from gross income under section 1202.
+(8) Coordination with recapture of net ordinary losses under section 1231
+If any amount is treated as ordinary income under section 1231(c), such amount shall be allocated among the separate categories of net section 1231 gain (as defined in section 1231(c)(3)) in such manner as the Secretary may by forms or regulations prescribe.
+(9) Regulations
+The Secretary may prescribe such regulations as are appropriate (including regulations requiring reporting) to apply this subsection in the case of sales and exchanges by pass-thru entities and of interests in such entities.
+(10) Pass-thru entity defined
+For purposes of this subsection, the term "pass-thru entity" means—
+(A) a regulated investment company;
+(B) a real estate investment trust;
+(C) an S corporation;
+(D) a partnership;
+(E) an estate or trust;
+(F) a common trust fund; and
+(G) a qualified electing fund (as defined in section 1295).
+(11) Dividends taxed as net capital gain
+(A) In general
+For purposes of this subsection, the term "net capital gain" means net capital gain (determined without regard to this paragraph) increased by qualified dividend income.
+(B) Qualified dividend income
+For purposes of this paragraph—
+(i) In general
+The term "qualified dividend income" means dividends received during the taxable year from—
+(I) domestic corporations, and
+(II) qualified foreign corporations.
+(ii) Certain dividends excluded
+Such term shall not include—
+(I) any dividend from a corporation which for the taxable year of the corporation in which the distribution is made, or the preceding taxable year, is a corporation exempt from tax under section 501 or 521,
+(II) any amount allowed as a deduction under section 591 (relating to deduction for dividends paid by mutual savings banks, etc.), and
+(III) any dividend described in section 404(k).
+(iii) Coordination with section 246(c)
+Such term shall not include any dividend on any share of stock—
+(I) with respect to which the holding period requirements of section 246(c) are not met (determined by substituting in section 246(c) "60 days" for "45 days" each place it appears and by substituting "121-day period" for "91-day period"), or
+(II) to the extent that the taxpayer is under an obligation (whether pursuant to a short sale or otherwise) to make related payments with respect to positions in substantially similar or related property.
+(C) Qualified foreign corporations
+(i) In general
+Except as otherwise provided in this paragraph, the term "qualified foreign corporation" means any foreign corporation if—
+(I) such corporation is incorporated in a possession of the United States, or
+(II) such corporation is eligible for benefits of a comprehensive income tax treaty with the United States which the Secretary determines is satisfactory for purposes of this paragraph and which includes an exchange of information program.
+(ii) Dividends on stock readily tradable on United States securities market
+A foreign corporation not otherwise treated as a qualified foreign corporation under clause (i) shall be so treated with respect to any dividend paid by such corporation if the stock with respect to which such dividend is paid is readily tradable on an established securities market in the United States.
+(iii) Exclusion of dividends of certain foreign corporations
+Such term shall not include—
+(I) any foreign corporation which for the taxable year of the corporation in which the dividend was paid, or the preceding taxable year, is a passive foreign investment company (as defined in section 1297), and
+(II) any corporation which first becomes a surrogate foreign corporation (as defined in section 7874(a)(2)(B)) after the date of the enactment of this subclause, other than a foreign corporation which is treated as a domestic corporation under section 7874(b).
+(iv) Coordination with foreign tax credit limitation
+Rules similar to the rules of section 904(b)(2)(B) shall apply with respect to the dividend rate differential under this paragraph.
+(D) Special rules
+(i) Amounts taken into account as investment income
+Qualified dividend income shall not include any amount which the taxpayer takes into account as investment income under section 163(d)(4)(B).
+(ii) Extraordinary dividends
+If a taxpayer to whom this section applies receives, with respect to any share of stock, qualified dividend income from 1 or more dividends which are extraordinary dividends (within the meaning of section 1059(c)), any loss on the sale or exchange of such share shall, to the extent of such dividends, be treated as long-term capital loss.
+(iii) Treatment of dividends from regulated investment companies and real estate investment trusts
+A dividend received from a regulated investment company or a real estate investment trust shall be subject to the limitations prescribed in sections 854 and 857.
+(i) Rate reductions after 2000
+(1) 10-percent rate bracket
+(A) In general
+In the case of taxable years beginning after December 31, 2000—
+(i) the rate of tax under subsections (a), (b), (c), and (d) on taxable income not over the initial bracket amount shall be 10 percent, and
+(ii) the 15 percent rate of tax shall apply only to taxable income over the initial bracket amount but not over the maximum dollar amount for the 15-percent rate bracket.
+(B) Initial bracket amount
+For purposes of this paragraph, the initial bracket amount is—
+(i) $14,000 in the case of subsection (a),
+(ii) $10,000 in the case of subsection (b), and
+(iii) ½ the amount applicable under clause (i) (after adjustment, if any, under subparagraph (C)) in the case of subsections (c) and (d).
+(C) Inflation adjustment
+In prescribing the tables under subsection (f) which apply with respect to taxable years beginning in calendar years after 2003—
+(i) the cost-of-living adjustment shall be determined under subsection (f)(3) by substituting "2002" for "2016" in subparagraph (A)(ii) thereof, and
+(ii) the adjustments under clause (i) shall not apply to the amount referred to in subparagraph (B)(iii).
+If any amount after adjustment under the preceding sentence is not a multiple of $50, such amount shall be rounded to the next lowest multiple of $50.
+(2) 25-, 28-, and 33-percent rate brackets
+The tables under subsections (a), (b), (c), (d), and (e) shall be applied—
+(A) by substituting "25%" for "28%" each place it appears (before the application of subparagraph (B)),
+(B) by substituting "28%" for "31%" each place it appears, and
+(C) by substituting "33%" for "36%" each place it appears.
+(3) Modifications to income tax brackets for high-income taxpayers
+(A) 35-percent rate bracket
+In the case of taxable years beginning after December 31, 2012—
+(i) the rate of tax under subsections (a), (b), (c), and (d) on a taxpayer's taxable income in the highest rate bracket shall be 35 percent to the extent such income does not exceed an amount equal to the excess of—
+(I) the applicable threshold, over
+(II) the dollar amount at which such bracket begins, and
+(ii) the 39.6 percent rate of tax under such subsections shall apply only to the taxpayer's taxable income in such bracket in excess of the amount to which clause (i) applies.
+(B) Applicable threshold
+For purposes of this paragraph, the term "applicable threshold" means—
+(i) $450,000 in the case of subsection (a),
+(ii) $425,000 in the case of subsection (b),
+(iii) $400,000 in the case of subsection (c), and
+(iv) ½ the amount applicable under clause (i) (after adjustment, if any, under subparagraph (C)) in the case of subsection (d).
+(C) Inflation adjustment
+For purposes of this paragraph, with respect to taxable years beginning in calendar years after 2013, each of the dollar amounts under clauses (i), (ii), and (iii) of subparagraph (B) shall be adjusted in the same manner as under paragraph (1)(C)(i), except that subsection (f)(3)(A)(ii) shall be applied by substituting "2012" for "2016".
+(4) Adjustment of tables
+The Secretary shall adjust the tables prescribed under subsection (f) to carry out this subsection.
+(j) Modifications for taxable years 2018 through 2025
+(1) In general
+In the case of a taxable year beginning after December 31, 2017, and before January 1, 2026—
+(A) subsection (i) shall not apply, and
+(B) this section (other than subsection (i)) shall be applied as provided in paragraphs (2) through (6).
+(2) Rate tables
+(A) Married individuals filing joint returns and surviving spouses
+The following table shall be applied in lieu of the table contained in subsection (a):
+If taxable income is: | The tax is:
+Not over $19,050 | 10% of taxable income.
+Over $19,050 but not over $77,400 | $1,905, plus 12% of the excess over $19,050.
+Over $77,400 but not over $165,000 | $8,907, plus 22% of the excess over $77,400.
+Over $165,000 but not over $315,000 | $28,179, plus 24% of the excess over $165,000.
+Over $315,000 but not over $400,000 | $64,179, plus 32% of the excess over $315,000.
+Over $400,000 but not over $600,000 | $91,379, plus 35% of the excess over $400,000.
+Over $600,000 | $161,379, plus 37% of the excess over $600,000.
+(B) Heads of households
+The following table shall be applied in lieu of the table contained in subsection (b):
+If taxable income is: | The tax is:
+Not over $13,600 | 10% of taxable income.
+Over $13,600 but not over $51,800 | $1,360, plus 12% of the excess over $13,600.
+Over $51,800 but not over $82,500 | $5,944, plus 22% of the excess over $51,800.
+Over $82,500 but not over $157,500 | $12,698, plus 24% of the excess over $82,500.
+Over $157,500 but not over $200,000 | $30,698, plus 32% of the excess over $157,500.
+Over $200,000 but not over $500,000 | $44,298, plus 35% of the excess over $200,000.
+Over $500,000 | $149,298, plus 37% of the excess over $500,000.
+(C) Unmarried individuals other than surviving spouses and heads of households
+The following table shall be applied in lieu of the table contained in subsection (c):
+If taxable income is: | The tax is:
+Not over $9,525 | 10% of taxable income.
+Over $9,525 but not over $38,700 | $952.50, plus 12% of the excess over $9,525.
+Over $38,700 but not over $82,500 | $4,453.50, plus 22% of the excess over $38,700.
+Over $82,500 but not over $157,500 | $14,089.50, plus 24% of the excess over $82,500.
+Over $157,500 but not over $200,000 | $32,089.50, plus 32% of the excess over $157,500.
+Over $200,000 but not over $500,000 | $45,689.50, plus 35% of the excess over $200,000.
+Over $500,000 | $150,689.50, plus 37% of the excess over $500,000.
+(D) Married individuals filing separate returns
+The following table shall be applied in lieu of the table contained in subsection (d):
+If taxable income is: | The tax is:
+Not over $9,525 | 10% of taxable income.
+Over $9,525 but not over $38,700 | $952.50, plus 12% of the excess over $9,525.
+Over $38,700 but not over $82,500 | $4,453.50, plus 22% of the excess over $38,700.
+Over $82,500 but not over $157,500 | $14,089.50, plus 24% of the excess over $82,500.
+Over $157,500 but not over $200,000 | $32,089.50, plus 32% of the excess over $157,500.
+Over $200,000 but not over $300,000 | $45,689.50, plus 35% of the excess over $200,000.
+Over $300,000 | $80,689.50, plus 37% of the excess over $300,000.
+(E) Estates and trusts
+The following table shall be applied in lieu of the table contained in subsection (e):
+If taxable income is: | The tax is:
+Not over $2,550 | 10% of taxable income.
+Over $2,550 but not over $9,150 | $255, plus 24% of the excess over $2,550.
+Over $9,150 but not over $12,500 | $1,839, plus 35% of the excess over $9,150.
+Over $12,500 | $3,011.50, plus 37% of the excess over $12,500.
+(F) References to rate tables
+Any reference in this title to a rate of tax under subsection (c) shall be treated as a reference to the corresponding rate bracket under subparagraph (C) of this paragraph, except that the reference in section 3402(q)(1) to the third lowest rate of tax applicable under subsection (c) shall be treated as a reference to the fourth lowest rate of tax under subparagraph (C).
+(3) Adjustments
+(A) No adjustment in 2018
+The tables contained in paragraph (2) shall apply without adjustment for taxable years beginning after December 31, 2017, and before January 1, 2019.
+(B) Subsequent years
+For taxable years beginning after December 31, 2018, the Secretary shall prescribe tables which shall apply in lieu of the tables contained in paragraph (2) in the same manner as under paragraphs (1) and (2) of subsection (f) (applied without regard to clauses (i) and (ii) of subsection (f)(2)(A)), except that in prescribing such tables—
+(i) subsection (f)(3) shall be applied by substituting "calendar year 2017" for "calendar year 2016" in subparagraph (A)(ii) thereof,
+(ii) subsection (f)(7)(B) shall apply to any unmarried individual other than a surviving spouse or head of household, and
+(iii) subsection (f)(8) shall not apply.
+[(4) Repealed. Pub. L. 116–94, div. O, title V, §501(a), Dec. 20, 2019, 133 Stat. 3180]
+(5) Application of current income tax brackets to capital gains brackets
+(A) In general
+Section 1(h)(1) shall be applied—
+(i) by substituting "below the maximum zero rate amount" for "which would (without regard to this paragraph) be taxed at a rate below 25 percent" in subparagraph (B)(i), and
+(ii) by substituting "below the maximum 15-percent rate amount" for "which would (without regard to this paragraph) be taxed at a rate below 39.6 percent" in subparagraph (C)(ii)(I).
+(B) Maximum amounts defined
+For purposes of applying section 1(h) with the modifications described in subparagraph (A)—
+(i) Maximum zero rate amount
+The maximum zero rate amount shall be—
+(I) in the case of a joint return or surviving spouse, $77,200,
+(II) in the case of an individual who is a head of household (as defined in section 2(b)), $51,700,
+(III) in the case of any other individual (other than an estate or trust), an amount equal to ½ of the amount in effect for the taxable year under subclause (I), and
+(IV) in the case of an estate or trust, $2,600.
+(ii) Maximum 15-percent rate amount
+The maximum 15-percent rate amount shall be—
+(I) in the case of a joint return or surviving spouse, $479,000 (½ such amount in the case of a married individual filing a separate return),
+(II) in the case of an individual who is the head of a household (as defined in section 2(b)), $452,400,
+(III) in the case of any other individual (other than an estate or trust), $425,800, and
+(IV) in the case of an estate or trust, $12,700.
+(C) Inflation adjustment
+In the case of any taxable year beginning after 2018, each of the dollar amounts in clauses (i) and (ii) of subparagraph (B) shall be increased by an amount equal to—
+(i) such dollar amount, multiplied by
+(ii) the cost-of-living adjustment determined under subsection (f)(3) for the calendar year in which the taxable year begins, determined by substituting "calendar year 2017" for "calendar year 2016" in subparagraph (A)(ii) thereof.
+If any increase under this subparagraph is not a multiple of $50, such increase shall be rounded to the next lowest multiple of $50.
+(6) Section 15 not to apply
+Section 15 shall not apply to any change in a rate of tax by reason of this subsection.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2020 a 2025. Impone el impuesto sobre el ingreso tributable de individuos, caudales y fideicomisos mediante tablas según el estado civil (a)-(e), con ajustes por inflación (f), el impuesto sobre ingreso no devengado de ciertos menores (g) y tasas máximas para ganancias de capital y dividendos calificados (h). La subsección (j) fija las tablas y modificaciones para los años contributivos 2018 a 2025; ya no contiene el párrafo (j)(4) sobre menores con ingreso no devengado, eliminado por la Ley Pública 116-94.
+
 ## 26 U.S.C. § 24: Child tax credit / Crédito por hijos
 `Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart A > § 24 (OLRC release point 119-121)`
 
@@ -711,6 +1120,277 @@ For purposes of section 1324 of title 31, United States Code, the payments under
 
 ### Español
 Resumen en español; el texto oficial está en inglés. Concede un crédito contra el impuesto por cada hijo calificado (a), sujeto a límites según el ingreso bruto ajustado modificado (b), con una porción reembolsable (d) y requisitos de número de identificación (e). La subsección (h) contiene las reglas especiales para años contributivos que comienzan después de 2017, la (i) los ajustes por inflación, la (j) la reconciliación con pagos por adelantado y la (k) la aplicación del crédito en las posesiones, incluido Puerto Rico.
+
+## 26 U.S.C. § 24: Child tax credit / Crédito por hijos
+`Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart A > § 24 (U.S. Code 2019 ed.)`
+
+### English
+(a) Allowance of credit
+There shall be allowed as a credit against the tax imposed by this chapter for the taxable year with respect to each qualifying child of the taxpayer for which the taxpayer is allowed a deduction under section 151 an amount equal to $1,000.
+(b) Limitations
+(1) Limitation based on adjusted gross income
+The amount of the credit allowable under subsection (a) shall be reduced (but not below zero) by $50 for each $1,000 (or fraction thereof) by which the taxpayer's modified adjusted gross income exceeds the threshold amount. For purposes of the preceding sentence, the term "modified adjusted gross income" means adjusted gross income increased by any amount excluded from gross income under section 911, 931, or 933.
+(2) Threshold amount
+For purposes of paragraph (1), the term "threshold amount" means—
+(A) $110,000 in the case of a joint return,
+(B) $75,000 in the case of an individual who is not married, and
+(C) $55,000 in the case of a married individual filing a separate return.
+For purposes of this paragraph, marital status shall be determined under section 7703.
+(c) Qualifying child
+For purposes of this section—
+(1) In general
+The term "qualifying child" means a qualifying child of the taxpayer (as defined in section 152(c)) who has not attained age 17.
+(2) Exception for certain noncitizens
+The term "qualifying child" shall not include any individual who would not be a dependent if subparagraph (A) of section 152(b)(3) were applied without regard to all that follows "resident of the United States".
+(d) Portion of credit refundable
+(1) In general
+The aggregate credits allowed to a taxpayer under subpart C shall be increased by the lesser of—
+(A) the credit which would be allowed under this section without regard to this subsection and the limitation under section 26(a) or
+(B) the amount by which the aggregate amount of credits allowed by this subpart (determined without regard to this subsection) would increase if the limitation imposed by section 26(a) were increased by the greater of—
+(i) 15 percent of so much of the taxpayer's earned income (within the meaning of section 32) which is taken into account in computing taxable income for the taxable year as exceeds $3,000, or
+(ii) in the case of a taxpayer with 3 or more qualifying children, the excess (if any) of—
+(I) the taxpayer's social security taxes for the taxable year, over
+(II) the credit allowed under section 32 for the taxable year.
+The amount of the credit allowed under this subsection shall not be treated as a credit allowed under this subpart and shall reduce the amount of credit otherwise allowable under subsection (a) without regard to section 26(a). For purposes of subparagraph (B), any amount excluded from gross income by reason of section 112 shall be treated as earned income which is taken into account in computing taxable income for the taxable year.
+(2) Social security taxes
+For purposes of paragraph (1)—
+(A) In general
+The term "social security taxes" means, with respect to any taxpayer for any taxable year—
+(i) the amount of the taxes imposed by sections 3101 and 3201(a) on amounts received by the taxpayer during the calendar year in which the taxable year begins,
+(ii) 50 percent of the taxes imposed by section 1401 on the self-employment income of the taxpayer for the taxable year, and
+(iii) 50 percent of the taxes imposed by section 3211(a) on amounts received by the taxpayer during the calendar year in which the taxable year begins.
+(B) Coordination with special refund of social security taxes
+The term "social security taxes" shall not include any taxes to the extent the taxpayer is entitled to a special refund of such taxes under section 6413(c).
+(C) Special rule
+Any amounts paid pursuant to an agreement under section 3121(l) (relating to agreements entered into by American employers with respect to foreign affiliates) which are equivalent to the taxes referred to in subparagraph (A)(i) shall be treated as taxes referred to in such subparagraph.
+(3) Exception for taxpayers excluding foreign earned income
+Paragraph (1) shall not apply to any taxpayer for any taxable year if such taxpayer elects to exclude any amount from gross income under section 911 for such taxable year.
+(e) Identification requirements
+(1) Qualifying child identification requirement
+No credit shall be allowed under this section to a taxpayer with respect to any qualifying child unless the taxpayer includes the name and taxpayer identification number of such qualifying child on the return of tax for the taxable year and such taxpayer identification number was issued on or before the due date for filing such return.
+(2) Taxpayer identification requirement
+No credit shall be allowed under this section if the taxpayer identification number of the taxpayer was issued after the due date for filing the return for the taxable year.
+(f) Taxable year must be full taxable year
+Except in the case of a taxable year closed by reason of the death of the taxpayer, no credit shall be allowable under this section in the case of a taxable year covering a period of less than 12 months.
+(g) Restrictions on taxpayers who improperly claimed credit in prior year
+(1) Taxpayers making prior fraudulent or reckless claims
+(A) In general
+No credit shall be allowed under this section for any taxable year in the disallowance period.
+(B) Disallowance period
+For purposes of subparagraph (A), the disallowance period is—
+(i) the period of 10 taxable years after the most recent taxable year for which there was a final determination that the taxpayer's claim of credit under this section was due to fraud, and
+(ii) the period of 2 taxable years after the most recent taxable year for which there was a final determination that the taxpayer's claim of credit under this section was due to reckless or intentional disregard of rules and regulations (but not due to fraud).
+(2) Taxpayers making improper prior claims
+In the case of a taxpayer who is denied credit under this section for any taxable year as a result of the deficiency procedures under subchapter B of chapter 63, no credit shall be allowed under this section for any subsequent taxable year unless the taxpayer provides such information as the Secretary may require to demonstrate eligibility for such credit.
+(h) Special rules for taxable years 2018 through 2025
+(1) In general
+In the case of a taxable year beginning after December 31, 2017, and before January 1, 2026, this section shall be applied as provided in paragraphs (2) through (7).
+(2) Credit amount
+Subsection (a) shall be applied by substituting "$2,000" for "$1,000".
+(3) Limitation
+In lieu of the amount determined under subsection (b)(2), the threshold amount shall be $400,000 in the case of a joint return ($200,000 in any other case).
+(4) Partial credit allowed for certain other dependents
+(A) In general
+The credit determined under subsection (a) (after the application of paragraph (2)) shall be increased by $500 for each dependent of the taxpayer (as defined in section 152) other than a qualifying child described in subsection (c).
+(B) Exception for certain noncitizens
+Subparagraph (A) shall not apply with respect to any individual who would not be a dependent if subparagraph (A) of section 152(b)(3) were applied without regard to all that follows "resident of the United States".
+(C) Certain qualifying children
+In the case of any qualifying child with respect to whom a credit is not allowed under this section by reason of paragraph (7), such child shall be treated as a dependent to whom subparagraph (A) applies.
+(5) Maximum amount of refundable credit
+(A) In general
+The amount determined under subsection (d)(1)(A) with respect to any qualifying child shall not exceed $1,400, and such subsection shall be applied without regard to paragraph (4) of this subsection.
+(B) Adjustment for inflation
+In the case of a taxable year beginning after 2018, the $1,400 amount in subparagraph (A) shall be increased by an amount equal to—
+(i) such dollar amount, multiplied by
+(ii) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting "2017" for "2016" in subparagraph (A)(ii) thereof.
+If any increase under this clause is not a multiple of $100, such increase shall be rounded to the next lowest multiple of $100.
+(6) Earned income threshold for refundable credit
+Subsection (d)(1)(B)(i) shall be applied by substituting "$2,500" for "$3,000".
+(7) Social security number required
+No credit shall be allowed under this section to a taxpayer with respect to any qualifying child unless the taxpayer includes the social security number of such child on the return of tax for the taxable year. For purposes of the preceding sentence, the term "social security number" means a social security number issued to an individual by the Social Security Administration, but only if the social security number is issued—
+(A) to a citizen of the United States or pursuant to subclause (I) (or that portion of subclause (III) that relates to subclause (I)) of section 205(c)(2)(B)(i) of the Social Security Act, and
+(B) before the due date for such return.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2019 y 2020. Concede un crédito contra el impuesto por cada hijo calificado (a), sujeto a límites según el ingreso bruto ajustado modificado (b), con una porción reembolsable (d) y requisitos de número de identificación (e). La subsección (h) fija las reglas para los años contributivos 2018 a 2025: crédito de $2,000 por hijo, porción reembolsable de hasta $1,400 ajustada por inflación, crédito de $500 por otros dependientes y número de seguro social del hijo. No contiene las subsecciones (i) a (k) añadidas en 2021.
+
+## 26 U.S.C. § 24: Child tax credit / Crédito por hijos
+`Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart A > § 24 (U.S. Code 2021 ed.)`
+
+### English
+(a) Allowance of credit
+There shall be allowed as a credit against the tax imposed by this chapter for the taxable year with respect to each qualifying child of the taxpayer for which the taxpayer is allowed a deduction under section 151 an amount equal to $1,000.
+(b) Limitations
+(1) Limitation based on adjusted gross income
+The amount of the credit allowable under subsection (a) shall be reduced (but not below zero) by $50 for each $1,000 (or fraction thereof) by which the taxpayer's modified adjusted gross income exceeds the threshold amount. For purposes of the preceding sentence, the term "modified adjusted gross income" means adjusted gross income increased by any amount excluded from gross income under section 911, 931, or 933.
+(2) Threshold amount
+For purposes of paragraph (1), the term "threshold amount" means—
+(A) $110,000 in the case of a joint return,
+(B) $75,000 in the case of an individual who is not married, and
+(C) $55,000 in the case of a married individual filing a separate return.
+For purposes of this paragraph, marital status shall be determined under section 7703.
+(c) Qualifying child
+For purposes of this section—
+(1) In general
+The term "qualifying child" means a qualifying child of the taxpayer (as defined in section 152(c)) who has not attained age 17.
+(2) Exception for certain noncitizens
+The term "qualifying child" shall not include any individual who would not be a dependent if subparagraph (A) of section 152(b)(3) were applied without regard to all that follows "resident of the United States".
+(d) Portion of credit refundable
+(1) In general
+The aggregate credits allowed to a taxpayer under subpart C shall be increased by the lesser of—
+(A) the credit which would be allowed under this section without regard to this subsection and the limitation under section 26(a) or
+(B) the amount by which the aggregate amount of credits allowed by this subpart (determined without regard to this subsection) would increase if the limitation imposed by section 26(a) were increased by the greater of—
+(i) 15 percent of so much of the taxpayer's earned income (within the meaning of section 32) which is taken into account in computing taxable income for the taxable year as exceeds $3,000, or
+(ii) in the case of a taxpayer with 3 or more qualifying children, the excess (if any) of—
+(I) the taxpayer's social security taxes for the taxable year, over
+(II) the credit allowed under section 32 for the taxable year.
+The amount of the credit allowed under this subsection shall not be treated as a credit allowed under this subpart and shall reduce the amount of credit otherwise allowable under subsection (a) without regard to section 26(a). For purposes of subparagraph (B), any amount excluded from gross income by reason of section 112 shall be treated as earned income which is taken into account in computing taxable income for the taxable year.
+(2) Social security taxes
+For purposes of paragraph (1)—
+(A) In general
+The term "social security taxes" means, with respect to any taxpayer for any taxable year—
+(i) the amount of the taxes imposed by sections 3101 and 3201(a) on amounts received by the taxpayer during the calendar year in which the taxable year begins,
+(ii) 50 percent of the taxes imposed by section 1401 on the self-employment income of the taxpayer for the taxable year, and
+(iii) 50 percent of the taxes imposed by section 3211(a) on amounts received by the taxpayer during the calendar year in which the taxable year begins.
+(B) Coordination with special refund of social security taxes
+The term "social security taxes" shall not include any taxes to the extent the taxpayer is entitled to a special refund of such taxes under section 6413(c).
+(C) Special rule
+Any amounts paid pursuant to an agreement under section 3121(l) (relating to agreements entered into by American employers with respect to foreign affiliates) which are equivalent to the taxes referred to in subparagraph (A)(i) shall be treated as taxes referred to in such subparagraph.
+(3) Exception for taxpayers excluding foreign earned income
+Paragraph (1) shall not apply to any taxpayer for any taxable year if such taxpayer elects to exclude any amount from gross income under section 911 for such taxable year.
+(e) Identification requirements
+(1) Qualifying child identification requirement
+No credit shall be allowed under this section to a taxpayer with respect to any qualifying child unless the taxpayer includes the name and taxpayer identification number of such qualifying child on the return of tax for the taxable year and such taxpayer identification number was issued on or before the due date for filing such return.
+(2) Taxpayer identification requirement
+No credit shall be allowed under this section if the taxpayer identification number of the taxpayer was issued after the due date for filing the return for the taxable year.
+(f) Taxable year must be full taxable year
+Except in the case of a taxable year closed by reason of the death of the taxpayer, no credit shall be allowable under this section in the case of a taxable year covering a period of less than 12 months.
+(g) Restrictions on taxpayers who improperly claimed credit in prior year
+(1) Taxpayers making prior fraudulent or reckless claims
+(A) In general
+No credit shall be allowed under this section for any taxable year in the disallowance period.
+(B) Disallowance period
+For purposes of subparagraph (A), the disallowance period is—
+(i) the period of 10 taxable years after the most recent taxable year for which there was a final determination that the taxpayer's claim of credit under this section was due to fraud, and
+(ii) the period of 2 taxable years after the most recent taxable year for which there was a final determination that the taxpayer's claim of credit under this section was due to reckless or intentional disregard of rules and regulations (but not due to fraud).
+(2) Taxpayers making improper prior claims
+In the case of a taxpayer who is denied credit under this section for any taxable year as a result of the deficiency procedures under subchapter B of chapter 63, no credit shall be allowed under this section for any subsequent taxable year unless the taxpayer provides such information as the Secretary may require to demonstrate eligibility for such credit.
+(h) Special rules for taxable years 2018 through 2025
+(1) In general
+In the case of a taxable year beginning after December 31, 2017, and before January 1, 2026, this section shall be applied as provided in paragraphs (2) through (7).
+(2) Credit amount
+Subsection (a) shall be applied by substituting "$2,000" for "$1,000".
+(3) Limitation
+In lieu of the amount determined under subsection (b)(2), the threshold amount shall be $400,000 in the case of a joint return ($200,000 in any other case).
+(4) Partial credit allowed for certain other dependents
+(A) In general
+The credit determined under subsection (a) (after the application of paragraph (2)) shall be increased by $500 for each dependent of the taxpayer (as defined in section 152) other than a qualifying child described in subsection (c).
+(B) Exception for certain noncitizens
+Subparagraph (A) shall not apply with respect to any individual who would not be a dependent if subparagraph (A) of section 152(b)(3) were applied without regard to all that follows "resident of the United States".
+(C) Certain qualifying children
+In the case of any qualifying child with respect to whom a credit is not allowed under this section by reason of paragraph (7), such child shall be treated as a dependent to whom subparagraph (A) applies.
+(5) Maximum amount of refundable credit
+(A) In general
+The amount determined under subsection (d)(1)(A) with respect to any qualifying child shall not exceed $1,400, and such subsection shall be applied without regard to paragraph (4) of this subsection.
+(B) Adjustment for inflation
+In the case of a taxable year beginning after 2018, the $1,400 amount in subparagraph (A) shall be increased by an amount equal to—
+(i) such dollar amount, multiplied by
+(ii) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting "2017" for "2016" in subparagraph (A)(ii) thereof.
+If any increase under this clause is not a multiple of $100, such increase shall be rounded to the next lowest multiple of $100.
+(6) Earned income threshold for refundable credit
+Subsection (d)(1)(B)(i) shall be applied by substituting "$2,500" for "$3,000".
+(7) Social security number required
+No credit shall be allowed under this section to a taxpayer with respect to any qualifying child unless the taxpayer includes the social security number of such child on the return of tax for the taxable year. For purposes of the preceding sentence, the term "social security number" means a social security number issued to an individual by the Social Security Administration, but only if the social security number is issued—
+(A) to a citizen of the United States or pursuant to subclause (I) (or that portion of subclause (III) that relates to subclause (I)) of section 205(c)(2)(B)(i) of the Social Security Act, and
+(B) before the due date for such return.
+(i) Special rules for 2021
+In the case of any taxable year beginning after December 31, 2020, and before January 1, 2022—
+(1) Refundable credit
+If the taxpayer (in the case of a joint return, either spouse) has a principal place of abode in the United States (determined as provided in section 32) for more than one-half of the taxable year or is a bona fide resident of Puerto Rico (within the meaning of section 937(a)) for such taxable year—
+(A) subsection (d) shall not apply, and
+(B) so much of the credit determined under subsection (a) (after application of subparagraph (A)) as does not exceed the amount of such credit which would be so determined without regard to subsection (h)(4) shall be allowed under subpart C (and not allowed under this subpart).
+(2) 17-year-olds eligible for treatment as qualifying children
+This section shall be applied—
+(A) by substituting "age 18" for "age 17" in subsection (c)(1), and
+(B) by substituting "described in subsection (c) (determined after the application of subsection (i)(2)(A))" for "described in subsection (c)" in subsection (h)(4)(A).
+(3) Credit amount
+Subsection (h)(2) shall not apply and subsection (a) shall be applied by substituting "$3,000 ($3,600 in the case of a qualifying child who has not attained age 6 as of the close of the calendar year in which the taxable year of the taxpayer begins)" for "$1,000".
+(4) Reduction of increased credit amount based on modified adjusted gross income
+(A) In general
+The amount of the credit allowable under subsection (a) (determined without regard to subsection (b)) shall be reduced by $50 for each $1,000 (or fraction thereof) by which the taxpayer's modified adjusted gross income (as defined in subsection (b)) exceeds the applicable threshold amount.
+(B) Applicable threshold amount
+For purposes of this paragraph, the term "applicable threshold amount" means—
+(i) $150,000, in the case of a joint return or surviving spouse (as defined in section 2(a)) ,1
+(ii) $112,500, in the case of a head of household (as defined in section 2(b)), and
+(iii) $75,000, in any other case.
+(C) Limitation on reduction
+(i) In general
+The amount of the reduction under subparagraph (A) shall not exceed the lesser of—
+(I) the applicable credit increase amount, or
+(II) 5 percent of the applicable phaseout threshold range.
+(ii) Applicable credit increase amount
+For purposes of this subparagraph, the term "applicable credit increase amount" means the excess (if any) of—
+(I) the amount of the credit allowable under this section for the taxable year determined without regard to this paragraph and subsection (b), over
+(II) the amount of such credit as so determined and without regard to paragraph (3).
+(iii) Applicable phaseout threshold range
+For purposes of this subparagraph, the term "applicable phaseout threshold range" means the excess of—
+(I) the threshold amount applicable to the taxpayer under subsection (b) (determined after the application of subsection (h)(3)), over
+(II) the applicable threshold amount applicable to the taxpayer under this paragraph.
+(D) Coordination with limitation on overall credit
+Subsection (b) shall be applied by substituting "the credit allowable under subsection (a) (determined after the application of subsection (i)(4)(A)" for "the credit allowable under subsection (a)".
+(j) Reconciliation of credit and advance credit
+(1) In general
+The amount of the credit allowed under this section to any taxpayer for any taxable year shall be reduced (but not below zero) by the aggregate amount of payments made under section 7527A to such taxpayer during such taxable year. Any failure to so reduce the credit shall be treated as arising out of a mathematical or clerical error and assessed according to section 6213(b)(1).
+(2) Excess advance payments
+(A) In general
+If the aggregate amount of payments under section 7527A to the taxpayer during the taxable year exceeds the amount of the credit allowed under this section to such taxpayer for such taxable year (determined without regard to paragraph (1)), the tax imposed by this chapter for such taxable year shall be increased by the amount of such excess. Any failure to so increase the tax shall be treated as arising out of a mathematical or clerical error and assessed according to section 6213(b)(1).
+(B) Safe harbor based on modified adjusted gross income
+(i) In general
+In the case of a taxpayer whose modified adjusted gross income (as defined in subsection (b)) for the taxable year does not exceed 200 percent of the applicable income threshold, the amount of the increase determined under subparagraph (A) with respect to such taxpayer for such taxable year shall be reduced (but not below zero) by the safe harbor amount.
+(ii) Phase out of safe harbor amount
+In the case of a taxpayer whose modified adjusted gross income (as defined in subsection (b)) for the taxable year exceeds the applicable income threshold, the safe harbor amount otherwise in effect under clause (i) shall be reduced by the amount which bears the same ratio to such amount as such excess bears to the applicable income threshold.
+(iii) Applicable income threshold
+For purposes of this subparagraph, the term "applicable income threshold" means—
+(I) $60,000 in the case of a joint return or surviving spouse (as defined in section 2(a)),
+(II) $50,000 in the case of a head of household, and
+(III) $40,000 in any other case.
+(iv) Safe harbor amount
+For purposes of this subparagraph, the term "safe harbor amount" means, with respect to any taxable year, the product of—
+(I) $2,000, multiplied by
+(II) the excess (if any) of the number of qualified children taken into account in determining the annual advance amount with respect to the taxpayer under section 7527A with respect to months beginning in such taxable year, over the number of qualified children taken into account in determining the credit allowed under this section for such taxable year.
+(k) Application of credit in possessions
+(1) Mirror code possessions
+(A) In general
+The Secretary shall pay to each possession of the United States with a mirror code tax system amounts equal to the loss (if any) to that possession by reason of the application of this section (determined without regard to this subsection) with respect to taxable years beginning after 2020. Such amounts shall be determined by the Secretary based on information provided by the government of the respective possession.
+(B) Coordination with credit allowed against United States income taxes
+No credit shall be allowed under this section for any taxable year to any individual to whom a credit is allowable against taxes imposed by a possession of the United States with a mirror code tax system by reason of the application of this section in such possession for such taxable year.
+(C) Mirror code tax system
+For purposes of this paragraph, the term "mirror code tax system" means, with respect to any possession of the United States, the income tax system of such possession if the income tax liability of the residents of such possession under such system is determined by reference to the income tax laws of the United States as if such possession were the United States.
+(2) Puerto Rico
+(A) Application to taxable years in 2021
+(i) For application of refundable credit to residents of Puerto Rico, see subsection (i)(1).
+(ii) For nonapplication of advance payment to residents of Puerto Rico, see section 7527A(e)(4)(A).
+(B) Application to taxable years after 2021
+In the case of any bona fide resident of Puerto Rico (within the meaning of section 937(a)) for any taxable year beginning after December 31, 2021—
+(i) the credit determined under this section shall be allowable to such resident, and
+(ii) subsection (d)(1)(B)(ii) shall be applied without regard to the phrase "in the case of a taxpayer with 3 or more qualifying children".
+(3) American Samoa
+(A) In general
+The Secretary shall pay to American Samoa amounts estimated by the Secretary as being equal to the aggregate benefits that would have been provided to residents of American Samoa by reason of the application of this section for taxable years beginning after 2020 if the provisions of this section had been in effect in American Samoa (applied as if American Samoa were the United States and without regard to the application of this section to bona fide residents of Puerto Rico under subsection (i)(1)).
+(B) Distribution requirement
+Subparagraph (A) shall not apply unless American Samoa has a plan, which has been approved by the Secretary, under which American Samoa will promptly distribute such payments to its residents.
+(C) Coordination with credit allowed against United States income taxes
+(i) In general
+In the case of a taxable year with respect to which a plan is approved under subparagraph (B), this section (other than this subsection) shall not apply to any individual eligible for a distribution under such plan.
+(ii) Application of section in event of absence of approved plan
+In the case of a taxable year with respect to which a plan is not approved under subparagraph (B)—
+(I) if such taxable year begins in 2021, subsection (i)(1) shall be applied by substituting "bona fide resident of Puerto Rico or American Samoa" for "bona fide resident of Puerto Rico", and
+(II) if such taxable year begins after December 31, 2021, rules similar to the rules of paragraph (2)(B) shall apply with respect to bona fide residents of American Samoa (within the meaning of section 937(a)).
+(4) Treatment of payments
+For purposes of section 1324 of title 31, United States Code, the payments under this subsection shall be treated in the same manner as a refund due from a credit provision referred to in subsection (b)(2) of such section.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2021 a 2024. Concede un crédito contra el impuesto por cada hijo calificado (a), sujeto a límites según el ingreso bruto ajustado modificado (b), con una porción reembolsable (d) y requisitos de número de identificación (e). La subsección (h) fija las reglas para los años contributivos 2018 a 2025, con un crédito de $2,000 por hijo. La (i) contiene las reglas especiales para 2021 (crédito reembolsable, hijos de 17 años y cantidades de $3,000 y $3,600), la (j) la reconciliación con los pagos por adelantado y la (k) la aplicación del crédito en las posesiones, incluido Puerto Rico.
 
 ## 26 U.S.C. § 32: Earned income / Crédito por ingreso devengado
 `Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart C > § 32 (OLRC release point 119-121)`
@@ -893,6 +1573,149 @@ Subsection (j) shall not apply to any dollar amount specified in this paragraph.
 ### Español
 Resumen en español; el texto oficial está en inglés. Concede a individuos elegibles un crédito reembolsable igual a un porcentaje del ingreso devengado hasta un tope, que se reduce gradualmente a partir de un nivel de ingreso (a). Fija los porcentajes y cantidades según el número de hijos calificados (b), define individuo elegible, hijo calificado e ingreso devengado (c) y deniega el crédito cuando el ingreso de inversión es excesivo (i). Las cantidades se ajustan por inflación (j).
 
+## 26 U.S.C. § 32: Earned income / Crédito por ingreso devengado
+`Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart C > § 32 (U.S. Code 2019 ed.)`
+
+### English
+(a) Allowance of credit
+(1) In general
+In the case of an eligible individual, there shall be allowed as a credit against the tax imposed by this subtitle for the taxable year an amount equal to the credit percentage of so much of the taxpayer's earned income for the taxable year as does not exceed the earned income amount.
+(2) Limitation
+The amount of the credit allowable to a taxpayer under paragraph (1) for any taxable year shall not exceed the excess (if any) of—
+(A) the credit percentage of the earned income amount, over
+(B) the phaseout percentage of so much of the adjusted gross income (or, if greater, the earned income) of the taxpayer for the taxable year as exceeds the phaseout amount.
+(b) Percentages and amounts
+For purposes of subsection (a)—
+(1) Percentages
+The credit percentage and the phaseout percentage shall be determined as follows:
+In the case of an eligible individual with: | The credit percentage is: | The phaseout percentage is:
+1 qualifying child | 34 | 15.98
+2 qualifying children | 40 | 21.06
+3 or more qualifying children | 45 | 21.06
+No qualifying children | 7.65 | 7.65
+(2) Amounts
+(A) In general
+Subject to subparagraph (B), the earned income amount and the phaseout amount shall be determined as follows:
+In the case of an eligible individual with: | The earned income amount is: | The phaseout amount is:
+1 qualifying child | $6,330 | $11,610
+2 or more qualifying children | $8,890 | $11,610
+No qualifying children | $4,220 | $5,280
+(B) Joint returns
+In the case of a joint return filed by an eligible individual and such individual's spouse, the phaseout amount determined under subparagraph (A) shall be increased by $5,000.
+(c) Definitions and special rules
+For purposes of this section—
+(1) Eligible individual
+(A) In general
+The term "eligible individual" means—
+(i) any individual who has a qualifying child for the taxable year, or
+(ii) any other individual who does not have a qualifying child for the taxable year, if—
+(I) such individual's principal place of abode is in the United States for more than one-half of such taxable year,
+(II) such individual (or, if the individual is married, either the individual or the individual's spouse) has attained age 25 but not attained age 65 before the close of the taxable year, and
+(III) such individual is not a dependent for whom a deduction is allowable under section 151 to another taxpayer for any taxable year beginning in the same calendar year as such taxable year.
+For purposes of the preceding sentence, marital status shall be determined under section 7703.
+(B) Qualifying child ineligible
+If an individual is the qualifying child of a taxpayer for any taxable year of such taxpayer beginning in a calendar year, such individual shall not be treated as an eligible individual for any taxable year of such individual beginning in such calendar year.
+(C) Exception for individual claiming benefits under section 911
+The term "eligible individual" does not include any individual who claims the benefits of section 911 (relating to citizens or residents living abroad) for the taxable year.
+(D) Limitation on eligibility of nonresident aliens
+The term "eligible individual" shall not include any individual who is a nonresident alien individual for any portion of the taxable year unless such individual is treated for such taxable year as a resident of the United States for purposes of this chapter by reason of an election under subsection (g) or (h) of section 6013.
+(E) Identification number requirement
+No credit shall be allowed under this section to an eligible individual who does not include on the return of tax for the taxable year—
+(i) such individual's taxpayer identification number, and
+(ii) if the individual is married (within the meaning of section 7703), the taxpayer identification number of such individual's spouse.
+(F) Individuals who do not include TIN, etc., of any qualifying child
+No credit shall be allowed under this section to any eligible individual who has one or more qualifying children if no qualifying child of such individual is taken into account under subsection (b) by reason of paragraph (3)(D).
+(2) Earned income
+(A) The term "earned income" means—
+(i) wages, salaries, tips, and other employee compensation, but only if such amounts are includible in gross income for the taxable year, plus
+(ii) the amount of the taxpayer's net earnings from self-employment for the taxable year (within the meaning of section 1402(a)), but such net earnings shall be determined with regard to the deduction allowed to the taxpayer by section 164(f).
+(B) For purposes of subparagraph (A)—
+(i) the earned income of an individual shall be computed without regard to any community property laws,
+(ii) no amount received as a pension or annuity shall be taken into account,
+(iii) no amount to which section 871(a) applies (relating to income of nonresident alien individuals not connected with United States business) shall be taken into account,
+(iv) no amount received for services provided by an individual while the individual is an inmate at a penal institution shall be taken into account,
+(v) no amount described in subparagraph (A) received for service performed in work activities as defined in paragraph (4) or (7) of section 407(d) of the Social Security Act to which the taxpayer is assigned under any State program under part A of title IV of such Act shall be taken into account, but only to the extent such amount is subsidized under such State program, and
+(vi) a taxpayer may elect to treat amounts excluded from gross income by reason of section 112 as earned income.
+(3) Qualifying child
+(A) In general
+The term "qualifying child" means a qualifying child of the taxpayer (as defined in section 152(c), determined without regard to paragraph (1)(D) thereof and section 152(e)).
+(B) Married individual
+The term "qualifying child" shall not include an individual who is married as of the close of the taxpayer's taxable year unless the taxpayer is entitled to a deduction under section 151 for such taxable year with respect to such individual (or would be so entitled but for section 152(e)).
+(C) Place of abode
+For purposes of subparagraph (A), the requirements of section 152(c)(1)(B) shall be met only if the principal place of abode is in the United States.
+(D) Identification requirements
+(i) In general
+A qualifying child shall not be taken into account under subsection (b) unless the taxpayer includes the name, age, and TIN of the qualifying child on the return of tax for the taxable year.
+(ii) Other methods
+The Secretary may prescribe other methods for providing the information described in clause (i).
+(4) Treatment of military personnel stationed outside the United States
+For purposes of paragraphs (1)(A)(ii)(I) and (3)(C), the principal place of abode of a member of the Armed Forces of the United States shall be treated as in the United States during any period during which such member is stationed outside the United States while serving on extended active duty with the Armed Forces of the United States. For purposes of the preceding sentence, the term "extended active duty" means any period of active duty pursuant to a call or order to such duty for a period in excess of 90 days or for an indefinite period.
+(d) Married individuals
+In the case of an individual who is married (within the meaning of section 7703), this section shall apply only if a joint return is filed for the taxable year under section 6013.
+(e) Taxable year must be full taxable year
+Except in the case of a taxable year closed by reason of the death of the taxpayer, no credit shall be allowable under this section in the case of a taxable year covering a period of less than 12 months.
+(f) Amount of credit to be determined under tables
+(1) In general
+The amount of the credit allowed by this section shall be determined under tables prescribed by the Secretary.
+(2) Requirements for tables
+The tables prescribed under paragraph (1) shall reflect the provisions of subsections (a) and (b) and shall have income brackets of not greater than $50 each—
+(A) for earned income between $0 and the amount of earned income at which the credit is phased out under subsection (b), and
+(B) for adjusted gross income between the dollar amount at which the phaseout begins under subsection (b) and the amount of adjusted gross income at which the credit is phased out under subsection (b).
+[(g) Repealed. Pub. L. 111–226, title II, §219(a)(2), Aug. 10, 2010, 124 Stat. 2403]
+[(h) Repealed. Pub. L. 107–16, title III, §303(c), June 7, 2001, 115 Stat. 55]
+(i) Denial of credit for individuals having excessive investment income
+(1) In general
+No credit shall be allowed under subsection (a) for the taxable year if the aggregate amount of disqualified income of the taxpayer for the taxable year exceeds $2,200.
+(2) Disqualified income
+For purposes of paragraph (1), the term "disqualified income" means—
+(A) interest or dividends to the extent includible in gross income for the taxable year,
+(B) interest received or accrued during the taxable year which is exempt from tax imposed by this chapter,
+(C) the excess (if any) of—
+(i) gross income from rents or royalties not derived in the ordinary course of a trade or business, over
+(ii) the sum of—
+(I) the deductions (other than interest) which are clearly and directly allocable to such gross income, plus
+(II) interest deductions properly allocable to such gross income,
+(D) the capital gain net income (as defined in section 1222) of the taxpayer for such taxable year, and
+(E) the excess (if any) of—
+(i) the aggregate income from all passive activities for the taxable year (determined without regard to any amount included in earned income under subsection (c)(2) or described in a preceding subparagraph), over
+(ii) the aggregate losses from all passive activities for the taxable year (as so determined).
+For purposes of subparagraph (E), the term "passive activity" has the meaning given such term by section 469.
+(j) Inflation adjustments
+(1) In general
+In the case of any taxable year beginning after 2015, each of the dollar amounts in subsections (b)(2) and (i)(1) shall be increased by an amount equal to—
+(A) such dollar amount, multiplied by
+(B) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting in subparagraph (A)(ii) thereof—
+(i) in the case of amounts in subsections (b)(2)(A) and (i)(1), "calendar year 1995" for "calendar year 2016", and
+(ii) in the case of the $5,000 amount in subsection (b)(2)(B), "calendar year 2008" for "calendar year 2016".
+(2) Rounding
+(A) In general
+If any dollar amount in subsection (b)(2)(A) (after being increased under subparagraph (B) thereof), after being increased under paragraph (1), is not a multiple of $10, such dollar amount shall be rounded to the nearest multiple of $10.
+(B) Disqualified income threshold amount
+If the dollar amount in subsection (i)(1), after being increased under paragraph (1), is not a multiple of $50, such amount shall be rounded to the next lowest multiple of $50.
+(k) Restrictions on taxpayers who improperly claimed credit in prior year
+(1) Taxpayers making prior fraudulent or reckless claims
+(A) In general
+No credit shall be allowed under this section for any taxable year in the disallowance period.
+(B) Disallowance period
+For purposes of paragraph (1), the disallowance period is—
+(i) the period of 10 taxable years after the most recent taxable year for which there was a final determination that the taxpayer's claim of credit under this section was due to fraud, and
+(ii) the period of 2 taxable years after the most recent taxable year for which there was a final determination that the taxpayer's claim of credit under this section was due to reckless or intentional disregard of rules and regulations (but not due to fraud).
+(2) Taxpayers making improper prior claims
+In the case of a taxpayer who is denied credit under this section for any taxable year as a result of the deficiency procedures under subchapter B of chapter 63, no credit shall be allowed under this section for any subsequent taxable year unless the taxpayer provides such information as the Secretary may require to demonstrate eligibility for such credit.
+(l) Coordination with certain means-tested programs
+For purposes of—
+(1) the United States Housing Act of 1937,
+(2) title V of the Housing Act of 1949,
+(3) section 101 of the Housing and Urban Development Act of 1965,
+(4) sections 221(d)(3), 235, and 236 of the National Housing Act, and
+(5) the Food and Nutrition Act of 2008,
+any refund made to an individual (or the spouse of an individual) by reason of this section shall not be treated as income (and shall not be taken into account in determining resources for the month of its receipt and the following month).
+(m) Identification numbers
+Solely for purposes of subsections (c)(1)(E) and (c)(3)(D), a taxpayer identification number means a social security number issued to an individual by the Social Security Administration (other than a social security number issued pursuant to clause (II) (or that portion of clause (III) that relates to clause (II)) of section 205(c)(2)(B)(i) of the Social Security Act) on or before the due date for filing the return for the taxable year.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2019 y 2020. Concede a individuos elegibles un crédito reembolsable igual a un porcentaje del ingreso devengado hasta un tope, que se reduce gradualmente a partir de un nivel de ingreso (a). Fija los porcentajes y cantidades según el número de hijos calificados (b), define individuo elegible, hijo calificado e ingreso devengado (c) y deniega el crédito cuando el ingreso de inversión excede $2,200, cantidad ajustada por inflación (i), (j). No contiene la subsección (n), con las reglas especiales de 2021 para individuos sin hijos calificados.
+
 ## 26 U.S.C. § 61: Gross income defined / Definición de ingreso bruto
 `Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 61 (OLRC release point 119-121)`
 
@@ -1050,6 +1873,276 @@ For purposes of subsection (a)(20), the term “unlawful discrimination” means
 ### Español
 Resumen en español; el texto oficial está en inglés. Define el ingreso bruto ajustado de un individuo como el ingreso bruto menos las deducciones enumeradas en la subsección (a), entre ellas ciertos gastos de negocio, pérdidas en la venta de propiedad, deducciones atribuibles a rentas y regalías, y aportaciones a ciertos planes de retiro. Incluye reglas para artistas calificados (b) y para acuerdos de reembolso (c).
 
+## 26 U.S.C. § 62: Adjusted gross income defined / Definición de ingreso bruto ajustado
+`Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (U.S. Code 2019 ed.)`
+
+### English
+(a) General rule
+For purposes of this subtitle, the term "adjusted gross income" means, in the case of an individual, gross income minus the following deductions:
+(1) Trade and business deductions
+The deductions allowed by this chapter (other than by part VII of this subchapter) which are attributable to a trade or business carried on by the taxpayer, if such trade or business does not consist of the performance of services by the taxpayer as an employee.
+(2) Certain trade and business deductions of employees
+(A) Reimbursed expenses of employees
+The deductions allowed by part VI (section 161 and following) which consist of expenses paid or incurred by the taxpayer, in connection with the performance by him of services as an employee, under a reimbursement or other expense allowance arrangement with his employer. The fact that the reimbursement may be provided by a third party shall not be determinative of whether or not the preceding sentence applies.
+(B) Certain expenses of performing artists
+The deductions allowed by section 162 which consist of expenses paid or incurred by a qualified performing artist in connection with the performances by him of services in the performing arts as an employee.
+(C) Certain expenses of officials
+The deductions allowed by section 162 which consist of expenses paid or incurred with respect to services performed by an official as an employee of a State or a political subdivision thereof in a position compensated in whole or in part on a fee basis.
+(D) Certain expenses of elementary and secondary school teachers
+The deductions allowed by section 162 which consist of expenses, not in excess of $250, paid or incurred by an eligible educator—
+(i) by reason of the participation of the educator in professional development courses related to the curriculum in which the educator provides instruction or to the students for which the educator provides instruction, and
+(ii) in connection with books, supplies (other than nonathletic supplies for courses of instruction in health or physical education), computer equipment (including related software and services) and other equipment, and supplementary materials used by the eligible educator in the classroom.
+(E) Certain expenses of members of reserve components of the Armed Forces of the United States
+The deductions allowed by section 162 which consist of expenses, determined at a rate not in excess of the rates for travel expenses (including per diem in lieu of subsistence) authorized for employees of agencies under subchapter I of chapter 57 of title 5, United States Code, paid or incurred by the taxpayer in connection with the performance of services by such taxpayer as a member of a reserve component of the Armed Forces of the United States for any period during which such individual is more than 100 miles away from home in connection with such services.
+(3) Losses from sale or exchange of property
+The deductions allowed by part VI (sec. 161 and following) as losses from the sale or exchange of property.
+(4) Deductions attributable to rents and royalties
+The deductions allowed by part VI (sec. 161 and following), by section 212 (relating to expenses for production of income), and by section 611 (relating to depletion) which are attributable to property held for the production of rents or royalties.
+(5) Certain deductions of life tenants and income beneficiaries of property
+In the case of a life tenant of property, or an income beneficiary of property held in trust, or an heir, legatee, or devisee of an estate, the deduction for depreciation allowed by section 167 and the deduction allowed by section 611.
+(6) Pension, profit-sharing, and annuity plans of self-employed individuals
+In the case of an individual who is an employee within the meaning of section 401(c)(1), the deduction allowed by section 404.
+(7) Retirement savings
+The deduction allowed by section 219 (relating to deduction of certain retirement savings).
+[(8) Repealed. Pub. L. 104–188, title I, §1401(b)(4), Aug. 20, 1996, 110 Stat. 1788]
+(9) Penalties forfeited because of premature withdrawal of funds from time savings accounts or deposits
+The deductions allowed by section 165 for losses incurred in any transaction entered into for profit, though not connected with a trade or business, to the extent that such losses include amounts forfeited to a bank, mutual savings bank, savings and loan association, building and loan association, cooperative bank or homestead association as a penalty for premature withdrawal of funds from a time savings account, certificate of deposit, or similar class of deposit.
+[(10) Repealed. Pub. L. 115–97, title I, §11051(b)(2)(A), Dec. 22, 2017, 131 Stat. 2089]
+(11) Reforestation expenses
+The deduction allowed by section 194.
+(12) Certain required repayments of supplemental unemployment compensation benefits
+The deduction allowed by section 165 for the repayment to a trust described in paragraph (9) or (17) of section 501(c) of supplemental unemployment compensation benefits received from such trust if such repayment is required because of the receipt of trade readjustment allowances under section 231 or 232 of the Trade Act of 1974 (19 U.S.C. 2291 and 2292).
+(13) Jury duty pay remitted to employer
+Any deduction allowable under this chapter by reason of an individual remitting any portion of any jury pay to such individual's employer in exchange for payment by the employer of compensation for the period such individual was performing jury duty. For purposes of the preceding sentence, the term "jury pay" means any payment received by the individual for the discharge of jury duty.
+[(14) Repealed. Pub. L. 113–295, div. A, title II, §221(a)(34)(C), Dec. 19, 2014, 128 Stat. 4042]
+(15) Moving expenses
+The deduction allowed by section 217.
+(16) Archer MSAs
+The deduction allowed by section 220.
+(17) Interest on education loans
+The deduction allowed by section 221.
+(18) Higher education expenses
+The deduction allowed by section 222.
+(19) Health savings accounts
+The deduction allowed by section 223.
+(20) Costs involving discrimination suits, etc.
+Any deduction allowable under this chapter for attorney fees and court costs paid by, or on behalf of, the taxpayer in connection with any action involving a claim of unlawful discrimination (as defined in subsection (e)) or a claim of a violation of subchapter III of chapter 37 of title 31, United States Code, or a claim made under section 1862(b)(3)(A) of the Social Security Act (42 U.S.C. 1395y(b)(3)(A)). The preceding sentence shall not apply to any deduction in excess of the amount includible in the taxpayer's gross income for the taxable year on account of a judgment or settlement (whether by suit or agreement and whether as lump sum or periodic payments) resulting from such claim.
+(21) Attorneys' fees relating to awards to whistleblowers
+(A) In general
+Any deduction allowable under this chapter for attorney fees and court costs paid by, or on behalf of, the taxpayer in connection with any award under—
+(i) section 7623(b), or
+(ii) in the case of taxable years beginning after December 31, 2017, any action brought under—
+(I) section 21F of the Securities Exchange Act of 1934 (15 U.S.C. 78u–6),
+(II) a State false claims act, including a State false claims act with qui tam provisions, or
+(III) section 23 of the Commodity Exchange Act (7 U.S.C. 26).
+(B) May not exceed award
+Subparagraph (A) shall not apply to any deduction in excess of the amount includible in the taxpayer's gross income for the taxable year on account of such award.
+Nothing in this section shall permit the same item to be deducted more than once. Any deduction allowed by section 199A shall not be treated as a deduction described in any of the preceding paragraphs of this subsection.
+(b) Qualified performing artist
+(1) In general
+For purposes of subsection (a)(2)(B), the term "qualified performing artist" means, with respect to any taxable year, any individual if—
+(A) such individual performed services in the performing arts as an employee during the taxable year for at least 2 employers,
+(B) the aggregate amount allowable as a deduction under section 162 in connection with the performance of such services exceeds 10 percent of such individual's gross income attributable to the performance of such services, and
+(C) the adjusted gross income of such individual for the taxable year (determined without regard to subsection (a)(2)(B)) does not exceed $16,000.
+(2) Nominal employer not taken into account
+An individual shall not be treated as performing services in the performing arts as an employee for any employer during any taxable year unless the amount received by such individual from such employer for the performance of such services during the taxable year equals or exceeds $200.
+(3) Special rules for married couples
+(A) In general
+Except in the case of a husband and wife who lived apart at all times during the taxable year, if the taxpayer is married at the close of the taxable year, subsection (a)(2)(B) shall apply only if the taxpayer and his spouse file a joint return for the taxable year.
+(B) Application of paragraph (1)
+In the case of a joint return—
+(i) paragraph (1) (other than subparagraph (C) thereof) shall be applied separately with respect to each spouse, but
+(ii) paragraph (1)(C) shall be applied with respect to their combined adjusted gross income.
+(C) Determination of marital status
+For purposes of this subsection, marital status shall be determined under section 7703(a).
+(D) Joint return
+For purposes of this subsection, the term "joint return" means the joint return of a husband and wife made under section 6013.
+(c) Certain arrangements not treated as reimbursement arrangements
+For purposes of subsection (a)(2)(A), an arrangement shall in no event be treated as a reimbursement or other expense allowance arrangement if—
+(1) such arrangement does not require the employee to substantiate the expenses covered by the arrangement to the person providing the reimbursement, or
+(2) such arrangement provides the employee the right to retain any amount in excess of the substantiated expenses covered under the arrangement.
+The substantiation requirements of the preceding sentence shall not apply to any expense to the extent that substantiation is not required under section 274(d) for such expense by reason of the regulations prescribed under the 2nd sentence thereof.
+(d) Definition; special rules
+(1) Eligible educator
+(A) In general
+For purposes of subsection (a)(2)(D), the term "eligible educator" means, with respect to any taxable year, an individual who is a kindergarten through grade 12 teacher, instructor, counselor, principal, or aide in a school for at least 900 hours during a school year.
+(B) School
+The term "school" means any school which provides elementary education or secondary education (kindergarten through grade 12), as determined under State law.
+(2) Coordination with exclusions
+A deduction shall be allowed under subsection (a)(2)(D) for expenses only to the extent the amount of such expenses exceeds the amount excludable under section 135, 529(c)(1), or 530(d)(2) for the taxable year.
+(3) Inflation adjustment
+In the case of any taxable year beginning after 2015, the $250 amount in subsection (a)(2)(D) shall be increased by an amount equal to—
+(A) such dollar amount, multiplied by
+(B) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting "calendar year 2014" for "calendar year 2016" in subparagraph (A)(ii) thereof.
+Any increase determined under the preceding sentence shall be rounded to the nearest multiple of $50.
+(e) Unlawful discrimination defined
+For purposes of subsection (a)(20), the term "unlawful discrimination" means an act that is unlawful under any of the following:
+(1) Section 302 of the Civil Rights Act of 1991 (42 U.S.C. 2000e–16b).
+(2) Section 201, 202, 203, 204, 205, 206, 207, or 208 of the Congressional Accountability Act of 1995 (2 U.S.C. 1311, 1312, 1313, 1314, 1315, 1316, or 1317).1
+(3) The National Labor Relations Act (29 U.S.C. 151 et seq.).
+(4) The Fair Labor Standards Act of 1938 (29 U.S.C. 201 et seq.).
+(5) Section 4 or 15 of the Age Discrimination in Employment Act of 1967 (29 U.S.C. 623 or 633a).
+(6) Section 501 or 504 of the Rehabilitation Act of 1973 (29 U.S.C. 791 or 794).
+(7) Section 510 of the Employee Retirement Income Security Act of 1974 (29 U.S.C. 1140).
+(8) Title IX of the Education Amendments of 1972 (20 U.S.C. 1681 et seq.).
+(9) The Employee Polygraph Protection Act of 1988 (29 U.S.C. 2001 et seq.).
+(10) The Worker Adjustment and Retraining Notification Act (29 U.S.C. 2102 et seq.).
+(11) Section 105 of the Family and Medical Leave Act of 1993 (29 U.S.C. 2615).
+(12) Chapter 43 of title 38, United States Code (relating to employment and reemployment rights of members of the uniformed services).
+(13) Section 1977, 1979, or 1980 of the Revised Statutes (42 U.S.C. 1981, 1983, or 1985).
+(14) Section 703, 704, or 717 of the Civil Rights Act of 1964 (42 U.S.C. 2000e–2, 2000e–3, or 2000e–16).
+(15) Section 804, 805, 806, 808, or 818 of the Fair Housing Act (42 U.S.C. 3604, 3605, 3606, 3608, or 3617).
+(16) Section 102, 202, 302, or 503 of the Americans with Disabilities Act of 1990 (42 U.S.C. 12112, 12132, 12182, or 12203).
+(17) Any provision of Federal law (popularly known as whistleblower protection provisions) prohibiting the discharge of an employee, the discrimination against an employee, or any other form of retaliation or reprisal against an employee for asserting rights or taking other actions permitted under Federal law.
+(18) Any provision of Federal, State, or local law, or common law claims permitted under Federal, State, or local law—
+(i) providing for the enforcement of civil rights, or
+(ii) regulating any aspect of the employment relationship, including claims for wages, compensation, or benefits, or prohibiting the discharge of an employee, the discrimination against an employee, or any other form of retaliation or reprisal against an employee for asserting rights or taking other actions permitted by law.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para el año contributivo 2019. Define el ingreso bruto ajustado de un individuo como el ingreso bruto menos las deducciones enumeradas en la subsección (a), entre ellas ciertos gastos de negocio, pérdidas en la venta de propiedad, deducciones atribuibles a rentas y regalías, aportaciones a ciertos planes de retiro y la deducción por gastos de educación superior de la sección 222 (a)(18). Incluye reglas para artistas calificados (b) y para acuerdos de reembolso (c).
+
+## 26 U.S.C. § 62: Adjusted gross income defined / Definición de ingreso bruto ajustado
+`Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (summary for tax year 2020)`
+
+### English
+Summary; the text of this version is not in the catalog. Enacted by Pub. L. 116-136, §2204.
+For taxable years beginning in 2020, section 62 read as in the version for tax year 2019 (id us-irc-62-2019), plus two provisions added by Pub. L. 116-136, div. A, title II, §2204(a) and (b), which applied to taxable years beginning after December 31, 2019 (§2204(c)).
+(a)(22) Charitable contributions: in the case of taxable years beginning in 2020, the amount (not to exceed $300) of qualified charitable contributions made by an eligible individual during the taxable year.
+(f) Definitions relating to qualified charitable contributions: an eligible individual was any individual who did not elect to itemize deductions. A qualified charitable contribution was a charitable contribution (as defined in section 170(c)) made in cash, for which a deduction is allowable under section 170 (determined without regard to subsection (b) thereof), made to an organization described in section 170(b)(1)(A), and not to an organization described in section 509(a)(3) or for the establishment of a new, or maintenance of an existing, donor advised fund (as defined in section 4966(d)(2)). It did not include any amount treated as a charitable contribution made in the taxable year by reason of subsection (b)(1)(G)(ii) or (d)(1) of section 170.
+Pub. L. 116-260, div. EE, title II, §212(c) struck paragraph (a)(22) and subsection (f) for taxable years beginning after December 31, 2020 (§212(d)).
+
+### Español
+Resumen; el texto de esta versión no está en el catálogo. Promulgado por la Ley Pública 116-136, §2204.
+Para los años contributivos que comenzaron en 2020, la sección 62 decía lo mismo que la versión del año contributivo 2019 (id us-irc-62-2019), más dos disposiciones añadidas por la Ley Pública 116-136, div. A, título II, §2204(a) y (b), aplicables a años contributivos que comiencen después del 31 de diciembre de 2019 (§2204(c)). El párrafo (a)(22) permitía restar del ingreso bruto hasta $300 de aportaciones caritativas calificadas hechas por un individuo elegible durante el año. La subsección (f) definía al individuo elegible (quien no detalla sus deducciones) y la aportación caritativa calificada (en efectivo, deducible bajo la sección 170 y hecha a una organización descrita en la sección 170(b)(1)(A), excepto organizaciones de la sección 509(a)(3) y fondos asesorados por donantes).
+La Ley Pública 116-260, div. EE, título II, §212(c) eliminó ambas disposiciones para años contributivos que comiencen después del 31 de diciembre de 2020 (§212(d)).
+
+## 26 U.S.C. § 62: Adjusted gross income defined / Definición de ingreso bruto ajustado
+`Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (U.S. Code 2021 ed.)`
+
+### English
+(a) General rule
+For purposes of this subtitle, the term "adjusted gross income" means, in the case of an individual, gross income minus the following deductions:
+(1) Trade and business deductions
+The deductions allowed by this chapter (other than by part VII of this subchapter) which are attributable to a trade or business carried on by the taxpayer, if such trade or business does not consist of the performance of services by the taxpayer as an employee.
+(2) Certain trade and business deductions of employees
+(A) Reimbursed expenses of employees
+The deductions allowed by part VI (section 161 and following) which consist of expenses paid or incurred by the taxpayer, in connection with the performance by him of services as an employee, under a reimbursement or other expense allowance arrangement with his employer. The fact that the reimbursement may be provided by a third party shall not be determinative of whether or not the preceding sentence applies.
+(B) Certain expenses of performing artists
+The deductions allowed by section 162 which consist of expenses paid or incurred by a qualified performing artist in connection with the performances by him of services in the performing arts as an employee.
+(C) Certain expenses of officials
+The deductions allowed by section 162 which consist of expenses paid or incurred with respect to services performed by an official as an employee of a State or a political subdivision thereof in a position compensated in whole or in part on a fee basis.
+(D) Certain expenses of elementary and secondary school teachers
+The deductions allowed by section 162 which consist of expenses, not in excess of $250, paid or incurred by an eligible educator—
+(i) by reason of the participation of the educator in professional development courses related to the curriculum in which the educator provides instruction or to the students for which the educator provides instruction, and
+(ii) in connection with books, supplies (other than nonathletic supplies for courses of instruction in health or physical education), computer equipment (including related software and services) and other equipment, and supplementary materials used by the eligible educator in the classroom.
+(E) Certain expenses of members of reserve components of the Armed Forces of the United States
+The deductions allowed by section 162 which consist of expenses, determined at a rate not in excess of the rates for travel expenses (including per diem in lieu of subsistence) authorized for employees of agencies under subchapter I of chapter 57 of title 5, United States Code, paid or incurred by the taxpayer in connection with the performance of services by such taxpayer as a member of a reserve component of the Armed Forces of the United States for any period during which such individual is more than 100 miles away from home in connection with such services.
+(3) Losses from sale or exchange of property
+The deductions allowed by part VI (sec. 161 and following) as losses from the sale or exchange of property.
+(4) Deductions attributable to rents and royalties
+The deductions allowed by part VI (sec. 161 and following), by section 212 (relating to expenses for production of income), and by section 611 (relating to depletion) which are attributable to property held for the production of rents or royalties.
+(5) Certain deductions of life tenants and income beneficiaries of property
+In the case of a life tenant of property, or an income beneficiary of property held in trust, or an heir, legatee, or devisee of an estate, the deduction for depreciation allowed by section 167 and the deduction allowed by section 611.
+(6) Pension, profit-sharing, and annuity plans of self-employed individuals
+In the case of an individual who is an employee within the meaning of section 401(c)(1), the deduction allowed by section 404.
+(7) Retirement savings
+The deduction allowed by section 219 (relating to deduction of certain retirement savings).
+[(8) Repealed. Pub. L. 104–188, title I, §1401(b)(4), Aug. 20, 1996, 110 Stat. 1788]
+(9) Penalties forfeited because of premature withdrawal of funds from time savings accounts or deposits
+The deductions allowed by section 165 for losses incurred in any transaction entered into for profit, though not connected with a trade or business, to the extent that such losses include amounts forfeited to a bank, mutual savings bank, savings and loan association, building and loan association, cooperative bank or homestead association as a penalty for premature withdrawal of funds from a time savings account, certificate of deposit, or similar class of deposit.
+[(10) Repealed. Pub. L. 115–97, title I, §11051(b)(2)(A), Dec. 22, 2017, 131 Stat. 2089]
+(11) Reforestation expenses
+The deduction allowed by section 194.
+(12) Certain required repayments of supplemental unemployment compensation benefits
+The deduction allowed by section 165 for the repayment to a trust described in paragraph (9) or (17) of section 501(c) of supplemental unemployment compensation benefits received from such trust if such repayment is required because of the receipt of trade readjustment allowances under section 231 or 232 of the Trade Act of 1974 (19 U.S.C. 2291 and 2292).
+(13) Jury duty pay remitted to employer
+Any deduction allowable under this chapter by reason of an individual remitting any portion of any jury pay to such individual's employer in exchange for payment by the employer of compensation for the period such individual was performing jury duty. For purposes of the preceding sentence, the term "jury pay" means any payment received by the individual for the discharge of jury duty.
+[(14) Repealed. Pub. L. 113–295, div. A, title II, §221(a)(34)(C), Dec. 19, 2014, 128 Stat. 4042]
+(15) Moving expenses
+The deduction allowed by section 217.
+(16) Archer MSAs
+The deduction allowed by section 220.
+(17) Interest on education loans
+The deduction allowed by section 221.
+[(18) Repealed. Pub. L. 116–260, div. EE, title I, §104(b)(2)(A), Dec. 27, 2020, 134 Stat. 3041]
+(19) Health savings accounts
+The deduction allowed by section 223.
+(20) Costs involving discrimination suits, etc.
+Any deduction allowable under this chapter for attorney fees and court costs paid by, or on behalf of, the taxpayer in connection with any action involving a claim of unlawful discrimination (as defined in subsection (e)) or a claim of a violation of subchapter III of chapter 37 of title 31, United States Code, or a claim made under section 1862(b)(3)(A) of the Social Security Act (42 U.S.C. 1395y(b)(3)(A)). The preceding sentence shall not apply to any deduction in excess of the amount includible in the taxpayer's gross income for the taxable year on account of a judgment or settlement (whether by suit or agreement and whether as lump sum or periodic payments) resulting from such claim.
+(21) Attorneys' fees relating to awards to whistleblowers
+(A) In general
+Any deduction allowable under this chapter for attorney fees and court costs paid by, or on behalf of, the taxpayer in connection with any award under—
+(i) section 7623(b), or
+(ii) in the case of taxable years beginning after December 31, 2017, any action brought under—
+(I) section 21F of the Securities Exchange Act of 1934 (15 U.S.C. 78u–6),
+(II) a State false claims act, including a State false claims act with qui tam provisions, or
+(III) section 23 of the Commodity Exchange Act (7 U.S.C. 26).
+(B) May not exceed award
+Subparagraph (A) shall not apply to any deduction in excess of the amount includible in the taxpayer's gross income for the taxable year on account of such award.
+Nothing in this section shall permit the same item to be deducted more than once. Any deduction allowed by section 199A shall not be treated as a deduction described in any of the preceding paragraphs of this subsection.
+(b) Qualified performing artist
+(1) In general
+For purposes of subsection (a)(2)(B), the term "qualified performing artist" means, with respect to any taxable year, any individual if—
+(A) such individual performed services in the performing arts as an employee during the taxable year for at least 2 employers,
+(B) the aggregate amount allowable as a deduction under section 162 in connection with the performance of such services exceeds 10 percent of such individual's gross income attributable to the performance of such services, and
+(C) the adjusted gross income of such individual for the taxable year (determined without regard to subsection (a)(2)(B)) does not exceed $16,000.
+(2) Nominal employer not taken into account
+An individual shall not be treated as performing services in the performing arts as an employee for any employer during any taxable year unless the amount received by such individual from such employer for the performance of such services during the taxable year equals or exceeds $200.
+(3) Special rules for married couples
+(A) In general
+Except in the case of a husband and wife who lived apart at all times during the taxable year, if the taxpayer is married at the close of the taxable year, subsection (a)(2)(B) shall apply only if the taxpayer and his spouse file a joint return for the taxable year.
+(B) Application of paragraph (1)
+In the case of a joint return—
+(i) paragraph (1) (other than subparagraph (C) thereof) shall be applied separately with respect to each spouse, but
+(ii) paragraph (1)(C) shall be applied with respect to their combined adjusted gross income.
+(C) Determination of marital status
+For purposes of this subsection, marital status shall be determined under section 7703(a).
+(D) Joint return
+For purposes of this subsection, the term "joint return" means the joint return of a husband and wife made under section 6013.
+(c) Certain arrangements not treated as reimbursement arrangements
+For purposes of subsection (a)(2)(A), an arrangement shall in no event be treated as a reimbursement or other expense allowance arrangement if—
+(1) such arrangement does not require the employee to substantiate the expenses covered by the arrangement to the person providing the reimbursement, or
+(2) such arrangement provides the employee the right to retain any amount in excess of the substantiated expenses covered under the arrangement.
+The substantiation requirements of the preceding sentence shall not apply to any expense to the extent that substantiation is not required under section 274(d) for such expense by reason of the regulations prescribed under the 2nd sentence thereof.
+(d) Definition; special rules
+(1) Eligible educator
+(A) In general
+For purposes of subsection (a)(2)(D), the term "eligible educator" means, with respect to any taxable year, an individual who is a kindergarten through grade 12 teacher, instructor, counselor, principal, or aide in a school for at least 900 hours during a school year.
+(B) School
+The term "school" means any school which provides elementary education or secondary education (kindergarten through grade 12), as determined under State law.
+(2) Coordination with exclusions
+A deduction shall be allowed under subsection (a)(2)(D) for expenses only to the extent the amount of such expenses exceeds the amount excludable under section 135, 529(c)(1), or 530(d)(2) for the taxable year.
+(3) Inflation adjustment
+In the case of any taxable year beginning after 2015, the $250 amount in subsection (a)(2)(D) shall be increased by an amount equal to—
+(A) such dollar amount, multiplied by
+(B) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting "calendar year 2014" for "calendar year 2016" in subparagraph (A)(ii) thereof.
+Any increase determined under the preceding sentence shall be rounded to the nearest multiple of $50.
+(e) Unlawful discrimination defined
+For purposes of subsection (a)(20), the term "unlawful discrimination" means an act that is unlawful under any of the following:
+(1) Section 302 of the Civil Rights Act of 1991 (42 U.S.C. 2000e–16b).
+(2) Section 201, 202, 203, 204, 205, 206, 207, or 208 of the Congressional Accountability Act of 1995 (2 U.S.C. 1311, 1312, 1313, 1314, 1315, 1316, or 1317).1
+(3) The National Labor Relations Act (29 U.S.C. 151 et seq.).
+(4) The Fair Labor Standards Act of 1938 (29 U.S.C. 201 et seq.).
+(5) Section 4 or 15 of the Age Discrimination in Employment Act of 1967 (29 U.S.C. 623 or 633a).
+(6) Section 501 or 504 of the Rehabilitation Act of 1973 (29 U.S.C. 791 or 794).
+(7) Section 510 of the Employee Retirement Income Security Act of 1974 (29 U.S.C. 1140).
+(8) Title IX of the Education Amendments of 1972 (20 U.S.C. 1681 et seq.).
+(9) The Employee Polygraph Protection Act of 1988 (29 U.S.C. 2001 et seq.).
+(10) The Worker Adjustment and Retraining Notification Act (29 U.S.C. 2102 et seq.).
+(11) Section 105 of the Family and Medical Leave Act of 1993 (29 U.S.C. 2615).
+(12) Chapter 43 of title 38, United States Code (relating to employment and reemployment rights of members of the uniformed services).
+(13) Section 1977, 1979, or 1980 of the Revised Statutes (42 U.S.C. 1981, 1983, or 1985).
+(14) Section 703, 704, or 717 of the Civil Rights Act of 1964 (42 U.S.C. 2000e–2, 2000e–3, or 2000e–16).
+(15) Section 804, 805, 806, 808, or 818 of the Fair Housing Act (42 U.S.C. 3604, 3605, 3606, 3608, or 3617).
+(16) Section 102, 202, 302, or 503 of the Americans with Disabilities Act of 1990 (42 U.S.C. 12112, 12132, 12182, or 12203).
+(17) Any provision of Federal law (popularly known as whistleblower protection provisions) prohibiting the discharge of an employee, the discrimination against an employee, or any other form of retaliation or reprisal against an employee for asserting rights or taking other actions permitted under Federal law.
+(18) Any provision of Federal, State, or local law, or common law claims permitted under Federal, State, or local law—
+(i) providing for the enforcement of civil rights, or
+(ii) regulating any aspect of the employment relationship, including claims for wages, compensation, or benefits, or prohibiting the discharge of an employee, the discrimination against an employee, or any other form of retaliation or reprisal against an employee for asserting rights or taking other actions permitted by law.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2021 a 2025. Define el ingreso bruto ajustado de un individuo como el ingreso bruto menos las deducciones enumeradas en la subsección (a), entre ellas ciertos gastos de negocio, los gastos de maestros de escuela elemental y secundaria (a)(2)(D), pérdidas en la venta de propiedad, deducciones atribuibles a rentas y regalías, y aportaciones a ciertos planes de retiro. Ya no incluye la deducción de la sección 222 ni la deducción caritativa de 2020. Incluye reglas para artistas calificados (b), acuerdos de reembolso (c) y educadores elegibles de kindergarten a grado 12 (d).
+
 ## 26 U.S.C. § 63: Taxable income defined / Definición de ingreso tributable
 `Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 63 (OLRC release point 119-121)`
 
@@ -1145,6 +2238,190 @@ For purposes of this section, marital status shall be determined under section 7
 
 ### Español
 Resumen en español; el texto oficial está en inglés. El ingreso tributable es el ingreso bruto menos las deducciones permitidas (a); para quien no detalla sus deducciones, es el ingreso bruto ajustado menos la deducción estándar y otras deducciones indicadas en (b). Define la deducción estándar y sus ajustes (c), las deducciones detalladas (d), la elección de detallar (e), las cantidades adicionales por edad o ceguera (f) y el estado civil (g).
+
+## 26 U.S.C. § 63: Taxable income defined / Definición de ingreso tributable
+`Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 63 (U.S. Code 2019 ed.)`
+
+### English
+(a) In general
+Except as provided in subsection (b), for purposes of this subtitle, the term "taxable income" means gross income minus the deductions allowed by this chapter (other than the standard deduction).
+(b) Individuals who do not itemize their deductions
+In the case of an individual who does not elect to itemize his deductions for the taxable year, for purposes of this subtitle, the term "taxable income" means adjusted gross income, minus—
+(1) the standard deduction,
+(2) the deduction for personal exemptions provided in section 151, and
+(3) any deduction provided in section 199A.
+(c) Standard deduction
+For purposes of this subtitle—
+(1) In general
+Except as otherwise provided in this subsection, the term "standard deduction" means the sum of—
+(A) the basic standard deduction, and
+(B) the additional standard deduction.
+(2) Basic standard deduction
+For purposes of paragraph (1), the basic standard deduction is—
+(A) 200 percent of the dollar amount in effect under subparagraph (C) for the taxable year in the case of—
+(i) a joint return, or
+(ii) a surviving spouse (as defined in section 2(a)),
+(B) $4,400 in the case of a head of household (as defined in section 2(b)), or
+(C) $3,000 in any other case.
+(3) Additional standard deduction for aged and blind
+For purposes of paragraph (1), the additional standard deduction is the sum of each additional amount to which the taxpayer is entitled under subsection (f).
+(4) Adjustments for inflation
+In the case of any taxable year beginning in a calendar year after 1988, each dollar amount contained in paragraph (2)(B), (2)(C), or (5) or subsection (f) shall be increased by an amount equal to—
+(A) such dollar amount, multiplied by
+(B) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, by substituting for "calendar year 2016" in subparagraph (A)(ii) thereof—
+(i) "calendar year 1987" in the case of the dollar amounts contained in paragraph (2)(B), (2)(C), or (5)(A) or subsection (f), and
+(ii) "calendar year 1997" in the case of the dollar amount contained in paragraph (5)(B).
+(5) Limitation on basic standard deduction in the case of certain dependents
+In the case of an individual with respect to whom a deduction under section 151 is allowable to another taxpayer for a taxable year beginning in the calendar year in which the individual's taxable year begins, the basic standard deduction applicable to such individual for such individual's taxable year shall not exceed the greater of—
+(A) $500, or
+(B) the sum of $250 and such individual's earned income.
+(6) Certain individuals, etc., not eligible for standard deduction
+In the case of—
+(A) a married individual filing a separate return where either spouse itemizes deductions,
+(B) a nonresident alien individual,
+(C) an individual making a return under section 443(a)(1) for a period of less than 12 months on account of a change in his annual accounting period, or
+(D) an estate or trust, common trust fund, or partnership,
+the standard deduction shall be zero.
+(7) Special rules for taxable years 2018 through 2025
+In the case of a taxable year beginning after December 31, 2017, and before January 1, 2026—
+(A) Increase in standard deduction
+Paragraph (2) shall be applied—
+(i) by substituting "$18,000" for "$4,400" in subparagraph (B), and
+(ii) by substituting "$12,000" for "$3,000" in subparagraph (C).
+(B) Adjustment for inflation
+(i) In general
+Paragraph (4) shall not apply to the dollar amounts contained in paragraphs (2)(B) and (2)(C).
+(ii) Adjustment of increased amounts
+In the case of a taxable year beginning after 2018, the $18,000 and $12,000 amounts in subparagraph (A) shall each be increased by an amount equal to—
+(I) such dollar amount, multiplied by
+(II) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting "2017" for "2016" in subparagraph (A)(ii) thereof.
+If any increase under this clause is not a multiple of $50, such increase shall be rounded to the next lowest multiple of $50.
+(d) Itemized deductions
+For purposes of this subtitle, the term "itemized deductions" means the deductions allowable under this chapter other than—
+(1) the deductions allowable in arriving at adjusted gross income,
+(2) the deduction for personal exemptions provided by section 151, and
+(3) any deduction provided in section 199A.
+(e) Election to itemize
+(1) In general
+Unless an individual makes an election under this subsection for the taxable year, no itemized deduction shall be allowed for the taxable year. For purposes of this subtitle, the determination of whether a deduction is allowable under this chapter shall be made without regard to the preceding sentence.
+(2) Time and manner of election
+Any election under this subsection shall be made on the taxpayer's return, and the Secretary shall prescribe the manner of signifying such election on the return.
+(3) Change of election
+Under regulations prescribed by the Secretary, a change of election with respect to itemized deductions for any taxable year may be made after the filing of the return for such year. If the spouse of the taxpayer filed a separate return for any taxable year corresponding to the taxable year of the taxpayer, the change shall not be allowed unless, in accordance with such regulations—
+(A) the spouse makes a change of election with respect to itemized deductions, for the taxable year covered in such separate return, consistent with the change of treatment sought by the taxpayer, and
+(B) the taxpayer and his spouse consent in writing to the assessment (within such period as may be agreed on with the Secretary) of any deficiency, to the extent attributable to such change of election, even though at the time of the filing of such consent the assessment of such deficiency would otherwise be prevented by the operation of any law or rule of law.
+This paragraph shall not apply if the tax liability of the taxpayer's spouse for the taxable year corresponding to the taxable year of the taxpayer has been compromised under section 7122.
+(f) Aged or blind additional amounts
+(1) Additional amounts for the aged
+The taxpayer shall be entitled to an additional amount of $600—
+(A) for himself if he has attained age 65 before the close of his taxable year, and
+(B) for the spouse of the taxpayer if the spouse has attained age 65 before the close of the taxable year and an additional exemption is allowable to the taxpayer for such spouse under section 151(b).
+(2) Additional amount for blind
+The taxpayer shall be entitled to an additional amount of $600—
+(A) for himself if he is blind at the close of the taxable year, and
+(B) for the spouse of the taxpayer if the spouse is blind as of the close of the taxable year and an additional exemption is allowable to the taxpayer for such spouse under section 151(b).
+For purposes of subparagraph (B), if the spouse dies during the taxable year the determination of whether such spouse is blind shall be made as of the time of such death.
+(3) Higher amount for certain unmarried individuals
+In the case of an individual who is not married and is not a surviving spouse, paragraphs (1) and (2) shall be applied by substituting "$750" for "$600".
+(4) Blindness defined
+For purposes of this subsection, an individual is blind only if his central visual acuity does not exceed 20/200 in the better eye with correcting lenses, or if his visual acuity is greater than 20/200 but is accompanied by a limitation in the fields of vision such that the widest diameter of the visual field subtends an angle no greater than 20 degrees.
+(g) Marital status
+For purposes of this section, marital status shall be determined under section 7703.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2019 y 2020. El ingreso tributable es el ingreso bruto menos las deducciones permitidas (a); para quien no detalla sus deducciones, es el ingreso bruto ajustado menos la deducción estándar, la deducción por exenciones personales y la deducción de la sección 199A (b). Para los años contributivos 2018 a 2025, la deducción estándar básica es $24,000 en planilla conjunta, $18,000 para jefe de familia y $12,000 en los demás casos, ajustadas por inflación después de 2018 (c)(7). Define además las deducciones detalladas (d), la elección de detallar (e), las cantidades adicionales por edad o ceguera (f) y el estado civil (g).
+
+## 26 U.S.C. § 63: Taxable income defined / Definición de ingreso tributable
+`Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 63 (U.S. Code 2021 ed.)`
+
+### English
+(a) In general
+Except as provided in subsection (b), for purposes of this subtitle, the term "taxable income" means gross income minus the deductions allowed by this chapter (other than the standard deduction).
+(b) Individuals who do not itemize their deductions
+In the case of an individual who does not elect to itemize his deductions for the taxable year, for purposes of this subtitle, the term "taxable income" means adjusted gross income, minus—
+(1) the standard deduction,
+(2) the deduction for personal exemptions provided in section 151,
+(3) any deduction provided in section 199A, and
+(4) the deduction provided in section 170(p).
+(c) Standard deduction
+For purposes of this subtitle—
+(1) In general
+Except as otherwise provided in this subsection, the term "standard deduction" means the sum of—
+(A) the basic standard deduction, and
+(B) the additional standard deduction.
+(2) Basic standard deduction
+For purposes of paragraph (1), the basic standard deduction is—
+(A) 200 percent of the dollar amount in effect under subparagraph (C) for the taxable year in the case of—
+(i) a joint return, or
+(ii) a surviving spouse (as defined in section 2(a)),
+(B) $4,400 in the case of a head of household (as defined in section 2(b)), or
+(C) $3,000 in any other case.
+(3) Additional standard deduction for aged and blind
+For purposes of paragraph (1), the additional standard deduction is the sum of each additional amount to which the taxpayer is entitled under subsection (f).
+(4) Adjustments for inflation
+In the case of any taxable year beginning in a calendar year after 1988, each dollar amount contained in paragraph (2)(B), (2)(C), or (5) or subsection (f) shall be increased by an amount equal to—
+(A) such dollar amount, multiplied by
+(B) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, by substituting for "calendar year 2016" in subparagraph (A)(ii) thereof—
+(i) "calendar year 1987" in the case of the dollar amounts contained in paragraph (2)(B), (2)(C), or (5)(A) or subsection (f), and
+(ii) "calendar year 1997" in the case of the dollar amount contained in paragraph (5)(B).
+(5) Limitation on basic standard deduction in the case of certain dependents
+In the case of an individual with respect to whom a deduction under section 151 is allowable to another taxpayer for a taxable year beginning in the calendar year in which the individual's taxable year begins, the basic standard deduction applicable to such individual for such individual's taxable year shall not exceed the greater of—
+(A) $500, or
+(B) the sum of $250 and such individual's earned income.
+(6) Certain individuals, etc., not eligible for standard deduction
+In the case of—
+(A) a married individual filing a separate return where either spouse itemizes deductions,
+(B) a nonresident alien individual,
+(C) an individual making a return under section 443(a)(1) for a period of less than 12 months on account of a change in his annual accounting period, or
+(D) an estate or trust, common trust fund, or partnership,
+the standard deduction shall be zero.
+(7) Special rules for taxable years 2018 through 2025
+In the case of a taxable year beginning after December 31, 2017, and before January 1, 2026—
+(A) Increase in standard deduction
+Paragraph (2) shall be applied—
+(i) by substituting "$18,000" for "$4,400" in subparagraph (B), and
+(ii) by substituting "$12,000" for "$3,000" in subparagraph (C).
+(B) Adjustment for inflation
+(i) In general
+Paragraph (4) shall not apply to the dollar amounts contained in paragraphs (2)(B) and (2)(C).
+(ii) Adjustment of increased amounts
+In the case of a taxable year beginning after 2018, the $18,000 and $12,000 amounts in subparagraph (A) shall each be increased by an amount equal to—
+(I) such dollar amount, multiplied by
+(II) the cost-of-living adjustment determined under section 1(f)(3) for the calendar year in which the taxable year begins, determined by substituting "2017" for "2016" in subparagraph (A)(ii) thereof.
+If any increase under this clause is not a multiple of $50, such increase shall be rounded to the next lowest multiple of $50.
+(d) Itemized deductions
+For purposes of this subtitle, the term "itemized deductions" means the deductions allowable under this chapter other than—
+(1) the deductions allowable in arriving at adjusted gross income, and
+(2) any deduction referred to in any paragraph of subsection (b).
+(e) Election to itemize
+(1) In general
+Unless an individual makes an election under this subsection for the taxable year, no itemized deduction shall be allowed for the taxable year. For purposes of this subtitle, the determination of whether a deduction is allowable under this chapter shall be made without regard to the preceding sentence.
+(2) Time and manner of election
+Any election under this subsection shall be made on the taxpayer's return, and the Secretary shall prescribe the manner of signifying such election on the return.
+(3) Change of election
+Under regulations prescribed by the Secretary, a change of election with respect to itemized deductions for any taxable year may be made after the filing of the return for such year. If the spouse of the taxpayer filed a separate return for any taxable year corresponding to the taxable year of the taxpayer, the change shall not be allowed unless, in accordance with such regulations—
+(A) the spouse makes a change of election with respect to itemized deductions, for the taxable year covered in such separate return, consistent with the change of treatment sought by the taxpayer, and
+(B) the taxpayer and his spouse consent in writing to the assessment (within such period as may be agreed on with the Secretary) of any deficiency, to the extent attributable to such change of election, even though at the time of the filing of such consent the assessment of such deficiency would otherwise be prevented by the operation of any law or rule of law.
+This paragraph shall not apply if the tax liability of the taxpayer's spouse for the taxable year corresponding to the taxable year of the taxpayer has been compromised under section 7122.
+(f) Aged or blind additional amounts
+(1) Additional amounts for the aged
+The taxpayer shall be entitled to an additional amount of $600—
+(A) for himself if he has attained age 65 before the close of his taxable year, and
+(B) for the spouse of the taxpayer if the spouse has attained age 65 before the close of the taxable year and an additional exemption is allowable to the taxpayer for such spouse under section 151(b).
+(2) Additional amount for blind
+The taxpayer shall be entitled to an additional amount of $600—
+(A) for himself if he is blind at the close of the taxable year, and
+(B) for the spouse of the taxpayer if the spouse is blind as of the close of the taxable year and an additional exemption is allowable to the taxpayer for such spouse under section 151(b).
+For purposes of subparagraph (B), if the spouse dies during the taxable year the determination of whether such spouse is blind shall be made as of the time of such death.
+(3) Higher amount for certain unmarried individuals
+In the case of an individual who is not married and is not a surviving spouse, paragraphs (1) and (2) shall be applied by substituting "$750" for "$600".
+(4) Blindness defined
+For purposes of this subsection, an individual is blind only if his central visual acuity does not exceed 20/200 in the better eye with correcting lenses, or if his visual acuity is greater than 20/200 but is accompanied by a limitation in the fields of vision such that the widest diameter of the visual field subtends an angle no greater than 20 degrees.
+(g) Marital status
+For purposes of this section, marital status shall be determined under section 7703.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2021 a 2024. El ingreso tributable es el ingreso bruto menos las deducciones permitidas (a); para quien no detalla sus deducciones, es el ingreso bruto ajustado menos la deducción estándar, la deducción por exenciones personales, la deducción de la sección 199A y la deducción caritativa de la sección 170(p) (b). Para los años contributivos 2018 a 2025, la deducción estándar básica es $24,000 en planilla conjunta, $18,000 para jefe de familia y $12,000 en los demás casos, ajustadas por inflación después de 2018 (c)(7). Define además las deducciones detalladas (d), la elección de detallar (e), las cantidades adicionales por edad o ceguera (f) y el estado civil (g).
 
 ## 26 U.S.C. § 911: Citizens or residents of the United States living abroad / Ciudadanos o residentes de los Estados Unidos que viven en el extranjero
 `Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart B > § 911 (OLRC release point 119-121)`
@@ -1499,3 +2776,34 @@ Amendment history (eCFR source note): adopted by T.D. 9391, 73 FR 19374, Apr. 9,
 
 ### Español
 Resumen en español; el texto oficial está en inglés. Establece las reglas para determinar si un ingreso está efectivamente conectado con la conducción de una industria o negocio en una posesión (a), aplicando los principios de la sección 864(c) (b). Ese ingreso no incluye partidas de fuentes dentro de los Estados Unidos ni efectivamente conectadas con una industria o negocio en los Estados Unidos, incluidos los arreglos de conducto (c), salvo ciertas ventas de inventario (d). Incluye ejemplos (e) y aplica a ingresos de años contributivos que terminen después del 9 de abril de 2008 (f). Historial de enmiendas (nota de fuente del eCFR): adoptada por T.D. 9391, 73 FR 19374, 9 de abril de 2008; enmendada por T.D. 9391, 73 FR 27728, 14 de mayo de 2008 (corrección), T.D. 9921, 85 FR 79853, 11 de diciembre de 2020, y T.D. 10022, 90 FR 3003, 14 de enero de 2025.
+
+## 26 CFR § 1.937-3: Income effectively connected with the conduct of a trade or business in a possession
+`Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3 (eCFR 2025-01-13)`
+
+### English
+(a) Scope. Section 937(b) and this section set forth the rules for determining whether income is effectively connected with the conduct of a trade or business within a particular possession (the relevant possession) for purposes of the Internal Revenue Code, including sections 881(b) and 957(c) and Subpart D, Part III, Subchapter N, Chapter 1 of the Internal Revenue Code. Paragraph (c) of this section does not apply, however, for purposes of section 881(b). In the case of a possession or territory that administers income tax laws that are identical (except for the substitution of the name of the possession or territory for the term “United States” where appropriate) to those in force in the United States, these rules do not apply for purposes of the application of such laws.
+(b) In general. Except as provided in paragraphs (c) and (d) of this section, the principles of section 864(c) and the regulations under that section (relating to the determination of income, gain or loss that is effectively connected with the conduct of a trade or business within the United States) generally will be applied in determining whether income is effectively connected with the conduct of a trade or business within the relevant possession, without regard to whether the taxpayer qualifies as a nonresident alien individual or a foreign corporation with respect to such possession. Subject to the rules of this section, the principles of section 864(c)(4) will apply for purposes of determining whether income from sources without the relevant possession is effectively connected with the conduct of a trade or business in the relevant possession. For purposes of the preceding sentence, all income other than income from sources within the relevant possession (as determined under the rules of § 1.937-2) will be considered income from sources without the relevant possession in the application of the principles of section 864(c) under this paragraph (b), it generally will be sufficient to substitute the name of the relevant possession for the term “United States” where appropriate, but additional substitutions may be necessary to accomplish the intent of section 937(b) and this section. In no case, however, will a bona fide resident or other person have, as a result of the application of these principles, more income effectively connected with the conduct of a trade or business in the relevant possession than the amount of U.S. effectively connected income that a similarly situated U.S. person who is not a bona fide resident would have under section 864(c).
+(c) U.S. income—(1) In general. Except as provided in paragraph (d) of this section, income considered to be effectively connected with the conduct of a trade or business within the relevant possession will not include any item of income determined under the rules of sections 861 through 865 and the regulations under those provisions to be—
+(i) From sources within the United States; or
+(ii) Effectively connected with the conduct of a trade or business within the United States.
+(2) Conduit arrangements. Income will be considered to be from sources within the United States for purposes of paragraph (c)(1) of this section if, pursuant to a plan or arrangement—
+(i) The income is received in exchange for consideration provided to another person; and
+(ii) Such person (or another person) provides the same consideration (or consideration of a like kind) to a third person in exchange for one or more payments constituting income from sources within the United States.
+(d) Income from certain sales of inventory property. Paragraph (c) of this section will not apply to income from sales of inventory property described in § 1.863-3(e).
+(e) Examples. The provisions of this section may be illustrated by the following examples:
+Example 1. X is a bona fide resident of Possession I, a section 931 possession (as defined in § 1.931-1(c)(1)). X has an office in Possession I from which X conducts a business consisting of the development and sale of specialized computer software. A purchaser of software will frequently pay X an additional amount to install the software on the purchaser's operating system and to ensure that the software is functioning properly. X performs the installation services at the purchaser's place of business, which may be in Possession I, in the United States, or in another country. The provision of such services is not de minimis and constitutes a separate transaction under the rules of § 1.861-18. Under the principles of section 864(c)(4) as applied pursuant to paragraph (b) of this section, the compensation that X receives for personal services performed outside of Possession I is not considered to be effectively connected with the conduct of a trade or business in Possession I for purposes of section 931(a)(2).
+Example 2. (i) F Bank is organized under the laws of Country FC and operates an active banking business from offices in the U.S. Virgin Islands (USVI). In connection with this banking business, F Bank makes loans to and receives interest payments from borrowers who reside in the USVI, in the United States, and in Country FC.
+(ii) Under the principles of section 861(a)(1) as applied pursuant to § 1.937-2(b), interest payments received by F Bank from borrowers who reside in the United States or in Country FC constitute income from sources outside of the USVI. Under the principles of section 864(c)(4) as applied pursuant to paragraph (b) of this section, interest income from sources outside of the USVI generally may constitute income that is effectively connected with the conduct of a trade or business within the USVI for purposes of the Internal Revenue Code. However, interest payments received by F Bank from borrowers who reside in the United States constitute income from sources within the United States under section 861(a)(1). Accordingly, under paragraph (c)(1) of this section, such interest income will not be treated as effectively connected with the conduct of a trade or business in the USVI for purposes of the Internal Revenue Code (for example, for purposes of section 934(b)). Interest payments received by F Bank from borrowers who reside in Country FC, however, may be treated as effectively connected with the conduct of a trade or business in the USVI for purposes of the Internal Revenue Code (including section 934(b)).
+(iii) To the extent that, as described in section 934(a), the USVI administers income tax laws that are identical (except for the substitution of the name of the USVI for the term “United States” where appropriate) to those in force in the United States, interest payments received by F Bank from borrowers who reside in the United States or in Country FC may be treated as income that is effectively connected with the conduct of a trade or business in the USVI for purposes of F Bank's income tax liability to the USVI under mirrored section 882.
+Example 3. (i) G is a partnership that is organized under the laws of, and that operates an active financing business from offices in, Possession I. Interests in G are owned by D, a bona fide resident of Possession I, and N, an alien individual who resides in Country FC. Pursuant to a pre-arrangement, G loans $x to T, a business entity organized under the laws of Country FC, and T in turn loans $y to E, a U.S. resident. In accordance with the arrangement, E pays interest to T, which in turn pays interest to G.
+(ii) The arrangement constitutes a conduit arrangement under paragraph (c)(2) of this section, and the interest payments received by G are treated as income from sources within the United States for purposes of paragraph (c)(1) of this section. Accordingly, the interest received by G will not be treated as effectively connected with the conduct of a trade or business in Possession I for purposes of the Internal Revenue Code (including sections 931(a)(2) and 934(b), if applicable with respect to D). Whether such interest constitutes income from sources within the United States for other purposes of the Internal Revenue Code under generally applicable conduit principles will depend on the facts and circumstances. See, for example, Aiken Indus., Inc. v. Commissioner, 56 T.C. 925 (1971).
+(iii) If Possession I administers income tax laws that are identical (except for the substitution of the name of the possession for the term “United States” where appropriate) to those in force in the United States, the interest received by G may be treated as income effectively connected with the conduct of a trade or business in Possession I under mirrored section 864(c)(4) for purposes of determining the Possession I territorial income tax liability of N under mirrored section 871.
+Example 4. (i) Corporation A, a corporation organized in Possession X, is engaged in a business consisting of the development of computer software and the sale of that software. Corporation A has its sole place of business in Possession X and is not engaged in the conduct of a trade or business in the United States. Corporation A receives orders for its software from customers in the United States and around the world. After orders are accepted, Corporation A's software is either loaded onto compact discs at Corporation A's Possession X facility and shipped via common carrier, or downloaded from Corporation A's server in Possession X. The sales contract provides that the rights, title, and interest in the product will pass from Corporation A to the customer either at Corporation A's place of business in Possession X (if shipped in compact disc form) or at Corporation A's server in Possession X (if electronically downloaded). Assume for purposes of this example that each transaction is classified as a sale of a copyrighted article under § 1.861-18(c)(1)(ii) and (f)(2).
+(ii) Under the principles of section 863(a), as applied pursuant to § 1.937-2(b), because Corporation A passes the rights, title, and interest to the copyrighted articles in Possession X, Corporation A's sales income is sourced to Possession X. Corporation A's sales income is also effectively connected with the conduct of a trade or business in Possession X, under the principles of section 864(c)(3) as applied pursuant to § 1.937-3(b). Corporation A's income is not from sources within the United States, nor is it effectively connected with the conduct of a trade or business in the United States. Accordingly, the U.S. income rule of section 937(b)(2), § 1.937-2(c)(1), and paragraph (c)(1) of this section does not operate to prevent Corporation A's sales income from being Possession X source and Possession X effectively connected income under section 937(b)(1).
+Example 5. (i) Corporation B, a corporation organized in Possession X, has its sole place of business in Possession X and is not engaged in the conduct of a trade or business in the United States. Corporation B employs a software business model generally referred to as an application service provider. Employees of Corporation B in Possession X develop software and maintain it on Corporation B's server in Possession X. Corporation B's customers in the United States and around the world transmit detailed data about their own customers to Corporation B's server and electronic storage facility in Possession X. The customers pay a monthly fee to Corporation B under a Subscription Agreement, and they can use the software to generate reports analyzing the data at any time but do not receive a copy of the software. Corporation B's software allows its customers to generate the reports from their location and to keep track of their relationships with their own customers. Assume for purposes of this example that Corporation B's income from these transactions is derived from the provision of services.
+(ii) Under the principles of section 861(a)(3) and § 1.861-4(a), as applied pursuant to § 1.937-2(b), because Corporation B performs personal services wholly within Possession X, the compensation Corporation B receives for services is sourced to Possession X. Corporation B's services income is also effectively connected with the conduct of a trade or business in Possession X, under the principles of section 864(c)(3) as applied pursuant to § 1.937-3(b). Corporation B's income is not from sources within the United States, nor is it effectively connected with the conduct of a trade or business in the United States. Accordingly, the U.S. income rule of section 937(b)(2), § 1.937-2(c)(1), and paragraph (c)(1) of this section does not operate to prevent Corporation B's services income from being Possession X source or Possession X effectively connected income within the meaning of section 937(b)(1).
+(f) Effective/applicability date. Except as otherwise provided in this paragraph (f), this section applies to income earned in taxable years ending after April 9, 2008. Taxpayers may choose to apply paragraph (b) of this section to income earned in open taxable years ending after October 22, 2004.
+Amendment history (eCFR source note): adopted by T.D. 9391, 73 FR 19374, Apr. 9, 2008; amended by T.D. 9391, 73 FR 27728, May 14, 2008 (correction), and T.D. 9921, 85 FR 79853, Dec. 11, 2020.
+
+### Español
+Resumen en español; el texto oficial está en inglés. Versión para los años contributivos 2019 a 2025. Establece las reglas para determinar si un ingreso está efectivamente conectado con la conducción de una industria o negocio en una posesión (a), aplicando los principios de la sección 864(c) (b). Ese ingreso no incluye partidas de fuentes dentro de los Estados Unidos ni efectivamente conectadas con una industria o negocio en los Estados Unidos, incluidos los arreglos de conducto (c), salvo ciertas ventas de inventario descritas en § 1.863-3(e) (d). Incluye los ejemplos 1 a 5 (e), entre ellos dos sobre programas de computadora vendidos o prestados como servicio desde una posesión (ejemplos 4 y 5), y aplica a ingresos de años contributivos que terminen después del 9 de abril de 2008 (f). Historial de enmiendas (nota de fuente del eCFR): adoptada por T.D. 9391, 73 FR 19374, 9 de abril de 2008; enmendada por T.D. 9391, 73 FR 27728, 14 de mayo de 2008 (corrección), y T.D. 9921, 85 FR 79853, 11 de diciembre de 2020.
