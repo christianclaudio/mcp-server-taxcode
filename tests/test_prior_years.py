@@ -142,6 +142,7 @@ PR_PRIOR_YEAR_IDS = frozenset(
         "pr-ley60-2022-02-2019",
         "pr-ley60-6020-03-2019",
         "pr-ley60-6020-10-2019-as-enacted",
+        "pr-ley60-6020-10-2022",
         "pr-ley60-6020-10-2024",
     }
 )

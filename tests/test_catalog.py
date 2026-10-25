@@ -64,8 +64,8 @@ PR_PRIOR_YEAR_VERBATIM = {
     "pr-ley60-6020-10-2019-as-enacted",
 }
 PR_PRIOR_YEAR_IDS = PR_PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_VERBATIM
-# Ley 60-2019 Sec. 6020.10 split at Ley 32-2024: each side records the act its (b) quotes.
-PR_SPLIT_IDS = {"pr-ley60-6020-10-2019", "pr-ley60-6020-10-2024"}
+# Ley 60-2019 Sec. 6020.10 split at Ley 52-2022 and Ley 32-2024: each records the act it quotes.
+PR_SPLIT_IDS = {"pr-ley60-6020-10-2019", "pr-ley60-6020-10-2022", "pr-ley60-6020-10-2024"}
 
 
 @pytest.fixture
@@ -446,7 +446,7 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 179
+    assert len(editions) == 180
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     # The prior-year federal versions name theirs: an annual code edition (or the eCFR) for
     # the verbatim ones, the enacted public law for the summaries.

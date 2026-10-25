@@ -177,8 +177,18 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert "its wording from 2020 until Ley 65-2025 is not on file;" in source_2020
     # (b) before 2025 is Ley 40-2020, Section 89, with the Ley 32-2024 split dated 2024.
     assert "(b) is quoted from Ley 40-2020, Section 89" in source_2020
-    assert "so it changed no text of (b)." in source_2020
+    assert "(a)(4)(i) and (ii) are quoted from Ley 60-2019 as approved" in source_2020
     assert source_2020.endswith("even though this row is keyed to 2020.")
+    source_2022 = next(
+        line
+        for line in (docs_out / "pr" / "ley60_6020_10_2022.md")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.startswith("- **Source:**")
+    )
+    # From 2022 (a)(4)(i) and (ii) are Ley 52-2022, Article 33; it printed no other text.
+    assert "(a)(4)(i) and (ii) are quoted from Ley 52-2022, Article 33" in source_2022
+    assert "so it changed no other text." in source_2022
     source_2025 = next(
         line
         for line in (docs_out / "pr" / "ley60_6020_10_2025.md")
