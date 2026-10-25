@@ -368,13 +368,14 @@ def test_ley60_sections_amended_by_act_38_2026_are_current_from_2026() -> None:
 
 
 def test_ley60_6020_10_lookup_by_tax_year_splits_on_ley_65_2025_and_act_38_2026() -> None:
-    """To 2024 the 2019 row answers, in 2025 the Ley 65-2025 row, from 2026 the Act 38 row."""
+    """To 2023 the 2019 row answers, in 2024 the Ley 32-2024 row, in 2025 the Ley 65-2025 row,
+    and from 2026 the Act 38 row."""
     test_db = TaxDatabase(":memory:")
-    for year in (2020, 2024):
+    for year in (2020, 2023):
         old = test_db.lookup_statute("Ley 60-2019 Sec. 6020.10", tax_year=year)
         assert old is not None, year
         assert old["id"] == "pr-ley60-6020-10-2019"
-        assert old["effective_year"] == 2019 and old["superseded_year"] == 2025
+        assert old["effective_year"] == 2019 and old["superseded_year"] == 2024
         # Neither Ley 65-2025's (e) and (f) nor Act 38-2026's 2027 registry rule is in it.
         assert "\n(e) " not in old["text_es"] and "\n(f) " not in old["text_es"]
         assert "comenzados luego del 31 de diciembre de 2024" not in old["text_es"]
@@ -390,12 +391,23 @@ def test_ley60_6020_10_lookup_by_tax_year_splits_on_ley_65_2025_and_act_38_2026(
         )
         assert "does not apply to taxable year 2019 lookups" in old["text_en"]
         assert old["text_es"].endswith(
-            "Versión sustituida en 2025 por la Ley 65-2025 (pr-ley60-6020-10-2025).]"
+            "Versión sustituida en 2024 por la Ley 32-2024 (pr-ley60-6020-10-2024).]"
         )
         assert "exact earlier wording is not on file" in old["text_en"]
         assert "Ley 40-2020, Section 89" in old["text_en"]
-        assert "superseded in 2025 by the text as amended by Ley 65-2025" in old["text_en"]
+        assert "superseded in 2024 by the text of (b) as amended by Ley 32-2024" in old["text_en"]
         assert "December 31, 2024" not in old["text_en"]
+    y24 = test_db.lookup_statute("Ley 60-2019 Sec. 6020.10", tax_year=2024)
+    assert y24 is not None
+    assert y24["id"] == "pr-ley60-6020-10-2024"
+    assert y24["effective_year"] == 2024 and y24["superseded_year"] == 2025
+    assert "\n(e) " not in y24["text_es"] and "\n(f) " not in y24["text_es"]
+    assert "1 de enero de 2027" not in y24["text_es"] and "Ley 38-2026" not in y24["text_es"]
+    assert "Artículo 9 de la Ley 32-2024" in y24["text_es"]
+    assert y24["text_es"].endswith(
+        "Versión sustituida en 2025 por la Ley 65-2025 (pr-ley60-6020-10-2025).]"
+    )
+    assert "superseded in 2025 by the text as amended by Ley 65-2025" in y24["text_en"]
     mid = test_db.lookup_statute("Ley 60-2019 Sec. 6020.10", tax_year=2025)
     assert mid is not None
     assert mid["id"] == "pr-ley60-6020-10-2025"
@@ -405,7 +417,7 @@ def test_ley60_6020_10_lookup_by_tax_year_splits_on_ley_65_2025_and_act_38_2026(
     assert new is not None
     assert new["id"] == "pr-ley60-6020-10"
     # Every summary of (c) carries the seller and ownership conditions of the Spanish text.
-    for row in (old, mid, new):
+    for row in (old, y24, mid, new):
         assert "totalmente desvinculada y ajena" in row["text_es"]
         assert "exclusivo y completo dominio" in row["text_es"]
         assert "wholly unrelated to and independent of the decree holder" in row["text_en"]
