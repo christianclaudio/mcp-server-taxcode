@@ -346,29 +346,128 @@ def test_no_earlier_year_is_given_the_current_text() -> None:
                 assert " ".join(rows[row_id][key].split()) != " ".join(rows[current][key].split())
 
 
-# --- Ley 60-2019 Sec. 6020.10(b) before 2025 ------------------------------------------------
+# --- Ley 60-2019 Sec. 6020.10(b), split at Ley 32-2024 ----------------------------------------
 
 FONDO = "Fondo Especial para la Igualdad Social"
+SPLIT_2019 = "pr-ley60-6020-10-2019"
+SPLIT_2024 = "pr-ley60-6020-10-2024"
+LEY32 = f"{OGP}/2020/0032-2024.pdf"
+# Tax year -> the 6020.10 row it resolves to.
+SPLIT_YEARS: dict[int, str] = {
+    **dict.fromkeys(range(2019, 2024), SPLIT_2019),
+    2024: SPLIT_2024,
+    2025: "pr-ley60-6020-10-2025",
+    **dict.fromkeys(range(2026, 2029), "pr-ley60-6020-10"),
+}
 
 
-def test_the_2019_2024_version_of_6020_10_b_is_ley_40_2020s_text(db: TaxDatabase) -> None:
-    rows = _rows()
-    row = rows["pr-ley60-6020-10-2019"]
+def _b(row: dict[str, Any]) -> str:
     (b,) = [p for p in row["text_es"].split("\n") if p.startswith("(b) ")]
+    return b
+
+
+def test_6020_10_resolves_to_the_2019_row_through_2023_and_the_2024_row_after(
+    db: TaxDatabase,
+) -> None:
+    rows = _rows()
+    for year in YEARS:
+        expected = SPLIT_YEARS.get(year)
+        for query in ("Ley 60-2019 Sec. 6020.10", "6020.10"):
+            for jurisdiction in ("PR", None):
+                for lang in ("en", "es"):
+                    found = db.lookup_statute(query, jurisdiction, year, lang)
+                    if expected is None:
+                        assert found is None, (query, year)
+                        continue
+                    assert found is not None and found["id"] == expected, (query, year)
+                    text = rows[expected]["text_en" if lang == "en" else "text_es"]
+                    assert found["operative_text"] == text
+    assert (rows[SPLIT_2019]["effective_year"], rows[SPLIT_2019]["superseded_year"]) == (2019, 2024)
+    assert (rows[SPLIT_2024]["effective_year"], rows[SPLIT_2024]["superseded_year"]) == (2024, 2025)
+    for row_id in (SPLIT_2019, SPLIT_2024):
+        row = db.lookup_statute(row_id)
+        assert row is not None and row["id"] == row_id and not row["is_current"]
+    row = db.lookup_statute("Ley 60-2019 Sec. 6020.10", "PR")
+    assert row is not None and row["id"] == "pr-ley60-6020-10"
+    assert [v["id"] for v in row["available_versions"]] == [
+        "pr-ley60-6020-10",
+        "pr-ley60-6020-10-2025",
+        SPLIT_2024,
+        SPLIT_2019,
+    ]
+
+
+def test_a_search_with_no_year_does_not_list_the_2024_row(db: TaxDatabase) -> None:
+    for query in NO_YEAR_QUERIES:
+        for jurisdiction in (None, "PR"):
+            ids = {r["id"] for r in db.search_statutes(query, jurisdiction, limit=500)}
+            assert SPLIT_2024 not in ids, (query, jurisdiction)
+    ids = {r["id"] for r in db.search_statutes("", "PR", tax_year=2024, limit=500)}
+    assert SPLIT_2024 in ids and SPLIT_2019 not in ids
+    ids = {r["id"] for r in db.search_statutes("", "PR", tax_year=2023, limit=500)}
+    assert SPLIT_2019 in ids and SPLIT_2024 not in ids
+
+
+def test_before_ley_32_2024_6020_10_b_is_ley_40_2020s_text() -> None:
+    rows = _rows()
+    row = rows[SPLIT_2019]
+    b = _b(row)
     # Ley 40-2020, Sec. 89, word for word; it names no Fondo Especial para la Igualdad Social.
     assert _sha16(b) == "f49a2b7a1a0ef719"
     assert FONDO not in b and "cinco mil dólares ($5,000)" in b
-    assert "Los restantes dos mil quinientos" not in row["text_es"].split("[Nota", 1)[0]
+    assert "$2,500 to the Fondo" not in row["text_en"]
+    assert "superseded in 2024 by the text of (b) as amended by Ley 32-2024" in row["text_en"]
+    assert (
+        "Versión sustituida en 2024 por la Ley 32-2024 (pr-ley60-6020-10-2024)." in (row["text_es"])
+    )
+    assert row["source_url"] == LEY40
+    assert "(pr-ley60-6020-10-2024)" in _notes()[SPLIT_2019]
+
+
+def test_from_ley_32_2024_6020_10_b_is_article_9s_text() -> None:
+    rows = _rows()
+    row = rows[SPLIT_2024]
+    b = _b(row)
+    # Ley 32-2024, Art. 9, word for word, read on the certified copy pages 7-8.
+    assert _sha16(b) == "6d09f6a1101713e0"
+    assert b.endswith(
+        "Los restantes dos mil quinientos (2,500) dólares deberán ser destinados al "
+        "Fondo Especial para la Igualdad Social."
+    )
+    assert "Dos mil quinientos (2,500) dólares deberán ser destinados a cualquier otra entidad" in b
+    assert row["source_url"] == LEY32
     en = row["text_en"]
-    assert "The Fondo split does not apply to taxable years 2019 through 2023." in en
-    assert "from January 18, 2024 (Ley 32-2024, Article 9" in en
-    assert "Ley 32-2024, Article 9" in _notes()["pr-ley60-6020-10-2019"]
-    for year in range(2019, 2025):
-        for query in ("Ley 60-2019 Sec. 6020.10", "6020.10"):
-            found = db.lookup_statute(query, "PR", year, "es")
-            assert found is not None and found["id"] == "pr-ley60-6020-10-2019", year
-            assert found["operative_text"] == row["text_es"]
-    # The 2025 and current versions keep the Fondo split.
+    assert en.startswith("English summary; the official text is in Spanish.")
+    assert "the remaining $2,500 to the Fondo Especial para la Igualdad Social" in en
+    assert "as amended by Ley 32-2024, Article 9, in force on approval on January 18, 2024" in en
+    assert "superseded in 2025 by the text as amended by Ley 65-2025" in en
+    note = _notes()[SPLIT_2024]
+    assert APPROVAL.format(y=2024) + " and names no tax year (Art. 11)" in note
+    assert "still governed January 1-17, 2024" in note
+    # The later versions keep the same (b).
     for later in ("pr-ley60-6020-10-2025", "pr-ley60-6020-10"):
-        (b_later,) = [p for p in rows[later]["text_es"].split("\n") if p.startswith("(b) ")]
-        assert FONDO in b_later, later
+        assert _b(rows[later]) == b, later
+
+
+def test_the_6020_10_split_pins_its_sources() -> None:
+    manifest = _manifest()
+    rows = _rows()
+    expected = {
+        SPLIT_2019: (LEY40, "39f6aac5879401fc", "Ley 40-2020, Sec. 89", "2020-04-16"),
+        SPLIT_2024: (LEY32, "03cc877429b4d794", "Ley 32-2024, Art. 9", "2024-01-18"),
+    }
+    for row_id, (url, sha16, law, effective_date) in expected.items():
+        entry = manifest[row_id]
+        assert rows[row_id]["source_url"] == entry["url"] == url, row_id
+        assert entry["content_sha256"][:16] == sha16, row_id
+        assert entry["enacting_law"].startswith(law), row_id
+        assert entry["effective_date"] == effective_date, row_id
+        assert (entry["edition"], entry["retrieved"]) == ("as_enacted", "2026-10-25"), row_id
+        # Only (b) (and (d)) were checked against the act; the rest is from the compilation.
+        assert entry["verification"] == "not_recorded", row_id
+
+
+def test_the_2020_1020_02_row_pins_ley_47_2020() -> None:
+    law = _manifest()["pr-ley60-1020-02-2020"]["enacting_law"]
+    assert f"Ley 47-2020, Art. 1 ({OGP}/2020/0047-2020.pdf, sha256 " in law
+    assert law.endswith("be8d5537f35687a7e576712200499b4834e4224206d8f3a3c4c142f0644e3290)")

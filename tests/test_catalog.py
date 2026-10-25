@@ -63,6 +63,8 @@ PR_PRIOR_YEAR_VERBATIM = {
     "pr-ley60-6020-03-2019",
 }
 PR_PRIOR_YEAR_IDS = PR_PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_VERBATIM
+# Ley 60-2019 Sec. 6020.10 split at Ley 32-2024: each side records the act its (b) quotes.
+PR_SPLIT_IDS = {"pr-ley60-6020-10-2019", "pr-ley60-6020-10-2024"}
 
 
 @pytest.fixture
@@ -148,11 +150,12 @@ def test_manifest_records_unknowns_explicitly() -> None:
         for e in catalog.manifest
         if e["kind"] == "statute" and e["content_sha256"] != NOT_RECORDED
     }
-    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS
+    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS
     hashed = {
         e["kind"]
         for e in catalog.manifest
-        if e["content_sha256"] != NOT_RECORDED and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS
+        if e["content_sha256"] != NOT_RECORDED
+        and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS
     }
     assert hashed == {"rate_table", "federal_table", "publication"}
     hashed_pubs = {
@@ -442,7 +445,7 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 177
+    assert len(editions) == 178
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     # The prior-year federal versions name theirs: an annual code edition (or the eCFR) for
     # the verbatim ones, the enacted public law for the summaries.
@@ -450,7 +453,7 @@ def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
         expected = "as_enacted" if row_id in PRIOR_YEAR_SUMMARIES else "amended_compilation"
         assert editions.pop(row_id) == expected, row_id
     # The prior-year Puerto Rico versions name the act they were read from, as enacted.
-    for row_id in sorted(PR_PRIOR_YEAR_IDS):
+    for row_id in sorted(PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS):
         assert editions.pop(row_id) == "as_enacted", row_id
     assert set(editions.values()) == {NOT_RECORDED}
 

@@ -141,6 +141,7 @@ PR_PRIOR_YEAR_IDS = frozenset(
         "pr-ley60-1020-02-2020",
         "pr-ley60-2022-02-2019",
         "pr-ley60-6020-03-2019",
+        "pr-ley60-6020-10-2024",
     }
 )
 OLD_STATUTES = [s for s in INITIAL_STATUTES if s["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS]

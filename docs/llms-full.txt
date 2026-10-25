@@ -3,7 +3,7 @@
 Full statutory text is split by jurisdiction. Each file holds every section of one jurisdiction, in catalog order.
 
 - [US](./us/llms-full.txt): 28 sections
-- [PR](./pr/llms-full.txt): 25 sections
+- [PR](./pr/llms-full.txt): 26 sections
 - [GA](./ga/llms-full.txt): 7 sections
 - [CA](./ca/llms-full.txt): 4 sections
 - [NY](./ny/llms-full.txt): 4 sections
