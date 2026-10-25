@@ -34,9 +34,54 @@ INITIAL_STATUTES: list[dict[str, Any]] = [statute_db_row(s) for s in _CATALOG.st
 INITIAL_PUBLICATIONS: list[dict[str, Any]] = [dict(p) for p in _CATALOG.publications]
 
 
+# Annual US Code editions (GPO, govinfo) that prior-year rows quote verbatim, by URL prefix.
+# Exact prefixes only: no other govinfo package (a public law PDF, another edition) matches.
+USCODE_EDITION_URL_PREFIXES: dict[str, int] = {
+    "https://www.govinfo.gov/content/pkg/USCODE-2019-title26/html/": 2019,
+    "https://www.govinfo.gov/content/pkg/USCODE-2021-title26/html/": 2021,
+}
+
+# The dated rows that existed before prior-year versions were added. They keep answering
+# lookups and searches with no tax year, as they always have. Any other row with a
+# superseded_year (a prior-year version) answers only a query for a year inside its window,
+# or a lookup by its own id. Frozen: tests pin it, and it never grows.
+LEGACY_DATED_STATUTE_IDS: frozenset[str] = frozenset(
+    {
+        "ga-ocga-48-7-20-2024",
+        "ga-ocga-48-7-20-2025",
+        "la-rev-stat-47-32",
+        "nh-rev-stat-77-1",
+        "pr-act22-2012",
+        "pr-ley60-2022-01-2019",
+        "pr-ley60-6020-10-2019",
+        "pr-ley60-6020-10-2025",
+    }
+)
+
+
+def uscode_edition(source_url: str | None) -> int | None:
+    """The annual US Code edition a row quotes (``2019``), or ``None``."""
+    for prefix, edition in USCODE_EDITION_URL_PREFIXES.items():
+        if source_url and source_url.startswith(prefix):
+            return edition
+    return None
+
+
 def is_official_text(source_url: str | None) -> bool:
-    """True for rows holding official US Code text from the pinned OLRC release point."""
-    return source_url == USLM_TITLE26_SOURCE_URL
+    """True for rows holding official US Code text.
+
+    That is the pinned OLRC release point, or an annual edition that a prior-year row
+    quotes (:data:`USCODE_EDITION_URL_PREFIXES`). Public-law PDFs never match: rows citing
+    one hold a summary.
+    """
+    return source_url == USLM_TITLE26_SOURCE_URL or uscode_edition(source_url) is not None
+
+
+def statute_labels(source_url: str | None) -> dict[str, Any]:
+    """The content labels of a statute row, from its source URL."""
+    return reference_labels(
+        official_text=is_official_text(source_url), code_edition=uscode_edition(source_url)
+    )
 
 
 def _year_is_known(value: Any) -> bool:
@@ -468,6 +513,14 @@ class TaxDatabase:
                         "AND (superseded_year IS NULL OR ? < superseded_year)"
                     )
                     params.extend([tax_year, tax_year])
+                else:
+                    # No year: a prior-year version never stands in for the current text;
+                    # its own id (from a search result or a page cursor) still names it.
+                    sql += (
+                        " AND (superseded_year IS NULL OR list_contains(?, id)"
+                        " OR LOWER(id) = LOWER(?))"
+                    )
+                    params.extend([list(LEGACY_DATED_STATUTE_IDS), query_val])
 
                 # An exact record id (from search results) names one version; it wins.
                 sql += (
@@ -521,7 +574,7 @@ class TaxDatabase:
                     "cross_references": result[11] or [],
                     "language": lang.lower(),
                     "official_language": "es" if result[1] == "PR" else "en",
-                    **reference_labels(official_text=is_official_text(result[10])),
+                    **statute_labels(result[10]),
                 }
             finally:
                 if self._mem_conn is None:
@@ -590,6 +643,10 @@ class TaxDatabase:
                         "AND (superseded_year IS NULL OR ? < superseded_year)"
                     )
                     params.extend([tax_year, tax_year])
+                else:
+                    # No year: a prior-year version never stands in for the current text.
+                    sql += " AND (superseded_year IS NULL OR list_contains(?, id))"
+                    params.append(list(LEGACY_DATED_STATUTE_IDS))
 
                 rows = conn.execute(sql, params).fetchall()
 
@@ -626,7 +683,7 @@ class TaxDatabase:
                             "validity": validity_label(r[8], r[9]),
                             "source_url": r[10],
                             "cross_references": r[11] or [],
-                            **reference_labels(official_text=is_official_text(r[10])),
+                            **statute_labels(r[10]),
                         }
                     )
                 return output

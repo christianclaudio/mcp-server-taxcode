@@ -9,11 +9,21 @@
 - [26 U.S.C. § 937 (2004) — Residence and source rules involving possessions / Reglas de residencia y fuente relativas a las posesiones](./us/irc_937.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart D > § 937 (OLRC release point 119-121)
 - [26 U.S.C. § 865 (1986) — Source rules for personal property sales / Reglas de fuente para ventas de propiedad mueble](./us/irc_865.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part I > § 865 (OLRC release point 119-121)
 - [26 U.S.C. § 1 (1954) — Tax imposed / Imposición del impuesto](./us/irc_1.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part I > § 1 (OLRC release point 119-121)
+- [26 U.S.C. § 1 (2019) — Tax imposed / Imposición del impuesto](./us/irc_1_2019.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part I > § 1 (summary for tax year 2019)
+- [26 U.S.C. § 1 (2020) — Tax imposed / Imposición del impuesto](./us/irc_1_2020.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part I > § 1 (U.S. Code 2019 ed.)
 - [26 U.S.C. § 24 (1997) — Child tax credit / Crédito por hijos](./us/irc_24.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart A > § 24 (OLRC release point 119-121)
+- [26 U.S.C. § 24 (2019) — Child tax credit / Crédito por hijos](./us/irc_24_2019.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart A > § 24 (U.S. Code 2019 ed.)
+- [26 U.S.C. § 24 (2021) — Child tax credit / Crédito por hijos](./us/irc_24_2021.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart A > § 24 (U.S. Code 2021 ed.)
 - [26 U.S.C. § 32 (1975) — Earned income / Crédito por ingreso devengado](./us/irc_32.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart C > § 32 (OLRC release point 119-121)
+- [26 U.S.C. § 32 (2019) — Earned income / Crédito por ingreso devengado](./us/irc_32_2019.md): Title 26 > Subtitle A > Chapter 1 > Subchapter A > Part IV > Subpart C > § 32 (U.S. Code 2019 ed.)
 - [26 U.S.C. § 61 (1954) — Gross income defined / Definición de ingreso bruto](./us/irc_61.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 61 (OLRC release point 119-121)
 - [26 U.S.C. § 62 (1954) — Adjusted gross income defined / Definición de ingreso bruto ajustado](./us/irc_62.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (OLRC release point 119-121)
+- [26 U.S.C. § 62 (2019) — Adjusted gross income defined / Definición de ingreso bruto ajustado](./us/irc_62_2019.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (U.S. Code 2019 ed.)
+- [26 U.S.C. § 62 (2020) — Adjusted gross income defined / Definición de ingreso bruto ajustado](./us/irc_62_2020.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (summary for tax year 2020)
+- [26 U.S.C. § 62 (2021) — Adjusted gross income defined / Definición de ingreso bruto ajustado](./us/irc_62_2021.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 62 (U.S. Code 2021 ed.)
 - [26 U.S.C. § 63 (1954) — Taxable income defined / Definición de ingreso tributable](./us/irc_63.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 63 (OLRC release point 119-121)
+- [26 U.S.C. § 63 (2019) — Taxable income defined / Definición de ingreso tributable](./us/irc_63_2019.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 63 (U.S. Code 2019 ed.)
+- [26 U.S.C. § 63 (2021) — Taxable income defined / Definición de ingreso tributable](./us/irc_63_2021.md): Title 26 > Subtitle A > Chapter 1 > Subchapter B > Part I > § 63 (U.S. Code 2021 ed.)
 - [26 U.S.C. § 911 (1954) — Citizens or residents of the United States living abroad / Ciudadanos o residentes de los Estados Unidos que viven en el extranjero](./us/irc_911.md): Title 26 > Subtitle A > Chapter 1 > Subchapter N > Part III > Subpart B > § 911 (OLRC release point 119-121)
 - [26 U.S.C. § 1411 (2010) — Imposition of tax on net investment income / Impuesto sobre el ingreso neto de inversión](./us/irc_1411.md): Title 26 > Subtitle A > Chapter 2A > § 1411 (OLRC release point 119-121)
 - [26 U.S.C. § 6012 (1954) — Persons required to make returns of income / Personas obligadas a rendir planillas de ingreso](./us/irc_6012.md): Title 26 > Subtitle F > Chapter 61 > Subchapter A > Part II > Subpart B > § 6012 (OLRC release point 119-121)
@@ -22,6 +32,7 @@
 - [26 CFR § 1.937-1 (2006) — Bona fide residency in a possession](./us/cfr_1_937_1.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-1
 - [26 CFR § 1.937-2 (2006) — Income from sources within a possession](./us/cfr_1_937_2.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-2
 - [26 CFR § 1.937-3 (2008) — Income effectively connected with the conduct of a trade or business in a possession](./us/cfr_1_937_3.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3
+- [26 CFR § 1.937-3 (2019) — Income effectively connected with the conduct of a trade or business in a possession](./us/cfr_1_937_3_2019.md): Title 26 > Chapter I > Subchapter A > Part 1 > § 1.937-3 (eCFR 2025-01-13)
 - [PR CRI Sec. 1010.01 (2011) — Definiciones generales / General Definitions](./pr/cri_1010_01.md): Ley 1-2011 > Subtítulo A > Capítulo 1 > Sección 1010.01
 - [PR CRI Sec. 1031.01 (2011) — Ingreso bruto / Gross Income](./pr/cri_1031_01.md): Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.01
 - [PR CRI Sec. 1031.02 (2011) — Exenciones del Ingreso Bruto / Exemptions from Gross Income](./pr/cri_1031_02.md): Ley 1-2011 > Subtítulo A > Capítulo 3 > Subcapítulo A > Sección 1031.02

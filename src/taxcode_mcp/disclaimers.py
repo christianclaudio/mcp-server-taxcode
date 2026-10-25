@@ -49,6 +49,12 @@ OFFICIAL_TEXT_LABEL: dict[str, str] = {
     "es": "Texto estatutario oficial (Código de los EE. UU., punto de publicación OLRC 119-121).",
 }
 
+# Official text quoted from an annual US Code edition (prior-year rows); {edition} is its year.
+USCODE_EDITION_TEXT_LABEL: dict[str, str] = {
+    "en": "Official statutory text (US Code, {edition} edition, GPO).",
+    "es": "Texto estatutario oficial (Código de los EE. UU., edición de {edition}, GPO).",
+}
+
 OFFICIAL_TEXT_TRANSLATION_DISCLAIMER = (
     "The Spanish summary is an unofficial translation for reference only; the official "
     "English statutory text controls. / El resumen en español es una traducción no oficial "
@@ -68,12 +74,23 @@ ESTIMATE_NOTE: dict[str, str] = {
 }
 
 
-def reference_labels(*, official_text: bool = False) -> dict[str, Any]:
-    """Per-item labels; official_text marks rows holding the official statutory text."""
+def reference_labels(
+    *, official_text: bool = False, code_edition: int | None = None
+) -> dict[str, Any]:
+    """Per-item labels; official_text marks rows holding the official statutory text.
+
+    ``code_edition`` names the annual US Code edition an official text is quoted from;
+    without it the label names the pinned OLRC release point.
+    """
     if official_text:
+        label = (
+            dict(OFFICIAL_TEXT_LABEL)
+            if code_edition is None
+            else {k: v.format(edition=code_edition) for k, v in USCODE_EDITION_TEXT_LABEL.items()}
+        )
         return {
             "content_type": CONTENT_TYPE_OFFICIAL_TEXT,
-            "content_label": dict(OFFICIAL_TEXT_LABEL),
+            "content_label": label,
             "unofficial_summary": False,
             "translation_disclaimer": OFFICIAL_TEXT_TRANSLATION_DISCLAIMER,
         }

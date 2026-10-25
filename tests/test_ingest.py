@@ -574,3 +574,22 @@ def test_formerly_catalog_only_entries_are_seeded_from_pinned_sources() -> None:
             "https://hacienda.pr.gov/sites/default/files/publicaciones/"
         )
         assert pubs[pid]["source_url"].endswith(".pdf")
+
+
+def test_ingest_records_keep_each_prior_year_versions_superseded_year() -> None:
+    """The ingest upsert writes ``superseded_year``, so a prior-year version stays dated."""
+    dated = {
+        "us-irc-1-2019": 2020,
+        "us-irc-1-2020": 2026,
+        "us-irc-24-2019": 2021,
+        "us-irc-24-2021": 2025,
+        "us-irc-32-2019": 2021,
+        "us-irc-62-2019": 2020,
+        "us-irc-62-2020": 2021,
+        "us-irc-62-2021": 2026,
+        "us-irc-63-2019": 2021,
+        "us-irc-63-2021": 2025,
+        "us-cfr-1-937-3-2019": 2026,
+    }
+    records = {r.id: r.to_dict() for r in STATUTES_CATALOG if r.id in dated}
+    assert {i: r["superseded_year"] for i, r in records.items()} == dated
