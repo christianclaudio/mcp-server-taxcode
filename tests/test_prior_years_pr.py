@@ -40,9 +40,9 @@ VERBATIM_IDS = frozenset(
 SUMMARY_IDS = PR_IDS - VERBATIM_IDS
 # id: (source_url, sha256[:16] of that file, enacting_law starts with, effective_date)
 PR_SOURCES: dict[str, tuple[str, str, str, str]] = {
-    "pr-cri-1031-02-2019": (LEY93, "9adcfbe63b8bc9f2", "Ley 93-2026, Sec. 1", "2026-07-01"),
-    "pr-cri-1062-01-2019": (LEY40, "39f6aac5879401fc", "Ley 40-2020, Sec. 33", "2020-04-16"),
-    "pr-cri-1062-03-2019": (LEY40, "39f6aac5879401fc", "Ley 40-2020, Sec. 35", "2020-04-16"),
+    "pr-cri-1031-02-2019": (LEY93, "9adcfbe63b8bc9f2", "Ley 93-2026, Sec. 1", "not_recorded"),
+    "pr-cri-1062-01-2019": (LEY40, "39f6aac5879401fc", "Ley 40-2020, Sec. 33", "not_recorded"),
+    "pr-cri-1062-03-2019": (LEY40, "39f6aac5879401fc", "Ley 40-2020, Sec. 35", "not_recorded"),
     "pr-ley60-1020-02-2019": (LEY60, "21cd65faf8bb83e0", "Ley 60-2019", "2019-07-01"),
     "pr-ley60-1020-02-2020": (LEY40, "39f6aac5879401fc", "Ley 40-2020, Sec. 74", "2020-04-16"),
     "pr-ley60-2022-02-2019": (LEY60, "21cd65faf8bb83e0", "Ley 60-2019", "2019-07-01"),
