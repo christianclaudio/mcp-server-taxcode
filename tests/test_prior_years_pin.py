@@ -18,7 +18,8 @@ Only these answers may change, and only in these ways:
 * (e) ``out``: a lookup that answers with a corrected row (see ``CORRECTED``): by its own id
   with any tax year or none, and by citation or bare section for a tax year that row
   answers; and the searches with no tax year whose results list that row, which now shows
-  its corrected text, source and 2024 end (``CORRECTED_SEARCHES``).
+  its corrected text, source, 2020 start and 2024 end, and ranks by that start
+  (``CORRECTED_SEARCHES``).
 """
 
 from __future__ import annotations
@@ -92,6 +93,7 @@ PRIOR_YEAR_IDS = {
     "pr-ley60-1020-02-2020",
     "pr-ley60-2022-02-2019",
     "pr-ley60-6020-03-2019",
+    "pr-ley60-6020-10-2019-as-enacted",
     "pr-ley60-6020-10-2024",
 }
 # Older dated versions of a section that gained versions: their version lists grew too.
@@ -100,7 +102,9 @@ DATED_IDS: dict[str, frozenset[str]] = {
 }
 # Row whose text was corrected after the base commit -> (jurisdiction, citation, bare
 # section, tax years it answers). Ley 60-2019 Sec. 6020.10(b) wrongly carried Ley 32-2024's
-# Fondo Especial para la Igualdad Social split, which first applies in 2024, into 2019-2023;
+# Fondo Especial para la Igualdad Social split, which first applies in 2024, into 2019-2023,
+# and Ley 40-2020's text into 2019. It now answers 2020-2023; 2019 answers with Ley 60-2019 as
+# approved (pr-ley60-6020-10-2019-as-enacted), so citation lookups for 2019-2023 may change;
 # 2024 now answers with that act's own version (VERSIONED).
 CORRECTED: dict[str, tuple[str, str, str, range]] = {
     "pr-ley60-6020-10-2019": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", range(2019, 2024)),
@@ -112,6 +116,7 @@ CORRECTED_SEARCHES = frozenset(
         "search|residente|PR|None|5",
         "search|credit|None|None|0",
         "search|credit|PR|None|0",
+        "search|exempt|None|None|5",
         "search|exempt|PR|None|5",
         "search|income|PR|None|5",
         "search|ingreso|PR|None|5",
@@ -173,6 +178,6 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
                     unexpected.append(f"versions {key}")
     assert unexpected == []
     # 280 US and 248 PR in-window lookups (240, plus 8 for 6020.10 in 2024), 68 lookups of the
-    # corrected row, 277 window-year searches, 8 searches listing the corrected row, and the
+    # corrected row, 277 window-year searches, 9 searches listing the corrected row, and the
     # health check.
-    assert (changed_out, changed_versions) == (882, 2072)
+    assert (changed_out, changed_versions) == (883, 2072)

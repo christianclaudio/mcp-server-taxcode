@@ -162,22 +162,23 @@ def test_run_ingest_live_db_and_export_docs(tmp_path: Path) -> None:
     assert (docs_out / "us" / "irc_933.md").exists()
     assert (docs_out / "pr" / "ley60_2021_01.md").exists()
     # A row with a source note says where its text came from; rows without one keep the bare URL.
-    source_2019 = next(
+    source_2020 = next(
         line
-        for line in (docs_out / "pr" / "ley60_6020_10_2019.md")
+        for line in (docs_out / "pr" / "ley60_6020_10_2020.md")
         .read_text(encoding="utf-8")
         .splitlines()
         if line.startswith("- **Source:**")
     )
     assert (
-        "— Text taken from the OGP compilation of Ley 60-2019 as revised with later" in source_2019
+        "— Text taken from the OGP compilation of Ley 60-2019 as revised with later" in source_2020
     )
-    assert "Ley 65-2025's (e) and (f) removed; (d) checked against Ley 40-2020" in source_2019
-    assert "which added it effective April 16, 2020 (Section 97)" in source_2019
-    assert "its exact earlier wording is not on file." in source_2019
+    assert "Ley 65-2025's (e) and (f) removed; (d) checked against Ley 40-2020" in source_2020
+    assert "which added it effective April 16, 2020 (Section 97)" in source_2020
+    assert "its wording from 2020 until Ley 65-2025 is not on file;" in source_2020
     # (b) before 2025 is Ley 40-2020, Section 89, with the Ley 32-2024 split dated 2024.
-    assert "(b) is quoted from Ley 40-2020, Section 89" in source_2019
-    assert source_2019.endswith("so it changed no text of (b).")
+    assert "(b) is quoted from Ley 40-2020, Section 89" in source_2020
+    assert "so it changed no text of (b)." in source_2020
+    assert source_2020.endswith("even though this row is keyed to 2020.")
     source_2025 = next(
         line
         for line in (docs_out / "pr" / "ley60_6020_10_2025.md")
