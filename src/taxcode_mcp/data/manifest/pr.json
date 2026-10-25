@@ -316,6 +316,19 @@
     },
     {
       "kind": "statute",
+      "id": "pr-ley60-6020-10-2019-as-enacted",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2019/0060-2019.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "21cd65faf8bb83e0f48a723710243401820bcaec5e0e10d96aeb69463a9485a1",
+      "enacting_law": "Ley 60-2019",
+      "effective_date": "2019-07-01",
+      "verification": "verified_verbatim"
+    },
+    {
+      "kind": "statute",
       "id": "pr-ley60-6070-55",
       "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
       "edition": "not_recorded",
