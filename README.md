@@ -27,7 +27,7 @@ graph TD
     SysSub["System Sub-server (mount: 'system')<br>• system_get_health_status<br>• taxcode://system/reference/capabilities"]
     StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications<br>• taxcode://statutes/{jurisdiction}/{section}"]
     CompSub["Compliance Sub-server (mount: 'compliance')<br>• compliance_evaluate_pr_bona_fide_residency<br>• compliance_calculate_built_in_gain_sourcing<br>• compliance_evaluate_georgia_residency<br>• compliance_evaluate_state_residency"]
-    DuckDB["DuckDB In-Memory & File Engine<br>(142 Statutes, 37 Publications, Full-Text Search, Temporal Versions)"]
+    DuckDB["DuckDB In-Memory & File Engine<br>(143 Statutes, 37 Publications, Full-Text Search, Temporal Versions)"]
 
     Client <-->|"JSON-RPC (tools/list, tools/call)"| Gateway
     Gateway --> ParentMW

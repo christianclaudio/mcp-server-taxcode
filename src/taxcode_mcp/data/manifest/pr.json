@@ -297,8 +297,21 @@
       "licence": "not_recorded",
       "retrieved": "2026-10-25",
       "content_sha256": "03cc877429b4d7946e711aeac110b617ed29782e7de200d7c0c4e9186ae510cc",
-      "enacting_law": "Ley 32-2024, Art. 9 ((b); the rest of the text is from the OGP compilation of Ley 60-2019)",
+      "enacting_law": "Ley 32-2024, Art. 9 ((b)); Ley 52-2022, Art. 33 ((a)(4)(i); https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0052-2022.pdf, sha256 6028882550a25e6d8e78a24f281e99b6b23d957f7d3c99e7c2375d82b58801d8); Ley 188-2024, Art. 5 ((a)(4)(ii); https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0188-2024.pdf, sha256 f05a1389c9173063df2d3a82db042c4189f52bf986445e4f96f74fa13db5f190); the rest of the text is from the OGP compilation of Ley 60-2019",
       "effective_date": "2024-01-18",
+      "verification": "not_recorded"
+    },
+    {
+      "kind": "statute",
+      "id": "pr-ley60-6020-10-2022",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0052-2022.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-10-25",
+      "content_sha256": "6028882550a25e6d8e78a24f281e99b6b23d957f7d3c99e7c2375d82b58801d8",
+      "enacting_law": "Ley 40-2020, Sec. 89; Ley 52-2022, Art. 33 ((a)(4)(i) and (ii); (a)(3), (b) and (d) are from Ley 40-2020, Sec. 89; the rest of the text is from the OGP compilation of Ley 60-2019)",
+      "effective_date": "2022-06-30",
       "verification": "not_recorded"
     },
     {
@@ -310,7 +323,7 @@
       "licence": "not_recorded",
       "retrieved": "2026-10-25",
       "content_sha256": "39f6aac5879401fc1a84c87c103277fb78f2302e86ed09632b4570e0b53637b8",
-      "enacting_law": "Ley 40-2020, Sec. 89 ((b) and (d); the rest of the text is from the OGP compilation of Ley 60-2019)",
+      "enacting_law": "Ley 40-2020, Sec. 89 ((a)(3), (b) and (d); (a)(4)(i) and (ii) are from Ley 60-2019 as approved; the rest of the text is from the OGP compilation of Ley 60-2019)",
       "effective_date": "2020-04-16",
       "verification": "not_recorded"
     },
