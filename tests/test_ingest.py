@@ -63,7 +63,7 @@ def test_run_ingest_source_filters() -> None:
 
     ga_stats = run_ingest(db_path=":memory:", sources="ga", dry_run=True)
     assert ga_stats["statutes_considered"] > 0
-    assert ga_stats["publications_considered"] == 2
+    assert ga_stats["publications_considered"] == 1
 
     ca_stats = run_ingest(db_path=":memory:", sources="ca", dry_run=True)
     assert ca_stats["statutes_considered"] == 4
@@ -236,6 +236,67 @@ def test_2026_publications_cite_the_issuing_agency_pdf() -> None:
     assert "Act No. 38-2026" in pubs["pr-ddec-ib-2026-004"]["summary"]
 
 
+GA_PTE_FAQ_URL = "https://dor.georgia.gov/hb-149-pass-through-entity-tax-faq"
+
+
+def test_georgia_publications_cite_the_live_dor_faq() -> None:
+    """The two unlisted GA bulletin rows are gone; DOR's HB 149 PTE tax FAQ replaces them."""
+    from taxcode_mcp.catalog import load_catalog
+    from taxcode_mcp.db import INITIAL_PUBLICATIONS
+
+    removed_ids = {"ga-dor-pb-it-2024-01", "ga-dor-pb-it-2022-02"}
+    removed_numbers = {"DOR PB IT-2024-01", "DOR PB IT-2022-02"}
+    assert not removed_ids & {p["id"] for p in INITIAL_PUBLICATIONS}
+    assert not removed_numbers & {p["doc_number"] for p in INITIAL_PUBLICATIONS}
+    ga = [p for p in INITIAL_PUBLICATIONS if p["id"].startswith("ga-")]
+    assert [p["id"] for p in ga] == ["ga-dor-hb-149-pte-tax-faq"]
+    faq = ga[0]
+    # doc_date: the page shows no date; its ga:citation:metadata last_updated="1755695821"
+    # attribute is 2025-08-20.
+    assert faq == {
+        "id": "ga-dor-hb-149-pte-tax-faq",
+        "category": "policy-bulletin",
+        "doc_number": "DOR HB 149 PTE Tax FAQ",
+        "doc_date": "2025-08-20",
+        "title": "HB 149 Pass-Through Entity Tax FAQ",
+        "summary": (
+            "Georgia Department of Revenue questions and answers on the HB 149 (2021) "
+            "election: for taxable years beginning on or after January 1, 2022, S "
+            "corporations and partnerships may annually make an irrevocable election to pay "
+            "income tax at the entity level. Covers who may elect (all partnerships from "
+            "2023), making the election on Form 600S or Form 700, estimated tax payments, "
+            "how owners report entity-taxed income (PTEDED) and loss (PTEADD) on Form 500, "
+            "composite returns, and tax attributes and credits."
+        ),
+        "source_url": GA_PTE_FAQ_URL,
+    }
+    assert faq == {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}[faq["id"]]
+    assert "irrevocable election to pay income tax at the entity level" in faq["summary"]
+    assert "SALT" not in faq["summary"]
+
+    entries = [
+        e
+        for e in load_catalog(with_manifest=True).manifest
+        if e["kind"] == "publication" and e["id"] == faq["id"]
+    ]
+    assert len(entries) == 1
+    entry = {k: v for k, v in entries[0].items() if k != "_jurisdiction"}
+    assert entry == {
+        "kind": "publication",
+        "id": "ga-dor-hb-149-pte-tax-faq",
+        "url": GA_PTE_FAQ_URL,
+        "edition": "not_recorded",
+        "official": True,
+        "licence": "not_recorded",
+        "retrieved": "2026-10-24",
+        "content_sha256": "ae24ef323dc4ff006bca9b2f5850c8fb9c23e4c49347029d9678d1ef0c94406a",
+        "enacting_law": "HB 149 of 2021",
+        "effective_date": "not_recorded",
+        "verification": "summary",
+    }
+    assert entries[0]["_jurisdiction"] == "GA"
+
+
 UPSTREAM_HOSTS = [
     "uscode.house.gov",
     "www.ecfr.gov",
@@ -248,7 +309,7 @@ PUBLIC_IP = "93.184.215.14"
 
 def test_upstream_endpoints_and_fixed_sources_avoid_dead_and_redirecting_urls() -> None:
     """Pins that replaced a 404, a deprecated API or a redirect on main stay replaced."""
-    from taxcode_mcp.db import INITIAL_STATUTES
+    from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES
 
     assert UPSTREAM_ENDPOINTS["OGP_PR"] == (
         "https://bvirtualogp.pr.gov/ogp/Bvirtual/Pages/default.aspx"
@@ -257,10 +318,14 @@ def test_upstream_endpoints_and_fixed_sources_avoid_dead_and_redirecting_urls() 
     dead = {
         "https://bvirtualogp.pr.gov/",
         "https://dor.georgia.gov/taxes/individual-income-tax",
+        "https://dor.georgia.gov/document/document/policy-bulletin-it-2024-01/download",
+        "https://dor.georgia.gov/document/document/policy-bulletin-it-2022-02/download",
     }
     for row in INITIAL_STATUTES:
         assert row["source_url"] not in dead, row["id"]
         assert "www.ecfr.gov/on/" not in row["source_url"], row["id"]
+    for pub in INITIAL_PUBLICATIONS:
+        assert pub["source_url"] not in dead, pub["id"]
     seeds = {s["id"]: s for s in INITIAL_STATUTES}
     assert seeds["pr-act22-2012"]["source_url"] == (
         "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/"
