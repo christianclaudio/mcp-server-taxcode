@@ -20,6 +20,10 @@ Only these answers may change, and only in these ways:
   answers; and the searches with no tax year whose results list that row, which now shows
   its corrected text, source, 2020 start and 2022 end, and ranks by that start
   (``CORRECTED_SEARCHES``).
+* (f) ``out``: a lookup that answers with a row whose (a)(4) was corrected (see
+  ``CORRECTED_A4``): by its own id with any tax year or none, and by citation or bare section
+  for a tax year that row answers (or with no tax year, for the current row); and the
+  resource read of that section, which shows the current row (``CORRECTED_RESOURCES``).
 """
 
 from __future__ import annotations
@@ -123,6 +127,16 @@ CORRECTED_SEARCHES = frozenset(
         "search|ingreso|PR|None|5",
     }
 )
+# Rows whose (a)(4) was corrected after the base commit -> (jurisdiction, citation, bare
+# section, tax years it answers, None for no tax year). The compilation of Ley 60-2019 prints
+# Ley 188-2024's (a)(4)(ii) as (i) and omits Ley 52-2022's (i), and the 2025 and current
+# rows of Sec. 6020.10 carried that error; both now read as the 2024 row does.
+CORRECTED_A4: dict[str, tuple[str, str, str, tuple[int | None, ...]]] = {
+    "pr-ley60-6020-10-2025": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", (2025,)),
+    "pr-ley60-6020-10": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", (None, 2026, 2027, 2028)),
+}
+# The resource read of a section answers with its current row.
+CORRECTED_RESOURCES = frozenset({"resource|PR|6020.10"})
 
 
 def _allowed(key: str) -> tuple[bool, bool]:
@@ -133,6 +147,8 @@ def _allowed(key: str) -> tuple[bool, bool]:
     if kind == "search":
         year = rest[2]
         return (year != "None" and 2019 <= int(year) <= 2025) or key in CORRECTED_SEARCHES, False
+    if kind == "resource":
+        return key in CORRECTED_RESOURCES, False
     if kind != "lookup":
         return False, False
     query, jurisdiction, year = rest[0], rest[1], rest[2]
@@ -148,6 +164,11 @@ def _allowed(key: str) -> tuple[bool, bool]:
             out = out or query == row
             if query in (citation, section):
                 out = out or (year != "None" and int(year) in years)
+    for row, (j, citation, section, a4_years) in CORRECTED_A4.items():
+        if jurisdiction in (j, "None"):
+            out = out or query == row
+            if query in (citation, section):
+                out = out or (None if year == "None" else int(year)) in a4_years
     return out, versions
 
 
@@ -179,6 +200,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
                     unexpected.append(f"versions {key}")
     assert unexpected == []
     # 280 US and 264 PR in-window lookups (240, plus 24 for 6020.10 in 2022-2024), 52 lookups
-    # of the corrected row, 277 window-year searches, 9 searches listing the corrected row, and
-    # the health check.
-    assert (changed_out, changed_versions) == (883, 2072)
+    # of the corrected row, 277 window-year searches, 9 searches listing the corrected row, the
+    # health check, 64 lookups of the two rows whose (a)(4) was corrected (24 by id, 40 by
+    # citation or bare section), and the resource read of 6020.10.
+    assert (changed_out, changed_versions) == (948, 2072)
