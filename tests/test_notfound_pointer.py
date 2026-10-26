@@ -145,3 +145,32 @@ def test_version_for_year_in_memory() -> None:
 
 def test_version_for_year_file_backed(tmp_path: Path) -> None:
     _check_version_for_year(TaxDatabase(str(tmp_path / "tax.duckdb")))
+
+
+def _tie_db(superseded: int | None) -> TaxDatabase:
+    """Two rows tied on effective year and current flag, inserted in reverse id order, plus
+    a later row of the same citation whose window misses 2024."""
+    tdb = TaxDatabase(":memory:")
+    conn = tdb._get_write_conn()
+    rows = [
+        ("zz-tie-b", 2020, superseded),
+        ("zz-tie-a", 2020, superseded),
+        ("zz-tie-c", 2026, None),
+    ]
+    for row_id, start, end in rows:
+        conn.execute(
+            "INSERT INTO statutes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+            [row_id, "ZZ", "TIE", "ZZ Tie Sec. 1", "tie-1", "Tie", "es", "en", start, end, "", []],
+        )
+    return tdb
+
+
+@pytest.mark.parametrize("superseded", [None, 2026])
+def test_a_tie_is_broken_by_id_in_both_the_lookup_and_the_pointer(superseded: int | None) -> None:
+    tdb = _tie_db(superseded)
+    for query in ("ZZ Tie Sec. 1", "tie-1"):
+        for jur in ("ZZ", None):
+            found = tdb.lookup_statute(query, jur, 2024)
+            assert found is not None and found["id"] == "zz-tie-a", (query, jur)
+    assert tdb.version_for_year("zz-tie-c", 2024) == "zz-tie-a"
+    assert tdb.version_for_year("zz-tie-c", 2024, "ZZ") == "zz-tie-a"

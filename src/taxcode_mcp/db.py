@@ -525,7 +525,7 @@ class TaxDatabase:
                 # An exact record id (from search results) names one version; it wins.
                 sql += (
                     " ORDER BY (LOWER(id) = LOWER(?)) DESC, effective_year DESC, "
-                    "(superseded_year IS NULL) DESC LIMIT 1;"
+                    "(superseded_year IS NULL) DESC, id LIMIT 1;"
                 )
                 params.append(query_val)
                 result = conn.execute(sql, params).fetchone()
