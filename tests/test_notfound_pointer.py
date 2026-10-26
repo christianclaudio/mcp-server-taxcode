@@ -174,3 +174,32 @@ def test_a_tie_is_broken_by_id_in_both_the_lookup_and_the_pointer(superseded: in
             assert found is not None and found["id"] == "zz-tie-a", (query, jur)
     assert tdb.version_for_year("zz-tie-c", 2024) == "zz-tie-a"
     assert tdb.version_for_year("zz-tie-c", 2024, "ZZ") == "zz-tie-a"
+
+
+def _spacing_db() -> TaxDatabase:
+    """A dated and a current row of one citation, spelled with different spacing."""
+    tdb = TaxDatabase(":memory:")
+    conn = tdb._get_write_conn()
+    rows = [
+        ("zz-space-old", "ZZ Space Sec.  1", 2018, 2024),
+        ("zz-space-new", "ZZ Space Sec.1", 2024, None),
+    ]
+    for row_id, citation, start, end in rows:
+        conn.execute(
+            "INSERT INTO statutes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+            [row_id, "ZZ", "SPC", citation, row_id, "Space", "es", "en", start, end, "", []],
+        )
+    return tdb
+
+
+def test_citations_that_differ_only_in_spacing_share_pointer_and_versions() -> None:
+    tdb = _spacing_db()
+    for jur in (None, "ZZ"):
+        assert tdb.version_for_year("zz-space-old", 2026, jur) == "zz-space-new"
+        assert tdb.version_for_year("zz-space-new", 2020, jur) == "zz-space-old"
+    for query in ("ZZ Space Sec.  1", "ZZ Space Sec.1", "ZZ Space Sec. 1"):
+        for year in (None, 2020, 2026):
+            found = tdb.lookup_statute(query, "ZZ", year)
+            assert found is not None, (query, year)
+            ids = {v["id"] for v in found["available_versions"]}
+            assert ids == {"zz-space-old", "zz-space-new"}, (query, year)

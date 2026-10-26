@@ -539,7 +539,7 @@ class TaxDatabase:
                     """
                     SELECT effective_year, superseded_year, id
                     FROM statutes
-                    WHERE LOWER(citation) = LOWER(?)
+                    WHERE LOWER(REPLACE(citation, ' ', '')) = LOWER(REPLACE(?, ' ', ''))
                     ORDER BY effective_year DESC, (superseded_year IS NULL) DESC;
                     """,
                     [matched_citation],
@@ -586,7 +586,8 @@ class TaxDatabase:
         """Return the id of the row that answers ``tax_year`` for ``record_id``'s citation.
 
         Meant for a record id whose own window does not hold ``tax_year``: the answer is
-        another row with the same jurisdiction and citation whose window holds the year,
+        another row with the same jurisdiction and citation (compared ignoring case and spaces,
+        as the citation lookup does) whose window holds the year,
         picked in the order a citation lookup uses (newest ``effective_year`` first, then
         the current row, then ``id``). ``jurisdiction``, when given, must match the record's.
         None when ``record_id`` is not a record id or no other row answers that year.
@@ -599,7 +600,7 @@ class TaxDatabase:
                     FROM statutes s
                     JOIN statutes o
                       ON o.jurisdiction = s.jurisdiction
-                     AND LOWER(o.citation) = LOWER(s.citation)
+                     AND LOWER(REPLACE(o.citation, ' ', '')) = LOWER(REPLACE(s.citation, ' ', ''))
                     WHERE LOWER(s.id) = LOWER(?)
                       AND LOWER(o.id) <> LOWER(s.id)
                       AND o.effective_year <= ?
