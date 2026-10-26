@@ -525,7 +525,7 @@ class TaxDatabase:
                 # An exact record id (from search results) names one version; it wins.
                 sql += (
                     " ORDER BY (LOWER(id) = LOWER(?)) DESC, effective_year DESC, "
-                    "(superseded_year IS NULL) DESC LIMIT 1;"
+                    "(superseded_year IS NULL) DESC, id LIMIT 1;"
                 )
                 params.append(query_val)
                 result = conn.execute(sql, params).fetchone()
@@ -539,7 +539,7 @@ class TaxDatabase:
                     """
                     SELECT effective_year, superseded_year, id
                     FROM statutes
-                    WHERE LOWER(citation) = LOWER(?)
+                    WHERE LOWER(REPLACE(citation, ' ', '')) = LOWER(REPLACE(?, ' ', ''))
                     ORDER BY effective_year DESC, (superseded_year IS NULL) DESC;
                     """,
                     [matched_citation],
@@ -576,6 +576,46 @@ class TaxDatabase:
                     "official_language": "es" if result[1] == "PR" else "en",
                     **statute_labels(result[10]),
                 }
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
+
+    def version_for_year(
+        self, record_id: str, tax_year: int, jurisdiction: str | None = None
+    ) -> str | None:
+        """Return the id of the row that answers ``tax_year`` for ``record_id``'s citation.
+
+        Meant for a record id whose own window does not hold ``tax_year``: the answer is
+        another row with the same jurisdiction and citation (compared ignoring case and spaces,
+        as the citation lookup does) whose window holds the year,
+        picked in the order a citation lookup uses (newest ``effective_year`` first, then
+        the current row, then ``id``). ``jurisdiction``, when given, must match the record's.
+        None when ``record_id`` is not a record id or no other row answers that year.
+        """
+        with self._lock:
+            conn = self._get_read_conn()
+            try:
+                sql = """
+                    SELECT o.id
+                    FROM statutes s
+                    JOIN statutes o
+                      ON o.jurisdiction = s.jurisdiction
+                     AND LOWER(REPLACE(o.citation, ' ', '')) = LOWER(REPLACE(s.citation, ' ', ''))
+                    WHERE LOWER(s.id) = LOWER(?)
+                      AND LOWER(o.id) <> LOWER(s.id)
+                      AND o.effective_year <= ?
+                      AND (o.superseded_year IS NULL OR ? < o.superseded_year)
+                """
+                params: list[Any] = [record_id.strip(), tax_year, tax_year]
+                if jurisdiction:
+                    sql += " AND UPPER(s.jurisdiction) = UPPER(?)"
+                    params.append(jurisdiction.strip())
+                sql += (
+                    " ORDER BY o.effective_year DESC, (o.superseded_year IS NULL) DESC, o.id"
+                    " LIMIT 1;"
+                )
+                row = conn.execute(sql, params).fetchone()
+                return None if row is None else str(row[0])
             finally:
                 if self._mem_conn is None:
                     conn.close()
