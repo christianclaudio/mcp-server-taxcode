@@ -589,3 +589,28 @@ def test_6020_10_a4_follows_ley_52_2022_and_ley_188_2024() -> None:
     assert f"Ley 188-2024, Art. 5 ((a)(4)(ii); {LEY188}, sha256 " in law
     assert f"{LEY188}, sha256 {LEY188_SHA256})" in law
     assert f"Ley 52-2022, Art. 33 ((a)(4)(i); {LEY52}, sha256 {LEY52_SHA256})" in law
+
+
+def test_6020_10_a4_in_the_2025_and_current_rows_reads_as_in_2024() -> None:
+    # The compilation prints Ley 188-2024's (a)(4)(ii) as (i) and omits Ley 52-2022's (i).
+    # Ley 65-2025, Art. 31 and Act 38-2026, Art. 5 print (a) as unchanged, so from 2025 on
+    # (a)(4)(i) is still Ley 52-2022, Art. 33 and (a)(4)(ii) still Ley 188-2024, Art. 5.
+    rows = _rows()
+    y24 = _a4(rows[SPLIT_2024])
+    for row_id in ("pr-ley60-6020-10-2025", "pr-ley60-6020-10"):
+        row = rows[row_id]
+        assert _a4(row) == y24, row_id
+        assert "empleo promedio" in _a4(row)[0], row_id
+        en = row["text_en"]
+        assert en.startswith("English summary; the official text is in Spanish."), row_id
+        assert "(a)(4)(i) is the text of Ley 52-2022, Article 33" in en, row_id
+        assert "(a)(4)(ii) is the text as amended by Ley 188-2024, Article 5" in en, row_id
+        assert (
+            "[Nota sobre el apartado (a)(4): El inciso (i) es el texto del Artículo 33 de la "
+            "Ley 52-2022"
+        ) in row["text_es"], row_id
+    note = _notes()["pr-ley60-6020-10-2025"]
+    assert f"Ley 52-2022, Article 33 (Departamento de Estado certified copy, {LEY52}" in note
+    assert f"Ley 188-2024, Article 5 (Departamento de Estado certified copy, {LEY188}" in note
+    # A current row cites only its compilation.
+    assert _notes()["pr-ley60-6020-10"] == ""
