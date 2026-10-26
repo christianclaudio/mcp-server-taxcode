@@ -20,10 +20,16 @@ Only these answers may change, and only in these ways:
   answers; and the searches with no tax year whose results list that row, which now shows
   its corrected text, source, 2020 start and 2022 end, and ranks by that start
   (``CORRECTED_SEARCHES``).
+
+Separately, a not-found lookup by a row's own id for a tax year outside that row's window may
+end its message with one sentence naming the row that answers that year (``POINTER``). That
+sentence is dropped before an answer is compared with its pin, so the rules above still hold
+for every other byte, and the number of answers carrying it is fixed below.
 """
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from fastmcp import Client
@@ -32,6 +38,23 @@ from scripts.build_prior_years_pins import BASE_COMMIT, answer, pin, plan, read_
 from taxcode_mcp.catalog import load_catalog
 from taxcode_mcp.server import mcp
 from taxcode_mcp.tools.compliance import SUPPORTED_STATE_JURISDICTIONS
+
+# The sentence a not-found lookup by id ends with when another row answers that tax year.
+POINTER = re.compile(
+    r" That record id names another version; tax year \d+ is answered by '[^']+'\.\Z"
+)
+
+
+def _without_pointer(out: Any) -> tuple[Any, bool]:
+    """``out`` with a not-found message's pointer sentence dropped, and whether it had one."""
+    if not (isinstance(out, dict) and out.get("status") == "not_found"):
+        return out, False
+    message = out.get("message")
+    found = POINTER.search(message) if isinstance(message, str) else None
+    if found is None:
+        return out, False
+    return {**out, "message": message[: found.start()]}, True
+
 
 # Section that gained versions -> (jurisdiction, citation, bare section, current id, tax
 # years answered by a prior-year version).
@@ -163,10 +186,11 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     pins: dict[str, list[str]] = read_fixture()["pins"]
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
     unexpected: list[str] = []
-    changed_out = changed_versions = 0
+    changed_out = changed_versions = pointed = 0
     async with Client(mcp) as client:
         for key in sorted(pins):
-            out: Any = await answer(client, calls[key])
+            out, has_pointer = _without_pointer(await answer(client, calls[key]))
+            pointed += has_pointer
             now = pin(out)
             out_ok, versions_ok = _allowed(key)
             if now[0] != pins[key][0]:
@@ -182,3 +206,5 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     # of the corrected row, 277 window-year searches, 9 searches listing the corrected row, and
     # the health check.
     assert (changed_out, changed_versions) == (883, 2072)
+    # Not-found lookups by id whose message names the row for that tax year.
+    assert pointed == 288

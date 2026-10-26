@@ -136,12 +136,22 @@ async def lookup_statute(
                 msg += f" for tax year {tax_year}"
             if jurisdiction:
                 msg += f" in jurisdiction '{jurisdiction}'"
+            msg += " not found in indexed corpora."
+            if tax_year is not None and not page_cursor:
+                # A record id names one version; if its window misses the year, name the
+                # row that answers that year.
+                other = db.version_for_year(citation_or_section, tax_year, jurisdiction)
+                if other is not None:
+                    msg += (
+                        " That record id names another version; tax year"
+                        f" {tax_year} is answered by '{other}'."
+                    )
             return {
                 "status": "not_found",
                 "query": citation_or_section,
                 "tax_year": tax_year,
                 "jurisdiction": jurisdiction,
-                "message": f"{msg} not found in indexed corpora.",
+                "message": msg,
                 **reference_labels(),
                 **output_notice(),
             }

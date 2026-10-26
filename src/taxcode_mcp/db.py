@@ -580,6 +580,45 @@ class TaxDatabase:
                 if self._mem_conn is None:
                     conn.close()
 
+    def version_for_year(
+        self, record_id: str, tax_year: int, jurisdiction: str | None = None
+    ) -> str | None:
+        """Return the id of the row that answers ``tax_year`` for ``record_id``'s citation.
+
+        Meant for a record id whose own window does not hold ``tax_year``: the answer is
+        another row with the same jurisdiction and citation whose window holds the year,
+        picked in the order a citation lookup uses (newest ``effective_year`` first, then
+        the current row, then ``id``). ``jurisdiction``, when given, must match the record's.
+        None when ``record_id`` is not a record id or no other row answers that year.
+        """
+        with self._lock:
+            conn = self._get_read_conn()
+            try:
+                sql = """
+                    SELECT o.id
+                    FROM statutes s
+                    JOIN statutes o
+                      ON o.jurisdiction = s.jurisdiction
+                     AND LOWER(o.citation) = LOWER(s.citation)
+                    WHERE LOWER(s.id) = LOWER(?)
+                      AND LOWER(o.id) <> LOWER(s.id)
+                      AND o.effective_year <= ?
+                      AND (o.superseded_year IS NULL OR ? < o.superseded_year)
+                """
+                params: list[Any] = [record_id.strip(), tax_year, tax_year]
+                if jurisdiction:
+                    sql += " AND UPPER(s.jurisdiction) = UPPER(?)"
+                    params.append(jurisdiction.strip())
+                sql += (
+                    " ORDER BY o.effective_year DESC, (o.superseded_year IS NULL) DESC, o.id"
+                    " LIMIT 1;"
+                )
+                row = conn.execute(sql, params).fetchone()
+                return None if row is None else str(row[0])
+            finally:
+                if self._mem_conn is None:
+                    conn.close()
+
     def search_statutes(
         self,
         query: str,
