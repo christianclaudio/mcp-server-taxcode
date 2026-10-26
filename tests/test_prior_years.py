@@ -131,7 +131,22 @@ F4F0D5D_DATED_IDS = {
     "pr-ley60-6020-10-2019",
     "pr-ley60-6020-10-2025",
 }
-OLD_STATUTES = [s for s in INITIAL_STATUTES if s["id"] not in PRIOR_YEAR_IDS]
+# Puerto Rico prior-year rows (tests/test_prior_years_pr.py), also added after f4f0d5d.
+PR_PRIOR_YEAR_IDS = frozenset(
+    {
+        "pr-cri-1031-02-2019",
+        "pr-cri-1062-01-2019",
+        "pr-cri-1062-03-2019",
+        "pr-ley60-1020-02-2019",
+        "pr-ley60-1020-02-2020",
+        "pr-ley60-2022-02-2019",
+        "pr-ley60-6020-03-2019",
+        "pr-ley60-6020-10-2019-as-enacted",
+        "pr-ley60-6020-10-2022",
+        "pr-ley60-6020-10-2024",
+    }
+)
+OLD_STATUTES = [s for s in INITIAL_STATUTES if s["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS]
 NO_YEAR_QUERIES = ["", "income", "credit", "deduction", "residente", "deducción", "ingreso"]
 FEDERAL_SUMMARY_PREFIX_EN = "Summary; the text of this version is not in the catalog. "
 FEDERAL_SUMMARY_PREFIX_ES = "Resumen; el texto de esta versión no está en el catálogo. "
