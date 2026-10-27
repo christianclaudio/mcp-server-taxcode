@@ -1,9 +1,9 @@
 # uv for the Dockerfile builder, which only runs `uv export` to turn uv.lock into a requirements
 # file with hashes. Installed with --require-hashes, so the install does not depend on TLS trust.
 # Hashes are digests.sha256 from PyPI's JSON API (https://pypi.org/pypi/uv/<version>/json) for
-# the Linux wheels pip picks on the python:3.14-slim base: manylinux_2_17 x86_64, and
-# manylinux_2_28 and manylinux_2_17 aarch64. Keep the version within pyproject.toml's
-# [tool.uv] required-version, and bump the pin and hashes together; Dependabot does not track the file.
+# every file published for the pinned version: each wheel and the sdist. Dependabot's uv updates
+# bump the pin and rewrite the hashes. Keep the version within pyproject.toml's [tool.uv]
+# required-version, and bump the pin and hashes together when editing the file by hand.
 uv==0.13.5 \
     --hash=sha256:0548460d46c8667488b1f089e936f29f0edfb1cc753f9152ffbd8bc84a46aa20 \
     --hash=sha256:0e03f5717bdaaf5ab4e2df361d2395e36b515946f56ef4bed88801aeb9959fb0 \
