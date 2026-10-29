@@ -12,6 +12,13 @@ updates:
       dependencies:
         patterns:
           - "*"
+      python-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -25,6 +32,13 @@ updates:
       actions:
         patterns:
           - "*"
+      actions-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -34,3 +48,11 @@ updates:
       time: "09:30"
       timezone: "America/New_York"
     open-pull-requests-limit: 10
+    groups:
+      docker-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
