@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "tn-rates",
-      "url": "not_recorded",
+      "url": "https://www.capitol.tn.gov/",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-30",
+      "content_sha256": "e8a5c3ffac491cd8081e5e915c6e9ff6b040c3411db678eb5a871fb2fbf04f25",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

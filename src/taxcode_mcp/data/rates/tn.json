@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "TN",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.capitol.tn.gov/",
   "params": {
     "statutory_basis": "Tenn. Const. art. II, § 28; Tenn. Code Ann. § 67-2-102",
     "rate_authority": "Tenn. Const. art. II, § 28",

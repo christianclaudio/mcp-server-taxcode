@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "SD",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://dor.sd.gov/",
   "params": {
     "statutory_basis": "S.D. Const. art. XI, § 2",
     "rate_authority": "S.D. Const. art. XI, § 2",

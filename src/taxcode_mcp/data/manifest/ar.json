@@ -26,7 +26,37 @@
       "content_sha256": "a016d75924df4030e71a3e901da89e177cdd22fd85cc5bee8666b5e1cdad8319",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 26399.0,
+            "brackets_2025.single[0].rate": 0.039,
+            "brackets_2025.single[1].over": 15999.0,
+            "brackets_2025.single[1].rate": 0.034,
+            "brackets_2025.single[2].over": 11199.0,
+            "brackets_2025.single[2].rate": 0.03,
+            "brackets_2025.single[3].over": 5599.0,
+            "brackets_2025.single[3].rate": 0.02,
+            "brackets_2025.single[4].rate": 0.0,
+            "brackets_2025.mfj[0].over": 26399.0,
+            "brackets_2025.mfj[0].rate": 0.039,
+            "brackets_2025.mfj[1].over": 15999.0,
+            "brackets_2025.mfj[1].rate": 0.034,
+            "brackets_2025.mfj[2].over": 11199.0,
+            "brackets_2025.mfj[2].rate": 0.03,
+            "brackets_2025.mfj[3].over": 5599.0,
+            "brackets_2025.mfj[3].rate": 0.02,
+            "brackets_2025.mfj[4].rate": 0.0,
+            "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)"
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf",
+          "official": true,
+          "retrieved": "2026-10-30",
+          "content_sha256": "a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02"
+        }
+      ]
     }
   ]
 }

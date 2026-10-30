@@ -221,7 +221,6 @@ _REGISTRY_TYPES: dict[str, type] = {
         ),
         float,
     ),
-    "middle_rate_estimate": bool,
     "brackets": dict,
     # Later-year values of the bracket schedule, its prose and the credit's base and
     # phase-out amounts. Each needs its unsuffixed key, placed after it, years ascending.
@@ -243,10 +242,9 @@ _REGISTRY_YEARLY_BASES = (
     *(f"credit_{name}_{status}" for name in ("base", "phaseout") for status in FILING_STATUSES),
 )
 # How a graduated registry table taxes income below its top bracket. ``brackets`` is the
-# state's official marginal schedule; ``middle_rate`` is one statutory rate; and
-# ``middle_rate_estimate`` (always ``true``) marks the old stand-in of 65% of the top rate,
-# kept only where no official schedule maps onto this model. Exactly one must be present.
-_REGISTRY_GRADUATED = ("brackets", "middle_rate", "middle_rate_estimate")
+# state's official marginal schedule; ``middle_rate`` is one statutory rate. Exactly one
+# must be present.
+_REGISTRY_GRADUATED = ("brackets", "middle_rate")
 # A nonrefundable credit taken off the computed tax (Utah's taxpayer tax credit):
 # ``credit_rate`` times the filing status's ``credit_base``, less ``credit_phaseout_rate``
 # times the taxable income over its ``credit_phaseout`` amount, never below zero. All or none.
@@ -526,8 +524,6 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         _check(type(value) is expected, f"{where}.{name}: must be {expected.__name__}")
         if name.startswith("brackets"):
             _check_brackets(value, ("over", "rate"), f"{where}.{name}")
-        elif name == "middle_rate_estimate":
-            _check(value is True, f"{where}.{name}: must be true when present")
         elif expected is float:
             check = _check_rate if "rate" in name else _check_amount
             check(value, f"{where}.{name}")

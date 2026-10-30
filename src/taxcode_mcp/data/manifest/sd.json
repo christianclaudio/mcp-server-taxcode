@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "sd-rates",
-      "url": "not_recorded",
+      "url": "https://dor.sd.gov/",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-30",
+      "content_sha256": "77f704e35c28c281735d2120fff5f335c514c8e377186a82e3b6d4a9997dd904",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
