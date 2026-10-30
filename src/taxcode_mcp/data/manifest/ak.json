@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "ak-rates",
-      "url": "https://tax.alaska.gov/",
+      "url": "https://tax.alaska.gov/programs/programs/reports/AnnualReport.aspx?Year=2024",
       "edition": "not_recorded",
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-10-30",
-      "content_sha256": "742b2c661ab1577c058e71f3ddd8414c1ccac0fbee5b9b1b1f50bd7ac3e2b51b",
+      "content_sha256": "bcb24fdf83caafbd5dc02729236f03bd852b3127a86940f6908eef2fba968c5f",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "SD",
   "model": "registry",
-  "source_url": "https://dor.sd.gov/",
+  "source_url": "https://dor.sd.gov/individuals/taxes/",
   "params": {
     "statutory_basis": "S.D. Const. art. XI, § 2",
     "rate_authority": "S.D. Const. art. XI, § 2",

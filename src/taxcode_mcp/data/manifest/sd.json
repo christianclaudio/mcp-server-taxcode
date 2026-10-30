@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "sd-rates",
-      "url": "https://dor.sd.gov/",
+      "url": "https://dor.sd.gov/individuals/taxes/",
       "edition": "not_recorded",
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-10-30",
-      "content_sha256": "77f704e35c28c281735d2120fff5f335c514c8e377186a82e3b6d4a9997dd904",
+      "content_sha256": "2c538b4f7c0b3dbf192cd30c6b3b9ebebf18f267b3d12da2070e67a77940102b",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

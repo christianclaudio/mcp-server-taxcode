@@ -55,53 +55,6 @@
           "rate": 0.0
         }
       ]
-    },
-    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)",
-    "brackets_2025": {
-      "single": [
-        {
-          "over": 26399.0,
-          "rate": 0.039
-        },
-        {
-          "over": 15999.0,
-          "rate": 0.034
-        },
-        {
-          "over": 11199.0,
-          "rate": 0.03
-        },
-        {
-          "over": 5599.0,
-          "rate": 0.02
-        },
-        {
-          "over": null,
-          "rate": 0.0
-        }
-      ],
-      "mfj": [
-        {
-          "over": 26399.0,
-          "rate": 0.039
-        },
-        {
-          "over": 15999.0,
-          "rate": 0.034
-        },
-        {
-          "over": 11199.0,
-          "rate": 0.03
-        },
-        {
-          "over": 5599.0,
-          "rate": 0.02
-        },
-        {
-          "over": null,
-          "rate": 0.0
-        }
-      ]
     }
   }
 }

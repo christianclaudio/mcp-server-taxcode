@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "AK",
   "model": "registry",
-  "source_url": "https://tax.alaska.gov/",
+  "source_url": "https://tax.alaska.gov/programs/programs/reports/AnnualReport.aspx?Year=2024",
   "params": {
     "statutory_basis": "Alaska Const. art. IX; AS § 43.05.010",
     "rate_authority": "AS § 43.05.010",
