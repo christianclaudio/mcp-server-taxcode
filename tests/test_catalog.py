@@ -239,7 +239,13 @@ def test_a_new_row_regenerates_only_its_pages(tree: tuple[Path, Path]) -> None:
     source = "https://example.gov/rcw-82-87-050"
 
     def add_row(doc: Any) -> None:
-        row = dict(doc["statutes"][0], id="wa-rcw-82-87-050", section="82.87.050")
+        # New id, section, and citation so the row is not a second current for 82.87.040.
+        row = dict(
+            doc["statutes"][0],
+            id="wa-rcw-82-87-050",
+            section="82.87.050",
+            citation="RCW 82.87.050",
+        )
         row["source_url"] = source
         doc["statutes"].append(row)
 
