@@ -13,7 +13,7 @@ and every statute resource read under that many characters of text.
   and reported in ``limit_applied``. ``next_offset`` is the ``offset`` for the next page,
   always greater than ``offset``, or ``None``.
 
-- The ``taxcode://statutes/{jurisdiction}/{section}{?page_cursor}`` resource returns the
+- The ``taxcode://statutes/{jurisdiction}/{section*}{?page_cursor}`` resource returns the
   same :data:`TEXT_PAGE_CHARS` window of the operative text and ends a non-final page with
   the full URI of the next one, whose ``page_cursor`` is the same cursor the tool uses.
 

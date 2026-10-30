@@ -167,6 +167,9 @@ CORRECTED_A4: dict[str, tuple[str, str, str, tuple[int | None, ...]]] = {
 }
 # The resource read of a section answers with its current row.
 CORRECTED_RESOURCES = frozenset({"resource|PR|6020.10"})
+# Resource reads that newly resolve after the {section*} template fix (issue #41).
+# Base pins recorded Unknown resource / not found; content is unchanged statute text.
+SLASH_RESOURCES = frozenset({"resource|IL|5/201", "resource|IL|5/301", "resource|IL|5/1501(a)(20)"})
 # Answers pinned in full in fixtures/prior_years/corrected_answers.json: 180 lookups by a
 # corrected row's id, 64 by its citation or bare section, 9 searches and 1 resource read.
 CORRECTED_COUNT = 254
@@ -202,6 +205,8 @@ def _allowed(key: str) -> tuple[bool, bool]:
     if kind == "search":
         year = rest[2]
         return (year != "None" and 2019 <= int(year) <= 2025) or is_corrected(key), False
+    if kind == "resource":
+        return key in CORRECTED_RESOURCES or key in SLASH_RESOURCES, False
     if kind != "lookup":
         return is_corrected(key), False
     query, jurisdiction, year = rest[0], rest[1], rest[2]
@@ -268,8 +273,9 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     # 280 US and 264 PR in-window lookups (240, plus 24 for 6020.10 in 2022-2024), 52 lookups
     # of the corrected row, 277 window-year searches, 9 searches listing the corrected row, the
     # health check, 64 lookups of the two rows whose (a)(4) was corrected (24 by id, 40 by
-    # citation or bare section), and the resource read of 6020.10.
-    assert (changed_out, changed_versions) == (948, 2072)
+    # citation or bare section), the resource read of 6020.10, and 3 Illinois resource reads
+    # that newly resolve once {section*} matches slash section ids (#41).
+    assert (changed_out, changed_versions) == (951, 2072)
     # Not-found lookups by id whose message names the row for that tax year.
     assert pointed == 288
 

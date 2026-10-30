@@ -304,14 +304,21 @@ async def list_publications(
 # The root mounts this server under the "statutes" namespace, and FastMCP's mount puts
 # the namespace after the scheme (taxcode://{x} becomes taxcode://statutes/{x}). So the
 # template below has no statutes/ segment of its own, and clients see
-# taxcode://statutes/{jurisdiction}/{section}{?page_cursor}.
+# taxcode://statutes/{jurisdiction}/{section*}{?page_cursor}.
+#
+# {section*} is a FastMCP wildcard parameter: it matches one or more path segments so
+# section ids that contain "/" (Illinois 5/201, 5/301, 5/1501(a)(20)) resolve. A plain
+# {section} matches only a single segment and never crosses "/". Percent-encoded forms
+# such as 5%2F201 still work; next-page URIs keep quoting the section for the path.
 STATUTE_RESOURCE_BASE = "taxcode://statutes"
 
 
 @statutes_server.resource(
-    "taxcode://{jurisdiction}/{section}{?page_cursor}",
+    "taxcode://{jurisdiction}/{section*}{?page_cursor}",
     description=(
-        "Statutory text by jurisdiction and section. Long text comes in pages of up to "
+        "Statutory text by jurisdiction and section. Section ids may include a slash "
+        "(for example Illinois 5/201); the template uses a wildcard path parameter so "
+        "those ids match. Long text comes in pages of up to "
         f"{TEXT_PAGE_CHARS:,} characters (each read stays under {RESPONSE_MAX_CHARS:,} "
         "characters); a page that is not the last ends with the URI of the next page, "
         "whose page_cursor is the same cursor statutes_lookup_statute returns as next_cursor."
