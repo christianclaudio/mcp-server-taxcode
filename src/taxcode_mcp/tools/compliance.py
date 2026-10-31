@@ -735,9 +735,11 @@ def evaluate_state_residency(
             is_domiciled or presumption_9mo or (days_in_state > 183 and maintains_permanent_abode)
         )
         rate_authority = "Cal. Rev. & Tax Code § 17041"
+        # The MHST threshold is the same for every filing status: Schedule X's top row.
         rate_desc = (
             f"{_range_desc(RATE_TABLES['CA'])} "
-            "(the top rate includes the 1% Mental Health Services Tax)"
+            "(the top rate includes the 1% Mental Health Services Tax on taxable income "
+            f"over ${RATE_TABLES['CA']['brackets']['single'][0]['over']:,.0f})"
         )
         std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
