@@ -628,6 +628,11 @@ def _check_params(model: str, params: Any, where: str) -> None:
                     f"{at}.phaseout.{status}",
                     _phase_row,
                 )
+                base = next(step for step in phase[status] if step["over"] is None)
+                _check(
+                    base["amount"] == value["amount"],
+                    f"{at}.phaseout.{status}: over-null amount must equal {at}.amount",
+                )
         elif name == "exemption" and model == "connecticut":
             _check(isinstance(value, dict), f"{at}: must be an object")
             _check_keys(value, FILING_STATUSES, at)
@@ -637,6 +642,7 @@ def _check_params(model: str, params: Any, where: str) -> None:
                 _check_keys(spec, ("full", "full_until", "step_agi", "step_amount"), sat)
                 for field in ("full", "full_until", "step_agi", "step_amount"):
                     _check_amount(spec[field], f"{sat}.{field}")
+                _check(spec["step_agi"] > 0.0, f"{sat}.step_agi: must be greater than 0.0")
         elif name == "phase_out_addback":
             _check(isinstance(value, dict), f"{at}: must be an object")
             _check_keys(value, FILING_STATUSES, at)
@@ -646,6 +652,7 @@ def _check_params(model: str, params: Any, where: str) -> None:
                 _check_keys(spec, ("start", "step_agi", "step_amount", "maximum"), sat)
                 for field in ("start", "step_agi", "step_amount", "maximum"):
                     _check_amount(spec[field], f"{sat}.{field}")
+                _check(spec["step_agi"] > 0.0, f"{sat}.step_agi: must be greater than 0.0")
         elif name == "tax_recapture":
             _check(isinstance(value, dict), f"{at}: must be an object")
             _check_keys(value, FILING_STATUSES, at)

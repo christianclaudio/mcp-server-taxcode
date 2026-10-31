@@ -888,7 +888,7 @@ def test_evaluate_state_residency_cases() -> None:
     assert pa_res["is_resident"] is True
     assert pa_res["tax_computation"]["estimated_state_tax"] == round(100000.0 * 0.0307, 2)
 
-    # 13. Connecticut (CT) - CT-1040 Tables A-D and reciprocal convenience rule
+    # 13. Connecticut (CT) - CT-1040 Tables A-E and reciprocal convenience rule
     ct_nonres = server.evaluate_state_residency(
         jurisdiction="CT",
         days_in_state=40,
@@ -1402,6 +1402,26 @@ def test_marginal_schedule_states_label_other_tax_years_as_estimates(state: str)
     later = server.evaluate_state_residency(**kwargs, tax_year=2026)
     note = later["tax_computation"]["rate_description"]
     assert "tax year 2026 brackets and deduction are not in this table; the 2025" in note
+
+
+def test_california_rate_description_names_mhst_or_bhst_by_schedule_year() -> None:
+    kwargs: dict[str, Any] = {"jurisdiction": "CA", "days_in_state": 365, "is_domiciled": True}
+    # Default tax_year is 2024, which uses the 2024 schedule name.
+    default_desc = server.evaluate_state_residency(**kwargs)["tax_computation"]["rate_description"]
+    assert "Mental Health Services Tax" in default_desc
+    assert "Behavioral Health Services Tax" not in default_desc
+    for year in (2023, 2024):
+        desc = server.evaluate_state_residency(**kwargs, tax_year=year)["tax_computation"][
+            "rate_description"
+        ]
+        assert "Mental Health Services Tax" in desc, year
+        assert "Behavioral Health Services Tax" not in desc, year
+    for year in (2025, 2026):
+        desc = server.evaluate_state_residency(**kwargs, tax_year=year)["tax_computation"][
+            "rate_description"
+        ]
+        assert "Behavioral Health Services Tax" in desc, year
+        assert "Mental Health Services Tax" not in desc, year
 
 
 def test_maryland_estimate_note_mentions_hb_352() -> None:

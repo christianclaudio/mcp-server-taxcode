@@ -804,9 +804,15 @@ def evaluate_state_residency(
         ca_brackets = _for_year(ca, "brackets", tax_year)
         # MHST/BHST starts at the single table's top row, the $1,000,000 band (not doubled for MFJ).
         ca_range = {"brackets": ca_brackets}
+        # 2025 Form 540 booklet, PDF page 5 (What's New): MHST renamed BHST from 2025.
+        ca_surtax_name = (
+            "Behavioral Health Services Tax"
+            if _schedule_year_used("CA", tax_year) >= 2025
+            else "Mental Health Services Tax"
+        )
         rate_desc = (
             f"{_range_desc(ca_range)} "
-            "(the top rate includes the 1% Mental Health Services Tax on taxable income "
+            f"(the top rate includes the 1% {ca_surtax_name} on taxable income "
             f"over ${ca_brackets['single'][0]['over']:,.0f})"
             f"{_outyear_estimate_note('CA', tax_year, ca)}"
         )

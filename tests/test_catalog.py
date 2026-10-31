@@ -791,6 +791,47 @@ def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> Non
         ) in errors
 
 
+def test_maryland_personal_exemption_base_row_must_match_amount(
+    tree: tuple[Path, Path],
+) -> None:
+    data, _ = tree
+
+    def break_base(doc: Any) -> None:
+        for step in doc["params"]["personal_exemption"]["phaseout"]["single"]:
+            if step["over"] is None:
+                step["amount"] = 999.0
+
+    _edit(data / "rates" / "md.json", break_base)
+    with pytest.raises(CatalogError, match=r"phaseout\.single: over-null amount must equal"):
+        load_catalog(data, with_manifest=True)
+
+
+def test_connecticut_exemption_rejects_zero_step_agi(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    _edit(
+        data / "rates" / "ct.json",
+        lambda d: d["params"]["exemption"]["single"].update(step_agi=0.0),
+    )
+    with pytest.raises(
+        CatalogError, match=r"exemption\.single\.step_agi: must be greater than 0\.0"
+    ):
+        load_catalog(data, with_manifest=True)
+
+
+def test_connecticut_phase_out_addback_rejects_zero_step_agi(
+    tree: tuple[Path, Path],
+) -> None:
+    data, _ = tree
+    _edit(
+        data / "rates" / "ct.json",
+        lambda d: d["params"]["phase_out_addback"]["single"].update(step_agi=0.0),
+    )
+    with pytest.raises(
+        CatalogError, match=r"phase_out_addback\.single\.step_agi: must be greater than 0\.0"
+    ):
+        load_catalog(data, with_manifest=True)
+
+
 def test_federal_table_has_one_manifest_record_with_a_source_per_year(
     tree: tuple[Path, Path],
 ) -> None:
