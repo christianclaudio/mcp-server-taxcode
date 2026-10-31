@@ -613,9 +613,9 @@ def _steps_desc(brackets: list[dict[str, Any]]) -> str:
 
 _FLAT_BY_CONSTITUTION = "(the state constitution requires a flat rate)"
 
-MIDDLE_RATE_ESTIMATE_NOTE = (
-    " [ESTIMATE: no official bracket schedule is modeled for this year; income below the "
-    "top bracket is taxed at 65% of the top rate, which is not a statutory rate]"
+WHOLE_INCOME_ESTIMATE_NOTE = (
+    " [ESTIMATE: bracket rate applied to whole taxable income on a shortened schedule; "
+    "not the state's full marginal tables]"
 )
 
 
@@ -714,7 +714,7 @@ def evaluate_state_residency(
                 "outside NY for a NY employer are sourced to NY unless for employer necessity."
             )
         rate_authority = "NY Tax Law § 601"
-        rate_desc = _range_desc(RATE_TABLES["NY"])
+        rate_desc = _range_desc(RATE_TABLES["NY"]) + WHOLE_INCOME_ESTIMATE_NOTE
         std_ded = _allowance(RATE_TABLES["NY"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
@@ -736,6 +736,7 @@ def evaluate_state_residency(
         rate_desc = (
             f"{_range_desc(RATE_TABLES['CA'])} "
             "(the top rate includes the 1% Mental Health Services Tax)"
+            f"{WHOLE_INCOME_ESTIMATE_NOTE}"
         )
         std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
@@ -809,7 +810,7 @@ def evaluate_state_residency(
                 "convenience rule."
             )
         rate_authority = "N.J.S.A. 54A:2-1"
-        rate_desc = _range_desc(RATE_TABLES["NJ"])
+        rate_desc = _range_desc(RATE_TABLES["NJ"]) + WHOLE_INCOME_ESTIMATE_NOTE
         exemption = _allowance(RATE_TABLES["NJ"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
@@ -849,7 +850,7 @@ def evaluate_state_residency(
                 "a convenience rule."
             )
         rate_authority = "Conn. Gen. Stat. § 12-700"
-        rate_desc = _range_desc(RATE_TABLES["CT"])
+        rate_desc = _range_desc(RATE_TABLES["CT"]) + WHOLE_INCOME_ESTIMATE_NOTE
         # Standard exemption phase-out model
         exemption = _allowance(RATE_TABLES["CT"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
@@ -891,6 +892,7 @@ def evaluate_state_residency(
         rate_desc = (
             f"{_range_desc(RATE_TABLES['MD'], 'Graduated state brackets')} "
             "plus county piggyback tax (2.25%-3.20%)"
+            f"{WHOLE_INCOME_ESTIMATE_NOTE}"
         )
         md_ded = RATE_TABLES["MD"]["standard_deduction"]
         max_ded = float(md_ded["maximum"][_status(is_mfj)])
@@ -1030,12 +1032,7 @@ def evaluate_state_residency(
                 tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
             top_bracket = float(info.get(tb_key, 0.0))
             top_rate = float(info.get("top_rate", 0.0))
-            if "middle_rate" in info:
-                mid_rate = float(info["middle_rate"])
-            else:  # middle_rate_estimate: no official schedule maps onto this formula
-                mid_rate = top_rate * 0.65
-                middle_rate_estimated = True
-                rate_desc = f"{rate_desc}{MIDDLE_RATE_ESTIMATE_NOTE}"
+            mid_rate = float(info["middle_rate"])
             if tax_year >= 2025 and (
                 "zero_bracket_mfj_2025" in info if is_mfj else "zero_bracket_single_2025" in info
             ):

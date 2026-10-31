@@ -196,10 +196,9 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("AL", _set("params.requires_abode", 1), "requires_abode: must be bool"),
     ("AL", _set("params.rate_desc", 2.0), "rate_desc: must be str"),
     # registry: how a graduated table taxes income below its top bracket
-    ("AR", _set("params.middle_rate_estimate", False), "middle_rate_estimate: must be true"),
-    ("AR", _set("params.middle_rate_estimate", 1), "middle_rate_estimate: must be bool"),
-    ("AR", _drop("params.middle_rate_estimate"), "a graduated table needs exactly one of"),
-    ("ND", _set("params.middle_rate_estimate", True), "a graduated table needs exactly one of"),
+    ("AR", _set("params.middle_rate_estimate", True), "unknown keys ['middle_rate_estimate']"),
+    ("AR", _drop("params.brackets"), "a graduated table needs exactly one of"),
+    ("ND", _set("params.brackets", _BRACKETS), "a graduated table needs exactly one of"),
     ("IN", _set("params.middle_rate", 0.02), "['middle_rate'] apply only to a graduated table"),
     ("AR", _set("params.brackets", []), "brackets: must be dict"),
     ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
@@ -283,27 +282,27 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
         "AR",
-        _both(_drop("params.middle_rate_estimate"), _set("params.brackets", {"single": []})),
+        _set("params.brackets", {"single": []}),
         "brackets: fields must be exactly",
     ),
     (
         "AR",
-        _both(_drop("params.middle_rate_estimate"), _set("params.brackets", _BRACKETS)),
-        "['top_bracket_mfj', 'top_bracket_single', 'top_rate'] are unused next to brackets",
+        _set("params.top_rate", 0.039),
+        "['top_rate'] are unused next to brackets",
     ),
     (
         "AR",
-        _both(_strip_formula, _set("params.brackets", _BRACKETS_WITH_BASE)),
+        _set("params.brackets", _BRACKETS_WITH_BASE),
         "brackets.single[0]: fields must be exactly",
     ),
     (
         "AR",
-        _both(_strip_formula, _set("params.brackets", _BRACKETS_UNORDERED)),
+        _set("params.brackets", _BRACKETS_UNORDERED),
         "brackets.single[0]: steps out of order",
     ),
     (
         "AR",
-        _both(_strip_formula, _set("params.brackets", _BRACKETS_BAD_RATE)),
+        _set("params.brackets", _BRACKETS_BAD_RATE),
         "brackets.mfj[0].rate: must be a float rate",
     ),
 ]
@@ -337,7 +336,7 @@ def test_invalid_json_is_rejected(rates_root: Path) -> None:
 
 
 def test_a_registry_table_with_brackets_is_valid(rates_root: Path) -> None:
-    _edit(rates_root, "AR", _both(_strip_formula, _set("params.brackets", _BRACKETS)))
+    _edit(rates_root, "AR", _set("params.brackets", _BRACKETS))
     assert load_rate_tables(rates_root)["AR"]["brackets"] == _BRACKETS
 
 
@@ -365,18 +364,16 @@ def _registry_answer(code: str, tax_year: int = 2024) -> dict[str, Any]:
     return result
 
 
-def test_the_middle_rate_estimate_is_labeled_in_the_answer() -> None:
+def test_no_table_uses_the_retired_middle_rate_estimate() -> None:
     estimated = [
         code for code, table in compliance.RATE_TABLES.items() if table.get("middle_rate_estimate")
     ]
-    assert estimated
-    for code in estimated:
-        tax = _registry_answer(code)["tax_computation"]
-        assert tax["middle_rate_is_estimate"] is True, code
-        assert tax["rate_description"].endswith(compliance.MIDDLE_RATE_ESTIMATE_NOTE), code
-    for code in ("ND", "IN", "AK"):
+    assert estimated == []
+    for code in ("AR", "ND", "IN", "AK"):
         tax = _registry_answer(code)["tax_computation"]
         assert tax["middle_rate_is_estimate"] is False, code
+    for code in ("ND", "IN", "AK"):
+        tax = _registry_answer(code)["tax_computation"]
         assert "ESTIMATE" not in tax["rate_description"], code
 
 

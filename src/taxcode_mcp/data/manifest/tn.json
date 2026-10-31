@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "tn-rates",
-      "url": "not_recorded",
+      "url": "https://www.tn.gov/content/dam/tn/revenue/documents/notices/income/income17-09.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-30",
+      "content_sha256": "8fe68345ee06c4cc5d80d7ca947cd5d6dfe9d34c01f1e0decf2fb0f766338619",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
