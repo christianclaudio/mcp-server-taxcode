@@ -23,8 +23,6 @@ NOT_IN_TABLE: dict[str, set[float]] = {
     "MD": {2.25, 3.2},  # the county piggyback range; county tax is not computed
     "NH": {3.0},  # the 2024 interest and dividends tax, which this tool does not compute
 }
-# The registry's labeled stand-in states its own factor.
-ESTIMATE_FACTOR = 65.0
 
 
 def _leaves(node: Any) -> Iterator[float]:
@@ -73,8 +71,6 @@ def test_rate_description_matches_the_rate_table(code: str) -> None:
     for tax_year, status, text in _descriptions(code):
         for kind, value in _stated(text):
             if value in allowed:
-                continue
-            if kind == "rate" and value == ESTIMATE_FACTOR and "ESTIMATE" in text:
                 continue
             if value not in (rates if kind == "rate" else amounts):
                 drift.append(f"{tax_year} {status}: {kind} {value:g} in {text!r}")

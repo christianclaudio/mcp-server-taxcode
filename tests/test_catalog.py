@@ -500,10 +500,16 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
 
 
 SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI MS NC ND OH PA UT VA WA".split()
+SOURCED_2026_10_30 = "AK NH NV SD TN WY".split()
 SOURCED_RATE_TABLES = sorted(
-    "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split() + SOURCED_2026_10_23
+    "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split()
+    + SOURCED_2026_10_23
+    + SOURCED_2026_10_30
 )
-RETRIEVED = dict.fromkeys(SOURCED_2026_10_23, "2026-10-23")
+RETRIEVED = {
+    **dict.fromkeys(SOURCED_2026_10_23, "2026-10-23"),
+    **dict.fromkeys(SOURCED_2026_10_30, "2026-10-30"),
+}
 # Sources that plain curl could not download (refused or failed), read as text: no hash.
 READ_WITHOUT_BYTES = {"ME", "VT", "KY", "MI"}
 

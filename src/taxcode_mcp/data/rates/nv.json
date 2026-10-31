@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "NV",
   "model": "registry",
-  "source_url": "not_recorded",
+  "source_url": "https://www.leg.state.nv.us/Const/NvConst.html",
   "params": {
     "statutory_basis": "Nev. Const. art. 10, § 1",
     "rate_authority": "Nev. Const. art. 10, § 1",
