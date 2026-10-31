@@ -239,7 +239,13 @@ def test_a_new_row_regenerates_only_its_pages(tree: tuple[Path, Path]) -> None:
     source = "https://example.gov/rcw-82-87-050"
 
     def add_row(doc: Any) -> None:
-        row = dict(doc["statutes"][0], id="wa-rcw-82-87-050", section="82.87.050")
+        # New id, section, and citation so the row is not a second current for 82.87.040.
+        row = dict(
+            doc["statutes"][0],
+            id="wa-rcw-82-87-050",
+            section="82.87.050",
+            citation="RCW 82.87.050",
+        )
         row["source_url"] = source
         doc["statutes"].append(row)
 
@@ -494,10 +500,16 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
 
 
 SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI MS NC ND OH PA UT VA WA".split()
+SOURCED_2026_10_30 = "AK NH NV SD TN WY".split()
 SOURCED_RATE_TABLES = sorted(
-    "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split() + SOURCED_2026_10_23
+    "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split()
+    + SOURCED_2026_10_23
+    + SOURCED_2026_10_30
 )
-RETRIEVED = dict.fromkeys(SOURCED_2026_10_23, "2026-10-23")
+RETRIEVED = {
+    **dict.fromkeys(SOURCED_2026_10_23, "2026-10-23"),
+    **dict.fromkeys(SOURCED_2026_10_30, "2026-10-30"),
+}
 # Sources that plain curl could not download (refused or failed), read as text: no hash.
 READ_WITHOUT_BYTES = {"ME", "VT", "KY", "MI"}
 

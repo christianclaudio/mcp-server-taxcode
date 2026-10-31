@@ -18,12 +18,12 @@
     {
       "kind": "rate_table",
       "id": "nv-rates",
-      "url": "not_recorded",
+      "url": "https://www.leg.state.nv.us/Const/NvConst.html",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-30",
+      "content_sha256": "726067b645f47709f00c2cf23ee6a514f7fc64381fd6c1f6eb0b1f48b31c51cc",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

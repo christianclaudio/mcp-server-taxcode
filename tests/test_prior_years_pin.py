@@ -197,11 +197,19 @@ def is_corrected(key: str) -> bool:
     return False
 
 
+# State residency answers that intentionally change with this PR's rate-model work
+# (AR DFA brackets replacing the 65% middle-rate stand-in; CA/CT/MD/NJ/NY whole-income
+# estimate labels). Their out hashes may differ from the f4f0d5d pin.
+RATE_MODEL_CHANGED = frozenset({"AR", "CA", "CT", "MD", "NJ", "NY"})
+
+
 def _allowed(key: str) -> tuple[bool, bool]:
     """Whether a key's (out, versions) hash may change."""
     if key == "tools|health":
         return True, False
     kind, *rest = key.split("|")
+    if kind == "state" and rest[0] in RATE_MODEL_CHANGED:
+        return True, False
     if kind == "search":
         year = rest[2]
         return (year != "None" and 2019 <= int(year) <= 2025) or is_corrected(key), False
@@ -273,9 +281,10 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     # 280 US and 264 PR in-window lookups (240, plus 24 for 6020.10 in 2022-2024), 52 lookups
     # of the corrected row, 277 window-year searches, 9 searches listing the corrected row, the
     # health check, 64 lookups of the two rows whose (a)(4) was corrected (24 by id, 40 by
-    # citation or bare section), the resource read of 6020.10, and 3 Illinois resource reads
-    # that newly resolve once {section*} matches slash section ids (#41).
-    assert (changed_out, changed_versions) == (951, 2072)
+    # citation or bare section), the resource read of 6020.10, 3 Illinois resource reads that
+    # newly resolve once {section*} matches slash section ids (#41), and 528 state-residency
+    # answers for AR/CA/CT/MD/NJ/NY whose rate model or ESTIMATE label changed (#29).
+    assert (changed_out, changed_versions) == (1479, 2072)
     # Not-found lookups by id whose message names the row for that tax year.
     assert pointed == 288
 
