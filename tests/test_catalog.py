@@ -493,15 +493,14 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         assert e["retrieved"] == RETRIEVED.get(code, "2026-10-22"), code
         assert (e["content_sha256"] == NOT_RECORDED) == (code in READ_WITHOUT_BYTES), code
         assert catalog.rate_tables[code]["source_url"] == e["url"]
-    assert {t["source_url"] for c, t in catalog.rate_tables.items() if c not in sourced} == {
-        NOT_RECORDED
-    }
+    unsourced_urls = {t["source_url"] for c, t in catalog.rate_tables.items() if c not in sourced}
+    assert unsourced_urls in (set(), {NOT_RECORDED})
     assert manifest_errors(catalog) == []
 
 
 SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI MS NC ND OH PA UT VA WA".split()
 SOURCED_2026_10_30 = "AK NH NV SD TN WY".split()
-SOURCED_2026_10_31 = "CA NJ NY".split()
+SOURCED_2026_10_31 = "CA CT MD NJ NY".split()
 SOURCED_RATE_TABLES = sorted(
     "AL AR DC DE HI IA LA ME MN MO MT NE NM OK OR RI SC VT WI WV".split()
     + SOURCED_2026_10_23
@@ -528,8 +527,8 @@ def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, P
     errors = manifest_errors(load_catalog(data, with_manifest=True))
     assert "rate_table 'ga-rates': no manifest entry" in errors
     assert (
-        "manifest/ny.json entry 'ny-rates': url 'https://www.tax.ny.gov/pdf/2024/inc/"
-        "it201i_2024.pdf' != row source_url 'https://example.gov/ny'"
+        "manifest/ny.json entry 'ny-rates': url 'https://www.tax.ny.gov/pdf/2025/inc/"
+        "it201i_2025.pdf' != row source_url 'https://example.gov/ny'"
     ) in errors
 
 

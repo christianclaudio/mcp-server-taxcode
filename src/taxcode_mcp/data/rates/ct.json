@@ -1,12 +1,22 @@
 {
   "schema": 1,
   "jurisdiction": "CT",
-  "model": "brackets_whole_income",
-  "source_url": "not_recorded",
+  "model": "connecticut",
+  "source_url": "https://portal.ct.gov/-/media/drs/forms/2024/income/2024-ct-1040-instructions_1224.pdf",
   "params": {
     "exemption": {
-      "single": 15000.0,
-      "mfj": 24000.0
+      "single": {
+        "full": 15000.0,
+        "full_until": 30000.0,
+        "step_agi": 1000.0,
+        "step_amount": 1000.0
+      },
+      "mfj": {
+        "full": 24000.0,
+        "full_until": 48000.0,
+        "step_agi": 1000.0,
+        "step_amount": 1000.0
+      }
     },
     "brackets": {
       "single": [
@@ -15,34 +25,716 @@
           "rate": 0.0699
         },
         {
+          "over": 250000.0,
+          "rate": 0.069
+        },
+        {
+          "over": 200000.0,
+          "rate": 0.065
+        },
+        {
           "over": 100000.0,
           "rate": 0.06
         },
         {
           "over": 50000.0,
-          "rate": 0.05
+          "rate": 0.055
+        },
+        {
+          "over": 10000.0,
+          "rate": 0.045
         },
         {
           "over": null,
-          "rate": 0.03
+          "rate": 0.02
         }
       ],
       "mfj": [
         {
-          "over": 500000.0,
+          "over": 1000000.0,
           "rate": 0.0699
         },
         {
-          "over": 100000.0,
+          "over": 500000.0,
+          "rate": 0.069
+        },
+        {
+          "over": 400000.0,
+          "rate": 0.065
+        },
+        {
+          "over": 200000.0,
           "rate": 0.06
         },
         {
-          "over": 50000.0,
-          "rate": 0.05
+          "over": 100000.0,
+          "rate": 0.055
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.045
         },
         {
           "over": null,
-          "rate": 0.03
+          "rate": 0.02
+        }
+      ]
+    },
+    "phase_out_addback": {
+      "single": {
+        "start": 56500.0,
+        "step_agi": 5000.0,
+        "step_amount": 25.0,
+        "maximum": 250.0
+      },
+      "mfj": {
+        "start": 100500.0,
+        "step_agi": 5000.0,
+        "step_amount": 50.0,
+        "maximum": 500.0
+      }
+    },
+    "tax_recapture": {
+      "single": [
+        {
+          "over": 540000.0,
+          "amount": 3400.0
+        },
+        {
+          "over": 535000.0,
+          "amount": 3350.0
+        },
+        {
+          "over": 530000.0,
+          "amount": 3300.0
+        },
+        {
+          "over": 525000.0,
+          "amount": 3250.0
+        },
+        {
+          "over": 520000.0,
+          "amount": 3200.0
+        },
+        {
+          "over": 515000.0,
+          "amount": 3150.0
+        },
+        {
+          "over": 510000.0,
+          "amount": 3100.0
+        },
+        {
+          "over": 505000.0,
+          "amount": 3050.0
+        },
+        {
+          "over": 500000.0,
+          "amount": 3000.0
+        },
+        {
+          "over": 345000.0,
+          "amount": 2950.0
+        },
+        {
+          "over": 340000.0,
+          "amount": 2860.0
+        },
+        {
+          "over": 335000.0,
+          "amount": 2770.0
+        },
+        {
+          "over": 330000.0,
+          "amount": 2680.0
+        },
+        {
+          "over": 325000.0,
+          "amount": 2590.0
+        },
+        {
+          "over": 320000.0,
+          "amount": 2500.0
+        },
+        {
+          "over": 315000.0,
+          "amount": 2410.0
+        },
+        {
+          "over": 310000.0,
+          "amount": 2320.0
+        },
+        {
+          "over": 305000.0,
+          "amount": 2230.0
+        },
+        {
+          "over": 300000.0,
+          "amount": 2140.0
+        },
+        {
+          "over": 295000.0,
+          "amount": 2050.0
+        },
+        {
+          "over": 290000.0,
+          "amount": 1960.0
+        },
+        {
+          "over": 285000.0,
+          "amount": 1870.0
+        },
+        {
+          "over": 280000.0,
+          "amount": 1780.0
+        },
+        {
+          "over": 275000.0,
+          "amount": 1690.0
+        },
+        {
+          "over": 270000.0,
+          "amount": 1600.0
+        },
+        {
+          "over": 265000.0,
+          "amount": 1510.0
+        },
+        {
+          "over": 260000.0,
+          "amount": 1420.0
+        },
+        {
+          "over": 255000.0,
+          "amount": 1330.0
+        },
+        {
+          "over": 250000.0,
+          "amount": 1240.0
+        },
+        {
+          "over": 245000.0,
+          "amount": 1150.0
+        },
+        {
+          "over": 240000.0,
+          "amount": 1060.0
+        },
+        {
+          "over": 235000.0,
+          "amount": 970.0
+        },
+        {
+          "over": 230000.0,
+          "amount": 880.0
+        },
+        {
+          "over": 225000.0,
+          "amount": 790.0
+        },
+        {
+          "over": 220000.0,
+          "amount": 700.0
+        },
+        {
+          "over": 215000.0,
+          "amount": 610.0
+        },
+        {
+          "over": 210000.0,
+          "amount": 520.0
+        },
+        {
+          "over": 205000.0,
+          "amount": 430.0
+        },
+        {
+          "over": 200000.0,
+          "amount": 340.0
+        },
+        {
+          "over": 150000.0,
+          "amount": 250.0
+        },
+        {
+          "over": 145000.0,
+          "amount": 225.0
+        },
+        {
+          "over": 140000.0,
+          "amount": 200.0
+        },
+        {
+          "over": 135000.0,
+          "amount": 175.0
+        },
+        {
+          "over": 130000.0,
+          "amount": 150.0
+        },
+        {
+          "over": 125000.0,
+          "amount": 125.0
+        },
+        {
+          "over": 120000.0,
+          "amount": 100.0
+        },
+        {
+          "over": 115000.0,
+          "amount": 75.0
+        },
+        {
+          "over": 110000.0,
+          "amount": 50.0
+        },
+        {
+          "over": 105000.0,
+          "amount": 25.0
+        },
+        {
+          "over": null,
+          "amount": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1080000.0,
+          "amount": 6800.0
+        },
+        {
+          "over": 1070000.0,
+          "amount": 6700.0
+        },
+        {
+          "over": 1060000.0,
+          "amount": 6600.0
+        },
+        {
+          "over": 1050000.0,
+          "amount": 6500.0
+        },
+        {
+          "over": 1040000.0,
+          "amount": 6400.0
+        },
+        {
+          "over": 1030000.0,
+          "amount": 6300.0
+        },
+        {
+          "over": 1020000.0,
+          "amount": 6200.0
+        },
+        {
+          "over": 1010000.0,
+          "amount": 6100.0
+        },
+        {
+          "over": 1000000.0,
+          "amount": 6000.0
+        },
+        {
+          "over": 690000.0,
+          "amount": 5900.0
+        },
+        {
+          "over": 680000.0,
+          "amount": 5720.0
+        },
+        {
+          "over": 670000.0,
+          "amount": 5540.0
+        },
+        {
+          "over": 660000.0,
+          "amount": 5360.0
+        },
+        {
+          "over": 650000.0,
+          "amount": 5180.0
+        },
+        {
+          "over": 640000.0,
+          "amount": 5000.0
+        },
+        {
+          "over": 630000.0,
+          "amount": 4820.0
+        },
+        {
+          "over": 620000.0,
+          "amount": 4640.0
+        },
+        {
+          "over": 610000.0,
+          "amount": 4460.0
+        },
+        {
+          "over": 600000.0,
+          "amount": 4280.0
+        },
+        {
+          "over": 590000.0,
+          "amount": 4100.0
+        },
+        {
+          "over": 580000.0,
+          "amount": 3920.0
+        },
+        {
+          "over": 570000.0,
+          "amount": 3740.0
+        },
+        {
+          "over": 560000.0,
+          "amount": 3560.0
+        },
+        {
+          "over": 550000.0,
+          "amount": 3380.0
+        },
+        {
+          "over": 540000.0,
+          "amount": 3200.0
+        },
+        {
+          "over": 530000.0,
+          "amount": 3020.0
+        },
+        {
+          "over": 520000.0,
+          "amount": 2840.0
+        },
+        {
+          "over": 510000.0,
+          "amount": 2660.0
+        },
+        {
+          "over": 500000.0,
+          "amount": 2480.0
+        },
+        {
+          "over": 490000.0,
+          "amount": 2300.0
+        },
+        {
+          "over": 480000.0,
+          "amount": 2120.0
+        },
+        {
+          "over": 470000.0,
+          "amount": 1940.0
+        },
+        {
+          "over": 460000.0,
+          "amount": 1760.0
+        },
+        {
+          "over": 450000.0,
+          "amount": 1580.0
+        },
+        {
+          "over": 440000.0,
+          "amount": 1400.0
+        },
+        {
+          "over": 430000.0,
+          "amount": 1220.0
+        },
+        {
+          "over": 420000.0,
+          "amount": 1040.0
+        },
+        {
+          "over": 410000.0,
+          "amount": 860.0
+        },
+        {
+          "over": 400000.0,
+          "amount": 680.0
+        },
+        {
+          "over": 300000.0,
+          "amount": 500.0
+        },
+        {
+          "over": 290000.0,
+          "amount": 450.0
+        },
+        {
+          "over": 280000.0,
+          "amount": 400.0
+        },
+        {
+          "over": 270000.0,
+          "amount": 350.0
+        },
+        {
+          "over": 260000.0,
+          "amount": 300.0
+        },
+        {
+          "over": 250000.0,
+          "amount": 250.0
+        },
+        {
+          "over": 240000.0,
+          "amount": 200.0
+        },
+        {
+          "over": 230000.0,
+          "amount": 150.0
+        },
+        {
+          "over": 220000.0,
+          "amount": 100.0
+        },
+        {
+          "over": 210000.0,
+          "amount": 50.0
+        },
+        {
+          "over": null,
+          "amount": 0.0
+        }
+      ]
+    },
+    "personal_tax_credit": {
+      "single": [
+        {
+          "over": 64500.0,
+          "decimal": 0.0
+        },
+        {
+          "over": 64000.0,
+          "decimal": 0.01
+        },
+        {
+          "over": 63500.0,
+          "decimal": 0.02
+        },
+        {
+          "over": 63000.0,
+          "decimal": 0.03
+        },
+        {
+          "over": 62500.0,
+          "decimal": 0.04
+        },
+        {
+          "over": 62000.0,
+          "decimal": 0.05
+        },
+        {
+          "over": 61500.0,
+          "decimal": 0.06
+        },
+        {
+          "over": 61000.0,
+          "decimal": 0.07
+        },
+        {
+          "over": 60500.0,
+          "decimal": 0.08
+        },
+        {
+          "over": 60000.0,
+          "decimal": 0.09
+        },
+        {
+          "over": 33300.0,
+          "decimal": 0.1
+        },
+        {
+          "over": 32800.0,
+          "decimal": 0.11
+        },
+        {
+          "over": 32300.0,
+          "decimal": 0.12
+        },
+        {
+          "over": 31800.0,
+          "decimal": 0.13
+        },
+        {
+          "over": 31300.0,
+          "decimal": 0.14
+        },
+        {
+          "over": 26500.0,
+          "decimal": 0.15
+        },
+        {
+          "over": 26000.0,
+          "decimal": 0.2
+        },
+        {
+          "over": 25500.0,
+          "decimal": 0.25
+        },
+        {
+          "over": 25000.0,
+          "decimal": 0.3
+        },
+        {
+          "over": 22300.0,
+          "decimal": 0.35
+        },
+        {
+          "over": 21800.0,
+          "decimal": 0.4
+        },
+        {
+          "over": 21300.0,
+          "decimal": 0.45
+        },
+        {
+          "over": 20800.0,
+          "decimal": 0.5
+        },
+        {
+          "over": 20300.0,
+          "decimal": 0.55
+        },
+        {
+          "over": 19800.0,
+          "decimal": 0.6
+        },
+        {
+          "over": 19300.0,
+          "decimal": 0.65
+        },
+        {
+          "over": 18800.0,
+          "decimal": 0.7
+        },
+        {
+          "over": 15000.0,
+          "decimal": 0.75
+        },
+        {
+          "over": null,
+          "decimal": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 100500.0,
+          "decimal": 0.0
+        },
+        {
+          "over": 100000.0,
+          "decimal": 0.01
+        },
+        {
+          "over": 99500.0,
+          "decimal": 0.02
+        },
+        {
+          "over": 99000.0,
+          "decimal": 0.03
+        },
+        {
+          "over": 98500.0,
+          "decimal": 0.04
+        },
+        {
+          "over": 98000.0,
+          "decimal": 0.05
+        },
+        {
+          "over": 97500.0,
+          "decimal": 0.06
+        },
+        {
+          "over": 97000.0,
+          "decimal": 0.07
+        },
+        {
+          "over": 96500.0,
+          "decimal": 0.08
+        },
+        {
+          "over": 96000.0,
+          "decimal": 0.09
+        },
+        {
+          "over": 52000.0,
+          "decimal": 0.1
+        },
+        {
+          "over": 51500.0,
+          "decimal": 0.11
+        },
+        {
+          "over": 51000.0,
+          "decimal": 0.12
+        },
+        {
+          "over": 50500.0,
+          "decimal": 0.13
+        },
+        {
+          "over": 50000.0,
+          "decimal": 0.14
+        },
+        {
+          "over": 41500.0,
+          "decimal": 0.15
+        },
+        {
+          "over": 41000.0,
+          "decimal": 0.2
+        },
+        {
+          "over": 40500.0,
+          "decimal": 0.25
+        },
+        {
+          "over": 40000.0,
+          "decimal": 0.3
+        },
+        {
+          "over": 33500.0,
+          "decimal": 0.35
+        },
+        {
+          "over": 33000.0,
+          "decimal": 0.4
+        },
+        {
+          "over": 32500.0,
+          "decimal": 0.45
+        },
+        {
+          "over": 32000.0,
+          "decimal": 0.5
+        },
+        {
+          "over": 31500.0,
+          "decimal": 0.55
+        },
+        {
+          "over": 31000.0,
+          "decimal": 0.6
+        },
+        {
+          "over": 30500.0,
+          "decimal": 0.65
+        },
+        {
+          "over": 30000.0,
+          "decimal": 0.7
+        },
+        {
+          "over": 24000.0,
+          "decimal": 0.75
+        },
+        {
+          "over": null,
+          "decimal": 0.0
         }
       ]
     }

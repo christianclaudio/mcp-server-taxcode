@@ -132,7 +132,7 @@ RATE_TABLE_MODELS: dict[str, str] = {
     "NJ": "brackets_marginal",
     "IL": "flat",
     "PA": "flat_no_deduction",
-    "CT": "brackets_whole_income",
+    "CT": "connecticut",
     "NC": "flat_by_year",
     "VA": "brackets_cumulative",
     "MD": "maryland",
@@ -150,10 +150,16 @@ RATE_TABLE_FIELDS: tuple[str, ...] = ("schema", "jurisdiction", "model", "source
 # income first, stored under its statutory name: ``deduction`` or ``exemption``.
 RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
     "georgia": ("standard_deduction", "retirement_exclusion", "rates"),
-    "brackets_whole_income": ("allowance", "brackets"),
     "brackets_marginal": ("allowance", "brackets"),
     "brackets_cumulative": ("allowance", "brackets"),
-    "maryland": ("standard_deduction", "brackets"),
+    "maryland": ("standard_deduction", "personal_exemption", "brackets"),
+    "connecticut": (
+        "exemption",
+        "brackets",
+        "phase_out_addback",
+        "tax_recapture",
+        "personal_tax_credit",
+    ),
     "flat": ("allowance", "rate"),
     "flat_no_deduction": ("rate",),
     "flat_by_year": ("allowance", "rates"),
@@ -168,6 +174,7 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
     "brackets_cumulative": ("brackets",),
+    "brackets_marginal": ("brackets", "deduction", "exemption"),
 }
 # ``tier`` has no unsuffixed value (an unsuffixed ``tier`` is an unknown key): before its
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
@@ -589,7 +596,10 @@ def _check_params(model: str, params: Any, where: str) -> None:
         name = key.rsplit("_", 1)[0] if key in yearly else key
         if model == "flat_by_year" and name == "deduction" and value == FEDERAL_ALLOWANCE:
             pass  # that tax year's federal standard deduction (load_federal_standard_deduction)
-        elif name in (*ALLOWANCE_NAMES, "standard_deduction") and model != "maryland":
+        elif name in (*ALLOWANCE_NAMES, "standard_deduction") and model not in (
+            "maryland",
+            "connecticut",
+        ):
             _check_by_status(value, at)
         elif name == "standard_deduction":  # maryland: a share of AGI between two limits
             _check(isinstance(value, dict), f"{at}: must be an object")
@@ -597,6 +607,79 @@ def _check_params(model: str, params: Any, where: str) -> None:
             _check_rate(value["percent_of_agi"], f"{at}.percent_of_agi")
             _check_by_status(value["minimum"], f"{at}.minimum")
             _check_by_status(value["maximum"], f"{at}.maximum")
+        elif name == "personal_exemption":  # maryland: fixed amount with FAGI phase-out
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, ("amount", "phaseout"), at)
+            _check_amount(value["amount"], f"{at}.amount")
+            phase = value["phaseout"]
+            _check(isinstance(phase, dict), f"{at}.phaseout: must be an object")
+            _check_keys(phase, FILING_STATUSES, f"{at}.phaseout")
+
+            def _phase_row(step: Mapping[str, Any], step_at: str) -> None:
+                if step["over"] is not None:
+                    _check_amount(step["over"], f"{step_at}.over")
+                _check_amount(step["amount"], f"{step_at}.amount")
+
+            for status in FILING_STATUSES:
+                _check_steps(
+                    phase[status],
+                    ("over", "amount"),
+                    "over",
+                    f"{at}.phaseout.{status}",
+                    _phase_row,
+                )
+        elif name == "exemption" and model == "connecticut":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, FILING_STATUSES, at)
+            for status in FILING_STATUSES:
+                spec, sat = value[status], f"{at}.{status}"
+                _check(isinstance(spec, dict), f"{sat}: must be an object")
+                _check_keys(spec, ("full", "full_until", "step_agi", "step_amount"), sat)
+                for field in ("full", "full_until", "step_agi", "step_amount"):
+                    _check_amount(spec[field], f"{sat}.{field}")
+        elif name == "phase_out_addback":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, FILING_STATUSES, at)
+            for status in FILING_STATUSES:
+                spec, sat = value[status], f"{at}.{status}"
+                _check(isinstance(spec, dict), f"{sat}: must be an object")
+                _check_keys(spec, ("start", "step_agi", "step_amount", "maximum"), sat)
+                for field in ("start", "step_agi", "step_amount", "maximum"):
+                    _check_amount(spec[field], f"{sat}.{field}")
+        elif name == "tax_recapture":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, FILING_STATUSES, at)
+
+            def _recapture_row(step: Mapping[str, Any], step_at: str) -> None:
+                if step["over"] is not None:
+                    _check_amount(step["over"], f"{step_at}.over")
+                _check_amount(step["amount"], f"{step_at}.amount")
+
+            for status in FILING_STATUSES:
+                _check_steps(
+                    value[status],
+                    ("over", "amount"),
+                    "over",
+                    f"{at}.{status}",
+                    _recapture_row,
+                )
+        elif name == "personal_tax_credit":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, FILING_STATUSES, at)
+
+            def _credit_row(step: Mapping[str, Any], step_at: str) -> None:
+                if step["over"] is not None:
+                    _check_amount(step["over"], f"{step_at}.over")
+                _check_rate(step["decimal"], f"{step_at}.decimal")
+
+            for status in FILING_STATUSES:
+                _check_steps(
+                    value[status],
+                    ("over", "decimal"),
+                    "over",
+                    f"{at}.{status}",
+                    _credit_row,
+                )
         elif name == "brackets":
             cumulative = model == "brackets_cumulative"
             _check_brackets(value, ("over", "base", "rate") if cumulative else ("over", "rate"), at)
