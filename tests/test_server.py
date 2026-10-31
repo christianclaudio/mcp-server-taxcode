@@ -1390,3 +1390,14 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert res["jurisdiction"] == jur
         assert res["status"] == "success"
+
+
+@pytest.mark.parametrize("state", ["CA", "NJ", "NY"])
+def test_marginal_schedule_states_label_other_tax_years_as_estimates(state: str) -> None:
+    """CA, NJ and NY hold only the 2024 schedule; other years say so in the rate note."""
+    kwargs: dict[str, Any] = {"jurisdiction": state, "days_in_state": 365, "is_domiciled": True}
+    current = server.evaluate_state_residency(**kwargs, tax_year=2024)
+    later = server.evaluate_state_residency(**kwargs, tax_year=2025)
+    assert "ESTIMATE" not in current["tax_computation"]["rate_description"]
+    note = later["tax_computation"]["rate_description"]
+    assert "tax year 2025 brackets and deduction are not in this table; the 2024" in note

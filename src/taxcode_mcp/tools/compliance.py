@@ -327,8 +327,19 @@ def _top_rate(table: dict[str, Any], tax_year: int) -> float:
     return max(float(s["rate"]) for s in _for_year(table, "brackets", tax_year)["single"])
 
 
+# CA, NJ and NY hold one official marginal schedule each, for this tax year (the source_url
+# in each rates/<code>.json is that year's instructions). Other years get an estimate label.
+MARGINAL_SCHEDULE_YEAR = 2024
+MARGINAL_SCHEDULE_STATES = {"CA": "California", "NJ": "New Jersey", "NY": "New York"}
+
+
 def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> str:
-    """The estimate label for a tax year past a table's last enacted or published figures."""
+    """The estimate label for a tax year a table's enacted or published figures don't cover."""
+    if state in MARGINAL_SCHEDULE_STATES and tax_year != MARGINAL_SCHEDULE_YEAR:
+        return (
+            f" [ESTIMATE: {MARGINAL_SCHEDULE_STATES[state]}'s tax year {tax_year} brackets and "
+            f"deduction are not in this table; the {MARGINAL_SCHEDULE_YEAR} amounts are used]"
+        )
     if state == "MS" and tax_year > MS_LAST_ENACTED_RATE_YEAR:
         return (
             f" [ESTIMATE: from tax year {MS_LAST_ENACTED_RATE_YEAR + 1} Mississippi's rate on "
@@ -716,7 +727,11 @@ def evaluate_state_residency(
                 "outside NY for a NY employer are sourced to NY unless for employer necessity."
             )
         rate_authority = "NY Tax Law § 601"
-        rate_desc = _range_desc(RATE_TABLES["NY"]) + NY_RECAPTURE_NOTE
+        rate_desc = (
+            _range_desc(RATE_TABLES["NY"])
+            + NY_RECAPTURE_NOTE
+            + _outyear_estimate_note("NY", tax_year, RATE_TABLES["NY"])
+        )
         std_ded = _allowance(RATE_TABLES["NY"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
@@ -735,11 +750,12 @@ def evaluate_state_residency(
             is_domiciled or presumption_9mo or (days_in_state > 183 and maintains_permanent_abode)
         )
         rate_authority = "Cal. Rev. & Tax Code § 17041"
-        # The MHST threshold is the same for every filing status: Schedule X's top row.
+        # MHST starts at the single table's top row, the $1,000,000 band (not doubled for MFJ).
         rate_desc = (
             f"{_range_desc(RATE_TABLES['CA'])} "
             "(the top rate includes the 1% Mental Health Services Tax on taxable income "
             f"over ${RATE_TABLES['CA']['brackets']['single'][0]['over']:,.0f})"
+            f"{_outyear_estimate_note('CA', tax_year, RATE_TABLES['CA'])}"
         )
         std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
@@ -813,7 +829,9 @@ def evaluate_state_residency(
                 "convenience rule."
             )
         rate_authority = "N.J.S.A. 54A:2-1"
-        rate_desc = _range_desc(RATE_TABLES["NJ"])
+        rate_desc = _range_desc(RATE_TABLES["NJ"]) + _outyear_estimate_note(
+            "NJ", tax_year, RATE_TABLES["NJ"]
+        )
         exemption = _allowance(RATE_TABLES["NJ"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
