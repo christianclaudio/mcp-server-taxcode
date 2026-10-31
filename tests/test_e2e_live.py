@@ -5,6 +5,7 @@ from __future__ import annotations
 import time
 from types import SimpleNamespace
 from typing import Any
+from urllib.parse import urlsplit
 
 import pytest
 from fastmcp.exceptions import ToolError
@@ -179,7 +180,7 @@ async def test_dispatch_tool_call_offline(monkeypatch: pytest.MonkeyPatch) -> No
 @pytest.mark.asyncio
 async def test_all_discovered_tools_live() -> None:
     """Dynamically discover and exercise registered tools against live endpoints."""
-    if "api.example.com" in client.base_url:
+    if urlsplit(client.base_url).hostname == "api.example.com":
         pytest.skip("Live E2E test requires a non-placeholder API base URL")
 
     tools = await mcp.list_tools()
