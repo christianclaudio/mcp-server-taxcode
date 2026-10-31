@@ -746,14 +746,15 @@ def window_span_errors(
     spans: Mapping[tuple[str, str], tuple[int, int]] = WINDOW_SPANS,
     ended: frozenset[tuple[str, str]] = WINDOW_GROUPS_ENDED,
 ) -> list[str]:
-    """Check the versions of every group with a dated row against its committed span.
+    """Check statute version groups against the committed spans and current-row rules.
 
-    Per (jurisdiction, citation) group: (1) dated rows never overlap; (2) exactly one current
-    row, or none in an ended group; (3) the earliest dated ``effective_year`` is the span's
-    start and the latest ``superseded_year`` its end; (4) each year from start to end is
-    covered by exactly one dated row; (5) a current row starts no later than the span
-    (layered on older text) or exactly at its end (a chain); (6) ``spans`` lists exactly the
-    groups that have a dated row.
+    Per (jurisdiction, citation) group: (0) at most one current row, including groups that
+    have no dated row; and for every group with a dated row: (1) dated rows never overlap;
+    (2) exactly one current row, or none in an ended group; (3) the earliest dated
+    ``effective_year`` is the span's start and the latest ``superseded_year`` its end;
+    (4) each year from start to end is covered by exactly one dated row; (5) a current row
+    starts no later than the span (layered on older text) or exactly at its end (a chain);
+    (6) ``spans`` lists exactly the groups that have a dated row.
     """
     groups: dict[tuple[str, str], list[Mapping[str, Any]]] = {}
     for s in statutes:
@@ -801,6 +802,14 @@ def window_span_errors(
                     f"{where}: current row {r['id']} starts in {r['effective_year']}, "
                     f"inside the dated span {start}-{end}"
                 )
+    # Groups with no dated row skipped the loop above; still reject two or more currents.
+    for key in sorted(
+        k for k, rows in groups.items() if all(r["superseded_year"] is None for r in rows)
+    ):
+        where = f"{key[0]} {key[1]}"
+        n = len(groups[key])
+        if n > 1:
+            errors.append(f"{where}: {n} current rows, expected at most 1")
     return errors
 
 
