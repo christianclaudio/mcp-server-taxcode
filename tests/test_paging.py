@@ -9,7 +9,6 @@ from urllib.parse import quote
 import pytest
 from fastmcp import Client
 from fastmcp.exceptions import ToolError
-from mcp.shared.exceptions import MCPError
 
 from taxcode_mcp import paging
 from taxcode_mcp.db import INITIAL_PUBLICATIONS, INITIAL_STATUTES, LEGACY_DATED_STATUTE_IDS
@@ -274,7 +273,7 @@ async def test_statute_resource_pages_round_trip_under_the_cap() -> None:
     base = f"taxcode://statutes/{LONGEST_EN['jurisdiction']}/{LONGEST_EN['id']}"
     async with Client(mcp) as client:
         templates = [t.uri_template for t in await client.list_resource_templates()]
-        assert templates == ["taxcode://statutes/{jurisdiction}/{section}{?page_cursor}"]
+        assert templates == ["taxcode://statutes/{jurisdiction}/{section*}{?page_cursor}"]
         uris = [base]
         pages = [await _read(client, base)]
         while "Next page: " in pages[-1]:
@@ -314,9 +313,12 @@ def test_statute_resource_window_shrinks_to_fit_the_cap() -> None:
 
 
 async def test_the_old_doubled_statute_uri_no_longer_resolves() -> None:
+    # With {section*}, a doubled "statutes/" segment still matches the template
+    # (jurisdiction="statutes", section="US/933") but must not return statute text.
     async with Client(mcp) as client:
-        with pytest.raises(MCPError, match="not found"):
-            await client.read_resource("taxcode://statutes/statutes/US/933")
+        text = await _read(client, "taxcode://statutes/statutes/US/933")
+    assert "not found" in text.lower()
+    assert "26 U.S.C." not in text
 
 
 async def test_next_page_uri_keeps_the_percent_encoded_path_it_was_read_with() -> None:
