@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "jurisdiction": "NY",
-  "model": "brackets_whole_income",
+  "model": "brackets_marginal",
   "source_url": "https://www.tax.ny.gov/pdf/2024/inc/it201i_2024.pdf",
   "params": {
     "deduction": {

@@ -115,7 +115,7 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("NY", _drop("source_url"), "fields must be exactly"),
     ("NY", _set("schema", 2), "schema must be 1"),
     ("NY", _set("jurisdiction", "CA"), "jurisdiction must be 'NY'"),
-    ("NY", _set("model", "flat"), "model must be 'brackets_whole_income'"),
+    ("NY", _set("model", "flat"), "model must be 'brackets_marginal'"),
     ("NY", _set("source_url", ""), "source_url must be a non-empty string"),
     ("NY", _set("params", []), "params must be an object"),
     # allowance and by-status amounts

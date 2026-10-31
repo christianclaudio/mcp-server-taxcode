@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "jurisdiction": "CA",
-  "model": "brackets_whole_income",
+  "model": "brackets_marginal",
   "source_url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
   "params": {
     "deduction": {

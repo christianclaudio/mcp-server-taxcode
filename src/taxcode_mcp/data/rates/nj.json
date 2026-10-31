@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "jurisdiction": "NJ",
-  "model": "brackets_whole_income",
+  "model": "brackets_marginal",
   "source_url": "https://www.nj.gov/treasury/taxation/pdf/other_forms/tgi-ee/2024/1040i.pdf",
   "params": {
     "exemption": {
