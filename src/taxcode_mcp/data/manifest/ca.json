@@ -57,12 +57,12 @@
     {
       "kind": "rate_table",
       "id": "ca-rates",
-      "url": "not_recorded",
+      "url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-31",
+      "content_sha256": "446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

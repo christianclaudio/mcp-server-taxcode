@@ -198,7 +198,7 @@ def is_corrected(key: str) -> bool:
 
 
 # State residency answers that intentionally change with this PR's rate-model work
-# (AR DFA brackets replacing the 65% middle-rate stand-in; CA/CT/MD/NJ/NY whole-income
+# (AR DFA brackets; CA/NJ/NY official marginal schedules; CT/MD whole-income
 # estimate labels). Their out hashes may differ from the f4f0d5d pin.
 RATE_MODEL_CHANGED = frozenset({"AR", "CA", "CT", "MD", "NJ", "NY"})
 

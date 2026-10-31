@@ -13,6 +13,7 @@ from taxcode_mcp import server
 from taxcode_mcp.config import settings
 from taxcode_mcp.db import db
 from taxcode_mcp.errors import SafetyViolationError
+from taxcode_mcp.tools import compliance
 
 
 @pytest.mark.asyncio
@@ -762,13 +763,8 @@ def test_evaluate_state_residency_cases() -> None:
     assert any("Convenience of the Employer" in f for f in ny_flags)
     assert ny_nonres["tax_computation"]["estimated_state_tax"] == 0.0
 
-    for inc, expected_pct in [
-        (6000000.0, 0.109),
-        (2000000.0, 0.0965),
-        (500000.0, 0.0685),
-        (150000.0, 0.060),
-        (50000.0, 0.055),
-    ]:
+    ny_brackets = compliance.RATE_TABLES["NY"]["brackets"]["single"]
+    for inc in (6000000.0, 2000000.0, 500000.0, 150000.0, 50000.0):
         ny_res = server.evaluate_state_residency(
             jurisdiction="NY",
             days_in_state=200,
@@ -778,15 +774,13 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert ny_res["is_resident"] is True
         taxable = inc - 8000.0
-        assert ny_res["tax_computation"]["estimated_state_tax"] == round(taxable * expected_pct, 2)
+        assert ny_res["tax_computation"]["estimated_state_tax"] == compliance._marginal_tax(
+            ny_brackets, taxable
+        )
 
     # 6. California (CA) - 9 month presumption & progressive brackets
-    for inc, expected_pct in [
-        (2000000.0, 0.133),
-        (500000.0, 0.113),
-        (100000.0, 0.093),
-        (40000.0, 0.060),
-    ]:
+    ca_brackets = compliance.RATE_TABLES["CA"]["brackets"]["single"]
+    for inc in (2000000.0, 500000.0, 100000.0, 40000.0):
         ca_res = server.evaluate_state_residency(
             jurisdiction="CA",
             days_in_state=280,
@@ -795,8 +789,10 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert ca_res["is_resident"] is True
         assert any("RTC § 17016" in f for f in ca_res["domicile_audit_risk"]["flags"])
-        taxable = inc - 5363.0
-        assert ca_res["tax_computation"]["estimated_state_tax"] == round(taxable * expected_pct, 2)
+        taxable = inc - 5540.0
+        assert ca_res["tax_computation"]["estimated_state_tax"] == compliance._marginal_tax(
+            ca_brackets, taxable
+        )
 
     # 7. Texas (TX)
     tx_res = server.evaluate_state_residency(
@@ -842,12 +838,8 @@ def test_evaluate_state_residency_cases() -> None:
     )
     assert any("NJ Reciprocal Convenience" in f for f in nj_nonres["domicile_audit_risk"]["flags"])
 
-    for inc, expected_pct in [
-        (2000000.0, 0.1075),
-        (800000.0, 0.0897),
-        (200000.0, 0.0637),
-        (50000.0, 0.035),
-    ]:
+    nj_brackets = compliance.RATE_TABLES["NJ"]["brackets"]["single"]
+    for inc in (2000000.0, 800000.0, 200000.0, 50000.0):
         nj_res = server.evaluate_state_residency(
             jurisdiction="NJ",
             days_in_state=200,
@@ -857,8 +849,9 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert nj_res["is_resident"] is True
         taxable_nj = inc - 1000.0
-        exp_nj = round(taxable_nj * expected_pct, 2)
-        assert nj_res["tax_computation"]["estimated_state_tax"] == exp_nj
+        assert nj_res["tax_computation"]["estimated_state_tax"] == compliance._marginal_tax(
+            nj_brackets, taxable_nj
+        )
 
     # 11. Illinois (IL) - flat 4.95% rate
     il_res = server.evaluate_state_residency(
@@ -1397,3 +1390,14 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert res["jurisdiction"] == jur
         assert res["status"] == "success"
+
+
+@pytest.mark.parametrize("state", ["CA", "NJ", "NY"])
+def test_marginal_schedule_states_label_other_tax_years_as_estimates(state: str) -> None:
+    """CA, NJ and NY hold only the 2024 schedule; other years say so in the rate note."""
+    kwargs: dict[str, Any] = {"jurisdiction": state, "days_in_state": 365, "is_domiciled": True}
+    current = server.evaluate_state_residency(**kwargs, tax_year=2024)
+    later = server.evaluate_state_residency(**kwargs, tax_year=2025)
+    assert "ESTIMATE" not in current["tax_computation"]["rate_description"]
+    note = later["tax_computation"]["rate_description"]
+    assert "tax year 2025 brackets and deduction are not in this table; the 2024" in note

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "jurisdiction": "NJ",
-  "model": "brackets_whole_income",
-  "source_url": "not_recorded",
+  "model": "brackets_marginal",
+  "source_url": "https://www.nj.gov/treasury/taxation/pdf/other_forms/tgi-ee/2024/1040i.pdf",
   "params": {
     "exemption": {
       "single": 1000.0,
@@ -23,8 +23,20 @@
           "rate": 0.0637
         },
         {
-          "over": null,
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
           "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
         }
       ],
       "mfj": [
@@ -37,12 +49,28 @@
           "rate": 0.0897
         },
         {
-          "over": 75000.0,
+          "over": 150000.0,
           "rate": 0.0637
         },
         {
-          "over": null,
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
           "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
         }
       ]
     }

@@ -125,11 +125,11 @@ _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 # ``rates/<code>.json`` file; the compliance tools read nothing else for these numbers.
 RATE_TABLE_MODELS: dict[str, str] = {
     "GA": "georgia",
-    "NY": "brackets_whole_income",
-    "CA": "brackets_whole_income",
+    "NY": "brackets_marginal",
+    "CA": "brackets_marginal",
     "WA": "capital_gains_excise",
     "MA": "flat_with_surtax",
-    "NJ": "brackets_whole_income",
+    "NJ": "brackets_marginal",
     "IL": "flat",
     "PA": "flat_no_deduction",
     "CT": "brackets_whole_income",
@@ -151,6 +151,7 @@ RATE_TABLE_FIELDS: tuple[str, ...] = ("schema", "jurisdiction", "model", "source
 RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
     "georgia": ("standard_deduction", "retirement_exclusion", "rates"),
     "brackets_whole_income": ("allowance", "brackets"),
+    "brackets_marginal": ("allowance", "brackets"),
     "brackets_cumulative": ("allowance", "brackets"),
     "maryland": ("standard_deduction", "brackets"),
     "flat": ("allowance", "rate"),
