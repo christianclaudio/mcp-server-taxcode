@@ -24,13 +24,23 @@ async def _read(client: Client, uri: str) -> str:
         ("taxcode://statutes/IL/5/1501(a)(20)", "35 ILCS 5/1501(a)(20)"),
     ],
 )
-async def test_statute_resource_reads_illinois_sections_with_slashes(uri: str, citation: str) -> None:
+async def test_statute_resource_reads_illinois_sections_with_slashes(
+    uri: str, citation: str
+) -> None:
     async with Client(mcp) as client:
         text = await _read(client, uri)
     assert "not found" not in text.lower()
     assert "Jurisdiction: IL" in text
     # The header opens with the matched row's citation, so each URI must resolve to its own section.
     assert text.startswith(f"{citation} - ")
+
+
+async def test_statute_resource_slash_read_does_not_render_another_section() -> None:
+    # A read that matched the wrong row would open with that row's citation instead.
+    async with Client(mcp) as client:
+        text = await _read(client, "taxcode://statutes/IL/5/301")
+    assert not text.startswith("35 ILCS 5/201 - ")
+    assert text.startswith("35 ILCS 5/301 - ")
 
 
 async def test_statute_resource_still_reads_a_single_segment_section() -> None:
