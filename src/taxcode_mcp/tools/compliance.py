@@ -618,6 +618,8 @@ WHOLE_INCOME_ESTIMATE_NOTE = (
     "not the state's full marginal tables]"
 )
 
+NY_RECAPTURE_NOTE = " [NYAGI-based tax computation worksheets (recapture) are not modeled]"
+
 
 @compliance_server.tool(
     name="evaluate_state_residency",
@@ -714,12 +716,12 @@ def evaluate_state_residency(
                 "outside NY for a NY employer are sourced to NY unless for employer necessity."
             )
         rate_authority = "NY Tax Law § 601"
-        rate_desc = _range_desc(RATE_TABLES["NY"]) + WHOLE_INCOME_ESTIMATE_NOTE
+        rate_desc = _range_desc(RATE_TABLES["NY"]) + NY_RECAPTURE_NOTE
         std_ded = _allowance(RATE_TABLES["NY"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
             brackets = RATE_TABLES["NY"]["brackets"][_status(is_mfj)]
-            estimated_tax = _whole_income_tax(brackets, taxable_income)
+            estimated_tax = _marginal_tax(brackets, taxable_income)
 
     elif state == "CA":
         statutory_basis = "Cal. Rev. & Tax Code § 17014, § 17016; 18 CCR § 17014"
@@ -736,13 +738,12 @@ def evaluate_state_residency(
         rate_desc = (
             f"{_range_desc(RATE_TABLES['CA'])} "
             "(the top rate includes the 1% Mental Health Services Tax)"
-            f"{WHOLE_INCOME_ESTIMATE_NOTE}"
         )
         std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
             brackets = RATE_TABLES["CA"]["brackets"][_status(is_mfj)]
-            estimated_tax = _whole_income_tax(brackets, taxable_income)
+            estimated_tax = _marginal_tax(brackets, taxable_income)
 
     elif state == "FL":
         statutory_basis = "Fla. Const. Art. VII § 5; Fla. Stat. § 222.17"
@@ -810,12 +811,12 @@ def evaluate_state_residency(
                 "convenience rule."
             )
         rate_authority = "N.J.S.A. 54A:2-1"
-        rate_desc = _range_desc(RATE_TABLES["NJ"]) + WHOLE_INCOME_ESTIMATE_NOTE
+        rate_desc = _range_desc(RATE_TABLES["NJ"])
         exemption = _allowance(RATE_TABLES["NJ"], is_mfj)
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
             brackets = RATE_TABLES["NJ"]["brackets"][_status(is_mfj)]
-            estimated_tax = _whole_income_tax(brackets, taxable_income)
+            estimated_tax = _marginal_tax(brackets, taxable_income)
 
     elif state == "IL":
         statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"

@@ -57,12 +57,12 @@
     {
       "kind": "rate_table",
       "id": "ny-rates",
-      "url": "not_recorded",
+      "url": "https://www.tax.ny.gov/pdf/2024/inc/it201i_2024.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-31",
+      "content_sha256": "19113ba3858ed5e8716ef037f375f146688ef805f9b5fdca1290670725927fbe",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
