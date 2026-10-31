@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "NY",
   "model": "brackets_marginal",
-  "source_url": "https://www.tax.ny.gov/pdf/2024/inc/it201i_2024.pdf",
+  "source_url": "https://www.tax.ny.gov/pdf/2025/inc/it201i_2025.pdf",
   "params": {
     "deduction": {
       "single": 8000.0,

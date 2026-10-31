@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import math
 from typing import Any
 
 from fastmcp import FastMCP
@@ -327,19 +328,44 @@ def _top_rate(table: dict[str, Any], tax_year: int) -> float:
     return max(float(s["rate"]) for s in _for_year(table, "brackets", tax_year)["single"])
 
 
-# CA, NJ and NY hold one official marginal schedule each, for this tax year (the source_url
-# in each rates/<code>.json is that year's instructions). Other years get an estimate label.
-MARGINAL_SCHEDULE_YEAR = 2024
-MARGINAL_SCHEDULE_STATES = {"CA": "California", "NJ": "New Jersey", "NY": "New York"}
+# Official schedule coverage per state. CA holds 2024 (unsuffixed) and 2025 (_2025);
+# NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024 only. A year outside the
+# published window uses the nearest held year and gets an estimate label naming that year.
+PUBLISHED_SCHEDULE_YEARS: dict[str, tuple[str, int, int]] = {
+    "CA": ("California", 2024, 2025),
+    "NJ": ("New Jersey", 2024, 2025),
+    "NY": ("New York", 2024, 2025),
+    "CT": ("Connecticut", 2024, 2025),
+    "MD": ("Maryland", 2024, 2024),
+}
+# Back-compat aliases used by tests that still import the old names.
+MARGINAL_SCHEDULE_YEAR = 2025
+MARGINAL_SCHEDULE_STATES = {code: name for code, (name, _, _) in PUBLISHED_SCHEDULE_YEARS.items()}
+
+
+def _schedule_year_used(state: str, tax_year: int) -> int:
+    """The published schedule year applied for ``tax_year`` (clamped to the held window)."""
+    _, first, last = PUBLISHED_SCHEDULE_YEARS[state]
+    return min(max(tax_year, first), last)
 
 
 def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> str:
     """The estimate label for a tax year a table's enacted or published figures don't cover."""
-    if state in MARGINAL_SCHEDULE_STATES and tax_year != MARGINAL_SCHEDULE_YEAR:
-        return (
-            f" [ESTIMATE: {MARGINAL_SCHEDULE_STATES[state]}'s tax year {tax_year} brackets and "
-            f"deduction are not in this table; the {MARGINAL_SCHEDULE_YEAR} amounts are used]"
+    if state in PUBLISHED_SCHEDULE_YEARS:
+        name, first, last = PUBLISHED_SCHEDULE_YEARS[state]
+        if first <= tax_year <= last:
+            return ""
+        used = _schedule_year_used(state, tax_year)
+        note = (
+            f" [ESTIMATE: {name}'s tax year {tax_year} brackets and deduction are not in this "
+            f"table; the {used} amounts are used]"
         )
+        if state == "MD" and tax_year >= 2025:
+            note = note[:-1] + (
+                ". Maryland enacted 2025 changes in HB 352 and the official 2025 schedule is "
+                "not published yet]"
+            )
+        return note
     if state == "MS" and tax_year > MS_LAST_ENACTED_RATE_YEAR:
         return (
             f" [ESTIMATE: from tax year {MS_LAST_ENACTED_RATE_YEAR + 1} Mississippi's rate on "
@@ -547,11 +573,6 @@ def _bracket(brackets: list[dict[str, Any]], taxable_income: float) -> dict[str,
     return next(b for b in brackets if b["over"] is None or taxable_income > b["over"])
 
 
-def _whole_income_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
-    """The bracket's rate applied to the whole taxable income (this model's simplification)."""
-    return float(round(taxable_income * _bracket(brackets, taxable_income)["rate"], 2))
-
-
 def _cumulative_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
     """The bracket's ``base`` plus its rate on the income over its threshold."""
     b = _bracket(brackets, taxable_income)
@@ -622,12 +643,46 @@ def _steps_desc(brackets: list[dict[str, Any]]) -> str:
     return "Graduated brackets: " + ", ".join(parts)
 
 
-_FLAT_BY_CONSTITUTION = "(the state constitution requires a flat rate)"
+def _ct_exemption(spec: dict[str, Any], agi: float) -> float:
+    """Table A personal exemption: full amount through ``full_until``, then step downs."""
+    if agi <= spec["full_until"]:
+        return float(spec["full"])
+    steps = math.ceil((agi - spec["full_until"]) / spec["step_agi"])
+    return float(max(0.0, spec["full"] - steps * spec["step_amount"]))
 
-WHOLE_INCOME_ESTIMATE_NOTE = (
-    " [ESTIMATE: bracket rate applied to whole taxable income on a shortened schedule; "
-    "not the state's full marginal tables]"
-)
+
+def _ct_phase_out_addback(spec: dict[str, Any], agi: float) -> float:
+    """Table C 2% tax rate phase-out add-back from Connecticut AGI."""
+    if agi <= spec["start"]:
+        return 0.0
+    steps = math.ceil((agi - spec["start"]) / spec["step_agi"])
+    return float(min(spec["maximum"], steps * spec["step_amount"]))
+
+
+def _ct_tax_recapture(rows: list[dict[str, Any]], agi: float) -> float:
+    """Table D tax recapture amount from Connecticut AGI."""
+    return float(next(r["amount"] for r in rows if r["over"] is None or agi > r["over"]))
+
+
+def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: float) -> float:
+    """Maryland personal exemptions: count by filing status times the FAGI-phased amount."""
+    each = float(
+        next(
+            s["amount"]
+            for s in info["personal_exemption"]["phaseout"][_status(is_mfj)]
+            if s["over"] is None or federal_agi > s["over"]
+        )
+    )
+    count = 2.0 if is_mfj else 1.0
+    return each * count
+
+
+def _ct_personal_credit(rows: list[dict[str, Any]], agi: float) -> float:
+    """Table E personal tax credit decimal from Connecticut AGI."""
+    return float(next(r["decimal"] for r in rows if r["over"] is None or agi > r["over"]))
+
+
+_FLAT_BY_CONSTITUTION = "(the state constitution requires a flat rate)"
 
 NY_RECAPTURE_NOTE = " [NYAGI-based tax computation worksheets (recapture) are not modeled]"
 
@@ -716,7 +771,6 @@ def evaluate_state_residency(
         rate_authority = "O.C.G.A. § 48-7-20"
         taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
         estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
-
     elif state == "NY":
         statutory_basis = "NY Tax Law § 605(b); 20 NYCRR § 105.20"
         statutory_res = maintains_permanent_abode and days_in_state > 183
@@ -727,17 +781,13 @@ def evaluate_state_residency(
                 "outside NY for a NY employer are sourced to NY unless for employer necessity."
             )
         rate_authority = "NY Tax Law § 601"
-        rate_desc = (
-            _range_desc(RATE_TABLES["NY"])
-            + NY_RECAPTURE_NOTE
-            + _outyear_estimate_note("NY", tax_year, RATE_TABLES["NY"])
-        )
-        std_ded = _allowance(RATE_TABLES["NY"], is_mfj)
+        ny = RATE_TABLES["NY"]
+        rate_desc = _range_desc(ny) + NY_RECAPTURE_NOTE + _outyear_estimate_note("NY", tax_year, ny)
+        std_ded = float(_for_year(ny, "deduction", tax_year)[_status(is_mfj)])
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            brackets = RATE_TABLES["NY"]["brackets"][_status(is_mfj)]
+            brackets = _for_year(ny, "brackets", tax_year)[_status(is_mfj)]
             estimated_tax = _marginal_tax(brackets, taxable_income)
-
     elif state == "CA":
         statutory_basis = "Cal. Rev. & Tax Code § 17014, § 17016; 18 CCR § 17014"
         presumption_9mo = days_in_state > 270
@@ -750,19 +800,20 @@ def evaluate_state_residency(
             is_domiciled or presumption_9mo or (days_in_state > 183 and maintains_permanent_abode)
         )
         rate_authority = "Cal. Rev. & Tax Code § 17041"
-        # MHST starts at the single table's top row, the $1,000,000 band (not doubled for MFJ).
+        ca = RATE_TABLES["CA"]
+        ca_brackets = _for_year(ca, "brackets", tax_year)
+        # MHST/BHST starts at the single table's top row, the $1,000,000 band (not doubled for MFJ).
+        ca_range = {"brackets": ca_brackets}
         rate_desc = (
-            f"{_range_desc(RATE_TABLES['CA'])} "
+            f"{_range_desc(ca_range)} "
             "(the top rate includes the 1% Mental Health Services Tax on taxable income "
-            f"over ${RATE_TABLES['CA']['brackets']['single'][0]['over']:,.0f})"
-            f"{_outyear_estimate_note('CA', tax_year, RATE_TABLES['CA'])}"
+            f"over ${ca_brackets['single'][0]['over']:,.0f})"
+            f"{_outyear_estimate_note('CA', tax_year, ca)}"
         )
-        std_ded = _allowance(RATE_TABLES["CA"], is_mfj)
+        std_ded = float(_for_year(ca, "deduction", tax_year)[_status(is_mfj)])
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            brackets = RATE_TABLES["CA"]["brackets"][_status(is_mfj)]
-            estimated_tax = _marginal_tax(brackets, taxable_income)
-
+            estimated_tax = _marginal_tax(ca_brackets[_status(is_mfj)], taxable_income)
     elif state == "FL":
         statutory_basis = "Fla. Const. Art. VII § 5; Fla. Stat. § 222.17"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
@@ -829,15 +880,13 @@ def evaluate_state_residency(
                 "convenience rule."
             )
         rate_authority = "N.J.S.A. 54A:2-1"
-        rate_desc = _range_desc(RATE_TABLES["NJ"]) + _outyear_estimate_note(
-            "NJ", tax_year, RATE_TABLES["NJ"]
-        )
-        exemption = _allowance(RATE_TABLES["NJ"], is_mfj)
+        nj = RATE_TABLES["NJ"]
+        rate_desc = _range_desc(nj) + _outyear_estimate_note("NJ", tax_year, nj)
+        exemption = float(_for_year(nj, "exemption", tax_year)[_status(is_mfj)])
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
-            brackets = RATE_TABLES["NJ"]["brackets"][_status(is_mfj)]
+            brackets = _for_year(nj, "brackets", tax_year)[_status(is_mfj)]
             estimated_tax = _marginal_tax(brackets, taxable_income)
-
     elif state == "IL":
         statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"
         is_resident = is_domiciled or (days_in_state >= 183 and maintains_permanent_abode)
@@ -871,14 +920,19 @@ def evaluate_state_residency(
                 "a convenience rule."
             )
         rate_authority = "Conn. Gen. Stat. § 12-700"
-        rate_desc = _range_desc(RATE_TABLES["CT"]) + WHOLE_INCOME_ESTIMATE_NOTE
-        # Standard exemption phase-out model
-        exemption = _allowance(RATE_TABLES["CT"], is_mfj)
-        taxable_income = max(0.0, federal_agi - exemption)
+        ct = RATE_TABLES["CT"]
+        rate_desc = _range_desc(ct) + _outyear_estimate_note("CT", tax_year, ct)
+        exemption = _ct_exemption(ct["exemption"][_status(is_mfj)], federal_agi)
+        line3 = max(0.0, federal_agi - exemption)
+        taxable_income = line3
         if is_resident:
-            brackets = RATE_TABLES["CT"]["brackets"][_status(is_mfj)]
-            estimated_tax = _whole_income_tax(brackets, taxable_income)
-
+            initial = _marginal_tax(ct["brackets"][_status(is_mfj)], line3)
+            addback = _ct_phase_out_addback(ct["phase_out_addback"][_status(is_mfj)], federal_agi)
+            recapture = _ct_tax_recapture(ct["tax_recapture"][_status(is_mfj)], federal_agi)
+            line7 = round(initial + addback + recapture, 2)
+            decimal = _ct_personal_credit(ct["personal_tax_credit"][_status(is_mfj)], federal_agi)
+            credit = round(line7 * decimal, 2)
+            estimated_tax = round(line7 - credit, 2)
     elif state == "NC":
         statutory_basis = "N.C. Gen. Stat. §§ 105-153.3, 105-153.7"
         is_resident = is_domiciled or (days_in_state > 183)
@@ -910,20 +964,21 @@ def evaluate_state_residency(
                 "to an additional mandatory local income tax between 2.25% and 3.20%."
             )
         rate_authority = "Md. Code Ann., Tax-Gen. § 10-105"
+        md = RATE_TABLES["MD"]
         rate_desc = (
-            f"{_range_desc(RATE_TABLES['MD'], 'Graduated state brackets')} "
+            f"{_range_desc(md, 'Graduated state brackets')} "
             "plus county piggyback tax (2.25%-3.20%)"
-            f"{WHOLE_INCOME_ESTIMATE_NOTE}"
+            f"{_outyear_estimate_note('MD', tax_year, md)}"
         )
-        md_ded = RATE_TABLES["MD"]["standard_deduction"]
+        md_ded = md["standard_deduction"]
         max_ded = float(md_ded["maximum"][_status(is_mfj)])
         min_ded = float(md_ded["minimum"][_status(is_mfj)])
         standard_ded = min(max_ded, max(min_ded, federal_agi * md_ded["percent_of_agi"]))
-        taxable_income = max(0.0, federal_agi - standard_ded)
+        personal_ex = _md_personal_exemption(md, is_mfj, federal_agi)
+        taxable_income = max(0.0, federal_agi - standard_ded - personal_ex)
         if is_resident:
-            brackets = RATE_TABLES["MD"]["brackets"][_status(is_mfj)]
-            estimated_tax = _whole_income_tax(brackets, taxable_income)
-
+            brackets = md["brackets"][_status(is_mfj)]
+            estimated_tax = _marginal_tax(brackets, taxable_income)
     elif state == "CO":
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)

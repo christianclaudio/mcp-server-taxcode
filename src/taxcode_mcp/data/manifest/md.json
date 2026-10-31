@@ -57,12 +57,12 @@
     {
       "kind": "rate_table",
       "id": "md-rates",
-      "url": "not_recorded",
+      "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2024/Resident-Booklet.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-31",
+      "content_sha256": "8b091df24da89b4e689d2af4ab681bcc5bebac0ea587d3eb4600aacc15c3348b",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

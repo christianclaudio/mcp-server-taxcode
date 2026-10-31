@@ -888,7 +888,7 @@ def test_evaluate_state_residency_cases() -> None:
     assert pa_res["is_resident"] is True
     assert pa_res["tax_computation"]["estimated_state_tax"] == round(100000.0 * 0.0307, 2)
 
-    # 13. Connecticut (CT) - brackets and reciprocal convenience rule
+    # 13. Connecticut (CT) - CT-1040 Tables A-D and reciprocal convenience rule
     ct_nonres = server.evaluate_state_residency(
         jurisdiction="CT",
         days_in_state=40,
@@ -900,24 +900,21 @@ def test_evaluate_state_residency_cases() -> None:
         "CT Reciprocal Convenience Rule" in f for f in ct_nonres["domicile_audit_risk"]["flags"]
     )
 
-    for inc, expected_ct_pct in [
-        (600000.0, 0.0699),
-        (200000.0, 0.06),
-        (80000.0, 0.05),
-        (20000.0, 0.03),
-    ]:
-        ct_res = server.evaluate_state_residency(
-            jurisdiction="CT",
-            days_in_state=200,
-            maintains_permanent_abode=True,
-            federal_agi=inc,
-            filing_status="single",
-        )
-        assert ct_res["is_resident"] is True
-        taxable_ct = inc - 15000.0
-        assert ct_res["tax_computation"]["estimated_state_tax"] == round(
-            taxable_ct * expected_ct_pct, 2
-        )
+    # Official TCS example: Line 3 \$13,000 Single → Table B \$335; AGI \$28,000 → Table A \$15,000
+    ct_example = server.evaluate_state_residency(
+        jurisdiction="CT",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=28000.0,
+        filing_status="single",
+    )
+    assert ct_example["is_resident"] is True
+    # Table B 335 less Table E .15 credit -> 284.75
+    assert ct_example["tax_computation"]["estimated_state_tax"] == 284.75
+    assert (
+        "Table E personal tax credits are not modeled"
+        not in ct_example["tax_computation"]["rate_description"]
+    )
 
     # 14. North Carolina (NC) - 183-day presumption and rate phase-ins
     nc_presumed = server.evaluate_state_residency(
@@ -984,7 +981,7 @@ def test_evaluate_state_residency_cases() -> None:
         )
         assert va_res_bracket["tax_computation"]["estimated_state_tax"] == expected_va
 
-    # 16. Maryland (MD) - county piggyback tax notice and graduated brackets
+    # 16. Maryland (MD) - county piggyback tax notice and full Schedules I/II
     md_nonres = server.evaluate_state_residency(
         jurisdiction="MD",
         days_in_state=50,
@@ -1001,21 +998,24 @@ def test_evaluate_state_residency_cases() -> None:
     )
     assert md_res_top["is_resident"] is True
     assert any("MD County Piggyback Tax" in f for f in md_res_top["domicile_audit_risk"]["flags"])
-    # MFJ deduction capped at 5450. Taxable: 400,000 - 5450 = 394,550 (>300k) -> 5.75%
-    assert md_res_top["tax_computation"]["estimated_state_tax"] == round(394550.0 * 0.0575, 2)
+    # MFJ: max ded 5450 + exemption phased to \$0 (FAGI > \$200k). Taxable 394,550.
+    # Schedule II: \$15,072.50 + 5.75% of excess over \$300,000.
+    assert md_res_top["tax_computation"]["estimated_state_tax"] == round(
+        15072.50 + 0.0575 * (394550.0 - 300000.0), 2
+    )
 
-    for inc, expected_rate in [(200000.0, 0.05), (80000.0, 0.0475)]:
-        md_res_sub = server.evaluate_state_residency(
-            jurisdiction="MD",
-            days_in_state=200,
-            maintains_permanent_abode=True,
-            federal_agi=inc,
-            filing_status="single",
-        )
-        taxable_md = inc - 2700.0
-        assert md_res_sub["tax_computation"]["estimated_state_tax"] == round(
-            taxable_md * expected_rate, 2
-        )
+    # Single mid bracket: AGI 80,000 → ded max 2700 + exemption 3200; taxable 74,100
+    # Schedule I: \$90 + 4.75% of excess over \$3,000.
+    md_mid = server.evaluate_state_residency(
+        jurisdiction="MD",
+        days_in_state=200,
+        maintains_permanent_abode=True,
+        federal_agi=80000.0,
+        filing_status="single",
+    )
+    assert md_mid["tax_computation"]["estimated_state_tax"] == round(
+        90.0 + 0.0475 * (74100.0 - 3000.0), 2
+    )
 
     # 17. Colorado (CO) - flat 4.25% for 2024 (SB 24-228)
     co_nonres = server.evaluate_state_residency(
@@ -1392,12 +1392,29 @@ def test_evaluate_state_residency_cases() -> None:
         assert res["status"] == "success"
 
 
-@pytest.mark.parametrize("state", ["CA", "NJ", "NY"])
+@pytest.mark.parametrize("state", ["CA", "NJ", "NY", "CT"])
 def test_marginal_schedule_states_label_other_tax_years_as_estimates(state: str) -> None:
-    """CA, NJ and NY hold only the 2024 schedule; other years say so in the rate note."""
+    """CA/NJ/NY/CT hold 2024-2025 schedules; later years name the year actually used."""
     kwargs: dict[str, Any] = {"jurisdiction": state, "days_in_state": 365, "is_domiciled": True}
-    current = server.evaluate_state_residency(**kwargs, tax_year=2024)
-    later = server.evaluate_state_residency(**kwargs, tax_year=2025)
-    assert "ESTIMATE" not in current["tax_computation"]["rate_description"]
+    for year in (2024, 2025):
+        current = server.evaluate_state_residency(**kwargs, tax_year=year)
+        assert "ESTIMATE" not in current["tax_computation"]["rate_description"], year
+    later = server.evaluate_state_residency(**kwargs, tax_year=2026)
     note = later["tax_computation"]["rate_description"]
+    assert "tax year 2026 brackets and deduction are not in this table; the 2025" in note
+
+
+def test_maryland_estimate_note_mentions_hb_352() -> None:
+    kwargs: dict[str, Any] = {"jurisdiction": "MD", "days_in_state": 365, "is_domiciled": True}
+    assert (
+        "ESTIMATE"
+        not in server.evaluate_state_residency(**kwargs, tax_year=2024)["tax_computation"][
+            "rate_description"
+        ]
+    )
+    note = server.evaluate_state_residency(**kwargs, tax_year=2025)["tax_computation"][
+        "rate_description"
+    ]
     assert "tax year 2025 brackets and deduction are not in this table; the 2024" in note
+    assert "Maryland enacted 2025 changes in HB 352" in note
+    assert "official 2025 schedule is not published yet" in note
