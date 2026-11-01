@@ -44,12 +44,12 @@
     {
       "kind": "rate_table",
       "id": "ct-rates",
-      "url": "not_recorded",
+      "url": "https://portal.ct.gov/-/media/drs/forms/2024/income/2024-ct-1040-instructions_1224.pdf",
       "edition": "not_recorded",
-      "official": "not_recorded",
+      "official": true,
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-10-31",
+      "content_sha256": "fad02854c8e39e179c6fd5cf0b36b9c9ef638baa679762236e5f06acb3412c42",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"
