@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "CA",
   "model": "brackets_marginal",
-  "source_url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
+  "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf",
   "params": {
     "deduction": {
       "single": 5540.0,
@@ -86,6 +86,96 @@
         },
         {
           "over": 21512.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
+      ]
+    },
+    "deduction_2025": {
+      "single": 5706.0,
+      "mfj": 11412.0
+    },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.133
+        },
+        {
+          "over": 742953.0,
+          "rate": 0.123
+        },
+        {
+          "over": 445771.0,
+          "rate": 0.113
+        },
+        {
+          "over": 371479.0,
+          "rate": 0.103
+        },
+        {
+          "over": 72724.0,
+          "rate": 0.093
+        },
+        {
+          "over": 57542.0,
+          "rate": 0.08
+        },
+        {
+          "over": 41452.0,
+          "rate": 0.06
+        },
+        {
+          "over": 26264.0,
+          "rate": 0.04
+        },
+        {
+          "over": 11079.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1485906.0,
+          "rate": 0.133
+        },
+        {
+          "over": 1000000.0,
+          "rate": 0.123
+        },
+        {
+          "over": 891542.0,
+          "rate": 0.113
+        },
+        {
+          "over": 742958.0,
+          "rate": 0.103
+        },
+        {
+          "over": 145448.0,
+          "rate": 0.093
+        },
+        {
+          "over": 115084.0,
+          "rate": 0.08
+        },
+        {
+          "over": 82904.0,
+          "rate": 0.06
+        },
+        {
+          "over": 52528.0,
+          "rate": 0.04
+        },
+        {
+          "over": 22158.0,
           "rate": 0.02
         },
         {

@@ -44,12 +44,12 @@
     {
       "kind": "rate_table",
       "id": "nj-rates",
-      "url": "https://www.nj.gov/treasury/taxation/pdf/other_forms/tgi-ee/2024/1040i.pdf",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/current/1040i.pdf",
       "edition": "not_recorded",
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-10-31",
-      "content_sha256": "06d08e69b2c732e1882dda507149efed7c364c8b77efee0f242bd0158d7ad6d3",
+      "content_sha256": "fe7977419b70d0c3dcc392c328adc5f58f3b99937e0d2f79aecf6ac368872c31",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded"

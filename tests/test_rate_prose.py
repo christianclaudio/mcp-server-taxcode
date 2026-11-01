@@ -19,7 +19,7 @@ _DOLLARS = re.compile(r"\$(\d[\d,]*(?:\.\d+)?)(k?)")
 
 # Figures the prose states that no formula reads, with the reason each may stay.
 NOT_IN_TABLE: dict[str, set[float]] = {
-    "CA": {1.0},  # the 1% Mental Health Services Tax, already inside the 13.3% top rate
+    "CA": {1.0},  # 1% MHST/BHST (name follows schedule year), inside the 13.3% top rate
     "MD": {2.25, 3.2},  # the county piggyback range; county tax is not computed
     "NH": {3.0},  # the 2024 interest and dividends tax, which this tool does not compute
 }

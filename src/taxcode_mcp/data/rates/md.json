@@ -2,17 +2,58 @@
   "schema": 1,
   "jurisdiction": "MD",
   "model": "maryland",
-  "source_url": "not_recorded",
+  "source_url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2024/Resident-Booklet.pdf",
   "params": {
     "standard_deduction": {
       "percent_of_agi": 0.15,
       "minimum": {
-        "single": 1700.0,
-        "mfj": 3450.0
+        "single": 1800.0,
+        "mfj": 3650.0
       },
       "maximum": {
         "single": 2700.0,
         "mfj": 5450.0
+      }
+    },
+    "personal_exemption": {
+      "amount": 3200.0,
+      "phaseout": {
+        "single": [
+          {
+            "over": 150000.0,
+            "amount": 0.0
+          },
+          {
+            "over": 125000.0,
+            "amount": 800.0
+          },
+          {
+            "over": 100000.0,
+            "amount": 1600.0
+          },
+          {
+            "over": null,
+            "amount": 3200.0
+          }
+        ],
+        "mfj": [
+          {
+            "over": 200000.0,
+            "amount": 0.0
+          },
+          {
+            "over": 175000.0,
+            "amount": 800.0
+          },
+          {
+            "over": 150000.0,
+            "amount": 1600.0
+          },
+          {
+            "over": null,
+            "amount": 3200.0
+          }
+        ]
       }
     },
     "brackets": {
@@ -22,12 +63,32 @@
           "rate": 0.0575
         },
         {
+          "over": 150000.0,
+          "rate": 0.055
+        },
+        {
+          "over": 125000.0,
+          "rate": 0.0525
+        },
+        {
           "over": 100000.0,
           "rate": 0.05
         },
         {
-          "over": null,
+          "over": 3000.0,
           "rate": 0.0475
+        },
+        {
+          "over": 2000.0,
+          "rate": 0.04
+        },
+        {
+          "over": 1000.0,
+          "rate": 0.03
+        },
+        {
+          "over": null,
+          "rate": 0.02
         }
       ],
       "mfj": [
@@ -36,12 +97,32 @@
           "rate": 0.0575
         },
         {
-          "over": 100000.0,
+          "over": 225000.0,
+          "rate": 0.055
+        },
+        {
+          "over": 175000.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 150000.0,
           "rate": 0.05
         },
         {
-          "over": null,
+          "over": 3000.0,
           "rate": 0.0475
+        },
+        {
+          "over": 2000.0,
+          "rate": 0.04
+        },
+        {
+          "over": 1000.0,
+          "rate": 0.03
+        },
+        {
+          "over": null,
+          "rate": 0.02
         }
       ]
     }
