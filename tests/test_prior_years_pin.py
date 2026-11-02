@@ -197,19 +197,98 @@ def is_corrected(key: str) -> bool:
     return False
 
 
-# State residency answers that intentionally change with this PR's rate-model work
-# (AR DFA brackets; CA/NJ/NY official marginal schedules; CT/MD whole-income
-# estimate labels). Their out hashes may differ from the f4f0d5d pin.
+# Prior #29 rate-model states: any year may change.
 RATE_MODEL_CHANGED = frozenset({"AR", "CA", "CT", "MD", "NJ", "NY"})
+# Batch 4: shared federal standard-deduction readers. 2024 already held 14,600, so a
+# 2024 out change is excluded from this general allow; UT 2024 may still differ in
+# rate_description only (see _ut_2024_rate_desc_only_matches_pin).
+FEDERAL_TABLE_STATES = frozenset({
+    "AZ", "DC", "IA", "ID", "ME", "MO", "MT", "ND", "NM", "SC", "UT",
+})
+# Batch 4: KS/MS/OH exemption figures are year-unsuffixed in the rate tables (KS/MS
+# exemption_single/mfj; OH MAGI-tier exemption.amount/phaseout), so they apply for
+# every year in the pin grid.
+EXEMPTION_STATES = frozenset({"KS", "MS", "OH"})
+EXEMPTION_YEARS = range(2018, 2029)
+GA_SCHEDULE_YEARS = range(2019, 2024)
+
+
+def _state_year(key: str) -> tuple[str, str, int] | None:
+    """`(kind, state_or_empty, tax_year)` for a state-residency or georgia key."""
+    kind, *rest = key.split("|")
+    if kind == "state":
+        return kind, rest[0], int(rest[1])
+    if kind == "ga":
+        return kind, "GA", int(rest[0])
+    return None
+
+
+def _strip_dependent_note(out: Any) -> Any:
+    """Answer with `DEPENDENT_EXEMPTION_NOTE` removed from every string field."""
+    from taxcode_mcp.tools.compliance import DEPENDENT_EXEMPTION_NOTE
+
+    note = DEPENDENT_EXEMPTION_NOTE
+    if isinstance(out, dict):
+        return {
+            k: (v.replace(note, "") if isinstance(v, str) else _strip_dependent_note(v))
+            for k, v in out.items()
+        }
+    if isinstance(out, list):
+        return [_strip_dependent_note(v) for v in out]
+    return out
+
+
+def _ga_note_only_matches_pin(out: Any, base_out_hash: str) -> bool:
+    """Whether `out` equals the pin once `DEPENDENT_EXEMPTION_NOTE` is removed."""
+    return pin(_strip_dependent_note(out))[0] == base_out_hash
+
+
+# rate_description at BASE_COMMIT for UT years that use the unsuffixed rate_desc.
+UT_PIN_RATE_DESCRIPTION = (
+    "Flat 4.55% rate (SB 69) less the taxpayer tax credit: 6% of the $14,600 "
+    "($29,200 joint) federal standard deduction, reduced by 1.3% of income over "
+    "$17,652 ($35,304 joint)"
+)
+
+
+def _with_rate_description(out: Any, text: str) -> Any:
+    """Answer with every `rate_description` string replaced by `text`."""
+    if isinstance(out, dict):
+        return {
+            k: (text if k == "rate_description" else _with_rate_description(v, text))
+            for k, v in out.items()
+        }
+    if isinstance(out, list):
+        return [_with_rate_description(v, text) for v in out]
+    return out
+
+
+def _ut_2024_rate_desc_only_matches_pin(out: Any, base_out_hash: str) -> bool:
+    """Whether `out` equals the pin once `rate_description` is the pin-era UT text.
+
+    Amounts and every other field must match; only the rate-description prose may differ.
+    """
+    return pin(_with_rate_description(out, UT_PIN_RATE_DESCRIPTION))[0] == base_out_hash
 
 
 def _allowed(key: str) -> tuple[bool, bool]:
-    """Whether a key's (out, versions) hash may change."""
+    """Whether a key's (out, versions) hash may change for any reason."""
     if key == "tools|health":
         return True, False
+    parsed = _state_year(key)
+    if parsed is not None:
+        kind, state, year = parsed
+        if state in RATE_MODEL_CHANGED:
+            return True, False
+        if state in FEDERAL_TABLE_STATES and year != 2024:
+            return True, False
+        if state in EXEMPTION_STATES and year in EXEMPTION_YEARS:
+            return True, False
+        if state == "GA" and year in GA_SCHEDULE_YEARS:
+            return True, False
+        # Other GA years: note-only, decided in `_compare` after stripping the note.
+        return False, False
     kind, *rest = key.split("|")
-    if kind == "state" and rest[0] in RATE_MODEL_CHANGED:
-        return True, False
     if kind == "search":
         year = rest[2]
         return (year != "None" and 2019 <= int(year) <= 2025) or is_corrected(key), False
@@ -237,8 +316,23 @@ def _compare(
     out_ok, versions_ok = _allowed(key)
     out_changed, versions_changed = now[0] != base[0], now[1] != base[1]
     problems: list[str] = []
+    parsed = _state_year(key)
+    ga_note_only = (
+        parsed is not None
+        and parsed[1] == "GA"
+        and parsed[2] not in GA_SCHEDULE_YEARS
+        and out_changed
+    )
+    ut_2024_desc_only = (
+        parsed is not None and parsed[1] == "UT" and parsed[2] == 2024 and out_changed
+    )
     if out_changed and not out_ok:
-        problems.append(f"out {key}")
+        if ga_note_only and _ga_note_only_matches_pin(out, base[0]):
+            pass  # DEPENDENT_EXEMPTION_NOTE text only; amounts match the pin
+        elif ut_2024_desc_only and _ut_2024_rate_desc_only_matches_pin(out, base[0]):
+            pass  # rate_description prose only; amounts match the pin
+        else:
+            problems.append(f"out {key}")
     if versions_changed and not versions_ok:
         problems.append(f"versions {key}")
     if full is not None and full_sha(raw) != full:
@@ -267,6 +361,8 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
     unexpected: list[str] = []
     changed_out = changed_versions = pointed = 0
+    ga_pre2019_amount_mismatches: list[str] = []
+    ut_2024_amount_mismatches: list[str] = []
     async with Client(mcp) as client:
         for key in sorted(pins):
             raw = await answer(client, calls[key])
@@ -277,14 +373,25 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
             changed_out += out_changed
             changed_versions += versions_changed
             pointed += has_pointer
+            parsed = _state_year(key)
+            if parsed is not None and parsed[1] == "GA" and parsed[2] < 2019:
+                out, _ = _without_pointer(raw)
+                if not _ga_note_only_matches_pin(out, pins[key][0]):
+                    ga_pre2019_amount_mismatches.append(key)
+            if parsed is not None and parsed[1] == "UT" and parsed[2] == 2024:
+                out, _ = _without_pointer(raw)
+                if not _ut_2024_rate_desc_only_matches_pin(out, pins[key][0]):
+                    ut_2024_amount_mismatches.append(key)
     assert unexpected == []
-    # 280 US and 264 PR in-window lookups (240, plus 24 for 6020.10 in 2022-2024), 52 lookups
-    # of the corrected row, 277 window-year searches, 9 searches listing the corrected row, the
-    # health check, 64 lookups of the two rows whose (a)(4) was corrected (24 by id, 40 by
-    # citation or bare section), the resource read of 6020.10, 3 Illinois resource reads that
-    # newly resolve once {section*} matches slash section ids (#41), and 528 state-residency
-    # answers for AR/CA/CT/MD/NJ/NY whose rate model or ESTIMATE label changed (#29).
-    assert (changed_out, changed_versions) == (1479, 2072)
+    # Pre-2019 GA answers may gain DEPENDENT_EXEMPTION_NOTE text only; amounts match pin.
+    assert ga_pre2019_amount_mismatches == []
+    # UT 2024 may change only in rate_description; amounts and other fields match pin.
+    assert ut_2024_amount_mismatches == []
+    # Prior total 1479 plus batch-4 outs with year-scoped allows equals 2587: federal-table
+    # years other than 2024, GA 2019-2023 any change, other GA years note-only, KS/MS/OH
+    # for 2018-2028, and UT 2024 rate_description-only. Same out count as the prior broad
+    # allowlist; versions unchanged at 2072.
+    assert (changed_out, changed_versions) == (2587, 2072)
     # Not-found lookups by id whose message names the row for that tax year.
     assert pointed == 288
 

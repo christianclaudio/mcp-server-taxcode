@@ -955,7 +955,7 @@ def test_utah_rate_and_credit_by_year() -> None:
     # less 1.3% of income over the phase-out. From 2026 the credit base follows the
     # shared federal table ($16,100 / $32,200); phase-out amounts stay at 2025.
     ut_notes = (
-        " The credit base uses the federal standard deduction only; the itemized path and"
+        ". The credit base uses the federal standard deduction only; the itemized path and"
         " the per-dependent exemption ($2,046 for 2024, $2,111 for 2025) are not computed."
         " Dependent exemptions are not included."
     )
@@ -1190,9 +1190,9 @@ def _ms_note(tax_year: int) -> str:
 
 def _ut_note(tax_year: int) -> str:
     return (
-        f" [ESTIMATE: Utah's tax year {tax_year} taxpayer tax credit amounts are not in this "
-        "table (Utah Code § 59-10-1018: the base is that year's federal standard deduction "
-        "and the phase-out amounts are indexed); the 2025 amounts are used]"
+        f" [ESTIMATE: Utah's tax year {tax_year} taxpayer tax credit phase-out "
+        "amounts are not in this table (Utah Code § 59-10-1018; the credit base is "
+        "that year's federal standard deduction); the 2025 phase-out amounts are used]"
     )
 
 
@@ -1223,7 +1223,12 @@ def test_outyear_estimate_notes_are_literal() -> None:
     ):
         got = compliance._outyear_estimate_note(code, first, compliance.RATE_TABLES[code])
         assert got == note(first), code
-        assert _resident_tax(code, first, 1.0)["rate_description"].endswith(note(first)), code
+        desc = _resident_tax(code, first, 1.0)["rate_description"]
+        # OH appends MAGI-tier and dependent-exemption notes after the out-year estimate.
+        suffix = note(first) + (
+            compliance.OH_MAGI_NOTE + compliance.DEPENDENT_EXEMPTION_NOTE if code == "OH" else ""
+        )
+        assert desc.endswith(suffix), code
         before = _resident_tax(code, first - 1, 1.0)["rate_description"]
         assert "[ESTIMATE:" not in before, code
     for tax_year in (2024, 2027, 2028, 2029, 2030):

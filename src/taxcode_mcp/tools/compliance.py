@@ -468,7 +468,7 @@ def evaluate_georgia_residency(
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
     status = _status(is_mfj)
-    standard_deduction = float(_for_year(ga, "standard_deduction", tax_year)[status])
+    standard_deduction = _ga_standard_deduction(ga, status, tax_year)
 
     # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
     max_exclusion = _ga_retirement_cap(ga, age, tax_year)
@@ -727,6 +727,16 @@ OH_MAGI_NOTE = (
 GA_DEPENDENT_NOTE = DEPENDENT_EXEMPTION_NOTE
 
 
+def _ga_standard_deduction(ga: dict[str, Any], status: str, tax_year: int) -> float:
+    """Georgia's standard deduction for a filing status and tax year.
+
+    Pre-2019 estimate years use the 2024 flat-rate deduction, matching the rate step
+    those years borrow; graduated-era floor amounts must not leak into that path.
+    """
+    year = tax_year if tax_year >= GA_FIRST_GRADUATED_YEAR else GA_FLAT_RATE_FIRST_YEAR
+    return float(_for_year(ga, "standard_deduction", year)[status])
+
+
 def _ct_personal_credit(rows: list[dict[str, Any]], agi: float) -> float:
     """Table E personal tax credit decimal from Connecticut AGI."""
     return float(next(r["decimal"] for r in rows if r["over"] is None or agi > r["over"]))
@@ -813,7 +823,7 @@ def evaluate_state_residency(
         )
         ga = RATE_TABLES["GA"]
         status = _status(is_mfj)
-        standard_ded = float(_for_year(ga, "standard_deduction", tax_year)[status])
+        standard_ded = _ga_standard_deduction(ga, status, tax_year)
         max_ret = _ga_retirement_cap(ga, age, tax_year)
         ret_excl = min(retirement_income, max_ret)
         rate_authority = "O.C.G.A. § 48-7-20"
