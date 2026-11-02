@@ -971,6 +971,11 @@ def test_utah_rate_and_credit_by_year() -> None:
             _tax("UT", tax_year, 100000.0),
         )
         assert got == pins, tax_year
+    assert _resident_tax("UT", 2024, 1.0)["rate_description"] == (
+        "Flat 4.55% rate (SB 69) less the taxpayer tax credit: 6% of that tax year's federal "
+        "standard deduction, reduced by 1.3% of income over the 2024 phase-out of $17,652 "
+        "($35,304 joint), which also applies to earlier years" + ut_notes
+    )
     assert _resident_tax("UT", 2025, 1.0)["rate_description"] == (
         "Flat 4.50% rate (HB 106 of 2025) less the taxpayer tax credit: 6% of the $15,750 "
         "($31,500 joint) federal standard deduction, reduced by 1.3% of income over $18,213 "

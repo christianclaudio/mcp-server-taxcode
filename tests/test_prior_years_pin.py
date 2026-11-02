@@ -202,9 +202,21 @@ RATE_MODEL_CHANGED = frozenset({"AR", "CA", "CT", "MD", "NJ", "NY"})
 # Batch 4: shared federal standard-deduction readers. 2024 already held 14,600, so a
 # 2024 out change is excluded from this general allow; UT 2024 may still differ in
 # rate_description only (see _ut_2024_rate_desc_only_matches_pin).
-FEDERAL_TABLE_STATES = frozenset({
-    "AZ", "DC", "IA", "ID", "ME", "MO", "MT", "ND", "NM", "SC", "UT",
-})
+FEDERAL_TABLE_STATES = frozenset(
+    {
+        "AZ",
+        "DC",
+        "IA",
+        "ID",
+        "ME",
+        "MO",
+        "MT",
+        "ND",
+        "NM",
+        "SC",
+        "UT",
+    }
+)
 # Batch 4: KS/MS/OH exemption figures are year-unsuffixed in the rate tables (KS/MS
 # exemption_single/mfj; OH MAGI-tier exemption.amount/phaseout), so they apply for
 # every year in the pin grid.
