@@ -63,6 +63,45 @@
           "rate": 0.0025
         }
       ]
-    }
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 7200.0,
+          "rate": 0.045
+        },
+        {
+          "over": 4900.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3750.0,
+          "rate": 0.025
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 14400.0,
+          "rate": 0.045
+        },
+        {
+          "over": 9800.0,
+          "rate": 0.035
+        },
+        {
+          "over": 7500.0,
+          "rate": 0.025
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "rate_desc_2026": "Graduated rates: 0% on the first $3,750 ($7,500 joint), then 2.5%, 3.5%, and 4.5% (68 O.S. § 2355(D); the further subsection E reduction is not applied)"
   }
 }

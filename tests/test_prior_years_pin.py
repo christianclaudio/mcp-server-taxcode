@@ -217,12 +217,29 @@ FEDERAL_TABLE_STATES = frozenset(
         "UT",
     }
 )
-# Batch 4: KS/MS/OH exemption figures are year-unsuffixed in the rate tables (KS/MS
-# exemption_single/mfj; OH MAGI-tier exemption.amount/phaseout), so they apply for
-# every year in the pin grid.
+# Batch 4: MS exemptions and the Ohio MAGI-tier exemption are year-unsuffixed, so
+# they apply for every year in the pin grid. Kansas allowances are year-specific
+# from 2018; those years are in the same window.
 EXEMPTION_STATES = frozenset({"KS", "MS", "OH"})
 EXEMPTION_YEARS = range(2018, 2029)
 GA_SCHEDULE_YEARS = range(2019, 2024)
+# 2587 previously, plus 232 answers whose tax or rate prose moved onto a schedule
+# sourced here: Hawaii's 2024 standard deduction and 2025 brackets, North Carolina's
+# 2022-2023 rates and the pre-2022 estimate label, Virginia's deduction by year,
+# Oklahoma's 2026 brackets, and West Virginia's 2025 rates. Plus 72 statute lookups
+# of Okla. Stat. tit. 68, § 2355 after its source cite was corrected.
+CHANGED_OUT = 2891
+# Schedules added from official publications in this sourcing pass. A year in the
+# range may change because that year's figures no longer borrow a neighboring schedule,
+# or because the rate prose now names the statute. 2024 amounts that were already
+# the held schedule stay on it.
+SCHEDULE_UPDATES: dict[str, range] = {
+    "HI": range(2024, 2029),
+    "NC": range(2018, 2029),
+    "VA": range(2018, 2029),
+    "OK": range(2026, 2029),
+    "WV": range(2025, 2029),
+}
 
 
 def _state_year(key: str) -> tuple[str, str, int] | None:
@@ -298,14 +315,26 @@ def _allowed(key: str) -> tuple[bool, bool]:
             return True, False
         if state == "GA" and year in GA_SCHEDULE_YEARS:
             return True, False
+        if year in SCHEDULE_UPDATES.get(state, range(0)):
+            return True, False
         # Other GA years: note-only, decided in `_compare` after stripping the note.
         return False, False
     kind, *rest = key.split("|")
+    # The Oklahoma § 2355 row's source cite was corrected. Lookups of that row may
+    # change; the stored summary text does not.
+    if kind == "lookup" and rest[0] in (
+        "2355",
+        "Okla. Stat. tit. 68, § 2355",
+        "ok-stat-68-2355",
+    ):
+        return True, False
     if kind == "search":
         year = rest[2]
         return (year != "None" and 2019 <= int(year) <= 2025) or is_corrected(key), False
     if kind == "resource":
-        return key in CORRECTED_RESOURCES or key in SLASH_RESOURCES, False
+        return (
+            key in CORRECTED_RESOURCES or key in SLASH_RESOURCES or key == "resource|OK|2355"
+        ), False
     if kind != "lookup":
         return is_corrected(key), False
     query, jurisdiction, year = rest[0], rest[1], rest[2]
@@ -399,11 +428,8 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     assert ga_pre2019_amount_mismatches == []
     # UT 2024 may change only in rate_description; amounts and other fields match pin.
     assert ut_2024_amount_mismatches == []
-    # Prior total 1479 plus batch-4 outs with year-scoped allows equals 2587: federal-table
-    # years other than 2024, GA 2019-2023 any change, other GA years note-only, KS/MS/OH
-    # for 2018-2028, and UT 2024 rate_description-only. Same out count as the prior broad
-    # allowlist; versions unchanged at 2072.
-    assert (changed_out, changed_versions) == (2587, 2072)
+    # See CHANGED_OUT. Versions are unchanged at 2072.
+    assert (changed_out, changed_versions) == (CHANGED_OUT, 2072)
     # Not-found lookups by id whose message names the row for that tax year.
     assert pointed == 288
 

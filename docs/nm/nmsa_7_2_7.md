@@ -4,7 +4,7 @@
 - **Corpus:** NMSA
 - **Effective Year:** 2024
 - **Superseded Year:** Current / In Force
-- **Source:** [https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7](https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7)
+- **Source:** [https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7](https://nmonesource.com/nmos/nmsa/en/item/4340/index.do#!fragment/sec7-2-7) — HB 6 (2019), Laws 2019, chapter 270, section 61 makes section 12 effective on the date the secretary of finance and administration certifies that fiscal year 2020 recurring general fund revenues are less than five percent above fiscal year 2019 recurring general fund revenues. The Taxation and Revenue Department's personal income tax rate publication records that this certification condition was met on December 18, 2020, when the secretary of the Department of Finance and Administration certified that fact to the New Mexico Compilation Commission and the director of the Legislative Council Service (https://api.realfile.rtsclients.com/PublicFiles/34821a9573ca43e7b06dfad20f5183fd/fd8f3075-42e7-4cdd-88db-7cab84ef72de/PIT%20rates_2005_2025.pdf, retrieved 2026-11-02).
 - **Hierarchy:** `NMSA > Chapter 7 > Article 2 > § 7-2-7`
 - **Cross References:** 
 

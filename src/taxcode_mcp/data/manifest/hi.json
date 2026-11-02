@@ -24,9 +24,35 @@
       "licence": "not_recorded",
       "retrieved": "2026-10-22",
       "content_sha256": "5bcce0f521562524be6d7422031c79038e337bba4249037fb866fc1047626b2f",
-      "enacting_law": "not_recorded",
-      "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "enacting_law": "Act 45, SLH 2024",
+      "effective_date": "2024-01-01",
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 4400.0,
+            "deduction_mfj_2024": 8800.0
+          },
+          "url": "https://files.hawaii.gov/tax/forms/2024/n11ins.pdf",
+          "official": true,
+          "retrieved": "2026-10-22",
+          "content_sha256": "5bcce0f521562524be6d7422031c79038e337bba4249037fb866fc1047626b2f"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 325000.0,
+            "brackets_2025.single[0].rate": 0.11,
+            "brackets_2025.mfj[0].over": 650000.0,
+            "brackets_2025.mfj[0].rate": 0.11
+          },
+          "url": "https://files.hawaii.gov/tax/forms/2025/n11ins.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "7160595e466b376ba9c14da1540d21532be9e05d48d01d877f5d953c85e4e4d4"
+        }
+      ]
     }
   ]
 }

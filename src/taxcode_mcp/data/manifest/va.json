@@ -65,7 +65,75 @@
       "content_sha256": "c71985e5d4c92f15cf4c51d5b734549bc7954084a18d7d429ff106d6729097a1",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_2019.single": 4500.0,
+            "deduction_2019.mfj": 9000.0
+          },
+          "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_2022.single": 8000.0,
+            "deduction_2022.mfj": 16000.0
+          },
+          "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_2025.single": 8750.0,
+            "deduction_2025.mfj": 17500.0
+          },
+          "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2027,
+          "values": {
+            "deduction_2027.single": 9200.0,
+            "deduction_2027.mfj": 18400.0
+          },
+          "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2028,
+          "values": {
+            "deduction_2028.single": 9300.0,
+            "deduction_2028.mfj": 18600.0
+          },
+          "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2030,
+          "values": {
+            "deduction_2030.single": 3000.0,
+            "deduction_2030.mfj": 6000.0
+          },
+          "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "not_recorded"
+        }
+      ]
     }
   ]
 }

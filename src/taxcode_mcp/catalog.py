@@ -173,8 +173,9 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "georgia": ("standard_deduction", "retirement_exclusion"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
-    "brackets_cumulative": ("brackets",),
+    "brackets_cumulative": ("brackets", "deduction"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
+    "maryland": ("standard_deduction", "personal_exemption", "brackets"),
 }
 # ``tier`` has no unsuffixed value (an unsuffixed ``tier`` is an unknown key): before its
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
@@ -193,7 +194,8 @@ ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
 REGIMES = frozenset({"none", "flat", "graduated"})
 # The years a registry table's ``brackets_YYYY`` and ``rate_desc_YYYY`` keys may name.
-REGISTRY_YEARS = (2024, 2025, 2026, 2027, 2028, 2029, 2030)
+# 2019-2023 are the earlier schedules a table holds when they differ from 2024.
+REGISTRY_YEARS = (2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030)
 # Registry tables keep the original key names. A ``_YYYY`` suffix is the value from that
 # tax year on; the unsuffixed key covers the years before.
 _REGISTRY_REQUIRED = ("statutory_basis", "rate_authority", "rate_desc", "regime")
@@ -206,17 +208,55 @@ _REGISTRY_TYPES: dict[str, type] = {
     "day_threshold": int,
     "requires_abode": bool,
     "inclusive_threshold": bool,
+    # Deduction and exemption ``_YYYY`` keys. The unsuffixed key, when present, covers
+    # the years before the first suffix. Kansas holds one of each for 2018-2024.
     **dict.fromkeys(
         (
-            f"{name}_{status}{year}"
-            for name in ("deduction", "top_bracket", "zero_bracket")
+            f"deduction_{status}{year}"
             for status in FILING_STATUSES
-            for year in ("", "_2024", "_2025", "_2026")
-            if name == "deduction" or year in ("", "_2025")
+            for year in (
+                "",
+                "_2018",
+                "_2019",
+                "_2020",
+                "_2021",
+                "_2022",
+                "_2023",
+                "_2024",
+                "_2025",
+                "_2026",
+            )
         ),
         float,
     ),
-    **dict.fromkeys((f"exemption_{status}" for status in FILING_STATUSES), float),
+    **dict.fromkeys(
+        (
+            f"{name}_{status}{year}"
+            for name in ("top_bracket", "zero_bracket")
+            for status in FILING_STATUSES
+            for year in ("", "_2025")
+        ),
+        float,
+    ),
+    **dict.fromkeys(
+        (
+            f"exemption_{status}{year}"
+            for status in FILING_STATUSES
+            for year in (
+                "",
+                "_2018",
+                "_2019",
+                "_2020",
+                "_2021",
+                "_2022",
+                "_2023",
+                "_2024",
+                "_2025",
+                "_2026",
+            )
+        ),
+        float,
+    ),
     **dict.fromkeys(
         ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
     ),
@@ -234,6 +274,10 @@ _REGISTRY_TYPES: dict[str, type] = {
     "brackets": dict,
     # Later-year values of the bracket schedule, its prose and the credit's base and
     # phase-out amounts. Each needs its unsuffixed key, placed after it, years ascending.
+    # Kansas low-income exclusion (K.S.A. 79-32,110(e)): a filing-status taxable-income
+    # ceiling at or below which the tax is zero. A later year's null ends it. Above the
+    # ceiling the ordinary brackets apply to all taxable income.
+    **dict.fromkeys((f"low_income_exclusion_{year}" for year in range(2018, 2027)), dict),
     **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_YEARS), dict),
     **dict.fromkeys((f"rate_desc_{year}" for year in REGISTRY_YEARS), str),
     **dict.fromkeys(
@@ -494,6 +538,16 @@ def _check_steps(
             previous = bound
 
 
+def _check_zero_liability(value: Any, where: str) -> None:
+    """A zero-tax ceiling by filing status, or null when that year's exclusion has ended."""
+    if value is None:
+        return
+    _check(isinstance(value, dict), f"{where}: must be an object or null")
+    _check_keys(value, FILING_STATUSES, where)
+    for status in FILING_STATUSES:
+        _check_amount(value[status], f"{where}.{status}")
+
+
 def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
     _check(isinstance(value, dict), f"{where}: must be an object")
     _check_keys(value, FILING_STATUSES, where)
@@ -530,6 +584,9 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
     missing = [k for k in _REGISTRY_REQUIRED if k not in params]
     _check(not missing, f"{where}: missing keys {missing}")
     for name, value in params.items():
+        if name.startswith("low_income_exclusion_"):
+            _check_zero_liability(value, f"{where}.{name}")
+            continue
         expected = _REGISTRY_TYPES[name]
         if value == FEDERAL_ALLOWANCE and (
             name.startswith("deduction_") or name.startswith("credit_base_")
@@ -562,6 +619,17 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         unused = sorted(_REGISTRY_FORMULA_KEYS & set(params))
         _check(not unused, f"{where}: {unused} are unused next to brackets")
     keys = list(params)
+    exclusion = [key for key in keys if key.startswith("low_income_exclusion_")]
+    exclusion_years = [int(key[-4:]) for key in exclusion]
+    _check(
+        exclusion_years == sorted(exclusion_years),
+        f"{where}: low_income_exclusion_YYYY keys must be years ascending",
+    )
+    if exclusion:
+        _check(
+            isinstance(params[exclusion[0]], dict),
+            f"{where}: {exclusion[0]} must state the threshold",
+        )
     for base in _REGISTRY_YEARLY_BASES:
         later = [k for k in keys if _YEARLY_KEY_RE.match(k) and k.rsplit("_", 1)[0] == base]
         if not later:

@@ -151,12 +151,14 @@ def test_manifest_records_unknowns_explicitly() -> None:
         for e in catalog.manifest
         if e["kind"] == "statute" and e["content_sha256"] != NOT_RECORDED
     }
-    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS
+    # ok-stat-68-2355 was hashed when its OSCN cite was corrected to 68 O.S. § 2355.
+    ok_hashed = {"ok-stat-68-2355"}
+    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
     hashed = {
         e["kind"]
         for e in catalog.manifest
         if e["content_sha256"] != NOT_RECORDED
-        and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS
+        and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
     }
     assert hashed == {"rate_table", "federal_table", "publication"}
     hashed_pubs = {
@@ -471,23 +473,53 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     assert [(e["_jurisdiction"], e["id"]) for e in entries] == [
         (code, rate_table_id(code)) for code in catalog.jurisdictions if code in RATE_TABLE_MODELS
     ]
-    # A table cites a source only once its brackets were read from that official file:
-    # then it records the url, official, the fetch date and (when the bytes were kept) their
-    # hash, and nothing else. Every other table records nothing at all.
+    # A table cites a source only once its brackets were read from that official file.
+    # verification is "summary" when those figures were checked against a second official
+    # source. edition, enacting_law and effective_date are filled only when that source
+    # states them. No source stated reuse terms, so licence stays not_recorded.
     sourced = {e["_jurisdiction"]: e for e in entries if e["url"] != NOT_RECORDED}
     assert sorted(sourced) == SOURCED_RATE_TABLES
-    recorded = ("url", "official", "retrieved", "content_sha256")
-    # Georgia's table also names the law that last amended it (HB 463 of 2026) and the first
-    # tax year that law applies to.
-    recorded_by_code = {"GA": (*recorded, "enacting_law", "effective_date")}
+    # States whose held figures matched a second official statute or instructions page.
+    summary = {
+        "AK",
+        "CO",
+        "DC",
+        "DE",
+        "HI",
+        "ID",
+        "IN",
+        "KS",
+        "MA",
+        "NC",
+        "ND",
+        "NJ",
+        "NM",
+        "NY",
+        "OK",
+        "OR",
+        "PA",
+        "UT",
+        "VA",
+        "WV",
+    }
+    # Georgia names HB 463. New Mexico's rate publication is the amended rate text and
+    # states the 2008 applicability date. Hawaii's 2024 booklet names Act 45, SLH 2024,
+    # effective for taxable years beginning after December 31, 2023.
+    extra = {
+        "GA": {"enacting_law": "HB 463 of 2026", "effective_date": "2026-01-01"},
+        "NM": {"edition": "amended_compilation", "effective_date": "2008-01-01"},
+        "HI": {"enacting_law": "Act 45, SLH 2024", "effective_date": "2024-01-01"},
+    }
     for e in entries:
-        unrecorded = [
-            name
-            for name in MANIFEST_FIELDS[2:]
-            if e["_jurisdiction"] not in sourced
-            or name not in recorded_by_code.get(e["_jurisdiction"], recorded)
-        ]
-        assert {e[name] for name in unrecorded} == {NOT_RECORDED}, e["id"]
+        code = e["_jurisdiction"]
+        if code not in sourced:
+            assert {e[name] for name in MANIFEST_FIELDS[2:]} == {NOT_RECORDED}, e["id"]
+            continue
+        assert e["verification"] == ("summary" if code in summary else NOT_RECORDED), code
+        assert e["licence"] == NOT_RECORDED, code
+        for name in ("edition", "enacting_law", "effective_date"):
+            expected = extra.get(code, {}).get(name, NOT_RECORDED)
+            assert e[name] == expected, (code, name, e[name])
     for code, e in sourced.items():
         assert e["url"].startswith("https://") and e["official"] is True, code
         assert e["retrieved"] == RETRIEVED.get(code, "2026-10-22"), code
@@ -511,6 +543,9 @@ RETRIEVED = {
     **dict.fromkeys(SOURCED_2026_10_23, "2026-10-23"),
     **dict.fromkeys(SOURCED_2026_10_30, "2026-10-30"),
     **dict.fromkeys(SOURCED_2026_10_31, "2026-10-31"),
+    # The New Mexico rate publication that records the HB 6 certification was fetched
+    # when the 2008-2020 schedule replaced the HB 6 PDF as the table's source.
+    "NM": "2026-11-02",
 }
 # Sources that plain curl could not download (refused or failed), read as text: no hash.
 READ_WITHOUT_BYTES = {"ME", "VT", "KY", "MI"}

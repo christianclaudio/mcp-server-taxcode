@@ -18,6 +18,7 @@ from taxcode_mcp.catalog import (
     dump_json,
     load_rate_tables,
 )
+from taxcode_mcp.errors import SafetyViolationError
 from taxcode_mcp.tools import compliance
 
 
@@ -98,6 +99,19 @@ _BRACKETS = {"single": _STEPS, "mfj": _STEPS}
 _BRACKETS_WITH_BASE = {"single": [{**_STEPS[0], "base": 20.0}, _STEPS[1]], "mfj": _STEPS}
 _BRACKETS_UNORDERED = {"single": _STEPS[::-1], "mfj": _STEPS}
 _BRACKETS_BAD_RATE = {"single": _STEPS, "mfj": [{"over": 1000.0, "rate": 5.0}, _STEPS[1]]}
+
+
+def _ks_exclusion_out_of_order(doc: dict[str, Any]) -> None:
+    params = doc["params"]
+    late = params.pop("low_income_exclusion_2024")
+    early = params.pop("low_income_exclusion_2018")
+    rebuilt: dict[str, Any] = {}
+    for key, value in params.items():
+        if key == "brackets":
+            rebuilt["low_income_exclusion_2024"] = late
+            rebuilt["low_income_exclusion_2018"] = early
+        rebuilt[key] = value
+    doc["params"] = rebuilt
 
 
 def _rename_first(new: str) -> Callable[[dict[str, Any]], None]:
@@ -203,7 +217,9 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("AR", _set("params.brackets", []), "brackets: must be dict"),
     ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
     # registry: later-year brackets, prose and credit amounts
-    ("ID", _set("params.brackets_2023", _BRACKETS), "unknown keys ['brackets_2023']"),
+    # 2019-2023 are allowed so a pre-2024 schedule can be stored on its own.
+    # 2018 is still outside the registry year list.
+    ("ID", _set("params.brackets_2018", _BRACKETS), "unknown keys ['brackets_2018']"),
     ("ID", _set("params.rate_desc_2031", "x"), "unknown keys ['rate_desc_2031']"),
     ("MS", _set("params.brackets_2031", _BRACKETS), "unknown keys ['brackets_2031']"),
     ("MS", _set("params.rate_desc_2028", None), "rate_desc_2028: must be str"),
@@ -284,7 +300,20 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("OH", _set("params.brackets_2026.single.0.base", 332), "base: must be a non-negative"),
     ("OH", _drop("params.brackets_2025.mfj.0.base"), "brackets_2025.mfj[0]: fields must be"),
     ("VA", _set("params.brackets_2025", _BRACKETS), "single[0]: fields must be exactly"),
-    ("NE", _set("params.deduction_single_2023", 1.0), "unknown keys ['deduction_single_2023']"),
+    # 2018-2026 deduction years are valid (Kansas). 2017 is not.
+    ("NE", _set("params.deduction_single_2017", 1.0), "unknown keys ['deduction_single_2017']"),
+    ("KS", _ks_exclusion_out_of_order, "low_income_exclusion_YYYY keys must be years ascending"),
+    ("KS", _set("params.low_income_exclusion_2018", []), "must be an object or null"),
+    ("KS", _set("params.low_income_exclusion_2018", None), "must state the threshold"),
+    ("KS", _set("params.low_income_exclusion_2018.single", 1), "must be a non-negative float"),
+    (
+        "KS",
+        lambda d: d["params"].__setitem__(
+            "low_income_exclusion_2017",
+            d["params"]["low_income_exclusion_2018"],
+        ),
+        "unknown keys ['low_income_exclusion_2017']",
+    ),
     ("UT", _set("params.credit_rate", 6.0), "credit_rate: must be a float rate"),
     ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
@@ -477,10 +506,10 @@ OFFICIAL_2024_FIGURES = [
     ("WA", ("capital_gains_deduction_2024",), 270000.0),
     ("KY", ("deduction_single",), 3160.0),
     ("KY", ("deduction_mfj",), 3160.0),
-    ("KS", ("deduction_single",), 3605.0),
-    ("KS", ("deduction_mfj",), 8240.0),
-    ("KS", ("exemption_single",), 9160.0),
-    ("KS", ("exemption_mfj",), 18320.0),
+    ("KS", ("deduction_single_2024",), 3605.0),
+    ("KS", ("deduction_mfj_2024",), 8240.0),
+    ("KS", ("exemption_single_2024",), 9160.0),
+    ("KS", ("exemption_mfj_2024",), 18320.0),
     ("NE", ("deduction_single_2024",), 8350.0),
     ("NE", ("deduction_mfj_2024",), 16700.0),
     ("RI", ("deduction_single",), 10550.0),
@@ -1281,10 +1310,13 @@ def test_outyear_constants_match_the_tables() -> None:
 
 
 def test_batch4_nm_brackets_pin_hb6_and_hb252() -> None:
-    # Unsuffixed brackets are HB 6 (pre-2025); brackets_2025 are HB 252 (2024 Regular Session).
+    # Unsuffixed brackets are the 2008–2020 schedule. brackets_2021 is HB 6.
+    # brackets_2025 are HB 252 (2024 Regular Session).
     nm = compliance.RATE_TABLES["NM"]
+    assert nm["brackets"]["single"][0]["rate"] == 0.049
     assert nm["brackets"]["single"][-1]["rate"] == 0.017
-    assert compliance._for_year(nm, "brackets", 2024)["single"][-1]["rate"] == 0.017
+    assert nm["brackets_2021"]["single"][0]["rate"] == 0.059
+    assert compliance._for_year(nm, "brackets", 2024) is nm["brackets_2021"]
     assert compliance._for_year(nm, "brackets", 2025)["single"][-1]["rate"] == 0.015
     assert compliance._marginal_tax(nm["brackets_2025"]["single"], 16500.0) == 434.50
     assert compliance._marginal_tax(nm["brackets"]["single"], 210000.0) == 10010.5
@@ -1313,8 +1345,24 @@ def test_batch4_georgia_2019_and_2022_schedules() -> None:
 
 
 def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
+    # K-40 instructions: 2018 standard deduction $3,000 / $7,500 and a $2,250
+    # exemption ($2,250 single, $4,500 joint). 2024 is $3,605 / $8,240 and
+    # $9,160 / $18,320. A year before 2018 has no sourced allowance.
+    # K.S.A. 79-32,110(e), for 2018 through 2023: taxable income of $2,500 or
+    # less ($5,000 joint) has no tax. Above that, the brackets apply to all of it.
+    assert _tax("KS", 2018, 3000.0 + 2250.0) == 0.0
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 1000.0) == 0.0
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 2500.0) == 0.0
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 2501.0) == round(2501.0 * 0.031, 2)
+    assert _tax("KS", 2018, 7500.0 + 4500.0 + 1000.0, "married_joint") == 0.0
+    # 2023 is still inside 79-32,110(e); the allowance that year is $3,500 / $2,250.
+    assert _tax("KS", 2023, 3500.0 + 2250.0 + 2500.0) == 0.0
+    assert _tax("KS", 2023, 3500.0 + 2250.0 + 2501.0) == round(2501.0 * 0.031, 2)
     assert _tax("KS", 2024, 3605.0 + 9160.0) == 0.0
     assert _tax("KS", 2024, 3605.0 + 9160.0 + 1000.0) == round(1000.0 * 0.052, 2)
+    assert _tax("KS", 2024, 3605.0 + 9160.0 + 2500.0) == round(2500.0 * 0.052, 2)
+    with pytest.raises(SafetyViolationError, match="tax year 2017"):
+        _resident_tax("KS", 2017, 10000.0)
     assert _tax("MS", 2024, 2300.0 + 6000.0 + 10000.0) == 0.0
     oh = compliance.RATE_TABLES["OH"]
     assert compliance._oh_personal_exemption(oh, False, 40000.0) == 2400.0
