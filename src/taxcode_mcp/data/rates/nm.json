@@ -11,8 +11,8 @@
     "day_threshold": 185,
     "requires_abode": false,
     "inclusive_threshold": true,
-    "deduction_single": 14600.0,
-    "deduction_mfj": 29200.0,
+    "deduction_single": "federal_standard_deduction",
+    "deduction_mfj": "federal_standard_deduction",
     "brackets": {
       "single": [
         {
@@ -56,6 +56,61 @@
         {
           "over": null,
           "rate": 0.017
+        }
+      ]
+    },
+    "rate_desc_2025": "Graduated brackets from 1.50% to 5.90% (HB 252 of the 2024 Regular Session)",
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 210000.0,
+          "rate": 0.059
+        },
+        {
+          "over": 66500.0,
+          "rate": 0.049
+        },
+        {
+          "over": 33500.0,
+          "rate": 0.047
+        },
+        {
+          "over": 16500.0,
+          "rate": 0.043
+        },
+        {
+          "over": 5500.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.015
+        }
+      ],
+      "mfj": [
+        {
+          "over": 315000.0,
+          "rate": 0.059
+        },
+        {
+          "over": 100000.0,
+          "rate": 0.049
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.047
+        },
+        {
+          "over": 25000.0,
+          "rate": 0.043
+        },
+        {
+          "over": 8000.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.015
         }
       ]
     }

@@ -721,11 +721,14 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
     assert entry["enacting_law"] == "HB 463 of 2026"
     assert entry["effective_date"] == "2026-01-01"
     sources = entry["year_sources"]
-    assert [s["tax_year"] for s in sources] == [2025, 2026, 2027]
+    assert [s["tax_year"] for s in sources] == [2019, 2020, 2021, 2022, 2023, 2025, 2026, 2027]
     assert sources[0]["url"] == (
+        "https://dor.georgia.gov/document/form/2019-it-511-individual-income-tax-booklet/download"
+    )
+    assert sources[5]["url"] == (
         "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download"
     )
-    for source in sources[1:]:
+    for source in sources[6:]:
         assert source["url"] == (
             "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download"
         )
@@ -736,12 +739,12 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
 
     def edit(doc: Any) -> None:
         ga = next(e for e in doc["entries"] if e["id"] == "ga-rates")
-        ga["year_sources"][1]["values"]["standard_deduction_2026.mfj"] = 31000.0
+        ga["year_sources"][6]["values"]["standard_deduction_2026.mfj"] = 31000.0
 
     _edit(data / "manifest" / "ga.json", edit)
     errors = manifest_errors(load_catalog(data, with_manifest=True))
     assert errors == [
-        "manifest/ga.json entry 'ga-rates' year_sources[1]: values: "
+        "manifest/ga.json entry 'ga-rates' year_sources[6]: values: "
         "'standard_deduction_2026.mfj' is 31000.0 here but 30000.0 in the table"
     ]
 
@@ -875,3 +878,35 @@ def test_federal_table_has_one_manifest_record_with_a_source_per_year(
         "manifest/us.json entry 'us-other': no federal_table row with this id",
         "federal_table 'us-standard-deduction': no manifest entry",
     ]
+
+
+def test_unknown_federal_sentinel_string_is_rejected(tree: tuple[Path, Path]) -> None:
+    """A widened federal-sentinel check still rejects any other string."""
+    data, _ = tree
+    _edit(
+        data / "rates" / "az.json",
+        lambda d: d["params"].update(deduction="federal_itemized_deduction"),
+    )
+    with pytest.raises(CatalogError, match=r"params\.deduction: must be an object"):
+        load_catalog(data, with_manifest=True)
+    _edit(
+        data / "rates" / "ut.json",
+        lambda d: d["params"].update(credit_base_single="federal_itemized_deduction"),
+    )
+    # Restore AZ so only the Utah sentinel is wrong for the second load.
+    shutil.copy(DATA_DIR / "rates" / "az.json", data / "rates" / "az.json")
+    with pytest.raises(CatalogError, match=r"credit_base_single: must be float"):
+        load_catalog(data, with_manifest=True)
+
+
+def test_ohio_exemption_base_row_must_match_amount(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+
+    def break_base(doc: Any) -> None:
+        for step in doc["params"]["exemption"]["phaseout"]["single"]:
+            if step["over"] is None:
+                step["amount"] = 999.0
+
+    _edit(data / "rates" / "oh.json", break_base)
+    with pytest.raises(CatalogError, match=r"phaseout\.single: over-null amount must equal"):
+        load_catalog(data, with_manifest=True)

@@ -9,8 +9,8 @@
     "rate_desc": "5.695% on taxable income over $4,673 ($9,346 joint)",
     "regime": "graduated",
     "day_threshold": 270,
-    "deduction_single": 14600.0,
-    "deduction_mfj": 29200.0,
+    "deduction_single": "federal_standard_deduction",
+    "deduction_mfj": "federal_standard_deduction",
     "brackets": {
       "single": [
         {
@@ -33,8 +33,6 @@
         }
       ]
     },
-    "deduction_single_2025": 15750.0,
-    "deduction_mfj_2025": 31500.0,
     "rate_desc_2025": "5.3% on taxable income over $4,811 ($9,622 joint)",
     "brackets_2025": {
       "single": [

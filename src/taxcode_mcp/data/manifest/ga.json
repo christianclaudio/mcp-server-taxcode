@@ -120,11 +120,96 @@
       "verification": "not_recorded",
       "year_sources": [
         {
+          "tax_year": 2019,
+          "values": {
+            "brackets.single[0].over": 7000.0,
+            "brackets.single[0].rate": 0.0575,
+            "brackets.mfj[0].over": 10000.0,
+            "brackets.mfj[0].rate": 0.0575,
+            "exemption.single": 2700.0,
+            "exemption.mfj": 7400.0,
+            "standard_deduction.single": 4600.0,
+            "standard_deduction.mfj": 6000.0
+          },
+          "url": "https://dor.georgia.gov/document/form/2019-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-01",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "brackets.single[0].over": 7000.0,
+            "brackets.single[0].rate": 0.0575,
+            "brackets.mfj[0].over": 10000.0,
+            "brackets.mfj[0].rate": 0.0575,
+            "exemption.single": 2700.0,
+            "exemption.mfj": 7400.0,
+            "standard_deduction.single": 4600.0,
+            "standard_deduction.mfj": 6000.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2020-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-01",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "brackets.single[0].over": 7000.0,
+            "brackets.single[0].rate": 0.0575,
+            "brackets.mfj[0].over": 10000.0,
+            "brackets.mfj[0].rate": 0.0575,
+            "exemption.single": 2700.0,
+            "exemption.mfj": 7400.0,
+            "standard_deduction.single": 4600.0,
+            "standard_deduction.mfj": 6000.0
+          },
+          "url": "https://dor.georgia.gov/document/booklet/2021-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-01",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "brackets.single[0].over": 7000.0,
+            "brackets.single[0].rate": 0.0575,
+            "brackets.mfj[0].over": 10000.0,
+            "brackets.mfj[0].rate": 0.0575,
+            "exemption.single": 2700.0,
+            "exemption.mfj": 7400.0,
+            "standard_deduction_2022.single": 5400.0,
+            "standard_deduction_2022.mfj": 7100.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2022-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-01",
+          "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "brackets.single[0].over": 7000.0,
+            "brackets.single[0].rate": 0.0575,
+            "brackets.mfj[0].over": 10000.0,
+            "brackets.mfj[0].rate": 0.0575,
+            "exemption.single": 2700.0,
+            "exemption.mfj": 7400.0,
+            "standard_deduction_2022.single": 5400.0,
+            "standard_deduction_2022.mfj": 7100.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2023-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-01",
+          "content_sha256": "not_recorded"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "rates[1].rate": 0.0519,
-            "standard_deduction.single": 12000.0,
-            "standard_deduction.mfj": 24000.0
+            "standard_deduction_2024.single": 12000.0,
+            "standard_deduction_2024.mfj": 24000.0
           },
           "url": "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download",
           "official": true,

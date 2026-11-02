@@ -226,10 +226,12 @@ def calculate_built_in_gain_sourcing(
 
 
 # Georgia's flat rate applies from tax year 2024 (O.C.G.A. § 48-7-20(a.1), as amended by
-# HB 1015 (2024): "for taxable years beginning on or after January 1, 2024"). Earlier years
-# were taxed on graduated brackets that the rate table does not hold, so an earlier tax year
-# gets the table's oldest step, labeled as an estimate.
+# HB 1015 (2024): "for taxable years beginning on or after January 1, 2024"). Tax years
+# 2019 to 2023 use the graduated brackets, standard deduction and personal exemption
+# held in the rate table. An earlier year than 2019 gets the table's oldest flat step,
+# labeled as an estimate.
 GA_FLAT_RATE_FIRST_YEAR = 2024
+GA_FIRST_GRADUATED_YEAR = 2019
 GA_PRE_FLAT_ESTIMATE_NOTE = (
     " [ESTIMATE: Georgia's flat rate starts with tax year 2024; earlier years were taxed on "
     "graduated brackets this table does not hold, so the 2024 rate is used]"
@@ -293,12 +295,12 @@ def _ga_revenue_conditional_note(ga: dict[str, Any]) -> str:
 
 
 def _ga_estimate_note(tax_year: int) -> str:
-    """The estimate label for a Georgia tax year; empty for 2024 to ``GA_LAST_FIXED_YEAR``.
+    """The estimate label for a Georgia tax year; empty for 2019 to ``GA_LAST_FIXED_YEAR``.
 
-    Before 2024 the flat rate doesn't apply; after ``GA_LAST_FIXED_YEAR`` the deduction and
-    rate depend on Georgia's revenue tests.
+    Before ``GA_FIRST_GRADUATED_YEAR`` the graduated schedule is not held; after
+    ``GA_LAST_FIXED_YEAR`` the deduction and rate depend on Georgia's revenue tests.
     """
-    if tax_year < GA_FLAT_RATE_FIRST_YEAR:
+    if tax_year < GA_FIRST_GRADUATED_YEAR:
         return GA_PRE_FLAT_ESTIMATE_NOTE
     if tax_year > GA_LAST_FIXED_YEAR:
         return _ga_revenue_conditional_note(RATE_TABLES["GA"])
@@ -312,8 +314,9 @@ def _ga_estimate_note(tax_year: int) -> str:
 # in years the Working Cash-Stabilization Reserve Fund is fully funded and revenue clears
 # set margins, and no cut is modeled.
 MS_LAST_ENACTED_RATE_YEAR = 2030
-# Utah: the taxpayer tax credit's base (that year's federal standard deduction) and indexed
-# phase-out amounts (Utah Code § 59-10-1018) are held through 2025; the rate is not labeled.
+# Utah: the taxpayer tax credit's phase-out amounts (Utah Code § 59-10-1018) are held
+# through 2025; the credit base is that year's federal standard deduction from the
+# shared table. The rate is not labeled.
 UT_LAST_CREDIT_AMOUNT_YEAR = 2025
 # Nebraska: the indexed brackets (§ 77-2715.03(3)) and standard deduction (§ 77-2716.01(3)(b))
 # are published through 2026; 2027 on keeps them with the enacted 3.99% rate.
@@ -377,10 +380,10 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         )
     if state == "UT" and tax_year > UT_LAST_CREDIT_AMOUNT_YEAR:
         return (
-            f" [ESTIMATE: Utah's tax year {tax_year} taxpayer tax credit amounts are not in "
-            "this table (Utah Code § 59-10-1018: the base is that year's federal standard "
-            "deduction and the phase-out amounts are indexed); the "
-            f"{UT_LAST_CREDIT_AMOUNT_YEAR} amounts are used]"
+            f" [ESTIMATE: Utah's tax year {tax_year} taxpayer tax credit phase-out "
+            "amounts are not in this table (Utah Code § 59-10-1018; the credit base is "
+            "that year's federal standard deduction); the "
+            f"{UT_LAST_CREDIT_AMOUNT_YEAR} phase-out amounts are used]"
         )
     if state == "NE" and tax_year > NE_LAST_PUBLISHED_SCHEDULE_YEAR:
         return (
@@ -464,18 +467,35 @@ def evaluate_georgia_residency(
     # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
-    standard_deduction = float(_for_year(ga, "standard_deduction", tax_year)[_status(is_mfj)])
+    status = _status(is_mfj)
+    standard_deduction = float(_for_year(ga, "standard_deduction", tax_year)[status])
 
     # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
     max_exclusion = _ga_retirement_cap(ga, age, tax_year)
     retirement_exclusion_applied = min(retirement_income, max_exclusion)
 
-    # Tax rate selection
-    ga_step = _year_step(ga["rates"], tax_year)
-    tax_rate = float(ga_step["rate"])
-
-    taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
-    estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
+    if GA_FIRST_GRADUATED_YEAR <= tax_year < GA_FLAT_RATE_FIRST_YEAR:
+        personal_ex = float(ga["exemption"][status])
+        taxable_income = max(
+            0.0,
+            federal_agi - standard_deduction - personal_ex - retirement_exclusion_applied,
+        )
+        brackets = ga["brackets"][status]
+        tax_rate = max(float(b["rate"]) for b in brackets)
+        estimated_tax = _marginal_tax(brackets, taxable_income) if is_georgia_resident else 0.0
+        rate_authority = (
+            f"O.C.G.A. § 48-7-20 ({_steps_desc(brackets)})"
+            f"{_ga_estimate_note(tax_year)}{DEPENDENT_EXEMPTION_NOTE}"
+        )
+    else:
+        ga_step = _year_step(ga["rates"], tax_year)
+        tax_rate = float(ga_step["rate"])
+        taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
+        estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
+        rate_authority = (
+            f"O.C.G.A. § 48-7-20 (flat tax, {ga_step['law']})"
+            f"{_ga_estimate_note(tax_year)}{DEPENDENT_EXEMPTION_NOTE}"
+        )
 
     return {
         "status": "success",
@@ -504,9 +524,7 @@ def evaluate_georgia_residency(
             "estimated_georgia_tax": estimated_tax,
             "is_estimate": True,
             "estimate_note": ESTIMATE_NOTE,
-            "statutory_rate_authority": (
-                f"O.C.G.A. § 48-7-20 (flat tax, {ga_step['law']}){_ga_estimate_note(tax_year)}"
-            ),
+            "statutory_rate_authority": rate_authority,
         },
         "disclaimer": BILINGUAL_DISCLAIMER,
         "content_notice": CONTENT_NOTICE,
@@ -597,10 +615,10 @@ def _registry_credit(
 ) -> float:
     """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0.
 
-    The base and phase-out amounts are the tax year's (``_YYYY`` keys, as elsewhere).
+    The base may name the federal standard deduction; phase-out amounts use ``_YYYY`` keys.
     """
     status = _status(is_mfj)
-    base = float(_for_year(info, f"credit_base_{status}", tax_year))
+    base = _federal_or_amount(_for_year(info, f"credit_base_{status}", tax_year), is_mfj, tax_year)
     initial = float(info["credit_rate"]) * base
     phaseout = float(_for_year(info, f"credit_phaseout_{status}", tax_year))
     over = max(0.0, taxable_income - phaseout)
@@ -675,6 +693,38 @@ def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: floa
     )
     count = 2.0 if is_mfj else 1.0
     return each * count
+
+
+def _oh_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: float) -> float:
+    """Ohio personal exemptions: count by filing status times the MAGI-tier amount.
+
+    The tier is picked from the tool's AGI (a stand-in for Ohio MAGI).
+    """
+    each = float(
+        next(
+            s["amount"]
+            for s in info["exemption"]["phaseout"][_status(is_mfj)]
+            if s["over"] is None or federal_agi > s["over"]
+        )
+    )
+    count = 2.0 if is_mfj else 1.0
+    return each * count
+
+
+def _federal_or_amount(raw: Any, is_mfj: bool, tax_year: int) -> float:
+    """A rate-table amount, or that tax year's federal standard deduction when named."""
+    if raw == FEDERAL_ALLOWANCE:
+        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][_status(is_mfj)]
+    return float(raw or 0.0)
+
+
+DEPENDENT_EXEMPTION_NOTE = " Dependent exemptions are not included."
+OH_MAGI_NOTE = (
+    " The personal-exemption tier is picked from the tool's AGI, which leaves out"
+    " Ohio's business-income deduction add-back, so near $40,000 and $80,000 the"
+    " tier may differ."
+)
+GA_DEPENDENT_NOTE = DEPENDENT_EXEMPTION_NOTE
 
 
 def _ct_personal_credit(rows: list[dict[str, Any]], agi: float) -> float:
@@ -762,15 +812,28 @@ def evaluate_state_residency(
             or (maintains_permanent_abode and days_in_state > 0)
         )
         ga = RATE_TABLES["GA"]
-        standard_ded = float(_for_year(ga, "standard_deduction", tax_year)[_status(is_mfj)])
+        status = _status(is_mfj)
+        standard_ded = float(_for_year(ga, "standard_deduction", tax_year)[status])
         max_ret = _ga_retirement_cap(ga, age, tax_year)
         ret_excl = min(retirement_income, max_ret)
-        ga_step = _year_step(ga["rates"], tax_year)
-        rate = float(ga_step["rate"])
-        rate_desc = f"Flat {_pct(rate)} rate ({ga_step['law']}){_ga_estimate_note(tax_year)}"
         rate_authority = "O.C.G.A. § 48-7-20"
-        taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
-        estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
+        if GA_FIRST_GRADUATED_YEAR <= tax_year < GA_FLAT_RATE_FIRST_YEAR:
+            personal_ex = float(ga["exemption"][status])
+            taxable_income = max(0.0, federal_agi - standard_ded - personal_ex - ret_excl)
+            brackets = ga["brackets"][status]
+            rate_desc = (
+                _steps_desc(brackets) + _ga_estimate_note(tax_year) + DEPENDENT_EXEMPTION_NOTE
+            )
+            estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+        else:
+            ga_step = _year_step(ga["rates"], tax_year)
+            rate = float(ga_step["rate"])
+            rate_desc = (
+                f"Flat {_pct(rate)} rate ({ga_step['law']})"
+                f"{_ga_estimate_note(tax_year)}{DEPENDENT_EXEMPTION_NOTE}"
+            )
+            taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
+            estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
     elif state == "NY":
         statutory_basis = "NY Tax Law § 605(b); 20 NYCRR § 105.20"
         statutory_res = maintains_permanent_abode and days_in_state > 183
@@ -1011,7 +1074,7 @@ def evaluate_state_residency(
             )
         rate_authority = "A.R.S. § 43-1011"
         rate_desc = f"Flat {_pct(RATE_TABLES['AZ']['rate'])} rate (SB 1828)"
-        standard_ded = _allowance(RATE_TABLES["AZ"], is_mfj)
+        standard_ded = _allowance(RATE_TABLES["AZ"], is_mfj, tax_year)
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * RATE_TABLES["AZ"]["rate"], 2) if is_resident else 0.0
 
@@ -1026,10 +1089,13 @@ def evaluate_state_residency(
             )
         rate_authority = "Ohio Rev. Code § 5747.02"
         oh_brackets = _for_year(RATE_TABLES["OH"], "brackets", tax_year)[_status(is_mfj)]
-        rate_desc = _steps_desc(oh_brackets) + _outyear_estimate_note(
-            "OH", tax_year, RATE_TABLES["OH"]
+        rate_desc = (
+            _steps_desc(oh_brackets)
+            + _outyear_estimate_note("OH", tax_year, RATE_TABLES["OH"])
+            + OH_MAGI_NOTE
+            + DEPENDENT_EXEMPTION_NOTE
         )
-        personal_exemption = _allowance(RATE_TABLES["OH"], is_mfj)
+        personal_exemption = _oh_personal_exemption(RATE_TABLES["OH"], is_mfj, federal_agi)
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
             estimated_tax = _cumulative_tax(oh_brackets, taxable_income)
@@ -1086,8 +1152,13 @@ def evaluate_state_residency(
             regime = str(info["regime"])
 
         # Year-aware standard deduction selection
-        ded = float(_for_year(info, f"deduction_{_status(is_mfj)}", tax_year) or 0.0)
-        taxable_income = max(0.0, federal_agi - ded)
+        ded = _federal_or_amount(
+            _for_year(info, f"deduction_{_status(is_mfj)}", tax_year), is_mfj, tax_year
+        )
+        exemption = _federal_or_amount(
+            _for_year(info, f"exemption_{_status(is_mfj)}", tax_year), is_mfj, tax_year
+        )
+        taxable_income = max(0.0, federal_agi - ded - exemption)
 
         if regime == "none":
             taxable_income = 0.0
