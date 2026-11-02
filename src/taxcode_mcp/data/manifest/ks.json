@@ -29,16 +29,103 @@
       "verification": "summary",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 3000.0,
+            "deduction_mfj_2018": 7500.0,
+            "exemption_single_2018": 2250.0,
+            "exemption_mfj_2018": 4500.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip18.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "ea880f401cdac2838fb60a89d6a7584b2b8a40a417fdfd8833ab9e0e1cc2e23f"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 3000.0,
+            "deduction_mfj_2019": 7500.0,
+            "exemption_single_2019": 2250.0,
+            "exemption_mfj_2019": 4500.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip19.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "0c43c779d95161d0848df49cad1ef3c225471783938e94d42d4c5e5af40b8545"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 3000.0,
+            "deduction_mfj_2020": 7500.0,
+            "exemption_single_2020": 2250.0,
+            "exemption_mfj_2020": 4500.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip20.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "4dfb967f180f0f1b0245f047daa759d6c184a790d36c9673852e4940c81d7b25"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 3500.0,
+            "deduction_mfj_2021": 8000.0,
+            "exemption_single_2021": 2250.0,
+            "exemption_mfj_2021": 4500.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip21.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "34bf772569c2d7711b019ef06d85cb8ecf3aa7d87b6f589480f3f73522c96549"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 3500.0,
+            "deduction_mfj_2022": 8000.0,
+            "exemption_single_2022": 2250.0,
+            "exemption_mfj_2022": 4500.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip22.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "ab527d8d0ee2ac54e47a67c429488ef167f6106969814c6352b12956d5fe8aeb"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 3500.0,
+            "deduction_mfj_2023": 8000.0,
+            "exemption_single_2023": 2250.0,
+            "exemption_mfj_2023": 4500.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip23.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "456f9b8b6254b33a3b6943d94c18eeb3e8a3df3ae42a58a78059885ef6f796af"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 3605.0,
+            "deduction_mfj_2024": 8240.0,
+            "exemption_single_2024": 9160.0,
+            "exemption_mfj_2024": 18320.0
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip24.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "771aa0205ad6da8f40e9557cc80d84029c59d1152ce538529c2078029d6283a5"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "brackets_2024.single[0].over": 23000.0,
             "brackets_2024.single[0].rate": 0.0558,
             "brackets_2024.mfj[0].over": 46000.0,
-            "brackets_2024.mfj[0].rate": 0.0558,
-            "deduction_single": 3605.0,
-            "deduction_mfj": 8240.0,
-            "exemption_single": 9160.0,
-            "exemption_mfj": 18320.0
+            "brackets_2024.mfj[0].rate": 0.0558
           },
           "url": "https://www.ksrevisor.org/statutes/chapters/ch79/079_032_0110.html",
           "official": true,

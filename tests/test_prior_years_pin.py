@@ -217,9 +217,9 @@ FEDERAL_TABLE_STATES = frozenset(
         "UT",
     }
 )
-# Batch 4: KS/MS/OH exemption figures are year-unsuffixed in the rate tables (KS/MS
-# exemption_single/mfj; OH MAGI-tier exemption.amount/phaseout), so they apply for
-# every year in the pin grid.
+# Batch 4: MS exemptions and the Ohio MAGI-tier exemption are year-unsuffixed, so
+# they apply for every year in the pin grid. Kansas allowances are year-specific
+# from 2018; those years are in the same window.
 EXEMPTION_STATES = frozenset({"KS", "MS", "OH"})
 EXEMPTION_YEARS = range(2018, 2029)
 GA_SCHEDULE_YEARS = range(2019, 2024)

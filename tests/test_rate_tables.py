@@ -18,6 +18,7 @@ from taxcode_mcp.catalog import (
     dump_json,
     load_rate_tables,
 )
+from taxcode_mcp.errors import SafetyViolationError
 from taxcode_mcp.tools import compliance
 
 
@@ -286,7 +287,8 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("OH", _set("params.brackets_2026.single.0.base", 332), "base: must be a non-negative"),
     ("OH", _drop("params.brackets_2025.mfj.0.base"), "brackets_2025.mfj[0]: fields must be"),
     ("VA", _set("params.brackets_2025", _BRACKETS), "single[0]: fields must be exactly"),
-    ("NE", _set("params.deduction_single_2023", 1.0), "unknown keys ['deduction_single_2023']"),
+    # 2018-2026 deduction years are valid (Kansas). 2017 is not.
+    ("NE", _set("params.deduction_single_2017", 1.0), "unknown keys ['deduction_single_2017']"),
     ("UT", _set("params.credit_rate", 6.0), "credit_rate: must be a float rate"),
     ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
@@ -479,10 +481,10 @@ OFFICIAL_2024_FIGURES = [
     ("WA", ("capital_gains_deduction_2024",), 270000.0),
     ("KY", ("deduction_single",), 3160.0),
     ("KY", ("deduction_mfj",), 3160.0),
-    ("KS", ("deduction_single",), 3605.0),
-    ("KS", ("deduction_mfj",), 8240.0),
-    ("KS", ("exemption_single",), 9160.0),
-    ("KS", ("exemption_mfj",), 18320.0),
+    ("KS", ("deduction_single_2024",), 3605.0),
+    ("KS", ("deduction_mfj_2024",), 8240.0),
+    ("KS", ("exemption_single_2024",), 9160.0),
+    ("KS", ("exemption_mfj_2024",), 18320.0),
     ("NE", ("deduction_single_2024",), 8350.0),
     ("NE", ("deduction_mfj_2024",), 16700.0),
     ("RI", ("deduction_single",), 10550.0),
@@ -1318,8 +1320,16 @@ def test_batch4_georgia_2019_and_2022_schedules() -> None:
 
 
 def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
+    # K-40 instructions: 2018 standard deduction $3,000 / $7,500 and a $2,250
+    # exemption ($2,250 single, $4,500 joint). 2024 is $3,605 / $8,240 and
+    # $9,160 / $18,320. A year before 2018 has no sourced allowance.
+    assert _tax("KS", 2018, 3000.0 + 2250.0) == 0.0
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 1000.0) == round(1000.0 * 0.031, 2)
+    assert _tax("KS", 2018, 7500.0 + 4500.0 + 1000.0, "married_joint") == round(1000.0 * 0.031, 2)
     assert _tax("KS", 2024, 3605.0 + 9160.0) == 0.0
     assert _tax("KS", 2024, 3605.0 + 9160.0 + 1000.0) == round(1000.0 * 0.052, 2)
+    with pytest.raises(SafetyViolationError, match="tax year 2017"):
+        _resident_tax("KS", 2017, 10000.0)
     assert _tax("MS", 2024, 2300.0 + 6000.0 + 10000.0) == 0.0
     oh = compliance.RATE_TABLES["OH"]
     assert compliance._oh_personal_exemption(oh, False, 40000.0) == 2400.0

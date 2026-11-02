@@ -208,17 +208,55 @@ _REGISTRY_TYPES: dict[str, type] = {
     "day_threshold": int,
     "requires_abode": bool,
     "inclusive_threshold": bool,
+    # Deduction and exemption ``_YYYY`` keys. The unsuffixed key, when present, covers
+    # the years before the first suffix. Kansas holds one of each for 2018-2024.
     **dict.fromkeys(
         (
-            f"{name}_{status}{year}"
-            for name in ("deduction", "top_bracket", "zero_bracket")
+            f"deduction_{status}{year}"
             for status in FILING_STATUSES
-            for year in ("", "_2024", "_2025", "_2026")
-            if name == "deduction" or year in ("", "_2025")
+            for year in (
+                "",
+                "_2018",
+                "_2019",
+                "_2020",
+                "_2021",
+                "_2022",
+                "_2023",
+                "_2024",
+                "_2025",
+                "_2026",
+            )
         ),
         float,
     ),
-    **dict.fromkeys((f"exemption_{status}" for status in FILING_STATUSES), float),
+    **dict.fromkeys(
+        (
+            f"{name}_{status}{year}"
+            for name in ("top_bracket", "zero_bracket")
+            for status in FILING_STATUSES
+            for year in ("", "_2025")
+        ),
+        float,
+    ),
+    **dict.fromkeys(
+        (
+            f"exemption_{status}{year}"
+            for status in FILING_STATUSES
+            for year in (
+                "",
+                "_2018",
+                "_2019",
+                "_2020",
+                "_2021",
+                "_2022",
+                "_2023",
+                "_2024",
+                "_2025",
+                "_2026",
+            )
+        ),
+        float,
+    ),
     **dict.fromkeys(
         ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
     ),

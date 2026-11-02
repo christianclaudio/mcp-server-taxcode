@@ -714,6 +714,27 @@ def _federal_or_amount(raw: Any, is_mfj: bool, tax_year: int) -> float:
     return float(raw or 0.0)
 
 
+def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_year: int) -> float:
+    """A registry deduction or exemption for ``tax_year``.
+
+    When the table holds ``_YYYY`` values and has no unsuffixed amount, a year before
+    the first of those values has no sourced figure. That year fails instead of using
+    a later year's amount or zero.
+    """
+    value = _for_year(info, name, tax_year)
+    yearly = [
+        int(key[len(name) + 1 :])
+        for key in info
+        if key.startswith(f"{name}_") and key[len(name) + 1 :].isdigit()
+    ]
+    if value is None and yearly:
+        raise SafetyViolationError(
+            f"No {name.replace('_', ' ')} is sourced for tax year {tax_year}; "
+            f"this table holds it from tax year {min(yearly)}."
+        )
+    return _federal_or_amount(value, is_mfj, tax_year)
+
+
 DEPENDENT_EXEMPTION_NOTE = " Dependent exemptions are not included."
 OH_MAGI_NOTE = (
     " The personal-exemption tier is picked from the tool's AGI, which leaves out"
@@ -1165,13 +1186,10 @@ def evaluate_state_residency(
         else:
             regime = str(info["regime"])
 
-        # Year-aware standard deduction selection
-        ded = _federal_or_amount(
-            _for_year(info, f"deduction_{_status(is_mfj)}", tax_year), is_mfj, tax_year
-        )
-        exemption = _federal_or_amount(
-            _for_year(info, f"exemption_{_status(is_mfj)}", tax_year), is_mfj, tax_year
-        )
+        # Year-aware standard deduction and personal exemption. A year before the
+        # first sourced ``_YYYY`` value fails instead of borrowing a later year.
+        ded = _sourced_registry_amount(info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year)
+        exemption = _sourced_registry_amount(info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year)
         taxable_income = max(0.0, federal_agi - ded - exemption)
 
         if regime == "none":
