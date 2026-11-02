@@ -4,10 +4,7 @@
   "model": "flat",
   "source_url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140i.pdf",
   "params": {
-    "deduction": {
-      "single": 14600.0,
-      "mfj": 29200.0
-    },
+    "deduction": "federal_standard_deduction",
     "rate": 0.025
   }
 }

@@ -22,6 +22,8 @@ NOT_IN_TABLE: dict[str, set[float]] = {
     "CA": {1.0},  # 1% MHST/BHST (name follows schedule year), inside the 13.3% top rate
     "MD": {2.25, 3.2},  # the county piggyback range; county tax is not computed
     "NH": {3.0},  # the 2024 interest and dividends tax, which this tool does not compute
+    # Per-dependent exemption amounts named in UT rate_desc; the tool does not compute them.
+    "UT": {2046.0, 2111.0},
 }
 
 
@@ -63,7 +65,7 @@ def _descriptions(code: str) -> Iterator[tuple[int, str, str]]:
 @pytest.mark.parametrize("code", sorted(compliance.SUPPORTED_STATE_JURISDICTIONS))
 def test_rate_description_matches_the_rate_table(code: str) -> None:
     table = compliance.RATE_TABLES.get(code, {})
-    leaves = list(_leaves(table))
+    leaves = list(_leaves(table)) + list(_leaves(compliance.FEDERAL_STANDARD_DEDUCTION))
     rates = {round(v * 100, 6) for v in leaves if 0 < v < 1} | {0.0}
     amounts = {round(v, 2) for v in leaves}
     allowed = NOT_IN_TABLE.get(code, set())

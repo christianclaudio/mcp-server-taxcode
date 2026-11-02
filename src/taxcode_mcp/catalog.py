@@ -149,7 +149,7 @@ RATE_TABLE_FIELDS: tuple[str, ...] = ("schema", "jurisdiction", "model", "source
 # Field order of ``params`` per model. ``allowance`` is the filing-status amount taken off
 # income first, stored under its statutory name: ``deduction`` or ``exemption``.
 RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
-    "georgia": ("standard_deduction", "retirement_exclusion", "rates"),
+    "georgia": ("standard_deduction", "retirement_exclusion", "rates", "brackets", "exemption"),
     "brackets_marginal": ("allowance", "brackets"),
     "brackets_cumulative": ("allowance", "brackets"),
     "maryland": ("standard_deduction", "personal_exemption", "brackets"),
@@ -180,9 +180,10 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
 # ``over`` (Washington's 2.9% on capital gains over $1,000,000 from 2025, RCW 82.87.040(1)(b)).
 
-# A flat_by_year allowance may name the federal standard deduction instead of holding
-# amounts: the deduction is then that tax year's federal figure (Colorado, which starts from
-# federal taxable income).
+# A flat, flat_by_year, or registry deduction / credit_base may name the federal standard
+# deduction instead of holding amounts: the figure is then that tax year's federal standard
+# deduction (Colorado; Arizona and the registry states that subtract it; Utah's taxpayer
+# tax credit base).
 FEDERAL_ALLOWANCE = "federal_standard_deduction"
 _YEARLY_KEY_RE = re.compile(r"^(?P<name>[a-z_]+?)_(?P<year>\d{4})$")
 # The text each per-year step carries: ``flat_by_year`` its whole ``rate_desc``; ``georgia``
@@ -215,6 +216,7 @@ _REGISTRY_TYPES: dict[str, type] = {
         ),
         float,
     ),
+    **dict.fromkeys((f"exemption_{status}" for status in FILING_STATUSES), float),
     **dict.fromkeys(
         ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
     ),
@@ -529,6 +531,10 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
     _check(not missing, f"{where}: missing keys {missing}")
     for name, value in params.items():
         expected = _REGISTRY_TYPES[name]
+        if value == FEDERAL_ALLOWANCE and (
+            name.startswith("deduction_") or name.startswith("credit_base_")
+        ):
+            continue  # that tax year's federal standard deduction
         _check(type(value) is expected, f"{where}.{name}: must be {expected.__name__}")
         if name.startswith("brackets"):
             _check_brackets(value, ("over", "rate"), f"{where}.{name}")
@@ -594,11 +600,12 @@ def _check_params(model: str, params: Any, where: str) -> None:
     for key in [*fields, *yearly]:
         value, at = params[key], f"{where}.{key}"
         name = key.rsplit("_", 1)[0] if key in yearly else key
-        if model == "flat_by_year" and name == "deduction" and value == FEDERAL_ALLOWANCE:
+        if model in ("flat_by_year", "flat") and name == "deduction" and value == FEDERAL_ALLOWANCE:
             pass  # that tax year's federal standard deduction (load_federal_standard_deduction)
-        elif name in (*ALLOWANCE_NAMES, "standard_deduction") and model not in (
-            "maryland",
-            "connecticut",
+        elif (
+            name in (*ALLOWANCE_NAMES, "standard_deduction")
+            and model not in ("maryland", "connecticut")
+            and not (model == "brackets_cumulative" and name == "exemption")
         ):
             _check_by_status(value, at)
         elif name == "standard_deduction":  # maryland: a share of AGI between two limits
@@ -627,6 +634,32 @@ def _check_params(model: str, params: Any, where: str) -> None:
                     "over",
                     f"{at}.phaseout.{status}",
                     _phase_row,
+                )
+                base = next(step for step in phase[status] if step["over"] is None)
+                _check(
+                    base["amount"] == value["amount"],
+                    f"{at}.phaseout.{status}: over-null amount must equal {at}.amount",
+                )
+        elif name == "exemption" and model == "brackets_cumulative":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, ("amount", "phaseout"), at)
+            _check_amount(value["amount"], f"{at}.amount")
+            phase = value["phaseout"]
+            _check(isinstance(phase, dict), f"{at}.phaseout: must be an object")
+            _check_keys(phase, FILING_STATUSES, f"{at}.phaseout")
+
+            def _oh_phase_row(step: Mapping[str, Any], step_at: str) -> None:
+                if step["over"] is not None:
+                    _check_amount(step["over"], f"{step_at}.over")
+                _check_amount(step["amount"], f"{step_at}.amount")
+
+            for status in FILING_STATUSES:
+                _check_steps(
+                    phase[status],
+                    ("over", "amount"),
+                    "over",
+                    f"{at}.phaseout.{status}",
+                    _oh_phase_row,
                 )
                 base = next(step for step in phase[status] if step["over"] is None)
                 _check(

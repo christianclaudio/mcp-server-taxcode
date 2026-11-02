@@ -178,4 +178,9 @@ async def test_batch_state_residency_matches_the_direct_call_in_out_years() -> N
         direct = compliance.evaluate_state_residency(**scenario, **common)
         assert data["tax_computation"] == direct["tax_computation"]
         taxes.append(data["tax_computation"]["estimated_state_tax"])
-    assert taxes == [3069.50, 2268.23, 1832.79, 1432.00]
+    # MS 2028: AGI 100000 - ded 2300 - exemption 6000 = 91700; 0% to 10000, 3.50% above
+    # -> 0.035 * 81700 = 2859.50 (was 3069.50 without the exemption).
+    # UT 2026: credit base is federal 2026 single 16100 (shared table); tax at 60000 = 2247.23.
+    # NE 2027 unchanged at 1832.79. OH 2028: MAGI-tier exemption 2150 (AGI 68450 in 40k-80k
+    # band) -> taxable 66300; 332 + 0.0275*(66300-26050) = 1438.88 (was 1432.00 at flat 2400).
+    assert taxes == [2859.50, 2247.23, 1832.79, 1438.88]

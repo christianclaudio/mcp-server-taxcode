@@ -38,8 +38,8 @@
         }
       ]
     },
-    "deduction_single": 14600.0,
-    "deduction_mfj": 29200.0,
+    "deduction_single": "federal_standard_deduction",
+    "deduction_mfj": "federal_standard_deduction",
     "regime_2025": "flat",
     "rate_2025": 0.038
   }

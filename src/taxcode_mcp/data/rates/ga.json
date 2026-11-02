@@ -5,8 +5,8 @@
   "source_url": "https://dor.georgia.gov/document/document/2024-it-511-individual-income-tax-booklet/download",
   "params": {
     "standard_deduction": {
-      "single": 12000.0,
-      "mfj": 24000.0
+      "single": 4600.0,
+      "mfj": 6000.0
     },
     "retirement_exclusion": [
       {
@@ -35,6 +35,72 @@
         "law": "HB 1015 of 2024"
       }
     ],
+    "brackets": {
+      "single": [
+        {
+          "over": 7000.0,
+          "rate": 0.0575
+        },
+        {
+          "over": 5250.0,
+          "rate": 0.05
+        },
+        {
+          "over": 3750.0,
+          "rate": 0.04
+        },
+        {
+          "over": 2250.0,
+          "rate": 0.03
+        },
+        {
+          "over": 750.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
+      ],
+      "mfj": [
+        {
+          "over": 10000.0,
+          "rate": 0.0575
+        },
+        {
+          "over": 7000.0,
+          "rate": 0.05
+        },
+        {
+          "over": 5000.0,
+          "rate": 0.04
+        },
+        {
+          "over": 3000.0,
+          "rate": 0.03
+        },
+        {
+          "over": 1000.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
+      ]
+    },
+    "exemption": {
+      "single": 2700.0,
+      "mfj": 7400.0
+    },
+    "standard_deduction_2022": {
+      "single": 5400.0,
+      "mfj": 7100.0
+    },
+    "standard_deduction_2024": {
+      "single": 12000.0,
+      "mfj": 24000.0
+    },
     "standard_deduction_2026": {
       "single": 15000.0,
       "mfj": 30000.0

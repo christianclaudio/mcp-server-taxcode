@@ -1073,8 +1073,8 @@ def test_evaluate_state_residency_cases() -> None:
     )
 
     for inc, expected_calc in [
-        (150000.0, round(2394.32 + 0.035 * (150000.0 - 2400.0 - 100000.0), 2)),
-        (50000.0, round(360.69 + 0.0275 * (50000.0 - 2400.0 - 26050.0), 2)),
+        (150000.0, round(2394.32 + 0.035 * (150000.0 - 1900.0 - 100000.0), 2)),
+        (50000.0, round(360.69 + 0.0275 * (50000.0 - 2150.0 - 26050.0), 2)),
         (25000.0, 0.0),
     ]:
         oh_res = server.evaluate_state_residency(
@@ -1253,7 +1253,7 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2025,
     )
-    # Taxable: 62,000 - 14,600 = 47,400 <= 48,475 -> 0 tax
+    # Taxable: 62,000 - 15,750 (2025 federal std ded) = 46,250 <= 48,475 -> 0 tax
     assert nd_2025["tax_computation"]["estimated_state_tax"] == 0.0
 
     nd_top_2025 = server.evaluate_state_residency(
@@ -1264,9 +1264,9 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2025,
     )
-    # Taxable: 300,000 - 14,600 = 285,400 (> 244,825)
+    # Taxable: 300,000 - 15,750 = 284,250 (> 244,825)
     base_nd_2025 = (244825.0 - 48475.0) * 0.0195
-    expected_nd_top_2025 = round(base_nd_2025 + 0.025 * (285400.0 - 244825.0), 2)
+    expected_nd_top_2025 = round(base_nd_2025 + 0.025 * (284250.0 - 244825.0), 2)
     assert nd_top_2025["tax_computation"]["estimated_state_tax"] == expected_nd_top_2025
 
     # 26. Iowa (IA) - 2024 graduated vs 2025 flat 3.80%
@@ -1290,7 +1290,8 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2025,
     )
-    assert ia_2025["tax_computation"]["estimated_state_tax"] == round(85400.0 * 0.038, 2)
+    # Taxable: 100,000 - 15,750 (2025 federal std ded) = 84,250 * 0.038 = 3201.50
+    assert ia_2025["tax_computation"]["estimated_state_tax"] == round(84250.0 * 0.038, 2)
 
     # 27. Louisiana (LA) - 2024 graduated vs 2025 flat 3.00% (Act 11 $12.5k deduction)
     la_2024 = server.evaluate_state_residency(
