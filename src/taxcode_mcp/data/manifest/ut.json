@@ -32,8 +32,6 @@
           "tax_year": 2025,
           "values": {
             "rate_2025": 0.045,
-            "credit_base_single_2025": 15750.0,
-            "credit_base_mfj_2025": 31500.0,
             "credit_phaseout_single_2025": 18213.0,
             "credit_phaseout_mfj_2025": 36426.0
           },
