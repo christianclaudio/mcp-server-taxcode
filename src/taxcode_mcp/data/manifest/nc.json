@@ -39,7 +39,49 @@
       "content_sha256": "f135ceb9b8e2f33f6386af472e0b6f11df5a68fd7b3ab88b338b062cdc7dd685",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2022,
+          "values": {
+            "rates[4].rate": 0.0499
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.7.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "rates[3].rate": 0.0475
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.7.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rates[1].rate": 0.0425
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.7.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "rates[0].rate": 0.0399
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.7.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
+        }
+      ]
     }
   ]
 }

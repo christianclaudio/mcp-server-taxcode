@@ -173,8 +173,9 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "georgia": ("standard_deduction", "retirement_exclusion"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
-    "brackets_cumulative": ("brackets",),
+    "brackets_cumulative": ("brackets", "deduction"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
+    "maryland": ("standard_deduction", "personal_exemption", "brackets"),
 }
 # ``tier`` has no unsuffixed value (an unsuffixed ``tier`` is an unknown key): before its
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
@@ -193,7 +194,8 @@ ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
 REGIMES = frozenset({"none", "flat", "graduated"})
 # The years a registry table's ``brackets_YYYY`` and ``rate_desc_YYYY`` keys may name.
-REGISTRY_YEARS = (2024, 2025, 2026, 2027, 2028, 2029, 2030)
+# 2019-2023 are the earlier schedules a table holds when they differ from 2024.
+REGISTRY_YEARS = (2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030)
 # Registry tables keep the original key names. A ``_YYYY`` suffix is the value from that
 # tax year on; the unsuffixed key covers the years before.
 _REGISTRY_REQUIRED = ("statutory_basis", "rate_authority", "rate_desc", "regime")

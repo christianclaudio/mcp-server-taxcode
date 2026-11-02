@@ -1425,17 +1425,27 @@ def test_california_rate_description_names_mhst_or_bhst_by_schedule_year() -> No
         assert "Mental Health Services Tax" not in desc, year
 
 
-def test_maryland_estimate_note_mentions_hb_352() -> None:
+def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:
+    """The Comptroller published the 2025 resident booklet, so 2025 is no longer an estimate.
+
+    Tax year 2026 still has no booklet, so it keeps the estimate label and the 2025 amounts.
+    """
     kwargs: dict[str, Any] = {"jurisdiction": "MD", "days_in_state": 365, "is_domiciled": True}
-    assert (
-        "ESTIMATE"
-        not in server.evaluate_state_residency(**kwargs, tax_year=2024)["tax_computation"][
+    for year in (2024, 2025):
+        desc = server.evaluate_state_residency(**kwargs, tax_year=year)["tax_computation"][
             "rate_description"
         ]
-    )
-    note = server.evaluate_state_residency(**kwargs, tax_year=2025)["tax_computation"][
+        assert "ESTIMATE" not in desc, year
+    desc_2024 = server.evaluate_state_residency(**kwargs, tax_year=2024)["tax_computation"][
         "rate_description"
     ]
-    assert "tax year 2025 brackets and deduction are not in this table; the 2024" in note
-    assert "Maryland enacted 2025 changes in HB 352" in note
-    assert "official 2025 schedule is not published yet" in note
+    desc_2025 = server.evaluate_state_residency(**kwargs, tax_year=2025)["tax_computation"][
+        "rate_description"
+    ]
+    assert "5.75%" in desc_2024 and "6.50%" not in desc_2024
+    assert "6.50%" in desc_2025
+    note = server.evaluate_state_residency(**kwargs, tax_year=2026)["tax_computation"][
+        "rate_description"
+    ]
+    assert "tax year 2026 brackets and deduction are not in this table; the 2025" in note
+    assert "not published yet" not in note

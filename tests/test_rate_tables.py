@@ -203,7 +203,9 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("AR", _set("params.brackets", []), "brackets: must be dict"),
     ("UT", _drop("params.credit_phaseout_rate"), "a credit needs all of"),
     # registry: later-year brackets, prose and credit amounts
-    ("ID", _set("params.brackets_2023", _BRACKETS), "unknown keys ['brackets_2023']"),
+    # 2019-2023 are allowed so a pre-2024 schedule can be stored on its own.
+    # 2018 is still outside the registry year list.
+    ("ID", _set("params.brackets_2018", _BRACKETS), "unknown keys ['brackets_2018']"),
     ("ID", _set("params.rate_desc_2031", "x"), "unknown keys ['rate_desc_2031']"),
     ("MS", _set("params.brackets_2031", _BRACKETS), "unknown keys ['brackets_2031']"),
     ("MS", _set("params.rate_desc_2028", None), "rate_desc_2028: must be str"),

@@ -12,7 +12,7 @@
       {
         "from_year": 2026,
         "rate": 0.0399,
-        "rate_desc": "Flat 3.99% rate (2026+ statutory phase-in)"
+        "rate_desc": "Flat 3.99% rate (after 2025, G.S. 105-153.7)"
       },
       {
         "from_year": 2025,
@@ -20,9 +20,24 @@
         "rate_desc": "Flat 4.25% rate (2025 statutory rate)"
       },
       {
-        "from_year": null,
+        "from_year": 2024,
         "rate": 0.045,
         "rate_desc": "Flat 4.50% rate (2024 statutory rate)"
+      },
+      {
+        "from_year": 2023,
+        "rate": 0.0475,
+        "rate_desc": "Flat 4.75% rate (2023 statutory rate)"
+      },
+      {
+        "from_year": 2022,
+        "rate": 0.0499,
+        "rate_desc": "Flat 4.99% rate (2022 statutory rate)"
+      },
+      {
+        "from_year": null,
+        "rate": 0.045,
+        "rate_desc": "Flat 4.50% rate (2024 statutory rate) [ESTIMATE: G.S. 105-153.7 does not list a rate for a tax year before 2022, so the 2024 rate is used]"
       }
     ]
   }

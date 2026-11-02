@@ -65,7 +65,24 @@
       "content_sha256": "8b091df24da89b4e689d2af4ab681bcc5bebac0ea587d3eb4600aacc15c3348b",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "standard_deduction_2025.minimum.single": 3350.0,
+            "standard_deduction_2025.minimum.mfj": 6700.0,
+            "brackets_2025.single[0].over": 1000000.0,
+            "brackets_2025.single[0].rate": 0.065,
+            "brackets_2025.mfj[0].over": 1200000.0,
+            "brackets_2025.mfj[0].rate": 0.065
+          },
+          "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2025/resident-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "17bc9f77e055c0570daee8840921e635b1b0952a39d54f28e33516699b9b6ba5"
+        }
+      ]
     }
   ]
 }

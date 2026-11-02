@@ -26,7 +26,22 @@
       "content_sha256": "a016d75924df4030e71a3e901da89e177cdd22fd85cc5bee8666b5e1cdad8319",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 26399.0,
+            "brackets_2025.single[0].rate": 0.039,
+            "brackets_2025.mfj[0].over": 26399.0,
+            "brackets_2025.mfj[0].rate": 0.039
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02"
+        }
+      ]
     }
   ]
 }

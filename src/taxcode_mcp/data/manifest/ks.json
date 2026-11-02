@@ -26,7 +26,26 @@
       "content_sha256": "771aa0205ad6da8f40e9557cc80d84029c59d1152ce538529c2078029d6283a5",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets_2024.single[0].over": 23000.0,
+            "brackets_2024.single[0].rate": 0.0558,
+            "brackets_2024.mfj[0].over": 46000.0,
+            "brackets_2024.mfj[0].rate": 0.0558,
+            "deduction_single": 3605.0,
+            "deduction_mfj": 8240.0,
+            "exemption_single": 9160.0,
+            "exemption_mfj": 18320.0
+          },
+          "url": "https://www.ksrevisor.org/statutes/chapters/ch79/079_032_0110.html",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "0aa626dd439f3319171bd2db7d21b3af0e7e98b1f1f561d13ff11671f9263a9b"
+        }
+      ]
     }
   ]
 }

@@ -26,7 +26,21 @@
       "content_sha256": "d17ff3224795c3b2a12b0f666f08460d24e90067be28ecf8f0bc8d51b19627ea",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].rate": 0.0482,
+            "brackets_2025.single[4].rate": 0.0222,
+            "brackets_2025.mfj[0].rate": 0.0482
+          },
+          "url": "https://tax.wv.gov/Documents/PIT/2025/it140.taxRateSchedules.2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "858b44ba5a17bb9805b45208df1029e1f3965c85dd89d30f88ba2b99f364825d"
+        }
+      ]
     }
   ]
 }

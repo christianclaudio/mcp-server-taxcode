@@ -332,14 +332,15 @@ def _top_rate(table: dict[str, Any], tax_year: int) -> float:
 
 
 # Official schedule coverage per state. CA holds 2024 (unsuffixed) and 2025 (_2025);
-# NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024 only. A year outside the
-# published window uses the nearest held year and gets an estimate label naming that year.
+# NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024 and the 2025 resident
+# booklet. A year outside the published window uses the nearest held year and gets an
+# estimate label naming that year.
 PUBLISHED_SCHEDULE_YEARS: dict[str, tuple[str, int, int]] = {
     "CA": ("California", 2024, 2025),
     "NJ": ("New Jersey", 2024, 2025),
     "NY": ("New York", 2024, 2025),
     "CT": ("Connecticut", 2024, 2025),
-    "MD": ("Maryland", 2024, 2024),
+    "MD": ("Maryland", 2024, 2025),
 }
 # Back-compat aliases used by tests that still import the old names.
 MARGINAL_SCHEDULE_YEAR = 2025
@@ -363,11 +364,6 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
             f" [ESTIMATE: {name}'s tax year {tax_year} brackets and deduction are not in this "
             f"table; the {used} amounts are used]"
         )
-        if state == "MD" and tax_year >= 2025:
-            note = note[:-1] + (
-                ". Maryland enacted 2025 changes in HB 352 and the official 2025 schedule is "
-                "not published yet]"
-            )
         return note
     if state == "MS" and tax_year > MS_LAST_ENACTED_RATE_YEAR:
         return (
@@ -1027,11 +1023,14 @@ def evaluate_state_residency(
         statutory_basis = "Va. Code Ann. §§ 58.1-302, 58.1-320, 58.1-342"
         is_resident = is_domiciled or days_in_state > 183
         rate_authority = "Va. Code Ann. § 58.1-320"
-        rate_desc = _range_desc(RATE_TABLES["VA"])
-        standard_ded = _allowance(RATE_TABLES["VA"], is_mfj)
+        va = RATE_TABLES["VA"]
+        rate_desc = _range_desc({"brackets": _for_year(va, "brackets", tax_year)})
+        # Va. Code § 58.1-322.03 sets the standard deduction by year; the unsuffixed
+        # amount is the pre-2019 figure and each deduction_YYYY applies from that year.
+        standard_ded = float(_for_year(va, "deduction", tax_year)[_status(is_mfj)])
         taxable_income = max(0.0, federal_agi - standard_ded)
         if is_resident:
-            brackets = RATE_TABLES["VA"]["brackets"][_status(is_mfj)]
+            brackets = _for_year(va, "brackets", tax_year)[_status(is_mfj)]
             estimated_tax = _cumulative_tax(brackets, taxable_income)
 
     elif state == "MD":
@@ -1044,19 +1043,24 @@ def evaluate_state_residency(
             )
         rate_authority = "Md. Code Ann., Tax-Gen. § 10-105"
         md = RATE_TABLES["MD"]
+        md_year = {
+            "standard_deduction": _for_year(md, "standard_deduction", tax_year),
+            "personal_exemption": _for_year(md, "personal_exemption", tax_year),
+            "brackets": _for_year(md, "brackets", tax_year),
+        }
         rate_desc = (
-            f"{_range_desc(md, 'Graduated state brackets')} "
+            f"{_range_desc(md_year, 'Graduated state brackets')} "
             "plus county piggyback tax (2.25%-3.20%)"
             f"{_outyear_estimate_note('MD', tax_year, md)}"
         )
-        md_ded = md["standard_deduction"]
+        md_ded = md_year["standard_deduction"]
         max_ded = float(md_ded["maximum"][_status(is_mfj)])
         min_ded = float(md_ded["minimum"][_status(is_mfj)])
         standard_ded = min(max_ded, max(min_ded, federal_agi * md_ded["percent_of_agi"]))
-        personal_ex = _md_personal_exemption(md, is_mfj, federal_agi)
+        personal_ex = _md_personal_exemption(md_year, is_mfj, federal_agi)
         taxable_income = max(0.0, federal_agi - standard_ded - personal_ex)
         if is_resident:
-            brackets = md["brackets"][_status(is_mfj)]
+            brackets = md_year["brackets"][_status(is_mfj)]
             estimated_tax = _marginal_tax(brackets, taxable_income)
     elif state == "CO":
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"

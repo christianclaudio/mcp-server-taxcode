@@ -5,8 +5,8 @@
   "source_url": "https://www.tax.virginia.gov/sites/default/files/vatax-pdf/2024-760-instructions.pdf",
   "params": {
     "deduction": {
-      "single": 8500.0,
-      "mfj": 17000.0
+      "single": 3000.0,
+      "mfj": 6000.0
     },
     "brackets": {
       "single": [
@@ -53,6 +53,34 @@
           "rate": 0.02
         }
       ]
+    },
+    "deduction_2019": {
+      "single": 4500.0,
+      "mfj": 9000.0
+    },
+    "deduction_2022": {
+      "single": 8000.0,
+      "mfj": 16000.0
+    },
+    "deduction_2024": {
+      "single": 8500.0,
+      "mfj": 17000.0
+    },
+    "deduction_2025": {
+      "single": 8750.0,
+      "mfj": 17500.0
+    },
+    "deduction_2027": {
+      "single": 9200.0,
+      "mfj": 18400.0
+    },
+    "deduction_2028": {
+      "single": 9300.0,
+      "mfj": 18600.0
+    },
+    "deduction_2030": {
+      "single": 3000.0,
+      "mfj": 6000.0
     }
   }
 }

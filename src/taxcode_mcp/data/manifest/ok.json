@@ -26,7 +26,23 @@
       "content_sha256": "570f7186c1f03a4c58cbe76a363979b6d366a88a0f2a293df6d815572d6dbc9f",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 7200.0,
+            "brackets_2026.single[0].rate": 0.045,
+            "brackets_2026.single[3].rate": 0.0,
+            "brackets_2026.mfj[0].over": 14400.0,
+            "brackets_2026.mfj[0].rate": 0.045
+          },
+          "url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=79924",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "e9053c035bde6707080e400cc4f4e61fb242bbe8963a4bc1393787db64c07338"
+        }
+      ]
     }
   ]
 }
