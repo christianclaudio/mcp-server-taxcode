@@ -5,12 +5,12 @@
     {
       "kind": "statute",
       "id": "ok-stat-68-2355",
-      "url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=440316",
+      "url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=92565",
       "edition": "not_recorded",
       "official": "not_recorded",
       "licence": "not_recorded",
-      "retrieved": "not_recorded",
-      "content_sha256": "not_recorded",
+      "retrieved": "2026-11-02",
+      "content_sha256": "1175f5fac9aeb6e406329db9b1e6021e72512fc04ef61c92202f9ad6a04cf723",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
@@ -37,10 +37,10 @@
             "brackets_2026.mfj[0].over": 14400.0,
             "brackets_2026.mfj[0].rate": 0.045
           },
-          "url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=79924",
+          "url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=92565",
           "official": true,
           "retrieved": "2026-11-02",
-          "content_sha256": "e9053c035bde6707080e400cc4f4e61fb242bbe8963a4bc1393787db64c07338"
+          "content_sha256": "1175f5fac9aeb6e406329db9b1e6021e72512fc04ef61c92202f9ad6a04cf723"
         }
       ]
     }

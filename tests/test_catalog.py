@@ -151,12 +151,14 @@ def test_manifest_records_unknowns_explicitly() -> None:
         for e in catalog.manifest
         if e["kind"] == "statute" and e["content_sha256"] != NOT_RECORDED
     }
-    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS
+    # ok-stat-68-2355 was hashed when its OSCN cite was corrected to 68 O.S. § 2355.
+    ok_hashed = {"ok-stat-68-2355"}
+    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
     hashed = {
         e["kind"]
         for e in catalog.manifest
         if e["content_sha256"] != NOT_RECORDED
-        and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS
+        and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
     }
     assert hashed == {"rate_table", "federal_table", "publication"}
     hashed_pubs = {

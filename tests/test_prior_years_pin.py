@@ -226,8 +226,9 @@ GA_SCHEDULE_YEARS = range(2019, 2024)
 # 2587 previously, plus 232 answers whose tax or rate prose moved onto a schedule
 # sourced here: Hawaii's 2024 standard deduction and 2025 brackets, North Carolina's
 # 2022-2023 rates and the pre-2022 estimate label, Virginia's deduction by year,
-# Oklahoma's 2026 brackets, and West Virginia's 2025 rates.
-CHANGED_OUT = 2819
+# Oklahoma's 2026 brackets, and West Virginia's 2025 rates. Plus 72 statute lookups
+# of Okla. Stat. tit. 68, § 2355 after its source cite was corrected.
+CHANGED_OUT = 2891
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -319,11 +320,21 @@ def _allowed(key: str) -> tuple[bool, bool]:
         # Other GA years: note-only, decided in `_compare` after stripping the note.
         return False, False
     kind, *rest = key.split("|")
+    # The Oklahoma § 2355 row's source cite was corrected. Lookups of that row may
+    # change; the stored summary text does not.
+    if kind == "lookup" and rest[0] in (
+        "2355",
+        "Okla. Stat. tit. 68, § 2355",
+        "ok-stat-68-2355",
+    ):
+        return True, False
     if kind == "search":
         year = rest[2]
         return (year != "None" and 2019 <= int(year) <= 2025) or is_corrected(key), False
     if kind == "resource":
-        return key in CORRECTED_RESOURCES or key in SLASH_RESOURCES, False
+        return (
+            key in CORRECTED_RESOURCES or key in SLASH_RESOURCES or key == "resource|OK|2355"
+        ), False
     if kind != "lookup":
         return is_corrected(key), False
     query, jurisdiction, year = rest[0], rest[1], rest[2]

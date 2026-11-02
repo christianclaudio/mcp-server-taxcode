@@ -1283,10 +1283,13 @@ def test_outyear_constants_match_the_tables() -> None:
 
 
 def test_batch4_nm_brackets_pin_hb6_and_hb252() -> None:
-    # Unsuffixed brackets are HB 6 (pre-2025); brackets_2025 are HB 252 (2024 Regular Session).
+    # Unsuffixed brackets are the 2008–2020 schedule. brackets_2021 is HB 6.
+    # brackets_2025 are HB 252 (2024 Regular Session).
     nm = compliance.RATE_TABLES["NM"]
+    assert nm["brackets"]["single"][0]["rate"] == 0.049
     assert nm["brackets"]["single"][-1]["rate"] == 0.017
-    assert compliance._for_year(nm, "brackets", 2024)["single"][-1]["rate"] == 0.017
+    assert nm["brackets_2021"]["single"][0]["rate"] == 0.059
+    assert compliance._for_year(nm, "brackets", 2024) is nm["brackets_2021"]
     assert compliance._for_year(nm, "brackets", 2025)["single"][-1]["rate"] == 0.015
     assert compliance._marginal_tax(nm["brackets_2025"]["single"], 16500.0) == 434.50
     assert compliance._marginal_tax(nm["brackets"]["single"], 210000.0) == 10010.5
