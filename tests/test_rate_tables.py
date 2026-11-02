@@ -101,6 +101,19 @@ _BRACKETS_UNORDERED = {"single": _STEPS[::-1], "mfj": _STEPS}
 _BRACKETS_BAD_RATE = {"single": _STEPS, "mfj": [{"over": 1000.0, "rate": 5.0}, _STEPS[1]]}
 
 
+def _ks_exclusion_out_of_order(doc: dict[str, Any]) -> None:
+    params = doc["params"]
+    late = params.pop("low_income_exclusion_2024")
+    early = params.pop("low_income_exclusion_2018")
+    rebuilt: dict[str, Any] = {}
+    for key, value in params.items():
+        if key == "brackets":
+            rebuilt["low_income_exclusion_2024"] = late
+            rebuilt["low_income_exclusion_2018"] = early
+        rebuilt[key] = value
+    doc["params"] = rebuilt
+
+
 def _rename_first(new: str) -> Callable[[dict[str, Any]], None]:
     def change(doc: dict[str, Any]) -> None:
         params = doc["params"]
@@ -289,6 +302,18 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("VA", _set("params.brackets_2025", _BRACKETS), "single[0]: fields must be exactly"),
     # 2018-2026 deduction years are valid (Kansas). 2017 is not.
     ("NE", _set("params.deduction_single_2017", 1.0), "unknown keys ['deduction_single_2017']"),
+    ("KS", _ks_exclusion_out_of_order, "low_income_exclusion_YYYY keys must be years ascending"),
+    ("KS", _set("params.low_income_exclusion_2018", []), "must be an object or null"),
+    ("KS", _set("params.low_income_exclusion_2018", None), "must state the threshold"),
+    ("KS", _set("params.low_income_exclusion_2018.single", 1), "must be a non-negative float"),
+    (
+        "KS",
+        lambda d: d["params"].__setitem__(
+            "low_income_exclusion_2017",
+            d["params"]["low_income_exclusion_2018"],
+        ),
+        "unknown keys ['low_income_exclusion_2017']",
+    ),
     ("UT", _set("params.credit_rate", 6.0), "credit_rate: must be a float rate"),
     ("UT", _set("params.credit_base_mfj", -1.0), "credit_base_mfj: must be a non-negative"),
     (
@@ -1323,11 +1348,19 @@ def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
     # K-40 instructions: 2018 standard deduction $3,000 / $7,500 and a $2,250
     # exemption ($2,250 single, $4,500 joint). 2024 is $3,605 / $8,240 and
     # $9,160 / $18,320. A year before 2018 has no sourced allowance.
+    # K.S.A. 79-32,110(e), for 2018 through 2023: taxable income of $2,500 or
+    # less ($5,000 joint) has no tax. Above that, the brackets apply to all of it.
     assert _tax("KS", 2018, 3000.0 + 2250.0) == 0.0
-    assert _tax("KS", 2018, 3000.0 + 2250.0 + 1000.0) == round(1000.0 * 0.031, 2)
-    assert _tax("KS", 2018, 7500.0 + 4500.0 + 1000.0, "married_joint") == round(1000.0 * 0.031, 2)
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 1000.0) == 0.0
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 2500.0) == 0.0
+    assert _tax("KS", 2018, 3000.0 + 2250.0 + 2501.0) == round(2501.0 * 0.031, 2)
+    assert _tax("KS", 2018, 7500.0 + 4500.0 + 1000.0, "married_joint") == 0.0
+    # 2023 is still inside 79-32,110(e); the allowance that year is $3,500 / $2,250.
+    assert _tax("KS", 2023, 3500.0 + 2250.0 + 2500.0) == 0.0
+    assert _tax("KS", 2023, 3500.0 + 2250.0 + 2501.0) == round(2501.0 * 0.031, 2)
     assert _tax("KS", 2024, 3605.0 + 9160.0) == 0.0
     assert _tax("KS", 2024, 3605.0 + 9160.0 + 1000.0) == round(1000.0 * 0.052, 2)
+    assert _tax("KS", 2024, 3605.0 + 9160.0 + 2500.0) == round(2500.0 * 0.052, 2)
     with pytest.raises(SafetyViolationError, match="tax year 2017"):
         _resident_tax("KS", 2017, 10000.0)
     assert _tax("MS", 2024, 2300.0 + 6000.0 + 10000.0) == 0.0

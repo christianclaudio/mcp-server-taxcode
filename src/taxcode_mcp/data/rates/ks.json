@@ -6,7 +6,7 @@
   "params": {
     "statutory_basis": "Kan. Stat. Ann. §§ 79-32,109, 79-32,110",
     "rate_authority": "Kan. Stat. Ann. § 79-32,110",
-    "rate_desc": "Graduated rates: 3.10% up to $15,000 ($30,000 joint), 5.25% to $30,000 ($60,000 joint), 5.70% above (2018-2023, K.S.A. 79-32,110)",
+    "rate_desc": "Graduated rates: 3.10% up to $15,000 ($30,000 joint), 5.25% to $30,000 ($60,000 joint), 5.70% above (2018-2023, K.S.A. 79-32,110). Taxable income of $2,500 or less ($5,000 joint) has no tax; above that these rates apply to all of it (K.S.A. 79-32,110(e)).",
     "regime": "graduated",
     "deduction_single_2018": 3000.0,
     "deduction_mfj_2018": 7500.0,
@@ -36,6 +36,11 @@
     "deduction_mfj_2024": 8240.0,
     "exemption_single_2024": 9160.0,
     "exemption_mfj_2024": 18320.0,
+    "low_income_exclusion_2018": {
+      "single": 2500.0,
+      "mfj": 5000.0
+    },
+    "low_income_exclusion_2024": null,
     "brackets": {
       "single": [
         {

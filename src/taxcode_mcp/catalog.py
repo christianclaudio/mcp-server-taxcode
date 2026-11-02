@@ -274,6 +274,10 @@ _REGISTRY_TYPES: dict[str, type] = {
     "brackets": dict,
     # Later-year values of the bracket schedule, its prose and the credit's base and
     # phase-out amounts. Each needs its unsuffixed key, placed after it, years ascending.
+    # Kansas low-income exclusion (K.S.A. 79-32,110(e)): a filing-status taxable-income
+    # ceiling at or below which the tax is zero. A later year's null ends it. Above the
+    # ceiling the ordinary brackets apply to all taxable income.
+    **dict.fromkeys((f"low_income_exclusion_{year}" for year in range(2018, 2027)), dict),
     **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_YEARS), dict),
     **dict.fromkeys((f"rate_desc_{year}" for year in REGISTRY_YEARS), str),
     **dict.fromkeys(
@@ -534,6 +538,16 @@ def _check_steps(
             previous = bound
 
 
+def _check_zero_liability(value: Any, where: str) -> None:
+    """A zero-tax ceiling by filing status, or null when that year's exclusion has ended."""
+    if value is None:
+        return
+    _check(isinstance(value, dict), f"{where}: must be an object or null")
+    _check_keys(value, FILING_STATUSES, where)
+    for status in FILING_STATUSES:
+        _check_amount(value[status], f"{where}.{status}")
+
+
 def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
     _check(isinstance(value, dict), f"{where}: must be an object")
     _check_keys(value, FILING_STATUSES, where)
@@ -570,6 +584,9 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
     missing = [k for k in _REGISTRY_REQUIRED if k not in params]
     _check(not missing, f"{where}: missing keys {missing}")
     for name, value in params.items():
+        if name.startswith("low_income_exclusion_"):
+            _check_zero_liability(value, f"{where}.{name}")
+            continue
         expected = _REGISTRY_TYPES[name]
         if value == FEDERAL_ALLOWANCE and (
             name.startswith("deduction_") or name.startswith("credit_base_")
@@ -602,6 +619,17 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         unused = sorted(_REGISTRY_FORMULA_KEYS & set(params))
         _check(not unused, f"{where}: {unused} are unused next to brackets")
     keys = list(params)
+    exclusion = [key for key in keys if key.startswith("low_income_exclusion_")]
+    exclusion_years = [int(key[-4:]) for key in exclusion]
+    _check(
+        exclusion_years == sorted(exclusion_years),
+        f"{where}: low_income_exclusion_YYYY keys must be years ascending",
+    )
+    if exclusion:
+        _check(
+            isinstance(params[exclusion[0]], dict),
+            f"{where}: {exclusion[0]} must state the threshold",
+        )
     for base in _REGISTRY_YEARLY_BASES:
         later = [k for k in keys if _YEARLY_KEY_RE.match(k) and k.rsplit("_", 1)[0] == base]
         if not later:

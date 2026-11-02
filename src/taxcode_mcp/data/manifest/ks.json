@@ -34,7 +34,9 @@
             "deduction_single_2018": 3000.0,
             "deduction_mfj_2018": 7500.0,
             "exemption_single_2018": 2250.0,
-            "exemption_mfj_2018": 4500.0
+            "exemption_mfj_2018": 4500.0,
+            "low_income_exclusion_2018.single": 2500.0,
+            "low_income_exclusion_2018.mfj": 5000.0
           },
           "url": "https://www.ksrevenue.gov/pdf/ip18.pdf",
           "official": true,
@@ -53,6 +55,17 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "0c43c779d95161d0848df49cad1ef3c225471783938e94d42d4c5e5af40b8545"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "low_income_exclusion_2018.single": 2500.0,
+            "low_income_exclusion_2018.mfj": 5000.0
+          },
+          "url": "https://www.ksrevisor.org/statutes/chapters/ch79/079_032_0110.html",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "0aa626dd439f3319171bd2db7d21b3af0e7e98b1f1f561d13ff11671f9263a9b"
         },
         {
           "tax_year": 2020,
@@ -107,6 +120,17 @@
           "content_sha256": "456f9b8b6254b33a3b6943d94c18eeb3e8a3df3ae42a58a78059885ef6f796af"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "low_income_exclusion_2018.single": 2500.0,
+            "low_income_exclusion_2018.mfj": 5000.0
+          },
+          "url": "https://www.ksrevisor.org/statutes/chapters/ch79/079_032_0110.html",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "0aa626dd439f3319171bd2db7d21b3af0e7e98b1f1f561d13ff11671f9263a9b"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "deduction_single_2024": 3605.0,
@@ -125,7 +149,8 @@
             "brackets_2024.single[0].over": 23000.0,
             "brackets_2024.single[0].rate": 0.0558,
             "brackets_2024.mfj[0].over": 46000.0,
-            "brackets_2024.mfj[0].rate": 0.0558
+            "brackets_2024.mfj[0].rate": 0.0558,
+            "low_income_exclusion_2024": null
           },
           "url": "https://www.ksrevisor.org/statutes/chapters/ch79/079_032_0110.html",
           "official": true,

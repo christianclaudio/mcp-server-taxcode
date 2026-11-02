@@ -594,6 +594,20 @@ def _cumulative_tax(brackets: list[dict[str, Any]], taxable_income: float) -> fl
     return float(round(b["base"] + b["rate"] * (taxable_income - over), 2))
 
 
+def _under_zero_liability(
+    info: dict[str, Any], is_mfj: bool, taxable_income: float, tax_year: int
+) -> bool:
+    """Whether ``taxable_income`` is at or below a sourced zero-tax ceiling.
+
+    Above the ceiling the ordinary brackets apply to all of the taxable income.
+    ``None`` (no key for the year, or a later null that ends the exclusion) is not under it.
+    """
+    exclusion = _for_year(info, "low_income_exclusion", tax_year)
+    if not isinstance(exclusion, dict):
+        return False
+    return taxable_income <= float(exclusion[_status(is_mfj)])
+
+
 def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
     """Each bracket's rate on the slice of income between its ``over`` and the next one up."""
     tax = 0.0
@@ -1198,6 +1212,8 @@ def evaluate_state_residency(
         elif regime == "graduated" and "brackets" in info:
             brackets = _for_year(info, "brackets", tax_year)[_status(is_mfj)]
             estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+            if is_resident and _under_zero_liability(info, is_mfj, taxable_income, tax_year):
+                estimated_tax = 0.0
         elif regime == "flat":
             if tax_year >= 2027 and "rate_2027" in info:
                 flat_rate = float(info["rate_2027"])
