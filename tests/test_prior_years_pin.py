@@ -220,7 +220,7 @@ FEDERAL_TABLE_STATES = frozenset(
 # Batch 4: MS exemptions and the Ohio MAGI-tier exemption are year-unsuffixed, so
 # they apply for every year in the pin grid. Kansas allowances are year-specific
 # from 2018; those years are in the same window.
-EXEMPTION_STATES = frozenset({"KS", "MS", "OH"})
+EXEMPTION_STATES = frozenset({"AL", "KS", "MS", "OH"})
 EXEMPTION_YEARS = range(2018, 2029)
 GA_SCHEDULE_YEARS = range(2018, 2024)
 # 2587 previously, plus 232 answers whose tax or rate prose moved onto a schedule
@@ -232,8 +232,9 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # and the estimate labels on years those tables do not publish. Plus 6 answers for
 # Georgia's 2018 6 percent top rate and South Carolina's 2026 schedule. Plus 88
 # answers whose New Hampshire description now states the prior-law interest and
-# dividends tax and the 2025 repeal.
-CHANGED_OUT = 3191
+# dividends tax and the 2025 repeal. Plus 88 Alabama answers after the personal
+# exemption was added beside the maximum standard deduction.
+CHANGED_OUT = 3279
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
