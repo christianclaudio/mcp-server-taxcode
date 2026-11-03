@@ -173,7 +173,7 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "georgia": ("standard_deduction", "retirement_exclusion"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
-    "brackets_cumulative": ("brackets", "deduction"),
+    "brackets_cumulative": ("brackets", "deduction", "exemption"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
     "maryland": ("standard_deduction", "personal_exemption", "brackets"),
 }
@@ -258,7 +258,21 @@ _REGISTRY_TYPES: dict[str, type] = {
         float,
     ),
     **dict.fromkeys(
-        ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
+        (
+            "top_rate",
+            "middle_rate",
+            "rate",
+            # Kentucky's flat rate by year (KRS 141.020): 5% from 2018, 4.5% for 2023,
+            # 4% from 2024, 3.5% from 2026. ``rate_2025`` and ``rate_2027`` are the
+            # other flat-rate years a registry table may name.
+            "rate_2018",
+            "rate_2023",
+            "rate_2024",
+            "rate_2025",
+            "rate_2026",
+            "rate_2027",
+        ),
+        float,
     ),
     **dict.fromkeys(
         (
@@ -279,7 +293,7 @@ _REGISTRY_TYPES: dict[str, type] = {
     # ceiling the ordinary brackets apply to all taxable income.
     **dict.fromkeys((f"low_income_exclusion_{year}" for year in range(2018, 2027)), dict),
     **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_YEARS), dict),
-    **dict.fromkeys((f"rate_desc_{year}" for year in REGISTRY_YEARS), str),
+    **dict.fromkeys((f"rate_desc_{year}" for year in (2018, *REGISTRY_YEARS)), str),
     **dict.fromkeys(
         (
             f"credit_{name}_{status}_2025"
@@ -292,6 +306,7 @@ _REGISTRY_TYPES: dict[str, type] = {
 # Registry params whose ``_YYYY`` keys need their unsuffixed key first, years ascending.
 _REGISTRY_YEARLY_BASES = (
     "brackets",
+    "rate",
     "rate_desc",
     *(f"credit_{name}_{status}" for name in ("base", "phaseout") for status in FILING_STATUSES),
 )
@@ -634,8 +649,15 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         later = [k for k in keys if _YEARLY_KEY_RE.match(k) and k.rsplit("_", 1)[0] == base]
         if not later:
             continue
-        _check(base in params, f"{where}: {later[0]} needs {base} first")
         years = [int(k[-4:]) for k in later]
+        # A flat ``rate_YYYY`` may be the first rate (Iowa and Louisiana are graduated
+        # until that year). Every other yearly value needs its unsuffixed key first.
+        if base not in params:
+            _check(
+                base == "rate" and years == sorted(years),
+                f"{where}: {later[0]} needs {base} first",
+            )
+            continue
         _check(
             years == sorted(years) and keys.index(later[0]) > keys.index(base),
             f"{where}: {base}_YYYY keys must follow {base}, years ascending",

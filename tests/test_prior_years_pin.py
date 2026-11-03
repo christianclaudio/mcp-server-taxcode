@@ -227,8 +227,10 @@ GA_SCHEDULE_YEARS = range(2019, 2024)
 # sourced here: Hawaii's 2024 standard deduction and 2025 brackets, North Carolina's
 # 2022-2023 rates and the pre-2022 estimate label, Virginia's deduction by year,
 # Oklahoma's 2026 brackets, and West Virginia's 2025 rates. Plus 72 statute lookups
-# of Okla. Stat. tit. 68, § 2355 after its source cite was corrected.
-CHANGED_OUT = 2891
+# of Okla. Stat. tit. 68, § 2355 after its source cite was corrected. Plus 206 answers
+# for Kentucky's flat rate by year, Wisconsin's 2025 brackets, Ohio's 2025 exemption,
+# and the estimate labels on years those tables do not publish.
+CHANGED_OUT = 3097
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -239,6 +241,14 @@ SCHEDULE_UPDATES: dict[str, range] = {
     "VA": range(2018, 2029),
     "OK": range(2026, 2029),
     "WV": range(2025, 2029),
+    # Kentucky's flat rate by year (KRS 141.020) and the pre-2024 deduction label.
+    "KY": range(2015, 2029),
+    # Wisconsin's 2025 statutory brackets, and the estimate label outside 2024-2025.
+    "WI": range(2015, 2029),
+    # Ohio's 2025 exemption (R.C. 5747.025) and the pre-2024 bracket label.
+    "OH": range(2015, 2029),
+    # Nebraska's pre-2023 indexed brackets are the 2023 schedule, labeled.
+    "NE": range(2015, 2023),
 }
 
 

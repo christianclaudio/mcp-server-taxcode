@@ -52,7 +52,19 @@
       "content_sha256": "c447dacbfab0146235b9c0d1d7360eb108201484aa8701bf2dd12c9bc4d1f334",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "rate": 0.0495
+          },
+          "url": "https://tax.illinois.gov/research/taxrates/income.html",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "96a4db285da69ec40c770182b9e89238cdda9efff8402ae8ad1813d6be3eecf7"
+        }
+      ]
     }
   ]
 }

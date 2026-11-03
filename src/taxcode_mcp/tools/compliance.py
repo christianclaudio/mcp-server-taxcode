@@ -365,6 +365,23 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
             f"table; the {used} amounts are used]"
         )
         return note
+    if state == "KY" and tax_year < 2024:
+        deduction = (
+            "Kentucky's standard deduction for this tax year is not in this table; "
+            "the 2024 amount is used"
+        )
+        if tax_year < 2018:
+            return (
+                " [ESTIMATE: Kentucky's graduated rates before 2018 (KRS 141.020) are "
+                f"not in this table, so the flat rate held before 2018 is used. {deduction}]"
+            )
+        return f" [ESTIMATE: {deduction}]"
+    if state == "WI" and (tax_year < 2024 or tax_year > 2025):
+        used = 2024 if tax_year < 2024 else 2025
+        return (
+            f" [ESTIMATE: Wisconsin's tax year {tax_year} indexed brackets are not in "
+            f"this table (Wis. Stat. § 71.06); the {used} amounts are used]"
+        )
     if state == "MS" and tax_year > MS_LAST_ENACTED_RATE_YEAR:
         return (
             f" [ESTIMATE: from tax year {MS_LAST_ENACTED_RATE_YEAR + 1} Mississippi's rate on "
@@ -381,12 +398,23 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
             "that year's federal standard deduction); the "
             f"{UT_LAST_CREDIT_AMOUNT_YEAR} phase-out amounts are used]"
         )
+    if state == "NE" and tax_year < 2023:
+        return (
+            f" [ESTIMATE: Nebraska's tax year {tax_year} indexed brackets are not in this "
+            "table (Neb. Rev. Stat. § 77-2715.03); the 2023 schedule is used]"
+        )
     if state == "NE" and tax_year > NE_LAST_PUBLISHED_SCHEDULE_YEAR:
         return (
             f" [ESTIMATE: Nebraska's tax year {tax_year} brackets and standard deduction are "
             "indexed for inflation (Neb. Rev. Stat. §§ 77-2715.03(3), 77-2716.01(3)(b)) and "
             f"not yet published; the {NE_LAST_PUBLISHED_SCHEDULE_YEAR} amounts are used with "
             f"the enacted {_pct(_top_rate(info, tax_year))} rate]"
+        )
+    if state == "OH" and tax_year < 2024:
+        return (
+            f" [ESTIMATE: Ohio's tax year {tax_year} brackets are not in this table "
+            "(R.C. 5747.02 states the 2024, 2025, and 2026 schedules); the 2024 amounts "
+            "are used]"
         )
     if state == "OH" and tax_year > OH_LAST_FIXED_SCHEDULE_YEAR:
         return (
@@ -705,15 +733,19 @@ def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: floa
     return each * count
 
 
-def _oh_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: float) -> float:
+def _oh_personal_exemption(
+    info: dict[str, Any], is_mfj: bool, federal_agi: float, tax_year: int = 2024
+) -> float:
     """Ohio personal exemptions: count by filing status times the MAGI-tier amount.
 
     The tier is picked from the tool's AGI (a stand-in for Ohio MAGI).
+    ``exemption_<YYYY>`` holds the amounts from that tax year on.
     """
+    exemption = _for_year(info, "exemption", tax_year)
     each = float(
         next(
             s["amount"]
-            for s in info["exemption"]["phaseout"][_status(is_mfj)]
+            for s in exemption["phaseout"][_status(is_mfj)]
             if s["over"] is None or federal_agi > s["over"]
         )
     )
@@ -1144,7 +1176,9 @@ def evaluate_state_residency(
             + OH_MAGI_NOTE
             + DEPENDENT_EXEMPTION_NOTE
         )
-        personal_exemption = _oh_personal_exemption(RATE_TABLES["OH"], is_mfj, federal_agi)
+        personal_exemption = _oh_personal_exemption(
+            RATE_TABLES["OH"], is_mfj, federal_agi, tax_year
+        )
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
             estimated_tax = _cumulative_tax(oh_brackets, taxable_income)
@@ -1215,14 +1249,9 @@ def evaluate_state_residency(
             if is_resident and _under_zero_liability(info, is_mfj, taxable_income, tax_year):
                 estimated_tax = 0.0
         elif regime == "flat":
-            if tax_year >= 2027 and "rate_2027" in info:
-                flat_rate = float(info["rate_2027"])
-            elif tax_year >= 2026 and "rate_2026" in info:
-                flat_rate = float(info["rate_2026"])
-            elif tax_year >= 2025 and "rate_2025" in info:
-                flat_rate = float(info["rate_2025"])
-            else:
-                flat_rate = float(info.get("rate", 0.0))
+            # ``rate_<YYYY>`` holds the rate from that tax year on; the unsuffixed
+            # rate covers the years before the first suffix.
+            flat_rate = float(_for_year(info, "rate", tax_year) or 0.0)
             estimated_tax = round(taxable_income * flat_rate, 2) if is_resident else 0.0
         else:  # graduated
             if tax_year >= 2025 and (

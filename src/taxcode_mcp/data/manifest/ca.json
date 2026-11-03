@@ -65,7 +65,50 @@
       "content_sha256": "ad70ee345aa7daf5788b64419e04280c76fbebd0c15856820ccea71f3534a8c6",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[1].over": 721314.0,
+            "brackets.single[1].rate": 0.123,
+            "brackets.single[2].over": 432787.0,
+            "brackets.single[2].rate": 0.113,
+            "brackets.single[3].over": 360659.0,
+            "brackets.single[3].rate": 0.103,
+            "brackets.single[4].over": 70606.0,
+            "brackets.single[4].rate": 0.093,
+            "brackets.single[5].over": 55866.0,
+            "brackets.single[5].rate": 0.08,
+            "brackets.single[6].over": 40245.0,
+            "brackets.single[6].rate": 0.06,
+            "brackets.single[7].over": 25499.0,
+            "brackets.single[7].rate": 0.04,
+            "brackets.single[8].over": 10756.0,
+            "brackets.single[8].rate": 0.02,
+            "brackets.single[9].rate": 0.01,
+            "brackets.mfj[2].over": 865574.0,
+            "brackets.mfj[2].rate": 0.113,
+            "brackets.mfj[3].over": 721318.0,
+            "brackets.mfj[3].rate": 0.103,
+            "brackets.mfj[4].over": 141212.0,
+            "brackets.mfj[4].rate": 0.093,
+            "brackets.mfj[5].over": 111732.0,
+            "brackets.mfj[5].rate": 0.08,
+            "brackets.mfj[6].over": 80490.0,
+            "brackets.mfj[6].rate": 0.06,
+            "brackets.mfj[7].over": 50998.0,
+            "brackets.mfj[7].rate": 0.04,
+            "brackets.mfj[8].over": 21512.0,
+            "brackets.mfj[8].rate": 0.02,
+            "brackets.mfj[9].rate": 0.01
+          },
+          "url": "https://www.ftb.ca.gov/forms/2024/2024-540-tax-rate-schedules.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "80d4cb7e90a0c069ecf02c633f1823567162e825f2440e8a08d6d23cbbd60e16"
+        }
+      ]
     }
   ]
 }

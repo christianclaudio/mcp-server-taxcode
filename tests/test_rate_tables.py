@@ -296,7 +296,7 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
         "capital_gains_deduction_2023 out of order; years ascend",
     ),
     ("OH", _set("params.brackets_2024", _BRACKETS_WITH_BASE), "brackets_2024 out of order"),
-    ("OH", _set("params.exemption_2025", {}), "unknown key 'exemption_2025'"),
+    ("OH", _set("params.exemption_2025", {}), "exemption_2025: fields must be exactly"),
     ("OH", _set("params.brackets_2026.single.0.base", 332), "base: must be a non-negative"),
     ("OH", _drop("params.brackets_2025.mfj.0.base"), "brackets_2025.mfj[0]: fields must be"),
     ("VA", _set("params.brackets_2025", _BRACKETS), "single[0]: fields must be exactly"),
@@ -823,6 +823,9 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
     # deduction is allowed" (2024); $3,270 for 2025; DOR announced $3,360 for 2026 (KRS 141.081).
     # The rate is 4% for 2024 and 2025 and 3.5% for 2026 (2026 Withholding Tax Formula).
     for year, deduction, tax_on_10000 in (
+        (2018, 3160.0, 500.0),
+        (2022, 3160.0, 500.0),
+        (2023, 3160.0, 450.0),
         (2024, 3160.0, 400.0),
         (2025, 3270.0, 400.0),
         (2026, 3360.0, 350.0),
@@ -831,6 +834,13 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
             assert _resident_tax("KY", year, deduction, status)["estimated_state_tax"] == 0.0
             tax = _resident_tax("KY", year, deduction + 10000.0, status)["estimated_state_tax"]
             assert tax == tax_on_10000, (year, status)
+    # KRS 141.020: 5% for 2018-2022, 4.5% for 2023, 4% for 2024-2025, 3.5% from 2026.
+    # The standard deduction before 2024 is the 2024 amount, labeled.
+    assert "Flat 5.0% rate" in _resident_tax("KY", 2018, 1.0)["rate_description"]
+    assert "4.5% rate" in _resident_tax("KY", 2023, 1.0)["rate_description"]
+    assert "[ESTIMATE:" in _resident_tax("KY", 2018, 1.0)["rate_description"]
+    assert "[ESTIMATE:" not in _resident_tax("KY", 2024, 1.0)["rate_description"]
+    assert "graduated rates before 2018" in _resident_tax("KY", 2017, 1.0)["rate_description"]
 
 
 def test_rhode_island_2025_standard_deduction() -> None:
@@ -1105,16 +1115,19 @@ def test_ohio_schedule_by_year() -> None:
     # R.C. 5747.02(A)(3) brackets; personal exemption is MAGI-tiered per the 2024 IT 1040
     # booklet ($2,400 / $2,150 / $1,900). AGI arguments land in the matching tier.
     oh_notes = compliance.OH_MAGI_NOTE + compliance.DEPENDENT_EXEMPTION_NOTE
-    for tax_year, pins in (
-        (2024, (0.0, 1460.69, 4006.07)),
-        (2025, (0.0, 1442.00, 3833.38)),
-        (2026, (0.0, 1432.00, 3632.00)),
-        *((year, (0.0, 1432.00, 3632.00)) for year in range(2027, 2036)),
+    # 2024 exemptions are the IT 1040 booklet's $2,400 / $2,150 / $1,900. R.C. 5747.025,
+    # as amended by H.B. 96, states $2,350 / $2,100 / $1,850 from 2025 (indexing suspended
+    # for 2025 and 2026). AGI is the bracket edge plus that year's exemption.
+    for tax_year, low, mid, high, pins in (
+        (2024, 2400.0, 2150.0, 1900.0, (0.0, 1460.69, 4006.07)),
+        (2025, 2350.0, 2100.0, 1850.0, (0.0, 1442.00, 3833.38)),
+        (2026, 2350.0, 2100.0, 1850.0, (0.0, 1432.00, 3632.00)),
+        *((year, 2350.0, 2100.0, 1850.0, (0.0, 1432.00, 3632.00)) for year in range(2027, 2036)),
     ):
         got = (
-            _tax("OH", tax_year, 26050.0 + 2400.0),
-            _tax("OH", tax_year, 66050.0 + 2150.0),
-            _tax("OH", tax_year, 146050.0 + 1900.0),
+            _tax("OH", tax_year, 26050.0 + low),
+            _tax("OH", tax_year, 66050.0 + mid),
+            _tax("OH", tax_year, 146050.0 + high),
         )
         assert got == pins, tax_year
     assert _resident_tax("OH", 2025, 1.0)["rate_description"] == (
@@ -1187,6 +1200,7 @@ def test_nebraska_brackets_and_deduction_by_year() -> None:
     for tax_year in (2019, 2022):
         assert _tax("NE", tax_year, 7900.0) == 0.0, tax_year
         assert _tax("NE", tax_year, 7901.0) == 0.02, tax_year
+        assert "2023 schedule is used" in _resident_tax("NE", tax_year, 1.0)["rate_description"]
 
 
 def test_colorado_deduction_follows_the_federal_figure() -> None:
@@ -1270,6 +1284,13 @@ def test_outyear_estimate_notes_are_literal() -> None:
     for tax_year in (2024, 2025, 2026):
         assert "[ESTIMATE:" not in _resident_tax("NE", tax_year, 1.0)["rate_description"]
         assert "[ESTIMATE:" not in _resident_tax("OH", tax_year, 1.0)["rate_description"]
+    for tax_year in (2024, 2025):
+        assert "[ESTIMATE:" not in _resident_tax("WI", tax_year, 1.0)["rate_description"]
+    assert "2024 amounts are used" in _resident_tax("OH", 2023, 1.0)["rate_description"]
+    assert "the 2025 amounts are used" in _resident_tax("WI", 2026, 1.0)["rate_description"]
+    wi = compliance.RATE_TABLES["WI"]["brackets_2025"]
+    assert wi["single"][0] == {"over": 323290.0, "rate": 0.0765}
+    assert wi["mfj"][2] == {"over": 19580.0, "rate": 0.044}
     ms, ut = _ms_note(2031), _ut_note(2026)
     ne, oh = _ne_note(2027), _oh_note(2027)
     assert "HB 1 of 2025, Section 2" in ms and "3.00%" in ms
@@ -1369,6 +1390,9 @@ def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
     assert compliance._oh_personal_exemption(oh, False, 40000.01) == 2150.0
     assert compliance._oh_personal_exemption(oh, False, 80000.01) == 1900.0
     assert compliance._oh_personal_exemption(oh, True, 50000.0) == 4300.0
+    assert compliance._oh_personal_exemption(oh, False, 40000.0, 2025) == 2350.0
+    assert compliance._oh_personal_exemption(oh, False, 40000.01, 2025) == 2100.0
+    assert compliance._oh_personal_exemption(oh, False, 80000.01, 2026) == 1850.0
 
 
 def test_batch4_federal_standard_deduction_readers() -> None:

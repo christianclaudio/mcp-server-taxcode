@@ -509,6 +509,14 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "GA": {"enacting_law": "HB 463 of 2026", "effective_date": "2026-01-01"},
         "NM": {"edition": "amended_compilation", "effective_date": "2008-01-01"},
         "HI": {"enacting_law": "Act 45, SLH 2024", "effective_date": "2024-01-01"},
+        # KRS 141.020 history names 2025 Ky. Acts ch. 1, sec. 1. Paragraph (e) states
+        # the 4% rate for taxable years beginning on or after January 1, 2024.
+        "KY": {
+            "enacting_law": "2025 Ky. Acts ch. 1, sec. 1",
+            "effective_date": "2024-01-01",
+        },
+        # R.C. 5747.025's current text names House Bill 96 as its latest legislation.
+        "OH": {"enacting_law": "House Bill 96 of the 136th General Assembly"},
     }
     for e in entries:
         code = e["_jurisdiction"]
@@ -614,7 +622,15 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
     data, _ = tree
     catalog = load_catalog(data, with_manifest=True)
     ky = next(e for e in catalog.manifest if e["id"] == "ky-rates")
-    assert [s["tax_year"] for s in ky["year_sources"]] == [2025, 2026, 2026, 2026]
+    assert [s["tax_year"] for s in ky["year_sources"]] == [
+        2018,
+        2023,
+        2024,
+        2025,
+        2026,
+        2026,
+        2026,
+    ]
     assert manifest_errors(catalog) == []
 
     def ky_source(change: Callable[[dict[str, Any]], None]) -> str:
@@ -656,7 +672,7 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
             f"{first}: content_sha256 must be 64 lowercase hex",
         ),
         (
-            lambda e: e["year_sources"][1].update(tax_year=2024),
+            lambda e: e["year_sources"][1].update(tax_year=2017),
             f"{where}[1]: tax_year must be an integer, in ascending order",
         ),
         (lambda e: e.update(year_sources=[]), f"{where[:-13]}: year_sources must be a non-empty"),
@@ -809,7 +825,10 @@ def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> Non
     assert [(s["tax_year"], s["values"]) for s in ut] == [(2026, {"rate_2026": 0.0445})] * 2
     assert ut[0]["url"] == "https://le.utah.gov/~2026/bills/sbillenr/SB0060.pdf"
     ne = sources["ne-rates"][-1]
-    assert ne["tax_year"] == 2027 and ne["content_sha256"] == "not_recorded"
+    assert ne["tax_year"] == 2027
+    assert ne["content_sha256"] == (
+        "3e30f5d0daba08672674217707ee8363468f950dc2ae6548caacee2f3a35cf64"
+    )
     assert set(ne["values"].values()) == {0.0399}
     assert manifest_errors(catalog) == []
 

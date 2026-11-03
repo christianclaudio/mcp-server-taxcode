@@ -181,6 +181,6 @@ async def test_batch_state_residency_matches_the_direct_call_in_out_years() -> N
     # MS 2028: AGI 100000 - ded 2300 - exemption 6000 = 91700; 0% to 10000, 3.50% above
     # -> 0.035 * 81700 = 2859.50 (was 3069.50 without the exemption).
     # UT 2026: credit base is federal 2026 single 16100 (shared table); tax at 60000 = 2247.23.
-    # NE 2027 unchanged at 1832.79. OH 2028: MAGI-tier exemption 2150 (AGI 68450 in 40k-80k
-    # band) -> taxable 66300; 332 + 0.0275*(66300-26050) = 1438.88 (was 1432.00 at flat 2400).
-    assert taxes == [2859.50, 2247.23, 1832.79, 1438.88]
+    # NE 2027 unchanged at 1832.79. OH 2028: R.C. 5747.025 exemption 2100 (AGI 68450 in
+    # the 40k-80k band) -> taxable 66350; 332 + 0.0275*(66350-26050) = 1440.25.
+    assert taxes == [2859.50, 2247.23, 1832.79, 1440.25]

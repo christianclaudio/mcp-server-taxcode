@@ -26,7 +26,19 @@
       "content_sha256": "262bec4835e18886fb7ad7f26b47ebdb2f069b8a6a9faa43c1e029b6b678ee9b",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.038
+          },
+          "url": "https://www.legis.iowa.gov/docs/code/422.5.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "171f7909ffeed08dae5103ba749e57ebab66a28b2899117a8e84c44787641ad2"
+        }
+      ]
     }
   ]
 }
