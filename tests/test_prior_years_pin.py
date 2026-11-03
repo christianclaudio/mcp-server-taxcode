@@ -230,8 +230,10 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # of Okla. Stat. tit. 68, § 2355 after its source cite was corrected. Plus 206 answers
 # for Kentucky's flat rate by year, Wisconsin's 2025 brackets, Ohio's 2025 exemption,
 # and the estimate labels on years those tables do not publish. Plus 6 answers for
-# Georgia's 2018 6 percent top rate and South Carolina's 2026 schedule.
-CHANGED_OUT = 3103
+# Georgia's 2018 6 percent top rate and South Carolina's 2026 schedule. Plus 88
+# answers whose New Hampshire description now states the prior-law interest and
+# dividends tax and the 2025 repeal.
+CHANGED_OUT = 3191
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -239,6 +241,7 @@ CHANGED_OUT = 3103
 SCHEDULE_UPDATES: dict[str, range] = {
     "HI": range(2024, 2029),
     "NC": range(2018, 2029),
+    "NH": range(2015, 2029),
     "VA": range(2018, 2029),
     "OK": range(2026, 2029),
     "WV": range(2025, 2029),

@@ -2,11 +2,16 @@
   "schema": 1,
   "jurisdiction": "NH",
   "model": "registry",
-  "source_url": "https://gc.nh.gov/rsa/html/V/77/77-mrg.htm",
+  "source_url": "https://www.revenue.nh.gov/news-and-media/interest-dividends-tax-repeal",
   "params": {
     "statutory_basis": "N.H. Rev. Stat. Ann. § 77:1",
     "rate_authority": "N.H. Rev. Stat. Ann. § 77:1",
-    "rate_desc": "No wage income tax; 3% on interest/dividends in 2024, fully repealed 2025+ (HB 2)",
-    "regime": "none"
+    "rate_desc": "No tax on wages. Prior law imposed the interest and dividends tax at 3% on interest and dividends over a $2,400 personal or $4,800 joint exemption (TIR 2025-001)",
+    "rate_desc_2025": "No tax on wages. The interest and dividends tax is repealed for taxable periods beginning after December 31, 2024 (TIR 2025-001)",
+    "regime": "none",
+    "rate": 0.03,
+    "rate_2025": 0.0,
+    "exemption_single": 2400.0,
+    "exemption_mfj": 4800.0
   }
 }

@@ -523,6 +523,8 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "OH": {"enacting_law": "House Bill 96 of the 136th General Assembly"},
         # Notice 17-09 names Public Chapter 181 (2017), Section 13 as the repeal.
         "TN": {"enacting_law": "Public Chapter 181 (2017), Section 13"},
+        # TIR 2025-001, dated January 21, 2025, states the repeal effective January 1, 2025.
+        "NH": {"enacting_law": "TIR 2025-001, January 21, 2025", "effective_date": "2025-01-01"},
     }
     for e in entries:
         code = e["_jurisdiction"]
@@ -606,6 +608,8 @@ RETRIEVED = {
     **dict.fromkeys(("KY", "ME", "MI", "VT"), "2026-11-02"),
     # Notice 17-09 was re-read from the owner PDF on this date.
     "TN": "2026-11-02",
+    # TIR 2025-001 was read from the owner PDF on this date.
+    "NH": "2026-11-02",
 }
 # Sources read as text without their bytes, so no hash. None remain.
 READ_WITHOUT_BYTES: set[str] = set()

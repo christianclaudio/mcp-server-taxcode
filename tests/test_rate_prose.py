@@ -21,7 +21,6 @@ _DOLLARS = re.compile(r"\$(\d[\d,]*(?:\.\d+)?)(k?)")
 NOT_IN_TABLE: dict[str, set[float]] = {
     "CA": {1.0},  # 1% MHST/BHST (name follows schedule year), inside the 13.3% top rate
     "MD": {2.25, 3.2},  # the county piggyback range; county tax is not computed
-    "NH": {3.0},  # the 2024 interest and dividends tax, which this tool does not compute
     # Per-dependent exemption amounts named in UT rate_desc; the tool does not compute them.
     "UT": {2046.0, 2111.0},
 }
