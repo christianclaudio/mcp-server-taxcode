@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import logging
 import math
-from typing import Any
+from typing import Annotated, Any
 
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
 from taxcode_mcp.catalog import (
     FEDERAL_ALLOWANCE,
@@ -854,17 +855,38 @@ def evaluate_state_residency(
     has_active_driver_license: bool = False,
     has_active_voter_registration: bool = False,
     telecommuting_days_out_of_state: int = 0,
-    dependents: int = 0,
-    spouse_agi: float = 0.0,
-    itemized_deductions: float = 0.0,
+    dependents: Annotated[
+        int,
+        Field(
+            description=(
+                "Number of dependents claimed. Applies per-dependent exemptions for KS, MS, "
+                "OH, GA and UT where a sourced amount exists. Years without one raise when "
+                "greater than 0."
+            )
+        ),
+    ] = 0,
+    spouse_agi: Annotated[
+        float,
+        Field(
+            description=(
+                "The spouse's part of federal_agi on a married-filing-jointly return. Used "
+                "only for Mississippi combined returns, where the filing-status exemption "
+                "and standard deduction are split evenly between the spouses. Ignored for "
+                "other states."
+            )
+        ),
+    ] = 0.0,
+    itemized_deductions: Annotated[
+        float,
+        Field(
+            description=(
+                "Utah only. Federal itemized deductions excluding state income tax, which "
+                "Utah adds back; that add-back is not computed."
+            )
+        ),
+    ] = 0.0,
 ) -> dict[str, Any]:
-    """Evaluate state domicile, presence day counts, and statutory state tax liability.
-
-    Mississippi spouse_agi splits the filing-status exemption and standard deduction evenly
-    between the two spouse columns; spouse_agi is used only for Mississippi and is ignored
-    for other states. Utah itemized_deductions is federal itemized deductions excluding
-    state income tax, which Utah adds back; that add-back is not computed.
-    """
+    """Evaluate state domicile, presence day counts, and statutory state tax liability."""
     state = jurisdiction.strip().upper()
     if state not in SUPPORTED_STATE_JURISDICTIONS:
         raise SafetyViolationError(

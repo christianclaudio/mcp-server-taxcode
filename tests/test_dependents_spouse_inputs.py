@@ -76,7 +76,13 @@ def test_ohio_dependents_use_magi_tier() -> None:
 
 
 def test_georgia_dependents_graduated_and_flat() -> None:
-    # 2023 graduated: $3,000; 2024-2025 flat: $4,000 (IT-511).
+    # 2018-2023: $3,000 (IT-511 Line 14b); 2024-2025 flat: $4,000 (IT-511).
+    # 2018 uses the existing pre-graduated estimate path (2024 flat figures).
+    none18 = _tax("GA", 2018, 80000.0)
+    one18 = _tax("GA", 2018, 80000.0, dependents=1)
+    two18 = _tax("GA", 2018, 80000.0, dependents=2)
+    assert one18["taxable_net_income"] == none18["taxable_net_income"] - 3000.0
+    assert two18["taxable_net_income"] == none18["taxable_net_income"] - 6000.0
     none23 = _tax("GA", 2023, 80000.0)
     one23 = _tax("GA", 2023, 80000.0, dependents=1)
     assert one23["taxable_net_income"] == none23["taxable_net_income"] - 3000.0
@@ -89,10 +95,10 @@ def test_georgia_dependents_graduated_and_flat() -> None:
     assert one25["taxable_net_income"] == none25["taxable_net_income"] - 4000.0
     assert two25["taxable_net_income"] == none25["taxable_net_income"] - 8000.0
     with pytest.raises(SafetyViolationError, match="No per-dependent exemption"):
-        _tax("GA", 2018, 80000.0, dependents=1)
+        _tax("GA", 2017, 80000.0, dependents=1)
     assert (
-        _tax("GA", 2018, 80000.0, dependents=0)["estimated_state_tax"]
-        == _tax("GA", 2018, 80000.0)["estimated_state_tax"]
+        _tax("GA", 2017, 80000.0, dependents=0)["estimated_state_tax"]
+        == _tax("GA", 2017, 80000.0)["estimated_state_tax"]
     )
 
 

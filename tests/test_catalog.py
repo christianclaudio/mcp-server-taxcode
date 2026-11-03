@@ -759,6 +759,7 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
     assert entry["effective_date"] == "2026-01-01"
     sources = entry["year_sources"]
     assert [s["tax_year"] for s in sources] == [
+        2018,
         2019,
         2020,
         2021,
@@ -773,6 +774,12 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
         2027,
     ]
     assert sources[0]["url"] == (
+        "https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download"
+    )
+    assert sources[0]["content_sha256"] == (
+        "b5df3662baed95f170c9f9fd441eda96e92574cce58c42b29559423501947579"
+    )
+    assert sources[1]["url"] == (
         "https://dor.georgia.gov/document/form/2019-it-511-individual-income-tax-booklet/download"
     )
     assert any(

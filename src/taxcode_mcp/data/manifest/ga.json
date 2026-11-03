@@ -120,6 +120,16 @@
       "verification": "not_recorded",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "dependent_exemption_2018": 3000.0
+          },
+          "url": "https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "b5df3662baed95f170c9f9fd441eda96e92574cce58c42b29559423501947579"
+        },
+        {
           "tax_year": 2019,
           "values": {
             "brackets.single[0].over": 7000.0,
