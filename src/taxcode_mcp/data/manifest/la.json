@@ -39,7 +39,8 @@
       "content_sha256": "46f455fe6e536847ce22cd7337f6ff778eff68a46cc0811b92622473e6454aa8",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://www.legis.la.gov/Legis/Law.aspx?d=101770 is repealed R.S. 47:298, not R.S. 47:32, so the held brackets were not on that page."
     }
   ]
 }

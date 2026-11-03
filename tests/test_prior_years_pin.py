@@ -222,13 +222,18 @@ FEDERAL_TABLE_STATES = frozenset(
 # from 2018; those years are in the same window.
 EXEMPTION_STATES = frozenset({"KS", "MS", "OH"})
 EXEMPTION_YEARS = range(2018, 2029)
-GA_SCHEDULE_YEARS = range(2019, 2024)
+GA_SCHEDULE_YEARS = range(2018, 2024)
 # 2587 previously, plus 232 answers whose tax or rate prose moved onto a schedule
 # sourced here: Hawaii's 2024 standard deduction and 2025 brackets, North Carolina's
 # 2022-2023 rates and the pre-2022 estimate label, Virginia's deduction by year,
 # Oklahoma's 2026 brackets, and West Virginia's 2025 rates. Plus 72 statute lookups
-# of Okla. Stat. tit. 68, § 2355 after its source cite was corrected.
-CHANGED_OUT = 2891
+# of Okla. Stat. tit. 68, § 2355 after its source cite was corrected. Plus 206 answers
+# for Kentucky's flat rate by year, Wisconsin's 2025 brackets, Ohio's 2025 exemption,
+# and the estimate labels on years those tables do not publish. Plus 6 answers for
+# Georgia's 2018 6 percent top rate and South Carolina's 2026 schedule. Plus 88
+# answers whose New Hampshire description now states the prior-law interest and
+# dividends tax and the 2025 repeal.
+CHANGED_OUT = 3191
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -236,9 +241,18 @@ CHANGED_OUT = 2891
 SCHEDULE_UPDATES: dict[str, range] = {
     "HI": range(2024, 2029),
     "NC": range(2018, 2029),
+    "NH": range(2015, 2029),
     "VA": range(2018, 2029),
     "OK": range(2026, 2029),
     "WV": range(2025, 2029),
+    # Kentucky's flat rate by year (KRS 141.020) and the pre-2024 deduction label.
+    "KY": range(2015, 2029),
+    # Wisconsin's 2025 statutory brackets, and the estimate label outside 2024-2025.
+    "WI": range(2015, 2029),
+    # Ohio's 2025 exemption (R.C. 5747.025) and the pre-2024 bracket label.
+    "OH": range(2015, 2029),
+    # Nebraska's pre-2023 indexed brackets are the 2023 schedule, labeled.
+    "NE": range(2015, 2023),
 }
 
 
@@ -421,7 +435,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
             changed_versions += versions_changed
             pointed += has_pointer
             parsed = _state_year(key)
-            if parsed is not None and parsed[1] == "GA" and parsed[2] < 2019:
+            if parsed is not None and parsed[1] == "GA" and parsed[2] < 2018:
                 out, _ = _without_pointer(raw)
                 if not _ga_note_only_matches_pin(out, pins[key][0]):
                     ga_pre2019_amount_mismatches.append(key)
@@ -430,7 +444,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
                 if not _ut_2024_rate_desc_only_matches_pin(out, pins[key][0]):
                     ut_2024_amount_mismatches.append(key)
     assert unexpected == []
-    # Pre-2019 GA answers may gain DEPENDENT_EXEMPTION_NOTE text only; amounts match pin.
+    # Pre-2018 GA answers may gain DEPENDENT_EXEMPTION_NOTE text only; amounts match pin.
     assert ga_pre2019_amount_mismatches == []
     # UT 2024 may change only in rate_description; amounts and other fields match pin.
     assert ut_2024_amount_mismatches == []

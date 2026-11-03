@@ -50,9 +50,10 @@
       "licence": "not_recorded",
       "retrieved": "2026-10-23",
       "content_sha256": "e87bcf677747e7b304218f1d107b8d54389acb00851727bd0d8e487d80e0f9fb",
-      "enacting_law": "not_recorded",
+      "enacting_law": "House Bill 96 of the 136th General Assembly",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "R.C. 5747.02 confirms the 2024, 2025, and 2026 brackets. R.C. 5747.025 states the 2025 exemption amounts and does not state the exemption above $750,000 for 2025 or $500,000 for 2026. The 2024 exemption is the booklet figure.",
       "year_sources": [
         {
           "tax_year": 2024,
@@ -93,6 +94,24 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "931b21e7484ba96e561cf2346d8a7d2a8005bd990724b5903c9a90acede5f50e"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "exemption_2025.amount": 2350.0,
+            "exemption_2025.phaseout.single[0].over": 80000.0,
+            "exemption_2025.phaseout.single[0].amount": 1850.0,
+            "exemption_2025.phaseout.single[1].over": 40000.0,
+            "exemption_2025.phaseout.single[1].amount": 2100.0,
+            "exemption_2025.phaseout.single[2].amount": 2350.0,
+            "exemption_2025.phaseout.mfj[0].amount": 1850.0,
+            "exemption_2025.phaseout.mfj[1].amount": 2100.0,
+            "exemption_2025.phaseout.mfj[2].amount": 2350.0
+          },
+          "url": "https://codes.ohio.gov/ohio-revised-code/section-5747.025",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "b78f7cf31be013cdab55c2e960f89ecafb3d9aa36f90c6a65eabfa3264252546"
         },
         {
           "tax_year": 2026,

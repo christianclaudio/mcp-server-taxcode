@@ -52,7 +52,8 @@
       "content_sha256": "fad02854c8e39e179c6fd5cf0b36b9c9ef638baa679762236e5f06acb3412c42",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "The cloud agent's fetch of https://www.cga.ct.gov/current/pub/chap_229.htm failed TLS certificate verification on 2026-11-02. An owner-saved browser snapshot of that page (snapshot sha256 feda7c0aae94ac94b79b3c14f26da8fa5aa6b9df8340c05982956227ff8b0f33) confirms the held single and joint brackets against Conn. Gen. Stat. § 12-700(a)(10) for taxable years commencing on or after January 1, 2024. The exemption, phase-out, recapture, and credit tables were not re-checked against that snapshot."
     }
   ]
 }

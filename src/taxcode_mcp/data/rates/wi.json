@@ -9,7 +9,9 @@
     "rate_desc": "Graduated rates: 3.50%, 4.40%, 5.30%, and top rate 7.65%",
     "regime": "graduated",
     "deduction_single": 13810.0,
+    "deduction_single_2025": 13560.0,
     "deduction_mfj": 25480.0,
+    "deduction_mfj_2025": 25110.0,
     "brackets": {
       "single": [
         {
@@ -40,6 +42,44 @@
         },
         {
           "over": 19090.0,
+          "rate": 0.044
+        },
+        {
+          "over": null,
+          "rate": 0.035
+        }
+      ]
+    },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 323290.0,
+          "rate": 0.0765
+        },
+        {
+          "over": 50480.0,
+          "rate": 0.053
+        },
+        {
+          "over": 14680.0,
+          "rate": 0.044
+        },
+        {
+          "over": null,
+          "rate": 0.035
+        }
+      ],
+      "mfj": [
+        {
+          "over": 431060.0,
+          "rate": 0.0765
+        },
+        {
+          "over": 67300.0,
+          "rate": 0.053
+        },
+        {
+          "over": 19580.0,
           "rate": 0.044
         },
         {

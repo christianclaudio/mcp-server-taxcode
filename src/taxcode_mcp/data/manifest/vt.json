@@ -26,7 +26,8 @@
       "content_sha256": "a4d2fa841a9404616d6426dec711e85e71b5ea2feeb62e8a8a4c2f6afc267ba8",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "32 V.S.A. section 5822 prints tables that are then adjusted for inflation (joint $64,600 / $156,150 / $237,950), not the held 2024 indexed brackets. The 3.35, 6.60, 7.60, and 8.75 percent rates match."
     }
   ]
 }

@@ -39,7 +39,8 @@
       "content_sha256": "595cf4083cea1b1b959aa29123818083b32b2579ab9e31eff45382dc6cd1352d",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "An owner-saved browser snapshot of https://www.azleg.gov/ars/43/01011.htm on 2026-11-02 (snapshot sha256 fad63b6eeb5ad42ceae0f08161608ad4ac232370d5a39d153311b748d4289a5f) prints graduated rates through A.R.S. § 43-1011(A)(6), including a 4.50 percent top rate for taxable years beginning after December 31, 2018, and refers to paragraphs 7, 8, and 9 without including them. It does not state the held 2.5 percent flat rate. The page was blocked from the cloud agent's network on 2026-11-02 and returned HTTP 200 from another network."
     }
   ]
 }

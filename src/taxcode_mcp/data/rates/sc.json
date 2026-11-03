@@ -7,6 +7,7 @@
     "statutory_basis": "S.C. Code Ann. §§ 12-6-30, 12-6-510",
     "rate_authority": "S.C. Code Ann. § 12-6-510",
     "rate_desc": "0% on first bracket; top rate 6.20% over $17,330",
+    "rate_desc_2026": "Graduated rates: 1.99% up to $30,000, 5.21% over $30,000 (S.C. Code Ann. § 12-6-510(C))",
     "regime": "graduated",
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
@@ -37,6 +38,28 @@
         {
           "over": null,
           "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 30000.0,
+          "rate": 0.0521
+        },
+        {
+          "over": null,
+          "rate": 0.0199
+        }
+      ],
+      "mfj": [
+        {
+          "over": 30000.0,
+          "rate": 0.0521
+        },
+        {
+          "over": null,
+          "rate": 0.0199
         }
       ]
     }

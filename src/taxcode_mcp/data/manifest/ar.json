@@ -27,14 +27,29 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf (sha256 a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02, retrieved 2026-11-02) states 2025 brackets of 0% to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, and 3.9% above that. Those match the held 2025 brackets. The same PDF prints a bracket-adjustment band from $94,701 to $97,800, where the 3.9% minus-adjustment steps down, and for $100,001 and over a formula of $3,809 plus 3.9% of the excess over $100,000. That band is not modeled. The PDF does not state the held $2,340 / $4,680 deduction.",
       "year_sources": [
         {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 26399.0,
             "brackets_2025.single[0].rate": 0.039,
+            "brackets_2025.single[1].over": 15999.0,
+            "brackets_2025.single[1].rate": 0.034,
+            "brackets_2025.single[2].over": 11199.0,
+            "brackets_2025.single[2].rate": 0.03,
+            "brackets_2025.single[3].over": 5599.0,
+            "brackets_2025.single[3].rate": 0.02,
+            "brackets_2025.single[4].rate": 0.0,
             "brackets_2025.mfj[0].over": 26399.0,
-            "brackets_2025.mfj[0].rate": 0.039
+            "brackets_2025.mfj[0].rate": 0.039,
+            "brackets_2025.mfj[1].over": 15999.0,
+            "brackets_2025.mfj[1].rate": 0.034,
+            "brackets_2025.mfj[2].over": 11199.0,
+            "brackets_2025.mfj[2].rate": 0.03,
+            "brackets_2025.mfj[3].over": 5599.0,
+            "brackets_2025.mfj[3].rate": 0.02,
+            "brackets_2025.mfj[4].rate": 0.0
           },
           "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf",
           "official": true,

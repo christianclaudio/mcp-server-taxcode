@@ -118,10 +118,17 @@
       "enacting_law": "HB 463 of 2026",
       "effective_date": "2026-01-01",
       "verification": "not_recorded",
+      "verification_note": "The 2018 Georgia Tax Rate Schedule is sourced from https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download (sha256 b5df3662baed95f170c9f9fd441eda96e92574cce58c42b29559423501947579, retrieved 2026-11-02). Its top rate is 6 percent; the 5.75 percent schedule starts in 2019. No second document confirmed the whole held schedule.",
       "year_sources": [
         {
           "tax_year": 2018,
           "values": {
+            "brackets.single[0].over": 7000.0,
+            "brackets.single[0].rate": 0.06,
+            "brackets.mfj[0].over": 10000.0,
+            "brackets.mfj[0].rate": 0.06,
+            "standard_deduction.single": 4600.0,
+            "standard_deduction.mfj": 6000.0,
             "dependent_exemption_2018": 3000.0
           },
           "url": "https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download",
@@ -132,10 +139,10 @@
         {
           "tax_year": 2019,
           "values": {
-            "brackets.single[0].over": 7000.0,
-            "brackets.single[0].rate": 0.0575,
-            "brackets.mfj[0].over": 10000.0,
-            "brackets.mfj[0].rate": 0.0575,
+            "brackets_2019.single[0].over": 7000.0,
+            "brackets_2019.single[0].rate": 0.0575,
+            "brackets_2019.mfj[0].over": 10000.0,
+            "brackets_2019.mfj[0].rate": 0.0575,
             "exemption.single": 2700.0,
             "exemption.mfj": 7400.0,
             "standard_deduction.single": 4600.0,
@@ -149,10 +156,10 @@
         {
           "tax_year": 2020,
           "values": {
-            "brackets.single[0].over": 7000.0,
-            "brackets.single[0].rate": 0.0575,
-            "brackets.mfj[0].over": 10000.0,
-            "brackets.mfj[0].rate": 0.0575,
+            "brackets_2019.single[0].over": 7000.0,
+            "brackets_2019.single[0].rate": 0.0575,
+            "brackets_2019.mfj[0].over": 10000.0,
+            "brackets_2019.mfj[0].rate": 0.0575,
             "exemption.single": 2700.0,
             "exemption.mfj": 7400.0,
             "standard_deduction.single": 4600.0,
@@ -166,10 +173,10 @@
         {
           "tax_year": 2021,
           "values": {
-            "brackets.single[0].over": 7000.0,
-            "brackets.single[0].rate": 0.0575,
-            "brackets.mfj[0].over": 10000.0,
-            "brackets.mfj[0].rate": 0.0575,
+            "brackets_2019.single[0].over": 7000.0,
+            "brackets_2019.single[0].rate": 0.0575,
+            "brackets_2019.mfj[0].over": 10000.0,
+            "brackets_2019.mfj[0].rate": 0.0575,
             "exemption.single": 2700.0,
             "exemption.mfj": 7400.0,
             "standard_deduction.single": 4600.0,
@@ -183,10 +190,10 @@
         {
           "tax_year": 2022,
           "values": {
-            "brackets.single[0].over": 7000.0,
-            "brackets.single[0].rate": 0.0575,
-            "brackets.mfj[0].over": 10000.0,
-            "brackets.mfj[0].rate": 0.0575,
+            "brackets_2019.single[0].over": 7000.0,
+            "brackets_2019.single[0].rate": 0.0575,
+            "brackets_2019.mfj[0].over": 10000.0,
+            "brackets_2019.mfj[0].rate": 0.0575,
             "exemption.single": 2700.0,
             "exemption.mfj": 7400.0,
             "standard_deduction_2022.single": 5400.0,
@@ -210,10 +217,10 @@
         {
           "tax_year": 2023,
           "values": {
-            "brackets.single[0].over": 7000.0,
-            "brackets.single[0].rate": 0.0575,
-            "brackets.mfj[0].over": 10000.0,
-            "brackets.mfj[0].rate": 0.0575,
+            "brackets_2019.single[0].over": 7000.0,
+            "brackets_2019.single[0].rate": 0.0575,
+            "brackets_2019.mfj[0].over": 10000.0,
+            "brackets_2019.mfj[0].rate": 0.0575,
             "exemption.single": 2700.0,
             "exemption.mfj": 7400.0,
             "standard_deduction_2022.single": 5400.0,

@@ -99,6 +99,10 @@ TABLE_KINDS = ("rate_table", "federal_table")
 # for other tax years than ``url``'s. Each names the table values it confirms by their path
 # in the rate table's ``params`` (or in the federal table's document).
 YEAR_SOURCES = "year_sources"
+# Optional field of a ``rate_table`` whose ``verification`` is still ``not_recorded``:
+# why that table could not be confirmed. It sits after ``verification`` and before
+# ``year_sources``.
+VERIFICATION_NOTE = "verification_note"
 YEAR_SOURCE_FIELDS: tuple[str, ...] = (
     "tax_year",
     "values",
@@ -170,10 +174,10 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
 # model's own fields, years ascending. Each holds the value from that tax year on, and the
 # unsuffixed key covers the years before (the registry's convention).
 YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
-    "georgia": ("standard_deduction", "retirement_exclusion", "dependent_exemption"),
+    "georgia": ("standard_deduction", "retirement_exclusion", "brackets", "dependent_exemption"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
-    "brackets_cumulative": ("brackets", "deduction"),
+    "brackets_cumulative": ("brackets", "deduction", "exemption"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
     "maryland": ("standard_deduction", "personal_exemption", "brackets"),
 }
@@ -276,7 +280,21 @@ _REGISTRY_TYPES: dict[str, type] = {
         float,
     ),
     **dict.fromkeys(
-        ("top_rate", "middle_rate", "rate", "rate_2025", "rate_2026", "rate_2027"), float
+        (
+            "top_rate",
+            "middle_rate",
+            "rate",
+            # Kentucky's flat rate by year (KRS 141.020): 5% from 2018, 4.5% for 2023,
+            # 4% from 2024, 3.5% from 2026. ``rate_2025`` and ``rate_2027`` are the
+            # other flat-rate years a registry table may name.
+            "rate_2018",
+            "rate_2023",
+            "rate_2024",
+            "rate_2025",
+            "rate_2026",
+            "rate_2027",
+        ),
+        float,
     ),
     **dict.fromkeys(
         (
@@ -297,7 +315,7 @@ _REGISTRY_TYPES: dict[str, type] = {
     # ceiling the ordinary brackets apply to all taxable income.
     **dict.fromkeys((f"low_income_exclusion_{year}" for year in range(2018, 2027)), dict),
     **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_YEARS), dict),
-    **dict.fromkeys((f"rate_desc_{year}" for year in REGISTRY_YEARS), str),
+    **dict.fromkeys((f"rate_desc_{year}" for year in (2018, *REGISTRY_YEARS)), str),
     **dict.fromkeys(
         (
             f"credit_{name}_{status}_2025"
@@ -310,6 +328,7 @@ _REGISTRY_TYPES: dict[str, type] = {
 # Registry params whose ``_YYYY`` keys need their unsuffixed key first, years ascending.
 _REGISTRY_YEARLY_BASES = (
     "brackets",
+    "rate",
     "rate_desc",
     *(f"credit_{name}_{status}" for name in ("base", "phaseout") for status in FILING_STATUSES),
 )
@@ -479,7 +498,11 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
             catalog.documents[f"manifest/{stem}"], entries = _document(path, code, "entries")
             for entry in entries:
                 where = f"manifest/{stem}.json entry {entry.get('id', '?')!r}"
-                fields = (*MANIFEST_FIELDS, *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()))
+                fields = (
+                    *MANIFEST_FIELDS,
+                    *((VERIFICATION_NOTE,) if VERIFICATION_NOTE in entry else ()),
+                    *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()),
+                )
                 _check_keys(entry, fields, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
     if with_manifest:
@@ -652,8 +675,15 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         later = [k for k in keys if _YEARLY_KEY_RE.match(k) and k.rsplit("_", 1)[0] == base]
         if not later:
             continue
-        _check(base in params, f"{where}: {later[0]} needs {base} first")
         years = [int(k[-4:]) for k in later]
+        # A flat ``rate_YYYY`` may be the first rate when the unsuffixed regime is
+        # graduated (Iowa and Louisiana until that year). A flat regime needs ``rate``.
+        if base not in params:
+            _check(
+                base == "rate" and params.get("regime") == "graduated" and years == sorted(years),
+                f"{where}: {later[0]} needs {base} first",
+            )
+            continue
         _check(
             years == sorted(years) and keys.index(later[0]) > keys.index(base),
             f"{where}: {base}_YYYY keys must follow {base}, years ascending",
@@ -1078,6 +1108,12 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
         sha,
     ):
         errors.append(f"{where}: verified_verbatim needs a retrieved date and content_sha256")
+    note = entry.get(VERIFICATION_NOTE)
+    if entry["kind"] == "rate_table" and entry["verification"] == NOT_RECORDED:
+        if not (isinstance(note, str) and note.strip()):
+            errors.append(f"{where}: verification_note must be a non-empty string")
+    elif VERIFICATION_NOTE in entry and entry["kind"] != "rate_table":
+        errors.append(f"{where}: verification_note belongs only on a rate_table")
     return errors
 
 

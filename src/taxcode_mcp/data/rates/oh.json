@@ -134,6 +134,39 @@
           "rate": 0.0
         }
       ]
+    },
+    "exemption_2025": {
+      "amount": 2350.0,
+      "phaseout": {
+        "single": [
+          {
+            "over": 80000.0,
+            "amount": 1850.0
+          },
+          {
+            "over": 40000.0,
+            "amount": 2100.0
+          },
+          {
+            "over": null,
+            "amount": 2350.0
+          }
+        ],
+        "mfj": [
+          {
+            "over": 80000.0,
+            "amount": 1850.0
+          },
+          {
+            "over": 40000.0,
+            "amount": 2100.0
+          },
+          {
+            "over": null,
+            "amount": 2350.0
+          }
+        ]
+      }
     }
   }
 }
