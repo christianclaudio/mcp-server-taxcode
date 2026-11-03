@@ -497,9 +497,11 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "NJ",
         "NM",
         "NY",
+        "NV",
         "OK",
         "OR",
         "PA",
+        "TN",
         "UT",
         "VA",
         "WV",
@@ -519,6 +521,8 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         },
         # R.C. 5747.025's current text names House Bill 96 as its latest legislation.
         "OH": {"enacting_law": "House Bill 96 of the 136th General Assembly"},
+        # Notice 17-09 names Public Chapter 181 (2017), Section 13 as the repeal.
+        "TN": {"enacting_law": "Public Chapter 181 (2017), Section 13"},
     }
     for e in entries:
         code = e["_jurisdiction"]
@@ -552,12 +556,9 @@ def test_an_unchecked_rate_table_needs_a_verification_note(tree: tuple[Path, Pat
     for entry in unchecked:
         note = entry.get("verification_note")
         assert isinstance(note, str) and note.strip(), entry["id"]
-    checked = [
-        e
-        for e in catalog.manifest
-        if e["kind"] == "rate_table" and e["verification"] != NOT_RECORDED
-    ]
-    assert checked and all("verification_note" not in e for e in checked)
+    noted = [e for e in catalog.manifest if "verification_note" in e]
+    assert noted
+    assert all(e["kind"] == "rate_table" for e in noted)
 
     def drop_note(doc: Any) -> None:
         entry = next(e for e in doc["entries"] if e["kind"] == "rate_table")
@@ -576,13 +577,13 @@ def test_an_unchecked_rate_table_needs_a_verification_note(tree: tuple[Path, Pat
     errors = manifest_errors(load_catalog(data, with_manifest=True))
     assert any("verification_note must be a non-empty string" in e for e in errors), errors
 
-    def note_on_a_checked_table(doc: Any) -> None:
-        entry = next(e for e in doc["entries"] if e["kind"] == "rate_table")
+    def note_on_a_statute(doc: Any) -> None:
+        entry = next(e for e in doc["entries"] if e["kind"] != "rate_table")
         entry["verification_note"] = "checked"
 
-    _edit(data / "manifest" / "ak.json", note_on_a_checked_table)
+    _edit(data / "manifest" / "ak.json", note_on_a_statute)
     errors = manifest_errors(load_catalog(data, with_manifest=True))
-    assert any("verification_note belongs only on a not_recorded rate_table" in e for e in errors)
+    assert any("verification_note belongs only on a rate_table" in e for e in errors)
 
 
 SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI MS NC ND OH PA UT VA WA".split()
@@ -603,6 +604,8 @@ RETRIEVED = {
     "NM": "2026-11-02",
     # The Kentucky, Maine, Michigan and Vermont rate files were downloaded and hashed then.
     **dict.fromkeys(("KY", "ME", "MI", "VT"), "2026-11-02"),
+    # Notice 17-09 was re-read from the owner PDF on this date.
+    "TN": "2026-11-02",
 }
 # Sources read as text without their bytes, so no hash. None remain.
 READ_WITHOUT_BYTES: set[str] = set()
@@ -821,14 +824,30 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
     assert entry["enacting_law"] == "HB 463 of 2026"
     assert entry["effective_date"] == "2026-01-01"
     sources = entry["year_sources"]
-    assert [s["tax_year"] for s in sources] == [2019, 2020, 2021, 2022, 2023, 2025, 2026, 2027]
+    assert [s["tax_year"] for s in sources] == [
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2025,
+        2026,
+        2027,
+    ]
     assert sources[0]["url"] == (
+        "https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download"
+    )
+    assert sources[0]["content_sha256"] == (
+        "b5df3662baed95f170c9f9fd441eda96e92574cce58c42b29559423501947579"
+    )
+    assert sources[1]["url"] == (
         "https://dor.georgia.gov/document/form/2019-it-511-individual-income-tax-booklet/download"
     )
-    assert sources[5]["url"] == (
+    assert sources[6]["url"] == (
         "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download"
     )
-    for source in sources[6:]:
+    for source in sources[7:]:
         assert source["url"] == (
             "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download"
         )
@@ -839,12 +858,12 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
 
     def edit(doc: Any) -> None:
         ga = next(e for e in doc["entries"] if e["id"] == "ga-rates")
-        ga["year_sources"][6]["values"]["standard_deduction_2026.mfj"] = 31000.0
+        ga["year_sources"][7]["values"]["standard_deduction_2026.mfj"] = 31000.0
 
     _edit(data / "manifest" / "ga.json", edit)
     errors = manifest_errors(load_catalog(data, with_manifest=True))
     assert errors == [
-        "manifest/ga.json entry 'ga-rates' year_sources[6]: values: "
+        "manifest/ga.json entry 'ga-rates' year_sources[7]: values: "
         "'standard_deduction_2026.mfj' is 31000.0 here but 30000.0 in the table"
     ]
 

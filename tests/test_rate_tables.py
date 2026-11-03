@@ -475,6 +475,10 @@ def test_south_carolina_brackets_match_the_published_shortcut() -> None:
         (100000.0, 0.062 * 100000.0 - 659.0),
     ):
         assert abs(compliance._marginal_tax(brackets, income) - shortcut) <= 1.0
+    # S.C. Code Ann. § 12-6-510(C), tax years beginning after 2025: 1.99% up to
+    # $30,000 and 5.21% of the amount minus $966 above it.
+    brackets_2026 = compliance.RATE_TABLES["SC"]["brackets_2026"]["single"]
+    assert compliance._marginal_tax(brackets_2026, 40000.0) == round(0.0521 * 40000.0 - 966.0, 2)
 
 
 def test_idaho_brackets_match_the_2024_worksheet() -> None:
@@ -607,16 +611,16 @@ def test_georgia_prose_cites_the_law_that_set_the_years_rate() -> None:
 
 
 def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
-    # Years before 2019 still reuse the 2024 flat rate labeled as an estimate.
-    for tax_year in (2017, 2018):
+    # Years before 2018 still reuse the 2024 flat rate labeled as an estimate.
+    for tax_year in (2017,):
         state, authority = _georgia_answers(tax_year)
         assert "[ESTIMATE: " in state and "[ESTIMATE: " in authority, tax_year
         assert compliance.GA_PRE_FLAT_ESTIMATE_NOTE in state, tax_year
         assert authority.endswith(
             compliance.GA_PRE_FLAT_ESTIMATE_NOTE + compliance.DEPENDENT_EXEMPTION_NOTE
         ), tax_year
-    # 2019 to 2023 use the graduated schedule; the estimate note is gone.
-    for tax_year in (2019, 2020, 2021, 2022, 2023):
+    # 2018 to 2023 use the graduated schedule; the estimate note is gone.
+    for tax_year in (2018, 2019, 2020, 2021, 2022, 2023):
         state, authority = _georgia_answers(tax_year)
         assert compliance.GA_PRE_FLAT_ESTIMATE_NOTE not in state, tax_year
         assert compliance.GA_PRE_FLAT_ESTIMATE_NOTE not in authority, tax_year
@@ -1359,9 +1363,17 @@ def test_batch4_georgia_2019_and_2022_schedules() -> None:
     assert compliance._for_year(ga, "standard_deduction", 2023) == {"single": 5400.0, "mfj": 7100.0}
     assert ga["exemption"] == {"single": 2700.0, "mfj": 7400.0}
     tax_2019 = _resident_tax("GA", 2019, 20000.0)["estimated_state_tax"]
-    assert tax_2019 == compliance._marginal_tax(ga["brackets"]["single"], 20000.0 - 4600.0 - 2700.0)
+    assert tax_2019 == compliance._marginal_tax(
+        compliance._for_year(ga, "brackets", 2019)["single"], 20000.0 - 4600.0 - 2700.0
+    )
+    tax_2018 = _resident_tax("GA", 2018, 20000.0)["estimated_state_tax"]
+    assert tax_2018 == compliance._marginal_tax(ga["brackets"]["single"], 20000.0 - 4600.0 - 2700.0)
+    assert ga["brackets"]["single"][0]["rate"] == 0.06
+    assert compliance._for_year(ga, "brackets", 2019)["single"][0]["rate"] == 0.0575
     tax_2022 = _resident_tax("GA", 2022, 20000.0)["estimated_state_tax"]
-    assert tax_2022 == compliance._marginal_tax(ga["brackets"]["single"], 20000.0 - 5400.0 - 2700.0)
+    assert tax_2022 == compliance._marginal_tax(
+        compliance._for_year(ga, "brackets", 2022)["single"], 20000.0 - 5400.0 - 2700.0
+    )
     assert (
         compliance.GA_PRE_FLAT_ESTIMATE_NOTE
         not in _resident_tax("GA", 2019, 1.0)["rate_description"]

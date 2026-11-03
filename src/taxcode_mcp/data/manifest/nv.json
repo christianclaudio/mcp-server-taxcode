@@ -26,8 +26,8 @@
       "content_sha256": "726067b645f47709f00c2cf23ee6a514f7fc64381fd6c1f6eb0b1f48b31c51cc",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded",
-      "verification_note": "https://www.leg.state.nv.us/const/nvconst.html returned HTTP 403."
+      "verification": "summary",
+      "verification_note": "Confirmed against an owner-saved browser snapshot of https://www.leg.state.nv.us/const/nvconst.html on 2026-11-02 (snapshot sha256 1dc052de4d807bb41e80786ac7c3b4e5ac8ee93031ab55855d42ebd7f06558f2). Nev. Const. art. 10, § 1(9) states that no income tax shall be levied upon the wages or personal income of natural persons. The page was blocked from the cloud agent's network on 2026-11-02 and returned HTTP 200 from another network."
     }
   ]
 }

@@ -174,7 +174,7 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
 # model's own fields, years ascending. Each holds the value from that tax year on, and the
 # unsuffixed key covers the years before (the registry's convention).
 YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
-    "georgia": ("standard_deduction", "retirement_exclusion"),
+    "georgia": ("standard_deduction", "retirement_exclusion", "brackets"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
     "brackets_cumulative": ("brackets", "deduction", "exemption"),
@@ -1091,11 +1091,11 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
     ):
         errors.append(f"{where}: verified_verbatim needs a retrieved date and content_sha256")
     note = entry.get(VERIFICATION_NOTE)
-    needs_note = entry["kind"] == "rate_table" and entry["verification"] == NOT_RECORDED
-    if needs_note and not (isinstance(note, str) and note.strip()):
-        errors.append(f"{where}: verification_note must be a non-empty string")
-    elif not needs_note and VERIFICATION_NOTE in entry:
-        errors.append(f"{where}: verification_note belongs only on a not_recorded rate_table")
+    if entry["kind"] == "rate_table" and entry["verification"] == NOT_RECORDED:
+        if not (isinstance(note, str) and note.strip()):
+            errors.append(f"{where}: verification_note must be a non-empty string")
+    elif VERIFICATION_NOTE in entry and entry["kind"] != "rate_table":
+        errors.append(f"{where}: verification_note belongs only on a rate_table")
     return errors
 
 

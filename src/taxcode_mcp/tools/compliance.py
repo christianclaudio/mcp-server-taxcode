@@ -231,7 +231,7 @@ def calculate_built_in_gain_sourcing(
 # held in the rate table. An earlier year than 2019 gets the table's oldest flat step,
 # labeled as an estimate.
 GA_FLAT_RATE_FIRST_YEAR = 2024
-GA_FIRST_GRADUATED_YEAR = 2019
+GA_FIRST_GRADUATED_YEAR = 2018
 GA_PRE_FLAT_ESTIMATE_NOTE = (
     " [ESTIMATE: Georgia's flat rate starts with tax year 2024; earlier years were taxed on "
     "graduated brackets this table does not hold, so the 2024 rate is used]"
@@ -376,6 +376,11 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
                 f"not in this table, so the 2024 flat rate is used. {deduction}]"
             )
         return f" [ESTIMATE: {deduction}]"
+    if state == "SC" and tax_year > 2026:
+        return (
+            f" [ESTIMATE: South Carolina's tax year {tax_year} top rate may be reduced under "
+            "S.C. Code Ann. § 12-6-510(C) and has not been determined; the 2026 rates are used]"
+        )
     if state == "WI" and (tax_year < 2024 or tax_year > 2025):
         used = 2024 if tax_year < 2024 else 2025
         return (
@@ -504,7 +509,7 @@ def evaluate_georgia_residency(
             0.0,
             federal_agi - standard_deduction - personal_ex - retirement_exclusion_applied,
         )
-        brackets = ga["brackets"][status]
+        brackets = _for_year(ga, "brackets", tax_year)[status]
         tax_rate = max(float(b["rate"]) for b in brackets)
         estimated_tax = _marginal_tax(brackets, taxable_income) if is_georgia_resident else 0.0
         rate_authority = (
@@ -793,7 +798,7 @@ GA_DEPENDENT_NOTE = DEPENDENT_EXEMPTION_NOTE
 def _ga_standard_deduction(ga: dict[str, Any], status: str, tax_year: int) -> float:
     """Georgia's standard deduction for a filing status and tax year.
 
-    Pre-2019 estimate years use the 2024 flat-rate deduction, matching the rate step
+    Pre-2018 estimate years use the 2024 flat-rate deduction, matching the rate step
     those years borrow; graduated-era floor amounts must not leak into that path.
     """
     year = tax_year if tax_year >= GA_FIRST_GRADUATED_YEAR else GA_FLAT_RATE_FIRST_YEAR
@@ -893,7 +898,7 @@ def evaluate_state_residency(
         if GA_FIRST_GRADUATED_YEAR <= tax_year < GA_FLAT_RATE_FIRST_YEAR:
             personal_ex = float(ga["exemption"][status])
             taxable_income = max(0.0, federal_agi - standard_ded - personal_ex - ret_excl)
-            brackets = ga["brackets"][status]
+            brackets = _for_year(ga, "brackets", tax_year)[status]
             rate_desc = (
                 _steps_desc(brackets) + _ga_estimate_note(tax_year) + DEPENDENT_EXEMPTION_NOTE
             )
