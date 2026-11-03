@@ -253,13 +253,19 @@ def _state_year(key: str) -> tuple[str, str, int] | None:
 
 
 def _strip_dependent_note(out: Any) -> Any:
-    """Answer with `DEPENDENT_EXEMPTION_NOTE` removed from every string field."""
-    from taxcode_mcp.tools.compliance import DEPENDENT_EXEMPTION_NOTE
+    """Answer with dependent-exemption notes removed from every string field."""
+    from taxcode_mcp.tools.compliance import DEPENDENT_EXEMPTION_NOTE, GA_TOOL_DEPENDENT_NOTE
 
-    note = DEPENDENT_EXEMPTION_NOTE
+    notes = (DEPENDENT_EXEMPTION_NOTE, GA_TOOL_DEPENDENT_NOTE)
+
+    def _strip(value: str) -> str:
+        for note in notes:
+            value = value.replace(note, "")
+        return value
+
     if isinstance(out, dict):
         return {
-            k: (v.replace(note, "") if isinstance(v, str) else _strip_dependent_note(v))
+            k: (_strip(v) if isinstance(v, str) else _strip_dependent_note(v))
             for k, v in out.items()
         }
     if isinstance(out, list):

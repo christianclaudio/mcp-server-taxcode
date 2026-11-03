@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import logging
 import math
-from typing import Any
+from typing import Annotated, Any
 
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
 from taxcode_mcp.catalog import (
     FEDERAL_ALLOWANCE,
@@ -481,7 +482,7 @@ def evaluate_georgia_residency(
         estimated_tax = _marginal_tax(brackets, taxable_income) if is_georgia_resident else 0.0
         rate_authority = (
             f"O.C.G.A. § 48-7-20 ({_steps_desc(brackets)})"
-            f"{_ga_estimate_note(tax_year)}{DEPENDENT_EXEMPTION_NOTE}"
+            f"{_ga_estimate_note(tax_year)}{GA_TOOL_DEPENDENT_NOTE}"
         )
     else:
         ga_step = _year_step(ga["rates"], tax_year)
@@ -490,7 +491,7 @@ def evaluate_georgia_residency(
         estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
         rate_authority = (
             f"O.C.G.A. § 48-7-20 (flat tax, {ga_step['law']})"
-            f"{_ga_estimate_note(tax_year)}{DEPENDENT_EXEMPTION_NOTE}"
+            f"{_ga_estimate_note(tax_year)}{GA_TOOL_DEPENDENT_NOTE}"
         )
 
     return {
@@ -621,14 +622,28 @@ def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> floa
 
 
 def _registry_credit(
-    info: dict[str, Any], is_mfj: bool, taxable_income: float, tax_year: int
+    info: dict[str, Any],
+    is_mfj: bool,
+    taxable_income: float,
+    tax_year: int,
+    *,
+    credit_base_override: float | None = None,
+    dependent_exemption_total: float = 0.0,
 ) -> float:
     """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0.
 
     The base may name the federal standard deduction; phase-out amounts use ``_YYYY`` keys.
+    ``credit_base_override`` replaces that base (Utah itemized path). Dependent exemptions
+    are added to the credit base when supplied (Utah TC-40 line 11).
     """
     status = _status(is_mfj)
-    base = _federal_or_amount(_for_year(info, f"credit_base_{status}", tax_year), is_mfj, tax_year)
+    if credit_base_override is None:
+        base = _federal_or_amount(
+            _for_year(info, f"credit_base_{status}", tax_year), is_mfj, tax_year
+        )
+    else:
+        base = float(credit_base_override)
+    base = base + float(dependent_exemption_total)
     initial = float(info["credit_rate"]) * base
     phaseout = float(_for_year(info, f"credit_phaseout_{status}", tax_year))
     over = max(0.0, taxable_income - phaseout)
@@ -705,10 +720,14 @@ def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: floa
     return each * count
 
 
-def _oh_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: float) -> float:
-    """Ohio personal exemptions: count by filing status times the MAGI-tier amount.
+def _oh_personal_exemption(
+    info: dict[str, Any], is_mfj: bool, federal_agi: float, dependents: int = 0
+) -> float:
+    """Ohio personal and dependent exemptions: count times the MAGI-tier amount.
 
-    The tier is picked from the tool's AGI (a stand-in for Ohio MAGI).
+    The tier is picked from the tool's AGI (a stand-in for Ohio MAGI). Each dependent
+    claimed on the federal return uses the same MAGI-tier amount as the taxpayer (and
+    spouse on a joint return), per the IT 1040 instructions.
     """
     each = float(
         next(
@@ -717,7 +736,7 @@ def _oh_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: floa
             if s["over"] is None or federal_agi > s["over"]
         )
     )
-    count = 2.0 if is_mfj else 1.0
+    count = (2.0 if is_mfj else 1.0) + float(dependents)
     return each * count
 
 
@@ -749,7 +768,41 @@ def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_
     return _federal_or_amount(value, is_mfj, tax_year)
 
 
-DEPENDENT_EXEMPTION_NOTE = " Dependent exemptions are not included."
+def _dependent_exemption_each(info: dict[str, Any], tax_year: int) -> float | None:
+    """Per-dependent exemption for ``tax_year``, or ``None`` when none is sourced.
+
+    Yearly ``dependent_exemption_YYYY`` keys do not carry past the latest sourced year, so a
+    later year without its own figure stays unsourced (Utah after 2025). An unsuffixed
+    ``dependent_exemption`` covers every year that has no later yearly key.
+    """
+    yearly = sorted(
+        int(key[len("dependent_exemption") + 1 :])
+        for key in info
+        if key.startswith("dependent_exemption_")
+        and key[len("dependent_exemption") + 1 :].isdigit()
+    )
+    if yearly and tax_year > max(yearly):
+        return None
+    value = _for_year(info, "dependent_exemption", tax_year)
+    if value is None:
+        return None
+    return float(value)
+
+
+def _require_dependent_exemption(info: dict[str, Any], tax_year: int, dependents: int) -> float:
+    """``dependents`` times the sourced per-dependent amount; 0 when ``dependents`` is 0."""
+    if dependents == 0:
+        return 0.0
+    each = _dependent_exemption_each(info, tax_year)
+    if each is None:
+        raise SafetyViolationError(
+            f"No per-dependent exemption is sourced for tax year {tax_year}."
+        )
+    return each * float(dependents)
+
+
+DEPENDENT_EXEMPTION_NOTE = " Dependent exemptions are included when dependents is passed."
+GA_TOOL_DEPENDENT_NOTE = " Dependent exemptions are not included."
 OH_MAGI_NOTE = (
     " The personal-exemption tier is picked from the tool's AGI, which leaves out"
     " Ohio's business-income deduction add-back, so near $40,000 and $80,000 the"
@@ -802,6 +855,36 @@ def evaluate_state_residency(
     has_active_driver_license: bool = False,
     has_active_voter_registration: bool = False,
     telecommuting_days_out_of_state: int = 0,
+    dependents: Annotated[
+        int,
+        Field(
+            description=(
+                "Number of dependents claimed. Applies per-dependent exemptions for KS, MS, "
+                "OH, GA and UT where a sourced amount exists. Years without one raise when "
+                "greater than 0."
+            )
+        ),
+    ] = 0,
+    spouse_agi: Annotated[
+        float,
+        Field(
+            description=(
+                "The spouse's part of federal_agi on a married-filing-jointly return. Used "
+                "only for Mississippi combined returns, where the filing-status exemption "
+                "and standard deduction are split evenly between the spouses. Ignored for "
+                "other states."
+            )
+        ),
+    ] = 0.0,
+    itemized_deductions: Annotated[
+        float,
+        Field(
+            description=(
+                "Utah only. Federal itemized deductions excluding state income tax, which "
+                "Utah adds back; that add-back is not computed."
+            )
+        ),
+    ] = 0.0,
 ) -> dict[str, Any]:
     """Evaluate state domicile, presence day counts, and statutory state tax liability."""
     state = jurisdiction.strip().upper()
@@ -810,6 +893,8 @@ def evaluate_state_residency(
             f"Unsupported jurisdiction '{jurisdiction}'. Supported states: "
             f"{', '.join(sorted(SUPPORTED_STATE_JURISDICTIONS))}."
         )
+    if itemized_deductions > 0.0 and state != "UT":
+        raise SafetyViolationError("itemized_deductions applies only to Utah.")
     if days_in_state < 0 or days_in_state > 366:
         raise SafetyViolationError("Day count must be between 0 and 366.")
     if federal_agi < 0:
@@ -820,8 +905,18 @@ def evaluate_state_residency(
         raise SafetyViolationError("Capital gains cannot be negative.")
     if telecommuting_days_out_of_state < 0:
         raise SafetyViolationError("Telecommuting day count cannot be negative.")
+    if dependents < 0:
+        raise SafetyViolationError("Dependent count cannot be negative.")
+    if spouse_agi < 0:
+        raise SafetyViolationError("Spouse AGI cannot be negative.")
+    if spouse_agi > federal_agi:
+        raise SafetyViolationError("Spouse AGI cannot exceed federal AGI.")
+    if itemized_deductions < 0:
+        raise SafetyViolationError("Itemized deductions cannot be negative.")
 
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
+    if spouse_agi > 0.0 and not is_mfj:
+        raise SafetyViolationError("spouse_agi applies only to married filing jointly.")
 
     # Common domicile audit risk factors
     audit_flags: list[str] = []
@@ -858,9 +953,10 @@ def evaluate_state_residency(
         max_ret = _ga_retirement_cap(ga, age, tax_year)
         ret_excl = min(retirement_income, max_ret)
         rate_authority = "O.C.G.A. § 48-7-20"
+        dep_ex = _require_dependent_exemption(ga, tax_year, dependents)
         if GA_FIRST_GRADUATED_YEAR <= tax_year < GA_FLAT_RATE_FIRST_YEAR:
             personal_ex = float(ga["exemption"][status])
-            taxable_income = max(0.0, federal_agi - standard_ded - personal_ex - ret_excl)
+            taxable_income = max(0.0, federal_agi - standard_ded - personal_ex - dep_ex - ret_excl)
             brackets = ga["brackets"][status]
             rate_desc = (
                 _steps_desc(brackets) + _ga_estimate_note(tax_year) + DEPENDENT_EXEMPTION_NOTE
@@ -873,7 +969,7 @@ def evaluate_state_residency(
                 f"Flat {_pct(rate)} rate ({ga_step['law']})"
                 f"{_ga_estimate_note(tax_year)}{DEPENDENT_EXEMPTION_NOTE}"
             )
-            taxable_income = max(0.0, federal_agi - standard_ded - ret_excl)
+            taxable_income = max(0.0, federal_agi - standard_ded - dep_ex - ret_excl)
             estimated_tax = round(taxable_income * rate, 2) if is_resident else 0.0
     elif state == "NY":
         statutory_basis = "NY Tax Law § 605(b); 20 NYCRR § 105.20"
@@ -1144,7 +1240,9 @@ def evaluate_state_residency(
             + OH_MAGI_NOTE
             + DEPENDENT_EXEMPTION_NOTE
         )
-        personal_exemption = _oh_personal_exemption(RATE_TABLES["OH"], is_mfj, federal_agi)
+        personal_exemption = _oh_personal_exemption(
+            RATE_TABLES["OH"], is_mfj, federal_agi, dependents
+        )
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
             estimated_tax = _cumulative_tax(oh_brackets, taxable_income)
@@ -1204,16 +1302,46 @@ def evaluate_state_residency(
         # first sourced ``_YYYY`` value fails instead of borrowing a later year.
         ded = _sourced_registry_amount(info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year)
         exemption = _sourced_registry_amount(info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year)
-        taxable_income = max(0.0, federal_agi - ded - exemption)
+        dep_ex = 0.0
+        if state in ("KS", "MS"):
+            dep_ex = _require_dependent_exemption(info, tax_year, dependents)
+        col_a: float | None = None
+        col_b: float | None = None
+        if state == "MS" and spouse_agi > 0.0 and is_mfj:
+            # Combined return: each column gets half the filing-status exemption and
+            # standard deduction (Form 80-105 allows any split; this is the even split).
+            # Dependent exemptions ($1,500 each) go to the taxpayer column.
+            taxpayer_agi = federal_agi - spouse_agi
+            half_ded = ded / 2.0
+            half_ex = exemption / 2.0
+            col_a = max(0.0, taxpayer_agi - half_ded - half_ex - dep_ex)
+            col_b = max(0.0, spouse_agi - half_ded - half_ex)
+            taxable_income = col_a + col_b
+        else:
+            taxable_income = max(0.0, federal_agi - ded - exemption - dep_ex)
 
         if regime == "none":
             taxable_income = 0.0
             estimated_tax = 0.0
         elif regime == "graduated" and "brackets" in info:
             brackets = _for_year(info, "brackets", tax_year)[_status(is_mfj)]
-            estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
-            if is_resident and _under_zero_liability(info, is_mfj, taxable_income, tax_year):
-                estimated_tax = 0.0
+            if (
+                state == "MS"
+                and spouse_agi > 0.0
+                and is_mfj
+                and col_a is not None
+                and col_b is not None
+            ):
+                # Each spouse's column gets its own schedule (including the $10,000 zero band).
+                estimated_tax = (
+                    _marginal_tax(brackets, col_a) + _marginal_tax(brackets, col_b)
+                    if is_resident
+                    else 0.0
+                )
+            else:
+                estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+                if is_resident and _under_zero_liability(info, is_mfj, taxable_income, tax_year):
+                    estimated_tax = 0.0
         elif regime == "flat":
             if tax_year >= 2027 and "rate_2027" in info:
                 flat_rate = float(info["rate_2027"])
@@ -1253,7 +1381,20 @@ def evaluate_state_residency(
                 estimated_tax = 0.0
 
         if "credit_rate" in info and is_resident:
-            credit = _registry_credit(info, is_mfj, taxable_income, tax_year)
+            ut_dep = 0.0
+            ut_itemized = None
+            if state == "UT":
+                ut_dep = _require_dependent_exemption(info, tax_year, dependents)
+                if itemized_deductions > 0.0:
+                    ut_itemized = itemized_deductions
+            credit = _registry_credit(
+                info,
+                is_mfj,
+                taxable_income,
+                tax_year,
+                credit_base_override=ut_itemized,
+                dependent_exemption_total=ut_dep,
+            )
             estimated_tax = max(0.0, round(estimated_tax - credit, 2))
 
     tax_computation: dict[str, Any] = {
