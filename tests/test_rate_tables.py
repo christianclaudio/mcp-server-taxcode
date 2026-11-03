@@ -992,11 +992,11 @@ def test_utah_rate_and_credit_by_year() -> None:
     # shared federal table ($16,100 / $32,200); phase-out amounts stay at 2025.
     ut_notes = (
         ". The credit base is the federal standard deduction, or federal itemized deductions"
-        " when itemized_deductions is passed (state income tax included in Schedule A is not"
-        " subtracted). The per-dependent exemption is added to that base when dependents is"
-        " passed ($565 for 2018, $579 for 2019, $590 for 2020, $1,750 for 2021, $1,802 for"
-        " 2022, $1,941 for 2023, $2,046 for 2024, $2,111 for 2025; later years raise when"
-        " dependents > 0 until sourced)."
+        " when itemized_deductions is passed (pass them excluding state income tax, which"
+        " Utah adds back; that add-back is not computed). The per-dependent exemption is"
+        " added to that base when dependents is passed ($565 for 2018, $579 for 2019, $590"
+        " for 2020, $1,750 for 2021, $1,802 for 2022, $1,941 for 2023, $2,046 for 2024,"
+        " $2,111 for 2025; later years raise when dependents > 0 until sourced)."
     )
     for tax_year, pins in (
         (2024, (649.52, 2404.52, 1299.05, 4550.00)),

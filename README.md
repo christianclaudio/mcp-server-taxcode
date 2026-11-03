@@ -53,7 +53,7 @@ graph TD
 * **Deterministic Compliance Engines**:
   * `evaluate_pr_bona_fide_residency`: Evaluates IRC § 937 presence (183-day, 549-day 3-year, 90-day US), tax home, and closer connection tests.
   * `calculate_built_in_gain_sourcing`: Allocates Section 937 / Act 60 capital gains across pre-move and post-move holding periods.
-  * `evaluate_state_residency`: Multi-state statutory presence day-counter, permanent place of abode (PPA), domicile audit risk flags, and tax liability computation across all 50 US states and District of Columbia (51 jurisdictions total). Optional `dependents`, Mississippi `spouse_agi` (MFJ combined returns), and Utah `itemized_deductions` refine KS/MS/OH/GA/UT liability; defaults keep prior results.
+  * `evaluate_state_residency`: Multi-state statutory presence day-counter, permanent place of abode (PPA), domicile audit risk flags, and tax liability computation across all 50 US states and District of Columbia (51 jurisdictions total). Optional `dependents`, Mississippi `spouse_agi` (MFJ combined returns; even split of the filing-status exemption and standard deduction; ignored for other states), and Utah `itemized_deductions` (federal itemized deductions excluding state income tax) refine KS/MS/OH/GA/UT liability; defaults keep prior results.
 * **Profiles & Opt-in ToolSearch**:
   * Domain-mount profiles: `full`, `system`, `statutes`, `compliance`, `readonly`.
   * Job-shaped allowlist profiles: `researcher` (statutes + circulars), `advisor` (cross-border residency + BIG calculations).

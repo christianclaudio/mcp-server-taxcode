@@ -73,7 +73,7 @@
         }
       ]
     },
-    "rate_desc_2024": "Graduated rates: 5.20% up to $23,000 ($46,000 joint), 5.58% above (SB 1). Less the $9,160 ($18,320 joint) personal exemption. Dependent exemptions ($2,320 each from 2024; $2,250 each for 2018-2023) are included when dependents is passed.",
+    "rate_desc_2024": "Graduated rates: 5.20% up to $23,000 ($46,000 joint), 5.58% above (SB 1). Less the $9,160 ($18,320 joint) personal exemption. Dependent exemptions ($2,320 each for 2024; $2,250 each for 2018-2023) are included when dependents is passed; tax year 2025 and later raise when dependents > 0 until sourced.",
     "brackets_2024": {
       "single": [
         {

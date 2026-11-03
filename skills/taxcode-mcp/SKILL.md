@@ -40,7 +40,7 @@ The server exposes exactly **8 lean, read-only MCP tools**, all annotated with `
 | `compliance_evaluate_pr_bona_fide_residency` | IRC § 937 Bona Fide Residency test engine | `readOnlyHint=True` | `days_present_pr`, `days_present_us`, `has_us_tax_home`, `closer_connection_jurisdiction` |
 | `compliance_calculate_built_in_gain_sourcing`| Section 937 / Act 60 capital gains allocation | `readOnlyHint=True` | `is_marketable`, `total_gain`, `fmv_on_residency_date`, `adjusted_basis`, `years_since_residency` |
 | `compliance_evaluate_georgia_residency` | Georgia O.C.G.A. Title 48 residency & tax liability | `readOnlyHint=True` | `days_present_ga`, `is_domiciled_in_ga`, `federal_agi`, `filing_status`, `tax_year` |
-| `compliance_evaluate_state_residency` | 50-State + DC statutory residency & tax engine | `readOnlyHint=True` | `jurisdiction`, `days_in_state`, `maintains_permanent_abode`, `federal_agi`, `filing_status`, `tax_year`, `dependents`, `spouse_agi`, `itemized_deductions` |
+| `compliance_evaluate_state_residency` | 50-State + DC statutory residency & tax engine (`spouse_agi`: MS even split, ignored elsewhere; `itemized_deductions`: federal itemized excluding state income tax) | `readOnlyHint=True` | `jurisdiction`, `days_in_state`, `maintains_permanent_abode`, `federal_agi`, `filing_status`, `tax_year`, `dependents`, `spouse_agi`, `itemized_deductions` |
 
 ---
 

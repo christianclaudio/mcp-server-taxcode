@@ -858,7 +858,13 @@ def evaluate_state_residency(
     spouse_agi: float = 0.0,
     itemized_deductions: float = 0.0,
 ) -> dict[str, Any]:
-    """Evaluate state domicile, presence day counts, and statutory state tax liability."""
+    """Evaluate state domicile, presence day counts, and statutory state tax liability.
+
+    Mississippi spouse_agi splits the filing-status exemption and standard deduction evenly
+    between the two spouse columns; spouse_agi is used only for Mississippi and is ignored
+    for other states. Utah itemized_deductions is federal itemized deductions excluding
+    state income tax, which Utah adds back; that add-back is not computed.
+    """
     state = jurisdiction.strip().upper()
     if state not in SUPPORTED_STATE_JURISDICTIONS:
         raise SafetyViolationError(
@@ -1277,6 +1283,8 @@ def evaluate_state_residency(
         dep_ex = 0.0
         if state in ("KS", "MS"):
             dep_ex = _require_dependent_exemption(info, tax_year, dependents)
+        col_a: float | None = None
+        col_b: float | None = None
         if state == "MS" and spouse_agi > 0.0 and is_mfj:
             # Combined return: each column gets half the filing-status exemption and
             # standard deduction (Form 80-105 allows any split; this is the even split).
@@ -1289,14 +1297,19 @@ def evaluate_state_residency(
             taxable_income = col_a + col_b
         else:
             taxable_income = max(0.0, federal_agi - ded - exemption - dep_ex)
-            col_a = col_b = None
 
         if regime == "none":
             taxable_income = 0.0
             estimated_tax = 0.0
         elif regime == "graduated" and "brackets" in info:
             brackets = _for_year(info, "brackets", tax_year)[_status(is_mfj)]
-            if state == "MS" and spouse_agi > 0.0 and is_mfj and col_a is not None:
+            if (
+                state == "MS"
+                and spouse_agi > 0.0
+                and is_mfj
+                and col_a is not None
+                and col_b is not None
+            ):
                 # Each spouse's column gets its own schedule (including the $10,000 zero band).
                 estimated_tax = (
                     _marginal_tax(brackets, col_a) + _marginal_tax(brackets, col_b)

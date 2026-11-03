@@ -45,6 +45,10 @@ def test_kansas_dependents_reduce_taxable_income() -> None:
     none18 = _tax("KS", 2018, 40000.0)
     one18 = _tax("KS", 2018, 40000.0, dependents=1)
     assert one18["taxable_net_income"] == none18["taxable_net_income"] - 2250.0
+    # 2025+ raises until a 2025 source is recorded.
+    with pytest.raises(SafetyViolationError, match="No per-dependent exemption"):
+        _tax("KS", 2025, 50000.0, dependents=1)
+    assert _tax("KS", 2025, 50000.0, dependents=0) == _tax("KS", 2025, 50000.0)
 
 
 def test_mississippi_dependents_and_combined_split() -> None:
@@ -72,13 +76,18 @@ def test_ohio_dependents_use_magi_tier() -> None:
 
 
 def test_georgia_dependents_graduated_and_flat() -> None:
-    # 2023 graduated: $3,000; 2024 flat: $4,000 (IT-511).
+    # 2023 graduated: $3,000; 2024-2025 flat: $4,000 (IT-511).
     none23 = _tax("GA", 2023, 80000.0)
     one23 = _tax("GA", 2023, 80000.0, dependents=1)
     assert one23["taxable_net_income"] == none23["taxable_net_income"] - 3000.0
     none24 = _tax("GA", 2024, 80000.0)
     one24 = _tax("GA", 2024, 80000.0, dependents=1)
     assert one24["taxable_net_income"] == none24["taxable_net_income"] - 4000.0
+    none25 = _tax("GA", 2025, 80000.0)
+    one25 = _tax("GA", 2025, 80000.0, dependents=1)
+    two25 = _tax("GA", 2025, 80000.0, dependents=2)
+    assert one25["taxable_net_income"] == none25["taxable_net_income"] - 4000.0
+    assert two25["taxable_net_income"] == none25["taxable_net_income"] - 8000.0
     with pytest.raises(SafetyViolationError, match="No per-dependent exemption"):
         _tax("GA", 2018, 80000.0, dependents=1)
     assert (
