@@ -30,6 +30,16 @@
       "verification_note": "The Department of Revenue general-information page confirms the $6,000 / $12,000 exemption, the $2,300 / $4,600 deduction, and the 4.4, 4, and 3.75 percent rates for 2025 through 2027. It does not state the 2024 4.70 percent rate.",
       "year_sources": [
         {
+          "tax_year": 2024,
+          "values": {
+            "dependent_exemption": 1500.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100241.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "35d4d7f235cbe22ad05d02ec95845c07b75af714912d8bebf18cc60397972cb7"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 10000.0,

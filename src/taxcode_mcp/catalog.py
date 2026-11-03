@@ -174,7 +174,7 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
 # model's own fields, years ascending. Each holds the value from that tax year on, and the
 # unsuffixed key covers the years before (the registry's convention).
 YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
-    "georgia": ("standard_deduction", "retirement_exclusion", "brackets"),
+    "georgia": ("standard_deduction", "retirement_exclusion", "brackets", "dependent_exemption"),
     "flat_with_surtax": ("surtax",),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
     "brackets_cumulative": ("brackets", "deduction", "exemption"),
@@ -246,6 +246,24 @@ _REGISTRY_TYPES: dict[str, type] = {
         (
             f"exemption_{status}{year}"
             for status in FILING_STATUSES
+            for year in (
+                "",
+                "_2018",
+                "_2019",
+                "_2020",
+                "_2021",
+                "_2022",
+                "_2023",
+                "_2024",
+                "_2025",
+                "_2026",
+            )
+        ),
+        float,
+    ),
+    **dict.fromkeys(
+        (
+            f"dependent_exemption{year}"
             for year in (
                 "",
                 "_2018",

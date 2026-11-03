@@ -128,7 +128,8 @@
             "brackets.mfj[0].over": 10000.0,
             "brackets.mfj[0].rate": 0.06,
             "standard_deduction.single": 4600.0,
-            "standard_deduction.mfj": 6000.0
+            "standard_deduction.mfj": 6000.0,
+            "dependent_exemption_2018": 3000.0
           },
           "url": "https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download",
           "official": true,
@@ -204,6 +205,16 @@
           "content_sha256": "not_recorded"
         },
         {
+          "tax_year": 2022,
+          "values": {
+            "dependent_exemption_2019": 3000.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2022-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "98eb22b6da9e8023b9be5fe8af962fbfc3ac63499edf7461386b19c8af70a7f2"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "brackets_2019.single[0].over": 7000.0,
@@ -221,6 +232,26 @@
           "content_sha256": "not_recorded"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "dependent_exemption_2019": 3000.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2023-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "3ce70e0378602d0fd60f0a86a3326fbd206b3c70613fd820da13d7a135bced2f"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "dependent_exemption_2024": 4000.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2024-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "5907211db514b3a5c485bf372aac2b8be6f61aa61e6995b2d541005d63e8b481"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "rates[1].rate": 0.0519,
@@ -230,6 +261,16 @@
           "url": "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download",
           "official": true,
           "retrieved": "2026-10-23",
+          "content_sha256": "ae43633e68ca423609607b0f93b1ebcd6056bce06ffb91829c448292e48a693f"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "dependent_exemption_2024": 4000.0
+          },
+          "url": "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download",
+          "official": true,
+          "retrieved": "2026-11-02",
           "content_sha256": "ae43633e68ca423609607b0f93b1ebcd6056bce06ffb91829c448292e48a693f"
         },
         {

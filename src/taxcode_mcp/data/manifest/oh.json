@@ -56,6 +56,16 @@
       "verification_note": "R.C. 5747.02 confirms the 2024, 2025, and 2026 brackets. R.C. 5747.025 states the 2025 exemption amounts and does not state the exemption above $750,000 for 2025 or $500,000 for 2026. The 2024 exemption is the booklet figure.",
       "year_sources": [
         {
+          "tax_year": 2024,
+          "values": {
+            "exemption.amount": 2400.0
+          },
+          "url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2024/it1040-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "e87bcf677747e7b304218f1d107b8d54389acb00851727bd0d8e487d80e0f9fb"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 100000.0,

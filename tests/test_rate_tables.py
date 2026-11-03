@@ -593,21 +593,22 @@ def _georgia_answers(tax_year: int) -> tuple[str, str]:
 def test_georgia_prose_cites_the_law_that_set_the_years_rate() -> None:
     # HB 1015 (2024) sets 5.39% for 2024, HB 111 (2025) 5.19% for 2025, HB 463 (2026) 4.99%
     # from 2026, each as signed (gov.georgia.gov).
-    note = compliance.DEPENDENT_EXEMPTION_NOTE
+    state_note = compliance.DEPENDENT_EXEMPTION_NOTE
+    ga_note = compliance.GA_TOOL_DEPENDENT_NOTE
     for tax_year, rate, law in (
         (2024, "5.39%", "HB 1015 of 2024"),
         (2025, "5.19%", "HB 111 of 2025"),
         (2026, "4.99%", "HB 463 of 2026"),
     ):
         state, authority = _georgia_answers(tax_year)
-        assert state == f"Flat {rate} rate ({law}){note}", tax_year
-        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, {law}){note}", tax_year
+        assert state == f"Flat {rate} rate ({law}){state_note}", tax_year
+        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, {law}){ga_note}", tax_year
     # From 2027 the deduction and rate depend on HB 463's revenue tests, so both are labeled.
     rev = compliance._ga_revenue_conditional_note(compliance.RATE_TABLES["GA"])
     for tax_year in (2027, 2028, 2030):
         state, authority = _georgia_answers(tax_year)
-        assert state == f"Flat 4.99% rate (HB 463 of 2026){rev}{note}", tax_year
-        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, HB 463 of 2026){rev}{note}", tax_year
+        assert state == f"Flat 4.99% rate (HB 463 of 2026){rev}{state_note}", tax_year
+        assert authority == f"O.C.G.A. § 48-7-20 (flat tax, HB 463 of 2026){rev}{ga_note}", tax_year
 
 
 def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
@@ -617,6 +618,9 @@ def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
         assert "[ESTIMATE: " in state and "[ESTIMATE: " in authority, tax_year
         assert compliance.GA_PRE_FLAT_ESTIMATE_NOTE in state, tax_year
         assert authority.endswith(
+            compliance.GA_PRE_FLAT_ESTIMATE_NOTE + compliance.GA_TOOL_DEPENDENT_NOTE
+        ), tax_year
+        assert state.endswith(
             compliance.GA_PRE_FLAT_ESTIMATE_NOTE + compliance.DEPENDENT_EXEMPTION_NOTE
         ), tax_year
     # 2018 to 2023 use the graduated schedule; the estimate note is gone.
@@ -626,6 +630,7 @@ def test_georgia_years_before_the_flat_rate_are_labeled_estimates() -> None:
         assert compliance.GA_PRE_FLAT_ESTIMATE_NOTE not in authority, tax_year
         assert "Graduated brackets:" in state, tax_year
         assert compliance.DEPENDENT_EXEMPTION_NOTE in state, tax_year
+        assert compliance.GA_TOOL_DEPENDENT_NOTE in authority, tax_year
     for tax_year in (2024, 2025, 2026):
         texts = _georgia_answers(tax_year)
         assert not any("[ESTIMATE:" in text for text in texts), tax_year
@@ -791,8 +796,8 @@ def test_mississippi_taxes_only_income_over_the_10000_band() -> None:
     # Form 80-100 instructions (2024): "taxable income in excess of $10,000" at 4.7% for 2024.
     # A joint return puts all income in Column A of the Tax Computation Schedule, so it has one
     # $10,000 band (Filing Status for Married Persons, item 1; Line 17). A combined return with
-    # both spouses' columns positive applies the schedule to each column, which needs the
-    # spouses' split that the tool does not take. Personal exemption $6,000 / $12,000 is
+    # both spouses' columns positive applies the schedule to each column when spouse_agi is
+    # passed (combined path). Personal exemption $6,000 / $12,000 is
     # subtracted after the standard deduction.
     for status, deduction, exemption in (
         ("single", 2300.0, 6000.0),
@@ -803,7 +808,9 @@ def test_mississippi_taxes_only_income_over_the_10000_band() -> None:
         tax = _resident_tax("MS", 2024, floor + 40000.0, status)
         assert tax["estimated_state_tax"] == round(40000.0 * 0.047, 2), status
         assert tax["middle_rate_is_estimate"] is False
-        assert "Dependent exemptions are not included" in tax["rate_description"]
+        assert (
+            "Dependent exemptions are included when dependents is passed" in tax["rate_description"]
+        )
         assert "combined returns" in tax["rate_description"]
 
 
@@ -1000,9 +1007,12 @@ def test_utah_rate_and_credit_by_year() -> None:
     # less 1.3% of income over the phase-out. From 2026 the credit base follows the
     # shared federal table ($16,100 / $32,200); phase-out amounts stay at 2025.
     ut_notes = (
-        ". The credit base uses the federal standard deduction only; the itemized path and"
-        " the per-dependent exemption ($2,046 for 2024, $2,111 for 2025) are not computed."
-        " Dependent exemptions are not included."
+        ". The credit base is the federal standard deduction, or federal itemized deductions"
+        " when itemized_deductions is passed (pass them excluding state income tax, which"
+        " Utah adds back; that add-back is not computed). The per-dependent exemption is"
+        " added to that base when dependents is passed ($565 for 2018, $579 for 2019, $590"
+        " for 2020, $1,750 for 2021, $1,802 for 2022, $1,941 for 2023, $2,046 for 2024,"
+        " $2,111 for 2025; later years raise when dependents > 0 until sourced)."
     )
     for tax_year, pins in (
         (2024, (649.52, 2404.52, 1299.05, 4550.00)),
@@ -1100,7 +1110,10 @@ def test_mississippi_rate_by_year() -> None:
         assert f", {rate} above" in answer["rate_description"], tax_year
         assert "phasing" not in answer["rate_description"]
         assert ("[ESTIMATE:" in answer["rate_description"]) == (tax_year >= 2031), tax_year
-        assert "Dependent exemptions are not included" in answer["rate_description"]
+        assert (
+            "Dependent exemptions are included when dependents is passed"
+            in answer["rate_description"]
+        )
         assert "combined returns" in answer["rate_description"]
     for tax_year, over_band in (
         (2025, 44.00),
