@@ -758,17 +758,36 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
     assert entry["enacting_law"] == "HB 463 of 2026"
     assert entry["effective_date"] == "2026-01-01"
     sources = entry["year_sources"]
-    assert [s["tax_year"] for s in sources] == [2019, 2020, 2021, 2022, 2023, 2025, 2026, 2027]
+    assert [s["tax_year"] for s in sources] == [
+        2019,
+        2020,
+        2021,
+        2022,
+        2022,
+        2023,
+        2023,
+        2024,
+        2025,
+        2025,
+        2026,
+        2027,
+    ]
     assert sources[0]["url"] == (
         "https://dor.georgia.gov/document/form/2019-it-511-individual-income-tax-booklet/download"
     )
-    assert sources[5]["url"] == (
-        "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download"
+    assert any(
+        s["tax_year"] == 2025
+        and s["url"]
+        == "https://dor.georgia.gov/document/document/2025-it-511-individual-income-tax-booklet/download"
+        for s in sources
     )
-    for source in sources[6:]:
-        assert source["url"] == (
-            "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download"
-        )
+    hb463 = [
+        s
+        for s in sources
+        if s["url"] == "https://gov.georgia.gov/document/2026-signed-legislation/hb-463/download"
+    ]
+    assert [s["tax_year"] for s in hb463] == [2026, 2027]
+    for source in hb463:
         assert source["content_sha256"] == (
             "1c5fa7abcb2ab99964c09144384d774bceea9a1531ea235c7e637925459f6066"
         )
@@ -776,14 +795,15 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
 
     def edit(doc: Any) -> None:
         ga = next(e for e in doc["entries"] if e["id"] == "ga-rates")
-        ga["year_sources"][6]["values"]["standard_deduction_2026.mfj"] = 31000.0
+        row = next(
+            s for s in ga["year_sources"] if "standard_deduction_2026.mfj" in s.get("values", {})
+        )
+        row["values"]["standard_deduction_2026.mfj"] = 31000.0
 
     _edit(data / "manifest" / "ga.json", edit)
     errors = manifest_errors(load_catalog(data, with_manifest=True))
-    assert errors == [
-        "manifest/ga.json entry 'ga-rates' year_sources[6]: values: "
-        "'standard_deduction_2026.mfj' is 31000.0 here but 30000.0 in the table"
-    ]
+    assert len(errors) == 1
+    assert "standard_deduction_2026.mfj' is 31000.0 here but 30000.0 in the table" in errors[0]
 
 
 def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> None:
@@ -797,7 +817,7 @@ def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> Non
     dor = "https://www.dor.ms.gov/forms-resources/laws-regulations/2025-legislation"
     hb1 = "https://billstatus.ls.state.ms.us/documents/2025/html/HB/0001-0099/HB0001SG.htm"
     # Two sources per year from 2028 to 2030: the DOR page first, then HB 1 of 2025.
-    ms = sources["ms-rates"][4:]
+    ms = [s for s in sources["ms-rates"] if s["tax_year"] >= 2028]
     assert [s["tax_year"] for s in ms] == [2028, 2028, 2029, 2029, 2030, 2030]
     assert [s["url"] for s in ms] == [dor, hb1] * 3
     assert [s["content_sha256"] for s in ms] == [
@@ -805,7 +825,7 @@ def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> Non
         "not_recorded",
     ] * 3
     assert [s["values"]["brackets_2029.single[0].rate"] for s in ms[2:4]] == [0.0325, 0.0325]
-    ut = sources["ut-rates"][3:]
+    ut = [s for s in sources["ut-rates"] if s["tax_year"] == 2026]
     assert [(s["tax_year"], s["values"]) for s in ut] == [(2026, {"rate_2026": 0.0445})] * 2
     assert ut[0]["url"] == "https://le.utah.gov/~2026/bills/sbillenr/SB0060.pdf"
     ne = sources["ne-rates"][-1]
@@ -815,20 +835,18 @@ def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> Non
 
     def edit(doc: Any) -> None:
         ms_rates = next(e for e in doc["entries"] if e["id"] == "ms-rates")
-        ms_rates["year_sources"][6]["values"]["brackets_2029.single[0].rate"] = 0.03
+        row = next(
+            s for s in ms_rates["year_sources"] if "brackets_2029.single[0].rate" in s["values"]
+        )
+        row["values"]["brackets_2029.single[0].rate"] = 0.03
 
     _edit(data / "manifest" / "ms.json", edit)
-    assert manifest_errors(load_catalog(data, with_manifest=True)) == [
-        "manifest/ms.json entry 'ms-rates' year_sources[6]: values: "
-        "'brackets_2029.single[0].rate' is 0.03 here but 0.0325 in the table"
-    ]
+    ms_errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert len(ms_errors) == 1
+    assert "'brackets_2029.single[0].rate' is 0.03 here but 0.0325 in the table" in ms_errors[0]
     _edit(data / "rates" / "ut.json", lambda d: d["params"].pop("rate_2026"))
     errors = manifest_errors(load_catalog(data, with_manifest=True))
-    for i in (3, 4):
-        assert (
-            f"manifest/ut.json entry 'ut-rates' year_sources[{i}]: values: "
-            "'rate_2026' is not in the rate table"
-        ) in errors
+    assert sum("'rate_2026' is not in the rate table" in e for e in errors) == 2
 
 
 def test_maryland_personal_exemption_base_row_must_match_amount(

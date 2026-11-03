@@ -29,6 +29,16 @@
       "verification": "not_recorded",
       "year_sources": [
         {
+          "tax_year": 2024,
+          "values": {
+            "dependent_exemption": 1500.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100241.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "35d4d7f235cbe22ad05d02ec95845c07b75af714912d8bebf18cc60397972cb7"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 10000.0,
