@@ -546,9 +546,11 @@ RETRIEVED = {
     # The New Mexico rate publication that records the HB 6 certification was fetched
     # when the 2008-2020 schedule replaced the HB 6 PDF as the table's source.
     "NM": "2026-11-02",
+    # The Kentucky, Maine, Michigan and Vermont rate files were downloaded and hashed then.
+    **dict.fromkeys(("KY", "ME", "MI", "VT"), "2026-11-02"),
 }
-# Sources that plain curl could not download (refused or failed), read as text: no hash.
-READ_WITHOUT_BYTES = {"ME", "VT", "KY", "MI"}
+# Sources read as text without their bytes, so no hash. None remain.
+READ_WITHOUT_BYTES: set[str] = set()
 
 
 def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:
