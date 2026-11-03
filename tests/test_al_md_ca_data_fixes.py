@@ -39,6 +39,10 @@ def test_alabama_applies_personal_exemption_and_max_standard_deduction() -> None
     assert y21["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y18 = _tax("AL", 2018, 20000.0)
     assert y18["taxable_net_income"] == 20000.0 - 3000.0 - 1500.0
+    y20 = _tax("AL", 2020, 20000.0)
+    assert y20["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
+    y20j = _tax("AL", 2020, 40000.0, "married_joint")
+    assert y20j["taxable_net_income"] == 40000.0 - 7500.0 - 3000.0
 
 
 def test_maryland_capital_gains_surtax_2025_through_2028() -> None:
@@ -52,9 +56,20 @@ def test_maryland_capital_gains_surtax_2025_through_2028() -> None:
     y24 = _tax("MD", 2024, 400000.0, capital_gains=10000.0)
     y24_base = _tax("MD", 2024, 400000.0)
     assert y24["estimated_state_tax"] == y24_base["estimated_state_tax"]
-    y29 = _tax("MD", 2029, 400000.0, capital_gains=10000.0)
+    # 2028 is the last year capital_gains_surtax_2025.through_year covers (rate from the table).
+    surtax = compliance._for_year(compliance.RATE_TABLES["MD"], "capital_gains_surtax", 2028)
+    assert isinstance(surtax, dict)
+    assert int(surtax["through_year"]) == 2028
+    gains = 10000.0
+    surtax_delta = round(gains * float(surtax["rate"]), 2)
+    y28_base = _tax("MD", 2028, 400000.0)
+    y28 = _tax("MD", 2028, 400000.0, capital_gains=gains)
+    assert y28["estimated_state_tax"] == round(y28_base["estimated_state_tax"] + surtax_delta, 2)
+    assert "2.00% on net capital gain" in y28_base["rate_description"]
+    y29 = _tax("MD", 2029, 400000.0, capital_gains=gains)
     y29_base = _tax("MD", 2029, 400000.0)
     assert y29["estimated_state_tax"] == y29_base["estimated_state_tax"]
+    assert "2.00% on net capital gain" not in y29_base["rate_description"]
     assert "2.00% on net capital gain" in base["rate_description"]
     assert "Act exclusions not modeled" in base["rate_description"]
     assert "2.00% on net capital gain" not in y24_base["rate_description"]
