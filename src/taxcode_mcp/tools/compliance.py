@@ -888,7 +888,18 @@ def evaluate_state_residency(
     filing_status: str = "single",
     age: int = 40,
     retirement_income: float = 0.0,
-    capital_gains: float = 0.0,
+    capital_gains: Annotated[
+        float,
+        Field(
+            description=(
+                "Net capital gain. Maryland applies a 2% surtax on this amount when federal AGI "
+                "exceeds $350,000 in tax years 2025-2028 (Act exclusions not modeled). "
+                "Washington uses this amount for its capital gains excise tax (after the "
+                "year's deduction, and from 2025 the additional tier on gains over "
+                "$1,000,000). Ignored for other states."
+            )
+        ),
+    ] = 0.0,
     tax_year: int = 2024,
     has_active_homestead_exemption: bool = False,
     has_active_driver_license: bool = False,
@@ -1220,10 +1231,7 @@ def evaluate_state_residency(
         }
         md_surtax = _for_year(md, "capital_gains_surtax", tax_year)
         surtax_note = ""
-        if (
-            isinstance(md_surtax, dict)
-            and tax_year <= int(md_surtax["through_year"])
-        ):
+        if isinstance(md_surtax, dict) and tax_year <= int(md_surtax["through_year"]):
             surtax_note = (
                 f"; plus {_pct(md_surtax['rate'])} on net capital gain when federal AGI "
                 f"exceeds {_money(md_surtax['fagi_over'])} (tax years through "

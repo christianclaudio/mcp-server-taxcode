@@ -27,8 +27,58 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Form 40 booklet 2024 (24f40bk.pdf) standard-deduction chart page 9: maximum $3,000 single / $8,500 joint (AGI phase-down not modeled). Line 13 personal exemption $1,500 single / $3,000 joint. Federal income tax deduction worksheet and dependent-exemption chart are not modeled. 2022 Form 40 What's New cites Acts 2022-292 and 2022-297 for the current standard-deduction chart.",
+      "verification_note": "Form 40 booklet 2024 (24f40bk.pdf) standard-deduction chart page 9: maximum $3,000 single / $8,500 joint (AGI phase-down not modeled). Line 13 personal exemption $1,500 single / $3,000 joint. Federal income tax deduction worksheet and dependent-exemption chart are not modeled. 2022 Form 40 What's New cites Acts 2022-292 and 2022-297 for the current standard-deduction chart. Tax years 2019-2021: NBER TAXSIM archive copies of the ADOR Form 40 booklets (standard-deduction chart page 9 maximum $2,500 single / $7,500 joint; page 6 personal exemption $1,500 single / $3,000 joint). Tax year 2018: NBER TAXSIM archive copy of the ADOR Form 40 (2-page form; page 1 Filing Status/Exemptions $1,500 single / $3,000 joint; standard-deduction chart not in that file).",
       "year_sources": [
+        {
+          "tax_year": 2018,
+          "values": {
+            "exemption_single": 1500.0,
+            "exemption_mfj": 3000.0
+          },
+          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2018/2021_10_18f40blk.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "fb0fccf6c6f59f1e83e01361f8d388eb3b98e5ebb473f607b5be24bd82f04fc3"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 2500.0,
+            "deduction_mfj_2019": 7500.0,
+            "exemption_single": 1500.0,
+            "exemption_mfj": 3000.0
+          },
+          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2019/19f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "3d0e218b4898b467bd0b92cfa75698c5d3e61a006f84195e26db284b5ebc72f5"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 2500.0,
+            "deduction_mfj_2020": 7500.0,
+            "exemption_single": 1500.0,
+            "exemption_mfj": 3000.0
+          },
+          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2020/20f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "f783804fe5e588f80db00dcb627fe2239144601b6290229eacfd90924b5f736a"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 2500.0,
+            "deduction_mfj_2021": 7500.0,
+            "exemption_single": 1500.0,
+            "exemption_mfj": 3000.0
+          },
+          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2021/21f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "8e5c81519721d9e9a4833da6e49d4538fd375aa6776810c5fd7ba1df96aa1131"
+        },
         {
           "tax_year": 2022,
           "values": {
@@ -41,19 +91,6 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "c200edd87819d5e9eb21f784dc6aae5d05c38155125fae0c045e57d6d3bb424c"
-        },
-        {
-          "tax_year": 2024,
-          "values": {
-            "deduction_single": 3000.0,
-            "deduction_mfj": 8500.0,
-            "exemption_single": 1500.0,
-            "exemption_mfj": 3000.0
-          },
-          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
-          "official": true,
-          "retrieved": "2026-11-02",
-          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
         }
       ]
     }

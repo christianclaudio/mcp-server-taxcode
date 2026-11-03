@@ -31,7 +31,14 @@ def test_alabama_applies_personal_exemption_and_max_standard_deduction() -> None
     assert "phase-down chart is not modeled" in desc
     assert "federal income tax deduction" in desc
     assert "$1,500 single" in desc
-    assert "Tax years before 2022 use the 2022 Form 40 figures as an estimate" in desc
+    assert "$2,500 single / $7,500 joint for 2019-2021" in desc
+    assert "Tax year 2018 uses the 2022 Form 40 standard-deduction maximum as an estimate" in desc
+    y19 = _tax("AL", 2019, 20000.0)
+    assert y19["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
+    y21 = _tax("AL", 2021, 20000.0)
+    assert y21["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
+    y18 = _tax("AL", 2018, 20000.0)
+    assert y18["taxable_net_income"] == 20000.0 - 3000.0 - 1500.0
 
 
 def test_maryland_capital_gains_surtax_2025_through_2028() -> None:
@@ -58,9 +65,7 @@ def test_california_top_rate_prose_names_twelve_three_plus_one() -> None:
     assert "13.3% is 12.3% plus the 1% Mental Health Services Tax" in y24["rate_description"]
     assert "applied once" in y24["rate_description"]
     y25 = _tax("CA", 2025, 50000.0)
-    assert (
-        "13.3% is 12.3% plus the 1% Behavioral Health Services Tax" in y25["rate_description"]
-    )
+    assert "13.3% is 12.3% plus the 1% Behavioral Health Services Tax" in y25["rate_description"]
     # Combined top rate is embedded once: income over $1M uses the 13.3% slice rate.
     ded = float(compliance._for_year(compliance.RATE_TABLES["CA"], "deduction", 2024)["single"])
     # Taxable income just above $1,000,000.

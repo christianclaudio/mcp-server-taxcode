@@ -6,12 +6,20 @@
   "params": {
     "statutory_basis": "Ala. Code §§ 40-18-1, 40-18-2",
     "rate_authority": "Ala. Code § 40-18-2",
-    "rate_desc": "Graduated brackets from 2.0% to 5.0%. Standard deduction uses the Form 40 maximum ($3,000 single / $8,500 joint); the AGI phase-down chart is not modeled. Personal exemption $1,500 single / $3,000 joint. The federal income tax deduction and dependent exemption are not modeled. Tax years before 2022 use the 2022 Form 40 figures as an estimate.",
+    "rate_desc": "Graduated brackets from 2.0% to 5.0%. Standard deduction uses the Form 40 maximum ($3,000 single / $8,500 joint for 2022+; $2,500 single / $7,500 joint for 2019-2021); the AGI phase-down chart is not modeled. Personal exemption $1,500 single / $3,000 joint. The federal income tax deduction and dependent exemption are not modeled. Tax year 2018 uses the 2022 Form 40 standard-deduction maximum as an estimate (the archived 2018 Form 40 states the personal exemption but not the standard-deduction chart).",
     "regime": "graduated",
     "deduction_single": 3000.0,
     "deduction_mfj": 8500.0,
     "exemption_single": 1500.0,
     "exemption_mfj": 3000.0,
+    "deduction_single_2019": 2500.0,
+    "deduction_mfj_2019": 7500.0,
+    "deduction_single_2020": 2500.0,
+    "deduction_mfj_2020": 7500.0,
+    "deduction_single_2021": 2500.0,
+    "deduction_mfj_2021": 7500.0,
+    "deduction_single_2022": 3000.0,
+    "deduction_mfj_2022": 8500.0,
     "brackets": {
       "single": [
         {

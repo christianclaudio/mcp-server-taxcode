@@ -866,6 +866,12 @@ def _check_params(model: str, params: Any, where: str) -> None:
                 type(value["through_year"]) is int,
                 f"{at}.through_year: must be an int",
             )
+            if key in yearly:
+                key_year = int(key[-4:])
+                _check(
+                    value["through_year"] >= key_year,
+                    f"{at}.through_year: must be >= {key_year}",
+                )
         elif name == "rate":
             _check_rate(value, at)
         else:  # capital_gains_deduction
