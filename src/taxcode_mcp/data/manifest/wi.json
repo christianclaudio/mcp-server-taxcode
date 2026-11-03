@@ -27,6 +27,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "Wis. Stat. section 71.06 states the 2025 brackets and not the 2024 indexed brackets. The 2025 Form 1 instructions publish a standard deduction that phases down with income; this table holds only its maximum, $13,560 single and $25,110 joint.",
       "year_sources": [
         {
           "tax_year": 2025,
@@ -50,6 +51,17 @@
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "22d24f2b6f18d29a4475f32451fe4a81de2abb31c3ef748df8367fff474ccb07"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 13560.0,
+            "deduction_mfj_2025": 25110.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2025/2025-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-03",
+          "content_sha256": "dd7e88901ac4ec560aaa85024511a918656e2d90aaf7bcc10b37d615e505913c"
         }
       ]
     }

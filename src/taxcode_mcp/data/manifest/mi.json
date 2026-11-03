@@ -26,7 +26,8 @@
       "content_sha256": "70649c626de2e57ccc2ead002b8bbc5dab9c03c39fcb0fb88eda8d784ef1602a",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-206-51 returned HTTP 403."
     }
   ]
 }

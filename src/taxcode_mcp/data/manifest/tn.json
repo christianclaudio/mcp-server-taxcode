@@ -26,7 +26,8 @@
       "content_sha256": "8fe68345ee06c4cc5d80d7ca947cd5d6dfe9d34c01f1e0decf2fb0f766338619",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://www.tn.gov/content/dam/tn/revenue/documents/notices/income/income17-09.pdf ended with a TLS error before any document arrived."
     }
   ]
 }

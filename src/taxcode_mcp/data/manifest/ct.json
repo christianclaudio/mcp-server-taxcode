@@ -52,7 +52,8 @@
       "content_sha256": "fad02854c8e39e179c6fd5cf0b36b9c9ef638baa679762236e5f06acb3412c42",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://www.cga.ct.gov/current/pub/chap_229.htm could not be retrieved: TLS certificate verification failed."
     }
   ]
 }

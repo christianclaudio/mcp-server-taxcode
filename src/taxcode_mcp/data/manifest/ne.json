@@ -27,6 +27,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03 is generated fresh on every request, so its content_sha256 is not_recorded. The page confirms the top rates for 2023 through 2027 and says the dollar brackets are indexed. It does not print those indexed dollars.",
       "year_sources": [
         {
           "tax_year": 2023,
@@ -130,7 +131,7 @@
           "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03",
           "official": true,
           "retrieved": "2026-11-03",
-          "content_sha256": "3e30f5d0daba08672674217707ee8363468f950dc2ae6548caacee2f3a35cf64"
+          "content_sha256": "not_recorded"
         }
       ]
     }

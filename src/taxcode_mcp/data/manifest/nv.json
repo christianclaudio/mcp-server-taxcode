@@ -26,7 +26,8 @@
       "content_sha256": "726067b645f47709f00c2cf23ee6a514f7fc64381fd6c1f6eb0b1f48b31c51cc",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://www.leg.state.nv.us/const/nvconst.html returned HTTP 403."
     }
   ]
 }

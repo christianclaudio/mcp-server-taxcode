@@ -205,6 +205,8 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ("AL", _set("params.deduction_single", -3000.0), "deduction_single: must be a non-negative"),
     ("AL", _set("params.regime", "progressive"), "regime: must be one of"),
     ("IA", _set("params.regime_2025", "linear"), "regime_2025: must be one of"),
+    # A year-only rate without ``rate`` is allowed only while the regime is graduated.
+    ("KY", _drop("params.rate"), "rate_2018 needs rate first"),
     ("AL", _set("params.day_threshold", 0), "must be a day count from 1 to 366"),
     ("AL", _set("params.day_threshold", 400), "must be a day count from 1 to 366"),
     ("AL", _set("params.requires_abode", 1), "requires_abode: must be bool"),
@@ -840,7 +842,7 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
     assert "4.5% rate" in _resident_tax("KY", 2023, 1.0)["rate_description"]
     assert "[ESTIMATE:" in _resident_tax("KY", 2018, 1.0)["rate_description"]
     assert "[ESTIMATE:" not in _resident_tax("KY", 2024, 1.0)["rate_description"]
-    assert "graduated rates before 2018" in _resident_tax("KY", 2017, 1.0)["rate_description"]
+    assert "2024 flat rate is used" in _resident_tax("KY", 2017, 1.0)["rate_description"]
 
 
 def test_rhode_island_2025_standard_deduction() -> None:
@@ -1288,9 +1290,15 @@ def test_outyear_estimate_notes_are_literal() -> None:
         assert "[ESTIMATE:" not in _resident_tax("WI", tax_year, 1.0)["rate_description"]
     assert "2024 amounts are used" in _resident_tax("OH", 2023, 1.0)["rate_description"]
     assert "the 2025 amounts are used" in _resident_tax("WI", 2026, 1.0)["rate_description"]
-    wi = compliance.RATE_TABLES["WI"]["brackets_2025"]
-    assert wi["single"][0] == {"over": 323290.0, "rate": 0.0765}
-    assert wi["mfj"][2] == {"over": 19580.0, "rate": 0.044}
+    wi = compliance.RATE_TABLES["WI"]
+    assert wi["brackets_2025"]["single"][0] == {"over": 323290.0, "rate": 0.0765}
+    assert wi["brackets_2025"]["mfj"][2] == {"over": 19580.0, "rate": 0.044}
+    # 2025 Form 1 instructions, Standard Deduction Table: the maximum is $13,560
+    # single and $25,110 joint. The table phases that amount down as income rises.
+    assert wi["deduction_single_2025"] == 13560.0
+    assert wi["deduction_mfj_2025"] == 25110.0
+    assert compliance._for_year(wi, "deduction_single", 2024) == 13810.0
+    assert compliance._for_year(wi, "deduction_single", 2025) == 13560.0
     ms, ut = _ms_note(2031), _ut_note(2026)
     ne, oh = _ne_note(2027), _oh_note(2027)
     assert "HB 1 of 2025, Section 2" in ms and "3.00%" in ms

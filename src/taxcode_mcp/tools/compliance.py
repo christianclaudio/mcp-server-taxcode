@@ -373,7 +373,7 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         if tax_year < 2018:
             return (
                 " [ESTIMATE: Kentucky's graduated rates before 2018 (KRS 141.020) are "
-                f"not in this table, so the flat rate held before 2018 is used. {deduction}]"
+                f"not in this table, so the 2024 flat rate is used. {deduction}]"
             )
         return f" [ESTIMATE: {deduction}]"
     if state == "WI" and (tax_year < 2024 or tax_year > 2025):

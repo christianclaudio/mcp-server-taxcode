@@ -36,6 +36,7 @@ Every manifest entry has every field below. A value we don't have is the explici
 | `enacting_law` | Law that enacted or last amended the text, or `"not_recorded"`. |
 | `effective_date` | Date the text took effect (`YYYY-MM-DD`), or `"not_recorded"`. |
 | `verification` | `verified_verbatim` (checked word for word against the fetched source; needs `retrieved` and `content_sha256`), `summary` (the stored text is a summary, not a copy), or `"not_recorded"`. |
+| `verification_note` | Optional, and only on a `rate_table` whose `verification` is `not_recorded`, after `verification` and before `year_sources`. A non-empty string saying why that table could not be confirmed. A checked table does not carry it. |
 | `year_sources` | Optional, `rate_table` and `federal_table` entries only, as the last field. A list of the sources for figures of other tax years than `url`'s, `tax_year` ascending. Each has exactly `tax_year`, `values` (the table values it confirms, keyed by their path in `params`, such as `rates[0].rate` or `deduction_mfj_2025`, or for the federal table in its document, such as `years[6].single`; each must equal the table's value), `url` (https), `official` (`true`), `retrieved` and `content_sha256` (`"not_recorded"` when the bytes could not be kept). |
 
 To add or change a row:

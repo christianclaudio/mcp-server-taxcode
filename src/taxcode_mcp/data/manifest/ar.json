@@ -27,6 +27,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "https://www.dfa.arkansas.gov/income-tax/individual-income-tax/tax-brackets/ returned HTTP 403. The held $2,340 / $4,680 deduction is not in a second document.",
       "year_sources": [
         {
           "tax_year": 2025,

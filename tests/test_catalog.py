@@ -136,7 +136,9 @@ def test_manifest_records_unknowns_explicitly() -> None:
     for entry in catalog.manifest:
         keys = [k for k in entry if k != "_jurisdiction"]
         # A rate table may add its other tax years' sources as one last field.
-        assert keys in (list(MANIFEST_FIELDS), [*MANIFEST_FIELDS, "year_sources"]), entry["id"]
+        note = ["verification_note"] if "verification_note" in entry else []
+        years = ["year_sources"] if "year_sources" in entry else []
+        assert keys == [*MANIFEST_FIELDS, *note, *years], entry["id"]
     # Only the prior-year versions were verified word for word against a fetched copy.
     by_verification: dict[str, set[str]] = {}
     for e in catalog.manifest:
@@ -509,11 +511,11 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "GA": {"enacting_law": "HB 463 of 2026", "effective_date": "2026-01-01"},
         "NM": {"edition": "amended_compilation", "effective_date": "2008-01-01"},
         "HI": {"enacting_law": "Act 45, SLH 2024", "effective_date": "2024-01-01"},
-        # KRS 141.020 history names 2025 Ky. Acts ch. 1, sec. 1. Paragraph (e) states
-        # the 4% rate for taxable years beginning on or after January 1, 2024.
+        # KRS 141.020's history: amended by 2025 Ky. Acts ch. 1, sec. 1, and ch. 98,
+        # sec. 9, both effective June 27, 2025.
         "KY": {
-            "enacting_law": "2025 Ky. Acts ch. 1, sec. 1",
-            "effective_date": "2024-01-01",
+            "enacting_law": "2025 Ky. Acts ch. 1, sec. 1, and ch. 98, sec. 9",
+            "effective_date": "2025-06-27",
         },
         # R.C. 5747.025's current text names House Bill 96 as its latest legislation.
         "OH": {"enacting_law": "House Bill 96 of the 136th General Assembly"},
@@ -536,6 +538,51 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
     unsourced_urls = {t["source_url"] for c, t in catalog.rate_tables.items() if c not in sourced}
     assert unsourced_urls in (set(), {NOT_RECORDED})
     assert manifest_errors(catalog) == []
+
+
+def test_an_unchecked_rate_table_needs_a_verification_note(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    catalog = load_catalog(data, with_manifest=True)
+    unchecked = [
+        e
+        for e in catalog.manifest
+        if e["kind"] == "rate_table" and e["verification"] == NOT_RECORDED
+    ]
+    assert unchecked
+    for entry in unchecked:
+        note = entry.get("verification_note")
+        assert isinstance(note, str) and note.strip(), entry["id"]
+    checked = [
+        e
+        for e in catalog.manifest
+        if e["kind"] == "rate_table" and e["verification"] != NOT_RECORDED
+    ]
+    assert checked and all("verification_note" not in e for e in checked)
+
+    def drop_note(doc: Any) -> None:
+        entry = next(e for e in doc["entries"] if e["kind"] == "rate_table")
+        entry.pop("verification_note")
+
+    _edit(data / "manifest" / "al.json", drop_note)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert any("verification_note must be a non-empty string" in e for e in errors), errors
+
+    def blank_note(doc: Any) -> None:
+        entry = next(e for e in doc["entries"] if e["kind"] == "rate_table")
+        entry["verification_note"] = "  "
+
+    shutil.copy(DATA_DIR / "manifest" / "al.json", data / "manifest" / "al.json")
+    _edit(data / "manifest" / "al.json", blank_note)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert any("verification_note must be a non-empty string" in e for e in errors), errors
+
+    def note_on_a_checked_table(doc: Any) -> None:
+        entry = next(e for e in doc["entries"] if e["kind"] == "rate_table")
+        entry["verification_note"] = "checked"
+
+    _edit(data / "manifest" / "ak.json", note_on_a_checked_table)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert any("verification_note belongs only on a not_recorded rate_table" in e for e in errors)
 
 
 SOURCED_2026_10_23 = "AZ CO GA ID IL IN KS KY MA MI MS NC ND OH PA UT VA WA".split()
@@ -825,10 +872,8 @@ def test_outyear_rate_records_cite_their_sources(tree: tuple[Path, Path]) -> Non
     assert [(s["tax_year"], s["values"]) for s in ut] == [(2026, {"rate_2026": 0.0445})] * 2
     assert ut[0]["url"] == "https://le.utah.gov/~2026/bills/sbillenr/SB0060.pdf"
     ne = sources["ne-rates"][-1]
-    assert ne["tax_year"] == 2027
-    assert ne["content_sha256"] == (
-        "3e30f5d0daba08672674217707ee8363468f950dc2ae6548caacee2f3a35cf64"
-    )
+    # The legislature page is generated on each request, so the hash is not kept.
+    assert ne["tax_year"] == 2027 and ne["content_sha256"] == "not_recorded"
     assert set(ne["values"].values()) == {0.0399}
     assert manifest_errors(catalog) == []
 

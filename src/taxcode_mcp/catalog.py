@@ -99,6 +99,10 @@ TABLE_KINDS = ("rate_table", "federal_table")
 # for other tax years than ``url``'s. Each names the table values it confirms by their path
 # in the rate table's ``params`` (or in the federal table's document).
 YEAR_SOURCES = "year_sources"
+# Optional field of a ``rate_table`` whose ``verification`` is still ``not_recorded``:
+# why that table could not be confirmed. It sits after ``verification`` and before
+# ``year_sources``.
+VERIFICATION_NOTE = "verification_note"
 YEAR_SOURCE_FIELDS: tuple[str, ...] = (
     "tax_year",
     "values",
@@ -476,7 +480,11 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
             catalog.documents[f"manifest/{stem}"], entries = _document(path, code, "entries")
             for entry in entries:
                 where = f"manifest/{stem}.json entry {entry.get('id', '?')!r}"
-                fields = (*MANIFEST_FIELDS, *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()))
+                fields = (
+                    *MANIFEST_FIELDS,
+                    *((VERIFICATION_NOTE,) if VERIFICATION_NOTE in entry else ()),
+                    *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()),
+                )
                 _check_keys(entry, fields, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
     if with_manifest:
@@ -650,11 +658,11 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         if not later:
             continue
         years = [int(k[-4:]) for k in later]
-        # A flat ``rate_YYYY`` may be the first rate (Iowa and Louisiana are graduated
-        # until that year). Every other yearly value needs its unsuffixed key first.
+        # A flat ``rate_YYYY`` may be the first rate when the unsuffixed regime is
+        # graduated (Iowa and Louisiana until that year). A flat regime needs ``rate``.
         if base not in params:
             _check(
-                base == "rate" and years == sorted(years),
+                base == "rate" and params.get("regime") == "graduated" and years == sorted(years),
                 f"{where}: {later[0]} needs {base} first",
             )
             continue
@@ -1082,6 +1090,12 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
         sha,
     ):
         errors.append(f"{where}: verified_verbatim needs a retrieved date and content_sha256")
+    note = entry.get(VERIFICATION_NOTE)
+    needs_note = entry["kind"] == "rate_table" and entry["verification"] == NOT_RECORDED
+    if needs_note and not (isinstance(note, str) and note.strip()):
+        errors.append(f"{where}: verification_note must be a non-empty string")
+    elif not needs_note and VERIFICATION_NOTE in entry:
+        errors.append(f"{where}: verification_note belongs only on a not_recorded rate_table")
     return errors
 
 

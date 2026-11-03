@@ -24,9 +24,10 @@
       "licence": "not_recorded",
       "retrieved": "2026-11-02",
       "content_sha256": "49564b8a0060453ec44ae992422f63158043ff980a704476a0c075bd257d2c27",
-      "enacting_law": "2025 Ky. Acts ch. 1, sec. 1",
-      "effective_date": "2024-01-01",
+      "enacting_law": "2025 Ky. Acts ch. 1, sec. 1, and ch. 98, sec. 9",
+      "effective_date": "2025-06-27",
       "verification": "not_recorded",
+      "verification_note": "KRS 141.020 confirms the flat rates by year. It does not state the standard deduction, so a year before 2024 still uses the 2024 deduction.",
       "year_sources": [
         {
           "tax_year": 2018,

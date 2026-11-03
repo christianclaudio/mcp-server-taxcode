@@ -53,6 +53,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "https://tax.illinois.gov/research/taxrates/income.html states 4.95 percent effective July 1, 2017 and does not state the $2,775 / $5,550 exemption. https://www.ilga.gov/legislation/ilcs/ilcs4.asp?DocName=003500050HArt%2E+2&ActID=577&ChapterID=8&SeqStart=1200000&SeqEnd=1600000 could not be retrieved: TLS certificate verification failed.",
       "year_sources": [
         {
           "tax_year": 2024,

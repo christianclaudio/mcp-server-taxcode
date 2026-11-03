@@ -66,6 +66,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "The 2024 Franchise Tax Board schedules match the bracket floors through 12.3 percent. They print 12.30 percent as the top schedule rate, not the held 13.3 percent, and they do not state the standard deduction.",
       "year_sources": [
         {
           "tax_year": 2024,

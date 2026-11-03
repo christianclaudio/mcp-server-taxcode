@@ -9,7 +9,9 @@
     "rate_desc": "Graduated rates: 3.50%, 4.40%, 5.30%, and top rate 7.65%",
     "regime": "graduated",
     "deduction_single": 13810.0,
+    "deduction_single_2025": 13560.0,
     "deduction_mfj": 25480.0,
+    "deduction_mfj_2025": 25110.0,
     "brackets": {
       "single": [
         {

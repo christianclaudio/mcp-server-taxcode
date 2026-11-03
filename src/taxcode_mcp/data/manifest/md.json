@@ -66,6 +66,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "Tax-General section 10-105 matches the 2025 brackets, including 6.25 and 6.50 percent, and imposes an additional 2 percent on net capital gain that this table does not compute. It does not print the 2024 schedule, the standard deduction, or the personal exemption.",
       "year_sources": [
         {
           "tax_year": 2025,

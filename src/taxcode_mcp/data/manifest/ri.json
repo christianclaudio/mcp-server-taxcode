@@ -27,6 +27,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
+      "verification_note": "http://webserver.rilin.state.ri.us/Statutes/TITLE44/44-30/44-30-2.HTM returned the statute title index, not the rate section. The 2025 and 2026 worksheets were not retrieved.",
       "year_sources": [
         {
           "tax_year": 2025,

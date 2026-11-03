@@ -26,7 +26,8 @@
       "content_sha256": "ee47f4063c84be2d86e84542932cc7b39e8ac767491c1b14382e2c8f0dd0d938",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://gc.nh.gov/rsa/html/V/77/77-1.htm returned HTTP 404. The chapter page already cited is this table's source and was not a second check of the 2024 3 percent rate."
     }
   ]
 }

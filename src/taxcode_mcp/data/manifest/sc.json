@@ -26,7 +26,8 @@
       "content_sha256": "5bc2ffd78f4534dc641fc5175f946b1e7c35af857a88d8447cdd886edb641336",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded"
+      "verification": "not_recorded",
+      "verification_note": "https://www.scstatehouse.gov/code/t12c006.php returned HTTP 403."
     }
   ]
 }
