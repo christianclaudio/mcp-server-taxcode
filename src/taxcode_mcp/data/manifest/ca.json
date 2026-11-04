@@ -66,7 +66,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "The 2024 Franchise Tax Board schedules match the bracket floors through 12.3 percent. They print 12.30 percent as the top schedule rate, not the held 13.3 percent, and they do not state the standard deduction.",
+      "verification_note": "The 2024 Franchise Tax Board tax rate schedules print 12.30 percent as the top schedule rate. Form 540 booklet Line 62 (Mental Health Services Tax; Behavioral Health Services Tax from 2025) adds 1 percent on taxable income over $1,000,000 (R&TC section 17043), so the combined top rate modeled here is 13.3 percent, applied once in the brackets. The schedules do not state the standard deduction.",
       "year_sources": [
         {
           "tax_year": 2024,
@@ -108,6 +108,17 @@
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "80d4cb7e90a0c069ecf02c633f1823567162e825f2440e8a08d6d23cbbd60e16"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[0].over": 1000000.0,
+            "brackets.single[0].rate": 0.133
+          },
+          "url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374"
         }
       ]
     }

@@ -888,7 +888,18 @@ def evaluate_state_residency(
     filing_status: str = "single",
     age: int = 40,
     retirement_income: float = 0.0,
-    capital_gains: float = 0.0,
+    capital_gains: Annotated[
+        float,
+        Field(
+            description=(
+                "Net capital gain. Maryland applies a 2% surtax on this amount when federal AGI "
+                "exceeds $350,000 in tax years 2025-2028 (Act exclusions not modeled). "
+                "Washington uses this amount for its capital gains excise tax (after the "
+                "year's deduction, and from 2025 the additional tier on gains over "
+                "$1,000,000). Ignored for other states."
+            )
+        ),
+    ] = 0.0,
     tax_year: int = 2024,
     has_active_homestead_exemption: bool = False,
     has_active_driver_license: bool = False,
@@ -1051,8 +1062,8 @@ def evaluate_state_residency(
         )
         rate_desc = (
             f"{_range_desc(ca_range)} "
-            f"(the top rate includes the 1% {ca_surtax_name} on taxable income "
-            f"over ${ca_brackets['single'][0]['over']:,.0f})"
+            f"(13.3% is 12.3% plus the 1% {ca_surtax_name} on taxable income "
+            f"over ${ca_brackets['single'][0]['over']:,.0f}, applied once)"
             f"{_outyear_estimate_note('CA', tax_year, ca)}"
         )
         std_ded = float(_for_year(ca, "deduction", tax_year)[_status(is_mfj)])
@@ -1218,9 +1229,17 @@ def evaluate_state_residency(
             "personal_exemption": _for_year(md, "personal_exemption", tax_year),
             "brackets": _for_year(md, "brackets", tax_year),
         }
+        md_surtax = _for_year(md, "capital_gains_surtax", tax_year)
+        surtax_note = ""
+        if isinstance(md_surtax, dict) and tax_year <= int(md_surtax["through_year"]):
+            surtax_note = (
+                f"; plus {_pct(md_surtax['rate'])} on net capital gain when federal AGI "
+                f"exceeds {_money(md_surtax['fagi_over'])} (tax years through "
+                f"{int(md_surtax['through_year'])}; Act exclusions not modeled)"
+            )
         rate_desc = (
             f"{_range_desc(md_year, 'Graduated state brackets')} "
-            "plus county piggyback tax (2.25%-3.20%)"
+            f"plus county piggyback tax (2.25%-3.20%){surtax_note}"
             f"{_outyear_estimate_note('MD', tax_year, md)}"
         )
         md_ded = md_year["standard_deduction"]
@@ -1232,6 +1251,16 @@ def evaluate_state_residency(
         if is_resident:
             brackets = md_year["brackets"][_status(is_mfj)]
             estimated_tax = _marginal_tax(brackets, taxable_income)
+            if (
+                isinstance(md_surtax, dict)
+                and tax_year <= int(md_surtax["through_year"])
+                and federal_agi > float(md_surtax["fagi_over"])
+                and capital_gains > 0.0
+            ):
+                estimated_tax = round(
+                    estimated_tax + capital_gains * float(md_surtax["rate"]),
+                    2,
+                )
     elif state == "CO":
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)

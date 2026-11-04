@@ -222,6 +222,11 @@
           "rate": 0.02
         }
       ]
+    },
+    "capital_gains_surtax_2025": {
+      "rate": 0.02,
+      "fagi_over": 350000.0,
+      "through_year": 2028
     }
   }
 }

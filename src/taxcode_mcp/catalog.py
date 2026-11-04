@@ -179,11 +179,13 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
     "brackets_cumulative": ("brackets", "deduction", "exemption"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
-    "maryland": ("standard_deduction", "personal_exemption", "brackets"),
+    "maryland": ("standard_deduction", "personal_exemption", "brackets", "capital_gains_surtax"),
 }
 # ``tier`` has no unsuffixed value (an unsuffixed ``tier`` is an unknown key): before its
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
 # ``over`` (Washington's 2.9% on capital gains over $1,000,000 from 2025, RCW 82.87.040(1)(b)).
+# ``capital_gains_surtax`` is likewise yearly-only (Maryland's 2% net-capital-gain surtax for
+# FAGI over $350,000 in tax years 2025-2028).
 
 # A flat, flat_by_year, or registry deduction / credit_base may name the federal standard
 # deduction instead of holding amounts: the figure is then that tax year's federal standard
@@ -855,6 +857,21 @@ def _check_params(model: str, params: Any, where: str) -> None:
             _check_keys(value, ("over", "rate"), at)
             _check_amount(value["over"], f"{at}.over")
             _check_rate(value["rate"], f"{at}.rate")
+        elif name == "capital_gains_surtax":
+            _check(isinstance(value, dict), f"{at}: must be an object")
+            _check_keys(value, ("rate", "fagi_over", "through_year"), at)
+            _check_rate(value["rate"], f"{at}.rate")
+            _check_amount(value["fagi_over"], f"{at}.fagi_over")
+            _check(
+                type(value["through_year"]) is int,
+                f"{at}.through_year: must be an int",
+            )
+            if key in yearly:
+                key_year = int(key[-4:])
+                _check(
+                    value["through_year"] >= key_year,
+                    f"{at}.through_year: must be >= {key_year}",
+                )
         elif name == "rate":
             _check_rate(value, at)
         else:  # capital_gains_deduction

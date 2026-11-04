@@ -1411,6 +1411,8 @@ def test_california_rate_description_names_mhst_or_bhst_by_schedule_year() -> No
     default_desc = server.evaluate_state_residency(**kwargs)["tax_computation"]["rate_description"]
     assert "Mental Health Services Tax" in default_desc
     assert "Behavioral Health Services Tax" not in default_desc
+    assert "13.3% is 12.3% plus the 1% Mental Health Services Tax" in default_desc
+    assert "applied once" in default_desc
     for year in (2023, 2024):
         desc = server.evaluate_state_residency(**kwargs, tax_year=year)["tax_computation"][
             "rate_description"
