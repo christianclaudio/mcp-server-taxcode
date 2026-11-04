@@ -59,6 +59,7 @@
 - [Ley 60-2019 Sec. 6020.10 (2022) — Informes](./pr/ley60_6020_10_2022.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
 - [Ley 60-2019 Sec. 6020.10 (2020) — Informes](./pr/ley60_6020_10_2020.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
 - [Ley 60-2019 Sec. 6020.10 (2019) — Informes](./pr/ley60_6020_10_2019.md): Ley 60-2019 > Subtítulo F > Capítulo 2 > Sección 6020.10
+- [Ley 60-2019 Sec. 6060.05 (2025) — Ley de Transición del Programa Impulso a la Vivienda / Housing Boost Transition (principal-residence gain exemption)](./pr/ley60_6060_05.md): Ley 60-2019 > Subtítulo F > Capítulo 6 > Sección 6060.05 (as amended by Ley 180-2025)
 - [Ley 60-2019 Sec. 6070.55 (2019) — Definiciones aplicables a las Zonas de Oportunidad](./pr/ley60_6070_55.md): Ley 60-2019 > Subtítulo F > Capítulo 7 > Sección 6070.55
 - [Act 22-2012 Sec. 3 (2012) — Exención Contributiva sobre Ganancias de Capital (Histórico Ley 22)](./pr/ley22_3_2012.md): Ley 22-2012 > Sección 3
 - [O.C.G.A. § 48-7-1 (2024) — Income Tax Definitions / Residency Rules](./ga/ocga_48_7_1.md): O.C.G.A. > Title 48 > Chapter 7 > Article 1 > § 48-7-1

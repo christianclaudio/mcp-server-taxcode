@@ -131,6 +131,55 @@ PRIOR_YEAR_IDS = {
     "pr-ley60-6020-10-2022",
     "pr-ley60-6020-10-2024",
 }
+# Current rows added after BASE_COMMIT. Their lookup/resource keys are not in the base
+# fixture; exclude them from the plan equality check. Search answers that newly list them
+# are allowed via NEW_SINCE_BASE_SEARCHES.
+NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"})
+# Searches (outside the 2019-2025 window already allowed) whose result lists newly include
+# pr-ley60-6060-05 after Ley 180-2025: "exempt"/"exenta" wording, "income"/"ingreso", and
+# "Puerto Rico" at offset 5 for tax years 2026-2028 (and no-year income/ingreso at offset 5).
+NEW_SINCE_BASE_SEARCHES = frozenset(
+    {
+        "search|Puerto Rico|None|2026|5",
+        "search|Puerto Rico|None|2027|5",
+        "search|Puerto Rico|None|2028|5",
+        "search|Puerto Rico|PR|2026|5",
+        "search|Puerto Rico|PR|2027|5",
+        "search|Puerto Rico|PR|2028|5",
+        "search|exempt|None|2026|0",
+        "search|exempt|None|2026|5",
+        "search|exempt|None|2027|0",
+        "search|exempt|None|2027|5",
+        "search|exempt|None|2028|0",
+        "search|exempt|None|2028|5",
+        "search|exempt|PR|2026|0",
+        "search|exempt|PR|2026|5",
+        "search|exempt|PR|2027|0",
+        "search|exempt|PR|2027|5",
+        "search|exempt|PR|2028|0",
+        "search|exempt|PR|2028|5",
+        "search|income|None|2026|5",
+        "search|income|None|2027|5",
+        "search|income|None|2028|5",
+        "search|income|None|None|5",
+        "search|income|PR|2026|0",
+        "search|income|PR|2026|5",
+        "search|income|PR|2027|0",
+        "search|income|PR|2027|5",
+        "search|income|PR|2028|0",
+        "search|income|PR|2028|5",
+        "search|ingreso|None|2026|5",
+        "search|ingreso|None|2027|5",
+        "search|ingreso|None|2028|5",
+        "search|ingreso|None|None|5",
+        "search|ingreso|PR|2026|0",
+        "search|ingreso|PR|2026|5",
+        "search|ingreso|PR|2027|0",
+        "search|ingreso|PR|2027|5",
+        "search|ingreso|PR|2028|0",
+        "search|ingreso|PR|2028|5",
+    }
+)
 # Older dated versions of a section that gained versions: their version lists grew too.
 DATED_IDS: dict[str, frozenset[str]] = {
     "6020.10": frozenset({"pr-ley60-6020-10-2019", "pr-ley60-6020-10-2025"}),
@@ -234,7 +283,9 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # answers whose New Hampshire description now states the prior-law interest and
 # dividends tax and the 2025 repeal. Plus 88 Alabama answers after the personal
 # exemption was added beside the maximum standard deduction.
-CHANGED_OUT = 3279
+# Plus 42 answers after Ley 180-2025 added pr-ley60-6060-05 (38 post-2025/no-year
+# searches newly listing that row; 4 already-allowlisted keys whose out hash also moved).
+CHANGED_OUT = 3321
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -351,7 +402,11 @@ def _allowed(key: str) -> tuple[bool, bool]:
         return True, False
     if kind == "search":
         year = rest[2]
-        return (year != "None" and 2019 <= int(year) <= 2025) or is_corrected(key), False
+        return (
+            (year != "None" and 2019 <= int(year) <= 2025)
+            or is_corrected(key)
+            or key in NEW_SINCE_BASE_SEARCHES
+        ), False
     if kind == "resource":
         return (
             key in CORRECTED_RESOURCES or key in SLASH_RESOURCES or key == "resource|OK|2355"
@@ -405,7 +460,9 @@ def _compare(
 def test_the_fixture_pins_exactly_the_base_commits_calls() -> None:
     fixture = read_fixture()
     assert fixture["head"] == BASE_COMMIT
-    base_rows = [s for s in load_catalog().statutes if s["id"] not in PRIOR_YEAR_IDS]
+    base_rows = [
+        s for s in load_catalog().statutes if s["id"] not in PRIOR_YEAR_IDS | NEW_SINCE_BASE_IDS
+    ]
     assert set(fixture["pins"]) == set(plan(base_rows, SUPPORTED_STATE_JURISDICTIONS))
     assert len(fixture["pins"]) == 26_709
 

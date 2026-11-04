@@ -245,14 +245,14 @@
   "lookup|pr-ley60-6020-10|PR|None|en": "c4d760e7e8f0ce05f60697f4b49c114ceb934051006d3abdc485d7cfdd36c0fb",
   "lookup|pr-ley60-6020-10|PR|None|es": "c070c72850e8c3498f2d5e27627dbc8d97aa6bb68a0e7877b338c138309bb1f2",
   "resource|PR|6020.10": "2f77d786c463476201c7b0912a85bc573c107dfc6931b3a2dbf72e8c9fc9666c",
-  "search|Puerto Rico|None|None|5": "5ab561fb8316a03bedad2c72fc473d8dccaa437a2b5a567901484133378b7250",
-  "search|Puerto Rico|PR|None|5": "23471c6dbaf49ddc4ad8f96363b9f1df3ede853fd0b4bc7660a3eb128f682372",
+  "search|Puerto Rico|None|None|5": "87f8df163d6520e1ec32a1ce66c53703eff43d27dba9b7da9bdc3d7678a57a9c",
+  "search|Puerto Rico|PR|None|5": "07c9c5dcb85af9d478dfec42352c342fea625065c27ef4c76284e7a0b4e95f53",
   "search|credit|None|None|0": "cb287b472b80faa219b0a92005361f3fc78121313634fdc955ed4083608c9f46",
   "search|credit|PR|None|0": "62af4c6d13497402460908464df59a880c98159c7a2bfd54bdbb699edc7e7c6c",
-  "search|exempt|None|None|5": "046bd5c081d35c80c3335e106a3eb2d6b41956faf189e31ee647179224484694",
-  "search|exempt|PR|None|5": "38b70e425372e1d0f19813c7a9efbe9b6fb841b1d0a020ca22d81b81c2e88b8c",
-  "search|income|PR|None|5": "ba6cd2cd3cce1a460b4f9e6ee4acc45263657b69074e3e3e432b3503a88761c5",
-  "search|ingreso|PR|None|5": "12c2bc17ba2c7a33eb74b482e4d8d42ae543dcc84424628491909c9353aa60f6",
+  "search|exempt|None|None|5": "3a8efa02c9df6f67b2d8e38351ad3fe0c93a6c2035ba9876d8906cd72c74ac04",
+  "search|exempt|PR|None|5": "1413cd550ecea015b701134029b8a27e5077b29d5a4b77a1c34caad199396215",
+  "search|income|PR|None|5": "1f70b341265dcf4e59a4fb3219be783a25c7b11e54ab1019f992c6546304022b",
+  "search|ingreso|PR|None|5": "eb271def7ef915fcb9c34867ea315f58ff9574b9acf43f3e2817f2d21d211603",
   "search|residente|PR|None|5": "219311b94dd91225f08957d79912149d034d81d09efa3d75e23579711a9c0092"
  }
 }
