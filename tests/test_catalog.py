@@ -610,6 +610,8 @@ RETRIEVED = {
     "TN": "2026-11-02",
     # TIR 2025-001 was read from the owner PDF on this date.
     "NH": "2026-11-02",
+    # Alabama Form 40 booklet (24f40bk) re-read for personal exemption and std-ded chart.
+    "AL": "2026-11-02",
 }
 # Sources read as text without their bytes, so no hash. None remain.
 READ_WITHOUT_BYTES: set[str] = set()

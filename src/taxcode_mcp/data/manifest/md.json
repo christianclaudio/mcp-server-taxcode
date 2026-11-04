@@ -66,7 +66,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Tax-General section 10-105 matches the 2025 brackets, including 6.25 and 6.50 percent, and imposes an additional 2 percent on net capital gain that this table does not compute. It does not print the 2024 schedule, the standard deduction, or the personal exemption.",
+      "verification_note": "Tax-General section 10-105 as amended by the Budget Reconciliation and Financing Act of 2025 (Chapter 604 / HB 352) matches the 2025 brackets, including 6.25 and 6.50 percent, and for tax years 2025 through 2028 imposes an additional 2 percent on net capital gain for individuals with federal AGI over $350,000 (exclusions in the Act are not modeled). It does not print the 2024 schedule, the standard deduction, or the personal exemption.",
       "year_sources": [
         {
           "tax_year": 2025,
@@ -82,6 +82,18 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "17bc9f77e055c0570daee8840921e635b1b0952a39d54f28e33516699b9b6ba5"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "capital_gains_surtax_2025.rate": 0.02,
+            "capital_gains_surtax_2025.fagi_over": 350000.0,
+            "capital_gains_surtax_2025.through_year": 2028
+          },
+          "url": "https://mgaleg.maryland.gov/2025RS/Chapters_noln/CH_604_hb0352e.pdf",
+          "official": true,
+          "retrieved": "2026-11-02",
+          "content_sha256": "7b8ecc16640cc2fb635d309cd36ab23b41773c6b144b2af2db2b332c39e0b004"
         }
       ]
     }

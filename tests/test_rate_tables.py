@@ -184,6 +184,11 @@ CASES: list[tuple[str, Callable[[dict[str, Any]], Any], str]] = [
     ),
     # maryland deduction
     ("MD", _set("params.standard_deduction", 1.0), "standard_deduction: must be an object"),
+    (
+        "MD",
+        _set("params.capital_gains_surtax_2025.through_year", 2024),
+        "capital_gains_surtax_2025.through_year: must be >= 2025",
+    ),
     ("MD", _drop("params.standard_deduction.minimum"), "fields must be exactly"),
     ("MD", _set("params.standard_deduction.percent_of_agi", 15.0), "must be a float rate"),
     ("MD", _set("params.standard_deduction.minimum.single", 1), "must be a non-negative"),
