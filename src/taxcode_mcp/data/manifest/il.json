@@ -67,8 +67,7 @@
         {
           "tax_year": 2024,
           "values": {
-            "exemption.single": 2775.0,
-            "exemption.mfj": 5550.0
+            "exemption.single": 2775.0
           },
           "url": "https://taxarchive.illinois.gov/research/dated-publications/informational-bulletins-archive/fy-2024-18.html",
           "official": true,
