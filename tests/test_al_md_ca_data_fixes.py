@@ -97,9 +97,9 @@ def test_ca_rtc_17041_statute_names_mhst_through_2024_and_bhst_from_2025() -> No
     en = db.lookup_statute("ca-rtc-17041", jurisdiction="CA", lang="en")
     es = db.lookup_statute("ca-rtc-17041", jurisdiction="CA", lang="es")
     assert en is not None and es is not None
-    for row in (en, es):
-        assert "17043" in row["operative_text"]
-        assert "Mental Health Services Tax" in row["operative_text"]
-        assert "2024" in row["operative_text"]
-        assert "Behavioral Health Services Tax" in row["operative_text"]
-        assert "2025" in row["operative_text"]
+    assert "17043" in en["operative_text"]
+    assert "Mental Health Services Tax through 2024" in en["operative_text"]
+    assert "Behavioral Health Services Tax from 2025" in en["operative_text"]
+    assert "17043" in es["operative_text"]
+    assert "Mental Health Services Tax hasta 2024" in es["operative_text"]
+    assert "Behavioral Health Services Tax desde 2025" in es["operative_text"]

@@ -96,8 +96,9 @@ MANIFEST_KINDS = frozenset({"statute", "publication", "rate_table", "federal_tab
 # Kinds whose entries describe a data table and so may carry ``year_sources``.
 TABLE_KINDS = ("rate_table", "federal_table")
 # Optional last field of a table entry (a kind in TABLE_KINDS): the sources of the figures
-# for other tax years than ``url``'s. Each names the table values it confirms by their path
-# in the rate table's ``params`` (or in the federal table's document).
+# for other tax years or corroborating second sources on ``url``'s year. Each names the
+# table values it confirms by their path in the rate table's ``params`` (or in the federal
+# table's document).
 YEAR_SOURCES = "year_sources"
 # Optional field of a ``rate_table`` whose ``verification`` is still ``not_recorded``:
 # why that table could not be confirmed. It sits after ``verification`` and before
