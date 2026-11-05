@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from taxcode_mcp.db import db
 from taxcode_mcp.tools import compliance
 
 
@@ -90,3 +91,15 @@ def test_california_top_rate_prose_names_twelve_three_plus_one() -> None:
     assert high["estimated_state_tax"] > mid["estimated_state_tax"]
     delta_tax = high["estimated_state_tax"] - mid["estimated_state_tax"]
     assert abs(delta_tax - 100.0 * 0.133) < 0.02
+
+
+def test_ca_rtc_17041_statute_names_mhst_through_2024_and_bhst_from_2025() -> None:
+    en = db.lookup_statute("ca-rtc-17041", jurisdiction="CA", lang="en")
+    es = db.lookup_statute("ca-rtc-17041", jurisdiction="CA", lang="es")
+    assert en is not None and es is not None
+    for row in (en, es):
+        assert "17043" in row["operative_text"]
+        assert "Mental Health Services Tax" in row["operative_text"]
+        assert "2024" in row["operative_text"]
+        assert "Behavioral Health Services Tax" in row["operative_text"]
+        assert "2025" in row["operative_text"]
