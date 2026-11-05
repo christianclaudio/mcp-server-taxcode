@@ -342,6 +342,19 @@
     },
     {
       "kind": "statute",
+      "id": "pr-ley60-6060-05",
+      "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0180-2025.pdf",
+      "edition": "as_enacted",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-04",
+      "content_sha256": "e64234c103e1d53eec153922dc8acea18aa382e2ac646e2d7fdc679d1452bc6f",
+      "enacting_law": "Ley 180-2025, Art. 1 (amends Ley 60-2019 Sec. 6060.05(c))",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "statute",
       "id": "pr-ley60-6070-55",
       "url": "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf",
       "edition": "not_recorded",

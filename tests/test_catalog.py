@@ -154,7 +154,8 @@ def test_manifest_records_unknowns_explicitly() -> None:
         if e["kind"] == "statute" and e["content_sha256"] != NOT_RECORDED
     }
     # ok-stat-68-2355 was hashed when its OSCN cite was corrected to 68 O.S. § 2355.
-    ok_hashed = {"ok-stat-68-2355"}
+    # pr-ley60-6060-05 was hashed from the OGP certified PDF of Ley 180-2025 (fetched 2026-11-04).
+    ok_hashed = {"ok-stat-68-2355", "pr-ley60-6060-05"}
     assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
     hashed = {
         e["kind"]
@@ -456,8 +457,10 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 180
+    assert len(editions) == 181
     assert editions.pop("pr-act22-2012") == "amended_compilation"
+    # Ley 180-2025 certified copy (as enacted) that amends Sec. 6060.05(c).
+    assert editions.pop("pr-ley60-6060-05") == "as_enacted"
     # The prior-year federal versions name theirs: an annual code edition (or the eCFR) for
     # the verbatim ones, the enacted public law for the summaries.
     for row_id in sorted(PRIOR_YEAR_IDS):
