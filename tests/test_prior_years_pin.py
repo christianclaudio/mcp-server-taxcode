@@ -41,12 +41,14 @@ import copy
 import re
 from collections.abc import Collection
 from typing import Any
+from unittest.mock import patch
 
 from fastmcp import Client
 
 from scripts.build_corrected_pins import full_sha, read_corrected
 from scripts.build_prior_years_pins import BASE_COMMIT, answer, pin, plan, read_fixture
 from taxcode_mcp.catalog import load_catalog
+from taxcode_mcp.db import db
 from taxcode_mcp.server import mcp
 from taxcode_mcp.tools.compliance import SUPPORTED_STATE_JURISDICTIONS
 
@@ -571,3 +573,28 @@ async def test_only_the_pointer_sentence_at_the_end_of_a_not_found_message_is_dr
         {**res, "query": _flip(res["query"], 0)},  # another field
     ):
         assert _problems(POINTED, changed) == [f"out {POINTED}"], changed
+
+
+async def test_new_since_base_searches_differ_only_by_the_inserted_row() -> None:
+    """Each NEW_SINCE_BASE_SEARCHES answer is the base answer plus the new row, nothing else.
+
+    Ranking is per row, so dropping NEW_SINCE_BASE_IDS from the ranked rows must give back
+    the exact pinned base answer: same IDs, same order, same paging fields.
+    """
+    pins: dict[str, list[str]] = read_fixture()["pins"]
+    calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
+    keys = sorted(NEW_SINCE_BASE_SEARCHES)
+    ranked = db.search_statutes
+
+    def without_new_rows(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
+        rows = ranked(**kw, limit=offset + limit + len(NEW_SINCE_BASE_IDS), offset=0)
+        kept = [r for r in rows if r["id"] not in NEW_SINCE_BASE_IDS]
+        return kept[offset : offset + limit]
+
+    async with Client(mcp) as client:
+        now = [_without_pointer(await answer(client, calls[k]))[0] for k in keys]
+        with patch.object(db, "search_statutes", without_new_rows):
+            base = [_without_pointer(await answer(client, calls[k]))[0] for k in keys]
+    for key, current, rebuilt in zip(keys, now, base, strict=True):
+        assert pin(current)[0] != pins[key][0], key
+        assert pin(rebuilt) == pins[key], key
