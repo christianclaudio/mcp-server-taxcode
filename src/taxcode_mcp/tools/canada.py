@@ -96,8 +96,7 @@ def _year_row(params: dict[str, Any], tax_year: int) -> dict[str, Any]:
     rows = {int(row["tax_year"]): row for row in params["years"]}
     if tax_year not in rows:
         raise SafetyViolationError(
-            f"Canada federal rates are held for tax years {min(rows)}-{max(rows)}; "
-            f"got {tax_year}."
+            f"Canada federal rates are held for tax years {min(rows)}-{max(rows)}; got {tax_year}."
         )
     row: dict[str, Any] = rows[tax_year]
     return row
@@ -312,14 +311,14 @@ def evaluate_canada(
         emigration_properties is not None or months_resident_in_last_120 is not None
     ):
         raise SafetyViolationError(
-            "emigration_properties and months_resident_in_last_120 need event=\"emigration\"."
+            'emigration_properties and months_resident_in_last_120 need event="emigration".'
         )
     if months_resident_in_last_120 is not None and not 0 <= months_resident_in_last_120 <= 120:
         raise SafetyViolationError("months_resident_in_last_120 must be between 0 and 120.")
     factual = is_domiciled or maintains_permanent_abode
     if emigrating and not factual:
         raise SafetyViolationError(
-            "event=\"emigration\" needs a factual resident of Canada before leaving "
+            'event="emigration" needs a factual resident of Canada before leaving '
             "(is_domiciled or maintains_permanent_abode)."
         )
     items = _properties(emigration_properties)
@@ -412,8 +411,7 @@ def evaluate_canada(
             "maintains_permanent_abode": maintains_permanent_abode,
             "sojourner_days_threshold": sojourner_days,
             "statutory_basis": (
-                "ITA s. 2(1), s. 250(1)(a), s. 114 and s. 128.1(4); CRA Income Tax Folio "
-                "S5-F1-C1"
+                "ITA s. 2(1), s. 250(1)(a), s. 114 and s. 128.1(4); CRA Income Tax Folio S5-F1-C1"
             ),
         },
         "domicile_audit_risk": {"risk_level": "high" if flags else "standard", "flags": flags},

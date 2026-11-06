@@ -595,9 +595,10 @@ def test_a_sojourner_of_183_days_is_deemed_resident() -> None:
 def test_income_tax_by_year_and_the_basic_personal_amount_phaseout() -> None:
     for year in range(2019, 2027):
         tax = _can(tax_year=year, federal_agi=100000.0)["tax_computation"]
-        assert tax["estimated_federal_tax"] == part_i_tax(YEARS[year], 100000.0)[
-            "estimated_federal_tax"
-        ]
+        assert (
+            tax["estimated_federal_tax"]
+            == part_i_tax(YEARS[year], 100000.0)["estimated_federal_tax"]
+        )
     assert "14.5%" in _can(tax_year=2025)["tax_computation"]["rate_description"]
     assert "from 14% to 33%" in _can(tax_year=2026)["tax_computation"]["rate_description"]
     bpa = YEARS[2024]["basic_personal_amount"]
