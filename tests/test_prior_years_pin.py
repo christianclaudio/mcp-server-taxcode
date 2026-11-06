@@ -39,7 +39,8 @@ from __future__ import annotations
 
 import copy
 import re
-from collections.abc import Collection
+from collections.abc import Collection, Iterator
+from contextlib import contextmanager
 from typing import Any
 from unittest.mock import patch
 
@@ -136,7 +137,10 @@ PRIOR_YEAR_IDS = {
 # Current rows added after BASE_COMMIT. Their lookup/resource keys are not in the base
 # fixture; exclude them from the plan equality check. Search answers that newly list them
 # are allowed via NEW_SINCE_BASE_SEARCHES.
-NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"})
+# The Canada (CAN) rows and CRA publications, added after BASE_COMMIT (see CANADA_COUNT).
+CANADA_IDS = frozenset(s["id"] for s in load_catalog().statutes if s["jurisdiction"] == "CAN")
+CANADA_PUBS = frozenset(p["id"] for p in load_catalog().publications if p["id"].startswith("can-"))
+NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"}) | CANADA_IDS
 # Searches (outside the 2019-2025 window already allowed) whose result lists newly include
 # pr-ley60-6060-05 after Ley 180-2025: "exempt"/"exenta" wording, "income"/"ingreso", and
 # "Puerto Rico" at offset 5 for tax years 2026-2028 (and no-year income/ingreso at offset 5).
@@ -215,15 +219,21 @@ CORRECTED_SEARCHES = frozenset(
 CORRECTED_A4: dict[str, tuple[str, str, str, tuple[int | None, ...]]] = {
     "pr-ley60-6020-10-2025": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", (2025,)),
     "pr-ley60-6020-10": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", (None, 2026, 2027, 2028)),
+    "ca-rtc-17041": (
+        "CA",
+        "Cal. Rev. & Tax Code § 17041",
+        "17041",
+        (None, 2024, 2025, 2026, 2027, 2028),
+    ),
 }
 # The resource read of a section answers with its current row.
-CORRECTED_RESOURCES = frozenset({"resource|PR|6020.10"})
+CORRECTED_RESOURCES = frozenset({"resource|PR|6020.10", "resource|CA|17041"})
 # Resource reads that newly resolve after the {section*} template fix (issue #41).
 # Base pins recorded Unknown resource / not found; content is unchanged statute text.
 SLASH_RESOURCES = frozenset({"resource|IL|5/201", "resource|IL|5/301", "resource|IL|5/1501(a)(20)"})
-# Answers pinned in full in fixtures/prior_years/corrected_answers.json: 180 lookups by a
-# corrected row's id, 64 by its citation or bare section, 9 searches and 1 resource read.
-CORRECTED_COUNT = 254
+# Answers pinned in full in fixtures/prior_years/corrected_answers.json: 240 lookups by a
+# corrected row's id, 112 by its citation or bare section, 9 searches and 2 resource reads.
+CORRECTED_COUNT = 363
 
 
 def is_corrected(key: str) -> bool:
@@ -287,7 +297,17 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # exemption was added beside the maximum standard deduction.
 # Plus 42 answers after Ley 180-2025 added pr-ley60-6060-05 (38 post-2025/no-year
 # searches newly listing that row; 4 already-allowlisted keys whose out hash also moved).
-CHANGED_OUT = 3321
+# Plus 75 answers after ca-rtc-17041 named Mental Health Services Tax through 2024 and
+# Behavioral Health Services Tax from 2025 (72 lookups, 1 resource read, and 2 2024 searches;
+# the 2025-2028 searches were already in the changed set).
+# Plus 71 answers that now list a Canada (CAN) row or CRA publication: the CANADA_COUNT ones
+# outside the windows, checked byte for byte without those rows, and searches the windows
+# above already allow to change.
+CHANGED_OUT = 3467
+# Answers that newly list a Canada row or publication: a search in every jurisdiction ranks
+# the Canada rows among the others, and the newest-first publication pages list the CRA
+# guidance. Each is the pinned base answer, byte for byte, once the Canada rows are dropped.
+CANADA_COUNT = 68
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -426,6 +446,32 @@ def _allowed(key: str) -> tuple[bool, bool]:
     return out or is_corrected(key), versions
 
 
+def _lists_canada(key: str) -> bool:
+    """Whether a key's answer may list a Canada row or publication."""
+    kind, *rest = key.split("|")
+    return kind == "pubs" or (kind == "search" and rest[1] == "None")
+
+
+@contextmanager
+def _without_canada() -> Iterator[None]:
+    """Answers as at BASE_COMMIT: searches and publication pages without the Canada rows."""
+    search, listed = db.search_statutes, db.list_publications
+
+    def search_base(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
+        rows = search(**kw, limit=offset + limit + len(CANADA_IDS), offset=0)
+        return [r for r in rows if r["id"] not in CANADA_IDS][offset : offset + limit]
+
+    def list_base(*, limit: int = 10, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
+        rows = listed(**kw, limit=offset + limit + len(CANADA_PUBS), offset=0)
+        return [r for r in rows if r["id"] not in CANADA_PUBS][offset : offset + limit]
+
+    with (
+        patch.object(db, "search_statutes", search_base),
+        patch.object(db, "list_publications", list_base),
+    ):
+        yield
+
+
 def _compare(
     key: str, raw: Any, base: list[str], full: str | None
 ) -> tuple[list[str], bool, bool, bool]:
@@ -481,7 +527,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     corrected = read_corrected()
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
     unexpected: list[str] = []
-    changed_out = changed_versions = pointed = 0
+    changed_out = changed_versions = pointed = canada = 0
     ga_pre2019_amount_mismatches: list[str] = []
     ut_2024_amount_mismatches: list[str] = []
     async with Client(mcp) as client:
@@ -490,6 +536,11 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
             problems, out_changed, versions_changed, has_pointer = _compare(
                 key, raw, pins[key], corrected.get(key)
             )
+            if problems and _lists_canada(key):
+                with _without_canada():
+                    base_raw = await answer(client, calls[key])
+                problems = _compare(key, base_raw, pins[key], corrected.get(key))[0]
+                canada += not problems
             unexpected += problems
             changed_out += out_changed
             changed_versions += versions_changed
@@ -510,6 +561,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     assert ut_2024_amount_mismatches == []
     # See CHANGED_OUT. Versions are unchanged at 2072.
     assert (changed_out, changed_versions) == (CHANGED_OUT, 2072)
+    assert canada == CANADA_COUNT
     # Not-found lookups by id whose message names the row for that tax year.
     assert pointed == 288
 
@@ -575,11 +627,26 @@ async def test_only_the_pointer_sentence_at_the_end_of_a_not_found_message_is_dr
         assert _problems(POINTED, changed) == [f"out {POINTED}"], changed
 
 
+BASE_CA_RTC_17041_SNIPPETS = {
+    "en": (
+        "Imposes graduated income tax rates on California taxable income ranging from 1% "
+        "to 12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income "
+        "exceeding $1,000,000, creating a top marginal individual rate of 13.3%."
+    ),
+    "es": (
+        "Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, "
+        "más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M "
+        "(Proposición 63), para una tasa marginal máxima de 13.3%."
+    ),
+}
+
+
 async def test_new_since_base_searches_differ_only_by_the_inserted_row() -> None:
     """Each NEW_SINCE_BASE_SEARCHES answer is the base answer plus the new row, nothing else.
 
-    Ranking is per row, so dropping NEW_SINCE_BASE_IDS from the ranked rows must give back
-    the exact pinned base answer: same IDs, same order, same paging fields.
+    Ranking is per row, so dropping NEW_SINCE_BASE_IDS from the ranked rows (and restoring
+    the base snippet on ca-rtc-17041 where it enters the page) must give back the exact
+    pinned base answer: same IDs, same order, same paging fields.
     """
     pins: dict[str, list[str]] = read_fixture()["pins"]
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
@@ -588,7 +655,15 @@ async def test_new_since_base_searches_differ_only_by_the_inserted_row() -> None
 
     def without_new_rows(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
         rows = ranked(**kw, limit=offset + limit + len(NEW_SINCE_BASE_IDS), offset=0)
-        kept = [r for r in rows if r["id"] not in NEW_SINCE_BASE_IDS]
+        kept = [
+            (
+                {**r, "snippet": BASE_CA_RTC_17041_SNIPPETS[r["snippet_language"]]}
+                if r["id"] == "ca-rtc-17041"
+                else r
+            )
+            for r in rows
+            if r["id"] not in NEW_SINCE_BASE_IDS
+        ]
         return kept[offset : offset + limit]
 
     async with Client(mcp) as client:

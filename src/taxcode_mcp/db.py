@@ -67,20 +67,42 @@ def uscode_edition(source_url: str | None) -> int | None:
     return None
 
 
-def is_official_text(source_url: str | None) -> bool:
-    """True for rows holding official US Code text.
+# Canada rows quote the Justice Canada consolidated XML (justicecanada/laws-lois-xml) at one
+# immutable commit: an Act (eng/acts, fra/lois) or a regulation (eng/regulations,
+# fra/reglements). A branch name or a short commit id never matches.
+JUSTICE_CANADA_URL_RE = re.compile(
+    r"https://raw\.githubusercontent\.com/justicecanada/laws-lois-xml/(?P<commit>[0-9a-f]{40})/"
+    r"(?:eng/acts|fra/lois|eng/regulations|fra/reglements)/[^/]+\.xml"
+)
 
-    That is the pinned OLRC release point, or an annual edition that a prior-year row
-    quotes (:data:`USCODE_EDITION_URL_PREFIXES`). Public-law PDFs never match: rows citing
-    one hold a summary.
+
+def justice_canada_commit(source_url: str | None) -> str | None:
+    """The laws-lois-xml commit a Canada row quotes, or ``None`` for any other URL."""
+    match = JUSTICE_CANADA_URL_RE.fullmatch(source_url or "")
+    return None if match is None else match["commit"]
+
+
+def is_official_text(source_url: str | None) -> bool:
+    """True for rows holding official statutory text.
+
+    That is the pinned OLRC release point, an annual US Code edition that a prior-year row
+    quotes (:data:`USCODE_EDITION_URL_PREFIXES`), or a Justice Canada consolidated XML file
+    pinned to a commit (:data:`JUSTICE_CANADA_URL_RE`). Public-law PDFs never match: rows
+    citing one hold a summary.
     """
-    return source_url == USLM_TITLE26_SOURCE_URL or uscode_edition(source_url) is not None
+    return (
+        source_url == USLM_TITLE26_SOURCE_URL
+        or uscode_edition(source_url) is not None
+        or justice_canada_commit(source_url) is not None
+    )
 
 
 def statute_labels(source_url: str | None) -> dict[str, Any]:
     """The content labels of a statute row, from its source URL."""
     return reference_labels(
-        official_text=is_official_text(source_url), code_edition=uscode_edition(source_url)
+        official_text=is_official_text(source_url),
+        code_edition=uscode_edition(source_url),
+        canada_commit=justice_canada_commit(source_url),
     )
 
 
@@ -192,6 +214,7 @@ JURISDICTION_NAMES: dict[str, str] = {
     "west virginia": "WV",
     "wisconsin": "WI",
     "wyoming": "WY",
+    "canada": "CAN",
 }
 
 STATUTE_CORPORA: frozenset[str] = frozenset(str(s["corpus"]).upper() for s in INITIAL_STATUTES)
@@ -342,6 +365,64 @@ def pick_snippet(
     return "", texts[0][0]
 
 
+def snippet_texts(
+    lang: str, jurisdiction: str, text_en: str | None, text_es: str | None, text_fr: str | None
+) -> list[tuple[str, str | None]]:
+    """The texts a search snippet is taken from, in preference order, for ``lang``.
+
+    ``"en"`` prefers English and anything else Spanish, as before; a row with a French text
+    offers it after the preferred one. ``"fr"`` prefers French; a row without one falls back
+    to its official language (Spanish for Puerto Rico, else English), then the other.
+    """
+    french = [("fr", text_fr)] if text_fr else []
+    if lang == "fr":
+        first, second = (("es", text_es), ("en", text_en))
+        if jurisdiction != "PR":
+            first, second = second, first
+        return [*french, first, second]
+    if lang == "en":
+        return [("en", text_en), *french, ("es", text_es)]
+    return [("es", text_es), ("en", text_en), *french]
+
+
+def language_fallback(used: str) -> dict[str, Any]:
+    """What a ``lang="fr"`` lookup of a row with no French text answered with instead."""
+    return {
+        "requested": "fr",
+        "used": used,
+        "en": (
+            "This record has no French text (only the Canada rows do); operative_text is in "
+            f"its official language, {used!r}."
+        ),
+        "es": (
+            "Este registro no tiene texto en francés (solo las filas de Canadá lo tienen); "
+            f"operative_text está en su idioma oficial, {used!r}."
+        ),
+        "fr": (
+            "Cet enregistrement n’a pas de texte français (seules les lignes du Canada en ont); "
+            f"operative_text est dans sa langue officielle, {used!r}."
+        ),
+    }
+
+
+# The statutes table with each row's French text (NULL when it has none), under the same name
+# so the queries that read it are unchanged.
+STATUTES_WITH_FRENCH = (
+    "(SELECT st.*, fr.text_fr FROM statutes AS st "
+    "LEFT JOIN statutes_fr AS fr ON fr.id = st.id) AS statutes"
+)
+
+
+def _write_french(conn: duckdb.DuckDBPyConnection, statute: dict[str, Any]) -> None:
+    """Store ``statute``'s French text, or clear it when the row has none."""
+    conn.execute("DELETE FROM statutes_fr WHERE id = ?;", [statute["id"]])
+    if statute.get("text_fr"):
+        conn.execute(
+            "INSERT INTO statutes_fr (id, text_fr) VALUES (?, ?);",
+            [statute["id"], statute["text_fr"]],
+        )
+
+
 class TaxDatabase:
     """Thread-safe DuckDB manager for tax statutes and administrative guidance."""
 
@@ -386,6 +467,13 @@ class TaxDatabase:
                     );
                     """
                 )
+                # The official French text of the rows that have one (Canada), by statute id.
+                # A table of its own keeps the statutes table, and any file-backed database
+                # made before it, unchanged.
+                conn.execute(
+                    "CREATE TABLE IF NOT EXISTS statutes_fr "
+                    "(id VARCHAR PRIMARY KEY, text_fr VARCHAR);"
+                )
                 conn.execute(
                     """
                     CREATE TABLE IF NOT EXISTS publications (
@@ -425,6 +513,8 @@ class TaxDatabase:
                             s["cross_references"],
                         ],
                     )
+                    if s.get("text_fr"):
+                        _write_french(conn, s)
 
                 # Add seed publications missing from the table, so existing file-backed DBs
                 # pick up new seed rows. Rows already present (same id or doc_number) are kept.
@@ -490,11 +580,11 @@ class TaxDatabase:
         with self._lock:
             conn = self._get_read_conn()
             try:
-                sql = """
+                sql = f"""
                     SELECT id, jurisdiction, corpus, citation, section, title,
                            text_es, text_en, effective_year, superseded_year,
-                           source_url, cross_references
-                    FROM statutes
+                           source_url, cross_references, text_fr
+                    FROM {STATUTES_WITH_FRENCH}
                     WHERE (
                         LOWER(id) = LOWER(?)
                         OR LOWER(citation) = LOWER(?)
@@ -532,7 +622,18 @@ class TaxDatabase:
                 if not result:
                     return None
 
-                text = result[7] if lang.lower() == "en" else result[6]
+                language = lang.lower()
+                french = result[12] or ""
+                official_language = "es" if result[1] == "PR" else "en"
+                fallback: dict[str, Any] | None = None
+                if language == "fr" and not french:
+                    # No French text: answer in the row's official language and say so.
+                    fallback = language_fallback(official_language)
+                    language = official_language
+                if language == "fr":
+                    text = french
+                else:
+                    text = result[7] if language == "en" else result[6]
                 matched_citation = result[3]
 
                 history_rows = conn.execute(
@@ -555,7 +656,7 @@ class TaxDatabase:
                     for h in history_rows
                 ]
 
-                return {
+                record: dict[str, Any] = {
                     "id": result[0],
                     "jurisdiction": result[1],
                     "corpus": result[2],
@@ -565,6 +666,7 @@ class TaxDatabase:
                     "operative_text": text,
                     "text_es": result[6],
                     "text_en": result[7],
+                    **({"text_fr": french} if french else {}),
                     "effective_year": result[8],
                     "superseded_year": result[9],
                     "is_current": result[9] is None,
@@ -572,10 +674,13 @@ class TaxDatabase:
                     "available_versions": available_versions,
                     "source_url": result[10],
                     "cross_references": result[11] or [],
-                    "language": lang.lower(),
-                    "official_language": "es" if result[1] == "PR" else "en",
+                    "language": language,
+                    "official_language": official_language,
+                    **({"official_languages": ["en", "fr"]} if french else {}),
+                    **({"language_fallback": fallback} if fallback else {}),
                     **statute_labels(result[10]),
                 }
+                return record
             finally:
                 if self._mem_conn is None:
                     conn.close()
@@ -659,15 +764,18 @@ class TaxDatabase:
         with self._lock:
             conn = self._get_read_conn()
             try:
+                # The French text joins the haystack only when a row has one, so other rows'
+                # haystacks, and so their matches and ranks, are unchanged.
                 haystack = (
                     "LOWER(COALESCE(title, '') || ' ' || COALESCE(citation, '') || ' ' || "
-                    "COALESCE(text_en, '') || ' ' || COALESCE(text_es, ''))"
+                    "COALESCE(text_en, '') || ' ' || COALESCE(text_es, '') || "
+                    "CASE WHEN COALESCE(text_fr, '') = '' THEN '' ELSE ' ' || text_fr END)"
                 )
                 sql = f"""
                     SELECT id, jurisdiction, corpus, citation, section, title,
                            text_es, text_en, effective_year, superseded_year,
-                           source_url, cross_references, {haystack} AS hay
-                    FROM statutes
+                           source_url, cross_references, {haystack} AS hay, text_fr
+                    FROM {STATUTES_WITH_FRENCH}
                     WHERE ({" OR ".join(f"{haystack} LIKE ?" for _ in patterns)})
                 """
                 params: list[Any] = list(patterns)
@@ -697,15 +805,11 @@ class TaxDatabase:
 
                 rows.sort(key=rank)
                 output: list[dict[str, Any]] = []
-                preferred = "en" if lang.lower() == "en" else "es"
+                wanted = lang.lower()
                 start = max(offset, 0)
                 for r in rows[start : start + max(limit, 0)]:
-                    by_lang = {"en": r[7], "es": r[6]}
-                    other = "es" if preferred == "en" else "en"
                     snippet, snippet_lang = pick_snippet(
-                        [(preferred, by_lang[preferred]), (other, by_lang[other])],
-                        phrase,
-                        terms,
+                        snippet_texts(wanted, r[1], r[7], r[6], r[13]), phrase, terms
                     )
                     output.append(
                         {
@@ -807,6 +911,7 @@ class TaxDatabase:
                         statute.get("cross_references", []),
                     ],
                 )
+                _write_french(conn, statute)
             finally:
                 if self._mem_conn is None:
                     conn.close()
@@ -851,6 +956,7 @@ class TaxDatabase:
                         statute.get("cross_references", []),
                     ],
                 )
+                _write_french(conn, statute)
             finally:
                 if self._mem_conn is None:
                     conn.close()
@@ -892,6 +998,7 @@ class TaxDatabase:
         with self._lock:
             conn = self._get_write_conn()
             try:
+                conn.execute("DELETE FROM statutes_fr WHERE id = ?;", [statute_id])
                 res = conn.execute(
                     "DELETE FROM statutes WHERE id = ? RETURNING id;", [statute_id]
                 ).fetchone()
