@@ -215,15 +215,21 @@ CORRECTED_SEARCHES = frozenset(
 CORRECTED_A4: dict[str, tuple[str, str, str, tuple[int | None, ...]]] = {
     "pr-ley60-6020-10-2025": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", (2025,)),
     "pr-ley60-6020-10": ("PR", "Ley 60-2019 Sec. 6020.10", "6020.10", (None, 2026, 2027, 2028)),
+    "ca-rtc-17041": (
+        "CA",
+        "Cal. Rev. & Tax Code § 17041",
+        "17041",
+        (None, 2024, 2025, 2026, 2027, 2028),
+    ),
 }
 # The resource read of a section answers with its current row.
-CORRECTED_RESOURCES = frozenset({"resource|PR|6020.10"})
+CORRECTED_RESOURCES = frozenset({"resource|PR|6020.10", "resource|CA|17041"})
 # Resource reads that newly resolve after the {section*} template fix (issue #41).
 # Base pins recorded Unknown resource / not found; content is unchanged statute text.
 SLASH_RESOURCES = frozenset({"resource|IL|5/201", "resource|IL|5/301", "resource|IL|5/1501(a)(20)"})
-# Answers pinned in full in fixtures/prior_years/corrected_answers.json: 180 lookups by a
-# corrected row's id, 64 by its citation or bare section, 9 searches and 1 resource read.
-CORRECTED_COUNT = 254
+# Answers pinned in full in fixtures/prior_years/corrected_answers.json: 240 lookups by a
+# corrected row's id, 112 by its citation or bare section, 9 searches and 2 resource reads.
+CORRECTED_COUNT = 363
 
 
 def is_corrected(key: str) -> bool:
@@ -287,7 +293,10 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # exemption was added beside the maximum standard deduction.
 # Plus 42 answers after Ley 180-2025 added pr-ley60-6060-05 (38 post-2025/no-year
 # searches newly listing that row; 4 already-allowlisted keys whose out hash also moved).
-CHANGED_OUT = 3321
+# Plus 75 answers after ca-rtc-17041 named Mental Health Services Tax through 2024 and
+# Behavioral Health Services Tax from 2025 (72 lookups, 1 resource read, and 2 2024 searches;
+# the 2025-2028 searches were already in the changed set).
+CHANGED_OUT = 3396
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -575,11 +584,26 @@ async def test_only_the_pointer_sentence_at_the_end_of_a_not_found_message_is_dr
         assert _problems(POINTED, changed) == [f"out {POINTED}"], changed
 
 
+BASE_CA_RTC_17041_SNIPPETS = {
+    "en": (
+        "Imposes graduated income tax rates on California taxable income ranging from 1% "
+        "to 12.3%, plus a 1% Mental Health Services Tax surcharge on taxable income "
+        "exceeding $1,000,000, creating a top marginal individual rate of 13.3%."
+    ),
+    "es": (
+        "Grava el ingreso tributable de California con tasas escalonadas del 1% al 12.3%, "
+        "más 1% de recargo para servicios de salud mental sobre ingresos mayores a $1M "
+        "(Proposición 63), para una tasa marginal máxima de 13.3%."
+    ),
+}
+
+
 async def test_new_since_base_searches_differ_only_by_the_inserted_row() -> None:
     """Each NEW_SINCE_BASE_SEARCHES answer is the base answer plus the new row, nothing else.
 
-    Ranking is per row, so dropping NEW_SINCE_BASE_IDS from the ranked rows must give back
-    the exact pinned base answer: same IDs, same order, same paging fields.
+    Ranking is per row, so dropping NEW_SINCE_BASE_IDS from the ranked rows (and restoring
+    the base snippet on ca-rtc-17041 where it enters the page) must give back the exact
+    pinned base answer: same IDs, same order, same paging fields.
     """
     pins: dict[str, list[str]] = read_fixture()["pins"]
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
@@ -588,7 +612,15 @@ async def test_new_since_base_searches_differ_only_by_the_inserted_row() -> None
 
     def without_new_rows(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
         rows = ranked(**kw, limit=offset + limit + len(NEW_SINCE_BASE_IDS), offset=0)
-        kept = [r for r in rows if r["id"] not in NEW_SINCE_BASE_IDS]
+        kept = [
+            (
+                {**r, "snippet": BASE_CA_RTC_17041_SNIPPETS[r["snippet_language"]]}
+                if r["id"] == "ca-rtc-17041"
+                else r
+            )
+            for r in rows
+            if r["id"] not in NEW_SINCE_BASE_IDS
+        ]
         return kept[offset : offset + limit]
 
     async with Client(mcp) as client:
