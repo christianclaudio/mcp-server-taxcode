@@ -1,5 +1,7 @@
 # Full Statutory Corpus: MA
 
+Unofficial bilingual reference summaries; not official statutory text. / Resúmenes bilingües de referencia no oficiales; no son texto estatutario oficial.
+
 ## Mass. Const. amend. art. XLIV: Fair Share Amendment (4% Millionaires' Surtax)
 `Mass. Const. > Amendments > Article XLIV`
 
@@ -26,3 +28,111 @@ Defines resident as any natural person domiciled in Massachusetts, or non-domici
 
 ### Español
 Define residente como persona domiciliada en Massachusetts o no domiciliada que mantenga un lugar permanente de morada y pase más de 183 días en el estado.
+
+## M.G.L. c. 62 § 2: Gross income and Parts A, B and C
+`MA > Individual income tax > Gross income and Parts A, B and C > 62-2`
+
+### English
+Massachusetts starts with federal gross income subject to state modifications, then classifies income into Parts A, B and C. Interest, dividends, short-term gains, ordinary income and long-term gains must be classified correctly because rates and deductions differ. Federal AGI is not the final state base.
+
+### Español
+Massachusetts parte del ingreso bruto federal con modificaciones estatales y clasifica ingresos en Partes A, B y C. Intereses, dividendos, ganancias a corto plazo, ingreso ordinario y ganancias a largo plazo requieren clasificación correcta porque difieren tasas y deducciones. El ingreso ajustado federal no es la base estatal final.
+
+## M.G.L. c. 62 § 3(B)(b): Personal and dependent exemptions
+`MA > Individual income tax > Personal and dependent exemptions > 62-3(B)(b)`
+
+### English
+For 2025 the personal exemption is $4,400 for a single filer and $8,800 jointly, with separate head-of-household, age, blindness and dependent provisions. These reduce income rather than tax dollar for dollar. Nonresident and part-year computations can limit or prorate amounts.
+
+### Español
+Para 2025 la exención personal es $4,400 para solteros y $8,800 en conjunta, con reglas para jefes de familia, edad, ceguera y dependientes. Reduce ingreso, no impuesto dólar por dólar. Los cálculos de no residentes y residentes parciales pueden limitar o prorratear importes.
+
+## M.G.L. c. 62 § 3(B)(a)(9): Rental deduction: $4,000 cap from 2023
+`MA > Individual income tax > Rental deduction: $4,000 cap from 2023 > 62-3(B)(a)(9)`
+
+### English
+Eligible renters may deduct 50% of rent for a Massachusetts principal residence up to $4,000 per return from 2023, or $2,000 married filing separately. Rent for a principal residence outside the state does not qualify. This increase from $3,000 is a deduction-cap change, not a refundable credit.
+
+### Español
+Los inquilinos elegibles pueden deducir el 50% del alquiler de vivienda principal en Massachusetts hasta $4,000 por declaración desde 2023, o $2,000 en matrimonio separado. No califica vivienda principal fuera del estado. El aumento desde $3,000 cambia una deducción, no crea crédito reembolsable.
+
+## M.G.L. c. 62 § 3(B)(a)(9): Rental deduction: 2022 $3,000 cap
+`MA > Individual income tax > Rental deduction: 2022 $3,000 cap > 62-3(B)(a)(9)`
+
+### English
+For 2022, eligible renters could deduct 50% of Massachusetts principal-residence rent up to $3,000 per return or $1,500 married filing separately. The dated 2023 DOR instructions expressly identify these former caps when explaining the increase from 2023. No earlier-year reconstruction is made.
+
+### Español
+Para 2022 podía deducirse el 50% del alquiler de vivienda principal en Massachusetts hasta $3,000 por declaración o $1,500 en matrimonio separado. Las instrucciones fechadas de 2023 identifican expresamente los límites anteriores al explicar el aumento desde 2023. No se reconstruyen años anteriores.
+
+## M.G.L. c. 62 § 4(a): Short-term capital gains rate from 2023
+`MA > Individual income tax > Short-term capital gains rate from 2023 > 62-4(a)`
+
+### English
+From 2023 short-term capital gains generally are taxed at 8.5%; ordinary interest and dividends generally receive 5% treatment and certain collectible gains retain special 12% treatment. The constitutional 4% surtax may apply above its indexed threshold. Not all Part A income is taxed at 8.5%.
+
+### Español
+Desde 2023 las ganancias a corto plazo generalmente tributan al 8.5%; intereses y dividendos ordinarios al 5% y ciertas ganancias de coleccionables conservan trato especial del 12%. Puede aplicarse la sobretasa constitucional del 4% sobre su umbral indexado. No toda Parte A tributa al 8.5%.
+
+## M.G.L. c. 62 § 5A: Nonresident and part-year source income
+`MA > Individual income tax > Nonresident and part-year source income > 62-5A`
+
+### English
+Nonresidents include Massachusetts-source employment, business and property income under allocation and apportionment rules, including pass-through income and qualifying sales of business interests. Part-year residents include worldwide income during residence and state-source income during nonresidence. No general post-emergency convenience rule is assumed.
+
+### Español
+Los no residentes incluyen empleo, negocios y bienes de fuente de Massachusetts conforme a asignación y distribución, incluidos ingresos de entidades y ciertas ventas de participaciones empresariales. Los residentes parciales incluyen ingreso mundial durante residencia y fuente estatal durante no residencia. No se presume una regla general de conveniencia posterior a la emergencia.
+
+## M.G.L. c. 62 § 6(a): Resident credit for another jurisdiction tax
+`MA > Individual income tax > Resident credit for another jurisdiction tax > 62-6(a)`
+
+### English
+Residents may claim a limited credit for qualifying income tax due to another state, territory or dependency, the District of Columbia, Canada or a Canadian province on income also taxed by Massachusetts. Same-income and limitation rules apply; a federal foreign tax credit does not automatically establish state entitlement.
+
+### Español
+Los residentes pueden reclamar un crédito limitado por impuesto sobre ingresos de otro estado, territorio o dependencia, Distrito de Columbia, Canadá o provincia canadiense cuando Massachusetts también grava el ingreso. Se aplican ingreso común y límites; un crédito federal extranjero no establece automáticamente el estatal.
+
+## M.G.L. c. 62 § 6(h): Earned income credit
+`MA > Individual income tax > Earned income credit > 62-6(h)`
+
+### English
+For 2025 the Massachusetts earned income credit generally equals 40% of the allowable federal earned income credit, subject to state eligibility and return rules. Qualifying excess is refundable. Part-year residence and filing status affect the state calculation.
+
+### Español
+Para 2025 el crédito por ingreso del trabajo generalmente equivale al 40% del crédito federal permitido, sujeto a requisitos estatales y declaración. El exceso elegible es reembolsable. La residencia parcial y el estado civil afectan el cálculo estatal.
+
+## M.G.L. c. 62 § 6(x): Child and family tax credit
+`MA > Individual income tax > Child and family tax credit > 62-6(x)`
+
+### English
+Eligible taxpayers maintaining a qualifying household may claim the 2025 refundable child and family tax credit of $440 per qualifying dependent. Age, disability, household and filing-status conditions apply; full-year nonresidents do not qualify and part-year residents prorate. The current provision is subsection (x), not former subsection (y).
+
+### Español
+Los contribuyentes con hogar elegible pueden reclamar en 2025 el crédito reembolsable para hijos y familia de $440 por dependiente elegible. Rigen edad, discapacidad, hogar y estado civil; no califican no residentes de todo el año y residentes parciales prorratean. La disposición actual es (x), no el antiguo inciso (y).
+
+## M.G.L. c. 62 § 6(k): Senior circuit breaker credit
+`MA > Individual income tax > Senior circuit breaker credit > 62-6(k)`
+
+### English
+Eligible residents age 65 or older may receive a refundable circuit breaker credit for qualifying real-estate tax or rent burdens on a principal Massachusetts residence. Indexed income, property-value and maximum-credit limits apply. Renters use the specified rent-equivalent computation, not all rent as tax paid.
+
+### Español
+Los residentes elegibles de 65 años o más pueden recibir crédito reembolsable circuit breaker por impuesto inmobiliario o alquiler de vivienda principal estatal. Rigen límites indexados de ingreso, valor y crédito. Los inquilinos usan el equivalente prescrito de alquiler, no todo alquiler como impuesto pagado.
+
+## M.G.L. c. 62B § 2: Employer wage withholding and surtax
+`MA > Individual income tax > Employer wage withholding and surtax > 62B-2`
+
+### English
+Employers must withhold Massachusetts income tax on covered wages under prescribed tables and methods, including applicable additional 4% tax withholding. Withholding is a payment on account; it does not replace the individual return computation or establish residence.
+
+### Español
+Los empleadores deben retener impuesto estatal sobre salarios cubiertos conforme a tablas y métodos, incluida la retención aplicable del impuesto adicional del 4%. Es un pago a cuenta; no sustituye el cálculo de la declaración individual ni establece residencia.
+
+## M.G.L. c. 63D § 2: Elective PTE excise and 90% member credit
+`MA > Individual income tax > Elective PTE excise and 90% member credit > 63D-2`
+
+### English
+An eligible pass-through entity may elect a 5% excise on qualified Massachusetts taxable income. Qualified members receive refundable credit of 90% of their proportionate share of entity tax due and paid, in the year the entity year ends. The credit is not 100%, and does not remove the separate individual 4% surtax.
+
+### Español
+Una entidad elegible puede optar por contribución del 5% sobre ingreso calificado gravable estatal. Los miembros reciben crédito reembolsable del 90% de su parte proporcional del impuesto debido y pagado, en el año en que termina el ejercicio de la entidad. No es del 100% ni elimina la sobretasa individual separada del 4%.

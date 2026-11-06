@@ -38,8 +38,10 @@ pointer sentence included, in ``fixtures/prior_years/corrected_answers.json`` (b
 from __future__ import annotations
 
 import copy
+import json
 import re
 from collections.abc import Collection
+from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
@@ -133,10 +135,13 @@ PRIOR_YEAR_IDS = {
     "pr-ley60-6020-10-2022",
     "pr-ley60-6020-10-2024",
 }
-# Current rows added after BASE_COMMIT. Their lookup/resource keys are not in the base
-# fixture; exclude them from the plan equality check. Search answers that newly list them
-# are allowed via NEW_SINCE_BASE_SEARCHES.
-NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"})
+# Rows added after BASE_COMMIT (including the three Wave 1 dated rows). Their lookup/resource
+# keys are not in the base fixture; exclude them from the plan equality check. Search answers
+# that newly list them are allowed via NEW_SINCE_BASE_SEARCHES.
+WAVE1_FIXTURES = Path(__file__).parent / "fixtures" / "wave1"
+WAVE1_IDS = frozenset(json.loads((WAVE1_FIXTURES / "sources.json").read_text()))
+WAVE1_SEARCHES = frozenset(json.loads((WAVE1_FIXTURES / "searches.json").read_text()))
+NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"}) | WAVE1_IDS
 # Searches (outside the 2019-2025 window already allowed) whose result lists newly include
 # pr-ley60-6060-05 after Ley 180-2025: "exempt"/"exenta" wording, "income"/"ingreso", and
 # "Puerto Rico" at offset 5 for tax years 2026-2028 (and no-year income/ingreso at offset 5).
@@ -296,7 +301,8 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # Plus 75 answers after ca-rtc-17041 named Mental Health Services Tax through 2024 and
 # Behavioral Health Services Tax from 2025 (72 lookups, 1 resource read, and 2 2024 searches;
 # the 2025-2028 searches were already in the changed set).
-CHANGED_OUT = 3396
+# Wave 1 changes 90 searches: 32 newly differ from base, 58 already differed.
+CHANGED_OUT = 3428
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -417,6 +423,7 @@ def _allowed(key: str) -> tuple[bool, bool]:
             (year != "None" and 2019 <= int(year) <= 2025)
             or is_corrected(key)
             or key in NEW_SINCE_BASE_SEARCHES
+            or key in WAVE1_SEARCHES
         ), False
     if kind == "resource":
         return (

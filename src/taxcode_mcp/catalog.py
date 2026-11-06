@@ -990,6 +990,9 @@ WINDOW_SPANS: dict[tuple[str, str], tuple[int, int]] = {
     ("PR", "Ley 60-2019 Sec. 6020.10"): (2019, 2026),
     ("PR", "Act 22-2012 Sec. 3"): (2012, 2019),
     ("GA", "O.C.G.A. § 48-7-20"): (2024, 2026),
+    ("NJ", "N.J.S.A. 54A:5-8"): (2022, 2023),
+    ("CA", "Cal. Rev. & Tax Code § 17043"): (2024, 2025),
+    ("MA", "M.G.L. c. 62 § 3(B)(a)(9)"): (2022, 2023),
     ("LA", "La. Rev. Stat. Ann. § 47:32"): (2022, 2025),
     ("NH", "N.H. Rev. Stat. Ann. § 77:1"): (2024, 2025),
 }
@@ -1269,6 +1272,17 @@ def render_docs(
     """
     files: dict[str, str] = {}
     for s in statutes:
+        is_summary = s["jurisdiction"] in {"NY", "NJ", "CA", "IL", "MA"}
+        en_heading = (
+            "Unofficial Reference Summary (English)"
+            if is_summary
+            else "Operative Statutory Language (English)"
+        )
+        es_heading = (
+            "Resumen de referencia no oficial (Español)"
+            if is_summary
+            else "Texto Estatutario Oficial (Español)"
+        )
         note = f" — {s['source_note']}" if s["source_note"] else ""
         refs = ", ".join(f"`{ref}`" for ref in s["cross_references"])
         files[statute_doc_path(s)] = (
@@ -1280,9 +1294,9 @@ def render_docs(
             f"- **Source:** [{s['source_url']}]({s['source_url']}){note}\n"
             f"- **Hierarchy:** `{s['breadcrumbs']}`\n"
             f"- **Cross References:** {refs}\n\n"
-            "## Operative Statutory Language (English)\n\n"
+            f"## {en_heading}\n\n"
             f"{s['text_en']}\n\n"
-            "## Texto Estatutario Oficial (Español)\n\n"
+            f"## {es_heading}\n\n"
             f"{s['text_es']}\n"
         )
     summary = [
@@ -1328,6 +1342,12 @@ def render_docs(
         sections = "section" if len(rows) == 1 else "sections"
         index.append(f"- [{code}](./{stem}/llms-full.txt): {len(rows)} {sections}")
         full = [f"# Full Statutory Corpus: {code}\n"]
+        if code in {"NY", "NJ", "CA", "IL", "MA"}:
+            full.append(
+                "Unofficial bilingual reference summaries; not official statutory text. / "
+                "Resúmenes bilingües de referencia no oficiales; "
+                "no son texto estatutario oficial.\n"
+            )
         for s in rows:
             full.append(
                 f"## {s['citation']}: {s['title']}\n`{s['breadcrumbs']}`\n\n"

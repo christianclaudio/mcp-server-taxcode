@@ -1,0 +1,953 @@
+{
+  "search|credit|None|2021|0": {
+    "before": "3c27b6631f9e569c3bf7124c71448dbf28a71f6fa761e7a808e95f6c5ec64422",
+    "after": "ff97db13993d7c9b1d8c382eb296dd3a5b57b87ec21e0849d2d8f8521b39d7c1",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2021|5": {
+    "before": "7a7a3db5994db08b69d449dcd06874480a088404913686c8ba38fa4d122073d9",
+    "after": "d68eab708edba1977f88de43e2a5c4e5bc05fba353a8f4b3017b3db23abad3fd",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2022|0": {
+    "before": "d35149b7090ee96893c8bc32e9c3e880bd834b22db55239cf9d30d3cebf8c9a9",
+    "after": "599681311675a0a1d8d870d1242d23c380c72e5c71feb6dda926bbc8a2d15161",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2022|5": {
+    "before": "7daf7892d68f871f52cc8ca719425b25c118127f6005c1b1988ba43c36dff98d",
+    "after": "e5b42e4e903da5eed66ef5d2b2910f6407505495a1d6a193122a89a00fbf96e1",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2023|0": {
+    "before": "94f97a939b33be7373f9892a006a397f3a0bbef3ae86bcc4af5e4e0d9b36f55c",
+    "after": "ce3617a8b91ede200d9cbf9d465e167bace16d4f062e175b93a0a28ce8a31364",
+    "inserted": [
+      "ma-gl-62-3-rent",
+      "nj-stat-54a-4-1-1",
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2023|5": {
+    "before": "325fa932b438cdab823c9322e0c27f77b7b442b9a7049266680b82b5c915b91b",
+    "after": "0d35ddeab75eed94b41dd31869e6d74e54d9404c3c6afb8e1882d4c981ce04eb",
+    "inserted": [
+      "ma-gl-62-3-rent",
+      "nj-stat-54a-4-1-1",
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2024|0": {
+    "before": "9f2c3d878ddd794398c13bf76541487ba9312ccbb55ec2a76f1ab7bb27db09a6",
+    "after": "df0e4803a950677faead17ef3ce64311b58d7d0ae2580428b4d8cde016fdfd68",
+    "inserted": [
+      "ma-gl-62-3-rent",
+      "nj-stat-54a-4-1-1",
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2024|5": {
+    "before": "f1f994e1bbce60f3fdb17fa4cccaacea5b9ecf816f15000e1ff8e9d2f508ba3b",
+    "after": "961a4e25587f5b01c3c883d47102f28f964a0e4f98da40cc1d521cf874a4bcbb",
+    "inserted": [
+      "ma-gl-62-3-rent",
+      "nj-stat-54a-4-1-1",
+      "ny-tax-861"
+    ]
+  },
+  "search|credit|None|2025|0": {
+    "before": "614d2dc16f87f6252a22b4582f657f13c37e1fc90c6a842737b4b7a7a8b1b07a",
+    "after": "cc5c0b916432a3f876113fbf9fee323ca3f2f40d1f4266a0a2150a9a15fbe829",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900",
+      "il-stat-35-ilcs-5-201-p"
+    ]
+  },
+  "search|credit|None|2025|5": {
+    "before": "a752ce067a3ee52921a44a21aaeed424c43905b8e7806d28489ca055e8387dfe",
+    "after": "6dd1c08115188a8b9eacd0a3bfeed0e7dbb88bf6e62e7342d7b363ba052df1cc",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900",
+      "il-stat-35-ilcs-5-201-p",
+      "il-stat-35-ilcs-5-208",
+      "il-stat-35-ilcs-5-305",
+      "il-stat-35-ilcs-5-601-b-3",
+      "ma-gl-62-6-a",
+      "ma-gl-62-6-h"
+    ]
+  },
+  "search|credit|None|2026|0": {
+    "before": "14090b116373334f5a64e4f5087d7c748881f048bccee1db421771d2c0411477",
+    "after": "c31efd51bfb3e479e0a8541796d56b53d62d21a35295df93729446feb0d6adeb",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|credit|None|2026|5": {
+    "before": "d4b87a01d8ccd7bab8436a758138f8eb380c22df86691dd8cec28328bfb3bcdc",
+    "after": "6ad19dec9597e105da57ee317aba776c53995ecb386edec396e07a02cd06539f",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900",
+      "il-stat-35-ilcs-5-201-p",
+      "il-stat-35-ilcs-5-208",
+      "il-stat-35-ilcs-5-305",
+      "il-stat-35-ilcs-5-601-b-3"
+    ]
+  },
+  "search|credit|None|2027|0": {
+    "before": "54bc7bc9ab85b0f47ea93f0eacc5d377d5320b889a8552bcd4b097b4d8300d9e",
+    "after": "99e65b293ba54b1f80667df2911b89f8817d5e5c08a8a1e423774aa7ce28595a",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|credit|None|2027|5": {
+    "before": "9ffef69a7af98c190656e80289face84bc4ca52a2ce874be940665e2ca25624f",
+    "after": "e18797c3a35aca9024ea4238b72024781a3d3424583b4b4d6715bddd3bf8acb6",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900",
+      "il-stat-35-ilcs-5-201-p",
+      "il-stat-35-ilcs-5-208",
+      "il-stat-35-ilcs-5-305",
+      "il-stat-35-ilcs-5-601-b-3"
+    ]
+  },
+  "search|credit|None|2028|0": {
+    "before": "09bff4933b01936a6d32cb87c56c42c1e94a3d3b247c6970dc36411621dbd771",
+    "after": "ad27f3f1072aebe8e0cac993b613d29c394d213a17ccd3b5dd40c279936b88c3",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|credit|None|2028|5": {
+    "before": "1ec39653bb060428c96a69c7ae23184e70c950974eafd7ee2ae74a8f6fec569a",
+    "after": "c2909d9cbbf03b4c84a9c03b4612dc0b6c4a0c0b16a8e128558f208a8ccff0c9",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900",
+      "il-stat-35-ilcs-5-201-p",
+      "il-stat-35-ilcs-5-208",
+      "il-stat-35-ilcs-5-305",
+      "il-stat-35-ilcs-5-601-b-3"
+    ]
+  },
+  "search|credit|None|None|0": {
+    "before": "cb287b472b80faa219b0a92005361f3fc78121313634fdc955ed4083608c9f46",
+    "after": "b475a6f1b314669cc2e3659589e555f0c8443965f62d15701a4decab67d64fe9",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|credit|None|None|5": {
+    "before": "31379248fbba2f08d2251b8145782564d53b809f369f0cf1430ad9a00723988a",
+    "after": "d27df40ae48b2b043ae1510f8d74fb4447c3376139c454499efa4715d74857c8",
+    "inserted": [
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900",
+      "il-stat-35-ilcs-5-201-p",
+      "il-stat-35-ilcs-5-208",
+      "il-stat-35-ilcs-5-305",
+      "il-stat-35-ilcs-5-601-b-3"
+    ]
+  },
+  "search|deducción|None|2023|0": {
+    "before": "ff99695c2629de7d3d9af5db97143b1eaf981220dc634b25b651b016daa623f3",
+    "after": "14f20a89bc58e26093c4b8997900481c4d79f6fe7b1e915cda9fbac97ce6978c",
+    "inserted": [
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2023|5": {
+    "before": "636c491e20cf6ba98eae8871d8ede2de8dd4e5efb995105e00434a3feee63887",
+    "after": "4de0009df0af620ae90d33ea2d978d5583cdfa5e85e31e33e2db44422be5b636",
+    "inserted": [
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2024|0": {
+    "before": "c62b81fed228fb3ddfc9ae1d678fc75aa5991a2241c3e2302c2e7038d0027d1b",
+    "after": "a14811a1a622366bcde1390a8de71b79ff4134fb8ab683abb7e035c362fd9ee5",
+    "inserted": [
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2024|5": {
+    "before": "858567fd10a109adc8e7f168a298b5eb5950833aad6d55031eb370dcab84ba58",
+    "after": "3c37fea040747f3939237fd74c04a1d4769935fc85a7ec21c68656c013a09254",
+    "inserted": [
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2025|0": {
+    "before": "61e475e23e6a74e6ab2831766e0984317f44638d4f828ff915a3f30a051ca50b",
+    "after": "e72b6df0eaf1f8bd6fe9d6b337994106b1a88367407e5fadb1efe0ae4185f40f",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611",
+      "ny-tax-612"
+    ]
+  },
+  "search|deducción|None|2025|5": {
+    "before": "064b336f2b983885b00488640b516f8995944d4f586d04c36aeef5731df0b483",
+    "after": "c59f2d470a2c80c16cb1d433ff03e9eff835f28a1817a434731b887a0f4bbe1a",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611",
+      "ny-tax-612",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2026|0": {
+    "before": "5da866d981a67caf7705d8cf3821a9c16cbf18308b23fa6db89dd4bf31c3ec8f",
+    "after": "59d59f146d27a85e5809206651efc633df76c20de6f44216d1488cb3dce4ee2b",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611"
+    ]
+  },
+  "search|deducción|None|2026|5": {
+    "before": "714c69b9b1e778562ed6cb626a4c88dbb2a525dd72dc96f66af030be82e8d3c8",
+    "after": "a30f78e9f54fb314e3421fb99b3d5299e0b9602806feec95276b8bc9c202a118",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611",
+      "ny-tax-612",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2027|0": {
+    "before": "e2f5bdc8e2db007a799cb7ee37b84cf5d992826e778a2d1112047264b1e7e0d1",
+    "after": "81ead64373c35c0b9565e41c9b4468203924347e18958d2c9fd83272dd8ef960",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611"
+    ]
+  },
+  "search|deducción|None|2027|5": {
+    "before": "cbf1b062b7c667e614d455a7266899743d0a435da118bb11cf78c9ac9006cedf",
+    "after": "560e375a24f4063b4492552f07ad68cc9f91521a4250bdfb73dbcf3a5e2f5135",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611",
+      "ny-tax-612",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|2028|0": {
+    "before": "227b43f5a1937e92d9ce006a0c268e352e0ed7cabc27af1f1ce2d2bdb33b5201",
+    "after": "c9e2e576ad229312513280b8f0e28b74d59ebcb637300d8dd79a7d6e2076fbcf",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611"
+    ]
+  },
+  "search|deducción|None|2028|5": {
+    "before": "873628bd70163e197c3064aa4613b1d95e027068e51ffe489db2dd559c62c738",
+    "after": "8686b525d2216755f3b7e833f1c8020161814f55cf133e12eabafb633e9422ff",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611",
+      "ny-tax-612",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|deducción|None|None|0": {
+    "before": "402961002392db2e3809dabf9be20ccb06655c7fc175e40cb3cd7fe7ec20adec",
+    "after": "a53fe30e4412443181ce051fd96e012c4e27630a3a20deea74cadefa6af5a26e",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611"
+    ]
+  },
+  "search|deducción|None|None|5": {
+    "before": "4df77054e6b7c97c27ff08c1997cc5efca706814e2e9750cdfb1322e1b7b477c",
+    "after": "1d90d05c609da49426fa63d6da0ffda9615a1308f917697ab8c3c35cd4a3e197",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "nj-stat-54a-3a-17",
+      "ny-tax-611",
+      "ny-tax-612",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|exempt|None|2025|0": {
+    "before": "6b2b748f80e1607b53f9a79daec7f81cc89ffe6d6bfb7c004dc6ef2c33565671",
+    "after": "a1ea23212ef3f474bfa637927d2d2cc74c0631589a7f2981f51d0fe814c41bfc",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17952-5",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-202",
+      "il-stat-35-ilcs-5-204"
+    ]
+  },
+  "search|exempt|None|2025|5": {
+    "before": "69b6441d30d488165842eff32f55ae08233b440714ff9392310eceb4dbadd869",
+    "after": "155b4c8aaf36849c3d72bf0e54f2804899f6ee78de2e62970c066829f755e617",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17952-5",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-202",
+      "il-stat-35-ilcs-5-204",
+      "il-stat-35-ilcs-5-302",
+      "il-stat-35-ilcs-5-701",
+      "ma-gl-62-3-exemptions",
+      "nj-stat-54a-12-5",
+      "nj-stat-54a-3-1"
+    ]
+  },
+  "search|exempt|None|2026|0": {
+    "before": "1256782028b314dd5271faafa1595090d2cb03ff95235c01185a6ddd5764cf65",
+    "after": "aa9898cd35f9d23ff4417da29b5761b77ce215dfe130a730d41be4991c4dd34a",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|exempt|None|2026|5": {
+    "before": "2dc2118ed06105bf82a09a37cf5e4d8e8e3b4872b0f0bcf38fe0c9f406ae0675",
+    "after": "b6c48da0b8fa1e8a15d8bf9b0b08c722574aa431cf517048460ef182bf98d09d",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17952-5",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-202",
+      "il-stat-35-ilcs-5-204",
+      "il-stat-35-ilcs-5-302"
+    ]
+  },
+  "search|exempt|None|2027|0": {
+    "before": "25b39eeba88b9eb6f4c6c08256494c8cbdeff28b9ca59e83b208937d941e465b",
+    "after": "8230d5d1c63b3bef18e48901098fb903f49a27e64cdd00ec61ad9d7c9412cccb",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|exempt|None|2027|5": {
+    "before": "d797ca242aaaa3d1af36a9ccaae7f325f5e7e7f00b8e646c3f1d5f68c3a7d6aa",
+    "after": "7fe775b90ee233c02ed7b049fa656fbb06b9e46ee60fdaac7a160347cc207300",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17952-5",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-202",
+      "il-stat-35-ilcs-5-204",
+      "il-stat-35-ilcs-5-302"
+    ]
+  },
+  "search|exempt|None|2028|0": {
+    "before": "24ac47e7e6a56a39dc8437cc40cd3fa88930976010df538798c3d749dde5bd84",
+    "after": "cf34e7942ba20f011432121bbf7c8eaae0148a90911f1df178af216d086d0fc1",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|exempt|None|2028|5": {
+    "before": "997602a6616547da19f9c0123efcb2fb728120de5644a239289a863240b329dd",
+    "after": "d684ab20a21e391b7a57e60cacd469a7f27169f278e9bf609f2d1f598c4d6530",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17952-5",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-202",
+      "il-stat-35-ilcs-5-204",
+      "il-stat-35-ilcs-5-302"
+    ]
+  },
+  "search|exempt|None|None|0": {
+    "before": "77a02d8e136970d8f65d27000020b07b917a256466ed3209b47d255a4ef47e1e",
+    "after": "9b5e42772c21270821398265f6ad90ca75aab0deb1662359493d2990ceaf1e93",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|exempt|None|None|5": {
+    "before": "3a8efa02c9df6f67b2d8e38351ad3fe0c93a6c2035ba9876d8906cd72c74ac04",
+    "after": "d1a57eee61157c9b402dad7124bd2704190d55c8966218b62d49fad7f4343b8b",
+    "inserted": [
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17952-5",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-202",
+      "il-stat-35-ilcs-5-204",
+      "il-stat-35-ilcs-5-302"
+    ]
+  },
+  "search|income|None|2021|0": {
+    "before": "ae053b589708ab375f45c022593fd99bc7bd5aeea8a33480e79d9fb7941dde72",
+    "after": "4c7533a6a6c649afa12c33c8ccc31c940dbb2d0b3b84485a55691ee5ebe63be9",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|income|None|2021|5": {
+    "before": "7515e9b5413857e9e322637ae353ea3e33ff2b132357f4521557dd8c0a7e8f70",
+    "after": "b468a215432ec150e2c7a0321b3848a85b1505af249caf69e0d301f8f99cff5d",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|income|None|2022|0": {
+    "before": "1f400bebd400783ce7c55b22560a3a5901b6bc30f2c0208e9e7366f747a95ddf",
+    "after": "b636b98775341f323f34d62f1d667e56f308b20f9255bb923bc1b907a060384f",
+    "inserted": [
+      "nj-stat-54a-5-8-2022",
+      "ny-tax-861"
+    ]
+  },
+  "search|income|None|2022|5": {
+    "before": "e6d3d7acad403623473fd5af04a694e5cdce185de2c8cec69c4725e99fdc5f44",
+    "after": "e23b2110981dc1702e450d5277bff685582ff83c72235cff3743826d52ce769e",
+    "inserted": [
+      "nj-stat-54a-5-8-2022",
+      "ny-tax-861"
+    ]
+  },
+  "search|income|None|2023|0": {
+    "before": "acdb02d68905b075c1dbcedca59507d3951f0aa4e034b2b99478edc6ae8cd9a3",
+    "after": "cc342bca3eedc2c9c75a347c758903824120f64a91ddf946632ea973228bb48e",
+    "inserted": [
+      "ma-gl-62-4-a",
+      "nj-stat-54a-5-8",
+      "ny-tax-861"
+    ]
+  },
+  "search|income|None|2023|5": {
+    "before": "e6f1eb068e1f5e7169f7b9626633fa006395b4d55f525f012ff1ff1a1cf01dfa",
+    "after": "f345dd9ca25654b1a5fd9b2357b3996bf82cbfdc7703e834e821fa97bed94142",
+    "inserted": [
+      "ma-gl-62-4-a",
+      "nj-stat-54a-5-8",
+      "ny-tax-861"
+    ]
+  },
+  "search|income|None|2024|0": {
+    "before": "fafd056a970eec5d62f1f835f5c38f19d07d3b7b03cabc66588a847cd4ad532d",
+    "after": "bd4fff679102b49b435574387503cdee54e26654284a72cef53dc9e9d41a7e2b",
+    "inserted": [
+      "ca-rtc-17043-2024"
+    ]
+  },
+  "search|income|None|2024|5": {
+    "before": "e613b6c7ac7583b89044ef90f0318a8fe9346da17a23fd746e24326fc3e8765b",
+    "after": "b702366eafed6c1ec469f3d2d73e1a7bb7b925bac46a4518204e700fda3dcc93",
+    "inserted": [
+      "ca-rtc-17043-2024"
+    ]
+  },
+  "search|income|None|2025|0": {
+    "before": "2d0687654f51042bcbb267290ad2871c254f5fb90ee953955b6ef6d73da5342b",
+    "after": "3256bae761697bb9754cc34f1e541e208b8480b928f29042b25e59b9b04137c7",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|income|None|2025|5": {
+    "before": "5666d27226b83911dff848f956e11f39073369e5f554600c43cb8cce3c73ac8b",
+    "after": "40fd3a826d170813e0d831937f345cbbfaf22b9b036c4adf4ae86931d51cfb9c",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17071",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|income|None|2026|5": {
+    "before": "3726fd17662c30ca8d118563925f72836ed7186a3dff02d99052742f079227eb",
+    "after": "f226d609ace6d1b4380f3b87ee9369567a986e8546ab72b4373017569af8d204",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|income|None|2027|5": {
+    "before": "97f4bbc23eaf3b93588e43d862ce8d4646847086f0fe96c6f3ab99c0cd9c8f8b",
+    "after": "51f123627ad787907d6e73485ecf0e58479cb1a99eb96bbe5cc4e252d19c53e0",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|income|None|2028|5": {
+    "before": "a61b0a42e4ef76ea76df325e8e52d00752b9b1589f1034b16246cc30d3382647",
+    "after": "4eebb14f2141bb6f061837768dd3d302f177b4f90d1dd139f915516a05386f5c",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|income|None|None|5": {
+    "before": "25d45abc2c278ab5cbb5ea21681e74a01b2ab5fb73fcb705ac75301268083ec7",
+    "after": "cbaa48d07827f1a9feea2a7a2690b796dec5969d214b880fe2c798382672298d",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|ingreso|None|2021|0": {
+    "before": "95227c6ff67aa425f6068b9e95c4d7d5ccd5edccc09a43610da6f7ddcf6f442b",
+    "after": "7e6fa5b257440acd7d6c3f15ce57eb967f6745a2a29ea2a7eb392fdd18ec7811",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|ingreso|None|2021|5": {
+    "before": "76b201898171825e0cfdd2a59edb1711c41478f65bfad87f4294e91714afed61",
+    "after": "7c4e7b525b3d79896fd49ab5c42a8398f2f168c21d9a55899673e5d86f0c94e6",
+    "inserted": [
+      "ny-tax-861"
+    ]
+  },
+  "search|ingreso|None|2022|0": {
+    "before": "338389af4212d1b9eb07cd5d3137772ed40f8b558211b9a0625e722be67ddb66",
+    "after": "c8e23d2a27b4e1b8057cc054bf73cd19b44f14cb0468cef875492d865f4c81a5",
+    "inserted": [
+      "nj-stat-54a-5-8-2022",
+      "ny-tax-861"
+    ]
+  },
+  "search|ingreso|None|2022|5": {
+    "before": "b1fafcc8bc3182e62b8e356c0c6268b00b5800721fa47e2f8257162964546b6b",
+    "after": "49db5593741bbe0e72b96534852729ff78d60bb5d6e9138cd15bcaab8e285a5c",
+    "inserted": [
+      "nj-stat-54a-5-8-2022",
+      "ny-tax-861"
+    ]
+  },
+  "search|ingreso|None|2023|0": {
+    "before": "cce55a5a5fae9e0463841028e5b1d9e805a3131fe3ee22aabcf45da9c7230d83",
+    "after": "d0715b75c1784f1d622fab709b5b7212be8c83421acefcd34b46fadda0443f16",
+    "inserted": [
+      "nj-stat-54a-5-8",
+      "ny-tax-861"
+    ]
+  },
+  "search|ingreso|None|2023|5": {
+    "before": "197bc6d7d8bba2cdc06245a64b815f5dcb62cc2efd7387e18e84d8898e11401e",
+    "after": "0de57ffc51a4a522242c32ac9df4a9c652e45ed09f07d4dd40f2e1a6104d013b",
+    "inserted": [
+      "nj-stat-54a-5-8",
+      "ny-tax-861"
+    ]
+  },
+  "search|ingreso|None|2024|0": {
+    "before": "b3305ce78dae06a704b856623c874c4f24a332859709a02438b44fc0dddf79f4",
+    "after": "aecca420d7e1291ef8ed35663ff7faa43253b2e41adc66f53fb5f28b7105760d",
+    "inserted": [
+      "ca-rtc-17043-2024"
+    ]
+  },
+  "search|ingreso|None|2024|5": {
+    "before": "b187a288e4e890669b723ca1d961975d6553887a2cbddaccb42769c7480d6eec",
+    "after": "03c8666b54af9812d117c422764c862f9df063e24ad6c239af71e61f2c20119f",
+    "inserted": [
+      "ca-rtc-17043-2024"
+    ]
+  },
+  "search|ingreso|None|2025|0": {
+    "before": "50528e9234638fb4de759cae3785f69b888db1dc5aaf7c6e96879453d0253033",
+    "after": "24865fddbb493c353b37432053324e7775d0c25398c13edaf9e61687bbca586c",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|ingreso|None|2025|5": {
+    "before": "616151eea6b55c80d2bb904f3cc1d7b3119bd401ee51fc497a185071039d11eb",
+    "after": "6faea42c075b9b0e2964738021951923ae77a4c6a1ff8f68622d423e5483a403",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062",
+      "ca-rtc-17071",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-19900"
+    ]
+  },
+  "search|ingreso|None|2026|5": {
+    "before": "7975eb25b9f24a171a644ec408a4f9ffaa0b24a0ef8c51b81e76ce3426254521",
+    "after": "6a573b519715a0be92a22cc71ebaa01642f3ffb8d5d252362dace0030634e879",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|ingreso|None|2027|5": {
+    "before": "d8509eb6da58084c7792f2e7ed1f3d070994f4b1d75733c26643837eda831e28",
+    "after": "56ecc498fb492d2c963c093978a01238e8af7e4a9a97fbc217b763cae93a2259",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|ingreso|None|2028|5": {
+    "before": "853aa9e62b4d80619f083e3fa370ec5b432d3f033dfbbcd1a154fe8c7d602375",
+    "after": "d847db3cfedd62f4e66cdba746ffe0f7d1706679c096c44eba4e7f7427ecf3b8",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|ingreso|None|None|5": {
+    "before": "12fa4307f08aa21556ce333c720c5f1808bb585ce99a6bcfbe24e8d0947eae53",
+    "after": "5e20e7158c360357b324f6877863368eed2ded8cf943663d7b901c4861a81ba2",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17043",
+      "ca-rtc-17052-10",
+      "ca-rtc-17054",
+      "ca-rtc-17062"
+    ]
+  },
+  "search|residente|None|2023|0": {
+    "before": "76f7811acd492162bfeabb4eff31ad3619932392092715dc459b86135c952d5b",
+    "after": "6037ae95aa25bb04ea97ecb5884ec2b566525418d3b58fa3c983b98ab405d70f",
+    "inserted": [
+      "nj-stat-54a-4-1-1"
+    ]
+  },
+  "search|residente|None|2023|5": {
+    "before": "88c1186293a79d1d2a806c4ff9f0a25febc3ebeb538b4554acba9ed8ff4be553",
+    "after": "2b883a5370ecf5f88fe73a15d4c7e74193c3ef1e617b73c686c70f66cd590f7d",
+    "inserted": [
+      "nj-stat-54a-4-1-1"
+    ]
+  },
+  "search|residente|None|2025|0": {
+    "before": "4019c3a89341c6dbf400966e1cfa1c0bf6899a70d70c48952668fd4cc16e9409",
+    "after": "b21f8631011a7f3c6ad85e97ba970c5481638b4acbec21a35f5ded3422228bdc",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|residente|None|2025|5": {
+    "before": "b70f2c4841453812df91c0959bba5d801a3e1ada475c2103a5e23c3a49fd1aab",
+    "after": "99f5b7e6beb3202d10645da58b3b8ba67aaaddfde2f02f6880345999a108b148",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002",
+      "ca-rtc-18662",
+      "il-stat-35-ilcs-5-1501-a-14",
+      "il-stat-35-ilcs-5-1501-a-16",
+      "il-stat-35-ilcs-5-302",
+      "il-stat-35-ilcs-5-303"
+    ]
+  },
+  "search|residente|None|2026|5": {
+    "before": "37d8cbfb1737af33ff43273ca7f57e4e5f1bfdbd0f619cfee7c026ad1e611c60",
+    "after": "fb7c38c41f75689284af631e9da96eef7c0695971abd798d29be3d0f6df8a5a9",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|residente|None|2027|5": {
+    "before": "3a641d6c0bd09c214b606b8d0b4c9af368bb71d69beb31bd72200c5369ad9d6f",
+    "after": "daf1619808e894633636d5ecaa9b7a05be203455dbb1bb81ebecc418c1c5dfbb",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|residente|None|2028|5": {
+    "before": "d3606dceec30f2b4fda073ad2dfda9d7f598b9133f8cf9cb046880efcb9aa2f5",
+    "after": "dd3dc737807952eb427c88758e0973b191067922797ee78182cf8e3d54275899",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|residente|None|None|5": {
+    "before": "a9731e5fa384990358a65a983cf564946ac67e61a7a52f5a5ea716c5e89e4530",
+    "after": "018b841d95f020faa475acb9763d1756c50573ec1e24b3de9a985d96e43feee3",
+    "inserted": [
+      "ca-rtc-17015",
+      "ca-rtc-17041-i",
+      "ca-rtc-17952",
+      "ca-rtc-17952-5",
+      "ca-rtc-18001",
+      "ca-rtc-18002"
+    ]
+  },
+  "search|standard deduction|None|2022|5": {
+    "before": "0c67cd62913f66db42bd1ad66b514115033ebb54f3fadbbaf4c14a437806c8eb",
+    "after": "3a3a80cc75940af0b5fa88503ef945888c598423f45978598247c5e08f61a3f7",
+    "inserted": [
+      "ma-gl-62-3-rent-2022"
+    ]
+  },
+  "search|standard deduction|None|2023|5": {
+    "before": "420956934647b2626309e3f0c2116b249d3f7a0d82d4cd3cf4a0364e4d4e27a2",
+    "after": "e4efab837521b863d5dc28f18a94df703ac0e64c808ae3beb3b204d3802b9c10",
+    "inserted": [
+      "ma-gl-62-3-rent"
+    ]
+  },
+  "search|standard deduction|None|2025|0": {
+    "before": "99132fac234b128d9463ed5bfd3ab119d6d1eb9f4013d95700d96cc3a5398846",
+    "after": "525d6f93430dcd1bc1c30ccf1cfa8ca6f3b1a0f20c3e53b4ea49a0b58c882f40",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615"
+    ]
+  },
+  "search|standard deduction|None|2025|5": {
+    "before": "c8d6c5ac3aa7ea319a35aaf2b19f85105b2bf8cdf75ace6dda2a0b87824fffc9",
+    "after": "9975a77f8c17a709e17fd9e4e02e37cffeec2a722896a308a21216b2915673ff",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ny-tax-611"
+    ]
+  },
+  "search|standard deduction|None|2026|0": {
+    "before": "b81a8275dd147ef0ae06b4e44c782a7eeb3f452bcdfd576ecd6bdd2ee6b2e74d",
+    "after": "17ed925b37b08ef65f962327f1d6533ff4c16b207b711cd2436b94feea827bbf",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615"
+    ]
+  },
+  "search|standard deduction|None|2026|5": {
+    "before": "473ecf0b1f424e04d5c4a144c55b15ece2a7b4bdf1a117ec18b01446e57505c6",
+    "after": "afd4c6a4b3892cd290da8d31fa40e7123915dc4c68887761e20b83bc9c894096",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ny-tax-611"
+    ]
+  },
+  "search|standard deduction|None|2027|0": {
+    "before": "3fbfa2c0427dd462cbc737c51cae73c310c36b748f8fd7ddeddc03631e4e73c4",
+    "after": "a557a1473ac4931e489d744b6ad2340e0816b50d9ba37454a2badb0d096f1b9d",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615"
+    ]
+  },
+  "search|standard deduction|None|2027|5": {
+    "before": "9973c6c6c43318c6205e8f880c6005612bea2dd1edebe091cebff69dea88c74c",
+    "after": "5f279857e38b30e3daa21daeca206c7afb54fb31935eb8fcbe7d90032fc5eb42",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ny-tax-611"
+    ]
+  },
+  "search|standard deduction|None|2028|0": {
+    "before": "13acfb0f67e14d56de340108636e9e450ee6e2c891e336861ba36f60ae53e463",
+    "after": "b3ede33a2c5ae3d50e536a5c9c7cbf9e1c73ebe877dddd9655e3433d0997a67c",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615"
+    ]
+  },
+  "search|standard deduction|None|2028|5": {
+    "before": "2231de1f05917ae15cb60927d77c22921205335c768e5debf1efea4690a64ebf",
+    "after": "974b453eb203b83ecb54049793cc9eee4c6a584a75d728697ca5af817cc089d7",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ny-tax-611"
+    ]
+  },
+  "search|standard deduction|None|None|0": {
+    "before": "ca921f4e577409b5aa6be78974ff49466f287b2213a7a903af87a5ad67feaac8",
+    "after": "e33570d6946904bc5f7d4ed7a88810fbd428c14692a06f9a28936108b56c2663",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615"
+    ]
+  },
+  "search|standard deduction|None|None|5": {
+    "before": "213753e844aa55069c178adb11e0a9f8157a3b672764b3bd836f165c5912a8cb",
+    "after": "39e39892b786a4ad68262e42e6b95faab0e09175aeacd86a997767db49c07bf9",
+    "inserted": [
+      "ca-rtc-17071",
+      "il-stat-35-ilcs-5-202",
+      "ny-tax-614",
+      "ny-tax-615",
+      "ny-tax-611"
+    ]
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "ny-tax-631": {
+    "url": "https://www.tax.ny.gov/pit/file/nonresident-faqs.htm",
+    "sha256": "a46637c6f28cda3718af32ecfed2e84ec0fc3ace875758016dcfa26e61b51002",
+    "verification": "summary"
+  },
+  "ny-tax-632": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf",
+    "sha256": "1620acdbcc5260521ff259494d5bce314f0d0a9783c3ad797b676f02485a6384",
+    "verification": "summary"
+  },
+  "ny-tax-638": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf",
+    "sha256": "1620acdbcc5260521ff259494d5bce314f0d0a9783c3ad797b676f02485a6384",
+    "verification": "summary"
+  },
+  "ny-tax-639": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf",
+    "sha256": "1620acdbcc5260521ff259494d5bce314f0d0a9783c3ad797b676f02485a6384",
+    "verification": "summary"
+  },
+  "ny-tax-611": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-612": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-614": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-615": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-616": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-620": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-861": {
+    "url": "https://www.tax.ny.gov/bus/ptet/",
+    "sha256": "ed049a0bb1b05485bb6ed0b42a3feb80e57b69f2acfc330939fd8a74d69fca76",
+    "verification": "summary"
+  },
+  "ny-tax-671": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-605-foreign": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "ny-tax-601-recapture": {
+    "url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+    "sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
+    "verification": "summary"
+  },
+  "nj-stat-54a-1-2-m": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-5-8": {
+    "url": "https://pub.njleg.state.nj.us/Bills/2022/PL23/125_.PDF",
+    "sha256": "cd685e1e025492d7e854c5156b0785b45a1c0125793b20b59097e9dc5a98b5ee",
+    "verification": "summary"
+  },
+  "nj-stat-54a-5-8-2022": {
+    "url": "https://pub.njleg.state.nj.us/Bills/2022/PL23/125_.PDF",
+    "sha256": "cd685e1e025492d7e854c5156b0785b45a1c0125793b20b59097e9dc5a98b5ee",
+    "verification": "summary"
+  },
+  "nj-stat-54a-5-1": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-5-2": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-3-1": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-3a-17": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-4-1": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-9-17-e": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-12-3": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-7-1": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-12-5": {
+    "url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+    "sha256": "c3da79e0a82524b04921b60ee8a127ad95b79e60346b83165032d4f546794fb8",
+    "verification": "summary"
+  },
+  "nj-stat-54a-4-1-1": {
+    "url": "https://pub.njleg.state.nj.us/Bills/2022/PL23/125_.PDF",
+    "sha256": "cd685e1e025492d7e854c5156b0785b45a1c0125793b20b59097e9dc5a98b5ee",
+    "verification": "summary"
+  },
+  "ca-rtc-17015": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+    "sha256": "bea21fa9bc4e699d9b40ca8c85ba6406ea60793b163fdb72bb968d280e5aeebb",
+    "verification": "summary"
+  },
+  "ca-rtc-17016": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+    "sha256": "bea21fa9bc4e699d9b40ca8c85ba6406ea60793b163fdb72bb968d280e5aeebb",
+    "verification": "summary"
+  },
+  "ca-rtc-17041-i": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+    "sha256": "bea21fa9bc4e699d9b40ca8c85ba6406ea60793b163fdb72bb968d280e5aeebb",
+    "verification": "summary"
+  },
+  "ca-rtc-17043": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+    "sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1",
+    "verification": "summary"
+  },
+  "ca-rtc-17043-2024": {
+    "url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
+    "sha256": "446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374",
+    "verification": "summary"
+  },
+  "ca-rtc-17062": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+    "sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1",
+    "verification": "summary"
+  },
+  "ca-rtc-17054": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+    "sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1",
+    "verification": "summary"
+  },
+  "ca-rtc-17071": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+    "sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1",
+    "verification": "summary"
+  },
+  "ca-rtc-17952": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+    "sha256": "bea21fa9bc4e699d9b40ca8c85ba6406ea60793b163fdb72bb968d280e5aeebb",
+    "verification": "summary"
+  },
+  "ca-rtc-17952-5": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+    "sha256": "bea21fa9bc4e699d9b40ca8c85ba6406ea60793b163fdb72bb968d280e5aeebb",
+    "verification": "summary"
+  },
+  "ca-rtc-18001": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-s.pdf",
+    "sha256": "a38fe9238cfb4d1724ad39d9bd9a76a05aee674d56c63753b725a25ecdea4fae",
+    "verification": "summary"
+  },
+  "ca-rtc-18002": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-s.pdf",
+    "sha256": "a38fe9238cfb4d1724ad39d9bd9a76a05aee674d56c63753b725a25ecdea4fae",
+    "verification": "summary"
+  },
+  "ca-rtc-19900": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-3804-instructions.pdf",
+    "sha256": "755374294ccf43bf61c9c1ee2ad47c61d4bc950a6715e1c800d1396b8f71b550",
+    "verification": "summary"
+  },
+  "ca-rtc-17052-10": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+    "sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1",
+    "verification": "summary"
+  },
+  "ca-rtc-18662": {
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+    "sha256": "bea21fa9bc4e699d9b40ca8c85ba6406ea60793b163fdb72bb968d280e5aeebb",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-1501-a-14": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-101.pdf",
+    "sha256": "686a3dde0a35cc14c5384320a25129e319a476ef152a3f7d1a75ed66648d74d0",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-1501-a-16": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-101.pdf",
+    "sha256": "686a3dde0a35cc14c5384320a25129e319a476ef152a3f7d1a75ed66648d74d0",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-202": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+    "sha256": "e888e819a62d34fba51dae317960c9bb5e12889d21d153ac78ab6bd67646d35a",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-203-a": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+    "sha256": "e888e819a62d34fba51dae317960c9bb5e12889d21d153ac78ab6bd67646d35a",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-204": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+    "sha256": "e888e819a62d34fba51dae317960c9bb5e12889d21d153ac78ab6bd67646d35a",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-208": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+    "sha256": "e888e819a62d34fba51dae317960c9bb5e12889d21d153ac78ab6bd67646d35a",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-302": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-schedule-nr-instr.pdf",
+    "sha256": "60ec6ed946bf8feaec3c3d42e163ff6363b45ea4f5988cbec3e9adeed8c4441a",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-303": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-schedule-nr-instr.pdf",
+    "sha256": "60ec6ed946bf8feaec3c3d42e163ff6363b45ea4f5988cbec3e9adeed8c4441a",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-304-a": {
+    "url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "il-stat-35-ilcs-5-305": {
+    "url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "il-stat-35-ilcs-5-601-b-3": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-schedule-cr-instr.pdf",
+    "sha256": "7d98e00acb8ee9fdecb24580f9194cdcf881b9289edde32e6a58fdc5dd8a450e",
+    "verification": "summary"
+  },
+  "il-stat-35-ilcs-5-201-p": {
+    "url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "il-stat-35-ilcs-5-701": {
+    "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-130.pdf",
+    "sha256": "b917e792f678c963fe804debe8064b0fc3b1a09679c36c80e085de281d1b5424",
+    "verification": "summary"
+  },
+  "ma-gl-62-2": {
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section2",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "ma-gl-62-3-exemptions": {
+    "url": "https://www.mass.gov/doc/2025-form-1-instructions/download",
+    "sha256": "f99acc9db3a4c83da890b7e2a26fd310f1a0ec6fa9e2744e4f975e32f64dd2cd",
+    "verification": "summary"
+  },
+  "ma-gl-62-3-rent": {
+    "url": "https://www.mass.gov/doc/2023-form-1-instructions/download",
+    "sha256": "9c220e87530aae4032b2231a65907cd1816f1d4028aaddcaf9160c275dd178a4",
+    "verification": "summary"
+  },
+  "ma-gl-62-3-rent-2022": {
+    "url": "https://www.mass.gov/doc/2023-form-1-instructions/download",
+    "sha256": "9c220e87530aae4032b2231a65907cd1816f1d4028aaddcaf9160c275dd178a4",
+    "verification": "summary"
+  },
+  "ma-gl-62-4-a": {
+    "url": "https://www.mass.gov/doc/2023-form-1-instructions/download",
+    "sha256": "9c220e87530aae4032b2231a65907cd1816f1d4028aaddcaf9160c275dd178a4",
+    "verification": "summary"
+  },
+  "ma-gl-62-5a": {
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section5A",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "ma-gl-62-6-a": {
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section6",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "ma-gl-62-6-h": {
+    "url": "https://www.mass.gov/doc/2025-form-1-instructions/download",
+    "sha256": "f99acc9db3a4c83da890b7e2a26fd310f1a0ec6fa9e2744e4f975e32f64dd2cd",
+    "verification": "summary"
+  },
+  "ma-gl-62-6-x": {
+    "url": "https://www.mass.gov/doc/2025-form-1-instructions/download",
+    "sha256": "f99acc9db3a4c83da890b7e2a26fd310f1a0ec6fa9e2744e4f975e32f64dd2cd",
+    "verification": "summary"
+  },
+  "ma-gl-62-6-k": {
+    "url": "https://www.mass.gov/doc/2025-form-1-instructions/download",
+    "sha256": "f99acc9db3a4c83da890b7e2a26fd310f1a0ec6fa9e2744e4f975e32f64dd2cd",
+    "verification": "summary"
+  },
+  "ma-gl-62b-2": {
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62B/Section2",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  },
+  "ma-gl-63d-2": {
+    "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter63D/Section2",
+    "sha256": "not_recorded",
+    "verification": "not_recorded"
+  }
+}

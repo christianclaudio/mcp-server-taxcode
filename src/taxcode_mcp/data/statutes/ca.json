@@ -91,6 +91,345 @@
       "text_es": [
         "Reglamento de la FTB sobre residencia y domicilio. Aplica el criterio de conexión más cercana evaluando propiedades inmuebles, familia, cuentas bancarias, licencias profesionales y afiliaciones comerciales."
       ]
+    },
+    {
+      "id": "ca-rtc-17015",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17015",
+      "section": "17015",
+      "title": "Nonresident definition",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17014",
+        "Cal. Rev. & Tax Code § 17951"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Nonresident definition > 17015",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A nonresident is an individual who is not a California resident. Part-year residents change status during the year: worldwide income is taxable during residence and generally only California-source income during nonresidence. Citizenship and mailing address alone do not decide residence."
+      ],
+      "text_es": [
+        "No residente es quien no es residente de California. La residencia parcial cambia durante el año: se grava ingreso mundial durante la residencia y generalmente solo fuente californiana durante la no residencia. La ciudadanía y la dirección postal no deciden por sí solas."
+      ]
+    },
+    {
+      "id": "ca-rtc-17016",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17016",
+      "section": "17016",
+      "title": "Rebuttable nine-month residence presumption",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17014(d)",
+        "18 CCR § 17014"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Rebuttable nine-month residence presumption > 17016",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Presence exceeding nine months in a taxable year creates a rebuttable presumption of residence. Shorter presence does not guarantee nonresidence; purpose, domicile and closest connections matter. California has no universal 183-day safe harbor; section 17014(d) separately provides a conditional 546-day employment-abroad safe harbor."
+      ],
+      "text_es": [
+        "Permanecer más de nueve meses en el año crea una presunción refutable de residencia. Menos tiempo no garantiza la no residencia; importan propósito, domicilio y vínculos. No existe un refugio universal de 183 días; 17014(d) contempla por separado un refugio condicionado de 546 días de empleo en el extranjero."
+      ]
+    },
+    {
+      "id": "ca-rtc-17041-i",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17041(i)",
+      "section": "17041(i)",
+      "title": "Part-year and nonresident effective-rate method",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17041",
+        "Cal. Rev. & Tax Code § 17951"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Part-year and nonresident effective-rate method > 17041(i)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "California generally computes the effective tax rate using total taxable income as if resident, then applies the California taxable-income ratio. The California column combines resident-period worldwide income with nonresident-period California-source income. Applying brackets only to state-source income can understate tax."
+      ],
+      "text_es": [
+        "California generalmente calcula la tasa efectiva usando el ingreso tributable total como si hubiera residencia y después aplica la proporción estatal. La columna de California combina ingreso mundial del período residente con fuente estatal del no residente. Aplicar tablas solo al ingreso estatal puede subestimar el impuesto."
+      ]
+    },
+    {
+      "id": "ca-rtc-17043",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17043",
+      "section": "17043",
+      "title": "Behavioral Health Services Tax: additional 1%",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Behavioral Health Services Tax: additional 1% > 17043",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. 2025 Form 540 instructions, line 62, confirm the new name; the 2024 booklet confirms the former name.",
+      "text_en": [
+        "An additional 1% tax applies only to California taxable income exceeding $1,000,000, including on a joint return with the same threshold. From January 1, 2025 it is named Behavioral Health Services Tax, replacing Mental Health Services Tax. Crossing the threshold does not impose 1% on all income."
+      ],
+      "text_es": [
+        "Un impuesto adicional del 1% grava solo el ingreso tributable de California que exceda $1,000,000, con igual umbral en declaración conjunta. Desde el 1 de enero de 2025 se denomina Behavioral Health Services Tax, en sustitución de Mental Health Services Tax. Superar el umbral no grava todo el ingreso al 1%."
+      ]
+    },
+    {
+      "id": "ca-rtc-17043-2024",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17043",
+      "section": "17043",
+      "title": "Mental Health Services Tax: 2024 version",
+      "effective_year": 2024,
+      "superseded_year": 2025,
+      "source_url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Mental Health Services Tax: 2024 version > 17043",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Dated 2024 Form 540 instructions, line 62; only the verified 2024 year is backfilled.",
+      "text_en": [
+        "For 2024 the additional 1% Mental Health Services Tax applies to California taxable income above $1,000,000. It taxes the excess only and the threshold is not doubled for joint filers. This dated source establishes the 2024 name; unverified earlier years are not reconstructed."
+      ],
+      "text_es": [
+        "Para 2024 el Mental Health Services Tax adicional del 1% grava el ingreso tributable de California superior a $1,000,000. Solo grava el exceso y el umbral no se duplica en declaración conjunta. La fuente fechada confirma el nombre de 2024; no se reconstruyen años anteriores sin verificar."
+      ]
+    },
+    {
+      "id": "ca-rtc-17062",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17062",
+      "section": "17062",
+      "title": "Individual alternative minimum tax",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Individual alternative minimum tax > 17062",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Individual AMT may apply when tentative minimum tax, generally calculated at 7% after the exemption and adjustments, exceeds regular tax under California rules. Schedule P performs the calculation. This is not an additional flat 7% tax on all adjusted gross income."
+      ],
+      "text_es": [
+        "El AMT individual puede aplicarse cuando el impuesto mínimo tentativo, generalmente calculado al 7% tras exención y ajustes, supera el impuesto regular conforme a reglas de California. Se calcula en Schedule P. No es un impuesto adicional del 7% sobre todo el ingreso bruto ajustado."
+      ]
+    },
+    {
+      "id": "ca-rtc-17054",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17054",
+      "section": "17054",
+      "title": "Personal and dependent exemption credits",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17054.1",
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Personal and dependent exemption credits > 17054",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "California provides personal, senior, blind and dependent exemption credits, subject to eligibility, annual indexed amounts and the high-income phaseout under section 17054.1. They reduce tax, unlike deductions from income. Applicable tax-year figures must be checked."
+      ],
+      "text_es": [
+        "California concede créditos por exención personal, edad avanzada, ceguera y dependientes, sujetos a requisitos, importes anuales indexados y reducción por ingresos elevados bajo 17054.1. Reducen el impuesto, no el ingreso como una deducción. Deben verificarse los importes del año fiscal."
+      ]
+    },
+    {
+      "id": "ca-rtc-17071",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17071",
+      "section": "17071",
+      "title": "Taxable income and California deductions",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17073.5",
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Taxable income and California deductions > 17071",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "California taxable income uses federal income as a starting point with state adjustments and permitted deductions. Taxpayers compare the California standard deduction with allowable California itemized deductions, subject to state limits; federal taxable income cannot simply be copied."
+      ],
+      "text_es": [
+        "El ingreso tributable de California parte del ingreso federal con ajustes y deducciones estatales. Se compara la deducción estándar de California con deducciones detalladas permitidas y sus límites; no basta copiar el ingreso tributable federal."
+      ]
+    },
+    {
+      "id": "ca-rtc-17952",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17952",
+      "section": "17952",
+      "title": "Intangible income and business situs",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17951",
+        "Cal. Rev. & Tax Code § 17955"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Intangible income and business situs > 17952",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Nonresident interest and dividends generally have their source at residence, not California solely because the payer is there. Intangibles used in a California business can acquire business situs and produce state-source income. Investment-trading exceptions and business apportionment require separate review."
+      ],
+      "text_es": [
+        "Los intereses y dividendos de no residentes generalmente tienen fuente en su residencia, no en California solo por estar allí el pagador. Los intangibles usados en un negocio estatal pueden adquirir situs empresarial y generar fuente estatal. Las excepciones de inversión y distribución empresarial requieren revisión separada."
+      ]
+    },
+    {
+      "id": "ca-rtc-17952-5",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17952.5",
+      "section": "17952.5",
+      "title": "Nonresident retirement income exclusion",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+      "cross_references": [
+        "4 U.S.C. § 114",
+        "Cal. Rev. & Tax Code § 17951"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Nonresident retirement income exclusion > 17952.5",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Qualifying retirement income received while a nonresident is excluded from California-source taxation consistent with 4 U.S.C. § 114. FTB guidance distinguishes qualified retirement distributions from other deferred compensation. The rule does not exempt a California resident pension merely because it was earned elsewhere."
+      ],
+      "text_es": [
+        "El ingreso de retiro elegible recibido siendo no residente se excluye de la imposición de fuente californiana conforme a 4 U.S.C. § 114. El FTB distingue distribuciones de retiro calificadas de otra remuneración diferida. No se exime la pensión de un residente solo porque se ganó fuera."
+      ]
+    },
+    {
+      "id": "ca-rtc-18001",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 18001",
+      "section": "18001",
+      "title": "Resident credit for other-state income taxes",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-s.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 18002",
+        "Cal. Rev. & Tax Code § 17041"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Resident credit for other-state income taxes > 18001",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Residents may claim a limited credit for qualifying net income taxes paid to another state on income taxed by both states, subject to source and credit-order rules. Schedule S applies overlapping-income and tax limitations; paying any tax elsewhere does not by itself qualify."
+      ],
+      "text_es": [
+        "Los residentes pueden reclamar un crédito limitado por impuestos netos sobre ingresos de otro estado cuando ambos gravan el ingreso, sujeto a fuente y prioridad del crédito. Schedule S aplica límites de ingreso común e impuesto; pagar cualquier impuesto fuera no basta."
+      ]
+    },
+    {
+      "id": "ca-rtc-18002",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 18002",
+      "section": "18002",
+      "title": "Reverse credit for qualifying nonresidents",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-s.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 18001"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Reverse credit for qualifying nonresidents > 18002",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Certain nonresidents may claim a California reverse credit for resident-state income tax on overlapping California-source income. Schedule S identifies qualifying states, including Arizona, Indiana, Oregon and Virginia, and limitations. Source and which state grants relief must be checked before claiming a credit."
+      ],
+      "text_es": [
+        "Ciertos no residentes pueden reclamar un crédito inverso de California por impuesto de su estado residente sobre ingreso común de fuente californiana. Schedule S identifica estados, incluidos Arizona, Indiana, Oregón y Virginia, y límites. Deben verificarse fuente y estado que concede alivio."
+      ]
+    },
+    {
+      "id": "ca-rtc-19900",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 19900",
+      "section": "19900",
+      "title": "Elective 9.3% pass-through entity tax",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-3804-instructions.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17052.10"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Elective 9.3% pass-through entity tax > 19900",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "An eligible entity may elect 9.3% tax on qualified net income attributable to consenting qualified taxpayers. Entity election and payment requirements apply, with a related taxpayer credit. This is not a replacement 9.3% rate for all income of every owner."
+      ],
+      "text_es": [
+        "Una entidad elegible puede optar por impuesto del 9.3% sobre ingreso neto calificado atribuible a contribuyentes elegibles que consienten. Se aplican elección y pagos de la entidad con crédito relacionado. No sustituye la tasa de todos los ingresos de cada propietario."
+      ]
+    },
+    {
+      "id": "ca-rtc-17052-10",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 17052.10",
+      "section": "17052.10",
+      "title": "Qualified taxpayer PTET credit",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 19900"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Qualified taxpayer PTET credit > 17052.10",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A qualified taxpayer may claim a nonrefundable credit for elective California pass-through tax paid on the taxpayer share of qualified net income. Unused amounts generally carry forward five years. Entity election and payment requirements must be satisfied; entity eligibility alone does not create a credit."
+      ],
+      "text_es": [
+        "Un contribuyente calificado puede reclamar un crédito no reembolsable por el impuesto electivo pagado sobre su parte de ingreso neto calificado. El remanente generalmente se traslada cinco años. Deben cumplirse elección y pago; la mera elegibilidad de la entidad no genera crédito."
+      ]
+    },
+    {
+      "id": "ca-rtc-18662",
+      "jurisdiction": "CA",
+      "corpus": "RTC",
+      "citation": "Cal. Rev. & Tax Code § 18662",
+      "section": "18662",
+      "title": "Nonresident California-source payment withholding",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ftb.ca.gov/forms/2025/2025-1031-publication.pdf",
+      "cross_references": [
+        "Cal. Rev. & Tax Code § 17951",
+        "Cal. Unemp. Ins. Code § 13020"
+      ],
+      "breadcrumbs": "CA > Individual income tax > Nonresident California-source payment withholding > 18662",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Covered California-source payments to nonresidents may require withholding, including business distributions and real-estate transactions, subject to exemptions or waivers. Employer wage withholding is separately administered by EDD under Unemployment Insurance Code section 13020. Withholding is a payment, not final tax."
+      ],
+      "text_es": [
+        "Los pagos cubiertos de fuente californiana a no residentes pueden exigir retención, incluidas distribuciones empresariales y operaciones inmobiliarias, con exenciones o dispensas. EDD administra por separado la retención salarial bajo el Código de Seguro de Desempleo 13020. La retención es un pago, no el impuesto final."
+      ]
     }
   ]
 }

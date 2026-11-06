@@ -68,6 +68,302 @@
       "text_es": [
         "Regla recíproca de conveniencia del patrono aprobada en 2023 que grava a no residentes que teletrabajen si su estado de residencia aplica una regla similar (ej. Nueva York)."
       ]
+    },
+    {
+      "id": "nj-stat-54a-1-2-m",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:1-2(m)–(n)",
+      "section": "54A:1-2(m)–(n)",
+      "title": "Domicile exception and nonresident definition",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:1-2",
+        "N.J.S.A. 54A:5-8"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Domicile exception and nonresident definition > 54A:1-2(m)–(n)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A domiciliary is excluded from resident status only with no permanent New Jersey abode, a permanent abode elsewhere and no more than 30 New Jersey days. A nondomiciliary with a permanent state abode and more than 183 days generally is resident, subject to the Armed Forces exception. A nonresident is a taxpayer who is not resident."
+      ],
+      "text_es": [
+        "Una persona domiciliada queda fuera de la residencia solo si no mantiene vivienda permanente en Nueva Jersey, la mantiene fuera y pasa como máximo 30 días en el estado. Una persona no domiciliada con vivienda permanente y más de 183 días generalmente es residente, salvo la excepción militar. No residente es quien no es residente."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-5-8",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:5-8",
+      "section": "54A:5-8",
+      "title": "Nonresident sourcing and reciprocal convenience rule",
+      "effective_year": 2023,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.state.nj.us/Bills/2022/PL23/125_.PDF",
+      "cross_references": [
+        "N.J.S.A. 54A:9-17(e)",
+        "P.L. 2023, c. 125, §§ 2, 8"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Nonresident sourcing and reciprocal convenience rule > 54A:5-8",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Enacted session-law amendment; subsection (e), not (a)(6), first applies from January 1, 2023.",
+      "text_en": [
+        "New Jersey-source income includes in-state property, services, businesses and allocated pass-through income. From 2023, subsection (e) applies reciprocal convenience sourcing to certain out-of-state services for a New Jersey employer when the employee resident state uses that rule. It is not a universal tax on remote work; reciprocity agreements remain relevant."
+      ],
+      "text_es": [
+        "La fuente de Nueva Jersey incluye bienes, servicios, negocios e ingresos asignados de entidades de traspaso en el estado. Desde 2023, el inciso (e) aplica conveniencia recíproca a ciertos servicios fuera del estado para un empleador de Nueva Jersey si el estado de residencia usa esa regla. No grava universalmente el trabajo remoto; importan los acuerdos recíprocos."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-5-8-2022",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:5-8",
+      "section": "54A:5-8",
+      "title": "Nonresident sourcing before the 2023 amendment",
+      "effective_year": 2022,
+      "superseded_year": 2023,
+      "source_url": "https://pub.njleg.state.nj.us/Bills/2022/PL23/125_.PDF",
+      "cross_references": [
+        "P.L. 2023, c. 125, §§ 2, 8"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Nonresident sourcing before the 2023 amendment > 54A:5-8",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. 2022-only prior-law window from the enacted amendment markup.",
+      "text_en": [
+        "For 2022, source income included New Jersey property, services, business activity, allocated partnership income, business intangibles and New Jersey S corporation income. The reciprocal convenience provision later added as subsection (e) did not apply. This summary uses the earlier provisions reproduced in the enacted amendment, not a backdated current compilation."
+      ],
+      "text_es": [
+        "Para 2022, la fuente incluía bienes, servicios, negocios, ingresos asignados de sociedades, intangibles empresariales e ingreso de corporaciones S de Nueva Jersey. No regía la conveniencia recíproca después añadida como inciso (e). Se usan disposiciones anteriores reproducidas en la enmienda promulgada, no una compilación actual retroactiva."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-5-1",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:5-1",
+      "section": "54A:5-1",
+      "title": "Categories of gross income",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:5-2",
+        "N.J.S.A. 54A:5-8"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Categories of gross income > 54A:5-1",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "New Jersey defines gross income by categories including compensation, business profits, disposition gains, rents, interest, dividends and partnership or S corporation shares. It does not simply adopt federal adjusted gross income. Category-specific exclusions and netting rules apply."
+      ],
+      "text_es": [
+        "Nueva Jersey define el ingreso bruto por categorías: remuneración, beneficios empresariales, ganancias de enajenación, alquileres, intereses, dividendos y participaciones de sociedades o corporaciones S. No adopta sin más el ingreso bruto ajustado federal. Se aplican exclusiones y compensaciones por categoría."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-5-2",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:5-2",
+      "section": "54A:5-2",
+      "title": "No cross-category loss offset",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:5-1"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > No cross-category loss offset > 54A:5-2",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A net loss in one New Jersey gross-income category cannot offset income in another category. Deductions and permitted netting within a category remain subject to their own rules; a federal loss deduction does not automatically carry into the state calculation."
+      ],
+      "text_es": [
+        "Una pérdida neta en una categoría de ingreso bruto de Nueva Jersey no compensa ingresos de otra categoría. Las deducciones y compensaciones dentro de una categoría conservan reglas propias; las pérdidas federales no se trasladan automáticamente al cálculo estatal."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-3-1",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:3-1",
+      "section": "54A:3-1",
+      "title": "Personal and dependent exemptions",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:3-1.1",
+        "N.J.S.A. 54A:1-2"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Personal and dependent exemptions > 54A:3-1",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "New Jersey provides personal and dependent exemptions and additional exemptions for qualifying age, blindness or disability and veteran status. State eligibility and amounts control, rather than federal personal-exemption deductions. Part-year resident allowances can require proration."
+      ],
+      "text_es": [
+        "Nueva Jersey concede exenciones personales y por dependientes, y adicionales por edad, ceguera o discapacidad y condición de veterano elegibles. Rigen requisitos e importes estatales, no las deducciones federales. La residencia parcial puede exigir prorrateo."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-3a-17",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:3A-17",
+      "section": "54A:3A-17",
+      "title": "Resident property tax deduction",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:3A-18",
+        "N.J.S.A. 54A:3A-20"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Resident property tax deduction > 54A:3A-17",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Eligible resident homeowners may deduct qualifying property taxes on a principal New Jersey homestead, subject to the $15,000 cap and payment and ownership limitations. Related sections govern tenants and the alternative $50 property tax credit. A deduction is not a refundable $15,000 credit."
+      ],
+      "text_es": [
+        "Los propietarios residentes elegibles pueden deducir impuestos sobre su vivienda principal en Nueva Jersey, sujetos al límite de $15,000 y requisitos de pago y propiedad. Otras secciones regulan a inquilinos y el crédito alternativo de $50. La deducción no es un crédito reembolsable de $15,000."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-4-1",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:4-1",
+      "section": "54A:4-1",
+      "title": "Resident credit for another jurisdiction tax",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:4-1.1",
+        "N.J.S.A. 54A:12-3"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Resident credit for another jurisdiction tax > 54A:4-1",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Residents may claim a limited credit for income or wage taxes paid elsewhere on income also taxed by New Jersey. Subsection (f) addresses substantially similar other-state pass-through taxes. The special convenience-rule refund litigation credit is separately codified at 54A:4-1.1, not subsection (f)."
+      ],
+      "text_es": [
+        "Los residentes pueden reclamar un crédito limitado por impuestos sobre ingresos o salarios de otra jurisdicción sobre ingresos también gravados por Nueva Jersey. El inciso (f) trata impuestos comparables de entidades de otros estados. El crédito especial por litigios de conveniencia se codifica en 54A:4-1.1, no en el inciso (f)."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-9-17-e",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:9-17(e)",
+      "section": "54A:9-17(e)",
+      "title": "Reciprocal wage-tax agreements",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:5-8(e)",
+        "P.L. 2023, c. 125, § 7"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Reciprocal wage-tax agreements > 54A:9-17(e)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "The Division may agree with another state to exempt reciprocal resident compensation and coordinate withholding and information exchange. New Jersey–Pennsylvania reciprocity concerns employee compensation, not every income category. The 2023 convenience amendment preserves agreements under this subsection."
+      ],
+      "text_es": [
+        "La División puede acordar con otro estado exenciones recíprocas de remuneración de residentes y coordinar retenciones e información. La reciprocidad Nueva Jersey–Pensilvania abarca remuneración laboral, no toda categoría de ingreso. La enmienda de conveniencia de 2023 preserva estos acuerdos."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-12-3",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:12-3",
+      "section": "54A:12-3",
+      "title": "Business Alternative Income Tax election",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:12-5",
+        "N.J.S.A. 54A:4-1(f)"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Business Alternative Income Tax election > 54A:12-3",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "An eligible pass-through entity may elect annually to pay BAIT on distributive proceeds under the statutory schedule. Entity election and payment requirements apply. Members receive their allocated refundable credit under 54A:12-5; entity payment does not remove every individual filing obligation."
+      ],
+      "text_es": [
+        "Una entidad de traspaso elegible puede optar anualmente por pagar BAIT sobre beneficios distribuibles conforme a la tabla legal. Se aplican requisitos de elección y pago. Los miembros reciben el crédito reembolsable asignado bajo 54A:12-5; el pago de la entidad no elimina todas las declaraciones individuales."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-7-1",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:7-1",
+      "section": "54A:7-1",
+      "title": "Employer gross income tax withholding",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:9-17(e)",
+        "N.J.S.A. 54A:5-8"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Employer gross income tax withholding > 54A:7-1",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Employers maintaining an office or transacting business in New Jersey must withhold from covered wages under prescribed tables and methods. Reciprocity and sourcing affect coverage. Withholding is a credit on the employee return, not an independent determination of residence."
+      ],
+      "text_es": [
+        "Los empleadores con oficina o actividad en Nueva Jersey deben retener de salarios sujetos al impuesto conforme a tablas y métodos prescritos. La reciprocidad y la fuente afectan la obligación. La retención se acredita en la declaración; no determina independientemente la residencia."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-12-5",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:12-5",
+      "section": "54A:12-5",
+      "title": "Refundable member credit for BAIT",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.gov/statutes/STATUTES-TEXT.zip",
+      "cross_references": [
+        "N.J.S.A. 54A:12-3"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Refundable member credit for BAIT > 54A:12-5",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Checked against Title 54A in the Legislature unannotated STATUTES.TXT bulk compilation. The publisher warns that inoperative provisions may remain and effective dates are not typically included; no official-version claim is made. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Members of an electing pass-through entity receive credit based on their direct share of BAIT paid. An eligible individual excess credit is treated as an overpayment. Corporate and tiered-entity members have specific allocation and application rules; the credit does not simply exempt all distributions."
+      ],
+      "text_es": [
+        "Los miembros de una entidad electora reciben crédito según su parte directa del BAIT pagado. El exceso individual elegible se trata como pago en exceso. Los miembros corporativos y entidades escalonadas tienen reglas específicas; el crédito no exime sin más toda distribución."
+      ]
+    },
+    {
+      "id": "nj-stat-54a-4-1-1",
+      "jurisdiction": "NJ",
+      "corpus": "NJSA",
+      "citation": "N.J.S.A. 54A:4-1.1",
+      "section": "54A:4-1.1",
+      "title": "Convenience-rule refund litigation credit",
+      "effective_year": 2023,
+      "superseded_year": null,
+      "source_url": "https://pub.njleg.state.nj.us/Bills/2022/PL23/125_.PDF",
+      "cross_references": [
+        "N.J.S.A. 54A:4-1(e)",
+        "P.L. 2023, c. 125, § 3"
+      ],
+      "breadcrumbs": "NJ > Individual income tax > Convenience-rule refund litigation credit > 54A:4-1.1",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Enacted in 2023; statutory relief concerns qualifying litigation for 2020–2023, not a general current remote-work credit.",
+      "text_en": [
+        "For tax years 2020–2023, qualifying residents who successfully challenge another state denial of a compensation-tax refund may receive a refundable credit equal to 50% of resulting additional New Jersey tax. The required claim, appeal, final judgment and credit readjustment must occur; ordinary remote work alone does not qualify."
+      ],
+      "text_es": [
+        "Para 2020–2023, residentes elegibles que impugnen con éxito la denegación de otro estado de un reembolso salarial pueden recibir un crédito reembolsable del 50% del impuesto adicional resultante de Nueva Jersey. Se exigen reclamación, recurso, sentencia firme y reajuste; el trabajo remoto por sí solo no basta."
+      ]
     }
   ]
 }

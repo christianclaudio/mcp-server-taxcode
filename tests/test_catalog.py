@@ -33,6 +33,8 @@ from taxcode_mcp.catalog import (
 )
 
 REPO = Path(__file__).resolve().parent.parent
+WAVE1_SOURCES = json.loads((REPO / "tests/fixtures/wave1/sources.json").read_text())
+WAVE1_HASHED = {k for k, v in WAVE1_SOURCES.items() if v["sha256"] != NOT_RECORDED}
 
 # The prior-year federal statute versions: each records the official file it was read from.
 # Two are summaries of an enacted law; the rest quote an official edition word for word.
@@ -146,8 +148,8 @@ def test_manifest_records_unknowns_explicitly() -> None:
     assert set(by_verification) == {"summary", NOT_RECORDED, "verified_verbatim"}
     assert by_verification["verified_verbatim"] == PRIOR_YEAR_VERBATIM | PR_PRIOR_YEAR_VERBATIM
     assert PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_SUMMARIES <= by_verification["summary"]
-    # Besides those statute versions, only a table whose figures were read from a fetched
-    # official file, or a publication whose source page was fetched, records a hash.
+    # Wave 1 summaries also pin deterministic source bytes; the hash is not a text-verbatim claim.
+    # Other hashes describe tables or publication source pages.
     statutes_hashed = {
         e["id"]
         for e in catalog.manifest
@@ -156,12 +158,15 @@ def test_manifest_records_unknowns_explicitly() -> None:
     # ok-stat-68-2355 was hashed when its OSCN cite was corrected to 68 O.S. § 2355.
     # pr-ley60-6060-05 was hashed from the OGP certified PDF of Ley 180-2025 (fetched 2026-11-04).
     ok_hashed = {"ok-stat-68-2355", "pr-ley60-6060-05"}
-    assert statutes_hashed == PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
+    assert statutes_hashed == (
+        PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed | WAVE1_HASHED
+    )
     hashed = {
         e["kind"]
         for e in catalog.manifest
         if e["content_sha256"] != NOT_RECORDED
-        and e["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed
+        and e["id"]
+        not in (PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed | WAVE1_HASHED)
     }
     assert hashed == {"rate_table", "federal_table", "publication"}
     hashed_pubs = {
@@ -454,10 +459,10 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
         load_catalog(data, with_manifest=True)
 
 
-def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
+def test_recorded_editions_include_verified_enacted_nj_amendments() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 181
+    assert len(editions) == 248
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     # Ley 180-2025 certified copy (as enacted) that amends Sec. 6060.05(c).
     assert editions.pop("pr-ley60-6060-05") == "as_enacted"
@@ -469,6 +474,8 @@ def test_act_22_and_the_prior_year_versions_alone_record_an_edition() -> None:
     # The prior-year Puerto Rico versions name the act they were read from, as enacted.
     for row_id in sorted(PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS):
         assert editions.pop(row_id) == "as_enacted", row_id
+    for row_id in ("nj-stat-54a-5-8", "nj-stat-54a-5-8-2022", "nj-stat-54a-4-1-1"):
+        assert editions.pop(row_id) == "as_enacted"
     assert set(editions.values()) == {NOT_RECORDED}
 
 

@@ -90,6 +90,330 @@
       "text_es": [
         "Dispone que la compensación de empleados no residentes por servicios realizados fuera del estado se atribuye a Nueva York si el trabajo remoto se realiza por conveniencia del empleado y no por necesidad del empleador."
       ]
+    },
+    {
+      "id": "ny-tax-631",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 631",
+      "section": "631",
+      "title": "Nonresident New York source income",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pit/file/nonresident-faqs.htm",
+      "cross_references": [
+        "20 NYCRR § 132.18",
+        "NY Tax Law § 632"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Nonresident New York source income > 631",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Nonresidents include New York-source income from in-state services, businesses and real or tangible property. The convenience-of-the-employer rule can treat certain out-of-state workdays as New York days; investment income is not sourced solely by the payer location."
+      ],
+      "text_es": [
+        "Los no residentes incluyen ingresos de servicios, negocios y bienes inmuebles o tangibles en Nueva York. La regla de conveniencia del empleador puede tratar ciertos días trabajados fuera como días estatales; la fuente de inversiones no depende solo del pagador."
+      ]
+    },
+    {
+      "id": "ny-tax-632",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 632",
+      "section": "632",
+      "title": "Nonresident partner and shareholder modifications",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf",
+      "cross_references": [
+        "NY Tax Law § 631",
+        "NY Tax Law § 637"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Nonresident partner and shareholder modifications > 632",
+      "source_note": "Unofficial bilingual reference summary checked against the 2025 IT-203 instructions. Two successful plain downloads were byte-identical; an additional attempt failed TLS without a workaround. Hash covers the PDF.",
+      "text_en": [
+        "Nonresident partners and S corporation shareholders determine their New York-source share under the pass-through sourcing and modification rules. An entity distribution is not automatically sourced by where it is received; entity-level New York activity and the applicable allocation matter."
+      ],
+      "text_es": [
+        "Los socios y accionistas S no residentes determinan su parte de fuente neoyorquina conforme a reglas de entidades de traspaso y ajustes. Recibir una distribución fuera del estado no determina su fuente; importan la actividad estatal de la entidad y la asignación aplicable."
+      ]
+    },
+    {
+      "id": "ny-tax-638",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 638",
+      "section": "638",
+      "title": "Part-year resident income",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf",
+      "cross_references": [
+        "NY Tax Law § 639",
+        "NY Tax Law § 601(e)"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Part-year resident income > 638",
+      "source_note": "Unofficial bilingual reference summary checked against the 2025 IT-203 instructions. Two successful plain downloads were byte-identical; an additional attempt failed TLS without a workaround. Hash covers the PDF.",
+      "text_en": [
+        "Part-year residents combine worldwide income during residence with New York-source income during nonresidence. Form IT-203 applies the income-percentage method; the move date does not justify allocating every item by a simple fraction of annual days."
+      ],
+      "text_es": [
+        "Los residentes parciales combinan ingreso mundial durante la residencia con ingreso de fuente neoyorquina durante la no residencia. El IT-203 aplica el porcentaje de ingreso; la mudanza no permite prorratear automáticamente cada partida por días del año."
+      ]
+    },
+    {
+      "id": "ny-tax-639",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 639",
+      "section": "639",
+      "title": "Special accruals on change of residence",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf",
+      "cross_references": [
+        "NY Tax Law § 638",
+        "NY Tax Law § 605(b)"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Special accruals on change of residence > 639",
+      "source_note": "Unofficial bilingual reference summary checked against the 2025 IT-203 instructions. Two successful plain downloads were byte-identical; an additional attempt failed TLS without a workaround. Hash covers the PDF.",
+      "text_en": [
+        "Special accrual rules address items accrued before a change of residence but normally reportable afterward. Accounting method, the move date and permitted security arrangements affect reporting; moving does not automatically remove tax on deferred income."
+      ],
+      "text_es": [
+        "Las reglas especiales de devengo regulan partidas devengadas antes de cambiar de residencia pero normalmente declaradas después. Importan el método contable, la fecha y las garantías permitidas; mudarse no elimina automáticamente el impuesto sobre ingresos diferidos."
+      ]
+    },
+    {
+      "id": "ny-tax-611",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 611",
+      "section": "611",
+      "title": "New York taxable income",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 612",
+        "NY Tax Law § 614",
+        "NY Tax Law § 615",
+        "NY Tax Law § 616"
+      ],
+      "breadcrumbs": "NY > Individual income tax > New York taxable income > 611",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "New York taxable income generally equals New York adjusted gross income less the permitted state standard or itemized deduction and dependent exemptions. It is not simply federal taxable income; state modifications precede the rate computation."
+      ],
+      "text_es": [
+        "El ingreso tributable de Nueva York generalmente es el ingreso bruto ajustado estatal menos la deducción estándar o detallada permitida y exenciones por dependientes. No equivale al ingreso tributable federal; los ajustes estatales preceden al cálculo del impuesto."
+      ]
+    },
+    {
+      "id": "ny-tax-612",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 612",
+      "section": "612",
+      "title": "Adjusted gross income modifications",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 611",
+        "NY Tax Law § 631"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Adjusted gross income modifications > 612",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "New York adjusted gross income starts with federal adjusted gross income and applies state additions and subtractions, including specific bond-interest and pension rules. A federal exclusion or deduction does not automatically control state treatment."
+      ],
+      "text_es": [
+        "El ingreso bruto ajustado de Nueva York parte del federal y aplica sumas y restas estatales, incluidas reglas de intereses de bonos y pensiones. Una exclusión o deducción federal no determina automáticamente el trato estatal."
+      ]
+    },
+    {
+      "id": "ny-tax-614",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 614",
+      "section": "614",
+      "title": "Standard deduction",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 611",
+        "NY Tax Law § 615"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Standard deduction > 614",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "For 2025 the usual standard deduction is $8,000 for a single filer who cannot be claimed as a dependent and $16,050 for married filing jointly. Separate amounts apply to other filing statuses and dependent filers. This reduces taxable income, not tax dollar for dollar."
+      ],
+      "text_es": [
+        "Para 2025 la deducción estándar habitual es $8,000 para solteros no dependientes y $16,050 para matrimonios con declaración conjunta. Otros estados civiles y dependientes tienen importes distintos. Reduce el ingreso tributable, no el impuesto dólar por dólar."
+      ]
+    },
+    {
+      "id": "ny-tax-615",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 615",
+      "section": "615",
+      "title": "Itemized deductions and high-income limits",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 611",
+        "NY Tax Law § 614"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Itemized deductions and high-income limits > 615",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "New York permits eligible state itemized deductions even if the federal standard deduction was claimed. State adjustments and high-income limitations apply; federal itemized amounts cannot simply be copied without the state computation."
+      ],
+      "text_es": [
+        "Nueva York permite deducciones detalladas estatales elegibles incluso si se reclamó la deducción estándar federal. Se aplican ajustes y límites por ingresos elevados; no basta copiar las deducciones detalladas federales."
+      ]
+    },
+    {
+      "id": "ny-tax-616",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 616",
+      "section": "616",
+      "title": "Dependent exemption",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 611"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Dependent exemption > 616",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "An eligible dependent generates a $1,000 New York exemption. This reduces taxable income, not tax by $1,000; state eligibility must be checked despite the federal suspension of personal-exemption deductions."
+      ],
+      "text_es": [
+        "Cada dependiente elegible genera una exención de Nueva York de $1,000. Reduce el ingreso tributable, no el impuesto en $1,000; debe verificarse la elegibilidad estatal pese a la suspensión federal de deducciones por exenciones personales."
+      ]
+    },
+    {
+      "id": "ny-tax-620",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 620",
+      "section": "620",
+      "title": "Resident credit for tax of other jurisdictions",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 620(b)",
+        "NY Tax Law § 631"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Resident credit for tax of other jurisdictions > 620",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Residents may claim a limited credit for qualifying income taxes of another state, political subdivision, the District of Columbia or a Canadian province on income also taxed by New York. Same-income and limitation rules apply; this is not a general foreign-country tax credit."
+      ],
+      "text_es": [
+        "Los residentes pueden reclamar un crédito limitado por impuestos sobre ingresos de otro estado, subdivisión política, Distrito de Columbia o provincia canadiense cuando Nueva York también grava el ingreso. Se aplican límites e ingreso común; no es un crédito general por impuestos extranjeros."
+      ]
+    },
+    {
+      "id": "ny-tax-861",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 861",
+      "section": "861",
+      "title": "Elective pass-through entity tax",
+      "effective_year": 2021,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/bus/ptet/",
+      "cross_references": [
+        "NY Tax Law § 862",
+        "NY Tax Law § 606(kkk)",
+        "NY Tax Law § 612"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Elective pass-through entity tax > 861",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2021 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Eligible partnerships and New York S corporations may elect annually into Article 24-A PTET. Entity taxable income is taxed at graduated rates from 6.85% to 10.9%; eligible direct owners receive an allocated refundable credit under section 606(kkk), with a related state addition modification."
+      ],
+      "text_es": [
+        "Las sociedades y corporaciones S elegibles pueden optar anualmente por el PTET del artículo 24-A. El ingreso tributable de la entidad recibe tasas del 6.85% al 10.9%; los propietarios directos elegibles reciben un crédito reembolsable asignado bajo 606(kkk), con ajuste estatal de adición relacionado."
+      ]
+    },
+    {
+      "id": "ny-tax-671",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 671",
+      "section": "671",
+      "title": "Employer wage withholding",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 631",
+        "20 NYCRR § 132.18"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Employer wage withholding > 671",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Employers must deduct and withhold New York income tax from covered wages. Withholding shown on Form W-2 is a payment toward return liability, not a final determination of residence or source; nonresident workday allocation also considers the convenience rule."
+      ],
+      "text_es": [
+        "Los empleadores deben retener el impuesto de Nueva York de salarios sujetos al impuesto. Lo indicado en el W-2 es un pago a cuenta, no una determinación definitiva de residencia o fuente; la asignación de días de no residentes también considera la regla de conveniencia."
+      ]
+    },
+    {
+      "id": "ny-tax-605-foreign",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 605(b)(1)(A)",
+      "section": "605(b)(1)(A)",
+      "title": "Domicile exceptions and foreign safe harbor",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 605(b)",
+        "20 NYCRR § 105.20"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Domicile exceptions and foreign safe harbor > 605(b)(1)(A)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A domiciliary exception requires no permanent New York abode, a permanent abode elsewhere and no more than 30 New York days. The separate foreign safe harbor requires 450 days abroad in 548 consecutive days, a 90-day New York limit for the individual, spouse and minor children, and proportional beginning/end-year limits."
+      ],
+      "text_es": [
+        "Una excepción de domicilio exige no tener vivienda permanente en Nueva York, mantenerla fuera y pasar como máximo 30 días en el estado. El refugio extranjero exige 450 días fuera del país en 548 días consecutivos, límite de 90 días en Nueva York para la persona, cónyuge e hijos menores y límites proporcionales inicial y final."
+      ]
+    },
+    {
+      "id": "ny-tax-601-recapture",
+      "jurisdiction": "NY",
+      "corpus": "NYTAX",
+      "citation": "NY Tax Law § 601(d)",
+      "section": "601(d)",
+      "title": "Supplemental tax and tax-benefit recapture",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.tax.ny.gov/pdf/current_forms/it/it201i.pdf",
+      "cross_references": [
+        "NY Tax Law § 601",
+        "NY Tax Law § 612"
+      ],
+      "breadcrumbs": "NY > Individual income tax > Supplemental tax and tax-benefit recapture > 601(d)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "High-income taxpayers may owe supplemental tax that recaptures the benefit of lower brackets under the applicable New York adjusted-gross-income worksheets. Merely applying marginal brackets can understate liability; the simplified compliance estimate expressly does not model this recapture."
+      ],
+      "text_es": [
+        "Los contribuyentes de ingresos elevados pueden adeudar impuesto suplementario que recupera el beneficio de tramos inferiores según las hojas de ingreso bruto ajustado estatal. Aplicar solo tasas marginales puede subestimar la obligación; el estimado simplificado de cumplimiento expresamente no modela esta recuperación."
+      ]
     }
   ]
 }

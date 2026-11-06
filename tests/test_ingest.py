@@ -66,11 +66,11 @@ def test_run_ingest_source_filters() -> None:
     assert ga_stats["publications_considered"] == 1
 
     ca_stats = run_ingest(db_path=":memory:", sources="ca", dry_run=True)
-    assert ca_stats["statutes_considered"] == 4
+    assert ca_stats["statutes_considered"] == 19
     assert ca_stats["publications_considered"] == 0
 
     ny_stats = run_ingest(db_path=":memory:", sources="ny", dry_run=True)
-    assert ny_stats["statutes_considered"] == 4
+    assert ny_stats["statutes_considered"] == 18
     assert ny_stats["publications_considered"] == 0
 
     fl_stats = run_ingest(db_path=":memory:", sources="fl", dry_run=True)
@@ -86,15 +86,15 @@ def test_run_ingest_source_filters() -> None:
     assert wa_stats["publications_considered"] == 0
 
     ma_stats = run_ingest(db_path=":memory:", sources="ma", dry_run=True)
-    assert ma_stats["statutes_considered"] == 3
+    assert ma_stats["statutes_considered"] == 15
     assert ma_stats["publications_considered"] == 0
 
     nj_stats = run_ingest(db_path=":memory:", sources="nj", dry_run=True)
-    assert nj_stats["statutes_considered"] == 3
+    assert nj_stats["statutes_considered"] == 16
     assert nj_stats["publications_considered"] == 0
 
     il_stats = run_ingest(db_path=":memory:", sources="il", dry_run=True)
-    assert il_stats["statutes_considered"] == 3
+    assert il_stats["statutes_considered"] == 16
     assert il_stats["publications_considered"] == 0
 
     pa_stats = run_ingest(db_path=":memory:", sources="pa", dry_run=True)
