@@ -1,0 +1,272 @@
+{
+  "schema": 1,
+  "jurisdiction": "CAN",
+  "model": "canada_federal",
+  "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+  "params": {
+    "years": [
+      {
+        "tax_year": 2019,
+        "brackets": [
+          {
+            "over": 210371.0,
+            "rate": 0.33
+          },
+          {
+            "over": 147667.0,
+            "rate": 0.29
+          },
+          {
+            "over": 95259.0,
+            "rate": 0.26
+          },
+          {
+            "over": 47630.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.15
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 12069.0,
+          "minimum": 12069.0,
+          "phaseout_start": 147667.0,
+          "phaseout_end": 210371.0
+        },
+        "credit_rate": 0.15
+      },
+      {
+        "tax_year": 2020,
+        "brackets": [
+          {
+            "over": 214368.0,
+            "rate": 0.33
+          },
+          {
+            "over": 150473.0,
+            "rate": 0.29
+          },
+          {
+            "over": 97069.0,
+            "rate": 0.26
+          },
+          {
+            "over": 48535.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.15
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 13229.0,
+          "minimum": 12298.0,
+          "phaseout_start": 150473.0,
+          "phaseout_end": 214368.0
+        },
+        "credit_rate": 0.15
+      },
+      {
+        "tax_year": 2021,
+        "brackets": [
+          {
+            "over": 216511.0,
+            "rate": 0.33
+          },
+          {
+            "over": 151978.0,
+            "rate": 0.29
+          },
+          {
+            "over": 98040.0,
+            "rate": 0.26
+          },
+          {
+            "over": 49020.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.15
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 13808.0,
+          "minimum": 12421.0,
+          "phaseout_start": 151978.0,
+          "phaseout_end": 216511.0
+        },
+        "credit_rate": 0.15
+      },
+      {
+        "tax_year": 2022,
+        "brackets": [
+          {
+            "over": 221708.0,
+            "rate": 0.33
+          },
+          {
+            "over": 155625.0,
+            "rate": 0.29
+          },
+          {
+            "over": 100392.0,
+            "rate": 0.26
+          },
+          {
+            "over": 50197.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.15
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 14398.0,
+          "minimum": 12719.0,
+          "phaseout_start": 155625.0,
+          "phaseout_end": 221708.0
+        },
+        "credit_rate": 0.15
+      },
+      {
+        "tax_year": 2023,
+        "brackets": [
+          {
+            "over": 235675.0,
+            "rate": 0.33
+          },
+          {
+            "over": 165430.0,
+            "rate": 0.29
+          },
+          {
+            "over": 106717.0,
+            "rate": 0.26
+          },
+          {
+            "over": 53359.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.15
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 15000.0,
+          "minimum": 13520.0,
+          "phaseout_start": 165430.0,
+          "phaseout_end": 235675.0
+        },
+        "credit_rate": 0.15
+      },
+      {
+        "tax_year": 2024,
+        "brackets": [
+          {
+            "over": 246752.0,
+            "rate": 0.33
+          },
+          {
+            "over": 173205.0,
+            "rate": 0.29
+          },
+          {
+            "over": 111733.0,
+            "rate": 0.26
+          },
+          {
+            "over": 55867.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.15
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 15705.0,
+          "minimum": 14156.0,
+          "phaseout_start": 173205.0,
+          "phaseout_end": 246752.0
+        },
+        "credit_rate": 0.15
+      },
+      {
+        "tax_year": 2025,
+        "brackets": [
+          {
+            "over": 253414.0,
+            "rate": 0.33
+          },
+          {
+            "over": 177882.0,
+            "rate": 0.29
+          },
+          {
+            "over": 114750.0,
+            "rate": 0.26
+          },
+          {
+            "over": 57375.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.145
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 16129.0,
+          "minimum": 14538.0,
+          "phaseout_start": 177882.0,
+          "phaseout_end": 253414.0
+        },
+        "credit_rate": 0.145
+      },
+      {
+        "tax_year": 2026,
+        "brackets": [
+          {
+            "over": 258482.0,
+            "rate": 0.33
+          },
+          {
+            "over": 181440.0,
+            "rate": 0.29
+          },
+          {
+            "over": 117045.0,
+            "rate": 0.26
+          },
+          {
+            "over": 58523.0,
+            "rate": 0.205
+          },
+          {
+            "over": null,
+            "rate": 0.14
+          }
+        ],
+        "basic_personal_amount": {
+          "maximum": 16452.0,
+          "minimum": 14829.0,
+          "phaseout_start": 181440.0,
+          "phaseout_end": 258482.0
+        },
+        "credit_rate": 0.14
+      }
+    ],
+    "capital_gains_inclusion_rate": 0.5,
+    "sojourner_days": 183,
+    "t1161_threshold": 25000.0,
+    "personal_use_reporting_threshold": 10000.0,
+    "personal_use_minimum": 1000.0,
+    "short_term_resident_months": 60
+  }
+}

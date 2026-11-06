@@ -55,3 +55,4 @@ Full statutory text is split by jurisdiction. Each file holds every section of o
 - [WV](./wv/llms-full.txt): 1 section
 - [WI](./wi/llms-full.txt): 1 section
 - [WY](./wy/llms-full.txt): 1 section
+- [CAN](./can/llms-full.txt): 24 sections

@@ -86,7 +86,9 @@ statutes_server.add_transform(
         f"Long text comes in pages of up to {TEXT_PAGE_CHARS:,} characters per text field "
         f"(each result stays under {RESPONSE_MAX_CHARS:,} characters): data.text_page gives "
         "the offset and full lengths, and while data.next_cursor is not null, call again "
-        "with page_cursor set to it for the next page."
+        "with page_cursor set to it for the next page. lang is en, es or fr: Canada (CAN) "
+        "rows hold the official English and French text and a Spanish summary; for a row "
+        "with no French text, fr answers in the row's official language (language_fallback)."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "read_only"},
@@ -168,7 +170,7 @@ async def lookup_statute(
 @statutes_server.tool(
     name="search_tax_code",
     description=(
-        "Keyword and concept search across Federal and State statutory corpora. "
+        "Keyword and concept search across Federal, State and Canada (CAN) statutory corpora. "
         "Multi-word queries match individual terms: rows with the whole phrase rank "
         "first, then by how many terms match, then newer effective year first "
         "(empty or non-numeric years last), then id. Each result is a short snippet "
@@ -177,7 +179,8 @@ async def lookup_statute(
         "full text: call statutes_lookup_statute with citation_or_section set to the "
         f"result's id to read the full text. limit is clamped to 1..{LIST_MAX_LIMIT} "
         "results per call (see limit_applied); while next_offset is not null, call again "
-        "with offset set to it for the next page."
+        "with offset set to it for the next page. lang picks the snippet language (en, es "
+        "or fr); matching reads every language a row has."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"statutes", "search", "read_only"},
@@ -189,7 +192,7 @@ async def search_tax_code(
         Field(
             description=(
                 "Optional jurisdiction code or full name, e.g. 'WA' or 'Washington', "
-                "'PR' or 'Puerto Rico', 'US' or 'federal'."
+                "'PR' or 'Puerto Rico', 'US' or 'federal', 'CAN' or 'Canada'."
             )
         ),
     ] = None,
@@ -215,6 +218,15 @@ async def search_tax_code(
     offset: Annotated[
         int, Field(ge=0, description="Optional number of ranked results to skip (paging).")
     ] = 0,
+    lang: Annotated[
+        str,
+        Field(
+            description=(
+                "Snippet language: 'en' (default), 'es' or 'fr'. 'fr' takes the French "
+                "text of a Canada row and otherwise the row's official language."
+            )
+        ),
+    ] = "en",
     client_id: str = "taxcode-client-default",
 ) -> dict[str, Any]:
     """Search statutes by keywords or concepts in DuckDB."""
@@ -225,6 +237,7 @@ async def search_tax_code(
             jurisdiction=jurisdiction,
             corpus=corpus,
             tax_year=tax_year,
+            lang=lang,
             limit=page_size + 1,
             offset=offset,
         )

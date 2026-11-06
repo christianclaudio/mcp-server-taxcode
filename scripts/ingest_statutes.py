@@ -54,13 +54,20 @@ class StatuteRecord:
     breadcrumbs: str = ""
     # Export-only provenance note appended to the docs Source line; not stored in the database.
     source_note: str = ""
+    # Official French text (Canada rows); empty elsewhere.
+    text_fr: str = ""
 
     def content_hash(self) -> str:
-        """Compute a SHA-256 checksum of the bilingual text payload."""
+        """Compute a SHA-256 checksum of the bilingual text payload.
+
+        A row with a French text adds it, so rows without one keep their old checksum.
+        """
         payload = (
             f"{self.citation}|{self.title}|{self.text_en}|{self.text_es}|"
             f"{self.effective_year}|{self.superseded_year}"
         )
+        if self.text_fr:
+            payload += f"|{self.text_fr}"
         return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
     def to_dict(self) -> dict[str, Any]:
@@ -78,6 +85,7 @@ class StatuteRecord:
             "superseded_year": self.superseded_year,
             "source_url": self.source_url,
             "cross_references": self.cross_references,
+            **({"text_fr": self.text_fr} if self.text_fr else {}),
         }
 
 

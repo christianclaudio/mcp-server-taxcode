@@ -11,6 +11,7 @@ from mcp.types import ToolAnnotations
 from pydantic import Field
 
 from taxcode_mcp.catalog import (
+    COUNTRY_RATE_TABLES,
     FEDERAL_ALLOWANCE,
     RATE_TABLE_MODELS,
     load_federal_standard_deduction,
@@ -18,6 +19,7 @@ from taxcode_mcp.catalog import (
 )
 from taxcode_mcp.disclaimers import BILINGUAL_DISCLAIMER, CONTENT_NOTICE, ESTIMATE_NOTE
 from taxcode_mcp.errors import SafetyViolationError, tool_error
+from taxcode_mcp.tools.canada import EmigrationProperty, evaluate_canada, is_canada
 
 logger = logging.getLogger(__name__)
 
@@ -572,8 +574,9 @@ FEDERAL_STANDARD_DEDUCTION: dict[int, dict[str, float]] = load_federal_standard_
 STATE_REGISTRY: dict[str, dict[str, Any]] = {
     code: params for code, params in RATE_TABLES.items() if RATE_TABLE_MODELS[code] == "registry"
 }
-# FL and TX levy no personal income tax, so they have no rate table.
-SUPPORTED_STATE_JURISDICTIONS = frozenset({"FL", "TX", *RATE_TABLE_MODELS})
+# FL and TX levy no personal income tax, so they have no rate table. Canada (CAN) has one but
+# is not a state: evaluate_state_residency answers it with taxcode_mcp.tools.canada.
+SUPPORTED_STATE_JURISDICTIONS = frozenset({"FL", "TX", *RATE_TABLE_MODELS}) - COUNTRY_RATE_TABLES
 
 
 def _status(is_mfj: bool) -> str:
@@ -874,7 +877,11 @@ NY_RECAPTURE_NOTE = " [NYAGI-based tax computation worksheets (recapture) are no
     name="evaluate_state_residency",
     description=(
         "Evaluate individual statutory residency, domicile nexus, and state tax liability "
-        "across all 50 US states and District of Columbia."
+        "across all 50 US states and District of Columbia. jurisdiction 'CAN' or 'Canada' "
+        "('CA' is California) evaluates Canada federal residency instead (factual, deemed "
+        "sojourner at 183 days, part-year emigrant or non-resident) and estimates federal Part I "
+        "tax in CAD (federal_agi is taxable income, days_in_state days in Canada, tax years "
+        "2019-2026); event='emigration' adds the departure tax estimate (ITA s. 128.1)."
     ),
     annotations=ANNOTATION_READ_ONLY,
     tags={"compliance", "states", "residency", "read_only"},
@@ -935,13 +942,76 @@ def evaluate_state_residency(
             )
         ),
     ] = 0.0,
+    event: Annotated[
+        str | None,
+        Field(
+            description=(
+                "Canada (CAN) only: 'emigration' for the year an individual leaves Canada. Adds "
+                "the deemed disposition on departure (ITA s. 128.1(4)(b)), the estimated "
+                "departure tax and the T1161 reporting test (s. 128.1(9))."
+            )
+        ),
+    ] = None,
+    emigration_properties: Annotated[
+        list[EmigrationProperty] | None,
+        Field(
+            description=(
+                "Canada emigration only: the property owned immediately before leaving, each "
+                "with category, fair_market_value and adjusted_cost_base in CAD."
+            )
+        ),
+    ] = None,
+    months_resident_in_last_120: Annotated[
+        int | None,
+        Field(
+            description=(
+                "Canada emigration only: months resident in Canada in the 120 months before "
+                "leaving. 60 or fewer applies the short-term resident exclusion (ITA "
+                "s. 128.1(4)(b)(iv)) to property owned on arrival or inherited since."
+            )
+        ),
+    ] = None,
 ) -> dict[str, Any]:
     """Evaluate state domicile, presence day counts, and statutory state tax liability."""
+    if is_canada(jurisdiction):
+        return evaluate_canada(
+            RATE_TABLES["CAN"],
+            days_in_canada=days_in_state,
+            is_domiciled=is_domiciled,
+            maintains_permanent_abode=maintains_permanent_abode,
+            taxable_income=federal_agi,
+            capital_gains=capital_gains,
+            tax_year=tax_year,
+            has_active_driver_license=has_active_driver_license,
+            has_active_voter_registration=has_active_voter_registration,
+            event=event,
+            emigration_properties=emigration_properties,
+            months_resident_in_last_120=months_resident_in_last_120,
+            other_inputs={
+                "filing_status": filing_status,
+                "age": age,
+                "retirement_income": retirement_income,
+                "has_active_homestead_exemption": has_active_homestead_exemption,
+                "telecommuting_days_out_of_state": telecommuting_days_out_of_state,
+                "dependents": dependents,
+                "spouse_agi": spouse_agi,
+                "itemized_deductions": itemized_deductions,
+            },
+        )
     state = jurisdiction.strip().upper()
     if state not in SUPPORTED_STATE_JURISDICTIONS:
         raise SafetyViolationError(
             f"Unsupported jurisdiction '{jurisdiction}'. Supported states: "
             f"{', '.join(sorted(SUPPORTED_STATE_JURISDICTIONS))}."
+        )
+    if (
+        event is not None
+        or emigration_properties is not None
+        or months_resident_in_last_120 is not None
+    ):
+        raise SafetyViolationError(
+            "event, emigration_properties and months_resident_in_last_120 apply only to "
+            "jurisdiction 'CAN' (Canada)."
         )
     if itemized_deductions > 0.0 and state != "UT":
         raise SafetyViolationError("itemized_deductions applies only to Utah.")

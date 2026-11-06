@@ -1,0 +1,783 @@
+{
+  "schema": 1,
+  "jurisdiction": "CAN",
+  "entries": [
+    {
+      "kind": "statute",
+      "id": "can-ita-2",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-38",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-114",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-115",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-117",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-117-2019",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/1fb8069ccea31210a735312bf041770d11454c0f/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "4c2d82eb790ec87a7f45740cabb3c18fc2dbfefb1a089dfb193eea34e5921932",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2021-01-01",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/1fb8069ccea31210a735312bf041770d11454c0f/fra/lois/I-3.3.xml",
+        "content_sha256": "b4a23071684586cf0fc72ed9fc4e0afb2e7521578ed584003db8975cd23d3881"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-117-2023",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/b88cac88557ac3f214f16c66b684036e8a2b2c2c/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "9bbce63b93bc3ed952b03a51f48fa3ce84e03028b7cc2856f6e976d97cb22165",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2023-06-22",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/b88cac88557ac3f214f16c66b684036e8a2b2c2c/fra/lois/I-3.3.xml",
+        "content_sha256": "9b1df31cd49ba85337a9021c1fa47dfa6f4fb74784796b52c57cd35f2c4c949b"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-117-1",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-118",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-118-2019",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/1fb8069ccea31210a735312bf041770d11454c0f/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "4c2d82eb790ec87a7f45740cabb3c18fc2dbfefb1a089dfb193eea34e5921932",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2021-01-01",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/1fb8069ccea31210a735312bf041770d11454c0f/fra/lois/I-3.3.xml",
+        "content_sha256": "b4a23071684586cf0fc72ed9fc4e0afb2e7521578ed584003db8975cd23d3881"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-118-2020",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/d67469e2aaf0f752b3dd7597cf48b32edc032be4/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "76df9f12a6cbc15c2e2f103f097dd9493cebac7ce0c023274cf2dd8fbf1a1eff",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2021-07-01",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/d67469e2aaf0f752b3dd7597cf48b32edc032be4/fra/lois/I-3.3.xml",
+        "content_sha256": "4f8827e8703308e1cdbeadd2c25d14944787ad8763e3ba4047a110e3d06a8507"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-118-2023",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/b88cac88557ac3f214f16c66b684036e8a2b2c2c/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "9bbce63b93bc3ed952b03a51f48fa3ce84e03028b7cc2856f6e976d97cb22165",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2023-06-22",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/b88cac88557ac3f214f16c66b684036e8a2b2c2c/fra/lois/I-3.3.xml",
+        "content_sha256": "9b1df31cd49ba85337a9021c1fa47dfa6f4fb74784796b52c57cd35f2c4c949b"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-128-1",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-153",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-212",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-ita-250",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9",
+      "enacting_law": "Income Tax Act, R.S.C. 1985, c. 1 (5th Supp.)",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/lois/I-3.3.xml",
+        "content_sha256": "36b8465c70f532e1fc1edd890154b07a67721e826f2a1af689014f255bb9c96c"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-100",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-102",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-103",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-105",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-202",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-805",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-2600",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "statute",
+      "id": "can-itr-2601",
+      "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/regulations/C.R.C.,_c._945.xml",
+      "edition": "amended_compilation",
+      "official": true,
+      "licence": "Open Government Licence - Canada (laws-lois-xml LICENSE.md); reproduced under the Reproduction of Federal Law Order, SI/97-5",
+      "retrieved": "2026-11-05",
+      "content_sha256": "d8cb64d6f568b9ed2046f4a4c6c7c1fa9eb5f8d41854a479e946009abccdda32",
+      "enacting_law": "Income Tax Regulations, C.R.C., c. 945",
+      "effective_date": "2026-06-18",
+      "verification": "verified_verbatim",
+      "french_source": {
+        "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/fra/reglements/C.R.C.,_ch._945.xml",
+        "content_sha256": "799e9c796ed216f74bd62022624c4e5a5b256ad75c6b5c63d2499d53a4a686c4"
+      }
+    },
+    {
+      "kind": "publication",
+      "id": "can-cra-folio-s5-f1-c1",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-5-international-residency/folio-1-residency/income-tax-folio-s5-f1-c1-determining-individual-s-residence-status.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-05",
+      "content_sha256": "3809d4387718668a41817398021ea7e67dd72b3dee1d5dfa7154c3d83ee94ba0",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "can-cra-t1161",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1161.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-05",
+      "content_sha256": "df953f3b506bc61ca2969bfe59c6186cfac689bd615292884fc9643855190c16",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "can-cra-t1243",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1243.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-05",
+      "content_sha256": "49c93cbf988c0279f754a9c784d56ea0b7c7463a166d8107d23c880bb46a1729",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "can-cra-t1244",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1244.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-05",
+      "content_sha256": "8de2cd25eede70f315c20b8296c93ef91e37f4eebf53e58b2593693379e1876f",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "publication",
+      "id": "can-cra-leaving-canada",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/leaving-canada-emigrants.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-05",
+      "content_sha256": "45c4d8512adacf927cac2f62ee67903b7e155b9611e15acd2d14f67ca56d8aca",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "rate_table",
+      "id": "can-rates",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "not_recorded",
+      "retrieved": "2026-11-05",
+      "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2019,
+          "values": {
+            "years[0].brackets[0].over": 210371.0,
+            "years[0].brackets[1].over": 147667.0,
+            "years[0].brackets[2].over": 95259.0,
+            "years[0].brackets[3].over": 47630.0,
+            "years[0].brackets[0].rate": 0.33,
+            "years[0].brackets[1].rate": 0.29,
+            "years[0].brackets[2].rate": 0.26,
+            "years[0].brackets[3].rate": 0.205,
+            "years[0].brackets[4].rate": 0.15,
+            "years[0].basic_personal_amount.phaseout_start": 147667.0,
+            "years[0].basic_personal_amount.phaseout_end": 210371.0,
+            "years[0].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "years[0].basic_personal_amount.maximum": 12069.0,
+            "years[0].basic_personal_amount.minimum": 12069.0
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/migration/cra-arc/tx/bsnss/tpcs/pyrll/t4032/2019/t4032-oc-19eng.pdf",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "abf107bb28f0e5f9ee4c0706331db22e47631989a018c4344d7747ca6b7a0e20"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "years[1].brackets[0].over": 214368.0,
+            "years[1].brackets[1].over": 150473.0,
+            "years[1].brackets[2].over": 97069.0,
+            "years[1].brackets[3].over": 48535.0,
+            "years[1].brackets[0].rate": 0.33,
+            "years[1].brackets[1].rate": 0.29,
+            "years[1].brackets[2].rate": 0.26,
+            "years[1].brackets[3].rate": 0.205,
+            "years[1].brackets[4].rate": 0.15,
+            "years[1].basic_personal_amount.phaseout_start": 150473.0,
+            "years[1].basic_personal_amount.phaseout_end": 214368.0,
+            "years[1].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "years[1].basic_personal_amount.maximum": 13229.0,
+            "years[1].basic_personal_amount.minimum": 12298.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "years[2].brackets[0].over": 216511.0,
+            "years[2].brackets[1].over": 151978.0,
+            "years[2].brackets[2].over": 98040.0,
+            "years[2].brackets[3].over": 49020.0,
+            "years[2].brackets[0].rate": 0.33,
+            "years[2].brackets[1].rate": 0.29,
+            "years[2].brackets[2].rate": 0.26,
+            "years[2].brackets[3].rate": 0.205,
+            "years[2].brackets[4].rate": 0.15,
+            "years[2].basic_personal_amount.phaseout_start": 151978.0,
+            "years[2].basic_personal_amount.phaseout_end": 216511.0,
+            "years[2].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "years[2].basic_personal_amount.maximum": 13808.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "years[2].basic_personal_amount.minimum": 12421.0
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1-ws/td1-ws-21e.pdf",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "1696bb7b7f98ee31cda0f481d8f834ec38d572979b7e193c0cf1b7844061fd72"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "years[3].brackets[0].over": 221708.0,
+            "years[3].brackets[1].over": 155625.0,
+            "years[3].brackets[2].over": 100392.0,
+            "years[3].brackets[3].over": 50197.0,
+            "years[3].brackets[0].rate": 0.33,
+            "years[3].brackets[1].rate": 0.29,
+            "years[3].brackets[2].rate": 0.26,
+            "years[3].brackets[3].rate": 0.205,
+            "years[3].brackets[4].rate": 0.15,
+            "years[3].basic_personal_amount.phaseout_start": 155625.0,
+            "years[3].basic_personal_amount.phaseout_end": 221708.0,
+            "years[3].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "years[3].basic_personal_amount.maximum": 14398.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "years[3].basic_personal_amount.minimum": 12719.0
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pbg/td1-ws/td1-ws-22e.pdf",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "1dfebfaba0b48e69468bd26ba75a588d05a7b5fffd77ffc3e27845ffc54abf80"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "years[4].brackets[0].over": 235675.0,
+            "years[4].brackets[1].over": 165430.0,
+            "years[4].brackets[2].over": 106717.0,
+            "years[4].brackets[3].over": 53359.0,
+            "years[4].brackets[0].rate": 0.33,
+            "years[4].brackets[1].rate": 0.29,
+            "years[4].brackets[2].rate": 0.26,
+            "years[4].brackets[3].rate": 0.205,
+            "years[4].brackets[4].rate": 0.15,
+            "years[4].basic_personal_amount.phaseout_start": 165430.0,
+            "years[4].basic_personal_amount.phaseout_end": 235675.0,
+            "years[4].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "years[4].basic_personal_amount.maximum": 15000.0,
+            "years[4].basic_personal_amount.minimum": 13520.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "years[5].brackets[0].over": 246752.0,
+            "years[5].brackets[1].over": 173205.0,
+            "years[5].brackets[2].over": 111733.0,
+            "years[5].brackets[3].over": 55867.0,
+            "years[5].brackets[0].rate": 0.33,
+            "years[5].brackets[1].rate": 0.29,
+            "years[5].brackets[2].rate": 0.26,
+            "years[5].brackets[3].rate": 0.205,
+            "years[5].brackets[4].rate": 0.15,
+            "years[5].basic_personal_amount.phaseout_start": 173205.0,
+            "years[5].basic_personal_amount.phaseout_end": 246752.0,
+            "years[5].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "years[5].basic_personal_amount.maximum": 15705.0,
+            "years[5].basic_personal_amount.minimum": 14156.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "years[6].brackets[0].over": 253414.0,
+            "years[6].brackets[1].over": 177882.0,
+            "years[6].brackets[2].over": 114750.0,
+            "years[6].brackets[3].over": 57375.0,
+            "years[6].brackets[0].rate": 0.33,
+            "years[6].brackets[1].rate": 0.29,
+            "years[6].brackets[2].rate": 0.26,
+            "years[6].brackets[3].rate": 0.205,
+            "years[6].brackets[4].rate": 0.145,
+            "years[6].basic_personal_amount.phaseout_start": 177882.0,
+            "years[6].basic_personal_amount.phaseout_end": 253414.0,
+            "years[6].credit_rate": 0.145
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/last-year.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "efa654b42830705a49ebc97cc180cfe9aa8a740d5ce7419c3faaae9cdd123675"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "years[6].basic_personal_amount.maximum": 16129.0,
+            "years[6].basic_personal_amount.minimum": 14538.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "years[7].brackets[0].over": 258482.0,
+            "years[7].brackets[1].over": 181440.0,
+            "years[7].brackets[2].over": 117045.0,
+            "years[7].brackets[3].over": 58523.0,
+            "years[7].brackets[0].rate": 0.33,
+            "years[7].brackets[1].rate": 0.29,
+            "years[7].brackets[2].rate": 0.26,
+            "years[7].brackets[3].rate": 0.205,
+            "years[7].brackets[4].rate": 0.14,
+            "years[7].basic_personal_amount.phaseout_start": 181440.0,
+            "years[7].basic_personal_amount.phaseout_end": 258482.0,
+            "years[7].credit_rate": 0.14
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "7dc60bf7ba9e9e1b702d8b409b7d6324e1e113205fd8c8546bba8e080b47bcee"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "years[7].basic_personal_amount.maximum": 16452.0,
+            "years[7].basic_personal_amount.minimum": 14829.0
+          },
+          "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "capital_gains_inclusion_rate": 0.5,
+            "sojourner_days": 183,
+            "t1161_threshold": 25000.0,
+            "personal_use_reporting_threshold": 10000.0,
+            "personal_use_minimum": 1000.0,
+            "short_term_resident_months": 60
+          },
+          "url": "https://raw.githubusercontent.com/justicecanada/laws-lois-xml/0507465393c224c0491fc8c17c88340217acc656/eng/acts/I-3.3.xml",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9"
+        }
+      ]
+    }
+  ]
+}

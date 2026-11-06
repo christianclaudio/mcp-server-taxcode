@@ -25,7 +25,9 @@ from taxcode_mcp.paging import (
 )
 from taxcode_mcp.server import mcp
 
-LONGEST = max(INITIAL_STATUTES, key=lambda s: max(len(s["text_en"]), len(s["text_es"])))
+# The rows with two text fields (a Canada row adds a French text; see test_canada_federal).
+TWO_TEXT_ROWS = [s for s in INITIAL_STATUTES if not s.get("text_fr")]
+LONGEST = max(TWO_TEXT_ROWS, key=lambda s: max(len(s["text_en"]), len(s["text_es"])))
 LONGEST_EN = max(INITIAL_STATUTES, key=lambda s: len(s["text_en"]))
 # What a search without a tax year lists: current rows and the dated rows that predate the
 # prior-year versions.

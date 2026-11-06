@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "jurisdiction": "CAN",
+  "publications": [
+    {
+      "id": "can-cra-folio-s5-f1-c1",
+      "category": "cra-folio",
+      "doc_number": "CRA Income Tax Folio S5-F1-C1",
+      "doc_date": "2026-10-30",
+      "title": "Income Tax Folio S5-F1-C1, Determining an Individual’s Residence Status",
+      "summary": "CRA technical guidance on how residence status is determined for an individual. Factual residence turns on residential ties kept in Canada: a home, a spouse or common-law partner, and dependants are the significant ties, with secondary ties such as personal property, social and economic ties, provincial health coverage and a driver’s licence. Also covers deemed residence of sojourners present 183 days or more in a year (ITA s. 250(1)(a)), the tax treaty tie-breaker rule that deems a dual resident not resident (s. 250(5)), and the dates residence starts and ends for part-year residents. Unofficial summary written for this catalog; read the folio itself for its exact text.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-5-international-residency/folio-1-residency/income-tax-folio-s5-f1-c1-determining-individual-s-residence-status.html"
+    },
+    {
+      "id": "can-cra-t1161",
+      "category": "cra-form",
+      "doc_number": "CRA Form T1161",
+      "doc_date": "2023-12-04",
+      "title": "T1161 List of Properties by an Emigrant of Canada",
+      "summary": "The form an individual who stops being resident in Canada files to list the property owned at departure when the total fair market value of that reportable property is more than $25,000 (ITA s. 128.1(9)). Cash, deposits, and personal-use property worth less than $10,000 each are left out of the list and the total (s. 128.1(10)). It is due with the return for the year of departure. Unofficial summary written for this catalog.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1161.html"
+    },
+    {
+      "id": "can-cra-t1243",
+      "category": "cra-form",
+      "doc_number": "CRA Form T1243",
+      "doc_date": "2023-12-04",
+      "title": "T1243 Deemed Disposition of Property by an Emigrant of Canada",
+      "summary": "The form an emigrant uses to work out the capital gains and losses from the deemed disposition of property at fair market value on the day before leaving Canada (ITA s. 128.1(4)(b)); the results are reported in the return for the year of departure. Unofficial summary written for this catalog.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1243.html"
+    },
+    {
+      "id": "can-cra-t1244",
+      "category": "cra-form",
+      "doc_number": "CRA Form T1244",
+      "doc_date": "2023-12-04",
+      "title": "T1244 Election, under Subsection 220(4.5) of the Income Tax Act, to Defer the Payment of Tax on Income Relating to the Deemed Disposition of Property",
+      "summary": "The election an emigrant files to defer paying the tax on gains from the deemed disposition on departure until the property is actually disposed of (ITA s. 220(4.5)); the CRA may require security for the deferred tax. Unofficial summary written for this catalog.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1244.html"
+    },
+    {
+      "id": "can-cra-leaving-canada",
+      "category": "cra-guidance",
+      "doc_number": "CRA Leaving Canada (emigrants)",
+      "doc_date": "2026-09-17",
+      "title": "Leaving Canada (emigrants)",
+      "summary": "CRA guidance for individuals who leave Canada: how the date residence ends is set, the return for the year of departure (taxed as a resident to that date and on Canadian-source income after it), the deemed disposition of property on leaving and the forms that report it (T1243, T1161), the election to defer the tax (T1244), and what happens to benefit and credit payments. Unofficial summary written for this catalog.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/leaving-canada-emigrants.html"
+    }
+  ]
+}
