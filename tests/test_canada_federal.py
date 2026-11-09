@@ -397,7 +397,7 @@ def test_the_cra_guidance_is_a_link_and_a_summary(db: TaxDatabase) -> None:
         assert pub["source_url"].startswith("https://www.canada.ca/"), pub_id
         assert "Unofficial summary written for this catalog" in pub["summary"], pub_id
         entry = MANIFEST[pub_id]
-        assert entry["verification"] == "summary" and len(entry["content_sha256"]) == 64
+        assert entry["verification"] == "summary" and entry["content_sha256"] == "not_recorded"
     listed = {p["id"] for p in db.list_publications(limit=100)}
     assert CRA_PUBLICATIONS <= listed
     assert "$25,000" in pubs["can-cra-t1161"]["summary"]
@@ -418,8 +418,13 @@ def test_the_rate_table_holds_2019_to_2026_from_cra_sources() -> None:
     assert (PARAMS["capital_gains_inclusion_rate"], PARAMS["sojourner_days"]) == (0.5, 183)
     assert (PARAMS["t1161_threshold"], PARAMS["short_term_resident_months"]) == (25000.0, 60)
     entry = MANIFEST["can-rates"]
-    assert entry["verification"] == "summary"
+    assert entry["verification"] == "summary" and entry["content_sha256"] == "not_recorded"
     assert sorted({s["tax_year"] for s in entry["year_sources"]}) == list(range(2019, 2027))
+    for source in entry["year_sources"]:
+        if source["url"].endswith(".html"):
+            assert source["content_sha256"] == "not_recorded"
+        else:
+            assert len(source["content_sha256"]) == 64
 
 
 # --- Catalog validation -----------------------------------------------------------------
@@ -601,6 +606,14 @@ def test_income_tax_by_year_and_the_basic_personal_amount_phaseout() -> None:
         )
     assert "14.5%" in _can(tax_year=2025)["tax_computation"]["rate_description"]
     assert "from 14% to 33%" in _can(tax_year=2026)["tax_computation"]["rate_description"]
+    assert (
+        "$15,705 phased down to $14,156 under s. 118(1.1) between the 4th and 5th brackets, "
+        "$173,205 to $246,752"
+    ) in _can(tax_year=2024)["tax_computation"]["rate_description"]
+    assert (
+        "$12,069 basic personal amount credit at 15% "
+        "(before the s. 118(1.1) phaseout took effect in 2020)"
+    ) in _can(tax_year=2019)["tax_computation"]["rate_description"]
     bpa = YEARS[2024]["basic_personal_amount"]
     assert basic_personal_amount(bpa, bpa["phaseout_start"]) == bpa["maximum"]
     assert basic_personal_amount(bpa, bpa["phaseout_end"]) == bpa["minimum"]

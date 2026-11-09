@@ -418,7 +418,7 @@
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-11-05",
-      "content_sha256": "3809d4387718668a41817398021ea7e67dd72b3dee1d5dfa7154c3d83ee94ba0",
+      "content_sha256": "not_recorded",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
@@ -431,7 +431,7 @@
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-11-05",
-      "content_sha256": "df953f3b506bc61ca2969bfe59c6186cfac689bd615292884fc9643855190c16",
+      "content_sha256": "not_recorded",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
@@ -444,7 +444,7 @@
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-11-05",
-      "content_sha256": "49c93cbf988c0279f754a9c784d56ea0b7c7463a166d8107d23c880bb46a1729",
+      "content_sha256": "not_recorded",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
@@ -457,7 +457,7 @@
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-11-05",
-      "content_sha256": "8de2cd25eede70f315c20b8296c93ef91e37f4eebf53e58b2593693379e1876f",
+      "content_sha256": "not_recorded",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
@@ -470,7 +470,7 @@
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-11-05",
-      "content_sha256": "45c4d8512adacf927cac2f62ee67903b7e155b9611e15acd2d14f67ca56d8aca",
+      "content_sha256": "not_recorded",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary"
@@ -483,7 +483,7 @@
       "official": true,
       "licence": "not_recorded",
       "retrieved": "2026-11-05",
-      "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670",
+      "content_sha256": "not_recorded",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "summary",
@@ -507,7 +507,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2019,
@@ -539,7 +539,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2020,
@@ -550,7 +550,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2021,
@@ -571,7 +571,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2021,
@@ -581,7 +581,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2021,
@@ -612,7 +612,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2022,
@@ -622,7 +622,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2022,
@@ -653,7 +653,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2023,
@@ -664,7 +664,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2024,
@@ -685,7 +685,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/all-years.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "6ef67b627876da2f84f3f305deee3ae778f108e5c72ada7f7d07a2c740742670"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2024,
@@ -696,7 +696,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2025,
@@ -717,7 +717,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/last-year.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "efa654b42830705a49ebc97cc180cfe9aa8a740d5ce7419c3faaae9cdd123675"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2025,
@@ -728,7 +728,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2026,
@@ -749,7 +749,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "7dc60bf7ba9e9e1b702d8b409b7d6324e1e113205fd8c8546bba8e080b47bcee"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2026,
@@ -760,7 +760,7 @@
           "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/adjustment-personal-income-tax-benefit-amounts.html",
           "official": true,
           "retrieved": "2026-11-05",
-          "content_sha256": "d6f9a13ede57892d6577d52d9070eac881b5ff8631203847c9c557496605b9a5"
+          "content_sha256": "not_recorded"
         },
         {
           "tax_year": 2026,

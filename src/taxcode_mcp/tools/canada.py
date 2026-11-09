@@ -375,6 +375,21 @@ def evaluate_canada(
     }
     lowest = float(row["brackets"][-1]["rate"])
     top = float(row["brackets"][0]["rate"])
+    bpa = row["basic_personal_amount"]
+    bpa_max = float(bpa["maximum"])
+    bpa_min = float(bpa["minimum"])
+    if bpa_max > bpa_min:
+        bpa_desc = (
+            f"the basic personal amount credit at {lowest * 100:g}% "
+            f"(${bpa_max:,.0f} phased down to ${bpa_min:,.0f} under s. 118(1.1) "
+            "between the 4th and 5th brackets, "
+            f"${float(bpa['phaseout_start']):,.0f} to ${float(bpa['phaseout_end']):,.0f})"
+        )
+    else:
+        bpa_desc = (
+            f"the ${bpa_max:,.0f} basic personal amount credit at {lowest * 100:g}% "
+            "(before the s. 118(1.1) phaseout took effect in 2020)"
+        )
     tax_computation: dict[str, Any] = {
         "currency": "CAD",
         "taxable_net_income": income,
@@ -389,7 +404,7 @@ def evaluate_canada(
         "estimate_note": ESTIMATE_NOTE,
         "rate_description": (
             f"Federal graduated brackets from {lowest * 100:g}% to {top * 100:g}% for "
-            f"{tax_year}, less the basic personal amount credit at {lowest * 100:g}%; "
+            f"{tax_year}, less {bpa_desc}; "
             "estimated_state_tax repeats the federal estimate. Provincial or territorial "
             "tax, other credits and deductions are not modeled."
         ),

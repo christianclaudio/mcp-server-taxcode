@@ -17,10 +17,10 @@ Statute and publication rows live only in the data files under `src/taxcode_mcp/
 | File | Holds |
 | --- | --- |
 | `jurisdictions.json` | Jurisdiction codes in catalog order. Rows load in this order, then in file order. |
-| `statutes/<code>.json` | One jurisdiction's statute rows (`us.json`, `pr.json`, `ga.json`, ...). `text_en` and `text_es` are lists of lines, joined with a newline when loaded. |
+| `statutes/<code>.json` | One jurisdiction's statute rows (`us.json`, `pr.json`, `can.json`, `ga.json`, ...). `text_en`, `text_es` and optional `text_fr` (required on `CAN` rows, stored in `statutes_fr`) are lists of lines, joined with a newline when loaded. |
 | `publications/<code>.json` | Publications whose `id` starts with `<code>-`. |
 | `manifest/<code>.json` | One source record per statute and publication row and per rate table of that jurisdiction. |
-| `rates/<code>.json` | The rate table the compliance tools compute a state's tax from. See "Changing a rate table" below. |
+| `rates/<code>.json` | The rate table the compliance tools compute a state's or country's tax from (`RATE_TABLE_MODELS` and `COUNTRY_RATE_TABLES` in `src/taxcode_mcp/catalog.py`). See "Changing a rate table" below. |
 
 Every manifest entry has every field below. A value we don't have is the explicit string `"not_recorded"`, never a missing key and never a guess.
 
@@ -36,8 +36,9 @@ Every manifest entry has every field below. A value we don't have is the explici
 | `enacting_law` | Law that enacted or last amended the text, or `"not_recorded"`. |
 | `effective_date` | Date the text took effect (`YYYY-MM-DD`), or `"not_recorded"`. |
 | `verification` | `verified_verbatim` (checked word for word against the fetched source; needs `retrieved` and `content_sha256`), `summary` (the stored text is a summary, not a copy), or `"not_recorded"`. |
+| `french_source` | Optional, `statute` entries only, after `verification`, and required when the row has `text_fr`. An object with `url` (https) and `content_sha256` (64 lowercase hex digits) for the fetched French source artifact. |
 | `verification_note` | Optional, and only on a `rate_table` whose `verification` is `not_recorded`, after `verification` and before `year_sources`. A non-empty string saying why that table could not be confirmed. A checked table does not carry it. |
-| `year_sources` | Optional, `rate_table` and `federal_table` entries only, as the last field. A list of the sources for figures of other tax years or corroborating second sources on `url`'s year, `tax_year` ascending. Each has exactly `tax_year`, `values` (the table values it confirms, keyed by their path in `params`, such as `rates[0].rate` or `deduction_mfj_2025`, or for the federal table in its document, such as `years[6].single`; each must equal the table's value), `url` (https), `official` (`true`), `retrieved` and `content_sha256` (`"not_recorded"` when the bytes could not be kept). |
+| `year_sources` | Optional, `rate_table` and `federal_table` entries only, as the last field. A list of the sources for figures of other tax years or corroborating second sources on `url`'s year, `tax_year` ascending. Each has exactly `tax_year`, `values` (the table values it confirms, keyed by their path in `params`, such as `rates[0].rate`, `deduction_mfj_2025` or `years[0].brackets[4].rate`, or for the federal table in its document, such as `years[6].single`; each must equal the table's value), `url` (https), `official` (`true`), `retrieved` and `content_sha256` (`"not_recorded"` when the bytes could not be kept). |
 
 To add or change a row:
 
@@ -50,7 +51,7 @@ A new jurisdiction also needs its code in `jurisdictions.json` and, for its name
 
 ## Changing a rate table
 
-Every deduction, exemption, bracket, rate and per-year value the compliance tools use lives in `src/taxcode_mcp/data/rates/<code>.json`, one file per state that has one (`RATE_TABLE_MODELS` in `src/taxcode_mcp/catalog.py`). FL and TX have none. Never add a rate as a Python literal.
+Every deduction, exemption, bracket, rate and per-year value the compliance tools use lives in `src/taxcode_mcp/data/rates/<code>.json`, one file per state that has one plus country tables in `COUNTRY_RATE_TABLES` (`RATE_TABLE_MODELS` in `src/taxcode_mcp/catalog.py`). FL and TX have none. Never add a rate as a Python literal.
 
 - `model` names the shape of `params` and which formula reads it. It must match `RATE_TABLE_MODELS`.
 - Amounts and rates are floats (`1000.0`, not `1000`), because tool output prints them as stored.
@@ -63,6 +64,7 @@ Every deduction, exemption, bracket, rate and per-year value the compliance tool
 - A graduated `registry` table says how it taxes income below its top bracket with exactly one of two keys. `brackets` is the state's official marginal schedule (`over` and `rate` only, the lowest step's `over` is `null`), and replaces the `top_*`, `zero_*` and `middle_*` keys. `middle_rate` is a single statutory rate for the middle band. Every `evaluate_state_residency` answer carries `middle_rate_is_estimate` (always `false`; the former 65%-of-top stand-in is gone). Never invent a middle-band rate where an official schedule exists.
 - A `registry` table may take a nonrefundable credit off the computed tax, as Utah's taxpayer tax credit does, with all six `credit_*` keys: `credit_rate` times the filing status's `credit_base`, less `credit_phaseout_rate` times the taxable income over its `credit_phaseout` amount, never below zero. Model such a credit as a credit, not as a deduction.
 
+- The `canada_federal` model (`rates/can.json`, `COUNTRY_RATE_TABLES`) holds Canada's federal Part I schedule and `ITA s. 128.1` departure-tax parameters: consecutive ascending `years` (each with `tax_year`, graduated `brackets`, `credit_rate`, and `basic_personal_amount` carrying `maximum`, `minimum`, `phaseout_start` and `phaseout_end` for the `ITA s. 118(1.1)` phaseout between the fourth and fifth brackets) plus `capital_gains_inclusion_rate`, `sojourner_days`, `t1161_threshold`, `personal_use_reporting_threshold`, `personal_use_minimum` and `short_term_resident_months`, backed by `can-rates` and `year_sources` in `manifest/can.json`.
 - The federal standard deduction by tax year lives in `src/taxcode_mcp/data/federal/standard_deduction.json` (`years`, consecutive and ascending, each with `tax_year`, `single` and `mfj`), with a `federal_table` entry `us-standard-deduction` in `manifest/us.json` and a `year_sources` item for each year. A `flat_by_year` table whose `deduction` is the string `"federal_standard_deduction"` (CO) uses that table's figure for the tax year, or the nearest year it holds, with an estimate label. Other tables keep their own sourced amounts: a state's conformity to a federal figure is its own law.
 
 The files load and are validated when the server starts. `tests/test_compliance_golden.py` pins the exact output of every compliance tool over a wide input grid, so a rate change also updates those files (`uv run python tests/golden_compliance.py --write`) and the diff shows which answers moved.

@@ -51,7 +51,7 @@ PRIOR_YEAR_VERBATIM = {
 }
 PRIOR_YEAR_IDS = PRIOR_YEAR_SUMMARIES | PRIOR_YEAR_VERBATIM
 # The Canada rows quote the Justice Canada consolidated XML word for word (English and French,
-# each file hashed); the CRA publications are summaries of pages whose bytes were hashed.
+# each file hashed); the CRA publications are summaries of dynamic canada.ca HTML pages.
 CAN_STATUTE_IDS = {s["id"] for s in db.INITIAL_STATUTES if s["jurisdiction"] == "CAN"}
 CAN_PUBLICATION_IDS = {
     "can-cra-folio-s5-f1-c1",
@@ -162,7 +162,10 @@ def test_manifest_records_unknowns_explicitly() -> None:
     assert by_verification["verified_verbatim"] == (
         PRIOR_YEAR_VERBATIM | PR_PRIOR_YEAR_VERBATIM | CAN_STATUTE_IDS
     )
-    assert PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_SUMMARIES <= by_verification["summary"]
+    assert (
+        PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_SUMMARIES | CAN_PUBLICATION_IDS
+        <= by_verification["summary"]
+    )
     # Besides those statute versions, only a table whose figures were read from a fetched
     # official file, or a publication whose source page was fetched, records a hash.
     statutes_hashed = {
@@ -187,7 +190,7 @@ def test_manifest_records_unknowns_explicitly() -> None:
         for e in catalog.manifest
         if e["kind"] == "publication" and e["content_sha256"] != NOT_RECORDED
     }
-    assert hashed_pubs == {"ga-dor-hb-149-pte-tax-faq", *CAN_PUBLICATION_IDS}
+    assert hashed_pubs == {"ga-dor-hb-149-pte-tax-faq"}
 
 
 def test_check_reports_docs_drift_and_write_repairs_it(tree: tuple[Path, Path]) -> None:
@@ -645,8 +648,8 @@ RETRIEVED = {
     # The CRA rate pages and the payroll and TD1 forms for the Canada table.
     "CAN": "2026-11-05",
 }
-# Sources read as text without their bytes, so no hash. None remain.
-READ_WITHOUT_BYTES: set[str] = set()
+# Rate-table sources whose pages inject per-request script tokens, so no reproducible hash.
+READ_WITHOUT_BYTES: set[str] = {"CAN"}
 
 
 def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:
