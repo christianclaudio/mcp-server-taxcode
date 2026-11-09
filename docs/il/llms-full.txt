@@ -1,5 +1,7 @@
 # Full Statutory Corpus: IL
 
+Unofficial bilingual reference summaries; not official statutory text. / Resúmenes bilingües de referencia no oficiales; no son texto estatutario oficial.
+
 ## 35 ILCS 5/201: Illinois Individual Income Tax Rate
 `35 ILCS 5/ > Article 2 > Section 201`
 
@@ -26,3 +28,120 @@ Rules for allocating and sourcing compensation and business income of nonresiden
 
 ### Español
 Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado.
+
+## 35 ILCS 5/1501(a)(14): Nonresident individual
+`IL > Individual income tax > Nonresident individual > 5/1501(a)(14)`
+
+### English
+A nonresident is an individual who is not an Illinois resident, but may still owe tax on Illinois-source income. Residence is not defined by a universal 183-day test: temporary purpose, domicile and facts matter. The compliance calculator is a simplified heuristic, not a substitute for these rules.
+
+### Español
+No residente es quien no es residente de Illinois, aunque puede tributar por fuente estatal. La residencia no se define por una regla universal de 183 días: importan propósito temporal, domicilio y hechos. La calculadora es una aproximación simplificada, no sustituye estas reglas.
+
+## 35 ILCS 5/1501(a)(16): Part-year resident individual
+`IL > Individual income tax > Part-year resident individual > 5/1501(a)(16)`
+
+### English
+A part-year resident is resident for part, but not all, of the taxable year. Schedule NR separates resident-period all-source income from nonresident-period Illinois-source items. Changing a mailing address alone does not establish a change of domicile.
+
+### Español
+Un residente parcial reside durante parte, pero no todo, el año fiscal. Schedule NR separa el ingreso mundial del período residente de las partidas de fuente de Illinois del no residente. Cambiar solo la dirección postal no demuestra cambio de domicilio.
+
+## 35 ILCS 5/202: Net income after exemption allowance
+`IL > Individual income tax > Net income after exemption allowance > 5/202`
+
+### English
+Individual net income is derived from base income after the statutory exemption allowance. Base income starts with federal adjusted gross income with state additions and subtractions. Illinois does not substitute the federal standard deduction for its exemption allowance.
+
+### Español
+El ingreso neto individual deriva del ingreso base tras la exención legal. El ingreso base parte del ingreso bruto ajustado federal con sumas y restas estatales. Illinois no sustituye su exención por la deducción estándar federal.
+
+## 35 ILCS 5/203(a): Base income and retirement subtraction
+`IL > Individual income tax > Base income and retirement subtraction > 5/203(a)`
+
+### English
+Individual base income starts with federal adjusted gross income and Illinois modifications. Qualifying federally included retirement income, including eligible pension, IRA and Social Security income, may be subtracted. Not every payment described as retirement qualifies automatically.
+
+### Español
+El ingreso base individual parte del ingreso bruto ajustado federal y ajustes de Illinois. Puede restarse ingreso de retiro elegible incluido federalmente, como ciertas pensiones, IRA y Seguro Social. No todo pago denominado de retiro califica automáticamente.
+
+## 35 ILCS 5/204: Personal exemption and income disallowance
+`IL > Individual income tax > Personal exemption and income disallowance > 5/204`
+
+### English
+The 2025 personal exemption is $2,850 per eligible exemption, with qualifying age and blindness additions. No exemption allowance is available above $250,000 federal AGI for nonjoint filers or $500,000 for joint filers. This is a threshold disallowance rather than a gradual phaseout.
+
+### Español
+La exención personal de 2025 es $2,850 por exención elegible, con adiciones por edad y ceguera calificadas. No se permite exención por encima de $250,000 de ingreso bruto ajustado federal en declaraciones no conjuntas o $500,000 en conjuntas. Es una exclusión por umbral, no una reducción gradual.
+
+## 35 ILCS 5/208: Residential property tax credit
+`IL > Individual income tax > Residential property tax credit > 5/208`
+
+### English
+Eligible taxpayers generally receive a credit of 5% of qualifying Illinois property tax paid on a principal residence. Federal AGI above $250,000 for nonjoint filers or $500,000 for joint filers disqualifies the credit. Ownership, residence and actual payment requirements apply.
+
+### Español
+Los contribuyentes elegibles generalmente reciben un crédito del 5% del impuesto inmobiliario de Illinois pagado sobre vivienda principal. Superar $250,000 de ingreso bruto ajustado federal en declaraciones no conjuntas o $500,000 en conjuntas elimina el crédito. Se exigen propiedad, residencia y pago efectivo.
+
+## 35 ILCS 5/302: Compensation allocation and reciprocity
+`IL > Individual income tax > Compensation allocation and reciprocity > 5/302`
+
+### English
+Compensation follows service-localization and nonresident workday rules, including the more-than-30-working-days provision and exceptions. Iowa, Kentucky, Michigan and Wisconsin residents generally receive reciprocity for covered employee compensation. Reciprocity does not exempt all Illinois-source business income.
+
+### Español
+La remuneración sigue reglas de localización y días laborales de no residentes, incluida la disposición de más de 30 días laborales y excepciones. Los residentes de Iowa, Kentucky, Michigan y Wisconsin generalmente reciben reciprocidad salarial. No se exime todo ingreso empresarial de fuente estatal.
+
+## 35 ILCS 5/303: Nonbusiness income allocation
+`IL > Individual income tax > Nonbusiness income allocation > 5/303`
+
+### English
+Nonbusiness income uses item-specific sourcing: Illinois real-estate rents and gains and certain tangible-property items may be Illinois income. Nonresident interest and dividends generally are not sourced solely by payer location. Business and partnership income follow separate allocation rules.
+
+### Español
+La renta no empresarial tiene fuente por partida: alquileres y ganancias inmobiliarias de Illinois y ciertos bienes tangibles pueden ser ingreso estatal. Los intereses y dividendos de no residentes generalmente no tienen fuente solo por la ubicación del pagador. Negocios y sociedades siguen reglas separadas.
+
+## 35 ILCS 5/304(a): Business income apportionment
+`IL > Individual income tax > Business income apportionment > 5/304(a)`
+
+### English
+Business income taxable inside and outside Illinois is apportioned using applicable sales-factor and sourcing rules. Services and intangibles have specific market rules; specialized industries may differ. Counting employee days is not a substitute for business-income apportionment.
+
+### Español
+El ingreso empresarial gravable dentro y fuera de Illinois se distribuye con reglas aplicables de factor de ventas y fuente. Servicios e intangibles tienen reglas de mercado; ciertas industrias difieren. Contar días de empleados no sustituye la distribución empresarial.
+
+## 35 ILCS 5/305: Partnership income allocation
+`IL > Individual income tax > Partnership income allocation > 5/305`
+
+### English
+Partnerships determine Illinois allocation and apportionment at entity level and report partner shares. Nonresident partners generally include the Illinois share; residents generally include all-source income. Pass-through withholding and elective PTE credits are distinct from source determination.
+
+### Español
+Las sociedades determinan asignación y distribución estatal a nivel de entidad e informan participaciones. Los socios no residentes generalmente incluyen su parte de Illinois; los residentes ingresos de toda fuente. La retención y créditos PTE son distintos de la determinación de fuente.
+
+## 35 ILCS 5/601(b)(3): Resident credit for other-state tax
+`IL > Individual income tax > Resident credit for other-state tax > 5/601(b)(3)`
+
+### English
+Residents may claim a limited Schedule CR credit for qualifying other-state income tax on income also taxed by Illinois. Same-income, source and limitation rules apply, including part-year treatment. This is not a general foreign-country tax credit; reciprocal-state wages need separate treatment.
+
+### Español
+Los residentes pueden reclamar un crédito limitado en Schedule CR por impuesto de otro estado sobre ingresos también gravados por Illinois. Se aplican ingreso común, fuente y límites, incluida residencia parcial. No es un crédito general por impuestos extranjeros; los salarios recíprocos requieren trato separado.
+
+## 35 ILCS 5/201(p): Elective PTE tax and refundable owner credit
+`IL > Individual income tax > Elective PTE tax and refundable owner credit > 5/201(p)`
+
+### English
+An eligible partnership or S corporation may elect PTE tax at 4.95% on the applicable net-income base. Eligible partners or shareholders claim their allocated credit, with excess refundable under the rules. Election and base requirements must be checked for the return year; no later extension is assumed here.
+
+### Español
+Una sociedad o corporación S elegible puede optar por impuesto PTE del 4.95% sobre la base neta aplicable. Los socios o accionistas elegibles reclaman el crédito asignado con exceso reembolsable conforme a reglas. Deben verificarse elección y base del año; no se presume una prórroga posterior.
+
+## 35 ILCS 5/701: Employer compensation withholding
+`IL > Individual income tax > Employer compensation withholding > 5/701`
+
+### English
+Employers must withhold Illinois income tax from covered compensation using prescribed methods and employee certificates. Nonresident allocation and reciprocal-state exemptions affect coverage. Withholding is a payment toward return liability, not proof of Illinois domicile.
+
+### Español
+Los empleadores deben retener el impuesto de Illinois de remuneración cubierta con métodos y certificados prescritos. La asignación de no residentes y exenciones recíprocas afectan la obligación. La retención es un pago a cuenta, no prueba de domicilio estatal.

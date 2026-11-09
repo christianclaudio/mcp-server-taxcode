@@ -68,6 +68,305 @@
       "text_es": [
         "Reglas de asignación de ingresos y salarios de no residentes a Illinois basándose en servicios efectivamente prestados en el estado."
       ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-1501-a-14",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/1501(a)(14)",
+      "section": "5/1501(a)(14)",
+      "title": "Nonresident individual",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-101.pdf",
+      "cross_references": [
+        "35 ILCS 5/1501(a)(20)",
+        "35 ILCS 5/301"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Nonresident individual > 5/1501(a)(14)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A nonresident is an individual who is not an Illinois resident, but may still owe tax on Illinois-source income. Residence is not defined by a universal 183-day test: temporary purpose, domicile and facts matter. The compliance calculator is a simplified heuristic, not a substitute for these rules."
+      ],
+      "text_es": [
+        "No residente es quien no es residente de Illinois, aunque puede tributar por fuente estatal. La residencia no se define por una regla universal de 183 días: importan propósito temporal, domicilio y hechos. La calculadora es una aproximación simplificada, no sustituye estas reglas."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-1501-a-16",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/1501(a)(16)",
+      "section": "5/1501(a)(16)",
+      "title": "Part-year resident individual",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-101.pdf",
+      "cross_references": [
+        "35 ILCS 5/301",
+        "35 ILCS 5/1501(a)(20)"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Part-year resident individual > 5/1501(a)(16)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "A part-year resident is resident for part, but not all, of the taxable year. Schedule NR separates resident-period all-source income from nonresident-period Illinois-source items. Changing a mailing address alone does not establish a change of domicile."
+      ],
+      "text_es": [
+        "Un residente parcial reside durante parte, pero no todo, el año fiscal. Schedule NR separa el ingreso mundial del período residente de las partidas de fuente de Illinois del no residente. Cambiar solo la dirección postal no demuestra cambio de domicilio."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-202",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/202",
+      "section": "5/202",
+      "title": "Net income after exemption allowance",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/203(a)",
+        "35 ILCS 5/204",
+        "35 ILCS 5/201"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Net income after exemption allowance > 5/202",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Individual net income is derived from base income after the statutory exemption allowance. Base income starts with federal adjusted gross income with state additions and subtractions. Illinois does not substitute the federal standard deduction for its exemption allowance."
+      ],
+      "text_es": [
+        "El ingreso neto individual deriva del ingreso base tras la exención legal. El ingreso base parte del ingreso bruto ajustado federal con sumas y restas estatales. Illinois no sustituye su exención por la deducción estándar federal."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-203-a",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/203(a)",
+      "section": "5/203(a)",
+      "title": "Base income and retirement subtraction",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/203(a)(2)(F)",
+        "35 ILCS 5/202"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Base income and retirement subtraction > 5/203(a)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Individual base income starts with federal adjusted gross income and Illinois modifications. Qualifying federally included retirement income, including eligible pension, IRA and Social Security income, may be subtracted. Not every payment described as retirement qualifies automatically."
+      ],
+      "text_es": [
+        "El ingreso base individual parte del ingreso bruto ajustado federal y ajustes de Illinois. Puede restarse ingreso de retiro elegible incluido federalmente, como ciertas pensiones, IRA y Seguro Social. No todo pago denominado de retiro califica automáticamente."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-204",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/204",
+      "section": "5/204",
+      "title": "Personal exemption and income disallowance",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/204(g)",
+        "35 ILCS 5/202"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Personal exemption and income disallowance > 5/204",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "The 2025 personal exemption is $2,850 per eligible exemption, with qualifying age and blindness additions. No exemption allowance is available above $250,000 federal AGI for nonjoint filers or $500,000 for joint filers. This is a threshold disallowance rather than a gradual phaseout."
+      ],
+      "text_es": [
+        "La exención personal de 2025 es $2,850 por exención elegible, con adiciones por edad y ceguera calificadas. No se permite exención por encima de $250,000 de ingreso bruto ajustado federal en declaraciones no conjuntas o $500,000 en conjuntas. Es una exclusión por umbral, no una reducción gradual."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-208",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/208",
+      "section": "5/208",
+      "title": "Residential property tax credit",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/204(g)"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Residential property tax credit > 5/208",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Eligible taxpayers generally receive a credit of 5% of qualifying Illinois property tax paid on a principal residence. Federal AGI above $250,000 for nonjoint filers or $500,000 for joint filers disqualifies the credit. Ownership, residence and actual payment requirements apply."
+      ],
+      "text_es": [
+        "Los contribuyentes elegibles generalmente reciben un crédito del 5% del impuesto inmobiliario de Illinois pagado sobre vivienda principal. Superar $250,000 de ingreso bruto ajustado federal en declaraciones no conjuntas o $500,000 en conjuntas elimina el crédito. Se exigen propiedad, residencia y pago efectivo."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-302",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/302",
+      "section": "5/302",
+      "title": "Compensation allocation and reciprocity",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-schedule-nr-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/301",
+        "35 ILCS 5/701"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Compensation allocation and reciprocity > 5/302",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Compensation follows service-localization and nonresident workday rules, including the more-than-30-working-days provision and exceptions. Iowa, Kentucky, Michigan and Wisconsin residents generally receive reciprocity for covered employee compensation. Reciprocity does not exempt all Illinois-source business income."
+      ],
+      "text_es": [
+        "La remuneración sigue reglas de localización y días laborales de no residentes, incluida la disposición de más de 30 días laborales y excepciones. Los residentes de Iowa, Kentucky, Michigan y Wisconsin generalmente reciben reciprocidad salarial. No se exime todo ingreso empresarial de fuente estatal."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-303",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/303",
+      "section": "5/303",
+      "title": "Nonbusiness income allocation",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-schedule-nr-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/304(a)",
+        "35 ILCS 5/305"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Nonbusiness income allocation > 5/303",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Nonbusiness income uses item-specific sourcing: Illinois real-estate rents and gains and certain tangible-property items may be Illinois income. Nonresident interest and dividends generally are not sourced solely by payer location. Business and partnership income follow separate allocation rules."
+      ],
+      "text_es": [
+        "La renta no empresarial tiene fuente por partida: alquileres y ganancias inmobiliarias de Illinois y ciertos bienes tangibles pueden ser ingreso estatal. Los intereses y dividendos de no residentes generalmente no tienen fuente solo por la ubicación del pagador. Negocios y sociedades siguen reglas separadas."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-304-a",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/304(a)",
+      "section": "5/304(a)",
+      "title": "Business income apportionment",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "cross_references": [
+        "35 ILCS 5/305",
+        "35 ILCS 5/301"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Business income apportionment > 5/304(a)",
+      "source_note": "Unofficial bilingual reference summary; not verified against downloaded statutory text. ILGA TLS certificate verification failed (curl error 60); no workaround was used. The attempted IDOR partnership instruction URL returned HTTP 404. Tax-year 2025 reference snapshot, not an earlier-law reconstruction.",
+      "text_en": [
+        "Business income taxable inside and outside Illinois is apportioned using applicable sales-factor and sourcing rules. Services and intangibles have specific market rules; specialized industries may differ. Counting employee days is not a substitute for business-income apportionment."
+      ],
+      "text_es": [
+        "El ingreso empresarial gravable dentro y fuera de Illinois se distribuye con reglas aplicables de factor de ventas y fuente. Servicios e intangibles tienen reglas de mercado; ciertas industrias difieren. Contar días de empleados no sustituye la distribución empresarial."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-305",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/305",
+      "section": "5/305",
+      "title": "Partnership income allocation",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "cross_references": [
+        "35 ILCS 5/304(a)",
+        "35 ILCS 5/201(p)"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Partnership income allocation > 5/305",
+      "source_note": "Unofficial bilingual reference summary; not verified against downloaded statutory text. ILGA TLS certificate verification failed (curl error 60); no workaround was used. The attempted IDOR partnership instruction URL returned HTTP 404. Tax-year 2025 reference snapshot, not an earlier-law reconstruction.",
+      "text_en": [
+        "Partnerships determine Illinois allocation and apportionment at entity level and report partner shares. Nonresident partners generally include the Illinois share; residents generally include all-source income. Pass-through withholding and elective PTE credits are distinct from source determination."
+      ],
+      "text_es": [
+        "Las sociedades determinan asignación y distribución estatal a nivel de entidad e informan participaciones. Los socios no residentes generalmente incluyen su parte de Illinois; los residentes ingresos de toda fuente. La retención y créditos PTE son distintos de la determinación de fuente."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-601-b-3",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/601(b)(3)",
+      "section": "5/601(b)(3)",
+      "title": "Resident credit for other-state tax",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-schedule-cr-instr.pdf",
+      "cross_references": [
+        "35 ILCS 5/302",
+        "35 ILCS 5/301"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Resident credit for other-state tax > 5/601(b)(3)",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Residents may claim a limited Schedule CR credit for qualifying other-state income tax on income also taxed by Illinois. Same-income, source and limitation rules apply, including part-year treatment. This is not a general foreign-country tax credit; reciprocal-state wages need separate treatment."
+      ],
+      "text_es": [
+        "Los residentes pueden reclamar un crédito limitado en Schedule CR por impuesto de otro estado sobre ingresos también gravados por Illinois. Se aplican ingreso común, fuente y límites, incluida residencia parcial. No es un crédito general por impuestos extranjeros; los salarios recíprocos requieren trato separado."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-201-p",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/201(p)",
+      "section": "5/201(p)",
+      "title": "Elective PTE tax and refundable owner credit",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=577",
+      "cross_references": [
+        "35 ILCS 5/305",
+        "35 ILCS 5/601"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Elective PTE tax and refundable owner credit > 5/201(p)",
+      "source_note": "Unofficial bilingual reference summary. ILGA TLS verification failed (curl error 60), so full statutory verification is not recorded. 2025 IL-1040 instructions, line 30, confirm the allocated owner credit but not the complete entity-rate rule. No later extension is asserted.",
+      "text_en": [
+        "An eligible partnership or S corporation may elect PTE tax at 4.95% on the applicable net-income base. Eligible partners or shareholders claim their allocated credit, with excess refundable under the rules. Election and base requirements must be checked for the return year; no later extension is assumed here."
+      ],
+      "text_es": [
+        "Una sociedad o corporación S elegible puede optar por impuesto PTE del 4.95% sobre la base neta aplicable. Los socios o accionistas elegibles reclaman el crédito asignado con exceso reembolsable conforme a reglas. Deben verificarse elección y base del año; no se presume una prórroga posterior."
+      ]
+    },
+    {
+      "id": "il-stat-35-ilcs-5-701",
+      "jurisdiction": "IL",
+      "corpus": "ILCS",
+      "citation": "35 ILCS 5/701",
+      "section": "5/701",
+      "title": "Employer compensation withholding",
+      "effective_year": 2025,
+      "superseded_year": null,
+      "source_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-130.pdf",
+      "cross_references": [
+        "35 ILCS 5/302",
+        "35 ILCS 5/201"
+      ],
+      "breadcrumbs": "IL > Individual income tax > Employer compensation withholding > 5/701",
+      "source_note": "Unofficial bilingual reference summary, not statutory text. Any hash covers the cited source file, not this summary. Tax-year 2025 snapshot; earlier law is not reconstructed.",
+      "text_en": [
+        "Employers must withhold Illinois income tax from covered compensation using prescribed methods and employee certificates. Nonresident allocation and reciprocal-state exemptions affect coverage. Withholding is a payment toward return liability, not proof of Illinois domicile."
+      ],
+      "text_es": [
+        "Los empleadores deben retener el impuesto de Illinois de remuneración cubierta con métodos y certificados prescritos. La asignación de no residentes y exenciones recíprocas afectan la obligación. La retención es un pago a cuenta, no prueba de domicilio estatal."
+      ]
     }
   ]
 }

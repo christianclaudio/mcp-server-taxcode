@@ -8,10 +8,10 @@
 - **Hierarchy:** `NY Tax Law > Article 22 > Part I > § 601`
 - **Cross References:** `NY Tax Law § 605`
 
-## Operative Statutory Language (English)
+## Unofficial Reference Summary (English)
 
 Imposes graduated income tax on New York taxable income with top marginal rates up to 10.9% for high-income earners, plus applicable New York City personal income tax (up to 3.876%) for NYC residents.
 
-## Texto Estatutario Oficial (Español)
+## Resumen de referencia no oficial (Español)
 
 Grava el ingreso tributable de Nueva York con tasas escalonadas de hasta 10.9% para personas con altos ingresos, más el impuesto municipal de la Ciudad de Nueva York (hasta 3.876%) para residentes de NYC.

@@ -74,10 +74,39 @@
 - [Cal. Rev. & Tax Code § 17041 (2024) — Individual Income Tax Rates and Brackets](./ca/rtc_17041.md): Cal. Rev. & Tax Code > Part 10 > Chapter 2 > § 17041
 - [Cal. Rev. & Tax Code § 17951 (2024) — Gross Income of Nonresidents and Sourcing](./ca/rtc_17951.md): Cal. Rev. & Tax Code > Part 10 > Chapter 9 > § 17951
 - [18 CCR § 17014 (2023) — FTB Residence and Domicile Guidelines](./ca/caccr_17014.md): 18 CCR > Division 3 > Chapter 2.5 > Subchapter 1 > § 17014
+- [Cal. Rev. & Tax Code § 17015 (2025) — Nonresident definition](./ca/rtc_17015.md): CA > Individual income tax > Nonresident definition > 17015
+- [Cal. Rev. & Tax Code § 17016 (2025) — Rebuttable nine-month residence presumption](./ca/rtc_17016.md): CA > Individual income tax > Rebuttable nine-month residence presumption > 17016
+- [Cal. Rev. & Tax Code § 17041(i) (2025) — Part-year and nonresident effective-rate method](./ca/rtc_17041_i.md): CA > Individual income tax > Part-year and nonresident effective-rate method > 17041(i)
+- [Cal. Rev. & Tax Code § 17043 (2025) — Behavioral Health Services Tax: additional 1%](./ca/rtc_17043.md): CA > Individual income tax > Behavioral Health Services Tax: additional 1% > 17043
+- [Cal. Rev. & Tax Code § 17043 (2024) — Mental Health Services Tax: 2024 version](./ca/rtc_17043_2024.md): CA > Individual income tax > Mental Health Services Tax: 2024 version > 17043
+- [Cal. Rev. & Tax Code § 17062 (2025) — Individual alternative minimum tax](./ca/rtc_17062.md): CA > Individual income tax > Individual alternative minimum tax > 17062
+- [Cal. Rev. & Tax Code § 17054 (2025) — Personal and dependent exemption credits](./ca/rtc_17054.md): CA > Individual income tax > Personal and dependent exemption credits > 17054
+- [Cal. Rev. & Tax Code § 17071 (2025) — Taxable income and California deductions](./ca/rtc_17071.md): CA > Individual income tax > Taxable income and California deductions > 17071
+- [Cal. Rev. & Tax Code § 17952 (2025) — Intangible income and business situs](./ca/rtc_17952.md): CA > Individual income tax > Intangible income and business situs > 17952
+- [Cal. Rev. & Tax Code § 17952.5 (2025) — Nonresident retirement income exclusion](./ca/rtc_17952_5.md): CA > Individual income tax > Nonresident retirement income exclusion > 17952.5
+- [Cal. Rev. & Tax Code § 18001 (2025) — Resident credit for other-state income taxes](./ca/rtc_18001.md): CA > Individual income tax > Resident credit for other-state income taxes > 18001
+- [Cal. Rev. & Tax Code § 18002 (2025) — Reverse credit for qualifying nonresidents](./ca/rtc_18002.md): CA > Individual income tax > Reverse credit for qualifying nonresidents > 18002
+- [Cal. Rev. & Tax Code § 19900 (2025) — Elective 9.3% pass-through entity tax](./ca/rtc_19900.md): CA > Individual income tax > Elective 9.3% pass-through entity tax > 19900
+- [Cal. Rev. & Tax Code § 17052.10 (2025) — Qualified taxpayer PTET credit](./ca/rtc_17052_10.md): CA > Individual income tax > Qualified taxpayer PTET credit > 17052.10
+- [Cal. Rev. & Tax Code § 18662 (2025) — Nonresident California-source payment withholding](./ca/rtc_18662.md): CA > Individual income tax > Nonresident California-source payment withholding > 18662
 - [NY Tax Law § 605(b) (2024) — Resident Individual and Domicile Defined](./ny/nytax_605.md): NY Tax Law > Article 22 > Part I > § 605
 - [NY Tax Law § 601 (2024) — Personal Income Tax Rates](./ny/nytax_601.md): NY Tax Law > Article 22 > Part I > § 601
 - [20 NYCRR § 105.20 (2024) — Rules for Determining Domicile (5 Primary Factors)](./ny/nycrr_105_20.md): 20 NYCRR > Chapter II > Subchapter A > Part 105 > § 105.20
 - [20 NYCRR § 132.18 (2024) — Convenience of the Employer Rule](./ny/nycrr_132_18.md): 20 NYCRR > Chapter II > Subchapter A > Part 132 > § 132.18
+- [NY Tax Law § 631 (2025) — Nonresident New York source income](./ny/nytax_631.md): NY > Individual income tax > Nonresident New York source income > 631
+- [NY Tax Law § 632 (2025) — Nonresident partner and shareholder modifications](./ny/nytax_632.md): NY > Individual income tax > Nonresident partner and shareholder modifications > 632
+- [NY Tax Law § 638 (2025) — Part-year resident income](./ny/nytax_638.md): NY > Individual income tax > Part-year resident income > 638
+- [NY Tax Law § 639 (2025) — Special accruals on change of residence](./ny/nytax_639.md): NY > Individual income tax > Special accruals on change of residence > 639
+- [NY Tax Law § 611 (2025) — New York taxable income](./ny/nytax_611.md): NY > Individual income tax > New York taxable income > 611
+- [NY Tax Law § 612 (2025) — Adjusted gross income modifications](./ny/nytax_612.md): NY > Individual income tax > Adjusted gross income modifications > 612
+- [NY Tax Law § 614 (2025) — Standard deduction](./ny/nytax_614.md): NY > Individual income tax > Standard deduction > 614
+- [NY Tax Law § 615 (2025) — Itemized deductions and high-income limits](./ny/nytax_615.md): NY > Individual income tax > Itemized deductions and high-income limits > 615
+- [NY Tax Law § 616 (2025) — Dependent exemption](./ny/nytax_616.md): NY > Individual income tax > Dependent exemption > 616
+- [NY Tax Law § 620 (2025) — Resident credit for tax of other jurisdictions](./ny/nytax_620.md): NY > Individual income tax > Resident credit for tax of other jurisdictions > 620
+- [NY Tax Law § 861 (2021) — Elective pass-through entity tax](./ny/nytax_861.md): NY > Individual income tax > Elective pass-through entity tax > 861
+- [NY Tax Law § 671 (2025) — Employer wage withholding](./ny/nytax_671.md): NY > Individual income tax > Employer wage withholding > 671
+- [NY Tax Law § 605(b)(1)(A) (2025) — Domicile exceptions and foreign safe harbor](./ny/nytax_605_b_1_a.md): NY > Individual income tax > Domicile exceptions and foreign safe harbor > 605(b)(1)(A)
+- [NY Tax Law § 601(d) (2025) — Supplemental tax and tax-benefit recapture](./ny/nytax_601_d.md): NY > Individual income tax > Supplemental tax and tax-benefit recapture > 601(d)
 - [Fla. Const. Art. VII § 5 (1968) — Constitutional Prohibition of Personal Income Tax](./fl/flconst_art__vii_sec__5.md): Fla. Const. > Article VII > Section 5
 - [Fla. Stat. § 222.17 (2024) — Manifesting and Evidencing Domicile in Florida](./fl/flstat_222_17.md): Fla. Stat. > Title XV > Chapter 222 > § 222.17
 - [Fla. Stat. § 196.031 (2024) — Exemption of Homesteads](./fl/flstat_196_031.md): Fla. Stat. > Title XIV > Chapter 196 > § 196.031
@@ -89,12 +118,50 @@
 - [Mass. Const. amend. art. XLIV (2023) — Fair Share Amendment (4% Millionaires' Surtax)](./ma/maconst_art__xliv.md): Mass. Const. > Amendments > Article XLIV
 - [M.G.L. c. 62 § 4 (2024) — Personal Income Tax Rates](./ma/mgl_62_4.md): M.G.L. > Part I > Title IX > Chapter 62 > Section 4
 - [M.G.L. c. 62 § 1(f) (2024) — Definition of Resident (Domicile and 183-Day Rule)](./ma/mgl_62_1_f.md): M.G.L. > Part I > Title IX > Chapter 62 > Section 1(f)
+- [M.G.L. c. 62 § 2 (2025) — Gross income and Parts A, B and C](./ma/mgl_62_2.md): MA > Individual income tax > Gross income and Parts A, B and C > 62-2
+- [M.G.L. c. 62 § 3(B)(b) (2025) — Personal and dependent exemptions](./ma/mgl_62_3_b_b.md): MA > Individual income tax > Personal and dependent exemptions > 62-3(B)(b)
+- [M.G.L. c. 62 § 3(B)(a)(9) (2023) — Rental deduction: $4,000 cap from 2023](./ma/mgl_62_3_b_a_9.md): MA > Individual income tax > Rental deduction: $4,000 cap from 2023 > 62-3(B)(a)(9)
+- [M.G.L. c. 62 § 3(B)(a)(9) (2022) — Rental deduction: 2022 $3,000 cap](./ma/mgl_62_3_b_a_9_2022.md): MA > Individual income tax > Rental deduction: 2022 $3,000 cap > 62-3(B)(a)(9)
+- [M.G.L. c. 62 § 4(a) (2023) — Short-term capital gains rate from 2023](./ma/mgl_62_4_a.md): MA > Individual income tax > Short-term capital gains rate from 2023 > 62-4(a)
+- [M.G.L. c. 62 § 5A (2025) — Nonresident and part-year source income](./ma/mgl_62_5a.md): MA > Individual income tax > Nonresident and part-year source income > 62-5A
+- [M.G.L. c. 62 § 6(a) (2025) — Resident credit for another jurisdiction tax](./ma/mgl_62_6_a.md): MA > Individual income tax > Resident credit for another jurisdiction tax > 62-6(a)
+- [M.G.L. c. 62 § 6(h) (2025) — Earned income credit](./ma/mgl_62_6_h.md): MA > Individual income tax > Earned income credit > 62-6(h)
+- [M.G.L. c. 62 § 6(x) (2025) — Child and family tax credit](./ma/mgl_62_6_x.md): MA > Individual income tax > Child and family tax credit > 62-6(x)
+- [M.G.L. c. 62 § 6(k) (2025) — Senior circuit breaker credit](./ma/mgl_62_6_k.md): MA > Individual income tax > Senior circuit breaker credit > 62-6(k)
+- [M.G.L. c. 62B § 2 (2025) — Employer wage withholding and surtax](./ma/mgl_62b_2.md): MA > Individual income tax > Employer wage withholding and surtax > 62B-2
+- [M.G.L. c. 63D § 2 (2025) — Elective PTE excise and 90% member credit](./ma/mgl_63d_2.md): MA > Individual income tax > Elective PTE excise and 90% member credit > 63D-2
 - [N.J.S.A. 54A:1-2 (2024) — Definition of Resident Individual](./nj/njsa_54a_1_2.md): N.J.S.A. > Title 54A > Chapter 1 > Section 54A:1-2
 - [N.J.S.A. 54A:2-1 (2024) — New Jersey Gross Income Tax Rates](./nj/njsa_54a_2_1.md): N.J.S.A. > Title 54A > Chapter 2 > Section 54A:2-1
 - [N.J.A.C. 18:35-5.2 (2023) — Convenience of the Employer Rule (Reciprocal Sourcing)](./nj/njac_18_35_5_2.md): N.J.A.C. > Title 18 > Chapter 35 > Subchapter 5 > Section 18:35-5.2
+- [N.J.S.A. 54A:1-2(m)–(n) (2025) — Domicile exception and nonresident definition](./nj/njsa_54a_1_2_m–_n.md): NJ > Individual income tax > Domicile exception and nonresident definition > 54A:1-2(m)–(n)
+- [N.J.S.A. 54A:5-8 (2023) — Nonresident sourcing and reciprocal convenience rule](./nj/njsa_54a_5_8.md): NJ > Individual income tax > Nonresident sourcing and reciprocal convenience rule > 54A:5-8
+- [N.J.S.A. 54A:5-8 (2022) — Nonresident sourcing before the 2023 amendment](./nj/njsa_54a_5_8_2022.md): NJ > Individual income tax > Nonresident sourcing before the 2023 amendment > 54A:5-8
+- [N.J.S.A. 54A:5-1 (2025) — Categories of gross income](./nj/njsa_54a_5_1.md): NJ > Individual income tax > Categories of gross income > 54A:5-1
+- [N.J.S.A. 54A:5-2 (2025) — No cross-category loss offset](./nj/njsa_54a_5_2.md): NJ > Individual income tax > No cross-category loss offset > 54A:5-2
+- [N.J.S.A. 54A:3-1 (2025) — Personal and dependent exemptions](./nj/njsa_54a_3_1.md): NJ > Individual income tax > Personal and dependent exemptions > 54A:3-1
+- [N.J.S.A. 54A:3A-17 (2025) — Resident property tax deduction](./nj/njsa_54a_3a_17.md): NJ > Individual income tax > Resident property tax deduction > 54A:3A-17
+- [N.J.S.A. 54A:4-1 (2025) — Resident credit for another jurisdiction tax](./nj/njsa_54a_4_1.md): NJ > Individual income tax > Resident credit for another jurisdiction tax > 54A:4-1
+- [N.J.S.A. 54A:9-17(e) (2025) — Reciprocal wage-tax agreements](./nj/njsa_54a_9_17_e.md): NJ > Individual income tax > Reciprocal wage-tax agreements > 54A:9-17(e)
+- [N.J.S.A. 54A:12-3 (2025) — Business Alternative Income Tax election](./nj/njsa_54a_12_3.md): NJ > Individual income tax > Business Alternative Income Tax election > 54A:12-3
+- [N.J.S.A. 54A:7-1 (2025) — Employer gross income tax withholding](./nj/njsa_54a_7_1.md): NJ > Individual income tax > Employer gross income tax withholding > 54A:7-1
+- [N.J.S.A. 54A:12-5 (2025) — Refundable member credit for BAIT](./nj/njsa_54a_12_5.md): NJ > Individual income tax > Refundable member credit for BAIT > 54A:12-5
+- [N.J.S.A. 54A:4-1.1 (2023) — Convenience-rule refund litigation credit](./nj/njsa_54a_4_1_1.md): NJ > Individual income tax > Convenience-rule refund litigation credit > 54A:4-1.1
 - [35 ILCS 5/201 (2024) — Illinois Individual Income Tax Rate](./il/ilcs_5_201.md): 35 ILCS 5/ > Article 2 > Section 201
 - [35 ILCS 5/1501(a)(20) (2024) — Definition of Resident](./il/ilcs_5_1501_a_20.md): 35 ILCS 5/ > Article 15 > Section 1501(a)(20)
 - [35 ILCS 5/301 (2024) — Compensation and Nonresident Income Sourcing](./il/ilcs_5_301.md): 35 ILCS 5/ > Article 3 > Section 301
+- [35 ILCS 5/1501(a)(14) (2025) — Nonresident individual](./il/ilcs_5_1501_a_14.md): IL > Individual income tax > Nonresident individual > 5/1501(a)(14)
+- [35 ILCS 5/1501(a)(16) (2025) — Part-year resident individual](./il/ilcs_5_1501_a_16.md): IL > Individual income tax > Part-year resident individual > 5/1501(a)(16)
+- [35 ILCS 5/202 (2025) — Net income after exemption allowance](./il/ilcs_5_202.md): IL > Individual income tax > Net income after exemption allowance > 5/202
+- [35 ILCS 5/203(a) (2025) — Base income and retirement subtraction](./il/ilcs_5_203_a.md): IL > Individual income tax > Base income and retirement subtraction > 5/203(a)
+- [35 ILCS 5/204 (2025) — Personal exemption and income disallowance](./il/ilcs_5_204.md): IL > Individual income tax > Personal exemption and income disallowance > 5/204
+- [35 ILCS 5/208 (2025) — Residential property tax credit](./il/ilcs_5_208.md): IL > Individual income tax > Residential property tax credit > 5/208
+- [35 ILCS 5/302 (2025) — Compensation allocation and reciprocity](./il/ilcs_5_302.md): IL > Individual income tax > Compensation allocation and reciprocity > 5/302
+- [35 ILCS 5/303 (2025) — Nonbusiness income allocation](./il/ilcs_5_303.md): IL > Individual income tax > Nonbusiness income allocation > 5/303
+- [35 ILCS 5/304(a) (2025) — Business income apportionment](./il/ilcs_5_304_a.md): IL > Individual income tax > Business income apportionment > 5/304(a)
+- [35 ILCS 5/305 (2025) — Partnership income allocation](./il/ilcs_5_305.md): IL > Individual income tax > Partnership income allocation > 5/305
+- [35 ILCS 5/601(b)(3) (2025) — Resident credit for other-state tax](./il/ilcs_5_601_b_3.md): IL > Individual income tax > Resident credit for other-state tax > 5/601(b)(3)
+- [35 ILCS 5/201(p) (2025) — Elective PTE tax and refundable owner credit](./il/ilcs_5_201_p.md): IL > Individual income tax > Elective PTE tax and refundable owner credit > 5/201(p)
+- [35 ILCS 5/701 (2025) — Employer compensation withholding](./il/ilcs_5_701.md): IL > Individual income tax > Employer compensation withholding > 5/701
 - [72 P.S. § 7302 (2024) — Imposition of Tax](./pa/p.s._7302.md): 72 P.S. > Chapter 73 > § 7302
 - [72 P.S. § 7301 (2024) — Definitions - Resident Individual](./pa/p.s._7301.md): 72 P.S. > Chapter 73 > § 7301
 - [61 Pa. Code § 109.8 (2024) — Convenience of the Employer Rule](./pa/pa. code_109_8.md): 61 Pa. Code > Chapter 109 > § 109.8

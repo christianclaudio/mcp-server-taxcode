@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -29,6 +30,9 @@ from taxcode_mcp.tools import statutes
 from taxcode_mcp.tools.compliance import compliance_server
 
 ELLIPSIS = "\u2026"
+WAVE1_IDS = frozenset(
+    json.loads((Path(__file__).parent / "fixtures/wave1/sources.json").read_text())
+)
 QUERIES = [
     "933",
     "bona fide residence",
@@ -168,25 +172,28 @@ def test_search_spanish_preference(db: TaxDatabase) -> None:
 
 # Catalog-only rows seeded after the orders below were recorded, and rows whose summary
 # was later replaced by the full statutory text (pr-ley60-2022-01, by Act 38-2026).
-SEEDED_AFTER_735477D = frozenset(
-    {
-        "us-irc-957",
-        "us-irc-6688",
-        "us-cfr-1-937-3",
-        "pr-cri-1031-02",
-        "pr-cri-1062-01",
-        "pr-ley60-6070-55",
-        "pr-ley60-6020-10",
-        "pr-ley60-6020-10-2019",
-        "pr-ley60-6020-10-2025",
-        "pr-cri-1062-03",
-        "pr-ley60-1020-02",
-        "pr-ley60-2022-01",
-        "pr-ley60-2022-02",
-        "pr-ley60-6020-03",
-        # The Canada (CAN) rows.
-        *(s["id"] for s in INITIAL_STATUTES if s["jurisdiction"] == "CAN"),
-    }
+SEEDED_AFTER_735477D = (
+    frozenset(
+        {
+            "us-irc-957",
+            "us-irc-6688",
+            "us-cfr-1-937-3",
+            "pr-cri-1031-02",
+            "pr-cri-1062-01",
+            "pr-ley60-6070-55",
+            "pr-ley60-6020-10",
+            "pr-ley60-6020-10-2019",
+            "pr-ley60-6020-10-2025",
+            "pr-cri-1062-03",
+            "pr-ley60-1020-02",
+            "pr-ley60-2022-01",
+            "pr-ley60-2022-02",
+            "pr-ley60-6020-03",
+            # The Canada (CAN) rows.
+            *(s["id"] for s in INITIAL_STATUTES if s["jurisdiction"] == "CAN"),
+        }
+    )
+    | WAVE1_IDS
 )
 
 
@@ -211,7 +218,7 @@ def test_ranking_unchanged(db: TaxDatabase, query: str, expected: list[str]) -> 
     Rows seeded later slot in between; the earlier rows keep their relative order.
     """
     # Wide enough that the later rows slotting in cannot push a recorded row off the page.
-    ids = [r["id"] for r in db.search_statutes(query=query, limit=20)]
+    ids = [r["id"] for r in db.search_statutes(query=query, limit=20 + len(WAVE1_IDS))]
     assert [i for i in ids if i not in SEEDED_AFTER_735477D][: len(expected)] == expected
 
 
