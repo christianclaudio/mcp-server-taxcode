@@ -4,10 +4,10 @@ Every statutes tool result stays under :data:`RESPONSE_MAX_CHARS` characters of 
 and every statute resource read under that many characters of text.
 
 - ``statutes_lookup_statute`` returns at most :data:`TEXT_PAGE_CHARS` characters of each
-  text field (``operative_text``, ``text_en``, ``text_es``) per call, all cut at the same
-  offset. ``text_page`` reports the offset and full lengths; ``next_cursor`` is an opaque
-  token for the next page, or ``None`` on the last page. Joining the pages in order gives
-  back the exact text.
+  text field (``operative_text``, ``text_en``, ``text_es``, and ``text_fr`` on a record
+  that has one) per call, all cut at the same offset. ``text_page`` reports the offset and
+  full lengths; ``next_cursor`` is an opaque token for the next page, or ``None`` on the
+  last page. Joining the pages in order gives back the exact text.
 - ``statutes_search_tax_code`` and ``statutes_list_publications`` return at most
   :data:`LIST_MAX_LIMIT` items per call: ``limit`` is clamped to ``1..LIST_MAX_LIMIT``
   and reported in ``limit_applied``. ``next_offset`` is the ``offset`` for the next page,
@@ -35,6 +35,8 @@ MIN_TEXT_PAGE_CHARS = 500
 LIST_MAX_LIMIT = 25
 _CURSOR_VERSION = 1
 _TEXT_FIELDS = ("text_en", "text_es")
+# Only the records that have a French text (Canada) carry this field.
+_FRENCH_FIELD = "text_fr"
 
 
 class PageCursorError(ValueError):
@@ -76,11 +78,12 @@ def decode_cursor(cursor: str) -> tuple[str, str, int]:
 
 
 def _text_page(record: dict[str, Any], offset: int, window: int) -> dict[str, Any]:
-    lengths = {name: len(record[name] or "") for name in _TEXT_FIELDS}
+    fields = (*_TEXT_FIELDS, *((_FRENCH_FIELD,) if _FRENCH_FIELD in record else ()))
+    lengths = {name: len(record[name] or "") for name in fields}
     total = max(lengths.values())
     end = offset + window
     page = dict(record)
-    for name in _TEXT_FIELDS:
+    for name in fields:
         page[name] = (record[name] or "")[offset:end]
     page["operative_text"] = (record["operative_text"] or "")[offset:end]
     more = end < total
@@ -89,6 +92,7 @@ def _text_page(record: dict[str, Any], offset: int, window: int) -> dict[str, An
         "page_chars": window,
         "text_en_chars": lengths["text_en"],
         "text_es_chars": lengths["text_es"],
+        **({"text_fr_chars": lengths[_FRENCH_FIELD]} if _FRENCH_FIELD in lengths else {}),
         "is_last_page": not more,
     }
     page["next_cursor"] = encode_cursor(record["id"], record["language"], end) if more else None

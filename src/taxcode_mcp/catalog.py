@@ -54,6 +54,12 @@ STATUTE_FIELDS: tuple[str, ...] = (
     "text_en",
     "text_es",
 )
+# Optional last field of a statute row: its official French text, as lines. Rows of a
+# jurisdiction in FRENCH_TEXT_JURISDICTIONS must have it, non-empty: Canada enacts its federal
+# law in English and French, and both versions are equally authoritative. Elsewhere it is
+# optional and, when absent, loads as an empty text.
+TEXT_FR = "text_fr"
+FRENCH_TEXT_JURISDICTIONS: frozenset[str] = frozenset({"CAN"})
 # The columns stored in the ``statutes`` table; ``breadcrumbs`` and ``source_note``
 # appear only in the generated docs.
 STATUTE_DB_FIELDS: tuple[str, ...] = (
@@ -104,6 +110,10 @@ YEAR_SOURCES = "year_sources"
 # why that table could not be confirmed. It sits after ``verification`` and before
 # ``year_sources``.
 VERIFICATION_NOTE = "verification_note"
+# Optional field of a ``statute`` entry, after ``verification``: the file its row's ``text_fr``
+# was read from (``url`` and ``content_sha256``). Every row with a French text needs one.
+FRENCH_SOURCE = "french_source"
+FRENCH_SOURCE_FIELDS: tuple[str, ...] = ("url", "content_sha256")
 YEAR_SOURCE_FIELDS: tuple[str, ...] = (
     "tax_year",
     "values",
@@ -149,7 +159,11 @@ RATE_TABLE_MODELS: dict[str, str] = {
         "SD TN UT VT WV WI WY".split(),
         "registry",
     ),
+    "CAN": "canada_federal",
 }
+# Rate tables of a country, not a US state: evaluate_state_residency answers them with their
+# own model (Canada: federal Part I tax and the departure tax on emigration).
+COUNTRY_RATE_TABLES: frozenset[str] = frozenset({"CAN"})
 RATE_TABLE_FIELDS: tuple[str, ...] = ("schema", "jurisdiction", "model", "source_url", "params")
 # Field order of ``params`` per model. ``allowance`` is the filing-status amount taken off
 # income first, stored under its statutory name: ``deduction`` or ``exemption``.
@@ -170,7 +184,26 @@ RATE_MODEL_PARAMS: dict[str, tuple[str, ...]] = {
     "flat_by_year": ("allowance", "rates"),
     "flat_with_surtax": ("allowance", "rate", "surtax"),
     "capital_gains_excise": ("capital_gains_deduction", "rate"),
+    "canada_federal": (
+        "years",
+        "capital_gains_inclusion_rate",
+        "sojourner_days",
+        "t1161_threshold",
+        "personal_use_reporting_threshold",
+        "personal_use_minimum",
+        "short_term_resident_months",
+    ),
 }
+# One ``canada_federal`` tax year: its brackets (``over`` descending, ``null`` last, the
+# lowest rate), the basic personal amount (the maximum, reduced to the minimum as income
+# rises from ``phaseout_start`` to ``phaseout_end``, ITA s. 118(1.1)) and the credit rate.
+CANADA_YEAR_FIELDS: tuple[str, ...] = (
+    "tax_year",
+    "brackets",
+    "basic_personal_amount",
+    "credit_rate",
+)
+CANADA_BPA_FIELDS: tuple[str, ...] = ("maximum", "minimum", "phaseout_start", "phaseout_end")
 # Model params that may also carry later-year values as ``<name>_<YYYY>`` keys after the
 # model's own fields, years ascending. Each holds the value from that tax year on, and the
 # unsuffixed key covers the years before (the registry's convention).
@@ -474,14 +507,21 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
             catalog.documents[f"statutes/{stem}"], rows = _document(path, code, "statutes")
             for row in rows:
                 where = f"statutes/{stem}.json row {row.get('id', '?')!r}"
-                _check_keys(row, STATUTE_FIELDS, where)
+                french = (TEXT_FR,) if TEXT_FR in row else ()
+                _check_keys(row, (*STATUTE_FIELDS, *french), where)
                 _check_types(row, where)
                 _check(row["jurisdiction"] == code, f"{where}: jurisdiction must be {code!r}")
+                if code in FRENCH_TEXT_JURISDICTIONS:
+                    _check(
+                        any(line.strip() for line in row.get(TEXT_FR, [])),
+                        f"{where}: text_fr (the official French text) is required",
+                    )
                 _check(row["id"] not in statute_ids, f"{where}: duplicate statute id")
                 statute_ids.add(row["id"])
                 loaded = dict(row)
                 loaded["text_en"] = "\n".join(row["text_en"])
                 loaded["text_es"] = "\n".join(row["text_es"])
+                loaded[TEXT_FR] = "\n".join(row.get(TEXT_FR, []))
                 catalog.statutes.append(loaded)
         path = root / "publications" / f"{stem}.json"
         if path.is_file():
@@ -503,6 +543,7 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
                 where = f"manifest/{stem}.json entry {entry.get('id', '?')!r}"
                 fields = (
                     *MANIFEST_FIELDS,
+                    *((FRENCH_SOURCE,) if FRENCH_SOURCE in entry else ()),
                     *((VERIFICATION_NOTE,) if VERIFICATION_NOTE in entry else ()),
                     *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()),
                 )
@@ -693,11 +734,56 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         )
 
 
+def _check_canada_bracket(step: Mapping[str, Any], at: str) -> None:
+    if step["over"] is not None:
+        _check_amount(step["over"], f"{at}.over")
+    _check_rate(step["rate"], f"{at}.rate")
+
+
+def _check_canada_federal(params: Mapping[str, Any], where: str) -> None:
+    """``canada_federal`` params: consecutive tax years ascending, then the Act's constants."""
+    _check_keys(params, RATE_MODEL_PARAMS["canada_federal"], where)
+    years = params["years"]
+    _check(isinstance(years, list) and len(years) > 0, f"{where}.years: must be a non-empty list")
+    for i, row in enumerate(years):
+        at = f"{where}.years[{i}]"
+        _check(isinstance(row, dict), f"{at}: must be an object")
+        _check_keys(row, CANADA_YEAR_FIELDS, at)
+        _check(type(row["tax_year"]) is int, f"{at}.tax_year: must be an integer")
+        _check(
+            i == 0 or row["tax_year"] == years[i - 1]["tax_year"] + 1,
+            f"{at}.tax_year: years must be consecutive, ascending",
+        )
+        _check_steps(
+            row["brackets"], ("over", "rate"), "over", f"{at}.brackets", _check_canada_bracket
+        )
+        bpa, bpa_at = row["basic_personal_amount"], f"{at}.basic_personal_amount"
+        _check(isinstance(bpa, dict), f"{bpa_at}: must be an object")
+        _check_keys(bpa, CANADA_BPA_FIELDS, bpa_at)
+        for name in CANADA_BPA_FIELDS:
+            _check_amount(bpa[name], f"{bpa_at}.{name}")
+        _check(bpa["minimum"] <= bpa["maximum"], f"{bpa_at}: minimum must not exceed maximum")
+        _check(
+            bpa["phaseout_start"] < bpa["phaseout_end"],
+            f"{bpa_at}: phaseout_start must be below phaseout_end",
+        )
+        _check_rate(row["credit_rate"], f"{at}.credit_rate")
+    _check_rate(params["capital_gains_inclusion_rate"], f"{where}.capital_gains_inclusion_rate")
+    for name, top in (("sojourner_days", 366), ("short_term_resident_months", 120)):
+        value = params[name]
+        _check(type(value) is int and 0 < value <= top, f"{where}.{name}: must be 1 to {top}")
+    for name in ("t1161_threshold", "personal_use_reporting_threshold", "personal_use_minimum"):
+        _check_amount(params[name], f"{where}.{name}")
+
+
 def _check_params(model: str, params: Any, where: str) -> None:
     _check(isinstance(params, dict), f"{where}: params must be an object")
     where = f"{where} params"
     if model == "registry":
         _check_registry(params, where)
+        return
+    if model == "canada_federal":
+        _check_canada_federal(params, where)
         return
     fields = list(RATE_MODEL_PARAMS[model])
     if fields[0] == "allowance":
@@ -995,6 +1081,8 @@ WINDOW_SPANS: dict[tuple[str, str], tuple[int, int]] = {
     ("MA", "M.G.L. c. 62 § 3(B)(a)(9)"): (2022, 2023),
     ("LA", "La. Rev. Stat. Ann. § 47:32"): (2022, 2025),
     ("NH", "N.H. Rev. Stat. Ann. § 77:1"): (2024, 2025),
+    ("CAN", "ITA s. 117"): (2019, 2025),
+    ("CAN", "ITA s. 118"): (2019, 2025),
 }
 # Groups whose law ended: dated rows only, no current row.
 WINDOW_GROUPS_ENDED: frozenset[tuple[str, str]] = frozenset(
@@ -1076,7 +1164,10 @@ def window_span_errors(
 
 def statute_db_row(statute: Mapping[str, Any]) -> dict[str, Any]:
     """The ``statutes`` table columns of a loaded statute row."""
-    return {name: statute[name] for name in STATUTE_DB_FIELDS}
+    row = {name: statute[name] for name in STATUTE_DB_FIELDS}
+    if statute.get(TEXT_FR):
+        row[TEXT_FR] = statute[TEXT_FR]  # stored in the statutes_fr table
+    return row
 
 
 def statute_document_row(statute: Mapping[str, Any]) -> dict[str, Any]:
@@ -1084,6 +1175,8 @@ def statute_document_row(statute: Mapping[str, Any]) -> dict[str, Any]:
     row = {name: statute[name] for name in STATUTE_FIELDS}
     row["text_en"] = split_lines(statute["text_en"])
     row["text_es"] = split_lines(statute["text_es"])
+    if statute.get(TEXT_FR):
+        row[TEXT_FR] = split_lines(statute[TEXT_FR])
     return row
 
 
@@ -1135,6 +1228,23 @@ def _entry_errors(entry: Mapping[str, Any]) -> list[str]:
             errors.append(f"{where}: verification_note must be a non-empty string")
     elif VERIFICATION_NOTE in entry and entry["kind"] != "rate_table":
         errors.append(f"{where}: verification_note belongs only on a rate_table")
+    if FRENCH_SOURCE in entry:
+        errors.extend(_french_source_errors(entry, where))
+    return errors
+
+
+def _french_source_errors(entry: Mapping[str, Any], where: str) -> list[str]:
+    source = entry[FRENCH_SOURCE]
+    if entry["kind"] != "statute":
+        return [f"{where}: {FRENCH_SOURCE} belongs only on a statute entry"]
+    if not (isinstance(source, dict) and list(source) == list(FRENCH_SOURCE_FIELDS)):
+        return [f"{where}: {FRENCH_SOURCE} fields must be exactly {list(FRENCH_SOURCE_FIELDS)}"]
+    errors: list[str] = []
+    if not (isinstance(source["url"], str) and source["url"].startswith("https://")):
+        errors.append(f"{where}: {FRENCH_SOURCE}.url must be an https URL")
+    sha = source["content_sha256"]
+    if not (isinstance(sha, str) and _SHA256_RE.match(sha)):
+        errors.append(f"{where}: {FRENCH_SOURCE}.content_sha256 must be 64 lowercase hex")
     return errors
 
 
@@ -1212,6 +1322,7 @@ def manifest_errors(catalog: Catalog) -> list[str]:
     a missing key.
     """
     rows: dict[tuple[str, str], tuple[str, str]] = {}
+    french = {("statute", s["id"]) for s in catalog.statutes if s.get(TEXT_FR)}
     for s in catalog.statutes:
         rows[("statute", s["id"])] = (file_stem(s["jurisdiction"]), s["source_url"])
     for p in catalog.publications:
@@ -1238,6 +1349,8 @@ def manifest_errors(catalog: Catalog) -> list[str]:
             errors.append(f"{where}: belongs in manifest/{stem}.json")
         if entry["url"] != url:
             errors.append(f"{where}: url {entry['url']!r} != row source_url {url!r}")
+        if key in french and FRENCH_SOURCE not in entry:
+            errors.append(f"{where}: a row with text_fr needs {FRENCH_SOURCE}")
         if YEAR_SOURCES in entry:
             params: Any
             if key[0] == "federal_table":
@@ -1260,6 +1373,16 @@ def statute_doc_path(statute: Mapping[str, Any]) -> str:
     if statute["superseded_year"]:
         base = f"{base}_{statute['effective_year']}"
     return f"{str(statute['jurisdiction']).lower()}/{base}.md"
+
+
+# The note a Canada statute page carries above its texts (see disclaimers.CANADA_TEXT_LABEL).
+FRENCH_DOCS_NOTE = (
+    "English and French, equally authoritative, reproduced from the Justice Canada "
+    "consolidation under the Reproduction of Federal Law Order (SI/97-5) with due diligence "
+    "as to accuracy. This is not an official version and is not made in affiliation with, "
+    "or with the endorsement of, the Government of Canada. The Spanish text is an "
+    "unofficial summary."
+)
 
 
 def render_docs(
@@ -1285,6 +1408,18 @@ def render_docs(
         )
         note = f" — {s['source_note']}" if s["source_note"] else ""
         refs = ", ".join(f"`{ref}`" for ref in s["cross_references"])
+        french = s.get(TEXT_FR) or ""
+        if french:
+            official = (
+                f"- **Official Text:** {FRENCH_DOCS_NOTE}\n\n"
+                "## Operative Statutory Language (English)\n\n"
+                f"{s['text_en']}\n\n"
+                "## Texte législatif officiel (Français)\n\n"
+                f"{french}\n\n"
+                "## Resumen no oficial (Español)\n\n"
+            )
+        else:
+            official = f"\n## {en_heading}\n\n{s['text_en']}\n\n## {es_heading}\n\n"
         files[statute_doc_path(s)] = (
             f"# {s['citation']} — {s['title']}\n\n"
             f"- **Jurisdiction:** {s['jurisdiction']}\n"
@@ -1293,10 +1428,8 @@ def render_docs(
             f"- **Superseded Year:** {s['superseded_year'] or 'Current / In Force'}\n"
             f"- **Source:** [{s['source_url']}]({s['source_url']}){note}\n"
             f"- **Hierarchy:** `{s['breadcrumbs']}`\n"
-            f"- **Cross References:** {refs}\n\n"
-            f"## {en_heading}\n\n"
-            f"{s['text_en']}\n\n"
-            f"## {es_heading}\n\n"
+            f"- **Cross References:** {refs}\n"
+            f"{official}"
             f"{s['text_es']}\n"
         )
     summary = [
@@ -1305,6 +1438,8 @@ def render_docs(
         "> Authoritative statutory and regulatory references for United States Federal Tax Law,",
         "> Puerto Rico Territorial Tax Law (Act 60-2019 and Ley 1-2011), and all 50 US States "
         "+ District of Columbia.",
+        "> Canada (CAN): federal Income Tax Act and Income Tax Regulations sections in their "
+        "official English and French text, with unofficial Spanish summaries.",
         "",
         "## Statutory Catalog",
         "",
@@ -1323,7 +1458,8 @@ def render_docs(
             "## Full Statutory Text",
             "",
             "- [Full-text index](./llms-full.txt): one `<code>/llms-full.txt` file per "
-            "jurisdiction with the full English and Spanish text of every section.",
+            "jurisdiction with the full English and Spanish text of every section "
+            "(and the official French text of the Canada sections).",
         ]
     )
     files["llms.txt"] = "\n".join(summary)
@@ -1349,9 +1485,15 @@ def render_docs(
                 "no son texto estatutario oficial.\n"
             )
         for s in rows:
+            french = s.get(TEXT_FR) or ""
+            spanish = (
+                f"### Français\n{french}\n\n### Español (resumen no oficial)\n"
+                if french
+                else "### Español\n"
+            )
             full.append(
                 f"## {s['citation']}: {s['title']}\n`{s['breadcrumbs']}`\n\n"
-                f"### English\n{s['text_en']}\n\n### Español\n{s['text_es']}\n"
+                f"### English\n{s['text_en']}\n\n{spanish}{s['text_es']}\n"
             )
         files[f"{stem}/llms-full.txt"] = "\n".join(full)
     files["llms-full.txt"] = "\n".join(index) + "\n"

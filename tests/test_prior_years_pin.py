@@ -40,7 +40,8 @@ from __future__ import annotations
 import copy
 import json
 import re
-from collections.abc import Collection
+from collections.abc import Collection, Iterator
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 from unittest.mock import patch
@@ -141,7 +142,10 @@ PRIOR_YEAR_IDS = {
 WAVE1_FIXTURES = Path(__file__).parent / "fixtures" / "wave1"
 WAVE1_IDS = frozenset(json.loads((WAVE1_FIXTURES / "sources.json").read_text()))
 WAVE1_SEARCHES = frozenset(json.loads((WAVE1_FIXTURES / "searches.json").read_text()))
-NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"}) | WAVE1_IDS
+# The Canada (CAN) rows and CRA publications, added after BASE_COMMIT (see CANADA_COUNT).
+CANADA_IDS = frozenset(s["id"] for s in load_catalog().statutes if s["jurisdiction"] == "CAN")
+CANADA_PUBS = frozenset(p["id"] for p in load_catalog().publications if p["id"].startswith("can-"))
+NEW_SINCE_BASE_IDS = frozenset({"pr-ley60-6060-05"}) | WAVE1_IDS | CANADA_IDS
 # Searches (outside the 2019-2025 window already allowed) whose result lists newly include
 # pr-ley60-6060-05 after Ley 180-2025: "exempt"/"exenta" wording, "income"/"ingreso", and
 # "Puerto Rico" at offset 5 for tax years 2026-2028 (and no-year income/ingreso at offset 5).
@@ -302,7 +306,16 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # Behavioral Health Services Tax from 2025 (72 lookups, 1 resource read, and 2 2024 searches;
 # the 2025-2028 searches were already in the changed set).
 # Wave 1 changes 90 searches: 32 newly differ from base, 58 already differed.
-CHANGED_OUT = 3428
+# Plus the answers that now list a Canada (CAN) row or CRA publication: the CANADA_COUNT ones
+# outside the windows, checked byte for byte without those rows, and searches the windows
+# above already allow to change. An answer that changed for both reasons is counted once.
+CHANGED_OUT = 3480
+# Answers that newly list a Canada row or publication and sit outside the allowlists above.
+# A search in every jurisdiction ranks the Canada rows among the others, and the newest-first
+# publication pages list the CRA guidance. Each is the pinned base answer, byte for byte,
+# once the Canada rows are dropped. Main counted 68; Wave 1's search allowlist covers the
+# rest, so the pin test's counter on the merged catalog is lower.
+CANADA_COUNT = 52
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -442,6 +455,32 @@ def _allowed(key: str) -> tuple[bool, bool]:
     return out or is_corrected(key), versions
 
 
+def _lists_canada(key: str) -> bool:
+    """Whether a key's answer may list a Canada row or publication."""
+    kind, *rest = key.split("|")
+    return kind == "pubs" or (kind == "search" and rest[1] == "None")
+
+
+@contextmanager
+def _without_canada() -> Iterator[None]:
+    """Answers as at BASE_COMMIT: searches and publication pages without the Canada rows."""
+    search, listed = db.search_statutes, db.list_publications
+
+    def search_base(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
+        rows = search(**kw, limit=offset + limit + len(CANADA_IDS), offset=0)
+        return [r for r in rows if r["id"] not in CANADA_IDS][offset : offset + limit]
+
+    def list_base(*, limit: int = 10, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
+        rows = listed(**kw, limit=offset + limit + len(CANADA_PUBS), offset=0)
+        return [r for r in rows if r["id"] not in CANADA_PUBS][offset : offset + limit]
+
+    with (
+        patch.object(db, "search_statutes", search_base),
+        patch.object(db, "list_publications", list_base),
+    ):
+        yield
+
+
 def _compare(
     key: str, raw: Any, base: list[str], full: str | None
 ) -> tuple[list[str], bool, bool, bool]:
@@ -497,7 +536,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     corrected = read_corrected()
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
     unexpected: list[str] = []
-    changed_out = changed_versions = pointed = 0
+    changed_out = changed_versions = pointed = canada = 0
     ga_pre2019_amount_mismatches: list[str] = []
     ut_2024_amount_mismatches: list[str] = []
     async with Client(mcp) as client:
@@ -506,6 +545,11 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
             problems, out_changed, versions_changed, has_pointer = _compare(
                 key, raw, pins[key], corrected.get(key)
             )
+            if problems and _lists_canada(key):
+                with _without_canada():
+                    base_raw = await answer(client, calls[key])
+                problems = _compare(key, base_raw, pins[key], corrected.get(key))[0]
+                canada += not problems
             unexpected += problems
             changed_out += out_changed
             changed_versions += versions_changed
@@ -526,6 +570,7 @@ async def test_no_answer_changes_outside_the_new_windows() -> None:
     assert ut_2024_amount_mismatches == []
     # See CHANGED_OUT. Versions are unchanged at 2072.
     assert (changed_out, changed_versions) == (CHANGED_OUT, 2072)
+    assert canada == CANADA_COUNT
     # Not-found lookups by id whose message names the row for that tax year.
     assert pointed == 288
 

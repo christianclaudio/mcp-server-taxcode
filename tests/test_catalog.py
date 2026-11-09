@@ -20,6 +20,7 @@ from taxcode_mcp.catalog import (
     RATE_TABLE_MODELS,
     STATUTE_FIELDS,
     TABLE_KINDS,
+    TEXT_FR,
     CatalogError,
     dump_json,
     federal_table_document,
@@ -51,6 +52,16 @@ PRIOR_YEAR_VERBATIM = {
     "us-cfr-1-937-3-2019",
 }
 PRIOR_YEAR_IDS = PRIOR_YEAR_SUMMARIES | PRIOR_YEAR_VERBATIM
+# The Canada rows quote the Justice Canada consolidated XML word for word (English and French,
+# each file hashed); the CRA publications are summaries of dynamic canada.ca HTML pages.
+CAN_STATUTE_IDS = {s["id"] for s in db.INITIAL_STATUTES if s["jurisdiction"] == "CAN"}
+CAN_PUBLICATION_IDS = {
+    "can-cra-folio-s5-f1-c1",
+    "can-cra-t1161",
+    "can-cra-t1243",
+    "can-cra-t1244",
+    "can-cra-leaving-canada",
+}
 # The prior-year Puerto Rico statute versions: each records the act it was read from, as
 # enacted. Three quote Ley 60-2019 as approved word for word; the rest are summaries.
 PR_PRIOR_YEAR_SUMMARIES = {
@@ -102,9 +113,11 @@ def test_rows_load_in_catalog_order_with_every_field() -> None:
     order = {code: i for i, code in enumerate(catalog.jurisdictions)}
     positions = [order[s["jurisdiction"]] for s in catalog.statutes]
     assert positions == sorted(positions)
-    assert all(list(s) == list(STATUTE_FIELDS) for s in catalog.statutes)
+    # A loaded row always has text_fr; it is empty unless the data file holds a French text.
+    assert all(list(s) == [*STATUTE_FIELDS, TEXT_FR] for s in catalog.statutes)
+    assert {s["id"] for s in catalog.statutes if s[TEXT_FR]} == CAN_STATUTE_IDS
     assert all(list(p) == list(PUBLICATION_FIELDS) for p in catalog.publications)
-    assert len(catalog.rate_tables) == 49
+    assert len(catalog.rate_tables) == 50
     assert len(catalog.manifest) == (
         len(catalog.statutes)
         + len(catalog.publications)
@@ -138,18 +151,26 @@ def test_manifest_records_unknowns_explicitly() -> None:
     for entry in catalog.manifest:
         keys = [k for k in entry if k != "_jurisdiction"]
         # A rate table may add its other tax years' sources as one last field.
+        french = ["french_source"] if "french_source" in entry else []
         note = ["verification_note"] if "verification_note" in entry else []
         years = ["year_sources"] if "year_sources" in entry else []
-        assert keys == [*MANIFEST_FIELDS, *note, *years], entry["id"]
+        assert keys == [*MANIFEST_FIELDS, *french, *note, *years], entry["id"]
+        assert bool(french) == (entry["id"] in CAN_STATUTE_IDS), entry["id"]
     # Only the prior-year versions were verified word for word against a fetched copy.
     by_verification: dict[str, set[str]] = {}
     for e in catalog.manifest:
         by_verification.setdefault(e["verification"], set()).add(e["id"])
     assert set(by_verification) == {"summary", NOT_RECORDED, "verified_verbatim"}
-    assert by_verification["verified_verbatim"] == PRIOR_YEAR_VERBATIM | PR_PRIOR_YEAR_VERBATIM
-    assert PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_SUMMARIES <= by_verification["summary"]
+    assert by_verification["verified_verbatim"] == (
+        PRIOR_YEAR_VERBATIM | PR_PRIOR_YEAR_VERBATIM | CAN_STATUTE_IDS
+    )
+    assert (
+        PRIOR_YEAR_SUMMARIES | PR_PRIOR_YEAR_SUMMARIES | CAN_PUBLICATION_IDS
+        <= by_verification["summary"]
+    )
     # Wave 1 summaries also pin deterministic source bytes; the hash is not a text-verbatim claim.
-    # Other hashes describe tables or publication source pages.
+    # Besides those statute versions, only a table whose figures were read from a fetched
+    # official file, or a publication whose source page was fetched, records a hash.
     statutes_hashed = {
         e["id"]
         for e in catalog.manifest
@@ -159,14 +180,17 @@ def test_manifest_records_unknowns_explicitly() -> None:
     # pr-ley60-6060-05 was hashed from the OGP certified PDF of Ley 180-2025 (fetched 2026-11-04).
     ok_hashed = {"ok-stat-68-2355", "pr-ley60-6060-05"}
     assert statutes_hashed == (
-        PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed | WAVE1_HASHED
+        PRIOR_YEAR_IDS
+        | PR_PRIOR_YEAR_IDS
+        | PR_SPLIT_IDS
+        | ok_hashed
+        | WAVE1_HASHED
+        | CAN_STATUTE_IDS
     )
     hashed = {
         e["kind"]
         for e in catalog.manifest
-        if e["content_sha256"] != NOT_RECORDED
-        and e["id"]
-        not in (PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | PR_SPLIT_IDS | ok_hashed | WAVE1_HASHED)
+        if e["content_sha256"] != NOT_RECORDED and e["id"] not in statutes_hashed
     }
     assert hashed == {"rate_table", "federal_table", "publication"}
     hashed_pubs = {
@@ -415,10 +439,10 @@ def test_a_jurisdiction_may_have_no_files_and_folders_are_optional(
     tree: tuple[Path, Path],
 ) -> None:
     data, _ = tree
-    _edit(data / "jurisdictions.json", lambda d: d.append("CAN"))
+    _edit(data / "jurisdictions.json", lambda d: d.append("ZZ"))
     shutil.rmtree(data / "manifest")
     catalog = load_catalog(data, with_manifest=True)
-    assert catalog.jurisdictions[-1] == "CAN" and catalog.manifest == []
+    assert catalog.jurisdictions[-1] == "ZZ" and catalog.manifest == []
 
 
 @pytest.mark.parametrize(
@@ -462,7 +486,10 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 def test_recorded_editions_include_verified_enacted_nj_amendments() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 248
+    assert len(editions) == 277
+    # The Canada rows quote a consolidation (the Act or regulations as amended).
+    for row_id in sorted(CAN_STATUTE_IDS):
+        assert editions.pop(row_id) == "amended_compilation", row_id
     assert editions.pop("pr-act22-2012") == "amended_compilation"
     # Ley 180-2025 certified copy (as enacted) that amends Sec. 6060.05(c).
     assert editions.pop("pr-ley60-6060-05") == "as_enacted"
@@ -518,6 +545,8 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "UT",
         "VA",
         "WV",
+        # Canada: the CRA figures match ITA s. 117 (the $57,375 base bracket, the 14% rate).
+        "CAN",
     }
     # Georgia names HB 463. New Mexico's rate publication is the amended rate text and
     # states the 2008 applicability date. Hawaii's 2024 booklet names Act 45, SLH 2024,
@@ -609,6 +638,7 @@ SOURCED_RATE_TABLES = sorted(
     + SOURCED_2026_10_23
     + SOURCED_2026_10_30
     + SOURCED_2026_10_31
+    + ["CAN"]
 )
 RETRIEVED = {
     **dict.fromkeys(SOURCED_2026_10_23, "2026-10-23"),
@@ -625,9 +655,11 @@ RETRIEVED = {
     "NH": "2026-11-02",
     # Alabama Form 40 booklet (24f40bk) re-read for personal exemption and std-ded chart.
     "AL": "2026-11-02",
+    # The CRA rate pages and the payroll and TD1 forms for the Canada table.
+    "CAN": "2026-11-05",
 }
-# Sources read as text without their bytes, so no hash. None remain.
-READ_WITHOUT_BYTES: set[str] = set()
+# Rate-table sources whose pages inject per-request script tokens, so no reproducible hash.
+READ_WITHOUT_BYTES: set[str] = {"CAN"}
 
 
 def test_rate_table_entries_are_checked_against_their_tables(tree: tuple[Path, Path]) -> None:

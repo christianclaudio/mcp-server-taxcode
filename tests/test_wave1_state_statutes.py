@@ -88,7 +88,12 @@ def test_existing_rows_are_byte_for_byte_unchanged_in_both_languages() -> None:
     expected = json.loads((FIXTURES / "existing_rows.json").read_text())
     rows = {s["id"]: s for s in load_catalog().statutes}
     assert len(expected) == 17
-    assert {row_id: full_sha(rows[row_id]) for row_id in expected} == expected
+    # Canada (#84) adds an empty text_fr on every loaded statute. The pins cover the
+    # fields those rows had before that key, English and Spanish included.
+    assert {
+        row_id: full_sha({k: v for k, v in rows[row_id].items() if k != "text_fr"})
+        for row_id in expected
+    } == expected
 
 
 def test_new_rows_have_honest_labels_and_exact_manifest_source_pins() -> None:
@@ -173,18 +178,24 @@ def test_source_corrections_and_summary_docs_are_explicit() -> None:
 async def test_each_changed_search_is_an_exact_insertion_only_change() -> None:
     calls = plan(load_catalog().statutes, SUPPORTED_STATE_JURISDICTIONS)
     ranked = db.search_statutes
+    # Canada rows (#84) rank into the same pages. The fixture was recorded before them.
+    canada_ids = frozenset(s["id"] for s in load_catalog().statutes if s["jurisdiction"] == "CAN")
 
-    def without_wave1(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
-        rows = ranked(**kw, limit=offset + limit + len(WAVE1_IDS), offset=0)
-        kept = [r for r in rows if r["id"] not in WAVE1_IDS]
-        return kept[offset : offset + limit]
+    def without(drop: frozenset[str]) -> Any:
+        def search(*, limit: int = 5, offset: int = 0, **kw: Any) -> list[dict[str, Any]]:
+            rows = ranked(**kw, limit=offset + limit + len(drop), offset=0)
+            kept = [r for r in rows if r["id"] not in drop]
+            return kept[offset : offset + limit]
+
+        return search
 
     async with Client(mcp) as client:
         for key, expected in SEARCHES.items():
             assert set(expected["inserted"]) <= WAVE1_IDS
             assert expected["inserted"]
-            expanded = await answer(client, calls[key])
+            with patch.object(db, "search_statutes", without(canada_ids)):
+                expanded = await answer(client, calls[key])
             assert full_sha(expanded) == expected["after"], key
-            with patch.object(db, "search_statutes", without_wave1):
+            with patch.object(db, "search_statutes", without(canada_ids | WAVE1_IDS)):
                 rebuilt = await answer(client, calls[key])
             assert full_sha(rebuilt) == expected["before"], key

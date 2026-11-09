@@ -151,10 +151,13 @@ WAVE1_PRIOR_YEAR_IDS = {
     "ca-rtc-17043-2024",
     "ma-gl-62-3-rent-2022",
 }
+# The rows before prior-year versions. The Canada (CAN) rows came later, with versions of their
+# own (tests/test_canada_federal.py). Wave 1 dated rows are excluded the same way.
 OLD_STATUTES = [
     s
     for s in INITIAL_STATUTES
     if s["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS | WAVE1_PRIOR_YEAR_IDS
+    and s["jurisdiction"] != "CAN"
 ]
 NO_YEAR_QUERIES = ["", "income", "credit", "deduction", "residente", "deducción", "ingreso"]
 FEDERAL_SUMMARY_PREFIX_EN = "Summary; the text of this version is not in the catalog. "

@@ -17,6 +17,7 @@ from fastmcp import Client
 
 from taxcode_mcp import server
 from taxcode_mcp.db import (
+    INITIAL_STATUTES,
     SNIPPET_LEAD_CHARS,
     SNIPPET_MAX_CHARS,
     TaxDatabase,
@@ -148,7 +149,8 @@ def test_search_rows_carry_bounded_snippet_not_full_text(db: TaxDatabase, query:
     for row in rows:
         assert {"operative_text", "text_en", "text_es"}.isdisjoint(row)
         assert len(row["snippet"]) <= SNIPPET_MAX_CHARS
-        assert row["snippet_language"] in {"en", "es"}
+        # A Canada row may match only in its French text.
+        assert row["snippet_language"] in {"en", "es", "fr"}
         full = db.lookup_statute(row["id"], lang=row["snippet_language"])
         assert full is not None
         flat = _flat(full["operative_text"])
@@ -187,6 +189,8 @@ SEEDED_AFTER_735477D = (
             "pr-ley60-2022-01",
             "pr-ley60-2022-02",
             "pr-ley60-6020-03",
+            # The Canada (CAN) rows.
+            *(s["id"] for s in INITIAL_STATUTES if s["jurisdiction"] == "CAN"),
         }
     )
     | WAVE1_IDS
