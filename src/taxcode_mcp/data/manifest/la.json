@@ -40,7 +40,21 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "https://www.legis.la.gov/Legis/Law.aspx?d=101770 is repealed R.S. 47:298, not R.S. 47:32, so the held brackets were not on that page."
+      "verification_note": "R.S. 47:32 at https://www.legis.la.gov/legis/Law.aspx?d=101946 states the flat 3 percent rate from 2025 (Acts 2024, 3rd Ex. Sess., No. 11), and R.S. 47:294 (d=101761) and the 2025 IT-540 instructions confirm the 2025 $12,500 / $25,000 standard deduction. R.S. 47:294(B) prescribes CPI-U indexing from 2026 without stating the held $12,838 / $25,676 amounts, and the LDR individual-income-tax page prints the 2022-2024 rates and threshold sets under a duplicated married-joint heading without the 2024 $4,500 / $9,000 deduction.",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 12500.0,
+            "deduction_mfj_2025": 25000.0,
+            "rate_2025": 0.03
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-05",
+          "content_sha256": "79a918a73b8f2f0eff7f57d32a0b8699e2d2b15d2c0dfa7ac51b8ef78a099643"
+        }
+      ]
     }
   ]
 }
