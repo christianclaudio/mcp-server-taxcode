@@ -55,6 +55,52 @@ USCODE_EDITION_TEXT_LABEL: dict[str, str] = {
     "es": "Texto estatutario oficial (Código de los EE. UU., edición de {edition}, GPO).",
 }
 
+# Canada rows quote the Justice Canada consolidated XML at one laws-lois-xml commit. The
+# Reproduction of Federal Law Order (SI/97-5) lets anyone reproduce federal law without charge
+# or permission, provided due diligence is exercised in ensuring accuracy and the reproduction
+# is not represented as an official version, or as made in affiliation with or with the
+# endorsement of the Government of Canada. {commit} is the short commit id.
+CANADA_TEXT_LABEL: dict[str, str] = {
+    "en": (
+        "Official statutory text of Canada (Justice Canada consolidation, laws-lois-xml "
+        "commit {commit}). The English and French versions are equally authoritative "
+        "(Charter s. 18(1); Official Languages Act s. 13). Reproduced under the Reproduction "
+        "of Federal Law Order (SI/97-5), with due diligence as to accuracy; this is not an "
+        "official version (Legislation Revision and Consolidation Act s. 31) and is not made "
+        "in affiliation with, or with the endorsement of, the Government of Canada. The "
+        "Spanish text is an unofficial summary."
+    ),
+    "es": (
+        "Texto legal oficial de Canadá (codificación del Ministerio de Justicia de Canadá, "
+        "laws-lois-xml commit {commit}). Las versiones en inglés y en francés son igualmente "
+        "auténticas (Carta, art. 18(1); Ley de Lenguas Oficiales, art. 13). Reproducido "
+        "conforme al Decreto sobre la reproducción de la legislación federal (TR/97-5), con "
+        "la debida diligencia en cuanto a su exactitud; no es una versión oficial (Ley de "
+        "revisión y codificación de textos legislativos, art. 31) ni se hace en "
+        "asociación con el Gobierno de Canadá ni con su aval. El texto en español es un "
+        "resumen no oficial."
+    ),
+    "fr": (
+        "Texte législatif officiel du Canada (codification du ministère de la Justice, "
+        "laws-lois-xml commit {commit}). Les versions française et anglaise ont également "
+        "force de loi (Charte, par. 18(1); Loi sur les langues officielles, art. 13). "
+        "Reproduit en vertu du Décret sur la reproduction de la législation fédérale "
+        "(TR/97-5), avec une diligence raisonnable quant à son exactitude; il ne s’agit pas "
+        "d’une version officielle (Loi sur la révision et la codification des textes "
+        "législatifs, art. 31) et la reproduction n’est faite ni en association avec le "
+        "gouvernement du Canada ni avec son appui. Le texte espagnol est un résumé non "
+        "officiel."
+    ),
+}
+
+CANADA_TRANSLATION_DISCLAIMER = (
+    "The English and French texts are both official and equally authoritative; the Spanish "
+    "summary is unofficial and for reference only. / Los textos en inglés y en francés son "
+    "oficiales e igualmente auténticos; el resumen en español no es oficial y es solo de "
+    "referencia. / Les textes anglais et français sont officiels et ont également force de "
+    "loi; le résumé espagnol n’est pas officiel et n’est fourni qu’à titre de référence."
+)
+
 OFFICIAL_TEXT_TRANSLATION_DISCLAIMER = (
     "The Spanish summary is an unofficial translation for reference only; the official "
     "English statutory text controls. / El resumen en español es una traducción no oficial "
@@ -75,13 +121,26 @@ ESTIMATE_NOTE: dict[str, str] = {
 
 
 def reference_labels(
-    *, official_text: bool = False, code_edition: int | None = None
+    *,
+    official_text: bool = False,
+    code_edition: int | None = None,
+    canada_commit: str | None = None,
 ) -> dict[str, Any]:
     """Per-item labels; official_text marks rows holding the official statutory text.
 
     ``code_edition`` names the annual US Code edition an official text is quoted from;
-    without it the label names the pinned OLRC release point.
+    without it the label names the pinned OLRC release point. ``canada_commit`` (the
+    laws-lois-xml commit of a Justice Canada text) gives the Canada label instead.
     """
+    if official_text and canada_commit is not None:
+        return {
+            "content_type": CONTENT_TYPE_OFFICIAL_TEXT,
+            "content_label": {
+                k: v.format(commit=canada_commit[:7]) for k, v in CANADA_TEXT_LABEL.items()
+            },
+            "unofficial_summary": False,
+            "translation_disclaimer": CANADA_TRANSLATION_DISCLAIMER,
+        }
     if official_text:
         label = (
             dict(OFFICIAL_TEXT_LABEL)

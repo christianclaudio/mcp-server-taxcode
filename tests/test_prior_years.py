@@ -146,7 +146,13 @@ PR_PRIOR_YEAR_IDS = frozenset(
         "pr-ley60-6020-10-2024",
     }
 )
-OLD_STATUTES = [s for s in INITIAL_STATUTES if s["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS]
+# The rows before prior-year versions. The Canada (CAN) rows came later, with versions of their
+# own (tests/test_canada_federal.py).
+OLD_STATUTES = [
+    s
+    for s in INITIAL_STATUTES
+    if s["id"] not in PRIOR_YEAR_IDS | PR_PRIOR_YEAR_IDS and s["jurisdiction"] != "CAN"
+]
 NO_YEAR_QUERIES = ["", "income", "credit", "deduction", "residente", "deducción", "ingreso"]
 FEDERAL_SUMMARY_PREFIX_EN = "Summary; the text of this version is not in the catalog. "
 FEDERAL_SUMMARY_PREFIX_ES = "Resumen; el texto de esta versión no está en el catálogo. "
