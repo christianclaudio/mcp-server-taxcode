@@ -242,10 +242,11 @@ def series_param(name: str) -> str:
     """The marker ``param`` for a ``_for_year`` series name.
 
     ``deduction_single`` and ``credit_phaseout_mfj`` name the base (``deduction``,
-    ``credit_phaseout``). A name with no filing-status suffix is itself. The suffix
-    list is :data:`FILING_STATUSES`.
+    ``credit_phaseout``). ``deduction_hoh`` and ``brackets_mfs`` do too. A name with
+    no filing-status suffix is itself. The suffix list is :data:`FILING_STATUSES`
+    plus :data:`EXTRA_FILING_STATUSES`.
     """
-    for status in FILING_STATUSES:
+    for status in (*FILING_STATUSES, *EXTRA_FILING_STATUSES):
         suffix = f"_{status}"
         if name.endswith(suffix):
             return name[: -len(suffix)]
@@ -257,6 +258,9 @@ def series_param(name: str) -> str:
 YEAR_STEP_TEXT: dict[str, str] = {"flat_by_year": "rate_desc", "georgia": "law"}
 ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
+# Printed on a schedule only when an official source states them. A table may omit
+# them. They are never filled from single or married-filing-jointly amounts.
+EXTRA_FILING_STATUSES = ("hoh", "mfs")
 REGIMES = frozenset({"none", "flat", "graduated"})
 # Georgia's graduated schedules start in 2018. A year before that reads the 2024 flat-rate
 # standard deduction, and the revenue-test note for a year after 2026 reads the 2026
@@ -295,6 +299,25 @@ _REGISTRY_TYPES: dict[str, type] = {
         (
             f"deduction_{status}{year}"
             for status in FILING_STATUSES
+            for year in (
+                "",
+                "_2018",
+                "_2019",
+                "_2020",
+                "_2021",
+                "_2022",
+                "_2023",
+                "_2024",
+                "_2025",
+                "_2026",
+            )
+        ),
+        float,
+    ),
+    **dict.fromkeys(
+        (
+            f"deduction_{status}{year}"
+            for status in EXTRA_FILING_STATUSES
             for year in (
                 "",
                 "_2018",
@@ -392,6 +415,16 @@ _REGISTRY_TYPES: dict[str, type] = {
     # ceiling the ordinary brackets apply to all taxable income.
     **dict.fromkeys((f"low_income_exclusion_{year}" for year in range(2018, 2027)), dict),
     **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_BRACKET_YEARS), dict),
+    # A status schedule stored beside a shared ``brackets`` marker (the shared key
+    # still refuses single and joint for that year).
+    **dict.fromkeys(
+        (
+            f"brackets_{status}_{year}"
+            for status in EXTRA_FILING_STATUSES
+            for year in REGISTRY_BRACKET_YEARS
+        ),
+        list,
+    ),
     **dict.fromkeys((f"rate_desc_{year}" for year in (2018, *REGISTRY_YEARS)), str),
     **dict.fromkeys(
         (
@@ -687,19 +720,34 @@ def _check_zero_liability(value: Any, where: str) -> None:
         _check_amount(value[status], f"{where}.{status}")
 
 
+def _bracket_statuses(value: Mapping[str, Any]) -> tuple[str, ...]:
+    """``single`` and ``mfj``, then any extra status the object actually prints.
+
+    Extra statuses stay in :data:`EXTRA_FILING_STATUSES` order and are optional.
+    """
+    extra = tuple(status for status in EXTRA_FILING_STATUSES if status in value)
+    return (*FILING_STATUSES, *extra)
+
+
+def _check_bracket_row(step: Mapping[str, Any], at: str) -> None:
+    if step["over"] is not None:
+        _check_amount(step["over"], f"{at}.over")
+    _check_rate(step["rate"], f"{at}.rate")
+    if "base" in step:
+        _check_amount(step["base"], f"{at}.base")
+
+
 def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
     _check(isinstance(value, dict), f"{where}: must be an object")
-    _check_keys(value, FILING_STATUSES, where)
+    statuses = _bracket_statuses(value)
+    _check_keys(value, statuses, where)
+    for status in statuses:
+        _check_steps(value[status], fields, "over", f"{where}.{status}", _check_bracket_row)
 
-    def row(step: Mapping[str, Any], at: str) -> None:
-        if step["over"] is not None:
-            _check_amount(step["over"], f"{at}.over")
-        _check_rate(step["rate"], f"{at}.rate")
-        if "base" in step:
-            _check_amount(step["base"], f"{at}.base")
 
-    for status in FILING_STATUSES:
-        _check_steps(value[status], fields, "over", f"{where}.{status}", row)
+def _extra_bracket_list(name: str) -> bool:
+    """A ``brackets_hoh_YYYY`` / ``brackets_mfs_YYYY`` list, not a status map."""
+    return any(name.startswith(f"brackets_{status}_") for status in EXTRA_FILING_STATUSES)
 
 
 def _check_year_steps(value: Any, fields: Sequence[str], where: str) -> None:
@@ -732,7 +780,9 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         ):
             continue  # that tax year's federal standard deduction
         _check(type(value) is expected, f"{where}.{name}: must be {expected.__name__}")
-        if name.startswith("brackets"):
+        if _extra_bracket_list(name):
+            _check_steps(value, ("over", "rate"), "over", f"{where}.{name}", _check_bracket_row)
+        elif name.startswith("brackets"):
             _check_brackets(value, ("over", "rate"), f"{where}.{name}")
         elif expected is float:
             check = _check_rate if "rate" in name else _check_amount

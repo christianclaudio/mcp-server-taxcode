@@ -29,7 +29,7 @@ def test_grid_covers_every_tool_and_jurisdiction() -> None:
 
     cases = read_cases()
     assert set(cases) == set(TOOLS)
-    assert sum(len(v) for v in cases.values()) == 25605
+    assert sum(len(v) for v in cases.values()) == 25619
     seen = {str(c["jurisdiction"]).upper() for c in cases["compliance_evaluate_state_residency"]}
     assert set(SUPPORTED_STATE_JURISDICTIONS) <= seen
     statuses = {c.get("filing_status") for c in cases["compliance_evaluate_state_residency"]}

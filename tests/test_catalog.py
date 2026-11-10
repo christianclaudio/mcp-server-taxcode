@@ -1106,6 +1106,10 @@ def test_unknown_federal_sentinel_string_is_rejected(tree: tuple[Path, Path]) ->
 _SERIES_PARAMS = (
     ("deduction_single", "deduction"),
     ("deduction_mfj", "deduction"),
+    ("deduction_hoh", "deduction"),
+    ("deduction_mfs", "deduction"),
+    ("brackets_hoh", "brackets"),
+    ("brackets_mfs", "brackets"),
     ("deduction", "deduction"),
     ("exemption_single", "exemption"),
     ("exemption_mfj", "exemption"),
@@ -1136,6 +1140,8 @@ _SERIES_PARAMS = (
 _STATUS_PARAMS = (
     "deduction_single",
     "deduction_mfj",
+    "deduction_hoh",
+    "brackets_hoh",
     "credit_base_single",
     "credit_base_mfj",
     "credit_phaseout_single",

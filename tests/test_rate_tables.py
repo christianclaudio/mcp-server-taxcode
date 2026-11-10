@@ -1508,6 +1508,160 @@ def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
     assert compliance._oh_personal_exemption(oh, True, 750000.00, 2025) == 0.0
 
 
+# Printed Vermont base tax at the top rate threshold, from the official IN-111,
+# rate schedule, or IN-114 page for that year. The marginal formula rounds to the
+# nearest cent and stays within a dollar of the printed base tax. Standard
+# deductions are the chart on the IN-111 instructions (MFS is the printed figure).
+# Pages: 2019-2021 deductions p.6, schedules p.1 (2021 schedule is booklet p.42);
+# 2022-2023 deductions p.7, schedules booklet p.45; 2024 deductions p.7 and
+# RateSched p.1 (booklet p.45); 2025 deductions p.7 and schedules p.13; 2026
+# schedules IN-114 p.2. 2026 has no printed standard deduction.
+_VT_HOH_MFS = (
+    # year, status, deduction, top threshold, printed base tax
+    (2019, "hoh", 9200.0, 221950.0, 13772.0),
+    (2019, "mfs", 6150.0, 121875.0, 7388.0),
+    (2020, "hoh", 9400.0, 226200.0, 14036.0),
+    (2020, "mfs", 6250.0, 124175.0, 7526.0),
+    (2021, "hoh", 9500.0, 229450.0, 14239.0),
+    (2021, "mfs", 6350.0, 125975.0, 7636.0),
+    (2022, "hoh", 9800.0, 236350.0, 14667.0),
+    (2022, "mfs", 6500.0, 129750.0, 7865.0),
+    (2023, "hoh", 10550.0, 254500.0, 15793.0),
+    (2023, "mfs", 7000.0, 139725.0, 8470.0),
+    (2024, "hoh", 11100.0, 268300.0, 16647.0),
+    (2024, "mfs", 7400.0, 147300.0, 8929.0),
+    (2025, "hoh", 11450.0, 276850.0, 17179.0),
+    (2025, "mfs", 7650.0, 152000.0, 9214.0),
+    (2026, "hoh", None, 284150.0, 17630.0),
+    (2026, "mfs", None, 156025.0, 9458.0),
+)
+
+
+def _vt_status_brackets(year: int, status: str) -> list[dict[str, Any]]:
+    table = compliance.RATE_TABLES["VT"]
+    exact = table.get(f"brackets_{status}_{year}")
+    if isinstance(exact, list):
+        return exact
+    shared = compliance._for_year(table, "brackets", year)
+    rows = shared[status]
+    assert isinstance(rows, list)
+    return rows
+
+
+@pytest.mark.parametrize(("year", "status", "deduction", "top", "printed"), _VT_HOH_MFS)
+def test_vt_hoh_mfs_matches_the_printed_schedule(
+    year: int, status: str, deduction: float | None, top: float, printed: float
+) -> None:
+    rows = _vt_status_brackets(year, status)
+    assert abs(compliance._marginal_tax(rows, top) - printed) <= 1.005
+    if deduction is None:
+        return
+    alias = "head_of_household" if status == "hoh" else "married_separate"
+    short = "hoh" if status == "hoh" else "mfs"
+    agi = top + deduction
+    tax = _tax("VT", year, agi, alias)
+    assert tax == compliance._marginal_tax(rows, agi - deduction)
+    assert tax == _tax("VT", year, agi, short)
+    if year <= 2023:
+        with pytest.raises(SafetyViolationError, match="No sourced brackets value"):
+            _tax("VT", year, agi, "single")
+    else:
+        assert tax != _tax("VT", year, agi, "single")
+
+
+def test_vt_hoh_side_schedule_is_readable_when_shared_brackets_are_marked() -> None:
+    """2019 single and joint brackets stay refused; the HoH list is its own series."""
+    table = compliance.RATE_TABLES["VT"]
+    with pytest.raises(SafetyViolationError, match="tax year 2019"):
+        compliance._for_year(table, "brackets", 2019)
+    assert compliance._for_year(table, "brackets_hoh", 2019)[0]["over"] == 221950.0
+    assert compliance._marker_series("brackets_hoh") == "brackets_hoh"
+    assert compliance._marker_series("deduction_mfs") == "deduction"
+
+
+def test_unrecorded_hoh_and_mfs_refuse_without_using_single() -> None:
+    single_2018 = None
+    with pytest.raises(SafetyViolationError, match="tax year 2018") as single_raised:
+        _resident_tax("VT", 2018, 50000.0)
+    single_2018 = str(single_raised.value)
+    with pytest.raises(SafetyViolationError, match="tax year 2018") as hoh_raised:
+        _resident_tax("VT", 2018, 50000.0, "head_of_household")
+    assert str(hoh_raised.value) == single_2018
+    with pytest.raises(SafetyViolationError, match="not_recorded") as ny_raised:
+        _resident_tax("NY", 2024, 80000.0, "head of household")
+    assert "single" not in str(ny_raised.value).lower()
+    single_ny = _tax("NY", 2024, 80000.0, "single")
+    assert single_ny > 0
+    with pytest.raises(SafetyViolationError, match="not_recorded"):
+        _resident_tax("FL", 2024, 80000.0, "mfs")
+    with pytest.raises(SafetyViolationError, match="not_recorded"):
+        compliance._extra_brackets(compliance.RATE_TABLES["VT"], "hoh", 2017, "VT")
+    with pytest.raises(SafetyViolationError, match="not_recorded"):
+        compliance._extra_deduction(
+            {"deduction_hoh": "federal_standard_deduction"}, "hoh", 2024, "AL"
+        )
+    absent = compliance.evaluate_state_residency(
+        jurisdiction="VT",
+        days_in_state=0,
+        is_domiciled=False,
+        maintains_permanent_abode=False,
+        federal_agi=100000.0,
+        filing_status="hoh",
+        tax_year=2025,
+    )
+    assert absent["is_resident"] is False
+    assert absent["tax_computation"]["estimated_state_tax"] == 0.0
+    same = _resident_tax("VT", 2025, 100000.0, "qualifying_widow")
+    assert same["estimated_state_tax"] == _tax("VT", 2025, 100000.0, "single")
+    assert compliance._extra_filing_status("  MFJ ") is None
+    assert compliance._extra_filing_status("married_joint") is None
+
+
+def test_extra_status_residency_rules_follow_the_rate_table() -> None:
+    """A table can require an inclusive day count and no permanent abode."""
+    brackets = [{"over": None, "rate": 0.01}]
+    compliance.STATE_REGISTRY["ZZ"] = {
+        "statutory_basis": "Test § 1",
+        "rate_authority": "Test § 2",
+        "rate_desc": "Graduated 1%",
+        "regime": "graduated",
+        "deduction_hoh": 1000.0,
+        "exemption_hoh": 500.0,
+        "brackets": {"single": brackets, "mfj": brackets, "hoh": brackets},
+        "day_threshold": 10,
+        "inclusive_threshold": True,
+        "requires_abode": False,
+    }
+    try:
+        result = compliance._evaluate_extra_filing_status(
+            state="ZZ",
+            status="hoh",
+            days_in_state=10,
+            is_domiciled=False,
+            maintains_permanent_abode=False,
+            federal_agi=11500.0,
+            tax_year=2024,
+            audit_flags=["flag"],
+        )
+    finally:
+        del compliance.STATE_REGISTRY["ZZ"]
+    assert result["is_resident"] is True
+    assert result["tax_computation"]["taxable_net_income"] == 10000.0
+    assert result["tax_computation"]["estimated_state_tax"] == 100.0
+    assert result["domicile_audit_risk"]["risk_level"] == "high"
+
+
+def test_georgia_hoh_refuses() -> None:
+    with pytest.raises(SafetyViolationError, match="not_recorded"):
+        compliance.evaluate_georgia_residency(
+            days_present_ga=200,
+            is_domiciled_in_ga=True,
+            federal_agi=50000.0,
+            filing_status="head_of_household",
+            tax_year=2024,
+        )
+
+
 def test_pdf_schedules_match_the_hashed_files() -> None:
     """Edges read from the inventory hashes, confirmed in the PDFs themselves."""
     vt = compliance.RATE_TABLES["VT"]

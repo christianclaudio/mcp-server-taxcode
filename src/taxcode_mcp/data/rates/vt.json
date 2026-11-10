@@ -56,12 +56,26 @@
     "deduction_single_2024": 7400.0,
     "deduction_single_2025": 7650.0,
     "deduction_mfj_2019": 12300.0,
+    "deduction_hoh_2019": 9200.0,
+    "deduction_mfs_2019": 6150.0,
     "deduction_mfj_2020": 12500.0,
+    "deduction_hoh_2020": 9400.0,
+    "deduction_mfs_2020": 6250.0,
     "deduction_mfj_2021": 12700.0,
+    "deduction_hoh_2021": 9500.0,
+    "deduction_mfs_2021": 6350.0,
     "deduction_mfj_2022": 13050.0,
+    "deduction_hoh_2022": 9800.0,
+    "deduction_mfs_2022": 6500.0,
     "deduction_mfj_2023": 14050.0,
+    "deduction_hoh_2023": 10550.0,
+    "deduction_mfs_2023": 7000.0,
     "deduction_mfj_2024": 14850.0,
+    "deduction_hoh_2024": 11100.0,
+    "deduction_mfs_2024": 7400.0,
     "deduction_mfj_2025": 15300.0,
+    "deduction_hoh_2025": 11450.0,
+    "deduction_mfs_2025": 7650.0,
     "brackets_2024": {
       "single": [
         {
@@ -92,6 +106,42 @@
         },
         {
           "over": 79950.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "hoh": [
+        {
+          "over": 268300.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 165700.0,
+          "rate": 0.076
+        },
+        {
+          "over": 64200.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfs": [
+        {
+          "over": 147300.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 96650.0,
+          "rate": 0.076
+        },
+        {
+          "over": 39975.0,
           "rate": 0.066
         },
         {
@@ -136,6 +186,42 @@
           "over": null,
           "rate": 0.0335
         }
+      ],
+      "hoh": [
+        {
+          "over": 276850.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 171000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 66200.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfs": [
+        {
+          "over": 152000.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 99725.0,
+          "rate": 0.076
+        },
+        {
+          "over": 41250.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
       ]
     },
     "brackets_2026": {
@@ -174,8 +260,224 @@
           "over": null,
           "rate": 0.0335
         }
+      ],
+      "hoh": [
+        {
+          "over": 284150.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 175500.0,
+          "rate": 0.076
+        },
+        {
+          "over": 68000.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfs": [
+        {
+          "over": 156025.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 102375.0,
+          "rate": 0.076
+        },
+        {
+          "over": 42350.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
       ]
     },
+    "brackets_hoh_2019": [
+      {
+        "over": 221950.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 137050.0,
+        "rate": 0.076
+      },
+      {
+        "over": 53100.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_mfs_2019": [
+      {
+        "over": 121875.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 79975.0,
+        "rate": 0.076
+      },
+      {
+        "over": 33075.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_hoh_2020": [
+      {
+        "over": 226200.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 139650.0,
+        "rate": 0.076
+      },
+      {
+        "over": 54100.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_mfs_2020": [
+      {
+        "over": 124175.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 81500.0,
+        "rate": 0.076
+      },
+      {
+        "over": 33725.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_hoh_2021": [
+      {
+        "over": 229450.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 141700.0,
+        "rate": 0.076
+      },
+      {
+        "over": 54850.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_mfs_2021": [
+      {
+        "over": 125975.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 82675.0,
+        "rate": 0.076
+      },
+      {
+        "over": 34200.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_hoh_2022": [
+      {
+        "over": 236350.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 145950.0,
+        "rate": 0.076
+      },
+      {
+        "over": 56500.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_mfs_2022": [
+      {
+        "over": 129750.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 85150.0,
+        "rate": 0.076
+      },
+      {
+        "over": 35225.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_hoh_2023": [
+      {
+        "over": 254500.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 157150.0,
+        "rate": 0.076
+      },
+      {
+        "over": 60850.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
+    "brackets_mfs_2023": [
+      {
+        "over": 139725.0,
+        "rate": 0.0875
+      },
+      {
+        "over": 91700.0,
+        "rate": 0.076
+      },
+      {
+        "over": 37925.0,
+        "rate": 0.066
+      },
+      {
+        "over": null,
+        "rate": 0.0335
+      }
+    ],
     "not_recorded": [
       {
         "param": "brackets",
