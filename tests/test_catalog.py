@@ -14,20 +14,27 @@ from scripts import build_catalog
 from taxcode_mcp import db
 from taxcode_mcp.catalog import (
     DATA_DIR,
+    GA_FIRST_GRADUATED_YEAR,
+    GA_FLAT_RATE_FIRST_YEAR,
+    GA_LAST_FIXED_YEAR,
     MANIFEST_FIELDS,
+    MARKER_ANCHORS,
     NOT_RECORDED,
     PUBLICATION_FIELDS,
     RATE_TABLE_MODELS,
     STATUTE_FIELDS,
     TABLE_KINDS,
     TEXT_FR,
+    UNSOURCED_YEARS,
     CatalogError,
     dump_json,
     federal_table_document,
     load_catalog,
     load_federal_standard_deduction,
     manifest_errors,
+    rate_table_document,
     rate_table_id,
+    series_param,
     split_lines,
     statute_doc_path,
     statute_document_row,
@@ -154,7 +161,8 @@ def test_manifest_records_unknowns_explicitly() -> None:
         french = ["french_source"] if "french_source" in entry else []
         note = ["verification_note"] if "verification_note" in entry else []
         years = ["year_sources"] if "year_sources" in entry else []
-        assert keys == [*MANIFEST_FIELDS, *french, *note, *years], entry["id"]
+        unsourced = [UNSOURCED_YEARS] if UNSOURCED_YEARS in entry else []
+        assert keys == [*MANIFEST_FIELDS, *french, *note, *years, *unsourced], entry["id"]
         assert bool(french) == (entry["id"] in CAN_STATUTE_IDS), entry["id"]
     # Only the prior-year versions were verified word for word against a fetched copy.
     by_verification: dict[str, set[str]] = {}
@@ -1086,6 +1094,251 @@ def test_unknown_federal_sentinel_string_is_rejected(tree: tuple[Path, Path]) ->
     shutil.copy(DATA_DIR / "rates" / "az.json", data / "rates" / "az.json")
     with pytest.raises(CatalogError, match=r"credit_base_single: must be float"):
         load_catalog(data, with_manifest=True)
+
+
+_SERIES_PARAMS = (
+    ("deduction_single", "deduction"),
+    ("deduction_mfj", "deduction"),
+    ("deduction", "deduction"),
+    ("exemption_single", "exemption"),
+    ("exemption_mfj", "exemption"),
+    ("exemption", "exemption"),
+    ("credit_base_single", "credit_base"),
+    ("credit_base_mfj", "credit_base"),
+    ("credit_phaseout_single", "credit_phaseout"),
+    ("credit_phaseout_mfj", "credit_phaseout"),
+    ("top_bracket_single", "top_bracket"),
+    ("top_bracket_mfj", "top_bracket"),
+    ("zero_bracket_single", "zero_bracket"),
+    ("zero_bracket_mfj", "zero_bracket"),
+    ("standard_deduction", "standard_deduction"),
+    ("brackets", "brackets"),
+    ("rate", "rate"),
+    ("rate_desc", "rate_desc"),
+    ("regime", "regime"),
+    ("rates", "rates"),
+    ("retirement_exclusion", "retirement_exclusion"),
+    ("dependent_exemption", "dependent_exemption"),
+    ("low_income_exclusion", "low_income_exclusion"),
+    ("personal_exemption", "personal_exemption"),
+    ("capital_gains_deduction", "capital_gains_deduction"),
+    ("capital_gains_surtax", "capital_gains_surtax"),
+    ("tier", "tier"),
+    ("surtax", "surtax"),
+)
+_STATUS_PARAMS = (
+    "deduction_single",
+    "deduction_mfj",
+    "credit_base_single",
+    "credit_base_mfj",
+    "credit_phaseout_single",
+    "credit_phaseout_mfj",
+    "exemption_single",
+    "top_bracket_single",
+    "zero_bracket_mfj",
+)
+
+
+def _mark(
+    param: str, year: int, reason: str = "No figure is published for this year."
+) -> dict[str, Any]:
+    return {"param": param, "tax_year": year, "reason": reason}
+
+
+def _rate_marker_error(data: Path, code: str, markers: Any) -> str:
+    path = data / "rates" / f"{code.lower()}.json"
+
+    def edit(doc: Any) -> None:
+        doc["params"][UNSOURCED_YEARS] = markers
+
+    _edit(path, edit)
+    try:
+        with pytest.raises(CatalogError) as raised:
+            rate_table_document(path, code)
+    finally:
+        shutil.copy(DATA_DIR / "rates" / f"{code.lower()}.json", path)
+    return str(raised.value)
+
+
+def test_committed_tables_have_no_unsourced_marker() -> None:
+    catalog = load_catalog(with_manifest=True)
+    for code, table in catalog.rate_tables.items():
+        assert UNSOURCED_YEARS not in table["params"], code
+    for entry in catalog.manifest:
+        assert UNSOURCED_YEARS not in entry, entry["id"]
+    assert MARKER_ANCHORS == (
+        ("GA", "standard_deduction", GA_LAST_FIXED_YEAR),
+        ("GA", "rates", GA_LAST_FIXED_YEAR),
+        ("GA", "standard_deduction", GA_FLAT_RATE_FIRST_YEAR),
+    )
+
+
+@pytest.mark.parametrize(("name", "param"), _SERIES_PARAMS)
+def test_series_param_maps_status_suffixes_to_the_base(name: str, param: str) -> None:
+    assert series_param(name) == param
+
+
+@pytest.mark.parametrize(("state", "param", "year"), MARKER_ANCHORS)
+def test_not_recorded_rejects_a_borrowed_anchor_year(
+    tree: tuple[Path, Path], state: str, param: str, year: int
+) -> None:
+    data, _ = tree
+    message = _rate_marker_error(data, state, [_mark(param, year)])
+    assert f"cannot mark {param} for tax year {year}" in message
+    assert "compliance reads that year for other tax years" in message
+
+
+@pytest.mark.parametrize("year", (2017, 2010))
+def test_ga_standard_deduction_marker_before_graduated_years_is_rejected(
+    tree: tuple[Path, Path], year: int
+) -> None:
+    data, _ = tree
+    message = _rate_marker_error(data, "GA", [_mark("standard_deduction", year)])
+    assert f"cannot mark standard_deduction for tax year {year}" in message
+    assert f"a year before {GA_FIRST_GRADUATED_YEAR} reads the {GA_FLAT_RATE_FIRST_YEAR}" in message
+
+
+def test_ga_rates_marker_before_2018_is_legal(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    marker = [_mark("rates", 2017, "No Georgia rate step is published for 2017.")]
+    _edit(data / "rates" / "ga.json", lambda d: d["params"].__setitem__(UNSOURCED_YEARS, marker))
+    loaded = rate_table_document(data / "rates" / "ga.json", "GA")
+    assert loaded["params"][UNSOURCED_YEARS] == marker
+    # 2027 is after the graduated era and is not an anchor year.
+    later = [_mark("standard_deduction", 2027)]
+    _edit(data / "rates" / "ga.json", lambda d: d["params"].__setitem__(UNSOURCED_YEARS, later))
+    assert rate_table_document(data / "rates" / "ga.json", "GA")["params"][UNSOURCED_YEARS] == later
+    _edit(data / "rates" / "ga.json", lambda d: d["params"].__setitem__(UNSOURCED_YEARS, marker))
+
+    def manifest(doc: Any) -> None:
+        entry = next(item for item in doc["entries"] if item["id"] == "ga-rates")
+        entry[UNSOURCED_YEARS] = marker
+
+    _edit(data / "manifest" / "ga.json", manifest)
+    assert manifest_errors(load_catalog(data, with_manifest=True)) == []
+
+
+def test_a_year_without_a_key_can_be_marked(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    marker = [_mark("deduction", 2027, "No DFA standard-deduction figure is published for 2027.")]
+    _edit(data / "rates" / "ar.json", lambda d: d["params"].__setitem__(UNSOURCED_YEARS, marker))
+    loaded = rate_table_document(data / "rates" / "ar.json", "AR")
+    assert loaded["params"][UNSOURCED_YEARS] == marker
+
+    def manifest(doc: Any) -> None:
+        entry = next(item for item in doc["entries"] if item["id"] == "ar-rates")
+        entry[UNSOURCED_YEARS] = marker
+
+    _edit(data / "manifest" / "ar.json", manifest)
+    assert manifest_errors(load_catalog(data, with_manifest=True)) == []
+
+
+@pytest.mark.parametrize("param", _STATUS_PARAMS)
+def test_not_recorded_rejects_a_status_specific_param(tree: tuple[Path, Path], param: str) -> None:
+    data, _ = tree
+    message = _rate_marker_error(data, "GA", [_mark(param, 2027)])
+    assert f"param {param!r} names one filing status; use {series_param(param)!r}" in message
+
+
+def test_not_recorded_list_is_checked(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    cases: list[tuple[str, Any, str]] = [
+        ("GA", "nope", "not_recorded: must be a non-empty list"),
+        ("GA", [], "not_recorded: must be a non-empty list"),
+        ("GA", [1], "fields must be exactly"),
+        ("GA", [{"param": "rates"}], "fields must be exactly"),
+        ("GA", [{"param": "", "tax_year": 2017, "reason": "x"}], "param: must be a non-empty"),
+        ("GA", [{"param": 1, "tax_year": 2017, "reason": "x"}], "param: must be a non-empty"),
+        (
+            "GA",
+            [{"param": "rates", "tax_year": "2017", "reason": "x"}],
+            "tax_year: must be an integer",
+        ),
+        ("GA", [{"param": "rates", "tax_year": 2017, "reason": ""}], "reason: must be a non-empty"),
+        ("GA", [{"param": "rates", "tax_year": 2017, "reason": 1}], "reason: must be a non-empty"),
+        ("IL", [_mark("deduction", 2027)], "is not a year-keyed series"),
+        ("AR", [_mark("deduction", 2026)], "already has a sourced deduction value"),
+        ("CO", [_mark("rates", 2025)], "already has a sourced rates value"),
+        (
+            "AR",
+            [_mark("deduction", 2028), _mark("deduction", 2027)],
+            "tax_year: must be in ascending order",
+        ),
+        (
+            "AR",
+            [_mark("deduction", 2028), _mark("deduction", 2028)],
+            "duplicate deduction for tax year 2028",
+        ),
+    ]
+    for code, markers, expected in cases:
+        assert expected in _rate_marker_error(data, code, markers), expected
+
+
+def test_manifest_not_recorded_must_match_the_rate_table(tree: tuple[Path, Path]) -> None:
+    data, _ = tree
+    marker = [_mark("deduction", 2027)]
+    other = [_mark("brackets", 2027)]
+    where = "manifest/ar.json entry 'ar-rates'"
+
+    def rate(doc: Any) -> None:
+        doc["params"][UNSOURCED_YEARS] = marker
+
+    def entry(markers: Any) -> Callable[[Any], None]:
+        def edit(doc: Any) -> None:
+            row = next(item for item in doc["entries"] if item["id"] == "ar-rates")
+            if markers is None:
+                row.pop(UNSOURCED_YEARS, None)
+            else:
+                row[UNSOURCED_YEARS] = markers
+
+        return edit
+
+    _edit(data / "rates" / "ar.json", rate)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert f"{where}: {UNSOURCED_YEARS} must match the rate table" in errors
+
+    shutil.copy(DATA_DIR / "rates" / "ar.json", data / "rates" / "ar.json")
+    _edit(data / "manifest" / "ar.json", entry(marker))
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert f"{where}: {UNSOURCED_YEARS} must match the rate table" in errors
+
+    _edit(data / "rates" / "ar.json", rate)
+    _edit(data / "manifest" / "ar.json", entry(other))
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert f"{where}: {UNSOURCED_YEARS} must match the rate table" in errors
+
+    def statute(doc: Any) -> None:
+        doc["entries"][0][UNSOURCED_YEARS] = marker
+
+    shutil.copy(DATA_DIR / "rates" / "ar.json", data / "rates" / "ar.json")
+    shutil.copy(DATA_DIR / "manifest" / "ar.json", data / "manifest" / "ar.json")
+    _edit(data / "manifest" / "ga.json", statute)
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    statute_where = "manifest/ga.json entry"
+    assert any(
+        f"{UNSOURCED_YEARS} belongs only on a rate_table entry" in error
+        and error.startswith(statute_where)
+        for error in errors
+    ), errors
+
+
+def test_misfiled_rate_table_entry_names_the_missing_table(tree: tuple[Path, Path]) -> None:
+    """A rate_table entry filed under a jurisdiction with no table is an error, not a crash."""
+    data, _ = tree
+    moved: dict[str, Any] = {}
+
+    def take(doc: Any) -> None:
+        for index, row in enumerate(doc["entries"]):
+            if row["id"] == "ar-rates":
+                moved.update(doc["entries"].pop(index))
+                return
+
+    _edit(data / "manifest" / "ar.json", take)
+    _edit(data / "manifest" / "fl.json", lambda doc: doc["entries"].append(moved))
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert (
+        "manifest/fl.json entry 'ar-rates': rate_table entry has no rate table for jurisdiction FL"
+    ) in errors
 
 
 def test_ohio_exemption_base_row_must_match_amount(tree: tuple[Path, Path]) -> None:

@@ -46,7 +46,10 @@ def test_kansas_dependents_reduce_taxable_income() -> None:
     one18 = _tax("KS", 2018, 40000.0, dependents=1)
     assert one18["taxable_net_income"] == none18["taxable_net_income"] - 2250.0
     # 2025+ raises until a 2025 source is recorded.
-    with pytest.raises(SafetyViolationError, match="No per-dependent exemption"):
+    with pytest.raises(
+        SafetyViolationError,
+        match="No sourced per-dependent exemption value exists for tax year 2025.",
+    ):
         _tax("KS", 2025, 50000.0, dependents=1)
     assert _tax("KS", 2025, 50000.0, dependents=0) == _tax("KS", 2025, 50000.0)
 
@@ -94,7 +97,10 @@ def test_georgia_dependents_graduated_and_flat() -> None:
     two25 = _tax("GA", 2025, 80000.0, dependents=2)
     assert one25["taxable_net_income"] == none25["taxable_net_income"] - 4000.0
     assert two25["taxable_net_income"] == none25["taxable_net_income"] - 8000.0
-    with pytest.raises(SafetyViolationError, match="No per-dependent exemption"):
+    with pytest.raises(
+        SafetyViolationError,
+        match="No sourced per-dependent exemption value exists for tax year 2017.",
+    ):
         _tax("GA", 2017, 80000.0, dependents=1)
     assert (
         _tax("GA", 2017, 80000.0, dependents=0)["estimated_state_tax"]
@@ -110,7 +116,10 @@ def test_utah_dependents_and_itemized_credit_base() -> None:
     # Itemized path: larger credit base lowers tax vs standard at this AGI.
     itemized = _tax("UT", 2024, 30000.0, itemized_deductions=20000.0)
     assert itemized["estimated_state_tax"] <= none["estimated_state_tax"]
-    with pytest.raises(SafetyViolationError, match="No per-dependent exemption"):
+    with pytest.raises(
+        SafetyViolationError,
+        match="No sourced per-dependent exemption value exists for tax year 2026.",
+    ):
         _tax("UT", 2026, 30000.0, dependents=1)
     assert (
         _tax("UT", 2026, 30000.0, dependents=0)["estimated_state_tax"]

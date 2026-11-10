@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import math
+from collections.abc import Mapping
 from typing import Annotated, Any
 
 from fastmcp import FastMCP
@@ -13,9 +14,14 @@ from pydantic import Field
 from taxcode_mcp.catalog import (
     COUNTRY_RATE_TABLES,
     FEDERAL_ALLOWANCE,
+    GA_FIRST_GRADUATED_YEAR,
+    GA_FLAT_RATE_FIRST_YEAR,
+    GA_LAST_FIXED_YEAR,
     RATE_TABLE_MODELS,
+    UNSOURCED_YEARS,
     load_federal_standard_deduction,
     load_rate_tables,
+    series_param,
 )
 from taxcode_mcp.disclaimers import BILINGUAL_DISCLAIMER, CONTENT_NOTICE, ESTIMATE_NOTE
 from taxcode_mcp.errors import SafetyViolationError, tool_error
@@ -232,9 +238,8 @@ def calculate_built_in_gain_sourcing(
 # HB 1015 (2024): "for taxable years beginning on or after January 1, 2024"). Tax years
 # 2019 to 2023 use the graduated brackets, standard deduction and personal exemption
 # held in the rate table. An earlier year than 2019 gets the table's oldest flat step,
-# labeled as an estimate.
-GA_FLAT_RATE_FIRST_YEAR = 2024
-GA_FIRST_GRADUATED_YEAR = 2018
+# labeled as an estimate. GA_FLAT_RATE_FIRST_YEAR and GA_FIRST_GRADUATED_YEAR are defined
+# in catalog.py, which rejects a standard_deduction marker for a year before 2018.
 GA_PRE_FLAT_ESTIMATE_NOTE = (
     " [ESTIMATE: Georgia's flat rate starts with tax year 2024; earlier years were taxed on "
     "graduated brackets this table does not hold, so the 2024 rate is used]"
@@ -281,13 +286,13 @@ def _co_estimate_note(tax_year: int, rate: float) -> str:
 # 0.125 percent a year, each only in years the tests in O.C.G.A. § 48-7-27(a)(1.1) are met
 # (§ 48-7-20(a.1) delays the rate cut with the deduction increase), so a later year carries
 # this year's figures, labeled. Tests tie it to the table's last deduction key and rate step.
-GA_LAST_FIXED_YEAR = 2026
+# GA_LAST_FIXED_YEAR is defined in catalog.py and listed in MARKER_ANCHORS.
 
 
 def _ga_revenue_conditional_note(ga: dict[str, Any]) -> str:
     """The estimate label for a Georgia tax year after ``GA_LAST_FIXED_YEAR``."""
     deduction = _for_year(ga, "standard_deduction", GA_LAST_FIXED_YEAR)
-    rate = _year_step(ga["rates"], GA_LAST_FIXED_YEAR)["rate"]
+    rate = _year_step(ga["rates"], GA_LAST_FIXED_YEAR, ga)["rate"]
     return (
         f" [ESTIMATE: from tax year {GA_LAST_FIXED_YEAR + 1}, HB 463 of 2026 raises Georgia's "
         "standard deduction and lowers its rate only in years its revenue tests are met "
@@ -520,7 +525,7 @@ def evaluate_georgia_residency(
             f"{_ga_estimate_note(tax_year)}{GA_TOOL_DEPENDENT_NOTE}"
         )
     else:
-        ga_step = _year_step(ga["rates"], tax_year)
+        ga_step = _year_step(ga["rates"], tax_year, ga)
         tax_rate = float(ga_step["rate"])
         taxable_income = max(0.0, federal_agi - standard_deduction - retirement_exclusion_applied)
         estimated_tax = round(taxable_income * tax_rate, 2) if is_georgia_resident else 0.0
@@ -600,12 +605,32 @@ def _allowance(params: dict[str, Any], is_mfj: bool, tax_year: int = 0) -> float
     return float(by_status[_status(is_mfj)])
 
 
-def _for_year(params: dict[str, Any], name: str, tax_year: int) -> Any:
+def _refuse_if_marked(params: Mapping[str, Any], param: str, tax_year: int) -> None:
+    """Raise when ``param`` is explicitly unsourced for the year this read was given.
+
+    The year is the argument of the read, including a year another call borrows.
+    The catalog rejects a marker on those borrowed years, so this check does not
+    skip them.
+    """
+    markers = params.get(UNSOURCED_YEARS)
+    if not isinstance(markers, list):
+        return
+    for marker in markers:
+        if marker["param"] == param and marker["tax_year"] == tax_year:
+            label = param.replace("_", " ")
+            raise SafetyViolationError(
+                f"No sourced {label} value exists for tax year {tax_year}. {marker['reason']}"
+            )
+
+
+def _for_year(params: Mapping[str, Any], name: str, tax_year: int) -> Any:
     """``params[name]``, or its latest ``<name>_<YYYY>`` value whose year the tax year reached.
 
     A ``_YYYY`` key holds the value from that tax year on; the unsuffixed key covers the
-    years before. ``None`` when neither applies.
+    years before. ``None`` when neither applies. A ``not_recorded`` marker for
+    :func:`series_param` of ``name`` and this year raises instead of carrying.
     """
+    _refuse_if_marked(params, series_param(name), tax_year)
     key, latest = name, -1
     for candidate in params:
         year = candidate[len(name) + 1 :]
@@ -614,8 +639,14 @@ def _for_year(params: dict[str, Any], name: str, tax_year: int) -> Any:
     return params.get(key)
 
 
-def _year_step(steps: list[dict[str, Any]], tax_year: int) -> dict[str, Any]:
-    """The first step whose ``from_year`` is reached; the last step (``null``) otherwise."""
+def _year_step(
+    steps: list[dict[str, Any]], tax_year: int, params: Mapping[str, Any]
+) -> dict[str, Any]:
+    """The first step whose ``from_year`` is reached; the last step (``null``) otherwise.
+
+    ``params`` is the rate table. A ``rates`` marker for ``tax_year`` raises.
+    """
+    _refuse_if_marked(params, "rates", tax_year)
     return next(s for s in steps if s["from_year"] is None or tax_year >= s["from_year"])
 
 
@@ -803,8 +834,9 @@ def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_
         if key.startswith(f"{name}_") and key[len(name) + 1 :].isdigit()
     ]
     if value is None and yearly:
+        label = name.replace("_", " ")
         raise SafetyViolationError(
-            f"No {name.replace('_', ' ')} is sourced for tax year {tax_year}; "
+            f"No sourced {label} value exists for tax year {tax_year}; "
             f"this table holds it from tax year {min(yearly)}."
         )
     return _federal_or_amount(value, is_mfj, tax_year)
@@ -815,8 +847,10 @@ def _dependent_exemption_each(info: dict[str, Any], tax_year: int) -> float | No
 
     Yearly ``dependent_exemption_YYYY`` keys do not carry past the latest sourced year, so a
     later year without its own figure stays unsourced (Utah after 2025). An unsuffixed
-    ``dependent_exemption`` covers every year that has no later yearly key.
+    ``dependent_exemption`` covers every year that has no later yearly key. A marker for
+    this year raises before that rule.
     """
+    _refuse_if_marked(info, "dependent_exemption", tax_year)
     yearly = sorted(
         int(key[len("dependent_exemption") + 1 :])
         for key in info
@@ -838,7 +872,7 @@ def _require_dependent_exemption(info: dict[str, Any], tax_year: int, dependents
     each = _dependent_exemption_each(info, tax_year)
     if each is None:
         raise SafetyViolationError(
-            f"No per-dependent exemption is sourced for tax year {tax_year}."
+            f"No sourced per-dependent exemption value exists for tax year {tax_year}."
         )
     return each * float(dependents)
 
@@ -1083,7 +1117,7 @@ def evaluate_state_residency(
             )
             estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
         else:
-            ga_step = _year_step(ga["rates"], tax_year)
+            ga_step = _year_step(ga["rates"], tax_year, ga)
             rate = float(ga_step["rate"])
             rate_desc = (
                 f"Flat {_pct(rate)} rate ({ga_step['law']})"
@@ -1263,7 +1297,7 @@ def evaluate_state_residency(
         statutory_basis = "N.C. Gen. Stat. §§ 105-153.3, 105-153.7"
         is_resident = is_domiciled or (days_in_state > 183)
         rate_authority = "N.C. Gen. Stat. § 105-153.7"
-        nc_step = _year_step(RATE_TABLES["NC"]["rates"], tax_year)
+        nc_step = _year_step(RATE_TABLES["NC"]["rates"], tax_year, RATE_TABLES["NC"])
         nc_rate = float(nc_step["rate"])
         rate_desc = str(nc_step["rate_desc"])
         exemption = _allowance(RATE_TABLES["NC"], is_mfj)
@@ -1335,7 +1369,7 @@ def evaluate_state_residency(
         statutory_basis = "Colo. Rev. Stat. §§ 39-22-103, 39-22-104"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state > 183)
         rate_authority = "Colo. Rev. Stat. § 39-22-104"
-        co_step = _year_step(RATE_TABLES["CO"]["rates"], tax_year)
+        co_step = _year_step(RATE_TABLES["CO"]["rates"], tax_year, RATE_TABLES["CO"])
         co_rate = float(co_step["rate"])
         rate_desc = f"{co_step['rate_desc']}{_co_estimate_note(tax_year, co_rate)}"
         standard_ded = _allowance(RATE_TABLES["CO"], is_mfj, tax_year)
@@ -1430,7 +1464,9 @@ def evaluate_state_residency(
                     "and use the 2026 baseline ($12,838 / $25,676) pending annual CPI-U release."
                 )
 
-        # Year-aware regime selection
+        # Year-aware regime selection. A marker names the requested year, not the
+        # ``regime_2025`` key a later year still reads.
+        _refuse_if_marked(info, "regime", tax_year)
         if tax_year >= 2025 and "regime_2025" in info:
             regime = str(info["regime_2025"])
         else:
@@ -1486,6 +1522,8 @@ def evaluate_state_residency(
             flat_rate = float(_for_year(info, "rate", tax_year) or 0.0)
             estimated_tax = round(taxable_income * flat_rate, 2) if is_resident else 0.0
         else:  # graduated
+            _refuse_if_marked(info, "top_bracket", tax_year)
+            _refuse_if_marked(info, "zero_bracket", tax_year)
             if tax_year >= 2025 and (
                 "top_bracket_mfj_2025" in info if is_mfj else "top_bracket_single_2025" in info
             ):
