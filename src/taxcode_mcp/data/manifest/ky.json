@@ -27,7 +27,7 @@
       "enacting_law": "2025 Ky. Acts ch. 1, sec. 1, and ch. 98, sec. 9",
       "effective_date": "2025-06-27",
       "verification": "not_recorded",
-      "verification_note": "KRS 141.020 confirms the flat rates by year. It does not state the standard deduction. The 2024 e-file handbook (https://revenue.ky.gov/Documents/TY2024%20E-File%20HandBook%20Publication%201345_v1.0.pdf, sha256 ff1518fdfb27eeac42f780fef0a727dc4d7d359866da6cf0b60dee5eabca850a, retrieved 2026-11-10) states the standard deduction increased from $2,980 to $3,160 for tax year 2024, so the held $3,160 is not the 2023 deduction. A year before 2025 still uses $3,160. The 2025 Form 740 packet (https://revenue.ky.gov/Forms/740%20Packet%20Instructions.pdf, sha256 cdb8e571c09f306961d5cb62154f8b57bd67f6ee50376b443647376b5667f421, retrieved 2026-11-10) states a 4% rate and a $3,270 standard deduction. The 2026 withholding formula (https://revenue.ky.gov/Forms/2026%20Withholding%20Formula.pdf, sha256 3876018d7019cf2b8ffae40554376ef2e6900809221517c26d8e71e025f5e439, retrieved 2026-11-10) states a 3.5% rate and a $3,360 standard deduction. The September 4, 2025 DOR announcement (https://revenue.ky.gov/News/Pages/Kentucky-DOR-Announces-2026-Standard-Deduction.aspx, sha256 f058b78a07a43e541838fd35a2b991f90e70a1d50e7cd4fcaf1ac1d994875416, retrieved 2026-11-10) states the 2026 standard deduction is $3,360.",
+      "verification_note": "KRS 141.020 confirms the flat rates by year. It does not state the standard deduction. The 2018 Form 740 packet (https://revenue.ky.gov/Forms/740%20Packet.pdf, sha256 fea24e4fbbb57e300dc0de0498ce49f059c9cc38833cf5876d51195657bf99a5, retrieved 2026-11-10) states the standard deduction is $2,530. That is the held 2018 deduction. Tax years 2019, 2020, and 2021 have no standard-deduction source; the 2018 amount ($2,530) is used, and the rate description says so. The 2022 Form 740 packet instructions (https://revenue.ky.gov/Forms/740%20Packet%20Instructions%205-9-23.pdf, sha256 fa4d83d689acf2a86b439cce152ca3020b0ee822f505f03e16fe8f7e24b4669a, retrieved 2026-11-10) state the standard deduction is $2,770. The 2023 Form 740 packet instructions (https://revenue.ky.gov/Forms/740%20Packet%20Instructions%202023.pdf, sha256 cd3242f0e358d0bad1bda6c8e2961327c142ccc651fc82b5ea99ece2ea506a8b, retrieved 2026-11-10) state the standard deduction is $2,980. The 2024 e-file handbook (https://revenue.ky.gov/Documents/TY2024%20E-File%20HandBook%20Publication%201345_v1.0.pdf, sha256 ff1518fdfb27eeac42f780fef0a727dc4d7d359866da6cf0b60dee5eabca850a, retrieved 2026-11-10) states the standard deduction increased from $2,980 to $3,160 for tax year 2024, which cross-checks the 2023 amount and is the held 2024 deduction. The 2025 Form 740 packet (https://revenue.ky.gov/Forms/740%20Packet%20Instructions.pdf, sha256 cdb8e571c09f306961d5cb62154f8b57bd67f6ee50376b443647376b5667f421, retrieved 2026-11-10) states a 4% rate and a $3,270 standard deduction. The 2026 withholding formula (https://revenue.ky.gov/Forms/2026%20Withholding%20Formula.pdf, sha256 3876018d7019cf2b8ffae40554376ef2e6900809221517c26d8e71e025f5e439, retrieved 2026-11-10) states a 3.5% rate and a $3,360 standard deduction. The September 4, 2025 DOR announcement (https://revenue.ky.gov/News/Pages/Kentucky-DOR-Announces-2026-Standard-Deduction.aspx, sha256 f058b78a07a43e541838fd35a2b991f90e70a1d50e7cd4fcaf1ac1d994875416, retrieved 2026-11-10) states the 2026 standard deduction is $3,360.",
       "year_sources": [
         {
           "tax_year": 2018,
@@ -40,6 +40,28 @@
           "content_sha256": "ba8f7b25f40ff55012f8e1713d4b4b58fcee9ac5a14b116e7b77c9c6a27b6777"
         },
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 2530.0,
+            "deduction_mfj_2018": 2530.0
+          },
+          "url": "https://revenue.ky.gov/Forms/740%20Packet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fea24e4fbbb57e300dc0de0498ce49f059c9cc38833cf5876d51195657bf99a5"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 2770.0,
+            "deduction_mfj_2022": 2770.0
+          },
+          "url": "https://revenue.ky.gov/Forms/740%20Packet%20Instructions%205-9-23.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fa4d83d689acf2a86b439cce152ca3020b0ee822f505f03e16fe8f7e24b4669a"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "rate_2023": 0.045
@@ -50,6 +72,28 @@
           "content_sha256": "ba8f7b25f40ff55012f8e1713d4b4b58fcee9ac5a14b116e7b77c9c6a27b6777"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 2980.0,
+            "deduction_mfj_2023": 2980.0
+          },
+          "url": "https://revenue.ky.gov/Forms/740%20Packet%20Instructions%202023.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "cd3242f0e358d0bad1bda6c8e2961327c142ccc651fc82b5ea99ece2ea506a8b"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 2980.0,
+            "deduction_mfj_2023": 2980.0
+          },
+          "url": "https://revenue.ky.gov/Documents/TY2024%20E-File%20HandBook%20Publication%201345_v1.0.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ff1518fdfb27eeac42f780fef0a727dc4d7d359866da6cf0b60dee5eabca850a"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "rate_2024": 0.04
@@ -58,6 +102,17 @@
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "ba8f7b25f40ff55012f8e1713d4b4b58fcee9ac5a14b116e7b77c9c6a27b6777"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 3160.0,
+            "deduction_mfj_2024": 3160.0
+          },
+          "url": "https://revenue.ky.gov/Documents/TY2024%20E-File%20HandBook%20Publication%201345_v1.0.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ff1518fdfb27eeac42f780fef0a727dc4d7d359866da6cf0b60dee5eabca850a"
         },
         {
           "tax_year": 2025,

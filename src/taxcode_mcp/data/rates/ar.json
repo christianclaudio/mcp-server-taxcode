@@ -10,6 +10,8 @@
     "regime": "graduated",
     "deduction_single": 2340.0,
     "deduction_mfj": 4680.0,
+    "deduction_single_2024": 2410.0,
+    "deduction_mfj_2024": 4820.0,
     "brackets": {
       "single": [
         {
@@ -102,6 +104,6 @@
         }
       ]
     },
-    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)"
+    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled) [ESTIMATE: Arkansas's standard deduction for this tax year is not in this table; the 2024 amount ($2,410 single / $4,820 joint) is used]"
   }
 }

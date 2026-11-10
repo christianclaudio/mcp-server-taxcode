@@ -369,16 +369,16 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         )
         return note
     if state == "KY" and tax_year < 2024:
-        deduction = (
-            "Kentucky's standard deduction for this tax year is not in this table; "
-            "the 2024 amount is used"
-        )
+        # Years before 2018 still use the unsuffixed deduction, which is the 2024 amount.
+        # From 2018 on, the rate description names that year's sourced deduction, or the
+        # 2018 amount when the year itself has no source. It does not claim the 2024 amount.
         if tax_year < 2018:
             return (
                 " [ESTIMATE: Kentucky's graduated rates before 2018 (KRS 141.020) are "
-                f"not in this table, so the 2024 flat rate is used. {deduction}]"
+                "not in this table, so the 2024 flat rate is used. Kentucky's standard "
+                "deduction for this tax year is not in this table; the 2024 amount is used]"
             )
-        return f" [ESTIMATE: {deduction}]"
+        return ""
     if state == "SC" and tax_year > 2026:
         return (
             f" [ESTIMATE: South Carolina's tax year {tax_year} top rate may be reduced under "

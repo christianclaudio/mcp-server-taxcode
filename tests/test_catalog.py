@@ -726,7 +726,12 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
     ky = next(e for e in catalog.manifest if e["id"] == "ky-rates")
     assert [s["tax_year"] for s in ky["year_sources"]] == [
         2018,
+        2018,
+        2022,
         2023,
+        2023,
+        2023,
+        2024,
         2024,
         2025,
         2026,
