@@ -9,6 +9,7 @@ Thank you for your interest in contributing!
 5. Open a Pull Request. Merges are performed via **Squash Merge** with Conventional Commit titles (`feat:`, `fix:`, `docs:`, `chore:`).
 6. Changing statute or publication rows? Follow "Adding or changing a row" below and run `uv run python scripts/build_catalog.py --check`.
 7. Do not edit version numbers or `CHANGELOG.md`: the git tag is the version, and GitHub Releases are the changelog. The squash commit message is the PR body, so a breaking (`feat!:` / `fix!:`) PR ends its body with one `BREAKING CHANGE:` final paragraph that lists the breaking items, with no migration steps.
+8. Do not edit `docker/build-backend.txt` by hand.
 
 ## Adding or changing a row
 
