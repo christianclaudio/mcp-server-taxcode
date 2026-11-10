@@ -18,7 +18,7 @@
 ARG CA_CERTIFICATES_FLOOR=20250419+deb13u1
 
 # ─── Stage 1: Builder ─────────────────────────────────────────────────────────
-FROM python:3.14-slim@sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a AS builder
+FROM python:3.14-slim-trixie@sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a AS builder
 
 ARG CA_CERTIFICATES_FLOOR
 RUN apt-get update && \
@@ -75,7 +75,7 @@ RUN pip install --no-cache-dir --require-hashes --only-binary=:all: -r /tmp/pip-
     PYTHONPATH=/tmp/build-backend pip install --no-cache-dir --no-deps --no-build-isolation .
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM python:3.14-slim@sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a AS runtime
+FROM python:3.14-slim-trixie@sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a AS runtime
 
 # MCP Registry ownership check for the OCI package: must equal server.json "name".
 # https://modelcontextprotocol.io/registry/package-types#docker%2Foci-images
