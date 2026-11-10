@@ -22,12 +22,11 @@
       "edition": "not_recorded",
       "official": true,
       "licence": "not_recorded",
-      "retrieved": "2026-10-30",
-      "content_sha256": "2c538b4f7c0b3dbf192cd30c6b3b9ebebf18f267b3d12da2070e67a77940102b",
+      "retrieved": "2026-11-10",
+      "content_sha256": "ffced3238ae9f2937ad9f580103a7b50dc048f2f488a7c771e147e585d61c1b0",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded",
-      "verification_note": "S.D. Const. art. XI, section 2 (https://sdlegislature.gov/api/Statutes/Constitution/11-2) empowers the Legislature to impose graduated taxes upon incomes rather than prohibiting a personal income tax, while https://sdlegislature.gov/Constitution/Article/11 returns a script shell. The Governor's Office of Economic Development tax-climate page (https://sdgoed.com/why-sd/tax-climate/) states that South Dakota imposes no personal income tax, leaving the held constitutional-basis attribution unconfirmed."
+      "verification": "summary"
     }
   ]
 }

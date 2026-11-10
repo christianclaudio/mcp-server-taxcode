@@ -27,7 +27,164 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Section 143.011 prints the pre-reduction base table and a conditional top-rate cut. It does not print the held indexed 4.80 percent dollars."
+      "verification_note": "Section 143.011 prints the pre-reduction base table and a conditional top-rate cut. It does not print the held indexed 4.80 percent dollars.",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets_2024.single[0].over": 8911.0,
+            "brackets_2024.single[0].rate": 0.048,
+            "brackets_2024.single[1].over": 7638.0,
+            "brackets_2024.single[1].rate": 0.045,
+            "brackets_2024.single[2].over": 6365.0,
+            "brackets_2024.single[2].rate": 0.04,
+            "brackets_2024.single[3].over": 5092.0,
+            "brackets_2024.single[3].rate": 0.035,
+            "brackets_2024.single[4].over": 3819.0,
+            "brackets_2024.single[4].rate": 0.03,
+            "brackets_2024.single[5].over": 2546.0,
+            "brackets_2024.single[5].rate": 0.025,
+            "brackets_2024.single[6].over": 1273.0,
+            "brackets_2024.single[6].rate": 0.02,
+            "brackets_2024.single[7].over": null,
+            "brackets_2024.single[7].rate": 0.0,
+            "brackets_2024.mfj[0].over": 8911.0,
+            "brackets_2024.mfj[0].rate": 0.048,
+            "brackets_2024.mfj[1].over": 7638.0,
+            "brackets_2024.mfj[1].rate": 0.045,
+            "brackets_2024.mfj[2].over": 6365.0,
+            "brackets_2024.mfj[2].rate": 0.04,
+            "brackets_2024.mfj[3].over": 5092.0,
+            "brackets_2024.mfj[3].rate": 0.035,
+            "brackets_2024.mfj[4].over": 3819.0,
+            "brackets_2024.mfj[4].rate": 0.03,
+            "brackets_2024.mfj[5].over": 2546.0,
+            "brackets_2024.mfj[5].rate": 0.025,
+            "brackets_2024.mfj[6].over": 1273.0,
+            "brackets_2024.mfj[6].rate": 0.02,
+            "brackets_2024.mfj[7].over": null,
+            "brackets_2024.mfj[7].rate": 0.0
+          },
+          "url": "https://dor.mo.gov/forms/MO-1040%20Instructions_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "abd3cf20dedc47be63dde32ef4e7d2daa6de6daea58b8b0fc86891a6c47fccc6"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 9191.0,
+            "brackets_2025.single[0].rate": 0.047,
+            "brackets_2025.single[1].over": 7878.0,
+            "brackets_2025.single[1].rate": 0.045,
+            "brackets_2025.single[2].over": 6565.0,
+            "brackets_2025.single[2].rate": 0.04,
+            "brackets_2025.single[3].over": 5252.0,
+            "brackets_2025.single[3].rate": 0.035,
+            "brackets_2025.single[4].over": 3939.0,
+            "brackets_2025.single[4].rate": 0.03,
+            "brackets_2025.single[5].over": 2626.0,
+            "brackets_2025.single[5].rate": 0.025,
+            "brackets_2025.single[6].over": 1313.0,
+            "brackets_2025.single[6].rate": 0.02,
+            "brackets_2025.single[7].over": null,
+            "brackets_2025.single[7].rate": 0.0,
+            "brackets_2025.mfj[0].over": 9191.0,
+            "brackets_2025.mfj[0].rate": 0.047,
+            "brackets_2025.mfj[1].over": 7878.0,
+            "brackets_2025.mfj[1].rate": 0.045,
+            "brackets_2025.mfj[2].over": 6565.0,
+            "brackets_2025.mfj[2].rate": 0.04,
+            "brackets_2025.mfj[3].over": 5252.0,
+            "brackets_2025.mfj[3].rate": 0.035,
+            "brackets_2025.mfj[4].over": 3939.0,
+            "brackets_2025.mfj[4].rate": 0.03,
+            "brackets_2025.mfj[5].over": 2626.0,
+            "brackets_2025.mfj[5].rate": 0.025,
+            "brackets_2025.mfj[6].over": 1313.0,
+            "brackets_2025.mfj[6].rate": 0.02,
+            "brackets_2025.mfj[7].over": null,
+            "brackets_2025.mfj[7].rate": 0.0
+          },
+          "url": "https://dor.mo.gov/forms/MO-1040%20Instructions_2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "99b1d607e1c9c7623ecf3cd7a8f6fba2a732861dcb54164cc7e7e3a82c5df540"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 9436.0,
+            "brackets_2026.single[0].rate": 0.047,
+            "brackets_2026.single[1].over": 8088.0,
+            "brackets_2026.single[1].rate": 0.045,
+            "brackets_2026.single[2].over": 6740.0,
+            "brackets_2026.single[2].rate": 0.04,
+            "brackets_2026.single[3].over": 5392.0,
+            "brackets_2026.single[3].rate": 0.035,
+            "brackets_2026.single[4].over": 4044.0,
+            "brackets_2026.single[4].rate": 0.03,
+            "brackets_2026.single[5].over": 2696.0,
+            "brackets_2026.single[5].rate": 0.025,
+            "brackets_2026.single[6].over": 1348.0,
+            "brackets_2026.single[6].rate": 0.02,
+            "brackets_2026.single[7].over": null,
+            "brackets_2026.single[7].rate": 0.0,
+            "brackets_2026.mfj[0].over": 9436.0,
+            "brackets_2026.mfj[0].rate": 0.047,
+            "brackets_2026.mfj[1].over": 8088.0,
+            "brackets_2026.mfj[1].rate": 0.045,
+            "brackets_2026.mfj[2].over": 6740.0,
+            "brackets_2026.mfj[2].rate": 0.04,
+            "brackets_2026.mfj[3].over": 5392.0,
+            "brackets_2026.mfj[3].rate": 0.035,
+            "brackets_2026.mfj[4].over": 4044.0,
+            "brackets_2026.mfj[4].rate": 0.03,
+            "brackets_2026.mfj[5].over": 2696.0,
+            "brackets_2026.mfj[5].rate": 0.025,
+            "brackets_2026.mfj[6].over": 1348.0,
+            "brackets_2026.mfj[6].rate": 0.02,
+            "brackets_2026.mfj[7].over": null,
+            "brackets_2026.mfj[7].rate": 0.0
+          },
+          "url": "https://dor.mo.gov/forms/Withholding%20Formula_2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "943ce02894aefe7bdc2bf4cf08fe6428266607ee95a5f1816a1fbffa103b0777"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "The instructions print the top rate (5.9% over $9,253) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "The instructions print the top rate (5.4% over $8,424) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "The instructions print the top rate (5.4% over $8,584) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "The instructions print the top rate (5.4% over $8,704) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "The instructions print the top rate (5.3% over $8,968) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "The instructions print the top rate (4.95% over $8,449) and not every indexed edge."
+        }
+      ]
     }
   ]
 }

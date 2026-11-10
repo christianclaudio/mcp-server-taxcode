@@ -521,6 +521,31 @@
           "content_sha256": "abf107bb28f0e5f9ee4c0706331db22e47631989a018c4344d7747ca6b7a0e20"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "years[0].tax_year": 2019,
+            "years[0].brackets[0].over": 210371.0,
+            "years[0].brackets[0].rate": 0.33,
+            "years[0].brackets[1].over": 147667.0,
+            "years[0].brackets[1].rate": 0.29,
+            "years[0].brackets[2].over": 95259.0,
+            "years[0].brackets[2].rate": 0.26,
+            "years[0].brackets[3].over": 47630.0,
+            "years[0].brackets[3].rate": 0.205,
+            "years[0].brackets[4].over": null,
+            "years[0].brackets[4].rate": 0.15,
+            "years[0].basic_personal_amount.maximum": 12069.0,
+            "years[0].basic_personal_amount.minimum": 12069.0,
+            "years[0].basic_personal_amount.phaseout_start": 147667.0,
+            "years[0].basic_personal_amount.phaseout_end": 210371.0,
+            "years[0].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-19e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "77b745fd0bd8271843a78bc32b4e94da37436b771c93f43d320d154f1075298e"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "years[1].brackets[0].over": 214368.0,
@@ -551,6 +576,31 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "years[1].tax_year": 2020,
+            "years[1].brackets[0].over": 214368.0,
+            "years[1].brackets[0].rate": 0.33,
+            "years[1].brackets[1].over": 150473.0,
+            "years[1].brackets[1].rate": 0.29,
+            "years[1].brackets[2].over": 97069.0,
+            "years[1].brackets[2].rate": 0.26,
+            "years[1].brackets[3].over": 48535.0,
+            "years[1].brackets[3].rate": 0.205,
+            "years[1].brackets[4].over": null,
+            "years[1].brackets[4].rate": 0.15,
+            "years[1].basic_personal_amount.maximum": 13229.0,
+            "years[1].basic_personal_amount.minimum": 12298.0,
+            "years[1].basic_personal_amount.phaseout_start": 150473.0,
+            "years[1].basic_personal_amount.phaseout_end": 214368.0,
+            "years[1].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-20e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "4e3e9143693e55dc7c97971056b565f539f6d3fc6e0b59542949602a88d7deb3"
         },
         {
           "tax_year": 2021,
@@ -594,6 +644,31 @@
           "content_sha256": "1696bb7b7f98ee31cda0f481d8f834ec38d572979b7e193c0cf1b7844061fd72"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "years[2].tax_year": 2021,
+            "years[2].brackets[0].over": 216511.0,
+            "years[2].brackets[0].rate": 0.33,
+            "years[2].brackets[1].over": 151978.0,
+            "years[2].brackets[1].rate": 0.29,
+            "years[2].brackets[2].over": 98040.0,
+            "years[2].brackets[2].rate": 0.26,
+            "years[2].brackets[3].over": 49020.0,
+            "years[2].brackets[3].rate": 0.205,
+            "years[2].brackets[4].over": null,
+            "years[2].brackets[4].rate": 0.15,
+            "years[2].basic_personal_amount.maximum": 13808.0,
+            "years[2].basic_personal_amount.minimum": 12421.0,
+            "years[2].basic_personal_amount.phaseout_start": 151978.0,
+            "years[2].basic_personal_amount.phaseout_end": 216511.0,
+            "years[2].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-21e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9776dd9c5bb3ff42aadd4310f7d731b355f132554ee17d7cad5fef490e19b2b0"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "years[3].brackets[0].over": 221708.0,
@@ -635,6 +710,31 @@
           "content_sha256": "1dfebfaba0b48e69468bd26ba75a588d05a7b5fffd77ffc3e27845ffc54abf80"
         },
         {
+          "tax_year": 2022,
+          "values": {
+            "years[3].tax_year": 2022,
+            "years[3].brackets[0].over": 221708.0,
+            "years[3].brackets[0].rate": 0.33,
+            "years[3].brackets[1].over": 155625.0,
+            "years[3].brackets[1].rate": 0.29,
+            "years[3].brackets[2].over": 100392.0,
+            "years[3].brackets[2].rate": 0.26,
+            "years[3].brackets[3].over": 50197.0,
+            "years[3].brackets[3].rate": 0.205,
+            "years[3].brackets[4].over": null,
+            "years[3].brackets[4].rate": 0.15,
+            "years[3].basic_personal_amount.maximum": 14398.0,
+            "years[3].basic_personal_amount.minimum": 12719.0,
+            "years[3].basic_personal_amount.phaseout_start": 155625.0,
+            "years[3].basic_personal_amount.phaseout_end": 221708.0,
+            "years[3].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-22e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fc2b945440c5198726a9e196ab790e778b37a878014164af96bc603bccef75d1"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "years[4].brackets[0].over": 235675.0,
@@ -665,6 +765,31 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "years[4].tax_year": 2023,
+            "years[4].brackets[0].over": 235675.0,
+            "years[4].brackets[0].rate": 0.33,
+            "years[4].brackets[1].over": 165430.0,
+            "years[4].brackets[1].rate": 0.29,
+            "years[4].brackets[2].over": 106717.0,
+            "years[4].brackets[2].rate": 0.26,
+            "years[4].brackets[3].over": 53359.0,
+            "years[4].brackets[3].rate": 0.205,
+            "years[4].brackets[4].over": null,
+            "years[4].brackets[4].rate": 0.15,
+            "years[4].basic_personal_amount.maximum": 15000.0,
+            "years[4].basic_personal_amount.minimum": 13520.0,
+            "years[4].basic_personal_amount.phaseout_start": 165430.0,
+            "years[4].basic_personal_amount.phaseout_end": 235675.0,
+            "years[4].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-23e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "0f0d6738a1f52f33819a9d7beb42e6fa29fbdd5f0a1c88a3289a24f7361714a0"
         },
         {
           "tax_year": 2024,
@@ -699,6 +824,31 @@
           "content_sha256": "not_recorded"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "years[5].tax_year": 2024,
+            "years[5].brackets[0].over": 246752.0,
+            "years[5].brackets[0].rate": 0.33,
+            "years[5].brackets[1].over": 173205.0,
+            "years[5].brackets[1].rate": 0.29,
+            "years[5].brackets[2].over": 111733.0,
+            "years[5].brackets[2].rate": 0.26,
+            "years[5].brackets[3].over": 55867.0,
+            "years[5].brackets[3].rate": 0.205,
+            "years[5].brackets[4].over": null,
+            "years[5].brackets[4].rate": 0.15,
+            "years[5].basic_personal_amount.maximum": 15705.0,
+            "years[5].basic_personal_amount.minimum": 14156.0,
+            "years[5].basic_personal_amount.phaseout_start": 173205.0,
+            "years[5].basic_personal_amount.phaseout_end": 246752.0,
+            "years[5].credit_rate": 0.15
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-24e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8a6f538b1b30131b3d3332469be328952e5514bb676b2113814fa97f9e5f6121"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "years[6].brackets[0].over": 253414.0,
@@ -729,6 +879,54 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "not_recorded"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "years[6].tax_year": 2025,
+            "years[6].brackets[0].over": 253414.0,
+            "years[6].brackets[0].rate": 0.33,
+            "years[6].brackets[1].over": 177882.0,
+            "years[6].brackets[1].rate": 0.29,
+            "years[6].brackets[2].over": 114750.0,
+            "years[6].brackets[2].rate": 0.26,
+            "years[6].brackets[3].over": 57375.0,
+            "years[6].brackets[3].rate": 0.205,
+            "years[6].brackets[4].over": null,
+            "years[6].brackets[4].rate": 0.145,
+            "years[6].basic_personal_amount.maximum": 16129.0,
+            "years[6].basic_personal_amount.minimum": 14538.0,
+            "years[6].basic_personal_amount.phaseout_start": 177882.0,
+            "years[6].basic_personal_amount.phaseout_end": 253414.0
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-25e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "cdad2c9055006ec1dc92b9fe2710e7efb8f46b5222456c8da8dfc55691d7186d"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "years[6].tax_year": 2025,
+            "years[6].brackets[0].over": 253414.0,
+            "years[6].brackets[0].rate": 0.33,
+            "years[6].brackets[1].over": 177882.0,
+            "years[6].brackets[1].rate": 0.29,
+            "years[6].brackets[2].over": 114750.0,
+            "years[6].brackets[2].rate": 0.26,
+            "years[6].brackets[3].over": 57375.0,
+            "years[6].brackets[3].rate": 0.205,
+            "years[6].brackets[4].over": null,
+            "years[6].brackets[4].rate": 0.145,
+            "years[6].basic_personal_amount.maximum": 16129.0,
+            "years[6].basic_personal_amount.minimum": 14538.0,
+            "years[6].basic_personal_amount.phaseout_start": 177882.0,
+            "years[6].basic_personal_amount.phaseout_end": 253414.0
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jul/t4127-jul-25e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "25750e15da62b5fb733bea830adccc408102afca6a03bc9be2b8ec64b402993d"
         },
         {
           "tax_year": 2026,
@@ -776,6 +974,31 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "29c21e504f774dbece4e3151edd99112ef318dff97942982106c09392b2b9df9"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "years[7].tax_year": 2026,
+            "years[7].brackets[0].over": 258482.0,
+            "years[7].brackets[0].rate": 0.33,
+            "years[7].brackets[1].over": 181440.0,
+            "years[7].brackets[1].rate": 0.29,
+            "years[7].brackets[2].over": 117045.0,
+            "years[7].brackets[2].rate": 0.26,
+            "years[7].brackets[3].over": 58523.0,
+            "years[7].brackets[3].rate": 0.205,
+            "years[7].brackets[4].over": null,
+            "years[7].brackets[4].rate": 0.14,
+            "years[7].basic_personal_amount.maximum": 16452.0,
+            "years[7].basic_personal_amount.minimum": 14829.0,
+            "years[7].basic_personal_amount.phaseout_start": 181440.0,
+            "years[7].basic_personal_amount.phaseout_end": 258482.0,
+            "years[7].credit_rate": 0.14
+          },
+          "url": "https://www.canada.ca/content/dam/cra-arc/formspubs/pub/t4127-jan/t4127-01-26e.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "c715b8e6d33e0887119e0462b9a4cf8915370c56381932f1d7ba3a32385ddd8c"
         }
       ]
     }

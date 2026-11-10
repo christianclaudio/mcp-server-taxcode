@@ -30,6 +30,83 @@
       "verification_note": "Wis. Stat. section 71.06 states the 2025 brackets and not the 2024 indexed brackets. The 2025 Form 1 instructions publish a standard deduction that phases down with income; this table holds only its maximum, $13,560 single and $25,110 joint.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 10580.0,
+            "deduction_mfj_2018": 19580.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2017through2019/2018-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "03cc701ac558d8a0bbe6b6f771da8496ec306078603f0512aa6123b762f8be06"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 10860.0,
+            "deduction_mfj_2019": 20110.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2017through2019/2019-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fe31923b0117c311215264b2b43670116fd6a5c256d0f4d8b7598cced83dfc06"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 11050.0,
+            "deduction_mfj_2020": 20470.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2020/2020-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "93a29db35f4e0464f82b2c37a13e3344f505c6659a8e94b5925fe0b2645b190e"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 11200.0,
+            "deduction_mfj_2021": 20730.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2021/2021-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "6c097766b581281dc4972f42167331930023c9e42758e3756f03504eb594555c"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 11790.0,
+            "deduction_mfj_2022": 21820.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2022/2022-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d3970c7d44195ccf5ac3b54fa927fec7348335b7707c51b8fd66ea1c7889a785"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 12760.0,
+            "deduction_mfj_2023": 23620.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2023/2023-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "cf68dafddf88da2f95a0a1438afdd23a3fbe1c6209c06359a5525831e26a47c1"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 13230.0,
+            "deduction_mfj_2024": 24490.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2024/2024-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fbaac0937a88ba3bacee8157748af80571c854da140b911d182bd648e1cc0c18"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 323290.0,
@@ -56,12 +133,60 @@
           "tax_year": 2025,
           "values": {
             "deduction_single_2025": 13560.0,
-            "deduction_mfj_2025": 25110.0
+            "deduction_mfj_2025": 25110.0,
+            "brackets_2025.single[0].over": 323290.0,
+            "brackets_2025.single[0].rate": 0.0765,
+            "brackets_2025.single[1].over": 50480.0,
+            "brackets_2025.single[1].rate": 0.053,
+            "brackets_2025.single[2].over": 14680.0,
+            "brackets_2025.single[2].rate": 0.044,
+            "brackets_2025.single[3].over": null,
+            "brackets_2025.single[3].rate": 0.035,
+            "brackets_2025.mfj[0].over": 431060.0,
+            "brackets_2025.mfj[0].rate": 0.0765,
+            "brackets_2025.mfj[1].over": 67300.0,
+            "brackets_2025.mfj[1].rate": 0.053,
+            "brackets_2025.mfj[2].over": 19580.0,
+            "brackets_2025.mfj[2].rate": 0.044,
+            "brackets_2025.mfj[3].over": null,
+            "brackets_2025.mfj[3].rate": 0.035
           },
           "url": "https://www.revenue.wi.gov/TaxForms2025/2025-Form1-Inst.pdf",
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "dd7e88901ac4ec560aaa85024511a918656e2d90aaf7bcc10b37d615e505913c"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "Form 1 prints the rates and the top edge (rates 4/5.84/6.27/7.65, top $252,150 / $336,200; the lower edges were not extracted)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "Form 1 prints the rates and the top edge (rates 3.86/5.04/6.27/7.65, top $258,950 / $345,270; the lower edges were not extracted)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "Form 1 prints the rates and the top edge (rates 3.54/4.65/6.27/7.65, top $263,480 / $351,310; the lower edges are not printed in the sweep)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "Form 1 prints the rates and the top edge (rates 3.54/4.65/5.3/7.65, top $266,930 / $355,910; the lower edges are not printed in the sweep)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "Form 1 prints the rates and the top edge (rates 3.54/4.65/5.3/7.65, top $280,950 / $374,600; the lower edges are not printed in the sweep)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "Form 1 prints the rates and the top edge (rates 3.5/4.4/5.3/7.65, top $304,170 / $405,550; the lower edges are not printed in the sweep)."
         }
       ]
     }

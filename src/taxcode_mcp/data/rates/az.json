@@ -5,6 +5,39 @@
   "source_url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140i.pdf",
   "params": {
     "deduction": "federal_standard_deduction",
-    "rate": 0.025
+    "rate": 0.025,
+    "deduction_2018": {
+      "single": 5312.0,
+      "mfj": 10613.0
+    },
+    "deduction_2019": "federal_standard_deduction",
+    "rate_2023": 0.025,
+    "not_recorded": [
+      {
+        "param": "rate",
+        "tax_year": 2018,
+        "reason": "Tax Table X is graduated 2.59%-4.54% (4.54% over $158,996 single); the full table is not stored on the flat model."
+      },
+      {
+        "param": "rate",
+        "tax_year": 2019,
+        "reason": "2019 Tax Tables X/Y were not found; the rates were graduated 2.59%-4.50% and are not stored."
+      },
+      {
+        "param": "rate",
+        "tax_year": 2020,
+        "reason": "Tax Table X/Y is graduated 2.59%-4.50% (4.50% over $163,632 single); the full table is not stored on the flat model."
+      },
+      {
+        "param": "rate",
+        "tax_year": 2021,
+        "reason": "Tax Table X/Y is graduated 2.59%-4.50% (4.50% over $166,843 single); the full table is not stored on the flat model."
+      },
+      {
+        "param": "rate",
+        "tax_year": 2022,
+        "reason": "Tax Table X/Y is graduated 2.55%/2.98% (2.98% over $28,653 single); the full table is not stored on the flat model."
+      }
+    ]
   }
 }

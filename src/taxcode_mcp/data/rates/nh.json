@@ -7,11 +7,26 @@
     "statutory_basis": "N.H. Rev. Stat. Ann. § 77:1",
     "rate_authority": "N.H. Rev. Stat. Ann. § 77:1",
     "rate_desc": "No tax on wages. Prior law imposed the interest and dividends tax at 3% on interest and dividends over a $2,400 personal or $4,800 joint exemption (TIR 2025-001)",
+    "rate_desc_2018": "No tax on wages. The interest and dividends tax is 5% on interest and dividends over a $2,400 personal or $4,800 joint exemption (Form DP-10 instructions).",
+    "rate_desc_2023": "No tax on wages. The interest and dividends tax is 4% on interest and dividends over a $2,400 personal or $4,800 joint exemption (Form DP-10 instructions).",
+    "rate_desc_2024": "No tax on wages. The interest and dividends tax is 3% on interest and dividends over a $2,400 personal or $4,800 joint exemption (Form DP-10 instructions).",
     "rate_desc_2025": "No tax on wages. The interest and dividends tax is repealed for taxable periods beginning after December 31, 2024 (TIR 2025-001)",
     "regime": "none",
     "rate": 0.03,
+    "rate_2018": 0.05,
+    "rate_2023": 0.04,
+    "rate_2024": 0.03,
     "rate_2025": 0.0,
     "exemption_single": 2400.0,
-    "exemption_mfj": 4800.0
+    "exemption_single_2024": 2400.0,
+    "exemption_mfj": 4800.0,
+    "exemption_mfj_2024": 4800.0,
+    "not_recorded": [
+      {
+        "param": "exemption",
+        "tax_year": 2025,
+        "reason": "TIR 2025-001 states the $2,400 / $4,800 exemptions as prior law and repeals the tax for periods beginning after December 31, 2024. It does not state a 2025 exemption."
+      }
+    ]
   }
 }

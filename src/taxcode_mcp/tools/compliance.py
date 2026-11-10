@@ -339,12 +339,12 @@ def _top_rate(table: dict[str, Any], tax_year: int) -> float:
     return max(float(s["rate"]) for s in _for_year(table, "brackets", tax_year)["single"])
 
 
-# Official schedule coverage per state. CA holds 2024 (unsuffixed) and 2025 (_2025);
-# NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024 and the 2025 resident
-# booklet. A year outside the published window uses the nearest held year and gets an
-# estimate label naming that year.
+# Official schedule coverage per state. CA holds 2024 (unsuffixed), 2025, and the
+# 2026 rate schedules. NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024
+# and the 2025 resident booklet. A year outside the published window uses the nearest
+# held year and gets an estimate label naming that year.
 PUBLISHED_SCHEDULE_YEARS: dict[str, tuple[str, int, int]] = {
-    "CA": ("California", 2024, 2025),
+    "CA": ("California", 2024, 2026),
     "NJ": ("New Jersey", 2024, 2025),
     "NY": ("New York", 2024, 2025),
     "CT": ("Connecticut", 2024, 2025),
@@ -367,6 +367,33 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         name, first, last = PUBLISHED_SCHEDULE_YEARS[state]
         if first <= tax_year <= last:
             return ""
+        # Maryland 2019-2023 standard deductions are sourced year by year. 2018 is
+        # not_recorded and the lookup refuses it before this note would be shown.
+        # 2026 has its own single deduction (withholding guide) and the 2025 brackets.
+        if state == "MD" and (2019 <= tax_year <= 2023 or tax_year == 2026):
+            return ""
+        # California 2027 and later: brackets carry the 2026 schedules. The standard
+        # deduction has no 2026 key, so it stays the 2025 amount.
+        if state == "CA" and tax_year > 2026:
+            return (
+                f" [ESTIMATE: {name}'s tax year {tax_year} brackets are the 2026 schedule. "
+                "The standard deduction is the 2025 amount]"
+            )
+        if state == "MD" and tax_year > last:
+            carried = [
+                int(key.rsplit("_", 1)[1])
+                for key in info
+                if key.startswith("standard_deduction_")
+                and key.rsplit("_", 1)[1].isdigit()
+                and int(key.rsplit("_", 1)[1]) <= tax_year
+            ]
+            if carried and max(carried) > last:
+                ded_year = max(carried)
+                return (
+                    f" [ESTIMATE: {name}'s tax year {tax_year} brackets are not in this "
+                    f"table; the {last} brackets are used. The standard deduction is the "
+                    f"{ded_year} amount]"
+                )
         used = _schedule_year_used(state, tax_year)
         note = (
             f" [ESTIMATE: {name}'s tax year {tax_year} brackets and deduction are not in this "
@@ -787,6 +814,20 @@ def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: floa
     return each * count
 
 
+def _oh_tier_reached(federal_agi: float, step: Mapping[str, Any]) -> bool:
+    """Whether ``federal_agi`` falls in this Ohio exemption tier.
+
+    A ``$0`` tier is inclusive (the 2025 booklet: ``$0`` at MAGI of ``$750,000`` or
+    more). Every other tier keeps the exclusive ``over`` test, and no other state's
+    threshold uses this helper.
+    """
+    # The caller treats a null ``over`` as the base tier and does not call this.
+    threshold = float(step["over"])
+    if step["amount"] == 0:
+        return federal_agi >= threshold
+    return federal_agi > threshold
+
+
 def _oh_personal_exemption(
     info: dict[str, Any],
     is_mfj: bool,
@@ -806,7 +847,7 @@ def _oh_personal_exemption(
         next(
             s["amount"]
             for s in exemption["phaseout"][_status(is_mfj)]
-            if s["over"] is None or federal_agi > s["over"]
+            if s["over"] is None or _oh_tier_reached(federal_agi, s)
         )
     )
     count = (2.0 if is_mfj else 1.0) + float(dependents)
@@ -1164,12 +1205,15 @@ def evaluate_state_residency(
             if _schedule_year_used("CA", tax_year) >= 2025
             else "Mental Health Services Tax"
         )
-        rate_desc = (
-            f"{_range_desc(ca_range)} "
-            f"(13.3% is 12.3% plus the 1% {ca_surtax_name} on taxable income "
-            f"over ${ca_brackets['single'][0]['over']:,.0f}, applied once)"
-            f"{_outyear_estimate_note('CA', tax_year, ca)}"
-        )
+        # The 13.3% sentence is the R&TC 17043 fold-in, present when the top row is 13.3%.
+        top = ca_brackets["single"][0]
+        fold_in = ""
+        if top["rate"] == 0.133:
+            fold_in = (
+                f" (13.3% is 12.3% plus the 1% {ca_surtax_name} on taxable income "
+                f"over ${top['over']:,.0f}, applied once)"
+            )
+        rate_desc = f"{_range_desc(ca_range)}{fold_in}{_outyear_estimate_note('CA', tax_year, ca)}"
         std_ded = float(_for_year(ca, "deduction", tax_year)[_status(is_mfj)])
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
@@ -1347,8 +1391,15 @@ def evaluate_state_residency(
             f"{_outyear_estimate_note('MD', tax_year, md)}"
         )
         md_ded = md_year["standard_deduction"]
-        max_ded = float(md_ded["maximum"][_status(is_mfj)])
-        min_ded = float(md_ded["minimum"][_status(is_mfj)])
+        status = _status(is_mfj)
+        if status not in md_ded["maximum"] or status not in md_ded["minimum"]:
+            raise SafetyViolationError(
+                f"No sourced standard deduction value exists for tax year {tax_year} "
+                f"({status}). The source states the single amount and does not state "
+                "the joint amount."
+            )
+        max_ded = float(md_ded["maximum"][status])
+        min_ded = float(md_ded["minimum"][status])
         standard_ded = min(max_ded, max(min_ded, federal_agi * md_ded["percent_of_agi"]))
         personal_ex = _md_personal_exemption(md_year, is_mfj, federal_agi)
         taxable_income = max(0.0, federal_agi - standard_ded - personal_ex)
@@ -1390,10 +1441,14 @@ def evaluate_state_residency(
                 "audit scrutiny."
             )
         rate_authority = "A.R.S. § 43-1011"
-        rate_desc = f"Flat {_pct(RATE_TABLES['AZ']['rate'])} rate (SB 1828)"
-        standard_ded = _allowance(RATE_TABLES["AZ"], is_mfj, tax_year)
+        az = RATE_TABLES["AZ"]
+        # ``rate_YYYY`` is the flat rate from that year on. A not_recorded marker for an
+        # earlier graduated year refuses the call instead of applying the flat rate.
+        az_rate = float(_for_year(az, "rate", tax_year))
+        rate_desc = f"Flat {_pct(az_rate)} rate (SB 1828)"
+        standard_ded = _allowance(az, is_mfj, tax_year)
         taxable_income = max(0.0, federal_agi - standard_ded)
-        estimated_tax = round(taxable_income * RATE_TABLES["AZ"]["rate"], 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * az_rate, 2) if is_resident else 0.0
 
     elif state == "OH":
         statutory_basis = "Ohio Rev. Code §§ 5747.02, 5747.24"

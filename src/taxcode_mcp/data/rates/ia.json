@@ -41,6 +41,263 @@
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
     "regime_2025": "flat",
-    "rate_2025": 0.038
+    "rate_2025": 0.038,
+    "deduction_single_2018": 2030.0,
+    "deduction_single_2019": 2080.0,
+    "deduction_single_2020": 2110.0,
+    "deduction_single_2021": 2130.0,
+    "deduction_single_2022": 2210.0,
+    "deduction_single_2023": "federal_standard_deduction",
+    "deduction_mfj_2018": 5000.0,
+    "deduction_mfj_2019": 5120.0,
+    "deduction_mfj_2020": 5210.0,
+    "deduction_mfj_2021": 5240.0,
+    "deduction_mfj_2022": 5450.0,
+    "deduction_mfj_2023": "federal_standard_deduction",
+    "brackets_2019": {
+      "single": [
+        {
+          "over": 73710.0,
+          "rate": 0.0853
+        },
+        {
+          "over": 49140.0,
+          "rate": 0.0744
+        },
+        {
+          "over": 32760.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 24570.0,
+          "rate": 0.0596
+        },
+        {
+          "over": 14742.0,
+          "rate": 0.0563
+        },
+        {
+          "over": 6552.0,
+          "rate": 0.0414
+        },
+        {
+          "over": 3276.0,
+          "rate": 0.0225
+        },
+        {
+          "over": 1638.0,
+          "rate": 0.0067
+        },
+        {
+          "over": null,
+          "rate": 0.0033
+        }
+      ],
+      "mfj": [
+        {
+          "over": 73710.0,
+          "rate": 0.0853
+        },
+        {
+          "over": 49140.0,
+          "rate": 0.0744
+        },
+        {
+          "over": 32760.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 24570.0,
+          "rate": 0.0596
+        },
+        {
+          "over": 14742.0,
+          "rate": 0.0563
+        },
+        {
+          "over": 6552.0,
+          "rate": 0.0414
+        },
+        {
+          "over": 3276.0,
+          "rate": 0.0225
+        },
+        {
+          "over": 1638.0,
+          "rate": 0.0067
+        },
+        {
+          "over": null,
+          "rate": 0.0033
+        }
+      ]
+    },
+    "brackets_2021": {
+      "single": [
+        {
+          "over": 75420.0,
+          "rate": 0.0853
+        },
+        {
+          "over": 50280.0,
+          "rate": 0.0744
+        },
+        {
+          "over": 33520.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 25140.0,
+          "rate": 0.0596
+        },
+        {
+          "over": 15084.0,
+          "rate": 0.0563
+        },
+        {
+          "over": 6704.0,
+          "rate": 0.0414
+        },
+        {
+          "over": 3352.0,
+          "rate": 0.0225
+        },
+        {
+          "over": 1676.0,
+          "rate": 0.0067
+        },
+        {
+          "over": null,
+          "rate": 0.0033
+        }
+      ],
+      "mfj": [
+        {
+          "over": 75420.0,
+          "rate": 0.0853
+        },
+        {
+          "over": 50280.0,
+          "rate": 0.0744
+        },
+        {
+          "over": 33520.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 25140.0,
+          "rate": 0.0596
+        },
+        {
+          "over": 15084.0,
+          "rate": 0.0563
+        },
+        {
+          "over": 6704.0,
+          "rate": 0.0414
+        },
+        {
+          "over": 3352.0,
+          "rate": 0.0225
+        },
+        {
+          "over": 1676.0,
+          "rate": 0.0067
+        },
+        {
+          "over": null,
+          "rate": 0.0033
+        }
+      ]
+    },
+    "brackets_2023": {
+      "single": [
+        {
+          "over": 75000.0,
+          "rate": 0.06
+        },
+        {
+          "over": 30000.0,
+          "rate": 0.057
+        },
+        {
+          "over": 6000.0,
+          "rate": 0.0482
+        },
+        {
+          "over": null,
+          "rate": 0.044
+        }
+      ],
+      "mfj": [
+        {
+          "over": 150000.0,
+          "rate": 0.06
+        },
+        {
+          "over": 60000.0,
+          "rate": 0.057
+        },
+        {
+          "over": 12000.0,
+          "rate": 0.0482
+        },
+        {
+          "over": null,
+          "rate": 0.044
+        }
+      ]
+    },
+    "brackets_2024": {
+      "single": [
+        {
+          "over": 31050.0,
+          "rate": 0.057
+        },
+        {
+          "over": 6210.0,
+          "rate": 0.0482
+        },
+        {
+          "over": null,
+          "rate": 0.044
+        }
+      ],
+      "mfj": [
+        {
+          "over": 62100.0,
+          "rate": 0.057
+        },
+        {
+          "over": 12420.0,
+          "rate": 0.0482
+        },
+        {
+          "over": null,
+          "rate": 0.044
+        }
+      ]
+    },
+    "rate_desc_2019": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $73,710 (one schedule for every filing status; IDR 2019 statistical report, Table 1).",
+    "rate_desc_2021": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $75,420 (one schedule for every filing status; IDR 2021 statistical report, Table 1).",
+    "rate_desc_2023": "Four brackets: 4.40% to $6,000, 4.82% to $30,000, 5.70% to $75,000, 6.00% over $75,000 (MFJ $12,000 / $60,000 / $150,000).",
+    "rate_desc_2024": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      }
+    ]
   }
 }

@@ -54,7 +54,8 @@
           "tax_year": 2019,
           "values": {
             "deduction_single_2019": 2590.0,
-            "deduction_mfj_2019": 2590.0
+            "deduction_mfj_2019": 2590.0,
+            "rate_2018": 0.05
           },
           "url": "https://revenue.ky.gov/Forms/2019%20740%20Instruction%20Packet.pdf",
           "official": true,
@@ -65,7 +66,8 @@
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2650.0,
-            "deduction_mfj_2020": 2650.0
+            "deduction_mfj_2020": 2650.0,
+            "rate_2018": 0.05
           },
           "url": "https://revenue.ky.gov/Forms/740%20Instructions%20Packet%205.7.21.pdf",
           "official": true,
@@ -76,7 +78,8 @@
           "tax_year": 2021,
           "values": {
             "deduction_single_2021": 2690.0,
-            "deduction_mfj_2021": 2690.0
+            "deduction_mfj_2021": 2690.0,
+            "rate_2018": 0.05
           },
           "url": "https://revenue.ky.gov/Forms/Form%20740%20Packet%20Instructions-2021.pdf",
           "official": true,
@@ -87,7 +90,8 @@
           "tax_year": 2022,
           "values": {
             "deduction_single_2022": 2770.0,
-            "deduction_mfj_2022": 2770.0
+            "deduction_mfj_2022": 2770.0,
+            "rate_2018": 0.05
           },
           "url": "https://revenue.ky.gov/Forms/740%20Packet%20Instructions%205-9-23.pdf",
           "official": true,
@@ -152,7 +156,8 @@
           "values": {
             "rate": 0.04,
             "deduction_single_2025": 3270.0,
-            "deduction_mfj_2025": 3270.0
+            "deduction_mfj_2025": 3270.0,
+            "rate_2024": 0.04
           },
           "url": "https://revenue.ky.gov/Forms/740%20Packet%20Instructions.pdf",
           "official": true,

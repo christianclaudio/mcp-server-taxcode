@@ -31,6 +31,84 @@
           "rate": 0.047
         }
       ]
-    }
+    },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 21100.0,
+          "rate": 0.059
+        },
+        {
+          "over": null,
+          "rate": 0.047
+        }
+      ],
+      "mfj": [
+        {
+          "over": 42200.0,
+          "rate": 0.059
+        },
+        {
+          "over": null,
+          "rate": 0.047
+        }
+      ]
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 47500.0,
+          "rate": 0.0565
+        },
+        {
+          "over": null,
+          "rate": 0.047
+        }
+      ],
+      "mfj": [
+        {
+          "over": 95000.0,
+          "rate": 0.0565
+        },
+        {
+          "over": null,
+          "rate": 0.047
+        }
+      ]
+    },
+    "rate_desc_2025": "Two-bracket schedule: 4.7% to $21,100 single / $42,200 joint, 5.9% over.",
+    "rate_desc_2026": "Two-bracket schedule: 4.7% to $47,500 single / $95,000 joint, 5.65% over (HB 337).",
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $17,900 and does not print the lower edges. There is no separate MFJ schedule."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $18,400 and does not print the lower edges. There is no separate MFJ schedule."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $18,700 and does not print the lower edges. There is no separate MFJ schedule."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $18,800 and does not print the lower edges. There is no separate MFJ schedule."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.75% over $19,800 and does not print the lower edges. There is no separate MFJ schedule."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.75% over $21,600 and does not print the lower edges. There is no separate MFJ schedule."
+      }
+    ]
   }
 }

@@ -45,6 +45,58 @@
       ]
     },
     "regime_2025": "flat",
-    "rate_2025": 0.03
+    "rate_2025": 0.03,
+    "brackets_2024": {
+      "single": [
+        {
+          "over": 50000.0,
+          "rate": 0.0425
+        },
+        {
+          "over": 12500.0,
+          "rate": 0.035
+        },
+        {
+          "over": null,
+          "rate": 0.0185
+        }
+      ],
+      "mfj": [
+        {
+          "over": 100000.0,
+          "rate": 0.0425
+        },
+        {
+          "over": 25000.0,
+          "rate": 0.035
+        },
+        {
+          "over": null,
+          "rate": 0.0185
+        }
+      ]
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The 2018 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2018 file."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "The 2019 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2019 file."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
+      }
+    ]
   }
 }

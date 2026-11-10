@@ -27,7 +27,176 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Minn. Stat. section 290.06 prints single brackets of $26,520 / $87,110 / $161,720, not the held 2024 indexed amounts."
+      "verification_note": "Minn. Stat. section 290.06 prints single brackets of $26,520 / $87,110 / $161,720, not the held 2024 indexed amounts.",
+      "year_sources": [
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 12400.0,
+            "deduction_mfj_2020": 24800.0
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2023-12/m1_inst_20.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "1ba336dd6bfc9dcd269bf9998dfe3dd5e0132c2c24f05cff66696fea37d84a88"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 12525.0,
+            "deduction_mfj_2021": 25050.0
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2023-12/m1_inst_21.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9abe64582a542e81d8c5d76bde1ed3146b1a3564996981595cd86c701316e179"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 12900.0,
+            "deduction_mfj_2022": 25800.0
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2024-02/m1-inst-22.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "1bb05a9a61e8a1905012c3c5b2fa3883f5aea0a9a8c5d97ca86d82c9278f2e69"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 13825.0,
+            "deduction_mfj_2023": 27650.0
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2025-06/m1-inst-23.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "520771ab4ce5d1705b4745db30bad656975ac5423e520bfb4aece72d084e2a8c"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 14575.0,
+            "deduction_mfj_2024": 29150.0,
+            "brackets.single[0].over": 193240.0,
+            "brackets.single[0].rate": 0.0985,
+            "brackets.single[1].over": 104090.0,
+            "brackets.single[1].rate": 0.0785,
+            "brackets.single[2].over": 31690.0,
+            "brackets.single[2].rate": 0.068,
+            "brackets.single[3].over": null,
+            "brackets.single[3].rate": 0.0535,
+            "brackets.mfj[0].over": 321450.0,
+            "brackets.mfj[0].rate": 0.0985,
+            "brackets.mfj[1].over": 184040.0,
+            "brackets.mfj[1].rate": 0.0785,
+            "brackets.mfj[2].over": 46330.0,
+            "brackets.mfj[2].rate": 0.068,
+            "brackets.mfj[3].over": null,
+            "brackets.mfj[3].rate": 0.0535
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2026-01/m1-inst-24.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b3994a58156d79d0cf9b97ecbddf208b6d6ed65d07be4d6e103e7e15533c9fad"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 14950.0,
+            "deduction_mfj_2025": 29900.0,
+            "brackets_2025.single[0].over": 198630.0,
+            "brackets_2025.single[0].rate": 0.0985,
+            "brackets_2025.single[1].over": 106990.0,
+            "brackets_2025.single[1].rate": 0.0785,
+            "brackets_2025.single[2].over": 32570.0,
+            "brackets_2025.single[2].rate": 0.068,
+            "brackets_2025.single[3].over": null,
+            "brackets_2025.single[3].rate": 0.0535,
+            "brackets_2025.mfj[0].over": 330410.0,
+            "brackets_2025.mfj[0].rate": 0.0985,
+            "brackets_2025.mfj[1].over": 189180.0,
+            "brackets_2025.mfj[1].rate": 0.0785,
+            "brackets_2025.mfj[2].over": 47620.0,
+            "brackets_2025.mfj[2].rate": 0.068,
+            "brackets_2025.mfj[3].over": null,
+            "brackets_2025.mfj[3].rate": 0.0535
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2024-12/inflation-adjusted-amounts-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9ac834177d0eead56583f40d2ebe3d976a43292b6fd9b7aac842b6dfe985638b"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2026": 15300.0,
+            "deduction_mfj_2026": 30600.0,
+            "brackets_2026.single[0].over": 203150.0,
+            "brackets_2026.single[0].rate": 0.0985,
+            "brackets_2026.single[1].over": 109430.0,
+            "brackets_2026.single[1].rate": 0.0785,
+            "brackets_2026.single[2].over": 33310.0,
+            "brackets_2026.single[2].rate": 0.068,
+            "brackets_2026.single[3].over": null,
+            "brackets_2026.single[3].rate": 0.0535,
+            "brackets_2026.mfj[0].over": 337930.0,
+            "brackets_2026.mfj[0].rate": 0.0985,
+            "brackets_2026.mfj[1].over": 193480.0,
+            "brackets_2026.mfj[1].rate": 0.0785,
+            "brackets_2026.mfj[2].over": 48700.0,
+            "brackets_2026.mfj[2].rate": 0.068,
+            "brackets_2026.mfj[3].over": null,
+            "brackets_2026.mfj[3].rate": 0.0535
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2025-12/inflation-adjusted-amounts-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "db216e8d9c0db86bb381cd4fbe3e338b933eae66e833e9dbe57b27c483557b8b"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "Form M1 prints the 9.85% threshold ($160,020 / $266,700) and not the lower indexed edges."
+        },
+        {
+          "param": "deduction",
+          "tax_year": 2018,
+          "reason": "The 2018 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "Form M1 prints the 9.85% threshold ($161,720 / $269,010) and not the lower indexed edges."
+        },
+        {
+          "param": "deduction",
+          "tax_year": 2019,
+          "reason": "The 2019 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "Form M1 prints the 9.85% threshold ($164,400 / $273,470) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "Form M1 prints the 9.85% threshold ($166,040 / $276,200) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "Form M1 prints the 9.85% threshold ($171,220 / $284,810) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "Form M1 prints the 9.85% threshold ($183,340 / $304,970) and not the lower indexed edges."
+        }
+      ]
     }
   ]
 }

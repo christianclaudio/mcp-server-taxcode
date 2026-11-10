@@ -32,14 +32,13 @@ def test_alabama_applies_personal_exemption_and_max_standard_deduction() -> None
     assert "phase-down chart is not modeled" in desc
     assert "federal income tax deduction" in desc
     assert "$1,500 single" in desc
-    assert "$2,500 single / $7,500 joint for 2019-2021" in desc
-    assert "Tax year 2018 uses the 2022 Form 40 standard-deduction maximum as an estimate" in desc
+    assert "$2,500 single / $7,500 joint for 2018-2021" in desc
     y19 = _tax("AL", 2019, 20000.0)
     assert y19["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y21 = _tax("AL", 2021, 20000.0)
     assert y21["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y18 = _tax("AL", 2018, 20000.0)
-    assert y18["taxable_net_income"] == 20000.0 - 3000.0 - 1500.0
+    assert y18["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y20 = _tax("AL", 2020, 20000.0)
     assert y20["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y20j = _tax("AL", 2020, 40000.0, "married_joint")
@@ -91,6 +90,28 @@ def test_california_top_rate_prose_names_twelve_three_plus_one() -> None:
     assert high["estimated_state_tax"] > mid["estimated_state_tax"]
     delta_tax = high["estimated_state_tax"] - mid["estimated_state_tax"]
     assert abs(delta_tax - 100.0 * 0.133) < 0.02
+
+
+def test_california_2026_and_2027_keep_the_one_percent_over_one_million() -> None:
+    """R&TC 17043's 1% stays folded into the 2026 schedule and the years that carry it.
+
+    The 2027 single golden at taxable income $1,005,020 is AGI $1,010,726
+    (the 2025 standard deduction is $5,706). That tax is 103,852.73.
+    """
+    ca = compliance.RATE_TABLES["CA"]
+    for year in (2026, 2027):
+        single = compliance._for_year(ca, "brackets", year)["single"]
+        joint = compliance._for_year(ca, "brackets", year)["mfj"]
+        assert single[0] == {"over": 1000000.0, "rate": 0.133}
+        assert joint[1] == {"over": 1000000.0, "rate": 0.123}
+        above = compliance._marginal_tax(single, 1_005_020.0)
+        at = compliance._marginal_tax(single, 1_000_000.0)
+        assert abs((above - at) - 5020.0 * 0.133) < 0.02, year
+    # 2026 still has no sourced standard deduction, so the residency call refuses.
+    # 2027 carries the 2026 brackets and the 2025 deduction.
+    got = _tax("CA", 2027, 1_010_726.0)
+    assert got["taxable_net_income"] == 1_005_020.0
+    assert got["estimated_state_tax"] == 103_852.73
 
 
 def test_ca_rtc_17041_statute_names_mhst_through_2024_and_bhst_from_2025() -> None:

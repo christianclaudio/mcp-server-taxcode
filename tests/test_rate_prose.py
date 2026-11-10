@@ -12,6 +12,7 @@ from typing import Any
 
 import pytest
 
+from taxcode_mcp.errors import SafetyViolationError
 from taxcode_mcp.tools import compliance
 
 _PERCENT = re.compile(r"(\d+(?:\.\d+)?)%")
@@ -48,16 +49,20 @@ def _stated(text: str) -> list[tuple[str, float]]:
 def _descriptions(code: str) -> Iterator[tuple[int, str, str]]:
     for tax_year in range(2018, 2028):
         for filing_status in ("single", "married_joint"):
-            result = compliance.evaluate_state_residency(
-                jurisdiction=code,
-                days_in_state=300,
-                is_domiciled=True,
-                maintains_permanent_abode=True,
-                federal_agi=150000.0,
-                capital_gains=400000.0,
-                filing_status=filing_status,
-                tax_year=tax_year,
-            )
+            try:
+                result = compliance.evaluate_state_residency(
+                    jurisdiction=code,
+                    days_in_state=300,
+                    is_domiciled=True,
+                    maintains_permanent_abode=True,
+                    federal_agi=150000.0,
+                    capital_gains=400000.0,
+                    filing_status=filing_status,
+                    tax_year=tax_year,
+                )
+            except SafetyViolationError:
+                # A not_recorded year has no description to check.
+                continue
             yield tax_year, filing_status, result["tax_computation"]["rate_description"]
 
 

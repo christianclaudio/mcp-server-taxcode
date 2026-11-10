@@ -62,6 +62,43 @@
           "rate": 0.0199
         }
       ]
-    }
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "SC1040TT prints only part of the schedule (top rate 6.5% (tax = 6.5% minus $658); dollar edges are only implied by the tax table)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "SC1040TT prints only part of the schedule (top rate 6.4% (minus $670); dollar edges are only implied by the tax table)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2025,
+        "reason": "SC1040TT 2025 (sha256 bf27744d0b7fba462b7ff9f69ec9b66af21073de8b95485b2d50e95bc36726b5) prints a top rate of 6% (minus $642) and approximate edges (about $3,560 and $17,830). The dollar edges are not exact, so the schedule is not stored."
+      }
+    ]
   }
 }

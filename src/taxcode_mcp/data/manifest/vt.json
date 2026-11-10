@@ -27,7 +27,211 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "32 V.S.A. section 5822 prints tables that are then adjusted for inflation (joint $64,600 / $156,150 / $237,950), not the held 2024 indexed brackets. The 3.35, 6.60, 7.60, and 8.75 percent rates match."
+      "verification_note": "32 V.S.A. section 5822 prints tables that are then adjusted for inflation (joint $64,600 / $156,150 / $237,950), not the held 2024 indexed brackets. The 3.35, 6.60, 7.60, and 8.75 percent rates match.",
+      "year_sources": [
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 6150.0,
+            "deduction_mfj_2019": 12300.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2019.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "060a61524acf7e8ddac01a7ee0374cc832d91445a23f2fc430272e472bfc7968"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 6250.0,
+            "deduction_mfj_2020": 12500.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2020.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "41b4864f72bd6670a2cf6067f6f97535c3fbe6b433b8e0fb8011a1d940384323"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 6350.0,
+            "deduction_mfj_2021": 12700.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2021.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9bc240818c056b0c03b62f7855a063117d4aa9bd75c6a705604be2583dde1603"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 6500.0,
+            "deduction_mfj_2022": 13050.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2022.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "18fa37cef2e2593255a550f933a6ddcb2f9bba51d87fe117c23bd9d4dd6f23a9"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 7000.0,
+            "deduction_mfj_2023": 14050.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2023.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d63a9063a168af75f96c846e7d89f4a75081a02b48be1f95dc5882889fa68a44"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 7400.0,
+            "deduction_mfj_2024": 14850.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8f4fa58fd4e980171aa55e2a713b1a1c8ae5dfaada14d558b3dbe1be108613e8"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets_2024.single[0].over": 242000.0,
+            "brackets_2024.single[0].rate": 0.0875,
+            "brackets_2024.single[1].over": 116000.0,
+            "brackets_2024.single[1].rate": 0.076,
+            "brackets_2024.single[2].over": 47900.0,
+            "brackets_2024.single[2].rate": 0.066,
+            "brackets_2024.single[3].over": null,
+            "brackets_2024.single[3].rate": 0.0335,
+            "brackets_2024.mfj[0].over": 294600.0,
+            "brackets_2024.mfj[0].rate": 0.0875,
+            "brackets_2024.mfj[1].over": 193300.0,
+            "brackets_2024.mfj[1].rate": 0.076,
+            "brackets_2024.mfj[2].over": 79950.0,
+            "brackets_2024.mfj[2].rate": 0.066,
+            "brackets_2024.mfj[3].over": null,
+            "brackets_2024.mfj[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "a4d2fa841a9404616d6426dec711e85e71b5ea2feeb62e8a8a4c2f6afc267ba8"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 249700.0,
+            "brackets_2025.single[0].rate": 0.0875,
+            "brackets_2025.single[1].over": 119700.0,
+            "brackets_2025.single[1].rate": 0.076,
+            "brackets_2025.single[2].over": 49400.0,
+            "brackets_2025.single[2].rate": 0.066,
+            "brackets_2025.single[3].rate": 0.0335,
+            "brackets_2025.mfj[0].over": 304000.0,
+            "brackets_2025.mfj[0].rate": 0.0875,
+            "brackets_2025.mfj[1].over": 199450.0,
+            "brackets_2025.mfj[1].rate": 0.076,
+            "brackets_2025.mfj[2].over": 82500.0,
+            "brackets_2025.mfj[2].rate": 0.066,
+            "brackets_2025.mfj[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e56ef973b1831973e9448df80feb9ee8540f427794ecdc22352a77f8f4264639"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 249700.0,
+            "brackets_2025.single[0].rate": 0.0875,
+            "brackets_2025.single[1].over": 119700.0,
+            "brackets_2025.single[1].rate": 0.076,
+            "brackets_2025.single[2].over": 49400.0,
+            "brackets_2025.single[2].rate": 0.066,
+            "brackets_2025.single[3].rate": 0.0335,
+            "brackets_2025.mfj[0].over": 304000.0,
+            "brackets_2025.mfj[0].rate": 0.0875,
+            "brackets_2025.mfj[1].over": 199450.0,
+            "brackets_2025.mfj[1].rate": 0.076,
+            "brackets_2025.mfj[2].over": 82500.0,
+            "brackets_2025.mfj[2].rate": 0.066,
+            "brackets_2025.mfj[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e56ef973b1831973e9448df80feb9ee8540f427794ecdc22352a77f8f4264639"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 256300.0,
+            "brackets_2026.single[0].rate": 0.0875,
+            "brackets_2026.single[1].over": 122850.0,
+            "brackets_2026.single[1].rate": 0.076,
+            "brackets_2026.single[2].over": 50750.0,
+            "brackets_2026.single[2].rate": 0.066,
+            "brackets_2026.single[3].rate": 0.0335,
+            "brackets_2026.mfj[0].over": 312050.0,
+            "brackets_2026.mfj[0].rate": 0.0875,
+            "brackets_2026.mfj[1].over": 204750.0,
+            "brackets_2026.mfj[1].rate": 0.076,
+            "brackets_2026.mfj[2].over": 84700.0,
+            "brackets_2026.mfj[2].rate": 0.066,
+            "brackets_2026.mfj[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-114-Instr-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8221e653b2b557ffc23b7f6ee443b5ea283d58860fc383394f5eaf89d2db5ca4"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "The rate schedule prints the 8.75% threshold ($195,450 / $237,950 (preliminary schedule)) and not the lower indexed edges."
+        },
+        {
+          "param": "deduction",
+          "tax_year": 2018,
+          "reason": "The 2018 IN-111 instructions are not on tax.vermont.gov (404). The standard deduction is not taken from an archive copy."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "The rate schedule prints the 8.75% threshold ($200,200 / $243,750) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "The rate schedule prints the 8.75% threshold ($204,000 / $248,350) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "The rate schedule prints the 8.75% threshold ($206,950 / $251,950) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "The rate schedule prints the 8.75% threshold ($213,150 / $259,500) and not the lower indexed edges."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "The rate schedule prints the 8.75% threshold ($229,550 / $279,450) and not the lower indexed edges."
+        },
+        {
+          "param": "deduction",
+          "tax_year": 2026,
+          "reason": "IN-114 prints the 2026 rate schedules and does not state the standard deduction."
+        }
+      ]
     }
   ]
 }

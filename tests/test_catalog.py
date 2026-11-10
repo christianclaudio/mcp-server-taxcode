@@ -554,6 +554,9 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "UT",
         "VA",
         "WV",
+        # South Dakota and Wyoming pages state that the state has no income tax.
+        "SD",
+        "WY",
         # Canada: the CRA figures match ITA s. 117 (the $57,375 base bracket, the 14% rate).
         "CAN",
     }
@@ -666,6 +669,10 @@ RETRIEVED = {
     "AL": "2026-11-02",
     # The CRA rate pages and the payroll and TD1 forms for the Canada table.
     "CAN": "2026-11-05",
+    # The snapshot date is the rate-table ``retrieved`` on manifest/sd.json and
+    # manifest/wy.json (hashes ffced323… and 47bb2fff…).
+    "SD": "2026-11-10",
+    "WY": "2026-11-10",
 }
 # Rate-table sources whose pages inject per-request script tokens, so no reproducible hash.
 READ_WITHOUT_BYTES: set[str] = {"CAN"}
@@ -1160,12 +1167,26 @@ def _rate_marker_error(data: Path, code: str, markers: Any) -> str:
     return str(raised.value)
 
 
-def test_committed_tables_have_no_unsourced_marker() -> None:
+# States whose sweep found a year with no complete official schedule.
+MARKED_RATE_TABLES = frozenset("AR AZ CA IA LA MD MN MO MT NE NH OH SC VT WI".split())
+
+
+def test_unsourced_markers_are_only_on_the_swept_tables() -> None:
     catalog = load_catalog(with_manifest=True)
-    for code, table in catalog.rate_tables.items():
-        assert UNSOURCED_YEARS not in table["params"], code
+    marked = {
+        code for code, table in catalog.rate_tables.items() if UNSOURCED_YEARS in table["params"]
+    }
+    assert marked == MARKED_RATE_TABLES
     for entry in catalog.manifest:
-        assert UNSOURCED_YEARS not in entry, entry["id"]
+        if entry["kind"] == "rate_table":
+            assert (UNSOURCED_YEARS in entry) == (entry["_jurisdiction"] in MARKED_RATE_TABLES)
+            if UNSOURCED_YEARS in entry:
+                assert (
+                    entry[UNSOURCED_YEARS]
+                    == catalog.rate_tables[entry["_jurisdiction"]]["params"][UNSOURCED_YEARS]
+                )
+        else:
+            assert UNSOURCED_YEARS not in entry, entry["id"]
     assert MARKER_ANCHORS == (
         ("GA", "standard_deduction", GA_LAST_FIXED_YEAR),
         ("GA", "rates", GA_LAST_FIXED_YEAR),

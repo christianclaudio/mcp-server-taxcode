@@ -305,11 +305,16 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # Plus 75 answers after ca-rtc-17041 named Mental Health Services Tax through 2024 and
 # Behavioral Health Services Tax from 2025 (72 lookups, 1 resource read, and 2 2024 searches;
 # the 2025-2028 searches were already in the changed set).
+# November 2026 source sweep moves 358 answers: per-year figures, and refusals
+# where the official file does not print a complete schedule. CHANGED_OUT is the
+# number of calls in the base pin fixture whose answer hash differs, counted by
+# this test (not by golden rows). The PR body lists each state-year and the
+# non-state call kinds; those rows sum to this number.
 # Wave 1 changes 90 searches: 32 newly differ from base, 58 already differed.
 # Plus the answers that now list a Canada (CAN) row or CRA publication: the CANADA_COUNT ones
 # outside the windows, checked byte for byte without those rows, and searches the windows
 # above already allow to change. An answer that changed for both reasons is counted once.
-CHANGED_OUT = 3480
+CHANGED_OUT = 3840
 # Answers that newly list a Canada row or publication and sit outside the allowlists above.
 # A search in every jurisdiction ranks the Canada rows among the others, and the newest-first
 # publication pages list the CRA guidance. Each is the pinned base answer, byte for byte,
@@ -320,7 +325,7 @@ CANADA_COUNT = 52
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
 # the held schedule stay on it.
-SCHEDULE_UPDATES: dict[str, range] = {
+SCHEDULE_UPDATES: dict[str, Collection[int]] = {
     "HI": range(2024, 2029),
     "NC": range(2018, 2029),
     "NH": range(2015, 2029),
@@ -335,6 +340,14 @@ SCHEDULE_UPDATES: dict[str, range] = {
     "OH": range(2015, 2029),
     # Nebraska's pre-2023 indexed brackets are the 2023 schedule, labeled.
     "NE": range(2015, 2023),
+    # November 2026 source sweep, limited to the state-years whose answers differ
+    # from the pin. Years the inventory does not move are not opened.
+    "MI": {2018, 2019, 2020, 2021, 2022, 2023, 2025, 2026, 2027, 2028},
+    "MN": {2018, 2019, 2020, 2021, 2022, 2023, 2025, 2026, 2027, 2028},
+    "LA": {2018, 2019, 2020, 2021},
+    "MS": set(range(2018, 2024)),
+    "VT": set(range(2018, 2029)),
+    "WA": {2022, 2026, 2027, 2028},
 }
 
 

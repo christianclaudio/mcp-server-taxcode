@@ -69,6 +69,76 @@
       "verification_note": "Withholding Tax Facts, January 2024 through December 2024 (https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/facts/Withholding-Tax-Facts-2024.pdf, sha256 4b5b732523daabd51ef6db90f9da47c369c289a3cbc08411c4064ed1c5ad2096, retrieved 2026-11-10) states the 2024 Schedules I and II and a $3,200 personal exemption. It does not state the 2024 standard deduction (15% of AGI, minimum $1,800 single / $3,650 joint, maximum $2,700 single / $5,450 joint) or the exemption phase-out steps. The 2024 Income Tax Summary Report (https://www.marylandcomptroller.gov/content/dam/mdcomp/md/reports/annual/summary24.pdf, sha256 320975967bc1fad247537ff46622e1dbce6401e52a181fa79a876b726cf20425, retrieved 2026-11-10) restates that 2024 rate schedule and does not state those deduction amounts. The 2025 resident booklet restates the 2025 schedules, including 6.25% and 6.50%, the flat standard deduction of $3,350 single / $6,700 joint, and the $3,200 exemption chart. Tax-General section 10-105 as amended by the Budget Reconciliation and Financing Act of 2025 (Chapter 604 / HB 352) matches the 2025 brackets and, for tax years 2025 through 2028, the additional 2% on net capital gain when federal AGI is over $350,000.",
       "year_sources": [
         {
+          "tax_year": 2019,
+          "values": {
+            "standard_deduction_2019.percent_of_agi": 0.15,
+            "standard_deduction_2019.minimum.single": 1500.0,
+            "standard_deduction_2019.minimum.mfj": 3050.0,
+            "standard_deduction_2019.maximum.single": 2250.0,
+            "standard_deduction_2019.maximum.mfj": 4550.0
+          },
+          "url": "https://interactive.marylandtaxes.gov/Individuals/iFile_ChooseForm/PriorYearForms/Resident_Booklet_2019.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "2dafdee3ddea0af32dade8711512869c418c4bba2082246afbbdcf0927eaa389"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "standard_deduction_2020.percent_of_agi": 0.15,
+            "standard_deduction_2020.minimum.single": 1550.0,
+            "standard_deduction_2020.minimum.mfj": 3100.0,
+            "standard_deduction_2020.maximum.single": 2300.0,
+            "standard_deduction_2020.maximum.mfj": 4650.0
+          },
+          "url": "https://interactive.marylandtaxes.gov/Individuals/iFile_ChooseForm/PriorYearForms/Resident_Booklet_2020.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "c07fd972b6d2758d33718d0610e4aa2d2f46c9c80d4eeb0ba15b323aedf003e9"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "standard_deduction_2021.percent_of_agi": 0.15,
+            "standard_deduction_2021.minimum.single": 1550.0,
+            "standard_deduction_2021.minimum.mfj": 3100.0,
+            "standard_deduction_2021.maximum.single": 2350.0,
+            "standard_deduction_2021.maximum.mfj": 4700.0
+          },
+          "url": "https://interactive.marylandtaxes.gov/Individuals/iFile_ChooseForm/PriorYearForms/Resident_Booklet_2021.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "dcb5b64a5c26d24570f495d0eb17e390440054ce60181f427e55308a1b08753e"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "standard_deduction_2022.percent_of_agi": 0.15,
+            "standard_deduction_2022.minimum.single": 1600.0,
+            "standard_deduction_2022.minimum.mfj": 3200.0,
+            "standard_deduction_2022.maximum.single": 2400.0,
+            "standard_deduction_2022.maximum.mfj": 4850.0
+          },
+          "url": "https://interactive.marylandtaxes.gov/Individuals/iFile_ChooseForm/PriorYearForms/Resident_Booklet_2022.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d513c1c290c5a078ace2d5182f7fd4179efd520c49386297a569d83b6f5963a3"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "standard_deduction_2023.percent_of_agi": 0.15,
+            "standard_deduction_2023.minimum.single": 1700.0,
+            "standard_deduction_2023.minimum.mfj": 3450.0,
+            "standard_deduction_2023.maximum.single": 2550.0,
+            "standard_deduction_2023.maximum.mfj": 5150.0
+          },
+          "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2023/Resident-Booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "00bda147e3c2a7600d16cc3fb3f90f35d04dced1e94ab724b73f65d4ea299d20"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "brackets.single[0].over": 250000.0,
@@ -224,6 +294,79 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "7b8ecc16640cc2fb635d309cd36ab23b41773c6b144b2af2db2b332c39e0b004"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "standard_deduction_2025.percent_of_agi": 0.0,
+            "standard_deduction_2025.minimum.single": 3350.0,
+            "standard_deduction_2025.minimum.mfj": 6700.0,
+            "standard_deduction_2025.maximum.single": 3350.0,
+            "standard_deduction_2025.maximum.mfj": 6700.0,
+            "brackets_2025.single[0].over": 1000000.0,
+            "brackets_2025.single[0].rate": 0.065,
+            "brackets_2025.single[1].over": 500000.0,
+            "brackets_2025.single[1].rate": 0.0625,
+            "brackets_2025.single[2].over": 250000.0,
+            "brackets_2025.single[2].rate": 0.0575,
+            "brackets_2025.single[3].over": 150000.0,
+            "brackets_2025.single[3].rate": 0.055,
+            "brackets_2025.single[4].over": 125000.0,
+            "brackets_2025.single[4].rate": 0.0525,
+            "brackets_2025.single[5].over": 100000.0,
+            "brackets_2025.single[5].rate": 0.05,
+            "brackets_2025.single[6].over": 3000.0,
+            "brackets_2025.single[6].rate": 0.0475,
+            "brackets_2025.single[7].over": 2000.0,
+            "brackets_2025.single[7].rate": 0.04,
+            "brackets_2025.single[8].over": 1000.0,
+            "brackets_2025.single[8].rate": 0.03,
+            "brackets_2025.single[9].over": null,
+            "brackets_2025.single[9].rate": 0.02,
+            "brackets_2025.mfj[0].over": 1200000.0,
+            "brackets_2025.mfj[0].rate": 0.065,
+            "brackets_2025.mfj[1].over": 600000.0,
+            "brackets_2025.mfj[1].rate": 0.0625,
+            "brackets_2025.mfj[2].over": 300000.0,
+            "brackets_2025.mfj[2].rate": 0.0575,
+            "brackets_2025.mfj[3].over": 225000.0,
+            "brackets_2025.mfj[3].rate": 0.055,
+            "brackets_2025.mfj[4].over": 175000.0,
+            "brackets_2025.mfj[4].rate": 0.0525,
+            "brackets_2025.mfj[5].over": 150000.0,
+            "brackets_2025.mfj[5].rate": 0.05,
+            "brackets_2025.mfj[6].over": 3000.0,
+            "brackets_2025.mfj[6].rate": 0.0475,
+            "brackets_2025.mfj[7].over": 2000.0,
+            "brackets_2025.mfj[7].rate": 0.04,
+            "brackets_2025.mfj[8].over": 1000.0,
+            "brackets_2025.mfj[8].rate": 0.03,
+            "brackets_2025.mfj[9].over": null,
+            "brackets_2025.mfj[9].rate": 0.02
+          },
+          "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/facts/Withholding-Tax-Facts-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "55d0fbac069e6a7ede49081caa0d9397119cd0df4ba5f3f558286b1f2068b1d3"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "standard_deduction_2026.percent_of_agi": 0.0,
+            "standard_deduction_2026.minimum.single": 3400.0,
+            "standard_deduction_2026.maximum.single": 3400.0
+          },
+          "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/withholding/2026/withholding-guide.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ce61cef90c00bc41ad4f4a4913ea1f9f5be65db9c08b015d43c191d20883e0bf"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "standard_deduction",
+          "tax_year": 2018,
+          "reason": "No official 2018 resident booklet is online. The archived min/max ($1,500/$3,000 and $2,250/$4,500) are not taken from an NBER copy."
         }
       ]
     }

@@ -56,9 +56,71 @@
       "verification_note": "R.C. 5747.02 confirms the 2024, 2025, and 2026 brackets. R.C. 5747.025 states the 2025 exemption amounts and does not state the exemption above $750,000 for 2025 or $500,000 for 2026. The 2024 exemption is the booklet figure.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "exemption_2018.amount": 2350.0,
+            "exemption_2018.phaseout.single[0].over": 80000.0,
+            "exemption_2018.phaseout.single[0].amount": 1850.0,
+            "exemption_2018.phaseout.single[1].over": 40000.0,
+            "exemption_2018.phaseout.single[1].amount": 2100.0,
+            "exemption_2018.phaseout.single[2].over": null,
+            "exemption_2018.phaseout.single[2].amount": 2350.0,
+            "exemption_2018.phaseout.mfj[0].over": 80000.0,
+            "exemption_2018.phaseout.mfj[0].amount": 1850.0,
+            "exemption_2018.phaseout.mfj[1].over": 40000.0,
+            "exemption_2018.phaseout.mfj[1].amount": 2100.0,
+            "exemption_2018.phaseout.mfj[2].over": null,
+            "exemption_2018.phaseout.mfj[2].amount": 2350.0
+          },
+          "url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2018/pit_it1040_booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "3371c21e4cc42d340e800a28df70072c3161199cd271aa4d5052ebbe99ad56c8"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "exemption_2020.amount": 2400.0,
+            "exemption_2020.phaseout.single[0].over": 80000.0,
+            "exemption_2020.phaseout.single[0].amount": 1900.0,
+            "exemption_2020.phaseout.single[1].over": 40000.0,
+            "exemption_2020.phaseout.single[1].amount": 2150.0,
+            "exemption_2020.phaseout.single[2].over": null,
+            "exemption_2020.phaseout.single[2].amount": 2400.0,
+            "exemption_2020.phaseout.mfj[0].over": 80000.0,
+            "exemption_2020.phaseout.mfj[0].amount": 1900.0,
+            "exemption_2020.phaseout.mfj[1].over": 40000.0,
+            "exemption_2020.phaseout.mfj[1].amount": 2150.0,
+            "exemption_2020.phaseout.mfj[2].over": null,
+            "exemption_2020.phaseout.mfj[2].amount": 2400.0
+          },
+          "url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2020/pit-it1040-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "3a49e65780156b7614b1d65775e9dca4a9860a9fcd92e4c4d161d9f693009a1a"
+        },
+        {
           "tax_year": 2024,
           "values": {
-            "exemption.amount": 2400.0
+            "exemption.amount": 2400.0,
+            "brackets.single[0].over": 100000.0,
+            "brackets.single[0].base": 2394.32,
+            "brackets.single[0].rate": 0.035,
+            "brackets.single[1].over": 26050.0,
+            "brackets.single[1].base": 360.69,
+            "brackets.single[1].rate": 0.0275,
+            "brackets.single[2].over": null,
+            "brackets.single[2].base": 0.0,
+            "brackets.single[2].rate": 0.0,
+            "brackets.mfj[0].over": 100000.0,
+            "brackets.mfj[0].base": 2394.32,
+            "brackets.mfj[0].rate": 0.035,
+            "brackets.mfj[1].over": 26050.0,
+            "brackets.mfj[1].base": 360.69,
+            "brackets.mfj[1].rate": 0.0275,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].base": 0.0,
+            "brackets.mfj[2].rate": 0.0
           },
           "url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2024/it1040-booklet.pdf",
           "official": true,
@@ -88,30 +150,29 @@
             "brackets_2025.single[0].rate": 0.03125,
             "brackets_2025.single[1].over": 26050.0,
             "brackets_2025.single[1].base": 342.0,
-            "brackets_2025.single[1].rate": 0.0275
+            "brackets_2025.single[1].rate": 0.0275,
+            "exemption_2025.amount": 2400.0,
+            "exemption_2025.phaseout.single[0].over": 750000.0,
+            "exemption_2025.phaseout.single[0].amount": 0.0,
+            "exemption_2025.phaseout.single[1].over": 80000.0,
+            "exemption_2025.phaseout.single[1].amount": 1900.0,
+            "exemption_2025.phaseout.single[2].over": 40000.0,
+            "exemption_2025.phaseout.single[2].amount": 2150.0,
+            "exemption_2025.phaseout.single[3].over": null,
+            "exemption_2025.phaseout.single[3].amount": 2400.0,
+            "exemption_2025.phaseout.mfj[0].over": 750000.0,
+            "exemption_2025.phaseout.mfj[0].amount": 0.0,
+            "exemption_2025.phaseout.mfj[1].over": 80000.0,
+            "exemption_2025.phaseout.mfj[1].amount": 1900.0,
+            "exemption_2025.phaseout.mfj[2].over": 40000.0,
+            "exemption_2025.phaseout.mfj[2].amount": 2150.0,
+            "exemption_2025.phaseout.mfj[3].over": null,
+            "exemption_2025.phaseout.mfj[3].amount": 2400.0
           },
           "url": "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/forms/ohio_individual/individual/2025/it1040-booklet.pdf",
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "931b21e7484ba96e561cf2346d8a7d2a8005bd990724b5903c9a90acede5f50e"
-        },
-        {
-          "tax_year": 2025,
-          "values": {
-            "exemption_2025.amount": 2350.0,
-            "exemption_2025.phaseout.single[0].over": 80000.0,
-            "exemption_2025.phaseout.single[0].amount": 1850.0,
-            "exemption_2025.phaseout.single[1].over": 40000.0,
-            "exemption_2025.phaseout.single[1].amount": 2100.0,
-            "exemption_2025.phaseout.single[2].amount": 2350.0,
-            "exemption_2025.phaseout.mfj[0].amount": 1850.0,
-            "exemption_2025.phaseout.mfj[1].amount": 2100.0,
-            "exemption_2025.phaseout.mfj[2].amount": 2350.0
-          },
-          "url": "https://codes.ohio.gov/ohio-revised-code/section-5747.025",
-          "official": true,
-          "retrieved": "2026-11-03",
-          "content_sha256": "b78f7cf31be013cdab55c2e960f89ecafb3d9aa36f90c6a65eabfa3264252546"
         },
         {
           "tax_year": 2026,
@@ -124,6 +185,38 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "e724e3060a009686473702423de4c3c9660b3b577471b2f6fe4504396ad6de72"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "The IT 1040 booklet prints a partial schedule (seven brackets, 0% to $10,850 through 4.997% over $217,400). The missing edges and bases are not stored."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "The IT 1040 booklet prints a partial schedule (0% to $21,750 through 4.797% over $217,400). The missing edges and bases are not stored."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "The IT 1040 booklet prints a partial schedule (0% to $22,150 through 4.797% over $221,300). The missing edges and bases are not stored."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "The IT 1040 booklet prints a partial schedule (0% to $25,000 through 3.990% over $110,650). The missing edges and bases are not stored."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "The IT 1040 booklet prints a partial schedule (0% to $26,050 through 3.990% over $115,300). The missing edges and bases are not stored."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "The IT 1040 booklet prints a partial schedule (0% to $26,050, 2.75% to $100,000, 3.688% to $115,300, 3.75% over $115,300; the bracket bases are not printed). The missing edges and bases are not stored."
         }
       ]
     }
