@@ -118,7 +118,9 @@
           "values": {
             "exemption_single": 2400.0,
             "exemption_mfj": 4800.0,
-            "rate_2024": 0.03
+            "rate_2024": 0.03,
+            "exemption_single_2024": 2400.0,
+            "exemption_mfj_2024": 4800.0
           },
           "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2024.pdf",
           "official": true,
@@ -144,6 +146,13 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "5dbd44ced3ac2aeee2417e2e866836114a834f0faa4bad31a578b1296d02754d"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "exemption",
+          "tax_year": 2025,
+          "reason": "TIR 2025-001 states the $2,400 / $4,800 exemptions as prior law and repeals the tax for periods beginning after December 31, 2024. It does not state a 2025 exemption."
         }
       ]
     }

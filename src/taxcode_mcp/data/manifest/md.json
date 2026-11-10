@@ -348,6 +348,18 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "55d0fbac069e6a7ede49081caa0d9397119cd0df4ba5f3f558286b1f2068b1d3"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "standard_deduction_2026.percent_of_agi": 0.0,
+            "standard_deduction_2026.minimum.single": 3400.0,
+            "standard_deduction_2026.maximum.single": 3400.0
+          },
+          "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/withholding/2026/withholding-guide.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ce61cef90c00bc41ad4f4a4913ea1f9f5be65db9c08b015d43c191d20883e0bf"
         }
       ],
       "not_recorded": [
@@ -355,11 +367,6 @@
           "param": "standard_deduction",
           "tax_year": 2018,
           "reason": "No official 2018 resident booklet is online. The archived min/max ($1,500/$3,000 and $2,250/$4,500) are not taken from an NBER copy."
-        },
-        {
-          "param": "standard_deduction",
-          "tax_year": 2026,
-          "reason": "The 2026 withholding guide states a $3,400 standard deduction and does not state the MFJ amount."
         }
       ]
     }

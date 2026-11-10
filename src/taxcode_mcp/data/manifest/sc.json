@@ -98,7 +98,7 @@
         {
           "param": "brackets",
           "tax_year": 2025,
-          "reason": "SC1040TT prints only part of the schedule (top rate 6% (minus $642), about $3,560 and $17,830; the edges are marked approximate)."
+          "reason": "SC1040TT 2025 (sha256 bf27744d0b7fba462b7ff9f69ec9b66af21073de8b95485b2d50e95bc36726b5) prints a top rate of 6% (minus $642) and approximate edges (about $3,560 and $17,830). The dollar edges are not exact, so the schedule is not stored."
         }
       ]
     }

@@ -120,8 +120,101 @@
         }
       ]
     },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 26399.0,
+          "rate": 0.037
+        },
+        {
+          "over": 15999.0,
+          "rate": 0.034
+        },
+        {
+          "over": 11199.0,
+          "rate": 0.03
+        },
+        {
+          "over": 5599.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 26399.0,
+          "rate": 0.037
+        },
+        {
+          "over": 15999.0,
+          "rate": 0.034
+        },
+        {
+          "over": 11199.0,
+          "rate": 0.03
+        },
+        {
+          "over": 5599.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2027": {
+      "single": [
+        {
+          "over": 26399.0,
+          "rate": 0.039
+        },
+        {
+          "over": 15999.0,
+          "rate": 0.034
+        },
+        {
+          "over": 11199.0,
+          "rate": 0.03
+        },
+        {
+          "over": 5599.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 26399.0,
+          "rate": 0.039
+        },
+        {
+          "over": 15999.0,
+          "rate": 0.034
+        },
+        {
+          "over": 11199.0,
+          "rate": 0.03
+        },
+        {
+          "over": 5599.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
     "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)",
-    "rate_desc_2026": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled) [ESTIMATE: Arkansas's 2026 standard deduction ($2,470 per taxpayer, $4,940 joint) is from the 2026 AR1000ES estimated-tax worksheet, not the final instructions. Tax year 2027 and later use the 2026 amount until a source is recorded]",
+    "rate_desc_2026": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.70% over $26,399 (2026 withholding formula top rate; lower bands are the 2025 indexed edges, which that formula does not restate)",
+    "rate_desc_2027": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled) [ESTIMATE: Arkansas's 2026 standard deduction ($2,470 per taxpayer, $4,940 joint) is from the 2026 AR1000ES estimated-tax worksheet, not the final instructions. Tax year 2027 and later use the 2026 amount until a source is recorded]",
     "not_recorded": [
       {
         "param": "brackets",
@@ -152,11 +245,6 @@
         "param": "brackets",
         "tax_year": 2023,
         "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.7% over $25,000; lower bands are not printed)."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2026,
-        "reason": "DFA bracket PDF prints only part of the schedule (revised formula states 3.70% over $26,399 and does not print the lower bands)."
       }
     ]
   }

@@ -636,6 +636,18 @@ def _check_by_status(value: Any, where: str) -> None:
         _check_amount(value[status], f"{where}.{status}")
 
 
+def _check_md_deduction_band(value: Any, where: str, *, allow_missing_mfj: bool) -> None:
+    """Maryland deduction limits. A later year may print only the single amount."""
+    if not allow_missing_mfj:
+        _check_by_status(value, where)
+        return
+    _check(isinstance(value, dict), f"{where}: must be an object")
+    allowed = set(FILING_STATUSES)
+    _check(set(value) <= allowed and "single" in value, f"{where}: must state single")
+    for status in value:
+        _check_amount(value[status], f"{where}.{status}")
+
+
 def _check_steps(
     steps: Any,
     fields: Sequence[str],
@@ -959,8 +971,13 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
             _check(isinstance(value, dict), f"{at}: must be an object")
             _check_keys(value, ("percent_of_agi", "minimum", "maximum"), at)
             _check_rate(value["percent_of_agi"], f"{at}.percent_of_agi")
-            _check_by_status(value["minimum"], f"{at}.minimum")
-            _check_by_status(value["maximum"], f"{at}.maximum")
+            # A yearly key may omit ``mfj`` when that year's source prints only the
+            # single amount (Maryland 2026 withholding guide: $3,400). The unsuffixed
+            # schedule still states both statuses.
+            for band in ("minimum", "maximum"):
+                _check_md_deduction_band(
+                    value[band], f"{at}.{band}", allow_missing_mfj=key in yearly
+                )
         elif name == "personal_exemption":  # maryland: fixed amount with FAGI phase-out
             _check(isinstance(value, dict), f"{at}: must be an object")
             _check_keys(value, ("amount", "phaseout"), at)

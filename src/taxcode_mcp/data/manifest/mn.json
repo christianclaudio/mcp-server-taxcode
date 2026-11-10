@@ -162,9 +162,19 @@
           "reason": "Form M1 prints the 9.85% threshold ($160,020 / $266,700) and not the lower indexed edges."
         },
         {
+          "param": "deduction",
+          "tax_year": 2018,
+          "reason": "The 2018 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
+        },
+        {
           "param": "brackets",
           "tax_year": 2019,
           "reason": "Form M1 prints the 9.85% threshold ($161,720 / $269,010) and not the lower indexed edges."
+        },
+        {
+          "param": "deduction",
+          "tax_year": 2019,
+          "reason": "The 2019 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
         },
         {
           "param": "brackets",

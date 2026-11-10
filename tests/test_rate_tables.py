@@ -881,16 +881,19 @@ def test_arkansas_standard_deduction_by_year() -> None:
     # What's New: 2023 deduction $2,340 / $4,680. 2024 AR1000F instructions: $2,410 / $4,820.
     # 2025 AR1000F instructions: $2,470 / $4,940. 2026 AR1000ES estimated-tax worksheet:
     # $2,470 per taxpayer ($4,940 joint), not the final instructions. 2027 uses that amount.
-    # 2023 and 2026 brackets are partial in the DFA files, so the tax call refuses.
-    # The deduction amounts are still stored.
+    # 2023 brackets are partial in the DFA file, so that tax call refuses.
+    # 2026 prints a 3.70% top over the same $26,399 edge; the lower bands stay the
+    # 2025 edges. 2027 keeps the 2025 schedule.
     ar = compliance.RATE_TABLES["AR"]
     assert compliance._for_year(ar, "deduction_single", 2023) == 2340.0
     assert compliance._for_year(ar, "deduction_mfj", 2023) == 4680.0
     assert compliance._for_year(ar, "deduction_single", 2026) == 2470.0
     with pytest.raises(SafetyViolationError, match="tax year 2023"):
         _resident_tax("AR", 2023, 1.0)
-    with pytest.raises(SafetyViolationError, match="tax year 2026"):
-        _resident_tax("AR", 2026, 1.0)
+    assert compliance._for_year(ar, "brackets", 2026)["single"][0]["rate"] == 0.037
+    assert compliance._for_year(ar, "brackets", 2026)["single"][0]["over"] == 26399.0
+    assert compliance._for_year(ar, "brackets", 2027)["single"][0]["rate"] == 0.039
+    assert _resident_tax("AR", 2026, 2470.0)["estimated_state_tax"] == 0.0
     for year, single, joint in (
         (2024, 2410.0, 4820.0),
         (2025, 2470.0, 4940.0),
@@ -1198,11 +1201,11 @@ def test_ohio_schedule_by_year() -> None:
     # booklet ($2,400 / $2,150 / $1,900). AGI arguments land in the matching tier.
     oh_notes = compliance.OH_MAGI_NOTE + compliance.DEPENDENT_EXEMPTION_NOTE
     # 2024 exemptions are the IT 1040 booklet's $2,400 / $2,150 / $1,900. The 2025
-    # booklet states the same three amounts and $0 at MAGI over $750,000. AGI is the
+    # booklet states the same three amounts and $0 at MAGI of $750,000 or more. AGI is the
     # bracket edge plus that year's exemption.
     for tax_year, low, mid, high, pins in (
         (2024, 2400.0, 2150.0, 1900.0, (0.0, 1460.69, 4006.07)),
-        # 2025 IT 1040 booklet: $2,400 / $2,150 / $1,900, and $0 at MAGI over $750,000.
+        # 2025 IT 1040 booklet: $2,400 / $2,150 / $1,900, and $0 at MAGI of $750,000 or more.
         # 2026+ carries that exemption; the 2026 IT 1040 booklet is not published.
         (2025, 2400.0, 2150.0, 1900.0, (0.0, 1442.00, 3833.38)),
         (2026, 2400.0, 2150.0, 1900.0, (0.0, 1432.00, 3632.00)),
@@ -1498,7 +1501,32 @@ def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
     assert compliance._oh_personal_exemption(oh, False, 40000.0, 2025) == 2400.0
     assert compliance._oh_personal_exemption(oh, False, 40000.01, 2025) == 2150.0
     assert compliance._oh_personal_exemption(oh, False, 80000.01, 2026) == 1900.0
+    assert compliance._oh_personal_exemption(oh, False, 749999.99, 2025) == 1900.0
+    assert compliance._oh_personal_exemption(oh, False, 750000.00, 2025) == 0.0
     assert compliance._oh_personal_exemption(oh, False, 750000.01, 2025) == 0.0
+    assert compliance._oh_personal_exemption(oh, True, 749999.99, 2025) == 3800.0
+    assert compliance._oh_personal_exemption(oh, True, 750000.00, 2025) == 0.0
+
+
+def test_ms_2018_brackets_and_az_rate_markers() -> None:
+    """Mississippi 2018 needs ``brackets_2018``; Arizona's flat year keys and markers do too.
+
+    ``REGISTRY_BRACKET_YEARS`` starts at 2018 so the Mississippi schedule loads.
+    ``YEARLY_PARAMS["flat"]`` is what lets Arizona store ``deduction_2018`` and
+    ``rate_2023``. The Arizona path reads ``rate`` through ``_for_year``, so a
+    ``not_recorded`` marker for 2018-2022 refuses those years instead of serving 2.5%.
+    """
+    ms = compliance.RATE_TABLES["MS"]
+    assert compliance._for_year(ms, "brackets", 2018)["single"][0]["rate"] == 0.05
+    assert _resident_tax("MS", 2018, 100000.0)["estimated_state_tax"] > 0
+    az = compliance.RATE_TABLES["AZ"]
+    assert compliance._for_year(az, "rate", 2023) == 0.025
+    assert compliance._for_year(az, "rate", 2026) == 0.025
+    assert compliance._for_year(az, "deduction", 2018) == {"single": 5312.0, "mfj": 10613.0}
+    with pytest.raises(SafetyViolationError, match="tax year 2018"):
+        compliance._for_year(az, "rate", 2018)
+    with pytest.raises(SafetyViolationError, match="tax year 2022"):
+        _resident_tax("AZ", 2022, 100000.0)
 
 
 def test_batch4_federal_standard_deduction_readers() -> None:

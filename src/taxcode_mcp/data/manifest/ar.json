@@ -176,6 +176,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "8a2d94f074d0a0a59ed8210a43b996a102367b4113f0f9ecec996dace11cbc64"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 26399.0,
+            "brackets_2026.single[0].rate": 0.037,
+            "brackets_2026.mfj[0].over": 26399.0,
+            "brackets_2026.mfj[0].rate": 0.037
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/Withholding-Tax-Formula.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8a2d94f074d0a0a59ed8210a43b996a102367b4113f0f9ecec996dace11cbc64"
         }
       ],
       "not_recorded": [
@@ -208,11 +221,6 @@
           "param": "brackets",
           "tax_year": 2023,
           "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.7% over $25,000; lower bands are not printed)."
-        },
-        {
-          "param": "brackets",
-          "tax_year": 2026,
-          "reason": "DFA bracket PDF prints only part of the schedule (revised formula states 3.70% over $26,399 and does not print the lower bands)."
         }
       ]
     }

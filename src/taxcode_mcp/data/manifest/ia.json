@@ -52,6 +52,51 @@
           "content_sha256": "8b7a56d5ab8fef187b780f89ee732209cbcd4699d53b2c36d3767cf55ae4702d"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "brackets_2019.single[0].over": 73710.0,
+            "brackets_2019.single[0].rate": 0.0853,
+            "brackets_2019.single[1].over": 49140.0,
+            "brackets_2019.single[1].rate": 0.0744,
+            "brackets_2019.single[2].over": 32760.0,
+            "brackets_2019.single[2].rate": 0.0625,
+            "brackets_2019.single[3].over": 24570.0,
+            "brackets_2019.single[3].rate": 0.0596,
+            "brackets_2019.single[4].over": 14742.0,
+            "brackets_2019.single[4].rate": 0.0563,
+            "brackets_2019.single[5].over": 6552.0,
+            "brackets_2019.single[5].rate": 0.0414,
+            "brackets_2019.single[6].over": 3276.0,
+            "brackets_2019.single[6].rate": 0.0225,
+            "brackets_2019.single[7].over": 1638.0,
+            "brackets_2019.single[7].rate": 0.0067,
+            "brackets_2019.single[8].over": null,
+            "brackets_2019.single[8].rate": 0.0033,
+            "brackets_2019.mfj[0].over": 73710.0,
+            "brackets_2019.mfj[0].rate": 0.0853,
+            "brackets_2019.mfj[1].over": 49140.0,
+            "brackets_2019.mfj[1].rate": 0.0744,
+            "brackets_2019.mfj[2].over": 32760.0,
+            "brackets_2019.mfj[2].rate": 0.0625,
+            "brackets_2019.mfj[3].over": 24570.0,
+            "brackets_2019.mfj[3].rate": 0.0596,
+            "brackets_2019.mfj[4].over": 14742.0,
+            "brackets_2019.mfj[4].rate": 0.0563,
+            "brackets_2019.mfj[5].over": 6552.0,
+            "brackets_2019.mfj[5].rate": 0.0414,
+            "brackets_2019.mfj[6].over": 3276.0,
+            "brackets_2019.mfj[6].rate": 0.0225,
+            "brackets_2019.mfj[7].over": 1638.0,
+            "brackets_2019.mfj[7].rate": 0.0067,
+            "brackets_2019.mfj[8].over": null,
+            "brackets_2019.mfj[8].rate": 0.0033
+          },
+          "url": "https://publications.iowa.gov/40694/1/Individual%20Income%20Tax%20Report%202019.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f2b77b3383d4472f76e0ab6450c423b1e46788b6985399f4362259d6f4263a6a"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2110.0,
@@ -244,7 +289,7 @@
         {
           "param": "brackets",
           "tax_year": 2021,
-          "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+          "reason": "The 2021 Individual Income Tax Annual Statistical Report (https://revenue.iowa.gov/sites/default/files/2023-06/Individual%20Income%20Tax%20Report%202021.pdf, sha256 8ba8a2851d3045594e6077d43ad2f450766af0df43c8a17092b770babd0721df) was fetched. It prints 0.33% to $1,676 and 8.53% over $75,420 and does not print the intermediate indexed edges, so the schedule is not stored."
         },
         {
           "param": "brackets",

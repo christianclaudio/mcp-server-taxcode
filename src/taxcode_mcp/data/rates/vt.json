@@ -100,6 +100,120 @@
         }
       ]
     },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 249700.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 116000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 47900.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfj": [
+        {
+          "over": 304000.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 193300.0,
+          "rate": 0.076
+        },
+        {
+          "over": 79950.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ]
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 256300.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 122850.0,
+          "rate": 0.076
+        },
+        {
+          "over": 47900.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfj": [
+        {
+          "over": 312050.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 204750.0,
+          "rate": 0.076
+        },
+        {
+          "over": 79950.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ]
+    },
+    "brackets_2027": {
+      "single": [
+        {
+          "over": 242000.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 116000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 47900.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfj": [
+        {
+          "over": 294600.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 193300.0,
+          "rate": 0.076
+        },
+        {
+          "over": 79950.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ]
+    },
     "not_recorded": [
       {
         "param": "brackets",
@@ -135,16 +249,6 @@
         "param": "brackets",
         "tax_year": 2023,
         "reason": "The rate schedule prints the 8.75% threshold ($229,550 / $279,450) and not the lower indexed edges."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2025,
-        "reason": "The rate schedule prints the 8.75% threshold ($249,700 / $304,000) and not the lower indexed edges."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2026,
-        "reason": "The rate schedule prints the 8.75% threshold ($256,300 / $312,050) and not the lower indexed edges."
       },
       {
         "param": "deduction",

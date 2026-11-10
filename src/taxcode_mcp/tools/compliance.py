@@ -367,9 +367,10 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         name, first, last = PUBLISHED_SCHEDULE_YEARS[state]
         if first <= tax_year <= last:
             return ""
-        # Maryland 2019-2023 standard deductions are sourced year by year. 2018 and 2026
-        # are not_recorded and the lookup refuses them before this note would be shown.
-        if state == "MD" and 2019 <= tax_year <= 2023:
+        # Maryland 2019-2023 standard deductions are sourced year by year. 2018 is
+        # not_recorded and the lookup refuses it before this note would be shown.
+        # 2026 has its own single deduction (withholding guide) and the 2025 brackets.
+        if state == "MD" and (2019 <= tax_year <= 2023 or tax_year == 2026):
             return ""
         used = _schedule_year_used(state, tax_year)
         note = (
@@ -791,6 +792,20 @@ def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: floa
     return each * count
 
 
+def _oh_tier_reached(federal_agi: float, step: Mapping[str, Any]) -> bool:
+    """Whether ``federal_agi`` falls in this Ohio exemption tier.
+
+    A ``$0`` tier is inclusive (the 2025 booklet: ``$0`` at MAGI of ``$750,000`` or
+    more). Every other tier keeps the exclusive ``over`` test, and no other state's
+    threshold uses this helper.
+    """
+    # The caller treats a null ``over`` as the base tier and does not call this.
+    threshold = float(step["over"])
+    if step["amount"] == 0:
+        return federal_agi >= threshold
+    return federal_agi > threshold
+
+
 def _oh_personal_exemption(
     info: dict[str, Any],
     is_mfj: bool,
@@ -810,7 +825,7 @@ def _oh_personal_exemption(
         next(
             s["amount"]
             for s in exemption["phaseout"][_status(is_mfj)]
-            if s["over"] is None or federal_agi > s["over"]
+            if s["over"] is None or _oh_tier_reached(federal_agi, s)
         )
     )
     count = (2.0 if is_mfj else 1.0) + float(dependents)
@@ -1351,8 +1366,15 @@ def evaluate_state_residency(
             f"{_outyear_estimate_note('MD', tax_year, md)}"
         )
         md_ded = md_year["standard_deduction"]
-        max_ded = float(md_ded["maximum"][_status(is_mfj)])
-        min_ded = float(md_ded["minimum"][_status(is_mfj)])
+        status = _status(is_mfj)
+        if status not in md_ded["maximum"] or status not in md_ded["minimum"]:
+            raise SafetyViolationError(
+                f"No sourced standard deduction value exists for tax year {tax_year} "
+                f"({status}). The source states the single amount and does not state "
+                "the joint amount."
+            )
+        max_ded = float(md_ded["maximum"][status])
+        min_ded = float(md_ded["minimum"][status])
         standard_ded = min(max_ded, max(min_ded, federal_agi * md_ded["percent_of_agi"]))
         personal_ex = _md_personal_exemption(md_year, is_mfj, federal_agi)
         taxable_income = max(0.0, federal_agi - standard_ded - personal_ex)

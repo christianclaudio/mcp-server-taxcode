@@ -1164,7 +1164,7 @@ def _rate_marker_error(data: Path, code: str, markers: Any) -> str:
 
 
 # States whose sweep found a year with no complete official schedule.
-MARKED_RATE_TABLES = frozenset("AR AZ CA IA LA MD MN MO MT NE OH SC VT WI".split())
+MARKED_RATE_TABLES = frozenset("AR AZ CA IA LA MD MN MO MT NE NH OH SC VT WI".split())
 
 
 def test_unsourced_markers_are_only_on_the_swept_tables() -> None:

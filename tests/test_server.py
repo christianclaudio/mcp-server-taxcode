@@ -1437,7 +1437,8 @@ def test_california_rate_description_names_mhst_or_bhst_by_schedule_year() -> No
 def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:
     """The Comptroller published the 2025 resident booklet, so 2025 is no longer an estimate.
 
-    Tax year 2026 still has no booklet, so it keeps the estimate label and the 2025 amounts.
+    Tax year 2026 uses the withholding guide's $3,400 single deduction. 2027 keeps the
+    2025 amounts and the estimate label.
     """
     kwargs: dict[str, Any] = {"jurisdiction": "MD", "days_in_state": 365, "is_domiciled": True}
     for year in (2024, 2025):
@@ -1458,9 +1459,11 @@ def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:
         "rate_description"
     ]
     assert "ESTIMATE" not in desc_2019
-    # 2026 states a single deduction only, so the year is not_recorded.
-    with pytest.raises(SafetyViolationError, match="tax year 2026"):
-        server.evaluate_state_residency(**kwargs, tax_year=2026)
+    # 2026 withholding guide states a $3,400 single deduction. Joint is not stated.
+    single_2026 = server.evaluate_state_residency(**kwargs, tax_year=2026)
+    assert "ESTIMATE" not in single_2026["tax_computation"]["rate_description"]
+    with pytest.raises(SafetyViolationError, match="does not state the joint amount"):
+        server.evaluate_state_residency(**kwargs, filing_status="married_joint", tax_year=2026)
     note = server.evaluate_state_residency(**kwargs, tax_year=2027)["tax_computation"][
         "rate_description"
     ]

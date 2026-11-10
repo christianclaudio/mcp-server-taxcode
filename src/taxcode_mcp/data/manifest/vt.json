@@ -130,6 +130,30 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "e56ef973b1831973e9448df80feb9ee8540f427794ecdc22352a77f8f4264639"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 249700.0,
+            "brackets_2025.mfj[0].over": 304000.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e56ef973b1831973e9448df80feb9ee8540f427794ecdc22352a77f8f4264639"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 256300.0,
+            "brackets_2026.mfj[0].over": 312050.0,
+            "brackets_2026.single[1].over": 122850.0,
+            "brackets_2026.mfj[1].over": 204750.0
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-114-Instr-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8221e653b2b557ffc23b7f6ee443b5ea283d58860fc383394f5eaf89d2db5ca4"
         }
       ],
       "not_recorded": [
@@ -167,16 +191,6 @@
           "param": "brackets",
           "tax_year": 2023,
           "reason": "The rate schedule prints the 8.75% threshold ($229,550 / $279,450) and not the lower indexed edges."
-        },
-        {
-          "param": "brackets",
-          "tax_year": 2025,
-          "reason": "The rate schedule prints the 8.75% threshold ($249,700 / $304,000) and not the lower indexed edges."
-        },
-        {
-          "param": "brackets",
-          "tax_year": 2026,
-          "reason": "The rate schedule prints the 8.75% threshold ($256,300 / $312,050) and not the lower indexed edges."
         },
         {
           "param": "deduction",

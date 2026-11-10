@@ -275,7 +275,12 @@
         {
           "param": "brackets",
           "tax_year": 2026,
-          "reason": "FTB schedule prints the 12.3% threshold ($768,213 / $1,536,426, with the 1% band at $11,456 single) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+          "reason": "FTB 2026 Schedule X/Y (sha256 17d22dcf30285cc45c692f6c7ad2805593d95d5c264887da14156d4b992643b3) prints 12.3% over $768,213 single / $1,536,426 joint and the 1% band at $11,456 single, and does not print the other indexed edges, so the schedule is not stored."
+        },
+        {
+          "param": "deduction",
+          "tax_year": 2026,
+          "reason": "The 2026 Form 540-ES instructions (sha256 3e67bc8f3dc6773cee6dab6e3d1b8d70ee03b8f91fbd581b5ad0e44ec49970bc) print the 2025 standard deduction ($5,706 / $11,412) and do not print the 2026 indexed deduction."
         }
       ]
     },

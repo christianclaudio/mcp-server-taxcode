@@ -7,6 +7,9 @@
     "statutory_basis": "Mo. Rev. Stat. §§ 143.011, 143.101",
     "rate_authority": "Mo. Rev. Stat. § 143.011",
     "rate_desc": "Graduated top rate 4.80%",
+    "rate_desc_2025": "Graduated top rate 4.70%",
+    "rate_desc_2026": "Graduated top rate 4.70% (steps of $1,348, 4.70% over $9,436)",
+    "rate_desc_2027": "Graduated top rate 4.80%",
     "regime": "graduated",
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
@@ -150,6 +153,216 @@
         }
       ]
     },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 9191.0,
+          "rate": 0.047
+        },
+        {
+          "over": 7878.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6565.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5252.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3939.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2626.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1313.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 9191.0,
+          "rate": 0.047
+        },
+        {
+          "over": 7878.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6565.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5252.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3939.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2626.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1313.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 9436.0,
+          "rate": 0.047
+        },
+        {
+          "over": 8088.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6740.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5392.0,
+          "rate": 0.035
+        },
+        {
+          "over": 4044.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2696.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1348.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 9436.0,
+          "rate": 0.047
+        },
+        {
+          "over": 8088.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6740.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5392.0,
+          "rate": 0.035
+        },
+        {
+          "over": 4044.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2696.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1348.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "brackets_2027": {
+      "single": [
+        {
+          "over": 8911.0,
+          "rate": 0.048
+        },
+        {
+          "over": 7638.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6365.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5092.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3819.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2546.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1273.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 8911.0,
+          "rate": 0.048
+        },
+        {
+          "over": 7638.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6365.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5092.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3819.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2546.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1273.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
     "not_recorded": [
       {
         "param": "brackets",
@@ -180,16 +393,6 @@
         "param": "brackets",
         "tax_year": 2023,
         "reason": "The instructions print the top rate (4.95% over $8,449) and not every indexed edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2025,
-        "reason": "The instructions print the top rate (4.7% over $9,191) and not every indexed edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2026,
-        "reason": "The instructions print the top rate (4.70% over $9,436 in steps of $1,348) and not every indexed edge."
       }
     ]
   }

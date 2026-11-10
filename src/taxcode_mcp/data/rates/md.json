@@ -203,6 +203,26 @@
         "mfj": 6700.0
       }
     },
+    "standard_deduction_2026": {
+      "percent_of_agi": 0.0,
+      "minimum": {
+        "single": 3400.0
+      },
+      "maximum": {
+        "single": 3400.0
+      }
+    },
+    "standard_deduction_2027": {
+      "percent_of_agi": 0.0,
+      "minimum": {
+        "single": 3350.0,
+        "mfj": 6700.0
+      },
+      "maximum": {
+        "single": 3350.0,
+        "mfj": 6700.0
+      }
+    },
     "brackets_2025": {
       "single": [
         {
@@ -299,11 +319,6 @@
         "param": "standard_deduction",
         "tax_year": 2018,
         "reason": "No official 2018 resident booklet is online. The archived min/max ($1,500/$3,000 and $2,250/$4,500) are not taken from an NBER copy."
-      },
-      {
-        "param": "standard_deduction",
-        "tax_year": 2026,
-        "reason": "The 2026 withholding guide states a $3,400 standard deduction and does not state the MFJ amount."
       }
     ]
   }

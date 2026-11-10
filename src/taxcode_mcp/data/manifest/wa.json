@@ -76,6 +76,16 @@
           "content_sha256": "6c844f90dc2c38132b8e11f65605168197da2f8f32cda23e3f4e899ec8889bb3"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "capital_gains_deduction_2024": 270000.0
+          },
+          "url": "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ffc14bbb9375c7947b4d053e89e66c2242ae7ba940845637fa0a78eeef727cd9"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "capital_gains_deduction_2025": 278000.0
@@ -128,6 +138,16 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "e0bf7f8357f7cedd8d875910be69d21a45251419f0e94c775a6ac923b7a6645b"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "capital_gains_deduction_2026": 290000.0
+          },
+          "url": "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ffc14bbb9375c7947b4d053e89e66c2242ae7ba940845637fa0a78eeef727cd9"
         }
       ]
     }
