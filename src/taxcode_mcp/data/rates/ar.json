@@ -10,6 +10,12 @@
     "regime": "graduated",
     "deduction_single": 2340.0,
     "deduction_mfj": 4680.0,
+    "deduction_single_2024": 2410.0,
+    "deduction_mfj_2024": 4820.0,
+    "deduction_single_2025": 2470.0,
+    "deduction_mfj_2025": 4940.0,
+    "deduction_single_2026": 2470.0,
+    "deduction_mfj_2026": 4940.0,
     "brackets": {
       "single": [
         {
@@ -102,6 +108,7 @@
         }
       ]
     },
-    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)"
+    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)",
+    "rate_desc_2026": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled) [ESTIMATE: Arkansas's 2026 standard deduction ($2,470 per taxpayer, $4,940 joint) is from the 2026 AR1000ES estimated-tax worksheet, not the final instructions. Tax year 2027 and later use the 2026 amount until a source is recorded]"
   }
 }

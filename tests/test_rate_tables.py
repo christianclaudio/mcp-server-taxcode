@@ -515,8 +515,8 @@ OFFICIAL_2024_FIGURES = [
     ("UT", ("credit_phaseout_rate",), 0.013),
     ("MA", ("surtax_2024", "over"), 1053750.0),
     ("WA", ("capital_gains_deduction_2024",), 270000.0),
-    ("KY", ("deduction_single",), 3160.0),
-    ("KY", ("deduction_mfj",), 3160.0),
+    ("KY", ("deduction_single_2024",), 3160.0),
+    ("KY", ("deduction_mfj_2024",), 3160.0),
     ("KS", ("deduction_single_2024",), 3605.0),
     ("KS", ("deduction_mfj_2024",), 8240.0),
     ("KS", ("exemption_single_2024",), 9160.0),
@@ -837,13 +837,17 @@ def test_utah_takes_the_taxpayer_tax_credit_off_the_tax() -> None:
 
 
 def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
-    # Form 740 instructions, Line 10: "If filing a joint return, only one $3,160 standard
-    # deduction is allowed" (2024); $3,270 for 2025; DOR announced $3,360 for 2026 (KRS 141.081).
-    # The rate is 4% for 2024 and 2025 and 3.5% for 2026 (2026 Withholding Tax Formula).
+    # Form 740 packet: $2,530 (2018), $2,590 (2019), $2,650 (2020), $2,690 (2021),
+    # $2,770 (2022), $2,980 (2023). 2024 e-file handbook: increased from $2,980 to $3,160.
+    # $3,270 for 2025; $3,360 for 2026.
+    # The rate is 5% for 2018-2022, 4.5% for 2023, 4% for 2024-2025, and 3.5% for 2026.
     for year, deduction, tax_on_10000 in (
-        (2018, 3160.0, 500.0),
-        (2022, 3160.0, 500.0),
-        (2023, 3160.0, 450.0),
+        (2018, 2530.0, 500.0),
+        (2019, 2590.0, 500.0),
+        (2020, 2650.0, 500.0),
+        (2021, 2690.0, 500.0),
+        (2022, 2770.0, 500.0),
+        (2023, 2980.0, 450.0),
         (2024, 3160.0, 400.0),
         (2025, 3270.0, 400.0),
         (2026, 3360.0, 350.0),
@@ -853,12 +857,55 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
             tax = _resident_tax("KY", year, deduction + 10000.0, status)["estimated_state_tax"]
             assert tax == tax_on_10000, (year, status)
     # KRS 141.020: 5% for 2018-2022, 4.5% for 2023, 4% for 2024-2025, 3.5% from 2026.
-    # The standard deduction before 2024 is the 2024 amount, labeled.
+    # Years before 2018 still use the 2024 deduction. 2019-2021 have their own amounts.
     assert "Flat 5.0% rate" in _resident_tax("KY", 2018, 1.0)["rate_description"]
     assert "4.5% rate" in _resident_tax("KY", 2023, 1.0)["rate_description"]
-    assert "[ESTIMATE:" in _resident_tax("KY", 2018, 1.0)["rate_description"]
+    assert "[ESTIMATE:" not in _resident_tax("KY", 2018, 1.0)["rate_description"]
     assert "[ESTIMATE:" not in _resident_tax("KY", 2024, 1.0)["rate_description"]
     assert "2024 flat rate is used" in _resident_tax("KY", 2017, 1.0)["rate_description"]
+    assert "the 2024 amount is used" in _resident_tax("KY", 2017, 1.0)["rate_description"]
+    for year in (2019, 2020, 2021):
+        desc = _resident_tax("KY", year, 1.0)["rate_description"]
+        assert "the 2018 amount" not in desc, year
+        assert "[ESTIMATE:" not in desc, year
+        assert "the 2024 amount is used" not in desc, year
+    for year in (2022, 2023):
+        assert "the 2024 amount is used" not in _resident_tax("KY", year, 1.0)["rate_description"]
+
+
+def test_arkansas_standard_deduction_by_year() -> None:
+    # What's New: 2023 deduction $2,340 / $4,680. 2024 AR1000F instructions: $2,410 / $4,820.
+    # 2025 AR1000F instructions: $2,470 / $4,940. 2026 AR1000ES estimated-tax worksheet:
+    # $2,470 per taxpayer ($4,940 joint), not the final instructions. 2027 uses that amount.
+    for year, single, joint in (
+        (2023, 2340.0, 4680.0),
+        (2024, 2410.0, 4820.0),
+        (2025, 2470.0, 4940.0),
+        (2026, 2470.0, 4940.0),
+        (2027, 2470.0, 4940.0),
+    ):
+        assert _resident_tax("AR", year, single, "single")["estimated_state_tax"] == 0.0
+        assert _resident_tax("AR", year, joint, "married_joint")["estimated_state_tax"] == 0.0
+        assert _resident_tax("AR", year, single + 1000.0, "single")["taxable_net_income"] == 1000.0
+        assert (
+            _resident_tax("AR", year, joint + 1000.0, "married_joint")["taxable_net_income"]
+            == 1000.0
+        )
+    # 2025 brackets: 0% through $5,599, then 2%. Income $1,000 above that band is taxed.
+    for year in (2025, 2026, 2027):
+        tax = _resident_tax("AR", year, 2470.0 + 5599.0 + 1000.0, "single")
+        assert tax["estimated_state_tax"] == 20.0, year
+        assert "the 2024 amount is used" not in tax["rate_description"]
+    desc_2026 = _resident_tax("AR", 2026, 1.0)["rate_description"]
+    assert "AR1000ES" in desc_2026
+    assert "estimated-tax worksheet" in desc_2026
+    assert "not the final instructions" in desc_2026
+    assert "2027 and later use the 2026 amount" in desc_2026
+    assert (
+        "2027 and later use the 2026 amount" in _resident_tax("AR", 2027, 1.0)["rate_description"]
+    )
+    for year in (2023, 2024, 2025):
+        assert "the 2024 amount is used" not in _resident_tax("AR", year, 1.0)["rate_description"]
 
 
 def test_rhode_island_2025_standard_deduction() -> None:

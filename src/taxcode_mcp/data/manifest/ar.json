@@ -27,8 +27,30 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "The 2024 AR1000F and AR1000NR instructions (https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf, sha256 dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297, retrieved 2026-11-10) state a standard deduction of $2,410 for single, head of household, married filing separately, and surviving spouse, and $4,820 for married filing joint. The held deduction is $2,340 single / $4,680 joint. The DFA What's New page (https://www.dfa.arkansas.gov/office/taxes/income-tax-administration/individual-income-tax/whats-new/, sha256 bfebef988d7dfff61159b531f501f908d705b27d160bce36c5fac7196ab3a0fc, retrieved 2026-11-10) states the 2023 standard deduction is $2,340 for those statuses and $4,680 for filing status 2. The 2024 instructions do not print the bracket thresholds. https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf (sha256 a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02, retrieved 2026-11-02) states 2025 brackets of 0% to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, and 3.9% above that. Those match the held 2025 brackets. The same PDF prints a bracket-adjustment band from $94,701 to $97,800, where the 3.9% minus-adjustment steps down, and for $100,001 and over a formula of $3,809 plus 3.9% of the excess over $100,000. That band is not modeled.",
+      "verification_note": "The 2024 AR1000F and AR1000NR instructions (https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf, sha256 dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297, retrieved 2026-11-10) state a standard deduction of $2,410 for single, head of household, married filing separately, and surviving spouse, and $4,820 for married filing joint. That is the held 2024 deduction. The DFA What's New page (https://www.dfa.arkansas.gov/office/taxes/income-tax-administration/individual-income-tax/whats-new/, sha256 bfebef988d7dfff61159b531f501f908d705b27d160bce36c5fac7196ab3a0fc, retrieved 2026-11-10) states the 2023 standard deduction is $2,340 for those statuses and $4,680 for filing status 2. That is the held deduction for 2023 and earlier. The 2025 AR1000F and AR1000NR instructions (https://www.dfa.arkansas.gov/wp-content/uploads/2025_AR1000F_and_AR1000NR_Instructions.pdf, sha256 9f24e23cfcfcc35633b288253f6d7e89ec7384f836010619798c105fddbf4857, retrieved 2026-11-10) state a standard deduction of $2,470 for single, head of household, married filing separately, and surviving spouse, and $4,940 for married filing joint. That is the held 2025 deduction. The 2026 AR1000ES estimated-tax worksheet (https://www.dfa.arkansas.gov/wp-content/uploads/2026_Final_AR1000ES_2.pdf, sha256 724b350ba495c54a21299ee57aa68c1038a0c0809011940a04a38eb4896002db, retrieved 2026-11-10), not the final 2026 instructions, states a standard deduction of $2,470 per taxpayer. That is the held 2026 deduction ($2,470 single / $4,940 joint). Tax year 2027 and later use the 2026 amount until a source is recorded. The 2024 instructions do not print the bracket thresholds. https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf (sha256 a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02, retrieved 2026-11-02) states 2025 brackets of 0% to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, and 3.9% above that. Those match the held 2025 brackets. The same PDF prints a bracket-adjustment band from $94,701 to $97,800, where the 3.9% minus-adjustment steps down, and for $100,001 and over a formula of $3,809 plus 3.9% of the excess over $100,000. That band is not modeled.",
       "year_sources": [
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single": 2340.0,
+            "deduction_mfj": 4680.0
+          },
+          "url": "https://www.dfa.arkansas.gov/office/taxes/income-tax-administration/individual-income-tax/whats-new/",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "bfebef988d7dfff61159b531f501f908d705b27d160bce36c5fac7196ab3a0fc"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 2410.0,
+            "deduction_mfj_2024": 4820.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
+        },
         {
           "tax_year": 2025,
           "values": {
@@ -55,6 +77,28 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 2470.0,
+            "deduction_mfj_2025": 4940.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2025_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9f24e23cfcfcc35633b288253f6d7e89ec7384f836010619798c105fddbf4857"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2026": 2470.0,
+            "deduction_mfj_2026": 4940.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2026_Final_AR1000ES_2.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "724b350ba495c54a21299ee57aa68c1038a0c0809011940a04a38eb4896002db"
         }
       ]
     }
