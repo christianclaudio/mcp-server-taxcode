@@ -1580,20 +1580,15 @@ def test_vt_hoh_side_schedule_is_readable_when_shared_brackets_are_marked() -> N
 
 
 def test_unrecorded_hoh_and_mfs_refuse_without_using_single() -> None:
-    single_2018 = None
-    with pytest.raises(SafetyViolationError, match="tax year 2018") as single_raised:
+    with pytest.raises(SafetyViolationError, match="not_recorded") as single_raised:
         _resident_tax("VT", 2018, 50000.0)
-    single_2018 = str(single_raised.value)
-    with pytest.raises(SafetyViolationError, match="tax year 2018") as hoh_raised:
-        _resident_tax("VT", 2018, 50000.0, "head_of_household")
-    assert str(hoh_raised.value) == single_2018
-    with pytest.raises(SafetyViolationError, match="not_recorded") as ny_raised:
-        _resident_tax("NY", 2024, 80000.0, "head of household")
-    assert "single" not in str(ny_raised.value).lower()
-    single_ny = _tax("NY", 2024, 80000.0, "single")
-    assert single_ny > 0
-    with pytest.raises(SafetyViolationError, match="not_recorded"):
-        _resident_tax("FL", 2024, 80000.0, "mfs")
+    assert "404" in str(single_raised.value)
+    for status in ("head_of_household", "married_separate"):
+        with pytest.raises(SafetyViolationError, match="not_recorded") as raised:
+            _resident_tax("VT", 2018, 50000.0, status)
+        assert str(raised.value) == str(single_raised.value)
+        assert "tax.vermont.gov" in str(raised.value)
+    assert _tax("NY", 2024, 80000.0, "head of household") == _tax("NY", 2024, 80000.0, "single")
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         compliance._extra_brackets(compliance.RATE_TABLES["VT"], "hoh", 2017, "VT")
     with pytest.raises(SafetyViolationError, match="not_recorded"):
@@ -1651,15 +1646,34 @@ def test_extra_status_residency_rules_follow_the_rate_table() -> None:
     assert result["domicile_audit_risk"]["risk_level"] == "high"
 
 
-def test_georgia_hoh_refuses() -> None:
-    with pytest.raises(SafetyViolationError, match="not_recorded"):
-        compliance.evaluate_georgia_residency(
-            days_present_ga=200,
-            is_domiciled_in_ga=True,
-            federal_agi=50000.0,
-            filing_status="head_of_household",
-            tax_year=2024,
-        )
+def test_non_vt_head_of_household_matches_main() -> None:
+    """Florida 2026 head of household stays main's residency answer, tax $0."""
+    import json
+
+    from tests.golden_compliance import read_lines
+
+    stored = None
+    for text in read_lines("compliance_evaluate_state_residency"):
+        record = json.loads(text)
+        args = record["args"]
+        if (
+            args.get("jurisdiction") == "FL"
+            and args.get("filing_status") == "head_of_household"
+            and args.get("tax_year") == 2026
+        ):
+            stored = record
+            break
+    assert stored is not None
+    assert stored["result"]["is_error"] is False
+    assert stored["result"]["structured"]["tax_computation"]["estimated_state_tax"] == 0.0
+    live = compliance.evaluate_state_residency(**stored["args"])
+    single = compliance.evaluate_state_residency(**{**stored["args"], "filing_status": "single"})
+    assert live["status"] == "success"
+    assert live["is_resident"] is True
+    assert live["tax_computation"]["estimated_state_tax"] == 0.0
+    assert live["tax_computation"]["taxable_net_income"] == 0.0
+    assert live["is_resident"] == single["is_resident"]
+    assert live["tax_computation"] == single["tax_computation"]
 
 
 def test_pdf_schedules_match_the_hashed_files() -> None:

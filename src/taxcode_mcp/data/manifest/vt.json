@@ -400,12 +400,12 @@
         {
           "param": "brackets",
           "tax_year": 2018,
-          "reason": "The rate schedule prints the 8.75% threshold ($195,450 / $237,950 (preliminary schedule)) and not the lower indexed edges."
+          "reason": "not_recorded: The 2018 IN-111 instructions and the rate schedule are not on tax.vermont.gov (404)."
         },
         {
           "param": "deduction",
           "tax_year": 2018,
-          "reason": "The 2018 IN-111 instructions are not on tax.vermont.gov (404). The standard deduction is not taken from an archive copy."
+          "reason": "not_recorded: The 2018 IN-111 instructions and the rate schedule are not on tax.vermont.gov (404)."
         },
         {
           "param": "brackets",

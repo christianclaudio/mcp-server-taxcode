@@ -530,9 +530,6 @@ def evaluate_georgia_residency(
         )
 
     # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
-    extra_status = _extra_filing_status(filing_status)
-    if extra_status is not None:
-        raise _missing_schedule("GA", extra_status, tax_year)
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
     status = _status(is_mfj)
@@ -1039,13 +1036,12 @@ def _evaluate_extra_filing_status(
     tax_year: int,
     audit_flags: list[str],
 ) -> dict[str, Any]:
-    """Residency and tax for head of household or married filing separately.
+    """Vermont residency and tax for head of household or married filing separately.
 
     The tax comes only from that status's stored deduction and rate schedule.
-    Every other state, and a Vermont year with no such schedule, refuses.
+    A Vermont year with no such schedule refuses. Other states keep the
+    historical single or joint path and do not call this.
     """
-    if state not in STATE_REGISTRY:
-        raise _missing_schedule(state, status, tax_year)
     info = STATE_REGISTRY[state]
     deduction = _extra_deduction(info, status, tax_year, state)
     brackets = _extra_brackets(info, status, tax_year, state)
@@ -1276,7 +1272,9 @@ def evaluate_state_residency(
         )
 
     extra_status = _extra_filing_status(filing_status)
-    if extra_status is not None:
+    # Only Vermont has stored HoH and MFS schedules. Every other state keeps
+    # main's behavior for those filing-status strings.
+    if extra_status is not None and state == "VT":
         return _evaluate_extra_filing_status(
             state=state,
             status=extra_status,
