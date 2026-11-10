@@ -887,7 +887,10 @@ def test_arkansas_standard_deduction_by_year() -> None:
         assert _resident_tax("AR", year, single, "single")["estimated_state_tax"] == 0.0
         assert _resident_tax("AR", year, joint, "married_joint")["estimated_state_tax"] == 0.0
         assert _resident_tax("AR", year, single + 1000.0, "single")["taxable_net_income"] == 1000.0
-        assert _resident_tax("AR", year, joint + 1000.0, "married_joint")["taxable_net_income"] == 1000.0
+        assert (
+            _resident_tax("AR", year, joint + 1000.0, "married_joint")["taxable_net_income"]
+            == 1000.0
+        )
     # 2025 brackets: 0% through $5,599, then 2%. Income $1,000 above that band is taxed.
     for year in (2025, 2026, 2027):
         tax = _resident_tax("AR", year, 2470.0 + 5599.0 + 1000.0, "single")
@@ -898,7 +901,9 @@ def test_arkansas_standard_deduction_by_year() -> None:
     assert "estimated-tax worksheet" in desc_2026
     assert "not the final instructions" in desc_2026
     assert "2027 and later use the 2026 amount" in desc_2026
-    assert "2027 and later use the 2026 amount" in _resident_tax("AR", 2027, 1.0)["rate_description"]
+    assert (
+        "2027 and later use the 2026 amount" in _resident_tax("AR", 2027, 1.0)["rate_description"]
+    )
     for year in (2023, 2024, 2025):
         assert "the 2024 amount is used" not in _resident_tax("AR", year, 1.0)["rate_description"]
 
