@@ -40,8 +40,42 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "R.S. 47:32 at https://www.legis.la.gov/legis/Law.aspx?d=101946 states the flat 3 percent rate from 2025 (Acts 2024, 3rd Ex. Sess., No. 11), and R.S. 47:294 (d=101761) and the 2025 IT-540 instructions confirm the 2025 $12,500 / $25,000 standard deduction. R.S. 47:294(B) prescribes CPI-U indexing from 2026 without stating the held $12,838 / $25,676 amounts, and the LDR individual-income-tax page prints the 2022-2024 rates and threshold sets under a duplicated married-joint heading without the 2024 $4,500 / $9,000 deduction.",
+      "verification_note": "The LDR individual income tax page (https://revenue.louisiana.gov/individuals/general-resources/individual-income-tax/, sha256 f92cc77b01b70ecbcda906009da3ecbbdc3ea0a55a1a4cbf3fa55b480b69201e, retrieved 2026-11-10) prints two tables, both captioned married filing jointly or qualified surviving spouse. For 2022-2024 one table uses $12,500 and $50,000 and the other uses $25,000 and $100,000, at 1.85%, 3.50%, and 4.25%, and both show 3% for 2025 and after. The $25,000 / $100,000 rows match the held joint brackets. The duplicated caption does not identify a single schedule. The page does not state the held $4,500 / $9,000 deduction or the held 2026 amounts $12,838 / $25,676. R.S. 47:32 (https://www.legis.la.gov/legis/Law.aspx?d=101946, sha256 1eb60081beb4a986eb98d209d499b7e5bd2bb3fb31df15528e2fdf809a802efa, retrieved 2026-11-10) states a 3% rate on individual net income and names Acts 2024, 3rd Ex. Sess., No. 11, effective December 4, 2024. It does not state the 2024 brackets or the standard deduction. The 2025 IT-540 instructions confirm the 2025 $12,500 / $25,000 standard deduction and the 3% rate.",
       "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.mfj[0].over": 100000.0,
+            "brackets.mfj[0].rate": 0.0425,
+            "brackets.mfj[1].over": 25000.0,
+            "brackets.mfj[1].rate": 0.035,
+            "brackets.mfj[2].rate": 0.0185
+          },
+          "url": "https://revenue.louisiana.gov/individuals/general-resources/individual-income-tax/",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f92cc77b01b70ecbcda906009da3ecbbdc3ea0a55a1a4cbf3fa55b480b69201e"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.03
+          },
+          "url": "https://revenue.louisiana.gov/individuals/general-resources/individual-income-tax/",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f92cc77b01b70ecbcda906009da3ecbbdc3ea0a55a1a4cbf3fa55b480b69201e"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.03
+          },
+          "url": "https://www.legis.la.gov/legis/Law.aspx?d=101946",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "1eb60081beb4a986eb98d209d499b7e5bd2bb3fb31df15528e2fdf809a802efa"
+        },
         {
           "tax_year": 2025,
           "values": {

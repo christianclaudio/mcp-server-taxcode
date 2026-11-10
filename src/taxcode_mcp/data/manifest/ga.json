@@ -118,7 +118,7 @@
       "enacting_law": "HB 463 of 2026",
       "effective_date": "2026-01-01",
       "verification": "not_recorded",
-      "verification_note": "The 2018 Georgia Tax Rate Schedule is sourced from https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download (sha256 b5df3662baed95f170c9f9fd441eda96e92574cce58c42b29559423501947579, retrieved 2026-11-02). Its top rate is 6 percent; the 5.75 percent schedule starts in 2019. No second document confirmed the whole held schedule.",
+      "verification_note": "The 2018 Georgia Tax Rate Schedule is sourced from https://dor.georgia.gov/document/form/2018-it-511-individual-income-tax-booklet/download (sha256 b5df3662baed95f170c9f9fd441eda96e92574cce58c42b29559423501947579, retrieved 2026-11-02). Its top rate is 6 percent; the 5.75 percent schedule starts in 2019. No second document confirmed the whole held schedule. The DOR standard-deduction page (https://dor.georgia.gov/georgia-standard-deductions-increases, sha256 98ee6aad54374ca520d75a16505a52a59e11877658626d3165ffdfbf4fedd190, retrieved 2026-11-10) states $5,400 single / $7,100 joint for 2022 and $12,000 single / $24,000 joint for 2024. It does not state the brackets, the flat rates, the exemptions, or the retirement exclusion.",
       "year_sources": [
         {
           "tax_year": 2018,

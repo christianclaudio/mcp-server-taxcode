@@ -27,8 +27,33 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Iowa Code 2026 section 422.5 states the 3.8 percent rate and does not print the 2024 brackets or the $31,050 edge. Section 422.5A is repealed.",
+      "verification_note": "The 2024 Individual Income Tax Statistical Report (https://revenue.iowa.gov/media/4509/download?inline=, sha256 6ce7019f1f7d2b46be4c9bdcad3dcd3fba2e720ecdeb3fb061c8a7073581c306, retrieved 2026-11-10) Table 1 states 4.40% over $0 but not over $6,210, 4.82% over $6,210 but not over $31,050, and 5.70% over $31,050, and a single 3.8% rate for 2025. It does not print the held joint edges $12,420 and $62,100. The 2024 expanded instructions (https://revenue.iowa.gov/media/4152/download?inline=, sha256 7257943544f063e3a3ec0832ade29127f23f48090da90b9b34cc1e327dc3b8cd, retrieved 2026-11-10) state the 3.8% rate for 2025 and say to enter the standard deduction reported on federal Form 1040, line 12. They do not print the 2024 brackets. https://revenue.iowa.gov/press-release/2023-10-25/idr-announces-2024-individual-income-tax-brackets-and-interest-rates returned HTTP 403 on 2026-11-10.",
       "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[0].over": 31050.0,
+            "brackets.single[0].rate": 0.057,
+            "brackets.single[1].over": 6210.0,
+            "brackets.single[1].rate": 0.0482,
+            "brackets.single[2].rate": 0.044
+          },
+          "url": "https://revenue.iowa.gov/media/4509/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "6ce7019f1f7d2b46be4c9bdcad3dcd3fba2e720ecdeb3fb061c8a7073581c306"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single": "federal_standard_deduction",
+            "deduction_mfj": "federal_standard_deduction"
+          },
+          "url": "https://revenue.iowa.gov/media/4152/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "7257943544f063e3a3ec0832ade29127f23f48090da90b9b34cc1e327dc3b8cd"
+        },
         {
           "tax_year": 2025,
           "values": {
@@ -38,6 +63,26 @@
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "171f7909ffeed08dae5103ba749e57ebab66a28b2899117a8e84c44787641ad2"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.038
+          },
+          "url": "https://revenue.iowa.gov/media/4509/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "6ce7019f1f7d2b46be4c9bdcad3dcd3fba2e720ecdeb3fb061c8a7073581c306"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.038
+          },
+          "url": "https://revenue.iowa.gov/media/4152/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "7257943544f063e3a3ec0832ade29127f23f48090da90b9b34cc1e327dc3b8cd"
         }
       ]
     }

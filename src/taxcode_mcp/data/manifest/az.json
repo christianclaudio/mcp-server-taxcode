@@ -40,7 +40,29 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "An owner-saved browser snapshot of https://www.azleg.gov/ars/43/01011.htm on 2026-11-02 (snapshot sha256 fad63b6eeb5ad42ceae0f08161608ad4ac232370d5a39d153311b748d4289a5f) prints graduated rates through A.R.S. § 43-1011(A)(6), including a 4.50 percent top rate for taxable years beginning after December 31, 2018, and refers to paragraphs 7, 8, and 9 without including them. It does not state the held 2.5 percent flat rate. The page was blocked from the cloud agent's network on 2026-11-02 and returned HTTP 200 from another network."
+      "verification_note": "The 2024 Form 140 booklet (https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140Booklet.pdf, sha256 32d7b7597c926ef7afcda7dded77e68fe050904ab8cff3a88970d73137d2ef7c, retrieved 2026-11-10) states a 2.5% rate for all income levels and filing statuses and a 2024 standard deduction of $14,600 single or married filing separate, $29,200 joint, and $21,900 head of household. The withholding page (https://azdor.gov/individuals/withholding-tax-individual, sha256 1895dd4a607ba8d21cd4a145a39982a3044a0666e28d053b3212910cd4132d77, retrieved 2026-11-10) states the tax rate for Arizona taxable income is 2.5% for tax year 2023 and beyond. The table holds one 2.5% rate and a federal_standard_deduction token, with no schedule for a year before 2023. An owner-saved browser snapshot of https://www.azleg.gov/ars/43/01011.htm on 2026-11-02 (snapshot sha256 fad63b6eeb5ad42ceae0f08161608ad4ac232370d5a39d153311b748d4289a5f) prints graduated rates through A.R.S. § 43-1011(A)(6), including a 4.50 percent top rate for taxable years beginning after December 31, 2018, and does not state 2.5%.",
+      "year_sources": [
+        {
+          "tax_year": 2023,
+          "values": {
+            "rate": 0.025
+          },
+          "url": "https://azdor.gov/individuals/withholding-tax-individual",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "1895dd4a607ba8d21cd4a145a39982a3044a0666e28d053b3212910cd4132d77"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "rate": 0.025
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140Booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "32d7b7597c926ef7afcda7dded77e68fe050904ab8cff3a88970d73137d2ef7c"
+        }
+      ]
     }
   ]
 }
