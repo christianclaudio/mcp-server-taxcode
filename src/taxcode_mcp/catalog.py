@@ -36,6 +36,11 @@ from typing import Any
 DATA_DIR = Path(__file__).resolve().parent / "data"
 SCHEMA_VERSION = 1
 NOT_RECORDED = "not_recorded"
+# Optional list on a rate table's ``params`` and on its manifest entry. The key is the
+# unknown-value token; the value is a list of ``{"param", "tax_year", "reason"}`` objects,
+# one per year the lookup must not carry forward.
+UNSOURCED_YEARS = NOT_RECORDED
+UNSOURCED_FIELDS: tuple[str, ...] = ("param", "tax_year", "reason")
 
 # Field order is the order written to the data files.
 STATUTE_FIELDS: tuple[str, ...] = (
@@ -227,12 +232,41 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
 # tax credit base).
 FEDERAL_ALLOWANCE = "federal_standard_deduction"
 _YEARLY_KEY_RE = re.compile(r"^(?P<name>[a-z_]+?)_(?P<year>\d{4})$")
+
+
+def series_param(name: str) -> str:
+    """The marker ``param`` for a ``_for_year`` series name.
+
+    ``deduction_single`` and ``credit_phaseout_mfj`` name the base (``deduction``,
+    ``credit_phaseout``). A name with no filing-status suffix is itself. The suffix
+    list is :data:`FILING_STATUSES`.
+    """
+    for status in FILING_STATUSES:
+        suffix = f"_{status}"
+        if name.endswith(suffix):
+            return name[: -len(suffix)]
+    return name
+
+
 # The text each per-year step carries: ``flat_by_year`` its whole ``rate_desc``; ``georgia``
 # the ``law`` that set that year's rate, which the rate prose cites.
 YEAR_STEP_TEXT: dict[str, str] = {"flat_by_year": "rate_desc", "georgia": "law"}
 ALLOWANCE_NAMES = ("deduction", "exemption")
 FILING_STATUSES = ("single", "mfj")
 REGIMES = frozenset({"none", "flat", "graduated"})
+# Georgia's graduated schedules start in 2018. A year before that reads the 2024 flat-rate
+# standard deduction, and the revenue-test note for a year after 2026 reads the 2026
+# deduction and rate step. ``compliance.py`` imports these names. A ``not_recorded`` marker
+# on a year in :data:`MARKER_ANCHORS`, or on Georgia ``standard_deduction`` before
+# :data:`GA_FIRST_GRADUATED_YEAR`, is rejected at load.
+GA_FIRST_GRADUATED_YEAR = 2018
+GA_FLAT_RATE_FIRST_YEAR = 2024
+GA_LAST_FIXED_YEAR = 2026
+MARKER_ANCHORS: tuple[tuple[str, str, int], ...] = (
+    ("GA", "standard_deduction", GA_LAST_FIXED_YEAR),
+    ("GA", "rates", GA_LAST_FIXED_YEAR),
+    ("GA", "standard_deduction", GA_FLAT_RATE_FIRST_YEAR),
+)
 # The years a registry table's ``brackets_YYYY`` and ``rate_desc_YYYY`` keys may name.
 # 2019-2023 are the earlier schedules a table holds when they differ from 2024.
 REGISTRY_YEARS = (2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030)
@@ -546,6 +580,7 @@ def load_catalog(root: Path = DATA_DIR, *, with_manifest: bool = False) -> Catal
                     *((FRENCH_SOURCE,) if FRENCH_SOURCE in entry else ()),
                     *((VERIFICATION_NOTE,) if VERIFICATION_NOTE in entry else ()),
                     *((YEAR_SOURCES,) if YEAR_SOURCES in entry else ()),
+                    *((UNSOURCED_YEARS,) if UNSOURCED_YEARS in entry else ()),
                 )
                 _check_keys(entry, fields, where)
                 catalog.manifest.append({**entry, "_jurisdiction": code})
@@ -776,15 +811,115 @@ def _check_canada_federal(params: Mapping[str, Any], where: str) -> None:
         _check_amount(params[name], f"{where}.{name}")
 
 
-def _check_params(model: str, params: Any, where: str) -> None:
+def _year_keyed_bases(params: Mapping[str, Any]) -> set[str]:
+    """Series a table can mark: ``_YYYY`` bases, plus ``rates`` when that key is present.
+
+    Model validation has already required a ``rates`` value to be ``from_year`` steps.
+    """
+    found: set[str] = set()
+    for key in params:
+        match = _YEARLY_KEY_RE.match(key)
+        if match is not None:
+            found.add(series_param(match["name"]))
+    if "rates" in params:
+        found.add("rates")
+    return found
+
+
+def _sourced_for_year(params: Mapping[str, Any], param: str, year: int) -> bool:
+    """Whether ``param`` already holds a real value for ``year``."""
+    keys = (
+        f"{param}_{year}",
+        *(f"{param}_{status}_{year}" for status in FILING_STATUSES),
+    )
+    if any(key in params for key in keys):
+        return True
+    if param != "rates":
+        return False
+    return any(step["from_year"] == year for step in params["rates"])
+
+
+def _check_not_recorded(code: str, params: Mapping[str, Any], markers: Any, where: str) -> None:
+    """Reject a malformed ``not_recorded`` list, or one the lookup would misread.
+
+    ``param`` is the base series (:func:`series_param`). A marker on a
+    :data:`MARKER_ANCHORS` year is rejected because compliance reads that year
+    while answering a different one. A Georgia ``standard_deduction`` marker
+    before :data:`GA_FIRST_GRADUATED_YEAR` is rejected because that path reads
+    :data:`GA_FLAT_RATE_FIRST_YEAR` instead.
+    """
+    at = f"{where}.{UNSOURCED_YEARS}"
+    _check(isinstance(markers, list) and bool(markers), f"{at}: must be a non-empty list")
+    bases = _year_keyed_bases(params)
+    previous: int | None = None
+    seen: set[tuple[str, int]] = set()
+    for index, marker in enumerate(markers):
+        item = f"{at}[{index}]"
+        _check(
+            isinstance(marker, dict) and list(marker) == list(UNSOURCED_FIELDS),
+            f"{item}: fields must be exactly {list(UNSOURCED_FIELDS)}",
+        )
+        param = marker["param"]
+        year = marker["tax_year"]
+        reason = marker["reason"]
+        if not isinstance(param, str) or not param:
+            _check(False, f"{item}.param: must be a non-empty string")
+        elif series_param(param) != param:
+            _check(
+                False,
+                f"{item}: param {param!r} names one filing status; use {series_param(param)!r}",
+            )
+        if type(year) is not int:
+            _check(False, f"{item}.tax_year: must be an integer")
+        elif previous is not None and year < previous:
+            _check(False, f"{item}.tax_year: must be in ascending order")
+        else:
+            previous = year
+        if not isinstance(reason, str) or not reason:
+            _check(False, f"{item}.reason: must be a non-empty string")
+        _check((param, year) not in seen, f"{item}: duplicate {param} for tax year {year}")
+        seen.add((param, year))
+        _check(
+            param in bases,
+            f"{item}: param {param!r} is not a year-keyed series on this table",
+        )
+        if (code, param, year) in MARKER_ANCHORS:
+            _check(
+                False,
+                f"{item}: cannot mark {param} for tax year {year}; "
+                "compliance reads that year for other tax years",
+            )
+        if code == "GA" and param == "standard_deduction" and year < GA_FIRST_GRADUATED_YEAR:
+            _check(
+                False,
+                f"{item}: cannot mark standard_deduction for tax year {year}; "
+                f"a year before {GA_FIRST_GRADUATED_YEAR} reads the "
+                f"{GA_FLAT_RATE_FIRST_YEAR} standard deduction",
+            )
+        _check(
+            not _sourced_for_year(params, param, year),
+            f"{item}: tax year {year} already has a sourced {param} value",
+        )
+
+
+def _check_params(model: str, params: Any, where: str, *, code: str) -> None:
     _check(isinstance(params, dict), f"{where}: params must be an object")
     where = f"{where} params"
+    has_markers = UNSOURCED_YEARS in params
+    markers = params[UNSOURCED_YEARS] if has_markers else None
+    if has_markers:
+        params = {key: value for key, value in params.items() if key != UNSOURCED_YEARS}
     if model == "registry":
         _check_registry(params, where)
-        return
-    if model == "canada_federal":
+    elif model == "canada_federal":
         _check_canada_federal(params, where)
-        return
+    else:
+        _check_model_params(model, params, where)
+    if has_markers:
+        _check_not_recorded(code, params, markers, where)
+
+
+def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> None:
     fields = list(RATE_MODEL_PARAMS[model])
     if fields[0] == "allowance":
         first = next(iter(params), None)
@@ -980,7 +1115,7 @@ def rate_table_document(path: Path, code: str) -> dict[str, Any]:
         isinstance(doc["source_url"], str) and bool(doc["source_url"]),
         f"{where}: source_url must be a non-empty string or {NOT_RECORDED!r}",
     )
-    _check_params(model, doc["params"], where)
+    _check_params(model, doc["params"], where, code=code)
     document: dict[str, Any] = doc
     return document
 
@@ -1310,6 +1445,23 @@ def _year_source_errors(entry: Mapping[str, Any], params: Any, where: str) -> li
     return errors
 
 
+def _unsourced_manifest_errors(
+    entry: Mapping[str, Any], params: Mapping[str, Any], where: str
+) -> list[str]:
+    """The manifest list and the rate table's list are the same object, or both absent."""
+    if entry["kind"] != "rate_table":
+        if UNSOURCED_YEARS in entry:
+            return [f"{where}: {UNSOURCED_YEARS} belongs only on a rate_table entry"]
+        return []
+    table_has = UNSOURCED_YEARS in params
+    entry_has = UNSOURCED_YEARS in entry
+    if not table_has and not entry_has:
+        return []
+    if not table_has or not entry_has or entry[UNSOURCED_YEARS] != params[UNSOURCED_YEARS]:
+        return [f"{where}: {UNSOURCED_YEARS} must match the rate table"]
+    return []
+
+
 def manifest_errors(catalog: Catalog) -> list[str]:
     """Check every manifest entry against its row's source record, and the reverse.
 
@@ -1358,6 +1510,11 @@ def manifest_errors(catalog: Catalog) -> list[str]:
             else:
                 params = catalog.rate_tables.get(str(entry["_jurisdiction"]), {}).get("params")
             errors.extend(_year_source_errors(entry, params, where))
+        if key[0] == "rate_table":
+            marker_params = catalog.rate_tables[str(entry["_jurisdiction"])]["params"]
+        else:
+            marker_params = {}
+        errors.extend(_unsourced_manifest_errors(entry, marker_params, where))
     for kind, row_id in sorted(set(rows) - seen):
         errors.append(f"{kind} {row_id!r}: no manifest entry")
     return errors

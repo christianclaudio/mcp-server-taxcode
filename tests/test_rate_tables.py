@@ -14,6 +14,7 @@ import pytest
 from taxcode_mcp.catalog import (
     DATA_DIR,
     RATE_TABLE_MODELS,
+    UNSOURCED_YEARS,
     CatalogError,
     dump_json,
     load_rate_tables,
@@ -540,9 +541,10 @@ def test_tables_hold_the_printed_2024_figures(
 
 def test_georgia_rates_follow_hb_1015_and_hb_111() -> None:
     # HB 1015 (2024): 5.39% for 2024. HB 111 (2025): 5.19% for 2025.
-    rates = compliance.RATE_TABLES["GA"]["rates"]
-    assert compliance._year_step(rates, 2024)["rate"] == 0.0539
-    assert compliance._year_step(rates, 2025)["rate"] == 0.0519
+    ga = compliance.RATE_TABLES["GA"]
+    rates = ga["rates"]
+    assert compliance._year_step(rates, 2024, ga)["rate"] == 0.0539
+    assert compliance._year_step(rates, 2025, ga)["rate"] == 0.0519
 
 
 def _resident_tax(code: str, tax_year: int, agi: float, status: str = "single") -> dict[str, Any]:
@@ -562,7 +564,8 @@ def _resident_tax(code: str, tax_year: int, agi: float, status: str = "single") 
 def test_colorado_rate_follows_the_tax_year() -> None:
     # DOR income tax guide: 4.5% (2019), 4.55% (2020), 4.5% (2021), 4.4% (2022, 2023), 4.25%
     # (2024, SB 24-228), 4.4% (2025). The deduction is that year's federal standard deduction.
-    rates = compliance.RATE_TABLES["CO"]["rates"]
+    co = compliance.RATE_TABLES["CO"]
+    rates = co["rates"]
     for tax_year, rate in (
         (2019, 0.045),
         (2020, 0.0455),
@@ -572,7 +575,7 @@ def test_colorado_rate_follows_the_tax_year() -> None:
         (2024, 0.0425),
         (2025, 0.044),
     ):
-        assert compliance._year_step(rates, tax_year)["rate"] == rate, tax_year
+        assert compliance._year_step(rates, tax_year, co)["rate"] == rate, tax_year
     assert compliance.RATE_TABLES["CO"]["deduction"] == "federal_standard_deduction"
     # 100,000 - 14,600 = 85,400 taxable (2024); 100,000 - 13,850 = 86,150 (2023);
     # 100,000 - 15,750 = 84,250 (2025).
@@ -1496,3 +1499,110 @@ def test_batch4_federal_standard_deduction_readers() -> None:
     assert _resident_tax("AZ", 2026, 16100.0)["estimated_state_tax"] == 0.0
     assert _tax("NM", 2024, 14600.0) == 0.0
     assert _tax("NM", 2025, 15750.0) == 0.0
+
+
+def _marker(param: str, year: int, reason: str) -> dict[str, Any]:
+    return {"param": param, "tax_year": year, "reason": reason}
+
+
+@pytest.fixture
+def marked() -> Any:
+    touched: list[dict[str, Any]] = []
+
+    def apply(code: str, markers: list[dict[str, Any]]) -> None:
+        table = compliance.RATE_TABLES[code]
+        table[UNSOURCED_YEARS] = markers
+        touched.append(table)
+
+    yield apply
+    for table in touched:
+        table.pop(UNSOURCED_YEARS, None)
+
+
+def test_a_marked_year_stops_and_a_later_unmarked_year_carries(marked: Any) -> None:
+    reason = "No DFA standard-deduction figure is published for tax year 2027."
+    marked("AR", [_marker("deduction", 2027, reason)])
+    with pytest.raises(SafetyViolationError, match="No deduction is sourced for tax year 2027"):
+        _resident_tax("AR", 2027, 10000.0)
+    carried = compliance._for_year(compliance.RATE_TABLES["AR"], "deduction_single", 2028)
+    assert carried == compliance._for_year(compliance.RATE_TABLES["AR"], "deduction_single", 2026)
+    assert (
+        _resident_tax("AR", 2026, 10000.0)["estimated_state_tax"]
+        == _resident_tax("AR", 2028, 10000.0)["estimated_state_tax"]
+    )
+
+
+def test_for_year_strips_a_status_suffix_before_the_marker() -> None:
+    params = {
+        "credit_base_single_2025": 10.0,
+        UNSOURCED_YEARS: [_marker("credit_base", 2026, "No credit base is published for 2026.")],
+    }
+    with pytest.raises(SafetyViolationError, match="No credit base is sourced for tax year 2026"):
+        compliance._for_year(params, "credit_base_single", 2026)
+    assert compliance._for_year(params, "credit_base_single", 2027) == 10.0
+    plain = {"credit_base_single_2025": 10.0}
+    assert compliance._for_year(plain, "credit_base_single", 2026) == 10.0
+
+
+def test_a_marked_rate_step_stops_only_that_year(marked: Any) -> None:
+    marked("NC", [_marker("rates", 2027, "No rate is published for tax year 2027.")])
+    with pytest.raises(SafetyViolationError, match="No rates is sourced for tax year 2027"):
+        _resident_tax("NC", 2027, 50000.0)
+    assert _resident_tax("NC", 2026, 50000.0)["estimated_state_tax"] > 0
+
+
+def test_a_regime_marker_uses_the_requested_year(marked: Any) -> None:
+    marked("IA", [_marker("regime", 2026, "No regime is published for tax year 2026.")])
+    with pytest.raises(SafetyViolationError, match="No regime is sourced for tax year 2026"):
+        _resident_tax("IA", 2026, 50000.0)
+    assert _resident_tax("IA", 2025, 50000.0)["estimated_state_tax"] > 0
+    compliance.RATE_TABLES["IA"].pop(UNSOURCED_YEARS)
+    marked("IA", [_marker("regime", 2025, "No regime is published for tax year 2025.")])
+    with pytest.raises(SafetyViolationError, match="No regime is sourced for tax year 2025"):
+        _resident_tax("IA", 2025, 50000.0)
+    assert _resident_tax("IA", 2026, 50000.0)["estimated_state_tax"] > 0
+
+
+def test_a_formula_marker_stops_the_requested_year(marked: Any) -> None:
+    marked("ND", [_marker("top_bracket", 2026, "No top bracket is published for tax year 2026.")])
+    with pytest.raises(SafetyViolationError, match="No top bracket is sourced for tax year 2026"):
+        _resident_tax("ND", 2026, 100000.0)
+    assert "estimated_state_tax" in _resident_tax("ND", 2025, 100000.0)
+
+
+def test_a_dependent_exemption_marker_is_read_only_when_dependents_are_passed(marked: Any) -> None:
+    reason = "No dependent exemption is published for tax year 2026."
+    marked("UT", [_marker("dependent_exemption", 2026, reason)])
+    with pytest.raises(
+        SafetyViolationError, match="No dependent exemption is sourced for tax year 2026"
+    ):
+        compliance.evaluate_state_residency(
+            jurisdiction="UT",
+            days_in_state=300,
+            is_domiciled=True,
+            federal_agi=50000.0,
+            tax_year=2026,
+            dependents=1,
+        )
+    assert _resident_tax("UT", 2026, 50000.0)["estimated_state_tax"] >= 0
+
+
+async def test_marked_year_reaches_the_client_as_a_tool_error(marked: Any) -> None:
+    from fastmcp import Client
+
+    from taxcode_mcp.server import create_server
+
+    reason = "No DFA standard-deduction figure is published for tax year 2027."
+    marked("AR", [_marker("deduction", 2027, reason)])
+    async with Client(create_server()) as client:
+        result = await client.call_tool(
+            "compliance_evaluate_state_residency",
+            {"jurisdiction": "AR", "days_in_state": 0, "tax_year": 2027},
+            raise_on_error=False,
+        )
+    assert result.is_error
+    assert result.structured_content is None
+    text = result.content[0].text
+    assert isinstance(text, str)
+    assert "No deduction is sourced for tax year 2027." in text
+    assert reason in text
