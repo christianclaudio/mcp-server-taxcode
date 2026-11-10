@@ -26,8 +26,30 @@
       "content_sha256": "6eb65377482d2f6627a16a72f362ef40a410ede450b0a396987d8d17397096b7",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "not_recorded",
-      "verification_note": "36 M.R.S. section 5111 prints base tables, including single $21,050 / $50,000, not the held 2024 indexed dollars."
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[0].over": 61600.0,
+            "brackets.single[0].rate": 0.0715,
+            "brackets.single[1].over": 26050.0,
+            "brackets.single[1].rate": 0.0675,
+            "brackets.single[2].rate": 0.058,
+            "brackets.mfj[0].over": 123250.0,
+            "brackets.mfj[0].rate": 0.0715,
+            "brackets.mfj[1].over": 52100.0,
+            "brackets.mfj[1].rate": 0.0675,
+            "brackets.mfj[2].rate": 0.058,
+            "deduction_single": "federal_standard_deduction",
+            "deduction_mfj": "federal_standard_deduction"
+          },
+          "url": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/24_1040me_book_gen_instr.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d99862486f0b1fe6b23350dbb21ff955acdf73eacf4072e72bbe23d29d70d25d"
+        }
+      ]
     }
   ]
 }

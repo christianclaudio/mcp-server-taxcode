@@ -531,6 +531,7 @@ def test_rate_tables_have_one_source_record_each_with_nothing_invented() -> None
         "IN",
         "KS",
         "MA",
+        "ME",
         "NC",
         "ND",
         "NJ",

@@ -66,7 +66,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "The 2024 Franchise Tax Board tax rate schedules print 12.30 percent as the top schedule rate. Form 540 booklet Line 62 (Mental Health Services Tax; Behavioral Health Services Tax from 2025) adds 1 percent on taxable income over $1,000,000 (R&TC section 17043), so the combined top rate modeled here is 13.3 percent, applied once in the brackets. The schedules do not state the standard deduction.",
+      "verification_note": "The 2024 Form 540 booklet (https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf, sha256 446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374, retrieved 2026-11-10) prints a standard deduction of $5,540 single / $11,080 joint and 12.30% as the top schedule rate over $721,314 single and $1,442,628 joint. The 2025 Form 540 booklet (https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf, sha256 b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1, retrieved 2026-11-10) prints $5,706 single / $11,412 joint and 12.30% over $742,953 single and $1,485,906 joint. Both booklets compute a separate 1% tax on taxable income over $1,000,000 (Mental Health Services Tax in 2024; Behavioral Health Services Tax in 2025, Form 540 line 62). They do not print 13.3%, and they do not print 12.3% at $1,000,000 on a joint return. The held top brackets fold that 1% into the schedule.",
       "year_sources": [
         {
           "tax_year": 2024,
@@ -119,6 +119,60 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction.single": 5540.0,
+            "deduction.mfj": 11080.0
+          },
+          "url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_2025.single": 5706.0,
+            "deduction_2025.mfj": 11412.0,
+            "brackets_2025.single[1].over": 742953.0,
+            "brackets_2025.single[1].rate": 0.123,
+            "brackets_2025.single[2].over": 445771.0,
+            "brackets_2025.single[2].rate": 0.113,
+            "brackets_2025.single[3].over": 371479.0,
+            "brackets_2025.single[3].rate": 0.103,
+            "brackets_2025.single[4].over": 72724.0,
+            "brackets_2025.single[4].rate": 0.093,
+            "brackets_2025.single[5].over": 57542.0,
+            "brackets_2025.single[5].rate": 0.08,
+            "brackets_2025.single[6].over": 41452.0,
+            "brackets_2025.single[6].rate": 0.06,
+            "brackets_2025.single[7].over": 26264.0,
+            "brackets_2025.single[7].rate": 0.04,
+            "brackets_2025.single[8].over": 11079.0,
+            "brackets_2025.single[8].rate": 0.02,
+            "brackets_2025.single[9].rate": 0.01,
+            "brackets_2025.mfj[2].over": 891542.0,
+            "brackets_2025.mfj[2].rate": 0.113,
+            "brackets_2025.mfj[3].over": 742958.0,
+            "brackets_2025.mfj[3].rate": 0.103,
+            "brackets_2025.mfj[4].over": 145448.0,
+            "brackets_2025.mfj[4].rate": 0.093,
+            "brackets_2025.mfj[5].over": 115084.0,
+            "brackets_2025.mfj[5].rate": 0.08,
+            "brackets_2025.mfj[6].over": 82904.0,
+            "brackets_2025.mfj[6].rate": 0.06,
+            "brackets_2025.mfj[7].over": 52528.0,
+            "brackets_2025.mfj[7].rate": 0.04,
+            "brackets_2025.mfj[8].over": 22158.0,
+            "brackets_2025.mfj[8].rate": 0.02,
+            "brackets_2025.mfj[9].rate": 0.01
+          },
+          "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1"
         }
       ]
     },

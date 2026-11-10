@@ -27,7 +27,7 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Form 40 booklet 2024 (24f40bk.pdf) standard-deduction chart page 9: maximum $3,000 single / $8,500 joint (AGI phase-down not modeled). Line 13 personal exemption $1,500 single / $3,000 joint. Federal income tax deduction worksheet and dependent-exemption chart are not modeled. 2022 Form 40 What's New cites Acts 2022-292 and 2022-297 for the current standard-deduction chart. Tax years 2019-2021: NBER TAXSIM archive copies of the ADOR Form 40 booklets (standard-deduction chart page 9 maximum $2,500 single / $7,500 joint; page 6 personal exemption $1,500 single / $3,000 joint). Tax year 2018: NBER TAXSIM archive copy of the ADOR Form 40 (2-page form; page 1 Filing Status/Exemptions $1,500 single / $3,000 joint; standard-deduction chart not in that file).",
+      "verification_note": "Form 40 booklet 2024 (24f40bk.pdf) standard-deduction chart page 9: maximum $3,000 single / $8,500 joint (AGI phase-down not modeled). Line 13 personal exemption $1,500 single / $3,000 joint. Federal income tax deduction worksheet and dependent-exemption chart are not modeled. 2022 Form 40 What's New cites Acts 2022-292 and 2022-297 for the current standard-deduction chart. Tax years 2019-2021: NBER TAXSIM archive copies of the ADOR Form 40 booklets (standard-deduction chart page 9 maximum $2,500 single / $7,500 joint; page 6 personal exemption $1,500 single / $3,000 joint). Tax year 2018: NBER TAXSIM archive copy of the ADOR Form 40 (2-page form; page 1 Filing Status/Exemptions $1,500 single / $3,000 joint; standard-deduction chart not in that file). ADOR individual income tax filing information (https://www.revenue.alabama.gov/individual-corporate/individual-income-tax-filing-information/, sha256 7f883430000830825690ac25e468a3762731ae1c15c26b85bcdc775a3c421f52, retrieved 2026-11-10) states the brackets (2% on the first $500 single or $1,000 joint, 4% on the next $2,500 single or $5,000 joint, 5% over $3,000 single or $6,000 joint) and a personal exemption of $1,500 single / $3,000 joint. It does not state the standard-deduction amounts.",
       "year_sources": [
         {
           "tax_year": 2018,
@@ -91,6 +91,27 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "c200edd87819d5e9eb21f784dc6aae5d05c38155125fae0c045e57d6d3bb424c"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].rate": 0.02,
+            "exemption_single": 1500.0,
+            "exemption_mfj": 3000.0
+          },
+          "url": "https://www.revenue.alabama.gov/individual-corporate/individual-income-tax-filing-information/",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "7f883430000830825690ac25e468a3762731ae1c15c26b85bcdc775a3c421f52"
         }
       ]
     }
