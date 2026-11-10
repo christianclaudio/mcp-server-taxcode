@@ -1432,6 +1432,11 @@ def test_california_rate_description_names_mhst_or_bhst_by_schedule_year() -> No
     assert "Mental Health Services Tax" not in desc
     with pytest.raises(SafetyViolationError, match="tax year 2026"):
         server.evaluate_state_residency(**kwargs, tax_year=2026)
+    desc_2027 = server.evaluate_state_residency(**kwargs, tax_year=2027)["tax_computation"][
+        "rate_description"
+    ]
+    assert "tax year 2027 brackets are the 2026 schedule" in desc_2027
+    assert "The standard deduction is the 2025 amount" in desc_2027
 
 
 def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:

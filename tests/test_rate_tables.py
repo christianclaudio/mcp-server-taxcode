@@ -1536,10 +1536,12 @@ def test_pdf_schedules_match_the_hashed_files() -> None:
         None,
     ]
     ca = compliance._for_year(compliance.RATE_TABLES["CA"], "brackets", 2026)
-    assert ca["single"][0] == {"over": 768213.0, "rate": 0.123}
+    assert ca["single"][0] == {"over": 1000000.0, "rate": 0.133}
+    assert ca["single"][1] == {"over": 768213.0, "rate": 0.123}
     assert ca["single"][-1] == {"over": None, "rate": 0.01}
-    assert ca["mfj"][0] == {"over": 1536426.0, "rate": 0.123}
-    assert len(ca["single"]) == 9 and len(ca["mfj"]) == 9
+    assert ca["mfj"][0] == {"over": 1536426.0, "rate": 0.133}
+    assert ca["mfj"][1] == {"over": 1000000.0, "rate": 0.123}
+    assert len(ca["single"]) == 10 and len(ca["mfj"]) == 10
     ia = compliance._for_year(compliance.RATE_TABLES["IA"], "brackets", 2021)
     assert ia["single"][0] == {"over": 75420.0, "rate": 0.0853}
     assert ia["single"][-1] == {"over": None, "rate": 0.0033}

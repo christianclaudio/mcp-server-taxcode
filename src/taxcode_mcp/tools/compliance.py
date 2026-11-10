@@ -339,12 +339,12 @@ def _top_rate(table: dict[str, Any], tax_year: int) -> float:
     return max(float(s["rate"]) for s in _for_year(table, "brackets", tax_year)["single"])
 
 
-# Official schedule coverage per state. CA holds 2024 (unsuffixed) and 2025 (_2025);
-# NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024 and the 2025 resident
-# booklet. A year outside the published window uses the nearest held year and gets an
-# estimate label naming that year.
+# Official schedule coverage per state. CA holds 2024 (unsuffixed), 2025, and the
+# 2026 rate schedules. NJ/NY/CT figures cover 2024-2025 identically; MD holds 2024
+# and the 2025 resident booklet. A year outside the published window uses the nearest
+# held year and gets an estimate label naming that year.
 PUBLISHED_SCHEDULE_YEARS: dict[str, tuple[str, int, int]] = {
-    "CA": ("California", 2024, 2025),
+    "CA": ("California", 2024, 2026),
     "NJ": ("New Jersey", 2024, 2025),
     "NY": ("New York", 2024, 2025),
     "CT": ("Connecticut", 2024, 2025),
@@ -372,6 +372,13 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         # 2026 has its own single deduction (withholding guide) and the 2025 brackets.
         if state == "MD" and (2019 <= tax_year <= 2023 or tax_year == 2026):
             return ""
+        # California 2027 and later: brackets carry the 2026 schedules. The standard
+        # deduction has no 2026 key, so it stays the 2025 amount.
+        if state == "CA" and tax_year > 2026:
+            return (
+                f" [ESTIMATE: {name}'s tax year {tax_year} brackets are the 2026 schedule. "
+                "The standard deduction is the 2025 amount]"
+            )
         if state == "MD" and tax_year > last:
             carried = [
                 int(key.rsplit("_", 1)[1])
@@ -1198,8 +1205,7 @@ def evaluate_state_residency(
             if _schedule_year_used("CA", tax_year) >= 2025
             else "Mental Health Services Tax"
         )
-        # The 13.3% sentence is the Mental/Behavioral Health fold-in. A schedule that
-        # prints 12.3% as its top row (the 2026 FTB schedules) does not carry that row.
+        # The 13.3% sentence is the R&TC 17043 fold-in, present when the top row is 13.3%.
         top = ca_brackets["single"][0]
         fold_in = ""
         if top["rate"] == 0.133:

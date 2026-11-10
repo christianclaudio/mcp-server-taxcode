@@ -92,6 +92,28 @@ def test_california_top_rate_prose_names_twelve_three_plus_one() -> None:
     assert abs(delta_tax - 100.0 * 0.133) < 0.02
 
 
+def test_california_2026_and_2027_keep_the_one_percent_over_one_million() -> None:
+    """R&TC 17043's 1% stays folded into the 2026 schedule and the years that carry it.
+
+    The 2027 single golden at taxable income $1,005,020 is AGI $1,010,726
+    (the 2025 standard deduction is $5,706). That tax is 103,852.73.
+    """
+    ca = compliance.RATE_TABLES["CA"]
+    for year in (2026, 2027):
+        single = compliance._for_year(ca, "brackets", year)["single"]
+        joint = compliance._for_year(ca, "brackets", year)["mfj"]
+        assert single[0] == {"over": 1000000.0, "rate": 0.133}
+        assert joint[1] == {"over": 1000000.0, "rate": 0.123}
+        above = compliance._marginal_tax(single, 1_005_020.0)
+        at = compliance._marginal_tax(single, 1_000_000.0)
+        assert abs((above - at) - 5020.0 * 0.133) < 0.02, year
+    # 2026 still has no sourced standard deduction, so the residency call refuses.
+    # 2027 carries the 2026 brackets and the 2025 deduction.
+    got = _tax("CA", 2027, 1_010_726.0)
+    assert got["taxable_net_income"] == 1_005_020.0
+    assert got["estimated_state_tax"] == 103_852.73
+
+
 def test_ca_rtc_17041_statute_names_mhst_through_2024_and_bhst_from_2025() -> None:
     en = db.lookup_statute("ca-rtc-17041", jurisdiction="CA", lang="en")
     es = db.lookup_statute("ca-rtc-17041", jurisdiction="CA", lang="es")
