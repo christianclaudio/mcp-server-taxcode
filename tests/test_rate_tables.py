@@ -875,21 +875,32 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
 
 def test_arkansas_standard_deduction_by_year() -> None:
     # What's New: 2023 deduction $2,340 / $4,680. 2024 AR1000F instructions: $2,410 / $4,820.
-    # 2025 and 2026 have no deduction source; the 2024 amount is used.
+    # 2025 AR1000F instructions: $2,470 / $4,940. 2026 AR1000ES estimated-tax worksheet:
+    # $2,470 per taxpayer ($4,940 joint), not the final instructions. 2027 uses that amount.
     for year, single, joint in (
         (2023, 2340.0, 4680.0),
         (2024, 2410.0, 4820.0),
-        (2025, 2410.0, 4820.0),
-        (2026, 2410.0, 4820.0),
+        (2025, 2470.0, 4940.0),
+        (2026, 2470.0, 4940.0),
+        (2027, 2470.0, 4940.0),
     ):
         assert _resident_tax("AR", year, single, "single")["estimated_state_tax"] == 0.0
         assert _resident_tax("AR", year, joint, "married_joint")["estimated_state_tax"] == 0.0
-    for year in (2023, 2024):
+        assert _resident_tax("AR", year, single + 1000.0, "single")["taxable_net_income"] == 1000.0
+        assert _resident_tax("AR", year, joint + 1000.0, "married_joint")["taxable_net_income"] == 1000.0
+    # 2025 brackets: 0% through $5,599, then 2%. Income $1,000 above that band is taxed.
+    for year in (2025, 2026, 2027):
+        tax = _resident_tax("AR", year, 2470.0 + 5599.0 + 1000.0, "single")
+        assert tax["estimated_state_tax"] == 20.0, year
+        assert "the 2024 amount is used" not in tax["rate_description"]
+    desc_2026 = _resident_tax("AR", 2026, 1.0)["rate_description"]
+    assert "AR1000ES" in desc_2026
+    assert "estimated-tax worksheet" in desc_2026
+    assert "not the final instructions" in desc_2026
+    assert "2027 and later use the 2026 amount" in desc_2026
+    assert "2027 and later use the 2026 amount" in _resident_tax("AR", 2027, 1.0)["rate_description"]
+    for year in (2023, 2024, 2025):
         assert "the 2024 amount is used" not in _resident_tax("AR", year, 1.0)["rate_description"]
-    for year in (2025, 2026):
-        desc = _resident_tax("AR", year, 1.0)["rate_description"]
-        assert "the 2024 amount ($2,410 single / $4,820 joint) is used" in desc, year
-        assert "not in this table" in desc, year
 
 
 def test_rhode_island_2025_standard_deduction() -> None:
