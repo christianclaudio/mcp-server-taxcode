@@ -1322,6 +1322,25 @@ def test_manifest_not_recorded_must_match_the_rate_table(tree: tuple[Path, Path]
     ), errors
 
 
+def test_misfiled_rate_table_entry_names_the_missing_table(tree: tuple[Path, Path]) -> None:
+    """A rate_table entry filed under a jurisdiction with no table is an error, not a crash."""
+    data, _ = tree
+    moved: dict[str, Any] = {}
+
+    def take(doc: Any) -> None:
+        for index, row in enumerate(doc["entries"]):
+            if row["id"] == "ar-rates":
+                moved.update(doc["entries"].pop(index))
+                return
+
+    _edit(data / "manifest" / "ar.json", take)
+    _edit(data / "manifest" / "fl.json", lambda doc: doc["entries"].append(moved))
+    errors = manifest_errors(load_catalog(data, with_manifest=True))
+    assert (
+        "manifest/fl.json entry 'ar-rates': rate_table entry has no rate table for jurisdiction FL"
+    ) in errors
+
+
 def test_ohio_exemption_base_row_must_match_amount(tree: tuple[Path, Path]) -> None:
     data, _ = tree
 

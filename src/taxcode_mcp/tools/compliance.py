@@ -619,7 +619,7 @@ def _refuse_if_marked(params: Mapping[str, Any], param: str, tax_year: int) -> N
         if marker["param"] == param and marker["tax_year"] == tax_year:
             label = param.replace("_", " ")
             raise SafetyViolationError(
-                f"No {label} is sourced for tax year {tax_year}. {marker['reason']}"
+                f"No sourced {label} value exists for tax year {tax_year}. {marker['reason']}"
             )
 
 
@@ -834,8 +834,9 @@ def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_
         if key.startswith(f"{name}_") and key[len(name) + 1 :].isdigit()
     ]
     if value is None and yearly:
+        label = name.replace("_", " ")
         raise SafetyViolationError(
-            f"No {name.replace('_', ' ')} is sourced for tax year {tax_year}; "
+            f"No sourced {label} value exists for tax year {tax_year}; "
             f"this table holds it from tax year {min(yearly)}."
         )
     return _federal_or_amount(value, is_mfj, tax_year)
@@ -870,9 +871,7 @@ def _require_dependent_exemption(info: dict[str, Any], tax_year: int, dependents
         return 0.0
     each = _dependent_exemption_each(info, tax_year)
     if each is None:
-        raise SafetyViolationError(
-            f"No per-dependent exemption is sourced for tax year {tax_year}."
-        )
+        raise SafetyViolationError(f"No per-dependent exemption exists for tax year {tax_year}.")
     return each * float(dependents)
 
 

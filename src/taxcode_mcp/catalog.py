@@ -1510,10 +1510,14 @@ def manifest_errors(catalog: Catalog) -> list[str]:
             else:
                 params = catalog.rate_tables.get(str(entry["_jurisdiction"]), {}).get("params")
             errors.extend(_year_source_errors(entry, params, where))
+        marker_params: Mapping[str, Any] = {}
         if key[0] == "rate_table":
-            marker_params = catalog.rate_tables[str(entry["_jurisdiction"])]["params"]
-        else:
-            marker_params = {}
+            jur = str(entry["_jurisdiction"])
+            table = catalog.rate_tables.get(jur)
+            if table is None:
+                errors.append(f"{where}: rate_table entry has no rate table for jurisdiction {jur}")
+            else:
+                marker_params = table["params"]
         errors.extend(_unsourced_manifest_errors(entry, marker_params, where))
     for kind, row_id in sorted(set(rows) - seen):
         errors.append(f"{kind} {row_id!r}: no manifest entry")

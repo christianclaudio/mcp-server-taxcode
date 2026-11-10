@@ -1522,7 +1522,9 @@ def marked() -> Any:
 def test_a_marked_year_stops_and_a_later_unmarked_year_carries(marked: Any) -> None:
     reason = "No DFA standard-deduction figure is published for tax year 2027."
     marked("AR", [_marker("deduction", 2027, reason)])
-    with pytest.raises(SafetyViolationError, match="No deduction is sourced for tax year 2027"):
+    with pytest.raises(
+        SafetyViolationError, match="No sourced deduction value exists for tax year 2027"
+    ):
         _resident_tax("AR", 2027, 10000.0)
     carried = compliance._for_year(compliance.RATE_TABLES["AR"], "deduction_single", 2028)
     assert carried == compliance._for_year(compliance.RATE_TABLES["AR"], "deduction_single", 2026)
@@ -1537,7 +1539,9 @@ def test_for_year_strips_a_status_suffix_before_the_marker() -> None:
         "credit_base_single_2025": 10.0,
         UNSOURCED_YEARS: [_marker("credit_base", 2026, "No credit base is published for 2026.")],
     }
-    with pytest.raises(SafetyViolationError, match="No credit base is sourced for tax year 2026"):
+    with pytest.raises(
+        SafetyViolationError, match="No sourced credit base value exists for tax year 2026"
+    ):
         compliance._for_year(params, "credit_base_single", 2026)
     assert compliance._for_year(params, "credit_base_single", 2027) == 10.0
     plain = {"credit_base_single_2025": 10.0}
@@ -1546,26 +1550,34 @@ def test_for_year_strips_a_status_suffix_before_the_marker() -> None:
 
 def test_a_marked_rate_step_stops_only_that_year(marked: Any) -> None:
     marked("NC", [_marker("rates", 2027, "No rate is published for tax year 2027.")])
-    with pytest.raises(SafetyViolationError, match="No rates is sourced for tax year 2027"):
+    with pytest.raises(
+        SafetyViolationError, match="No sourced rates value exists for tax year 2027"
+    ):
         _resident_tax("NC", 2027, 50000.0)
     assert _resident_tax("NC", 2026, 50000.0)["estimated_state_tax"] > 0
 
 
 def test_a_regime_marker_uses_the_requested_year(marked: Any) -> None:
     marked("IA", [_marker("regime", 2026, "No regime is published for tax year 2026.")])
-    with pytest.raises(SafetyViolationError, match="No regime is sourced for tax year 2026"):
+    with pytest.raises(
+        SafetyViolationError, match="No sourced regime value exists for tax year 2026"
+    ):
         _resident_tax("IA", 2026, 50000.0)
     assert _resident_tax("IA", 2025, 50000.0)["estimated_state_tax"] > 0
     compliance.RATE_TABLES["IA"].pop(UNSOURCED_YEARS)
     marked("IA", [_marker("regime", 2025, "No regime is published for tax year 2025.")])
-    with pytest.raises(SafetyViolationError, match="No regime is sourced for tax year 2025"):
+    with pytest.raises(
+        SafetyViolationError, match="No sourced regime value exists for tax year 2025"
+    ):
         _resident_tax("IA", 2025, 50000.0)
     assert _resident_tax("IA", 2026, 50000.0)["estimated_state_tax"] > 0
 
 
 def test_a_formula_marker_stops_the_requested_year(marked: Any) -> None:
     marked("ND", [_marker("top_bracket", 2026, "No top bracket is published for tax year 2026.")])
-    with pytest.raises(SafetyViolationError, match="No top bracket is sourced for tax year 2026"):
+    with pytest.raises(
+        SafetyViolationError, match="No sourced top bracket value exists for tax year 2026"
+    ):
         _resident_tax("ND", 2026, 100000.0)
     assert "estimated_state_tax" in _resident_tax("ND", 2025, 100000.0)
 
@@ -1574,7 +1586,7 @@ def test_a_dependent_exemption_marker_is_read_only_when_dependents_are_passed(ma
     reason = "No dependent exemption is published for tax year 2026."
     marked("UT", [_marker("dependent_exemption", 2026, reason)])
     with pytest.raises(
-        SafetyViolationError, match="No dependent exemption is sourced for tax year 2026"
+        SafetyViolationError, match="No sourced dependent exemption value exists for tax year 2026"
     ):
         compliance.evaluate_state_residency(
             jurisdiction="UT",
@@ -1604,5 +1616,5 @@ async def test_marked_year_reaches_the_client_as_a_tool_error(marked: Any) -> No
     assert result.structured_content is None
     text = result.content[0].text
     assert isinstance(text, str)
-    assert "No deduction is sourced for tax year 2027." in text
+    assert "No sourced deduction value exists for tax year 2027." in text
     assert reason in text
