@@ -1599,6 +1599,19 @@ def test_a_dependent_exemption_marker_is_read_only_when_dependents_are_passed(ma
     assert _resident_tax("UT", 2026, 50000.0)["estimated_state_tax"] >= 0
 
 
+def test_unsourced_dependent_exemption_names_the_missing_source() -> None:
+    with pytest.raises(SafetyViolationError) as raised:
+        compliance.evaluate_state_residency(
+            jurisdiction="UT",
+            days_in_state=300,
+            is_domiciled=True,
+            federal_agi=30000.0,
+            tax_year=2026,
+            dependents=1,
+        )
+    assert str(raised.value) == "No sourced per-dependent exemption value exists for tax year 2026."
+
+
 async def test_marked_year_reaches_the_client_as_a_tool_error(marked: Any) -> None:
     from fastmcp import Client
 

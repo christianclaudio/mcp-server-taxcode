@@ -871,7 +871,9 @@ def _require_dependent_exemption(info: dict[str, Any], tax_year: int, dependents
         return 0.0
     each = _dependent_exemption_each(info, tax_year)
     if each is None:
-        raise SafetyViolationError(f"No per-dependent exemption exists for tax year {tax_year}.")
+        raise SafetyViolationError(
+            f"No sourced per-dependent exemption value exists for tax year {tax_year}."
+        )
     return each * float(dependents)
 
 
