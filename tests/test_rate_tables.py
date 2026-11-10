@@ -837,16 +837,15 @@ def test_utah_takes_the_taxpayer_tax_credit_off_the_tax() -> None:
 
 
 def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
-    # Form 740 packet (2018): "the standard deduction is $2,530". 2022 packet instructions:
-    # "For 2022, the standard deduction is $2,770". 2023 packet: "For 2023, the standard
-    # deduction is $2,980". 2024 e-file handbook: increased from $2,980 to $3,160.
-    # 2019-2021 have no source and use the 2018 amount. $3,270 for 2025; $3,360 for 2026.
+    # Form 740 packet: $2,530 (2018), $2,590 (2019), $2,650 (2020), $2,690 (2021),
+    # $2,770 (2022), $2,980 (2023). 2024 e-file handbook: increased from $2,980 to $3,160.
+    # $3,270 for 2025; $3,360 for 2026.
     # The rate is 5% for 2018-2022, 4.5% for 2023, 4% for 2024-2025, and 3.5% for 2026.
     for year, deduction, tax_on_10000 in (
         (2018, 2530.0, 500.0),
-        (2019, 2530.0, 500.0),
-        (2020, 2530.0, 500.0),
-        (2021, 2530.0, 500.0),
+        (2019, 2590.0, 500.0),
+        (2020, 2650.0, 500.0),
+        (2021, 2690.0, 500.0),
         (2022, 2770.0, 500.0),
         (2023, 2980.0, 450.0),
         (2024, 3160.0, 400.0),
@@ -858,7 +857,7 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
             tax = _resident_tax("KY", year, deduction + 10000.0, status)["estimated_state_tax"]
             assert tax == tax_on_10000, (year, status)
     # KRS 141.020: 5% for 2018-2022, 4.5% for 2023, 4% for 2024-2025, 3.5% from 2026.
-    # Years before 2018 still use the 2024 deduction. 2019-2021 use the 2018 amount.
+    # Years before 2018 still use the 2024 deduction. 2019-2021 have their own amounts.
     assert "Flat 5.0% rate" in _resident_tax("KY", 2018, 1.0)["rate_description"]
     assert "4.5% rate" in _resident_tax("KY", 2023, 1.0)["rate_description"]
     assert "[ESTIMATE:" not in _resident_tax("KY", 2018, 1.0)["rate_description"]
@@ -867,8 +866,8 @@ def test_kentucky_allows_one_standard_deduction_per_joint_return() -> None:
     assert "the 2024 amount is used" in _resident_tax("KY", 2017, 1.0)["rate_description"]
     for year in (2019, 2020, 2021):
         desc = _resident_tax("KY", year, 1.0)["rate_description"]
-        assert "the 2018 amount ($2,530) is used" in desc, year
-        assert "not in this table" in desc, year
+        assert "the 2018 amount" not in desc, year
+        assert "[ESTIMATE:" not in desc, year
         assert "the 2024 amount is used" not in desc, year
     for year in (2022, 2023):
         assert "the 2024 amount is used" not in _resident_tax("KY", year, 1.0)["rate_description"]
