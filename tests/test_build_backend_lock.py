@@ -19,6 +19,8 @@ from packaging.version import Version
 from scripts import gen_build_backend
 
 HASH = "0" * 64
+_DIGEST = "a" * 64
+_GLIBC = (2, 41)
 
 
 def test_build_backend_file_matches_uv_lock() -> None:
@@ -47,10 +49,51 @@ def test_group_pins_are_exact_and_inside_build_system_ranges() -> None:
         assert pins[name][0] == spec.version, (name, pins[name][0])
 
 
+def _image(*tags: str) -> str:
+    stages = ("builder", "runtime", "extra")
+    return "".join(f"FROM {tag} AS {stages[i]}\n" for i, tag in enumerate(tags))
+
+
 def test_base_python_reads_the_dockerfile() -> None:
-    assert gen_build_backend.base_python("FROM python:3.14-slim@sha256:abc AS builder\n") == "3.14"
+    text = f"FROM python:3.14-slim-trixie@sha256:{_DIGEST} AS builder\n"
+    assert gen_build_backend.base_python(text) == "3.14"
     with pytest.raises(ValueError, match="one python"):
         gen_build_backend.base_python("FROM python:3.13-slim\nFROM python:3.14-slim\n")
+
+
+def test_image_glibc_reads_the_release_in_the_tag() -> None:
+    trixie = f"python:3.14-slim-trixie@sha256:{_DIGEST}"
+    bookworm = f"python:3.12-slim-bookworm@sha256:{_DIGEST}"
+    assert gen_build_backend.image_glibc(_image(trixie, trixie)) == (2, 41)
+    assert gen_build_backend.image_glibc(_image(bookworm, bookworm)) == (2, 36)
+
+
+@pytest.mark.parametrize(
+    ("text", "match"),
+    [
+        ("", "unpinned base"),
+        ("FROM python:3.14-slim-trixie AS builder\n", "unpinned base"),
+        ("FROM python:3.14-slim-trixie@sha256:abc AS builder\n", "unpinned base"),
+        (f"FROM python:3.14-slim@sha256:{_DIGEST} AS builder\n", "no release suffix"),
+        (
+            _image(
+                f"python:3.14-slim-trixie@sha256:{_DIGEST}",
+                f"python:3.14-slim-bookworm@sha256:{_DIGEST}",
+            ),
+            "mixed releases",
+        ),
+        (
+            _image(
+                f"python:3.14-slim-sid@sha256:{_DIGEST}",
+                f"python:3.14-slim-sid@sha256:{_DIGEST}",
+            ),
+            "unknown release",
+        ),
+    ],
+)
+def test_image_glibc_rejects_a_base_it_cannot_key(text: str, match: str) -> None:
+    with pytest.raises(ValueError, match=match):
+        gen_build_backend.image_glibc(text)
 
 
 @pytest.mark.parametrize(
@@ -130,16 +173,85 @@ def test_digests_picks_one_native_wheel_per_arch() -> None:
             _wheel("markupsafe-3.0.4-cp314-cp314-win_amd64.whl", "5" * 64),
         ],
     }
-    assert gen_build_backend._digests(package, "3.14") == [x86_64, aarch64]
+    assert gen_build_backend._digests(package, "3.14", _GLIBC) == [x86_64, aarch64]
 
 
 def test_digests_prefers_the_py3_none_any_wheel() -> None:
     universal = "6" * 64
     package = {"name": "pluggy", "wheels": [_wheel("pluggy-1.6.0-py3-none-any.whl", universal)]}
-    assert gen_build_backend._digests(package, "3.14") == [universal]
+    assert gen_build_backend._digests(package, "3.14", _GLIBC) == [universal]
 
 
 def test_digests_rejects_a_missing_arch() -> None:
     wheel = _wheel("markupsafe-3.0.4-cp314-cp314-manylinux2014_x86_64.whl", "1" * 64)
     with pytest.raises(ValueError, match="no single cp314 wheel per arch"):
-        gen_build_backend._digests({"name": "markupsafe", "wheels": [wheel]}, "3.14")
+        gen_build_backend._digests({"name": "markupsafe", "wheels": [wheel]}, "3.14", _GLIBC)
+
+
+def test_digests_skips_a_manylinux_floor_above_the_image_glibc() -> None:
+    """manylinux_2_42 needs glibc newer than trixie; musllinux never qualifies."""
+    x86_64 = "1" * 64
+    aarch64 = "2" * 64
+    package = {
+        "name": "markupsafe",
+        "wheels": [
+            _wheel("markupsafe-3.0.4-cp314-cp314-manylinux_2_17_x86_64.whl", x86_64),
+            _wheel("markupsafe-3.0.4-cp314-cp314-manylinux_2_42_x86_64.whl", "7" * 64),
+            _wheel("markupsafe-3.0.4-cp314-cp314-manylinux_2_17_aarch64.whl", aarch64),
+            _wheel("markupsafe-3.0.4-cp314-cp314-manylinux_2_42_aarch64.whl", "8" * 64),
+            _wheel("markupsafe-3.0.4-cp314-cp314-musllinux_1_2_x86_64.whl", "4" * 64),
+        ],
+    }
+    assert gen_build_backend._digests(package, "3.14", _GLIBC) == [x86_64, aarch64]
+
+
+@pytest.mark.parametrize(
+    "filename",
+    [
+        "markupsafe-3.0.4-cp314-cp314-manylinux1_{arch}.whl",
+        "markupsafe-3.0.4-cp314-cp314-manylinux2010_{arch}.whl",
+        "markupsafe-3.0.4-cp314-cp314-manylinux2014_{arch}.whl",
+        "markupsafe-3.0.4-cp314-cp314-manylinux_2_36_{arch}.whl",
+    ],
+)
+def test_digests_accepts_aliases_and_an_equal_floor(filename: str) -> None:
+    x86_64 = "1" * 64
+    aarch64 = "2" * 64
+    package = {
+        "name": "markupsafe",
+        "wheels": [
+            _wheel(filename.format(arch="x86_64"), x86_64),
+            _wheel(filename.format(arch="aarch64"), aarch64),
+        ],
+    }
+    assert gen_build_backend._digests(package, "3.14", (2, 36)) == [x86_64, aarch64]
+
+
+def test_digests_uses_the_lowest_manylinux_tag_as_the_floor() -> None:
+    x86_64 = "1" * 64
+    aarch64 = "2" * 64
+    package = {
+        "name": "markupsafe",
+        "wheels": [
+            _wheel(
+                "markupsafe-3.0.4-cp314-cp314-"
+                "manylinux_2_42_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl",
+                x86_64,
+            ),
+            _wheel(
+                "markupsafe-3.0.4-cp314-cp314-manylinux_2_42_aarch64.manylinux_2_17_aarch64.whl",
+                aarch64,
+            ),
+        ],
+    }
+    assert gen_build_backend._digests(package, "3.14", _GLIBC) == [x86_64, aarch64]
+
+
+def test_digests_rejects_when_every_native_wheel_exceeds_the_image_glibc() -> None:
+    wheels = [
+        _wheel("markupsafe-3.0.4-cp314-cp314-manylinux_2_42_x86_64.whl", "1" * 64),
+        _wheel("markupsafe-3.0.4-cp314-cp314-manylinux_2_42_aarch64.whl", "2" * 64),
+        _wheel("markupsafe-3.0.4-cp314-cp314-musllinux_1_2_aarch64.whl", "3" * 64),
+    ]
+    with pytest.raises(ValueError, match="no single cp314 wheel per arch"):
+        gen_build_backend._digests({"name": "markupsafe", "wheels": wheels}, "3.14", _GLIBC)
