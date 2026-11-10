@@ -212,6 +212,84 @@
         }
       ]
     },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 768213.0,
+          "rate": 0.123
+        },
+        {
+          "over": 460927.0,
+          "rate": 0.113
+        },
+        {
+          "over": 384109.0,
+          "rate": 0.103
+        },
+        {
+          "over": 75197.0,
+          "rate": 0.093
+        },
+        {
+          "over": 59498.0,
+          "rate": 0.08
+        },
+        {
+          "over": 42861.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27157.0,
+          "rate": 0.04
+        },
+        {
+          "over": 11456.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1536426.0,
+          "rate": 0.123
+        },
+        {
+          "over": 921854.0,
+          "rate": 0.113
+        },
+        {
+          "over": 768218.0,
+          "rate": 0.103
+        },
+        {
+          "over": 150394.0,
+          "rate": 0.093
+        },
+        {
+          "over": 118996.0,
+          "rate": 0.08
+        },
+        {
+          "over": 85722.0,
+          "rate": 0.06
+        },
+        {
+          "over": 54314.0,
+          "rate": 0.04
+        },
+        {
+          "over": 22912.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
+      ]
+    },
     "not_recorded": [
       {
         "param": "brackets",
@@ -242,11 +320,6 @@
         "param": "brackets",
         "tax_year": 2023,
         "reason": "FTB schedule prints the 12.3% threshold ($698,271 / $1,396,542) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2026,
-        "reason": "FTB 2026 Schedule X/Y (sha256 17d22dcf30285cc45c692f6c7ad2805593d95d5c264887da14156d4b992643b3) prints 12.3% over $768,213 single / $1,536,426 joint and the 1% band at $11,456 single, and does not print the other indexed edges, so the schedule is not stored."
       },
       {
         "param": "deduction",

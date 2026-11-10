@@ -9,7 +9,6 @@
     "rate_desc": "Graduated top rate 4.80%",
     "rate_desc_2025": "Graduated top rate 4.70%",
     "rate_desc_2026": "Graduated top rate 4.70% (steps of $1,348, 4.70% over $9,436)",
-    "rate_desc_2027": "Graduated top rate 4.80%",
     "regime": "graduated",
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
@@ -285,76 +284,6 @@
         },
         {
           "over": 1348.0,
-          "rate": 0.02
-        },
-        {
-          "over": null,
-          "rate": 0.0
-        }
-      ]
-    },
-    "brackets_2027": {
-      "single": [
-        {
-          "over": 8911.0,
-          "rate": 0.048
-        },
-        {
-          "over": 7638.0,
-          "rate": 0.045
-        },
-        {
-          "over": 6365.0,
-          "rate": 0.04
-        },
-        {
-          "over": 5092.0,
-          "rate": 0.035
-        },
-        {
-          "over": 3819.0,
-          "rate": 0.03
-        },
-        {
-          "over": 2546.0,
-          "rate": 0.025
-        },
-        {
-          "over": 1273.0,
-          "rate": 0.02
-        },
-        {
-          "over": null,
-          "rate": 0.0
-        }
-      ],
-      "mfj": [
-        {
-          "over": 8911.0,
-          "rate": 0.048
-        },
-        {
-          "over": 7638.0,
-          "rate": 0.045
-        },
-        {
-          "over": 6365.0,
-          "rate": 0.04
-        },
-        {
-          "over": 5092.0,
-          "rate": 0.035
-        },
-        {
-          "over": 3819.0,
-          "rate": 0.03
-        },
-        {
-          "over": 2546.0,
-          "rate": 0.025
-        },
-        {
-          "over": 1273.0,
           "rate": 0.02
         },
         {

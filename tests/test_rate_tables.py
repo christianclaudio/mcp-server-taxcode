@@ -882,8 +882,8 @@ def test_arkansas_standard_deduction_by_year() -> None:
     # 2025 AR1000F instructions: $2,470 / $4,940. 2026 AR1000ES estimated-tax worksheet:
     # $2,470 per taxpayer ($4,940 joint), not the final instructions. 2027 uses that amount.
     # 2023 brackets are partial in the DFA file, so that tax call refuses.
-    # 2026 prints a 3.70% top over the same $26,399 edge; the lower bands stay the
-    # 2025 edges. 2027 keeps the 2025 schedule.
+    # 2026 withholding formula prints 0/2/3/3.4/3.70% on the $5,599/$11,199/$15,999/$26,399
+    # edges. 2027 carries that schedule; there is no 2027 source.
     ar = compliance.RATE_TABLES["AR"]
     assert compliance._for_year(ar, "deduction_single", 2023) == 2340.0
     assert compliance._for_year(ar, "deduction_mfj", 2023) == 4680.0
@@ -892,7 +892,7 @@ def test_arkansas_standard_deduction_by_year() -> None:
         _resident_tax("AR", 2023, 1.0)
     assert compliance._for_year(ar, "brackets", 2026)["single"][0]["rate"] == 0.037
     assert compliance._for_year(ar, "brackets", 2026)["single"][0]["over"] == 26399.0
-    assert compliance._for_year(ar, "brackets", 2027)["single"][0]["rate"] == 0.039
+    assert compliance._for_year(ar, "brackets", 2027)["single"][0]["rate"] == 0.037
     assert _resident_tax("AR", 2026, 2470.0)["estimated_state_tax"] == 0.0
     for year, single, joint in (
         (2024, 2410.0, 4820.0),
@@ -1506,6 +1506,46 @@ def test_batch4_ks_ms_oh_exemptions_from_cited_sources() -> None:
     assert compliance._oh_personal_exemption(oh, False, 750000.01, 2025) == 0.0
     assert compliance._oh_personal_exemption(oh, True, 749999.99, 2025) == 3800.0
     assert compliance._oh_personal_exemption(oh, True, 750000.00, 2025) == 0.0
+
+
+def test_pdf_schedules_match_the_hashed_files() -> None:
+    """Edges read from the inventory hashes, confirmed in the PDFs themselves."""
+    vt = compliance.RATE_TABLES["VT"]
+    assert [row["over"] for row in compliance._for_year(vt, "brackets", 2025)["single"]] == [
+        249700.0,
+        119700.0,
+        49400.0,
+        None,
+    ]
+    assert [row["over"] for row in compliance._for_year(vt, "brackets", 2025)["mfj"]] == [
+        304000.0,
+        199450.0,
+        82500.0,
+        None,
+    ]
+    assert [row["over"] for row in compliance._for_year(vt, "brackets", 2026)["single"]] == [
+        256300.0,
+        122850.0,
+        50750.0,
+        None,
+    ]
+    assert [row["over"] for row in compliance._for_year(vt, "brackets", 2026)["mfj"]] == [
+        312050.0,
+        204750.0,
+        84700.0,
+        None,
+    ]
+    ca = compliance._for_year(compliance.RATE_TABLES["CA"], "brackets", 2026)
+    assert ca["single"][0] == {"over": 768213.0, "rate": 0.123}
+    assert ca["single"][-1] == {"over": None, "rate": 0.01}
+    assert ca["mfj"][0] == {"over": 1536426.0, "rate": 0.123}
+    assert len(ca["single"]) == 9 and len(ca["mfj"]) == 9
+    ia = compliance._for_year(compliance.RATE_TABLES["IA"], "brackets", 2021)
+    assert ia["single"][0] == {"over": 75420.0, "rate": 0.0853}
+    assert ia["single"][-1] == {"over": None, "rate": 0.0033}
+    assert ia["single"] == ia["mfj"]
+    assert len(ia["single"]) == 9
+    assert _resident_tax("IA", 2021, 100000.0)["estimated_state_tax"] > 0
 
 
 def test_ms_2018_brackets_and_az_rate_markers() -> None:

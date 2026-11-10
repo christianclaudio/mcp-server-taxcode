@@ -132,6 +132,84 @@
         }
       ]
     },
+    "brackets_2021": {
+      "single": [
+        {
+          "over": 75420.0,
+          "rate": 0.0853
+        },
+        {
+          "over": 50280.0,
+          "rate": 0.0744
+        },
+        {
+          "over": 33520.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 25140.0,
+          "rate": 0.0596
+        },
+        {
+          "over": 15084.0,
+          "rate": 0.0563
+        },
+        {
+          "over": 6704.0,
+          "rate": 0.0414
+        },
+        {
+          "over": 3352.0,
+          "rate": 0.0225
+        },
+        {
+          "over": 1676.0,
+          "rate": 0.0067
+        },
+        {
+          "over": null,
+          "rate": 0.0033
+        }
+      ],
+      "mfj": [
+        {
+          "over": 75420.0,
+          "rate": 0.0853
+        },
+        {
+          "over": 50280.0,
+          "rate": 0.0744
+        },
+        {
+          "over": 33520.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 25140.0,
+          "rate": 0.0596
+        },
+        {
+          "over": 15084.0,
+          "rate": 0.0563
+        },
+        {
+          "over": 6704.0,
+          "rate": 0.0414
+        },
+        {
+          "over": 3352.0,
+          "rate": 0.0225
+        },
+        {
+          "over": 1676.0,
+          "rate": 0.0067
+        },
+        {
+          "over": null,
+          "rate": 0.0033
+        }
+      ]
+    },
     "brackets_2023": {
       "single": [
         {
@@ -201,6 +279,7 @@
       ]
     },
     "rate_desc_2019": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $73,710 (one schedule for every filing status; IDR 2019 statistical report, Table 1).",
+    "rate_desc_2021": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $75,420 (one schedule for every filing status; IDR 2021 statistical report, Table 1).",
     "rate_desc_2023": "Four brackets: 4.40% to $6,000, 4.82% to $30,000, 5.70% to $75,000, 6.00% over $75,000 (MFJ $12,000 / $60,000 / $150,000).",
     "rate_desc_2024": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
     "not_recorded": [
@@ -213,11 +292,6 @@
         "param": "brackets",
         "tax_year": 2020,
         "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "The 2021 Individual Income Tax Annual Statistical Report (https://revenue.iowa.gov/sites/default/files/2023-06/Individual%20Income%20Tax%20Report%202021.pdf, sha256 8ba8a2851d3045594e6077d43ad2f450766af0df43c8a17092b770babd0721df) was fetched. It prints 0.33% to $1,676 and 8.53% over $75,420 and does not print the intermediate indexed edges, so the schedule is not stored."
       },
       {
         "param": "brackets",

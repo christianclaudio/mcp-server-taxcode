@@ -239,6 +239,51 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 768213.0,
+            "brackets_2026.single[0].rate": 0.123,
+            "brackets_2026.single[1].over": 460927.0,
+            "brackets_2026.single[1].rate": 0.113,
+            "brackets_2026.single[2].over": 384109.0,
+            "brackets_2026.single[2].rate": 0.103,
+            "brackets_2026.single[3].over": 75197.0,
+            "brackets_2026.single[3].rate": 0.093,
+            "brackets_2026.single[4].over": 59498.0,
+            "brackets_2026.single[4].rate": 0.08,
+            "brackets_2026.single[5].over": 42861.0,
+            "brackets_2026.single[5].rate": 0.06,
+            "brackets_2026.single[6].over": 27157.0,
+            "brackets_2026.single[6].rate": 0.04,
+            "brackets_2026.single[7].over": 11456.0,
+            "brackets_2026.single[7].rate": 0.02,
+            "brackets_2026.single[8].over": null,
+            "brackets_2026.single[8].rate": 0.01,
+            "brackets_2026.mfj[0].over": 1536426.0,
+            "brackets_2026.mfj[0].rate": 0.123,
+            "brackets_2026.mfj[1].over": 921854.0,
+            "brackets_2026.mfj[1].rate": 0.113,
+            "brackets_2026.mfj[2].over": 768218.0,
+            "brackets_2026.mfj[2].rate": 0.103,
+            "brackets_2026.mfj[3].over": 150394.0,
+            "brackets_2026.mfj[3].rate": 0.093,
+            "brackets_2026.mfj[4].over": 118996.0,
+            "brackets_2026.mfj[4].rate": 0.08,
+            "brackets_2026.mfj[5].over": 85722.0,
+            "brackets_2026.mfj[5].rate": 0.06,
+            "brackets_2026.mfj[6].over": 54314.0,
+            "brackets_2026.mfj[6].rate": 0.04,
+            "brackets_2026.mfj[7].over": 22912.0,
+            "brackets_2026.mfj[7].rate": 0.02,
+            "brackets_2026.mfj[8].over": null,
+            "brackets_2026.mfj[8].rate": 0.01
+          },
+          "url": "https://www.ftb.ca.gov/forms/2026/2026-540-tax-rate-schedules.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "17d22dcf30285cc45c692f6c7ad2805593d95d5c264887da14156d4b992643b3"
         }
       ],
       "not_recorded": [
@@ -271,11 +316,6 @@
           "param": "brackets",
           "tax_year": 2023,
           "reason": "FTB schedule prints the 12.3% threshold ($698,271 / $1,396,542) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
-        },
-        {
-          "param": "brackets",
-          "tax_year": 2026,
-          "reason": "FTB 2026 Schedule X/Y (sha256 17d22dcf30285cc45c692f6c7ad2805593d95d5c264887da14156d4b992643b3) prints 12.3% over $768,213 single / $1,536,426 joint and the 1% band at $11,456 single, and does not print the other indexed edges, so the schedule is not stored."
         },
         {
           "param": "deduction",

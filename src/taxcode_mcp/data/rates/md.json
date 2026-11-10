@@ -212,17 +212,6 @@
         "single": 3400.0
       }
     },
-    "standard_deduction_2027": {
-      "percent_of_agi": 0.0,
-      "minimum": {
-        "single": 3350.0,
-        "mfj": 6700.0
-      },
-      "maximum": {
-        "single": 3350.0,
-        "mfj": 6700.0
-      }
-    },
     "brackets_2025": {
       "single": [
         {

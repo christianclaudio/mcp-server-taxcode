@@ -669,6 +669,10 @@ RETRIEVED = {
     "AL": "2026-11-02",
     # The CRA rate pages and the payroll and TD1 forms for the Canada table.
     "CAN": "2026-11-05",
+    # inventory.csv has no date column. summary_ab76.md records the HTML snapshots
+    # (SD ffced323…, WY 47bb2fff…) as fetched with that inventory on 2026-11-10.
+    "SD": "2026-11-10",
+    "WY": "2026-11-10",
 }
 # Rate-table sources whose pages inject per-request script tokens, so no reproducible hash.
 READ_WITHOUT_BYTES: set[str] = {"CAN"}

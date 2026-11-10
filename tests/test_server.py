@@ -1467,5 +1467,8 @@ def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:
     note = server.evaluate_state_residency(**kwargs, tax_year=2027)["tax_computation"][
         "rate_description"
     ]
-    assert "tax year 2027 brackets and deduction are not in this table; the 2025" in note
+    # 2027 is not in the inventory. Brackets carry the 2025 schedule; the deduction
+    # carries the 2026 withholding figure.
+    assert "tax year 2027 brackets are not in this table; the 2025 brackets are used" in note
+    assert "standard deduction is the 2026 amount" in note
     assert "not published yet" not in note

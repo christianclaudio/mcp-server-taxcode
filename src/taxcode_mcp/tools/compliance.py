@@ -372,6 +372,21 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         # 2026 has its own single deduction (withholding guide) and the 2025 brackets.
         if state == "MD" and (2019 <= tax_year <= 2023 or tax_year == 2026):
             return ""
+        if state == "MD" and tax_year > last:
+            carried = [
+                int(key.rsplit("_", 1)[1])
+                for key in info
+                if key.startswith("standard_deduction_")
+                and key.rsplit("_", 1)[1].isdigit()
+                and int(key.rsplit("_", 1)[1]) <= tax_year
+            ]
+            if carried and max(carried) > last:
+                ded_year = max(carried)
+                return (
+                    f" [ESTIMATE: {name}'s tax year {tax_year} brackets are not in this "
+                    f"table; the {last} brackets are used. The standard deduction is the "
+                    f"{ded_year} amount]"
+                )
         used = _schedule_year_used(state, tax_year)
         note = (
             f" [ESTIMATE: {name}'s tax year {tax_year} brackets and deduction are not in this "
@@ -1183,12 +1198,16 @@ def evaluate_state_residency(
             if _schedule_year_used("CA", tax_year) >= 2025
             else "Mental Health Services Tax"
         )
-        rate_desc = (
-            f"{_range_desc(ca_range)} "
-            f"(13.3% is 12.3% plus the 1% {ca_surtax_name} on taxable income "
-            f"over ${ca_brackets['single'][0]['over']:,.0f}, applied once)"
-            f"{_outyear_estimate_note('CA', tax_year, ca)}"
-        )
+        # The 13.3% sentence is the Mental/Behavioral Health fold-in. A schedule that
+        # prints 12.3% as its top row (the 2026 FTB schedules) does not carry that row.
+        top = ca_brackets["single"][0]
+        fold_in = ""
+        if top["rate"] == 0.133:
+            fold_in = (
+                f" (13.3% is 12.3% plus the 1% {ca_surtax_name} on taxable income "
+                f"over ${top['over']:,.0f}, applied once)"
+            )
+        rate_desc = f"{_range_desc(ca_range)}{fold_in}{_outyear_estimate_note('CA', tax_year, ca)}"
         std_ded = float(_for_year(ca, "deduction", tax_year)[_status(is_mfj)])
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
