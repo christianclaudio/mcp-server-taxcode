@@ -43,6 +43,57 @@
       "verification_note": "The 2024 Form 140 booklet (https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140Booklet.pdf, sha256 32d7b7597c926ef7afcda7dded77e68fe050904ab8cff3a88970d73137d2ef7c, retrieved 2026-11-10) states a 2.5% rate for all income levels and filing statuses and a 2024 standard deduction of $14,600 single or married filing separate, $29,200 joint, and $21,900 head of household. The withholding page (https://azdor.gov/individuals/withholding-tax-individual, sha256 1895dd4a607ba8d21cd4a145a39982a3044a0666e28d053b3212910cd4132d77, retrieved 2026-11-10) states the tax rate for Arizona taxable income is 2.5% for tax year 2023 and beyond. The table holds one 2.5% rate and a federal_standard_deduction token, with no schedule for a year before 2023. An owner-saved browser snapshot of https://www.azleg.gov/ars/43/01011.htm on 2026-11-02 (snapshot sha256 fad63b6eeb5ad42ceae0f08161608ad4ac232370d5a39d153311b748d4289a5f) prints graduated rates through A.R.S. § 43-1011(A)(6), including a 4.50 percent top rate for taxable years beginning after December 31, 2018, and does not state 2.5%.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_2018.single": 5312.0,
+            "deduction_2018.mfj": 10613.0
+          },
+          "url": "https://azdor.gov/sites/default/files/2023-05/FORMS_INDIVIDUAL_2018_140_Booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b10f6b792c8773633c2463d3f0b9c0eae9fe13c689c28feee808d8d2ecae5d8e"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/2023-03/FORMS_INDIVIDUAL_2019_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "44ba0d1e8dd41ca7740257bc9124cfbd188d74cb5e1e1d46c96b351aeff65105"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/2023-03/FORMS_INDIVIDUAL_2020_140i_0.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9126fb981c36a6c74f0417cf9ffc81d34ecc4de8c138ec0fad40c9731ce5a443"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/2023-03/FORMS_INDIVIDUAL_2021_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f042f9923e8ddbe7f62e1f7668123d9697b423e9e203b6ab75a316660a93a2f4"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/2023-03/FORMS_INDIVIDUAL_2022_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b84e9a79f8500ab0433379e0de91504f8bd13bfe6bc81ddaffdae3a20a60df50"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "rate": 0.025
@@ -53,6 +104,16 @@
           "content_sha256": "1895dd4a607ba8d21cd4a145a39982a3044a0666e28d053b3212910cd4132d77"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/2023-12/FORMS_INDIVIDUAL_2023_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "809231c3bcfcdb4adbd2ce283168b90bd0ec8286ea4cde29ea6d75f1e3d539ba"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "rate": 0.025
@@ -61,6 +122,53 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "32d7b7597c926ef7afcda7dded77e68fe050904ab8cff3a88970d73137d2ef7c"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2024_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "595cf4083cea1b1b959aa29123818083b32b2579ab9e31eff45382dc6cd1352d"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "rate",
+          "tax_year": 2018,
+          "reason": "Tax Table X is graduated 2.59%-4.54% (4.54% over $158,996 single); the full table is not stored on the flat model."
+        },
+        {
+          "param": "rate",
+          "tax_year": 2019,
+          "reason": "2019 Tax Tables X/Y were not found; the rates were graduated 2.59%-4.50% and are not stored."
+        },
+        {
+          "param": "rate",
+          "tax_year": 2020,
+          "reason": "Tax Table X/Y is graduated 2.59%-4.50% (4.50% over $163,632 single); the full table is not stored on the flat model."
+        },
+        {
+          "param": "rate",
+          "tax_year": 2021,
+          "reason": "Tax Table X/Y is graduated 2.59%-4.50% (4.50% over $166,843 single); the full table is not stored on the flat model."
+        },
+        {
+          "param": "rate",
+          "tax_year": 2022,
+          "reason": "Tax Table X/Y is graduated 2.55%/2.98% (2.98% over $28,653 single); the full table is not stored on the flat model."
         }
       ]
     }

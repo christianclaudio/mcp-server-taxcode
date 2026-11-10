@@ -30,9 +30,157 @@
       "verification_note": "The Department of Revenue general-information page confirms the $6,000 / $12,000 exemption, the $2,300 / $4,600 deduction, and the 4.4, 4, and 3.75 percent rates for 2025 through 2027. It does not state the 2024 4.70 percent rate.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "brackets_2018.single[0].over": 10000.0,
+            "brackets_2018.single[0].rate": 0.05,
+            "brackets_2018.single[1].over": 5000.0,
+            "brackets_2018.single[1].rate": 0.04,
+            "brackets_2018.single[2].over": 1000.0,
+            "brackets_2018.single[2].rate": 0.03,
+            "brackets_2018.single[3].over": null,
+            "brackets_2018.single[3].rate": 0.0,
+            "brackets_2018.mfj[0].over": 10000.0,
+            "brackets_2018.mfj[0].rate": 0.05,
+            "brackets_2018.mfj[1].over": 5000.0,
+            "brackets_2018.mfj[1].rate": 0.04,
+            "brackets_2018.mfj[2].over": 1000.0,
+            "brackets_2018.mfj[2].rate": 0.03,
+            "brackets_2018.mfj[3].over": null,
+            "brackets_2018.mfj[3].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100201.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "4e6b311db470c01f248a59dbbd109339d03c600881980e88efc69066b8adde5f"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "brackets_2019.single[0].over": 10000.0,
+            "brackets_2019.single[0].rate": 0.05,
+            "brackets_2019.single[1].over": 5000.0,
+            "brackets_2019.single[1].rate": 0.04,
+            "brackets_2019.single[2].over": 2000.0,
+            "brackets_2019.single[2].rate": 0.03,
+            "brackets_2019.single[3].over": null,
+            "brackets_2019.single[3].rate": 0.0,
+            "brackets_2019.mfj[0].over": 10000.0,
+            "brackets_2019.mfj[0].rate": 0.05,
+            "brackets_2019.mfj[1].over": 5000.0,
+            "brackets_2019.mfj[1].rate": 0.04,
+            "brackets_2019.mfj[2].over": 2000.0,
+            "brackets_2019.mfj[2].rate": 0.03,
+            "brackets_2019.mfj[3].over": null,
+            "brackets_2019.mfj[3].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100201.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "4e6b311db470c01f248a59dbbd109339d03c600881980e88efc69066b8adde5f"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "brackets_2020.single[0].over": 10000.0,
+            "brackets_2020.single[0].rate": 0.05,
+            "brackets_2020.single[1].over": 5000.0,
+            "brackets_2020.single[1].rate": 0.04,
+            "brackets_2020.single[2].over": 3000.0,
+            "brackets_2020.single[2].rate": 0.03,
+            "brackets_2020.single[3].over": null,
+            "brackets_2020.single[3].rate": 0.0,
+            "brackets_2020.mfj[0].over": 10000.0,
+            "brackets_2020.mfj[0].rate": 0.05,
+            "brackets_2020.mfj[1].over": 5000.0,
+            "brackets_2020.mfj[1].rate": 0.04,
+            "brackets_2020.mfj[2].over": 3000.0,
+            "brackets_2020.mfj[2].rate": 0.03,
+            "brackets_2020.mfj[3].over": null,
+            "brackets_2020.mfj[3].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100201.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "4e6b311db470c01f248a59dbbd109339d03c600881980e88efc69066b8adde5f"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "brackets_2021.single[0].over": 10000.0,
+            "brackets_2021.single[0].rate": 0.05,
+            "brackets_2021.single[1].over": 5000.0,
+            "brackets_2021.single[1].rate": 0.04,
+            "brackets_2021.single[2].over": 4000.0,
+            "brackets_2021.single[2].rate": 0.03,
+            "brackets_2021.single[3].over": null,
+            "brackets_2021.single[3].rate": 0.0,
+            "brackets_2021.mfj[0].over": 10000.0,
+            "brackets_2021.mfj[0].rate": 0.05,
+            "brackets_2021.mfj[1].over": 5000.0,
+            "brackets_2021.mfj[1].rate": 0.04,
+            "brackets_2021.mfj[2].over": 4000.0,
+            "brackets_2021.mfj[2].rate": 0.03,
+            "brackets_2021.mfj[3].over": null,
+            "brackets_2021.mfj[3].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100201.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "4e6b311db470c01f248a59dbbd109339d03c600881980e88efc69066b8adde5f"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "brackets_2022.single[0].over": 10000.0,
+            "brackets_2022.single[0].rate": 0.05,
+            "brackets_2022.single[1].over": 5000.0,
+            "brackets_2022.single[1].rate": 0.04,
+            "brackets_2022.single[2].over": null,
+            "brackets_2022.single[2].rate": 0.0,
+            "brackets_2022.mfj[0].over": 10000.0,
+            "brackets_2022.mfj[0].rate": 0.05,
+            "brackets_2022.mfj[1].over": 5000.0,
+            "brackets_2022.mfj[1].rate": 0.04,
+            "brackets_2022.mfj[2].over": null,
+            "brackets_2022.mfj[2].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100221.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "530899067c150c845242f7713ce239f50931769da1c79239490c3b8657b27b3c"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "brackets_2023.single[0].over": 10000.0,
+            "brackets_2023.single[0].rate": 0.05,
+            "brackets_2023.single[1].over": null,
+            "brackets_2023.single[1].rate": 0.0,
+            "brackets_2023.mfj[0].over": 10000.0,
+            "brackets_2023.mfj[0].rate": 0.05,
+            "brackets_2023.mfj[1].over": null,
+            "brackets_2023.mfj[1].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100231.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fcff36db37de10639f11d2f5188d1ecaf1f4a55edbed779042a9a1e13ffad2e5"
+        },
+        {
           "tax_year": 2024,
           "values": {
-            "dependent_exemption": 1500.0
+            "dependent_exemption": 1500.0,
+            "deduction_single": 2300.0,
+            "deduction_mfj": 4600.0,
+            "brackets_2024.single[0].over": 10000.0,
+            "brackets_2024.single[0].rate": 0.047,
+            "brackets_2024.single[1].over": null,
+            "brackets_2024.single[1].rate": 0.0,
+            "brackets_2024.mfj[0].over": 10000.0,
+            "brackets_2024.mfj[0].rate": 0.047,
+            "brackets_2024.mfj[1].over": null,
+            "brackets_2024.mfj[1].rate": 0.0
           },
           "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100241.pdf",
           "official": true,
@@ -53,6 +201,25 @@
           "content_sha256": "8b6af318b7d20acf1e91b917371afb2cc4de74be17c7306d2b9f7620ff3e0e5e"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single": 2300.0,
+            "deduction_mfj": 4600.0,
+            "brackets_2025.single[0].over": 10000.0,
+            "brackets_2025.single[0].rate": 0.044,
+            "brackets_2025.single[1].over": null,
+            "brackets_2025.single[1].rate": 0.0,
+            "brackets_2025.mfj[0].over": 10000.0,
+            "brackets_2025.mfj[0].rate": 0.044,
+            "brackets_2025.mfj[1].over": null,
+            "brackets_2025.mfj[1].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100251%202.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f0d2eb70d26f0934dba9d7dbceb21ee519d038061210f703c084cfcc85f85824"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "brackets_2026.single[0].over": 10000.0,
@@ -64,6 +231,25 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "8b6af318b7d20acf1e91b917371afb2cc4de74be17c7306d2b9f7620ff3e0e5e"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single": 2300.0,
+            "deduction_mfj": 4600.0,
+            "brackets_2026.single[0].over": 10000.0,
+            "brackets_2026.single[0].rate": 0.04,
+            "brackets_2026.single[1].over": null,
+            "brackets_2026.single[1].rate": 0.0,
+            "brackets_2026.mfj[0].over": 10000.0,
+            "brackets_2026.mfj[0].rate": 0.04,
+            "brackets_2026.mfj[1].over": null,
+            "brackets_2026.mfj[1].rate": 0.0
+          },
+          "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/business/89700251revised1.13.2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "5eabfe62a2d271ab21f72f741c95d1e0b49021b4ef286a644f4270b512a4d585"
         },
         {
           "tax_year": 2027,

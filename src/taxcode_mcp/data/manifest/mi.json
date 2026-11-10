@@ -27,7 +27,109 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "An owner-saved browser snapshot of https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-206-51 on 2026-11-02 (snapshot sha256 f439a62686af86972d4579391206963c8d1c8006a3e1ad9f63ff54a37323e625) states 4.25 percent on and after October 1, 2012 (MCL 206.51(1)(b)), subject to a conditional reduction from tax year 2023 that the section states as a formula and not as a determined rate. The section does not state the held $5,600 / $11,200 exemption. The page was blocked from the cloud agent's network on 2026-11-02 and returned HTTP 200 from another network."
+      "verification_note": "An owner-saved browser snapshot of https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-206-51 on 2026-11-02 (snapshot sha256 f439a62686af86972d4579391206963c8d1c8006a3e1ad9f63ff54a37323e625) states 4.25 percent on and after October 1, 2012 (MCL 206.51(1)(b)), subject to a conditional reduction from tax year 2023 that the section states as a formula and not as a determined rate. The section does not state the held $5,600 / $11,200 exemption. The page was blocked from the cloud agent's network on 2026-11-02 and returned HTTP 200 from another network.",
+      "year_sources": [
+        {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 4050.0,
+            "deduction_mfj_2018": 8100.0
+          },
+          "url": "https://legislature.mi.gov/documents/2017-2018/billanalysis/Senate/htm/2017-SFA-0748-N.htm",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "1df7f7599342b2b9e9e8916412377cbc92d6a78a57dc82c327bf5492350b5371"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 4400.0,
+            "deduction_mfj_2019": 8800.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2019/2019_BOOK_MI_1040.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fb456e0a6ad9e96a367e57173df8c8e82676a423c27b9ecc737f671edd3418b3"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 4750.0,
+            "deduction_mfj_2020": 9500.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2020/Book_MI-1040_instructions_only.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "4027673d3f2e2e9dafc96f0aa8e51ae8393eaaa049eba27842c5d558c19a078c"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 4900.0,
+            "deduction_mfj_2021": 9800.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2021/Book-1040-Instructions-Only.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "dd1fb579744de8afe221e85128a31aa6f6d084502e8e90d41e7ec0625889687d"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 5000.0,
+            "deduction_mfj_2022": 10000.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2022/BOOK_MI-1040.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "49980e57a11f9c5c1593edac56d0e3b8d0e12da6086088557f036dfe9ff2e4d7"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 5400.0,
+            "deduction_mfj_2023": 10800.0,
+            "rate_2023": 0.0405
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2023/BOOK_MI-1040-instructions-only.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "be7b4644f2cabe7541fe7f0b46c372831408e09601bf33de565ce3251af86e3a"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 5600.0,
+            "deduction_mfj_2024": 11200.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2024/MI-1040-Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "70649c626de2e57ccc2ead002b8bbc5dab9c03c39fcb0fb88eda8d784ef1602a"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 5800.0,
+            "deduction_mfj_2025": 11600.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/IIT/TY2025/MI-1040-Book.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "35b38086176f867d1365e20f4f31a40b9b85ef68befb3e44d6021eb4502f66cd"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2026": 5900.0,
+            "deduction_mfj_2026": 11800.0
+          },
+          "url": "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/SUW/TY2026/446_Withholding-Guide_2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "5cfe50e6842338649de7f97027f39659d830bb87e64e0c5834cf8e61b3a91b04"
+        }
+      ]
     }
   ]
 }

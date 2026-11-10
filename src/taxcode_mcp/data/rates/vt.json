@@ -8,8 +8,8 @@
     "rate_authority": "32 V.S.A. § 5822",
     "rate_desc": "Graduated rates: 3.35%, 6.60%, 7.60%, and top rate 8.75%",
     "regime": "graduated",
-    "deduction_single": 7350.0,
-    "deduction_mfj": 14700.0,
+    "deduction_single": 7400.0,
+    "deduction_mfj": 14850.0,
     "brackets": {
       "single": [
         {
@@ -47,6 +47,110 @@
           "rate": 0.0335
         }
       ]
-    }
+    },
+    "deduction_single_2019": 6150.0,
+    "deduction_single_2020": 6250.0,
+    "deduction_single_2021": 6350.0,
+    "deduction_single_2022": 6500.0,
+    "deduction_single_2023": 7000.0,
+    "deduction_single_2024": 7400.0,
+    "deduction_single_2025": 7650.0,
+    "deduction_mfj_2019": 12300.0,
+    "deduction_mfj_2020": 12500.0,
+    "deduction_mfj_2021": 12700.0,
+    "deduction_mfj_2022": 13050.0,
+    "deduction_mfj_2023": 14050.0,
+    "deduction_mfj_2024": 14850.0,
+    "deduction_mfj_2025": 15300.0,
+    "brackets_2024": {
+      "single": [
+        {
+          "over": 242000.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 116000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 47900.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ],
+      "mfj": [
+        {
+          "over": 294600.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 193300.0,
+          "rate": 0.076
+        },
+        {
+          "over": 79950.0,
+          "rate": 0.066
+        },
+        {
+          "over": null,
+          "rate": 0.0335
+        }
+      ]
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The rate schedule prints the 8.75% threshold ($195,450 / $237,950 (preliminary schedule)) and not the lower indexed edges."
+      },
+      {
+        "param": "deduction",
+        "tax_year": 2018,
+        "reason": "The 2018 IN-111 instructions are not on tax.vermont.gov (404). The standard deduction is not taken from an archive copy."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "The rate schedule prints the 8.75% threshold ($200,200 / $243,750) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The rate schedule prints the 8.75% threshold ($204,000 / $248,350) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "The rate schedule prints the 8.75% threshold ($206,950 / $251,950) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "The rate schedule prints the 8.75% threshold ($213,150 / $259,500) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "The rate schedule prints the 8.75% threshold ($229,550 / $279,450) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2025,
+        "reason": "The rate schedule prints the 8.75% threshold ($249,700 / $304,000) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2026,
+        "reason": "The rate schedule prints the 8.75% threshold ($256,300 / $312,050) and not the lower indexed edges."
+      },
+      {
+        "param": "deduction",
+        "tax_year": 2026,
+        "reason": "IN-114 prints the 2026 rate schedules and does not state the standard deduction."
+      }
+    ]
   }
 }

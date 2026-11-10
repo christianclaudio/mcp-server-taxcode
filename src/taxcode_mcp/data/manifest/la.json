@@ -43,6 +43,28 @@
       "verification_note": "The LDR individual income tax page (https://revenue.louisiana.gov/individuals/general-resources/individual-income-tax/, sha256 f92cc77b01b70ecbcda906009da3ecbbdc3ea0a55a1a4cbf3fa55b480b69201e, retrieved 2026-11-10) prints two tables, both captioned married filing jointly or qualified surviving spouse. For 2022-2024 one table uses $12,500 and $50,000 and the other uses $25,000 and $100,000, at 1.85%, 3.50%, and 4.25%, and both show 3% for 2025 and after. The $25,000 / $100,000 rows match the held joint brackets. The duplicated caption does not identify a single schedule. The page does not state the held $4,500 / $9,000 deduction or the held 2026 amounts $12,838 / $25,676. R.S. 47:32 (https://www.legis.la.gov/legis/Law.aspx?d=101946, sha256 1eb60081beb4a986eb98d209d499b7e5bd2bb3fb31df15528e2fdf809a802efa, retrieved 2026-11-10) states a 3% rate on individual net income and names Acts 2024, 3rd Ex. Sess., No. 11, effective December 4, 2024. It does not state the 2024 brackets or the standard deduction. The 2025 IT-540 instructions confirm the 2025 $12,500 / $25,000 standard deduction and the 3% rate.",
       "year_sources": [
         {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single": 4500.0,
+            "deduction_mfj": 9000.0
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540(2022)%20Tax%20Table.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "93f832dafaafffcd4ce0a0dd8f88c6b94d08922cbb0b6171e45359dfbde62d4f"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single": 4500.0,
+            "deduction_mfj": 9000.0
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540(2023)%20TT.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e183a0b67b92519e1b36ed7bba9ab56a89c5d5bc24d087334efe27fef9e8fa39"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "brackets.mfj[0].over": 100000.0,
@@ -55,6 +77,17 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "f92cc77b01b70ecbcda906009da3ecbbdc3ea0a55a1a4cbf3fa55b480b69201e"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single": 4500.0,
+            "deduction_mfj": 9000.0
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540(2024)D13%20TT.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f6be874f6ed059ebcbd6415a9ba2006364c29c9319727801daa4e657e365d986"
         },
         {
           "tax_year": 2025,
@@ -87,6 +120,50 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "79a918a73b8f2f0eff7f57d32a0b8699e2d2b15d2c0dfa7ac51b8ef78a099643"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2025": 12500.0,
+            "deduction_mfj_2025": 25000.0
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2025-Revised-7-26.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b301af5be15b42c50f92c8849f36ab251ed84ca509858927775857f84967fbe2"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2026": 12838.0,
+            "deduction_mfj_2026": 25676.0
+          },
+          "url": "https://dam.ldr.la.gov/lawspolicies/RIB%2026-019.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "f22663cde2ebdf56eed6688779d25583e1c8fb86feaa773c8454b8735dd71067"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "The 2018 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2018 file."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "The 2019 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2019 file."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
         }
       ]
     }

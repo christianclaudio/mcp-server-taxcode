@@ -79,6 +79,118 @@
           "rate": 0.0
         }
       ]
-    }
+    },
+    "brackets_2024": {
+      "single": [
+        {
+          "over": 8911.0,
+          "rate": 0.048
+        },
+        {
+          "over": 7638.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6365.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5092.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3819.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2546.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1273.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 8911.0,
+          "rate": 0.048
+        },
+        {
+          "over": 7638.0,
+          "rate": 0.045
+        },
+        {
+          "over": 6365.0,
+          "rate": 0.04
+        },
+        {
+          "over": 5092.0,
+          "rate": 0.035
+        },
+        {
+          "over": 3819.0,
+          "rate": 0.03
+        },
+        {
+          "over": 2546.0,
+          "rate": 0.025
+        },
+        {
+          "over": 1273.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.0
+        }
+      ]
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The instructions print the top rate (5.9% over $9,253) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "The instructions print the top rate (5.4% over $8,424) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The instructions print the top rate (5.4% over $8,584) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "The instructions print the top rate (5.4% over $8,704) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "The instructions print the top rate (5.3% over $8,968) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "The instructions print the top rate (4.95% over $8,449) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2025,
+        "reason": "The instructions print the top rate (4.7% over $9,191) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2026,
+        "reason": "The instructions print the top rate (4.70% over $9,436 in steps of $1,348) and not every indexed edge."
+      }
+    ]
   }
 }

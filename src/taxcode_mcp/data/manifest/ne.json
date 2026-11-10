@@ -30,6 +30,116 @@
       "verification_note": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03 is generated fresh on every request, so its content_sha256 is not_recorded. The page confirms the top rates for 2023 through 2027 and says the dollar brackets are indexed. It does not print those indexed dollars.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 6750.0,
+            "deduction_mfj_2018": 13500.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2018/2018_Tax_Calculation_Schedule.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ec9feb8c3299b86733ecb29a68dd118aaf43313595f06b3c1ff3ac488dcf3b20"
+        },
+        {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 6750.0,
+            "deduction_mfj_2018": 13500.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 6900.0,
+            "deduction_mfj_2019": 13800.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 6900.0,
+            "deduction_mfj_2019": 13800.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2019/f_1040n_booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "a817c11069100bff5c1f19eb3875722bb526b28ba7ee23586584e8e252a5bec3"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 7000.0,
+            "deduction_mfj_2020": 14000.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 7000.0,
+            "deduction_mfj_2020": 14000.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2020/f_1040n_booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d4b8a83e7b6c6b5d5272cb881ae8f5fee3c238519f4937ca6e7da5f85692c5e5"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 7100.0,
+            "deduction_mfj_2021": 14200.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 7100.0,
+            "deduction_mfj_2021": 14200.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2021/f_1040n_booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "533a0e558dc72d62aca0e4a98e2cb56bea095e51bb2882d3021c2f4458d6014d"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 7350.0,
+            "deduction_mfj_2022": 14700.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 7350.0,
+            "deduction_mfj_2022": 14700.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/2022_NE_Tax_Calculation_Schedule_8-460-2022_final.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b8eee1db1dcd628ee39471693b03559e77434936eafc265b829b94b93f5d6e68"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "deduction_single": 7900.0,
@@ -60,6 +170,55 @@
           "content_sha256": "042df48605bc33290745bd414fe2d7b422fdb06a3a386e40afc0bda52ac8843a"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 7900.0,
+            "deduction_mfj_2023": 15800.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 8350.0,
+            "deduction_mfj_2024": 16700.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/research/chronology/4-607table1.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2024": 8350.0,
+            "deduction_mfj_2024": 16700.0,
+            "brackets_2024.single[0].over": 37670.0,
+            "brackets_2024.single[0].rate": 0.0584,
+            "brackets_2024.single[1].over": 23370.0,
+            "brackets_2024.single[1].rate": 0.0501,
+            "brackets_2024.single[2].over": 3900.0,
+            "brackets_2024.single[2].rate": 0.0351,
+            "brackets_2024.single[3].over": null,
+            "brackets_2024.single[3].rate": 0.0246,
+            "brackets_2024.mfj[0].over": 75340.0,
+            "brackets_2024.mfj[0].rate": 0.0584,
+            "brackets_2024.mfj[1].over": 46760.0,
+            "brackets_2024.mfj[1].rate": 0.0501,
+            "brackets_2024.mfj[2].over": 7790.0,
+            "brackets_2024.mfj[2].rate": 0.0351,
+            "brackets_2024.mfj[3].over": null,
+            "brackets_2024.mfj[3].rate": 0.0246
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2024/2024_Tax_Calculation_Schedule.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "c7d829404e55cc4a33e2f69b6b08b2d2b547f1a4faae64382f3cdeda50466e11"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 38870.0,
@@ -71,7 +230,15 @@
             "brackets_2025.single[0].rate": 0.052,
             "brackets_2025.single[1].rate": 0.0501,
             "brackets_2025.single[2].rate": 0.0351,
-            "brackets_2025.single[3].rate": 0.0246
+            "brackets_2025.single[3].rate": 0.0246,
+            "deduction_single_2025": 8600.0,
+            "deduction_mfj_2025": 17200.0,
+            "brackets_2025.single[3].over": null,
+            "brackets_2025.mfj[0].rate": 0.052,
+            "brackets_2025.mfj[1].rate": 0.0501,
+            "brackets_2025.mfj[2].rate": 0.0351,
+            "brackets_2025.mfj[3].over": null,
+            "brackets_2025.mfj[3].rate": 0.0246
           },
           "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2025/2025_Tax_Calculation_Schedule.pdf",
           "official": true,
@@ -132,6 +299,33 @@
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "not_recorded"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "Nebraska prints only part of the schedule (6.84% over $30,420 single / $60,840 joint; lower edges are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "Nebraska prints only part of the schedule (6.84% over $33,180 single / $66,360 joint; lower edges are not printed)."
         }
       ]
     }

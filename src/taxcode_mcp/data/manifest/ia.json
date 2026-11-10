@@ -30,13 +30,116 @@
       "verification_note": "The 2024 Individual Income Tax Statistical Report (https://revenue.iowa.gov/media/4509/download?inline=, sha256 6ce7019f1f7d2b46be4c9bdcad3dcd3fba2e720ecdeb3fb061c8a7073581c306, retrieved 2026-11-10) Table 1 states 4.40% over $0 but not over $6,210, 4.82% over $6,210 but not over $31,050, and 5.70% over $31,050, and a single 3.8% rate for 2025. It does not print the held joint edges $12,420 and $62,100. The 2024 expanded instructions (https://revenue.iowa.gov/media/4152/download?inline=, sha256 7257943544f063e3a3ec0832ade29127f23f48090da90b9b34cc1e327dc3b8cd, retrieved 2026-11-10) state the 3.8% rate for 2025 and say to enter the standard deduction reported on federal Form 1040, line 12. They do not print the 2024 brackets. https://revenue.iowa.gov/press-release/2023-10-25/idr-announces-2024-individual-income-tax-brackets-and-interest-rates returned HTTP 403 on 2026-11-10.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 2030.0,
+            "deduction_mfj_2018": 5000.0
+          },
+          "url": "https://revenue.iowa.gov/media/2228/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "ddf3aec8c8cf7a03c3808ac89aa484783ebac5b0d8d86652cf9e07be5958685e"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 2080.0,
+            "deduction_mfj_2019": 5120.0
+          },
+          "url": "https://revenue.iowa.gov/media/2492/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8b7a56d5ab8fef187b780f89ee732209cbcd4699d53b2c36d3767cf55ae4702d"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 2110.0,
+            "deduction_mfj_2020": 5210.0
+          },
+          "url": "https://revenue.iowa.gov/media/2575/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d5d1b4a1aebe472d610af41d8bfe8e04a60afcfa8a894027b71ce2e75bfd623b"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 2130.0,
+            "deduction_mfj_2021": 5240.0
+          },
+          "url": "https://revenue.iowa.gov/media/2650/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fe9f8ef8457d6dad3ea7b546909a1049a485d82490f123e8e325172ffcb6eee5"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 2210.0,
+            "deduction_mfj_2022": 5450.0
+          },
+          "url": "https://revenue.iowa.gov/media/2721/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "67ef375cd1fb6a19aa477a5be1235c373d531ad5b2a0873a1e6ec46a99f2dd21"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "brackets_2023.single[0].over": 75000.0,
+            "brackets_2023.single[0].rate": 0.06,
+            "brackets_2023.single[1].over": 30000.0,
+            "brackets_2023.single[1].rate": 0.057,
+            "brackets_2023.single[2].over": 6000.0,
+            "brackets_2023.single[2].rate": 0.0482,
+            "brackets_2023.single[3].over": null,
+            "brackets_2023.single[3].rate": 0.044,
+            "brackets_2023.mfj[0].over": 150000.0,
+            "brackets_2023.mfj[0].rate": 0.06,
+            "brackets_2023.mfj[1].over": 60000.0,
+            "brackets_2023.mfj[1].rate": 0.057,
+            "brackets_2023.mfj[2].over": 12000.0,
+            "brackets_2023.mfj[2].rate": 0.0482,
+            "brackets_2023.mfj[3].over": null,
+            "brackets_2023.mfj[3].rate": 0.044
+          },
+          "url": "https://revenue.iowa.gov/media/2748/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "6f10d202f57d5f5a14840b047748d936a9811f089b018ce3b13cacd28f768f91"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": "federal_standard_deduction",
+            "deduction_mfj_2023": "federal_standard_deduction"
+          },
+          "url": "https://revenue.iowa.gov/media/2811/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "0bfe839e640f84ca6def74fe9bf7c04099fbf86171637c87b5fe8a02a75097e9"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "brackets.single[0].over": 31050.0,
             "brackets.single[0].rate": 0.057,
             "brackets.single[1].over": 6210.0,
             "brackets.single[1].rate": 0.0482,
-            "brackets.single[2].rate": 0.044
+            "brackets.single[2].rate": 0.044,
+            "brackets_2024.single[0].over": 31050.0,
+            "brackets_2024.single[0].rate": 0.057,
+            "brackets_2024.single[1].over": 6210.0,
+            "brackets_2024.single[1].rate": 0.0482,
+            "brackets_2024.single[2].over": null,
+            "brackets_2024.single[2].rate": 0.044,
+            "brackets_2024.mfj[0].over": 62100.0,
+            "brackets_2024.mfj[0].rate": 0.057,
+            "brackets_2024.mfj[1].over": 12420.0,
+            "brackets_2024.mfj[1].rate": 0.0482,
+            "brackets_2024.mfj[2].over": null,
+            "brackets_2024.mfj[2].rate": 0.044
           },
           "url": "https://revenue.iowa.gov/media/4509/download?inline=",
           "official": true,
@@ -53,6 +156,27 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "7257943544f063e3a3ec0832ade29127f23f48090da90b9b34cc1e327dc3b8cd"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets_2024.single[0].over": 31050.0,
+            "brackets_2024.single[0].rate": 0.057,
+            "brackets_2024.single[1].over": 6210.0,
+            "brackets_2024.single[1].rate": 0.0482,
+            "brackets_2024.single[2].over": null,
+            "brackets_2024.single[2].rate": 0.044,
+            "brackets_2024.mfj[0].over": 62100.0,
+            "brackets_2024.mfj[0].rate": 0.057,
+            "brackets_2024.mfj[1].over": 12420.0,
+            "brackets_2024.mfj[1].rate": 0.0482,
+            "brackets_2024.mfj[2].over": null,
+            "brackets_2024.mfj[2].rate": 0.044
+          },
+          "url": "https://revenue.iowa.gov/media/4093/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "262bec4835e18886fb7ad7f26b47ebdb2f069b8a6a9faa43c1e029b6b678ee9b"
         },
         {
           "tax_year": 2025,
@@ -83,6 +207,49 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "7257943544f063e3a3ec0832ade29127f23f48090da90b9b34cc1e327dc3b8cd"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "rate_2025": 0.038
+          },
+          "url": "https://revenue.iowa.gov/resources/law-policy-information/iowa-tax-rate-history",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "fe09b57b2008f2ed842b1c154fb298bac8684a2c4f47791fa520aacc64f73e8b"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2023": "federal_standard_deduction",
+            "deduction_mfj_2023": "federal_standard_deduction"
+          },
+          "url": "https://revenue.iowa.gov/media/4435/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e7cf068dbcafb5319afa6efbebde5120d8850811d4ff4d66654e1ba5687af343"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
         }
       ]
     }

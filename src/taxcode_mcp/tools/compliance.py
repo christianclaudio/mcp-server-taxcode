@@ -367,6 +367,10 @@ def _outyear_estimate_note(state: str, tax_year: int, info: dict[str, Any]) -> s
         name, first, last = PUBLISHED_SCHEDULE_YEARS[state]
         if first <= tax_year <= last:
             return ""
+        # Maryland 2019-2023 standard deductions are sourced year by year. 2018 and 2026
+        # are not_recorded and the lookup refuses them before this note would be shown.
+        if state == "MD" and 2019 <= tax_year <= 2023:
+            return ""
         used = _schedule_year_used(state, tax_year)
         note = (
             f" [ESTIMATE: {name}'s tax year {tax_year} brackets and deduction are not in this "
@@ -1390,10 +1394,14 @@ def evaluate_state_residency(
                 "audit scrutiny."
             )
         rate_authority = "A.R.S. § 43-1011"
-        rate_desc = f"Flat {_pct(RATE_TABLES['AZ']['rate'])} rate (SB 1828)"
-        standard_ded = _allowance(RATE_TABLES["AZ"], is_mfj, tax_year)
+        az = RATE_TABLES["AZ"]
+        # ``rate_YYYY`` is the flat rate from that year on. A not_recorded marker for an
+        # earlier graduated year refuses the call instead of applying the flat rate.
+        az_rate = float(_for_year(az, "rate", tax_year))
+        rate_desc = f"Flat {_pct(az_rate)} rate (SB 1828)"
+        standard_ded = _allowance(az, is_mfj, tax_year)
         taxable_income = max(0.0, federal_agi - standard_ded)
-        estimated_tax = round(taxable_income * RATE_TABLES["AZ"]["rate"], 2) if is_resident else 0.0
+        estimated_tax = round(taxable_income * az_rate, 2) if is_resident else 0.0
 
     elif state == "OH":
         statutory_basis = "Ohio Rev. Code §§ 5747.02, 5747.24"

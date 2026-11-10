@@ -8,9 +8,23 @@
     "rate_authority": "Wis. Stat. § 71.06",
     "rate_desc": "Graduated rates: 3.50%, 4.40%, 5.30%, and top rate 7.65%",
     "regime": "graduated",
-    "deduction_single": 13810.0,
+    "deduction_single": 13230.0,
+    "deduction_single_2018": 10580.0,
+    "deduction_single_2019": 10860.0,
+    "deduction_single_2020": 11050.0,
+    "deduction_single_2021": 11200.0,
+    "deduction_single_2022": 11790.0,
+    "deduction_single_2023": 12760.0,
+    "deduction_single_2024": 13230.0,
     "deduction_single_2025": 13560.0,
-    "deduction_mfj": 25480.0,
+    "deduction_mfj": 24490.0,
+    "deduction_mfj_2018": 19580.0,
+    "deduction_mfj_2019": 20110.0,
+    "deduction_mfj_2020": 20470.0,
+    "deduction_mfj_2021": 20730.0,
+    "deduction_mfj_2022": 21820.0,
+    "deduction_mfj_2023": 23620.0,
+    "deduction_mfj_2024": 24490.0,
     "deduction_mfj_2025": 25110.0,
     "brackets": {
       "single": [
@@ -87,6 +101,38 @@
           "rate": 0.035
         }
       ]
-    }
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "Form 1 prints the rates and the top edge (rates 4/5.84/6.27/7.65, top $252,150 / $336,200; the lower edges were not extracted)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "Form 1 prints the rates and the top edge (rates 3.86/5.04/6.27/7.65, top $258,950 / $345,270; the lower edges were not extracted)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "Form 1 prints the rates and the top edge (rates 3.54/4.65/6.27/7.65, top $263,480 / $351,310; the lower edges are not printed in the sweep)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "Form 1 prints the rates and the top edge (rates 3.54/4.65/5.3/7.65, top $266,930 / $355,910; the lower edges are not printed in the sweep)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "Form 1 prints the rates and the top edge (rates 3.54/4.65/5.3/7.65, top $280,950 / $374,600; the lower edges are not printed in the sweep)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "Form 1 prints the rates and the top edge (rates 3.5/4.4/5.3/7.65, top $304,170 / $405,550; the lower edges are not printed in the sweep)."
+      }
+    ]
   }
 }

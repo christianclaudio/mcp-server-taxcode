@@ -30,6 +30,27 @@
       "verification_note": "An owner-saved browser snapshot of https://www.scstatehouse.gov/code/t12c006.php on 2026-11-02 (snapshot sha256 58aedbf00874428f1f931b25895bff712e81d85bd1add6f8508891b013df89ee) states the 2026 schedule in S.C. Code Ann. § 12-6-510(C) (2026 Act No. 110, first applying to tax years beginning after 2025): 1.99 percent up to $30,000 and 5.21 percent over $30,000. It does not print the indexed 2024 bracket dollars. The page was blocked from the cloud agent's network on 2026-11-02 and returned HTTP 200 from another network.",
       "year_sources": [
         {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[0].over": 17330.0,
+            "brackets.single[0].rate": 0.062,
+            "brackets.single[1].over": 3460.0,
+            "brackets.single[1].rate": 0.03,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.0,
+            "brackets.mfj[0].over": 17330.0,
+            "brackets.mfj[0].rate": 0.062,
+            "brackets.mfj[1].over": 3460.0,
+            "brackets.mfj[1].rate": 0.03,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.0
+          },
+          "url": "https://dor.sc.gov/forms-site/Forms/SC1040TT_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "5bc2ffd78f4534dc641fc5175f946b1e7c35af857a88d8447cdd886edb641336"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "brackets_2026.single[0].over": 30000.0,
@@ -41,6 +62,43 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "not_recorded"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "SC1040TT prints only part of the schedule (six rates 0/3/4/5/6/7% with a 7% top; dollar edges are only implied by the tax table)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "SC1040TT prints only part of the schedule (top rate 6.5% (tax = 6.5% minus $658); dollar edges are only implied by the tax table)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "SC1040TT prints only part of the schedule (top rate 6.4% (minus $670); dollar edges are only implied by the tax table)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2025,
+          "reason": "SC1040TT prints only part of the schedule (top rate 6% (minus $642), about $3,560 and $17,830; the edges are marked approximate)."
         }
       ]
     }

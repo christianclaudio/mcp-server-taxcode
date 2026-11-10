@@ -219,6 +219,10 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "brackets_cumulative": ("brackets", "deduction", "exemption"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
     "maryland": ("standard_deduction", "personal_exemption", "brackets", "capital_gains_surtax"),
+    # Arizona's flat tax starts in 2023. Earlier years are not that one rate; ``rate_YYYY``
+    # and ``deduction_YYYY`` hold the year the flat figures begin, and a ``not_recorded``
+    # marker covers a year the flat table does not have.
+    "flat": ("deduction", "rate"),
 }
 # ``tier`` has no unsuffixed value (an unsuffixed ``tier`` is an unknown key): before its
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
@@ -269,7 +273,10 @@ MARKER_ANCHORS: tuple[tuple[str, str, int], ...] = (
 )
 # The years a registry table's ``brackets_YYYY`` and ``rate_desc_YYYY`` keys may name.
 # 2019-2023 are the earlier schedules a table holds when they differ from 2024.
+# 2018 is a bracket year too (Mississippi's pre-2019 schedule). ``rate_desc`` already
+# allowed 2018.
 REGISTRY_YEARS = (2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030)
+REGISTRY_BRACKET_YEARS = (2018, *REGISTRY_YEARS)
 # Registry tables keep the original key names. A ``_YYYY`` suffix is the value from that
 # tax year on; the unsuffixed key covers the years before.
 _REGISTRY_REQUIRED = ("statutory_basis", "rate_authority", "rate_desc", "regime")
@@ -384,7 +391,7 @@ _REGISTRY_TYPES: dict[str, type] = {
     # ceiling at or below which the tax is zero. A later year's null ends it. Above the
     # ceiling the ordinary brackets apply to all taxable income.
     **dict.fromkeys((f"low_income_exclusion_{year}" for year in range(2018, 2027)), dict),
-    **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_YEARS), dict),
+    **dict.fromkeys((f"brackets_{year}" for year in REGISTRY_BRACKET_YEARS), dict),
     **dict.fromkeys((f"rate_desc_{year}" for year in (2018, *REGISTRY_YEARS)), str),
     **dict.fromkeys(
         (

@@ -32,14 +32,13 @@ def test_alabama_applies_personal_exemption_and_max_standard_deduction() -> None
     assert "phase-down chart is not modeled" in desc
     assert "federal income tax deduction" in desc
     assert "$1,500 single" in desc
-    assert "$2,500 single / $7,500 joint for 2019-2021" in desc
-    assert "Tax year 2018 uses the 2022 Form 40 standard-deduction maximum as an estimate" in desc
+    assert "$2,500 single / $7,500 joint for 2018-2021" in desc
     y19 = _tax("AL", 2019, 20000.0)
     assert y19["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y21 = _tax("AL", 2021, 20000.0)
     assert y21["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y18 = _tax("AL", 2018, 20000.0)
-    assert y18["taxable_net_income"] == 20000.0 - 3000.0 - 1500.0
+    assert y18["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y20 = _tax("AL", 2020, 20000.0)
     assert y20["taxable_net_income"] == 20000.0 - 2500.0 - 1500.0
     y20j = _tax("AL", 2020, 40000.0, "married_joint")

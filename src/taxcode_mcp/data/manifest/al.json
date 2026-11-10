@@ -41,43 +41,84 @@
           "content_sha256": "fb0fccf6c6f59f1e83e01361f8d388eb3b98e5ebb473f607b5be24bd82f04fc3"
         },
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 2500.0,
+            "deduction_mfj_2018": 7500.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2021/10/18f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "799aa8926cd2d21796e0bbae64c3cfc3df519e72d47a54b315b5c40a95b517db"
+        },
+        {
           "tax_year": 2019,
           "values": {
             "deduction_single_2019": 2500.0,
             "deduction_mfj_2019": 7500.0,
-            "exemption_single": 1500.0,
-            "exemption_mfj": 3000.0
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
           },
-          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2019/19f40bk.pdf",
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2021/10/19f40bk.pdf",
           "official": true,
-          "retrieved": "2026-11-03",
-          "content_sha256": "3d0e218b4898b467bd0b92cfa75698c5d3e61a006f84195e26db284b5ebc72f5"
+          "retrieved": "2026-11-10",
+          "content_sha256": "1fa63d4d0ed11606a2e504808ec087ee4245bc51a28c2717865b2e3818d604d7"
         },
         {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2500.0,
             "deduction_mfj_2020": 7500.0,
-            "exemption_single": 1500.0,
-            "exemption_mfj": 3000.0
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
           },
-          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2020/20f40bk.pdf",
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2021/10/20f40bk.pdf",
           "official": true,
-          "retrieved": "2026-11-03",
-          "content_sha256": "f783804fe5e588f80db00dcb627fe2239144601b6290229eacfd90924b5f736a"
+          "retrieved": "2026-11-10",
+          "content_sha256": "d536152835a54b804e670aefe355bd0e7269352cde38b4e4829b6eae7f63a588"
         },
         {
           "tax_year": 2021,
           "values": {
             "deduction_single_2021": 2500.0,
             "deduction_mfj_2021": 7500.0,
-            "exemption_single": 1500.0,
-            "exemption_mfj": 3000.0
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
           },
-          "url": "https://taxsim.nber.org/historical_state_tax_forms/AL/2021/21f40bk.pdf",
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2022/06/21f40bk.pdf",
           "official": true,
-          "retrieved": "2026-11-03",
-          "content_sha256": "8e5c81519721d9e9a4833da6e49d4538fd375aa6776810c5fd7ba1df96aa1131"
+          "retrieved": "2026-11-10",
+          "content_sha256": "e9fa452731ba53adb39f733da0289540e71f8446c745737d942f886af4485d42"
         },
         {
           "tax_year": 2022,
@@ -85,12 +126,49 @@
             "deduction_single": 3000.0,
             "deduction_mfj": 8500.0,
             "exemption_single": 1500.0,
-            "exemption_mfj": 3000.0
+            "exemption_mfj": 3000.0,
+            "deduction_single_2022": 3000.0,
+            "deduction_mfj_2022": 8500.0,
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
           },
           "url": "https://www.revenue.alabama.gov/wp-content/uploads/2023/01/22f40bk.pdf",
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "c200edd87819d5e9eb21f784dc6aae5d05c38155125fae0c045e57d6d3bb424c"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2022": 3000.0,
+            "deduction_mfj_2022": 8500.0,
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2024/01/23f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "765d4fea1282884627514aa553da94774dd24e27f503ddd67b350760d8bd0f52"
         },
         {
           "tax_year": 2024,
@@ -112,6 +190,63 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "7f883430000830825690ac25e468a3762731ae1c15c26b85bcdc775a3c421f52"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_single_2022": 3000.0,
+            "deduction_mfj_2022": 8500.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_single_2022": 3000.0,
+            "deduction_mfj_2022": 8500.0,
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2026/01/25f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "7871a80bd580dff9bbfe0fd8252664bfd2394d3c51bd98199cdd5162a4b46699"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2022": 3000.0,
+            "deduction_mfj_2022": 8500.0,
+            "brackets.single[0].over": 3000.0,
+            "brackets.single[0].rate": 0.05,
+            "brackets.single[1].over": 500.0,
+            "brackets.single[1].rate": 0.04,
+            "brackets.single[2].over": null,
+            "brackets.single[2].rate": 0.02,
+            "brackets.mfj[0].over": 6000.0,
+            "brackets.mfj[0].rate": 0.05,
+            "brackets.mfj[1].over": 1000.0,
+            "brackets.mfj[1].rate": 0.04,
+            "brackets.mfj[2].over": null,
+            "brackets.mfj[2].rate": 0.02
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2026/01/whbooklet_0126.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "11aa9a42eb1ba920918bcb7ed9356d6b2aad5b446079ac14c170b46c7313f628"
         }
       ]
     }

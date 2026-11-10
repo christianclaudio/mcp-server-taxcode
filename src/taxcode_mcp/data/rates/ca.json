@@ -94,6 +94,34 @@
         }
       ]
     },
+    "deduction_2018": {
+      "single": 4401.0,
+      "mfj": 8802.0
+    },
+    "deduction_2019": {
+      "single": 4537.0,
+      "mfj": 9074.0
+    },
+    "deduction_2020": {
+      "single": 4601.0,
+      "mfj": 9202.0
+    },
+    "deduction_2021": {
+      "single": 4803.0,
+      "mfj": 9606.0
+    },
+    "deduction_2022": {
+      "single": 5202.0,
+      "mfj": 10404.0
+    },
+    "deduction_2023": {
+      "single": 5363.0,
+      "mfj": 10726.0
+    },
+    "deduction_2024": {
+      "single": 5540.0,
+      "mfj": 11080.0
+    },
     "deduction_2025": {
       "single": 5706.0,
       "mfj": 11412.0
@@ -183,6 +211,43 @@
           "rate": 0.01
         }
       ]
-    }
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "FTB schedule prints the 12.3% threshold ($572,980 / $1,145,960) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "FTB schedule prints the 12.3% threshold ($590,742 / $1,181,484) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "FTB schedule prints the 12.3% threshold ($599,012 / $1,198,024) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "FTB schedule prints the 12.3% threshold ($625,369 / $1,250,738) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "FTB schedule prints the 12.3% threshold ($677,275 / $1,354,550) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "FTB schedule prints the 12.3% threshold ($698,271 / $1,396,542) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2026,
+        "reason": "FTB schedule prints the 12.3% threshold ($768,213 / $1,536,426, with the 1% band at $11,456 single) and says the lower edges are indexed; those edges are not in the sweep, so the schedule is not stored."
+      }
+    ]
   }
 }

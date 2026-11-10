@@ -30,6 +30,61 @@
       "verification_note": "The 2024 AR1000F and AR1000NR instructions (https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf, sha256 dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297, retrieved 2026-11-10) state a standard deduction of $2,410 for single, head of household, married filing separately, and surviving spouse, and $4,820 for married filing joint. That is the held 2024 deduction. The DFA What's New page (https://www.dfa.arkansas.gov/office/taxes/income-tax-administration/individual-income-tax/whats-new/, sha256 bfebef988d7dfff61159b531f501f908d705b27d160bce36c5fac7196ab3a0fc, retrieved 2026-11-10) states the 2023 standard deduction is $2,340 for those statuses and $4,680 for filing status 2. That is the held deduction for 2023 and earlier. The 2025 AR1000F and AR1000NR instructions (https://www.dfa.arkansas.gov/wp-content/uploads/2025_AR1000F_and_AR1000NR_Instructions.pdf, sha256 9f24e23cfcfcc35633b288253f6d7e89ec7384f836010619798c105fddbf4857, retrieved 2026-11-10) state a standard deduction of $2,470 for single, head of household, married filing separately, and surviving spouse, and $4,940 for married filing joint. That is the held 2025 deduction. The 2026 AR1000ES estimated-tax worksheet (https://www.dfa.arkansas.gov/wp-content/uploads/2026_Final_AR1000ES_2.pdf, sha256 724b350ba495c54a21299ee57aa68c1038a0c0809011940a04a38eb4896002db, retrieved 2026-11-10), not the final 2026 instructions, states a standard deduction of $2,470 per taxpayer. That is the held 2026 deduction ($2,470 single / $4,940 joint). Tax year 2027 and later use the 2026 amount until a source is recorded. The 2024 instructions do not print the bracket thresholds. https://www.dfa.arkansas.gov/wp-content/uploads/2025_TaxBrackets.pdf (sha256 a54fb139ba2b997b5545217474a0558c94e943f62f5d089c81299a81e30c9f02, retrieved 2026-11-02) states 2025 brackets of 0% to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, and 3.9% above that. Those match the held 2025 brackets. The same PDF prints a bracket-adjustment band from $94,701 to $97,800, where the 3.9% minus-adjustment steps down, and for $100,001 and over a formula of $3,809 plus 3.9% of the excess over $100,000. That band is not modeled.",
       "year_sources": [
         {
+          "tax_year": 2018,
+          "values": {
+            "deduction_single_2018": 2200.0,
+            "deduction_mfj_2018": 4400.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/AR1000FandAR1000NRInstructions_2018.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "362c2fe54505763d8c4b4609755211651a306db31f74561896efe54aca0d1c99"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "deduction_single_2019": 2200.0,
+            "deduction_mfj_2019": 4400.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2019_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "3472304a04af71b2ae8604ec5edc2751ce97142cda69eb9be8829e27d239a038"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_single_2020": 2200.0,
+            "deduction_mfj_2020": 4400.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2020_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "368a82ded18889887d97193a5919b9bcac165acb6ce3f02a0e1ea02dc8706ca6"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_single_2021": 2200.0,
+            "deduction_mfj_2021": 4400.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2021_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9ffbd619636e2bac951101c17df7d03462fa337e86f93f45af5e000f4d5b879f"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_single_2022": 2270.0,
+            "deduction_mfj_2022": 4540.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2022_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "a73294c0cac94782397c3fc0a9c44e33e3517785f1b68f5133c1e86dc31f3b68"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "deduction_single": 2340.0,
@@ -39,6 +94,17 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "bfebef988d7dfff61159b531f501f908d705b27d160bce36c5fac7196ab3a0fc"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_single_2023": 2340.0,
+            "deduction_mfj_2023": 4680.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2023_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "62f1966af42cc42712f488c4f265fe1c8008644164ab88d3ebb4afd4894615a0"
         },
         {
           "tax_year": 2024,
@@ -99,6 +165,54 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "724b350ba495c54a21299ee57aa68c1038a0c0809011940a04a38eb4896002db"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2026": 2470.0,
+            "deduction_mfj_2026": 4940.0
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/Withholding-Tax-Formula.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8a2d94f074d0a0a59ed8210a43b996a102367b4113f0f9ecec996dace11cbc64"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.9% over $79,300; lower bands of the 0.9%-6.9% schedule are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.9% over $80,800; lower bands are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.6% over $82,000; lower bands are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "DFA bracket PDF prints only part of the schedule (top rate 5.9% over $39,700; lower bands are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.9% over $24,300; lower bands are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.7% over $25,000; lower bands are not printed)."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2026,
+          "reason": "DFA bracket PDF prints only part of the schedule (revised formula states 3.70% over $26,399 and does not print the lower bands)."
         }
       ]
     }

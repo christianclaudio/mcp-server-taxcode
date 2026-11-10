@@ -14,7 +14,19 @@
     "regime": "graduated",
     "deduction_single": 7900.0,
     "deduction_mfj": 15800.0,
+    "deduction_single_2018": 6750.0,
+    "deduction_single_2019": 6900.0,
+    "deduction_single_2020": 7000.0,
+    "deduction_single_2021": 7100.0,
+    "deduction_single_2022": 7350.0,
+    "deduction_single_2023": 7900.0,
     "deduction_single_2024": 8350.0,
+    "deduction_mfj_2018": 13500.0,
+    "deduction_mfj_2019": 13800.0,
+    "deduction_mfj_2020": 14000.0,
+    "deduction_mfj_2021": 14200.0,
+    "deduction_mfj_2022": 14700.0,
+    "deduction_mfj_2023": 15800.0,
     "deduction_mfj_2024": 16700.0,
     "deduction_single_2025": 8600.0,
     "deduction_mfj_2025": 17200.0,
@@ -209,6 +221,33 @@
           "rate": 0.0246
         }
       ]
-    }
+    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "Nebraska prints only part of the schedule (6.84% over $30,420 single / $60,840 joint; lower edges are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "Nebraska prints only part of the schedule (6.84% over $33,180 single / $66,360 joint; lower edges are not printed)."
+      }
+    ]
   }
 }

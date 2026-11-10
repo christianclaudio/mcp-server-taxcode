@@ -27,7 +27,92 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "Section 143.011 prints the pre-reduction base table and a conditional top-rate cut. It does not print the held indexed 4.80 percent dollars."
+      "verification_note": "Section 143.011 prints the pre-reduction base table and a conditional top-rate cut. It does not print the held indexed 4.80 percent dollars.",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets_2024.single[0].over": 8911.0,
+            "brackets_2024.single[0].rate": 0.048,
+            "brackets_2024.single[1].over": 7638.0,
+            "brackets_2024.single[1].rate": 0.045,
+            "brackets_2024.single[2].over": 6365.0,
+            "brackets_2024.single[2].rate": 0.04,
+            "brackets_2024.single[3].over": 5092.0,
+            "brackets_2024.single[3].rate": 0.035,
+            "brackets_2024.single[4].over": 3819.0,
+            "brackets_2024.single[4].rate": 0.03,
+            "brackets_2024.single[5].over": 2546.0,
+            "brackets_2024.single[5].rate": 0.025,
+            "brackets_2024.single[6].over": 1273.0,
+            "brackets_2024.single[6].rate": 0.02,
+            "brackets_2024.single[7].over": null,
+            "brackets_2024.single[7].rate": 0.0,
+            "brackets_2024.mfj[0].over": 8911.0,
+            "brackets_2024.mfj[0].rate": 0.048,
+            "brackets_2024.mfj[1].over": 7638.0,
+            "brackets_2024.mfj[1].rate": 0.045,
+            "brackets_2024.mfj[2].over": 6365.0,
+            "brackets_2024.mfj[2].rate": 0.04,
+            "brackets_2024.mfj[3].over": 5092.0,
+            "brackets_2024.mfj[3].rate": 0.035,
+            "brackets_2024.mfj[4].over": 3819.0,
+            "brackets_2024.mfj[4].rate": 0.03,
+            "brackets_2024.mfj[5].over": 2546.0,
+            "brackets_2024.mfj[5].rate": 0.025,
+            "brackets_2024.mfj[6].over": 1273.0,
+            "brackets_2024.mfj[6].rate": 0.02,
+            "brackets_2024.mfj[7].over": null,
+            "brackets_2024.mfj[7].rate": 0.0
+          },
+          "url": "https://dor.mo.gov/forms/MO-1040%20Instructions_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "abd3cf20dedc47be63dde32ef4e7d2daa6de6daea58b8b0fc86891a6c47fccc6"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "The instructions print the top rate (5.9% over $9,253) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "The instructions print the top rate (5.4% over $8,424) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "The instructions print the top rate (5.4% over $8,584) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "The instructions print the top rate (5.4% over $8,704) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "The instructions print the top rate (5.3% over $8,968) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "The instructions print the top rate (4.95% over $8,449) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2025,
+          "reason": "The instructions print the top rate (4.7% over $9,191) and not every indexed edge."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2026,
+          "reason": "The instructions print the top rate (4.70% over $9,436 in steps of $1,348) and not every indexed edge."
+        }
+      ]
     }
   ]
 }

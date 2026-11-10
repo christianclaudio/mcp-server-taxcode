@@ -1400,6 +1400,11 @@ def test_marginal_schedule_states_label_other_tax_years_as_estimates(state: str)
     for year in (2024, 2025):
         current = server.evaluate_state_residency(**kwargs, tax_year=year)
         assert "ESTIMATE" not in current["tax_computation"]["rate_description"], year
+    if state == "CA":
+        # The 2026 FTB schedule prints the top edge only, so the year is not_recorded.
+        with pytest.raises(SafetyViolationError, match="tax year 2026"):
+            server.evaluate_state_residency(**kwargs, tax_year=2026)
+        return
     later = server.evaluate_state_residency(**kwargs, tax_year=2026)
     note = later["tax_computation"]["rate_description"]
     assert "tax year 2026 brackets and deduction are not in this table; the 2025" in note
@@ -1413,18 +1418,20 @@ def test_california_rate_description_names_mhst_or_bhst_by_schedule_year() -> No
     assert "Behavioral Health Services Tax" not in default_desc
     assert "13.3% is 12.3% plus the 1% Mental Health Services Tax" in default_desc
     assert "applied once" in default_desc
-    for year in (2023, 2024):
-        desc = server.evaluate_state_residency(**kwargs, tax_year=year)["tax_computation"][
-            "rate_description"
-        ]
-        assert "Mental Health Services Tax" in desc, year
-        assert "Behavioral Health Services Tax" not in desc, year
-    for year in (2025, 2026):
-        desc = server.evaluate_state_residency(**kwargs, tax_year=year)["tax_computation"][
-            "rate_description"
-        ]
-        assert "Behavioral Health Services Tax" in desc, year
-        assert "Mental Health Services Tax" not in desc, year
+    with pytest.raises(SafetyViolationError, match="tax year 2023"):
+        server.evaluate_state_residency(**kwargs, tax_year=2023)
+    desc = server.evaluate_state_residency(**kwargs, tax_year=2024)["tax_computation"][
+        "rate_description"
+    ]
+    assert "Mental Health Services Tax" in desc
+    assert "Behavioral Health Services Tax" not in desc
+    desc = server.evaluate_state_residency(**kwargs, tax_year=2025)["tax_computation"][
+        "rate_description"
+    ]
+    assert "Behavioral Health Services Tax" in desc
+    assert "Mental Health Services Tax" not in desc
+    with pytest.raises(SafetyViolationError, match="tax year 2026"):
+        server.evaluate_state_residency(**kwargs, tax_year=2026)
 
 
 def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:
@@ -1446,8 +1453,16 @@ def test_maryland_2025_booklet_replaces_the_estimate_note() -> None:
     ]
     assert "5.75%" in desc_2024 and "6.50%" not in desc_2024
     assert "6.50%" in desc_2025
-    note = server.evaluate_state_residency(**kwargs, tax_year=2026)["tax_computation"][
+    # 2019-2023 standard deductions are sourced, so they are not labeled as estimates.
+    desc_2019 = server.evaluate_state_residency(**kwargs, tax_year=2019)["tax_computation"][
         "rate_description"
     ]
-    assert "tax year 2026 brackets and deduction are not in this table; the 2025" in note
+    assert "ESTIMATE" not in desc_2019
+    # 2026 states a single deduction only, so the year is not_recorded.
+    with pytest.raises(SafetyViolationError, match="tax year 2026"):
+        server.evaluate_state_residency(**kwargs, tax_year=2026)
+    note = server.evaluate_state_residency(**kwargs, tax_year=2027)["tax_computation"][
+        "rate_description"
+    ]
+    assert "tax year 2027 brackets and deduction are not in this table; the 2025" in note
     assert "not published yet" not in note

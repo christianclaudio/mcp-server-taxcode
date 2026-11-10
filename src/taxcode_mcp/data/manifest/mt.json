@@ -27,7 +27,92 @@
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
-      "verification_note": "The temporary text of section 15-30-2103 (Ch. 227, L. 2025, terminates December 31, 2026) states 4.7 / 5.65 percent at $47,500 single and $95,000 joint, not the held 5.9 percent / $20,500 schedule. The section does not state the first tax year of that temporary text."
+      "verification_note": "The temporary text of section 15-30-2103 (Ch. 227, L. 2025, terminates December 31, 2026) states 4.7 / 5.65 percent at $47,500 single and $95,000 joint, not the held 5.9 percent / $20,500 schedule. The section does not state the first tax year of that temporary text.",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets.single[0].over": 20500.0,
+            "brackets.single[0].rate": 0.059,
+            "brackets.single[1].over": null,
+            "brackets.single[1].rate": 0.047,
+            "brackets.mfj[0].over": 41000.0,
+            "brackets.mfj[0].rate": 0.059,
+            "brackets.mfj[1].over": null,
+            "brackets.mfj[1].rate": 0.047
+          },
+          "url": "https://revenue.mt.gov/files/Forms/Montana-Individual-Income-Tax-Return-Form-2/2024_Montana_Individual_Income_Tax_Return_Form_2_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e226ab03a7d7b4db1b964a2d4641927e977cd8201e98b664853a92982e72e93d"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 21100.0,
+            "brackets_2025.single[0].rate": 0.059,
+            "brackets_2025.single[1].over": null,
+            "brackets_2025.single[1].rate": 0.047,
+            "brackets_2025.mfj[0].over": 42200.0,
+            "brackets_2025.mfj[0].rate": 0.059,
+            "brackets_2025.mfj[1].over": null,
+            "brackets_2025.mfj[1].rate": 0.047
+          },
+          "url": "https://revenue.mt.gov/files/forms/Montana-Individual-Income-Tax-Return-Form-2-Instructions/2025_Montana_Individual_Income_Tax_Return_Form_2_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "bed29192ae2fb020272962d8629101f05133ca00ccda04bf508c8bf939d2ef98"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.single[0].over": 47500.0,
+            "brackets_2026.single[0].rate": 0.0565,
+            "brackets_2026.single[1].over": null,
+            "brackets_2026.single[1].rate": 0.047,
+            "brackets_2026.mfj[0].over": 95000.0,
+            "brackets_2026.mfj[0].rate": 0.0565,
+            "brackets_2026.mfj[1].over": null,
+            "brackets_2026.mfj[1].rate": 0.047
+          },
+          "url": "https://revenuefiles.mt.gov/files/Forms/Publication-1/Publication-1-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e3c8ead48b90065910744bb2ffdfc23709760892bfaa34ee4b468286cdde620d"
+        }
+      ],
+      "not_recorded": [
+        {
+          "param": "brackets",
+          "tax_year": 2018,
+          "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $17,900 and does not print the lower edges. There is no separate MFJ schedule."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2019,
+          "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $18,400 and does not print the lower edges. There is no separate MFJ schedule."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2020,
+          "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $18,700 and does not print the lower edges. There is no separate MFJ schedule."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2021,
+          "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.9% over $18,800 and does not print the lower edges. There is no separate MFJ schedule."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2022,
+          "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.75% over $19,800 and does not print the lower edges. There is no separate MFJ schedule."
+        },
+        {
+          "param": "brackets",
+          "tax_year": 2023,
+          "reason": "Form 2 prints a 7-bracket 1% schedule with a top of 6.75% over $21,600 and does not print the lower edges. There is no separate MFJ schedule."
+        }
+      ]
     }
   ]
 }

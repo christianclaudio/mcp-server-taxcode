@@ -27,8 +27,80 @@
       "enacting_law": "TIR 2025-001, January 21, 2025",
       "effective_date": "2025-01-01",
       "verification": "not_recorded",
-      "verification_note": "TIR 2025-001 (January 21, 2025) replaces https://gc.nh.gov/rsa/html/V/77/77-1.htm, which returned HTTP 404. The sha256 5dbd44ced3ac2aeee2417e2e866836114a834f0faa4bad31a578b1296d02754d, retrieved 2026-11-02, is the hash of that release's PDF. The url is the department page that issued the release. The release states that under prior law the interest and dividends tax was 3% on interest and dividend income over a $2,400 personal exemption or a $4,800 joint exemption, and that the tax is repealed for taxable periods beginning after December 31, 2024. Those are the held rate and exemptions. The computed tax stays zero because this tool does not tax wages. The release's additional exemptions for age, blindness, and disability are not modeled.",
+      "verification_note": "TIR 2025-001 (January 21, 2025) replaces https://gc.nh.gov/rsa/html/V/77/77-1.htm, which returned HTTP 404. The sha256 5dbd44ced3ac2aeee2417e2e866836114a834f0faa4bad31a578b1296d02754d, retrieved 2026-11-02, is the hash of that release's PDF. The url is the department page that issued the release. The release states that under prior law the interest and dividends tax was 3% on interest and dividend income over a $2,400 personal exemption or a $4,800 joint exemption, and that the tax is repealed for taxable periods beginning after December 31, 2024. Those are the held rate and exemptions. The computed tax stays zero because this tool does not tax wages. The release's additional exemptions for age, blindness, and disability are not modeled. Form DP-10 instructions state 5% for 2018-2022 and 4% for 2023; the 2024 booklet states 3%, which is the rate immediately before repeal.",
       "year_sources": [
+        {
+          "tax_year": 2018,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2018": 0.05
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2018.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8a6d4aba8ef4909e28f19ddf992fabc44c4be994e3cce88b1845ae90c6f9e952"
+        },
+        {
+          "tax_year": 2019,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2018": 0.05
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2019.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "94498501b5a28bd720db0657d30a4f032a06be895835bd0d34cfec064c52c7e6"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2018": 0.05
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2020.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "8c39ceccee5a0f20899e9bc10e1c5eff978987d7c91ae00efe02b99c906287dc"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2018": 0.05
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2021.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "64b898cb1139ca3179729e79477a0fe6e8090ac9d6ea7c701b00991822965feb"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2018": 0.05
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2022.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "9c2b4582e77b147fd878bd6e8de0590d8153ce40fa2f1b14dbff967c2c0a2348"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2023": 0.04
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2023.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "b39684dc2a24137e798af78a2a0b8ee64feaf4a2b84cecb45af793ee9f875b2e"
+        },
         {
           "tax_year": 2024,
           "values": {
@@ -42,6 +114,18 @@
           "content_sha256": "5dbd44ced3ac2aeee2417e2e866836114a834f0faa4bad31a578b1296d02754d"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "exemption_single": 2400.0,
+            "exemption_mfj": 4800.0,
+            "rate_2024": 0.03
+          },
+          "url": "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/dp-10-instructions-2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "99d5b03e85ae10d9c457ca5577cd5fd52c2fea9ec3fedcef5124e41e9ae2a5fe"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "rate_2025": 0.0
@@ -49,6 +133,16 @@
           "url": "https://www.revenue.nh.gov/news-and-media/interest-dividends-tax-repeal",
           "official": true,
           "retrieved": "2026-11-02",
+          "content_sha256": "5dbd44ced3ac2aeee2417e2e866836114a834f0faa4bad31a578b1296d02754d"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "rate_2025": 0.0
+          },
+          "url": "https://www.revenue.nh.gov/news-and-media/interest-dividends-tax-repeal",
+          "official": true,
+          "retrieved": "2026-11-10",
           "content_sha256": "5dbd44ced3ac2aeee2417e2e866836114a834f0faa4bad31a578b1296d02754d"
         }
       ]
