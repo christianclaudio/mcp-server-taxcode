@@ -1122,9 +1122,12 @@ def test_utah_credit_base_is_the_federal_standard_deduction() -> None:
     federal = compliance.FEDERAL_STANDARD_DEDUCTION
     assert ut["credit_base_single"] == "federal_standard_deduction"
     assert ut["credit_base_mfj"] == "federal_standard_deduction"
-    assert federal[2024] == {"single": 14600.0, "mfj": 29200.0}
-    assert federal[2025] == {"single": 15750.0, "mfj": 31500.0}
-    assert federal[2026] == {"single": 16100.0, "mfj": 32200.0}
+    assert federal[2024]["single"] == 14600.0 and federal[2024]["mfj"] == 29200.0
+    assert federal[2024]["hoh"] == 21900.0 and federal[2024]["mfs"] == 14600.0
+    assert federal[2025]["single"] == 15750.0 and federal[2025]["mfj"] == 31500.0
+    assert federal[2025]["hoh"] == 23625.0
+    assert federal[2026]["single"] == 16100.0 and federal[2026]["mfj"] == 32200.0
+    assert federal[2026]["hoh"] == 24150.0
     assert "credit_base_single_2025" not in ut
 
 
@@ -1446,10 +1449,13 @@ def test_batch4_nm_brackets_pin_hb6_and_hb252() -> None:
 def test_batch4_georgia_2019_and_2022_schedules() -> None:
     # IT-511: graduated rates; std ded $4,600/$6,000 (2019-2021) then $5,400/$7,100 (2022-2023).
     ga = compliance.RATE_TABLES["GA"]
-    assert compliance._for_year(ga, "standard_deduction", 2019) == {"single": 4600.0, "mfj": 6000.0}
-    assert compliance._for_year(ga, "standard_deduction", 2022) == {"single": 5400.0, "mfj": 7100.0}
-    assert compliance._for_year(ga, "standard_deduction", 2023) == {"single": 5400.0, "mfj": 7100.0}
-    assert ga["exemption"] == {"single": 2700.0, "mfj": 7400.0}
+    ded_2019 = compliance._for_year(ga, "standard_deduction", 2019)
+    ded_2022 = compliance._for_year(ga, "standard_deduction", 2022)
+    ded_2023 = compliance._for_year(ga, "standard_deduction", 2023)
+    assert ded_2019["single"] == 4600.0 and ded_2019["mfj"] == 6000.0
+    assert ded_2022["single"] == 5400.0 and ded_2022["mfj"] == 7100.0
+    assert ded_2023["single"] == 5400.0 and ded_2023["mfj"] == 7100.0
+    assert ga["exemption"]["single"] == 2700.0 and ga["exemption"]["mfj"] == 7400.0
     tax_2019 = _resident_tax("GA", 2019, 20000.0)["estimated_state_tax"]
     assert tax_2019 == compliance._marginal_tax(
         compliance._for_year(ga, "brackets", 2019)["single"], 20000.0 - 4600.0 - 2700.0
@@ -1603,13 +1609,16 @@ def test_unrecorded_hoh_and_mfs_refuse_without_using_single() -> None:
         with pytest.raises(SafetyViolationError, match="not_recorded") as raised:
             _resident_tax("VT", 2018, 50000.0, status)
         assert str(raised.value) == expected
-    assert _tax("NY", 2024, 80000.0, "head of household") == _tax("NY", 2024, 80000.0, "single")
+    # 2024 IT-201-I prints a head-of-household deduction of $11,200, not the single $8,000.
+    assert _tax("NY", 2024, 80000.0, "head of household") != _tax("NY", 2024, 80000.0, "single")
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         compliance._extra_brackets(compliance.RATE_TABLES["VT"], "hoh", 2017, "VT")
-    with pytest.raises(SafetyViolationError, match="not_recorded"):
+    assert (
         compliance._extra_deduction(
             {"deduction_hoh": "federal_standard_deduction"}, "hoh", 2024, "AL"
         )
+        == 21900.0
+    )
     absent = compliance.evaluate_state_residency(
         jurisdiction="VT",
         days_in_state=0,

@@ -79,6 +79,25 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "e3c8ead48b90065910744bb2ffdfc23709760892bfaa34ee4b468286cdde620d"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.hoh": [
+              {
+                "over": 71250.0,
+                "rate": 0.0565
+              },
+              {
+                "over": null,
+                "rate": 0.047
+              }
+            ]
+          },
+          "url": "https://revenuefiles.mt.gov/files/Forms/Publication-1/Publication-1-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "e3c8ead48b90065910744bb2ffdfc23709760892bfaa34ee4b468286cdde620d"
         }
       ],
       "not_recorded": [

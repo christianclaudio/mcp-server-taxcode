@@ -41,6 +41,11 @@
         "rate": 0.044,
         "rate_desc": "Flat 4.40% rate (Proposition 121)"
       }
-    ]
+    ],
+    "deduction_hoh": "federal_standard_deduction",
+    "deduction_mfs": {
+      "same_as": "single",
+      "quote": "Colorado income tax is based on federal taxable income."
+    }
   }
 }

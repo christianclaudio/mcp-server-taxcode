@@ -48,6 +48,55 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "d99862486f0b1fe6b23350dbb21ff955acdf73eacf4072e72bbe23d29d70d25d"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "brackets_hoh_2024": [
+              {
+                "over": 92450.0,
+                "rate": 0.0715
+              },
+              {
+                "over": 39050.0,
+                "rate": 0.0675
+              },
+              {
+                "over": null,
+                "rate": 0.058
+              }
+            ]
+          },
+          "url": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/ind_tax_rate_sched_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "6eb65377482d2f6627a16a72f362ef40a410ede450b0a396987d8d17397096b7"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.hoh": [
+              {
+                "over": 95150.0,
+                "rate": 0.0715
+              },
+              {
+                "over": 40200.0,
+                "rate": 0.0675
+              },
+              {
+                "over": null,
+                "rate": 0.058
+              }
+            ],
+            "deduction_hoh_2025": 22500.0,
+            "deduction_single_2025": 15000.0,
+            "deduction_mfj_2025": 30000.0
+          },
+          "url": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/ind_tax_rate_sched_2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "af76db2b2f358f8c19baa35d61d8a0b383613a2503982cd60e519ce393e1ec5e"
         }
       ]
     }

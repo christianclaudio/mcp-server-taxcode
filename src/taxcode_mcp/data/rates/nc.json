@@ -39,6 +39,31 @@
         "rate": 0.045,
         "rate_desc": "Flat 4.50% rate (2024 statutory rate) [ESTIMATE: G.S. 105-153.7 does not list a rate for a tax year before 2022, so the 2024 rate is used]"
       }
-    ]
+    ],
+    "exemption_hoh_2022": 19125.0,
+    "exemption_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction."
+    },
+    "exemption_hoh_2023": 19125.0,
+    "exemption_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction."
+    },
+    "exemption_hoh_2024": 19125.0,
+    "exemption_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction."
+    },
+    "exemption_hoh_2025": 19125.0,
+    "exemption_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction."
+    },
+    "exemption_hoh_2026": 19125.0,
+    "exemption_mfs_2026": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction."
+    }
   }
 }

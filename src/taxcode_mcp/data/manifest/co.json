@@ -82,6 +82,16 @@
           "content_sha256": "61358b252e5e9326e2ae450335b956f40aa40230e6671d39c658e1dfd42cf47e"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh": "federal_standard_deduction"
+          },
+          "url": "https://tax.colorado.gov/sites/tax/files/documents/DR0104_book_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "64e7f9a6093901466419a3ed75413ed1b1eb559e931a5e056aa73520c7abd1b6"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "rates[0].rate": 0.044

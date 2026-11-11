@@ -52,7 +52,35 @@
       "content_sha256": "fe7977419b70d0c3dcc392c328adc5f58f3b99937e0d2f79aecf6ac368872c31",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2019,
+          "values": {
+            "brackets_2019.hoh": {
+              "same_as": "mfj",
+              "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+            }
+          },
+          "url": "https://www.nj.gov/treasury/taxation/pdf/other_forms/tgi-ee/2019/1040i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "8d037447d3942b6112628d13048d573a56e9a2766a4c45c4d97b86e6c84bc633"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.hoh": {
+              "same_as": "mfj",
+              "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+            }
+          },
+          "url": "https://www.nj.gov/treasury/taxation/pdf/current/1040i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fe7977419b70d0c3dcc392c328adc5f58f3b99937e0d2f79aecf6ac368872c31"
+        }
+      ]
     },
     {
       "kind": "statute",

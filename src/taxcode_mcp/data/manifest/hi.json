@@ -40,6 +40,16 @@
           "content_sha256": "5bcce0f521562524be6d7422031c79038e337bba4249037fb866fc1047626b2f"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": 6424.0
+          },
+          "url": "https://files.hawaii.gov/tax/forms/2024/n11ins.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "5bcce0f521562524be6d7422031c79038e337bba4249037fb866fc1047626b2f"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 325000.0,
@@ -50,6 +60,65 @@
           "url": "https://files.hawaii.gov/tax/forms/2025/n11ins.pdf",
           "official": true,
           "retrieved": "2026-11-02",
+          "content_sha256": "7160595e466b376ba9c14da1540d21532be9e05d48d01d877f5d953c85e4e4d4"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.hoh": [
+              {
+                "over": 487500.0,
+                "rate": 0.11
+              },
+              {
+                "over": 412500.0,
+                "rate": 0.1
+              },
+              {
+                "over": 337500.0,
+                "rate": 0.09
+              },
+              {
+                "over": 262500.0,
+                "rate": 0.0825
+              },
+              {
+                "over": 187500.0,
+                "rate": 0.079
+              },
+              {
+                "over": 72000.0,
+                "rate": 0.076
+              },
+              {
+                "over": 54000.0,
+                "rate": 0.072
+              },
+              {
+                "over": 36000.0,
+                "rate": 0.068
+              },
+              {
+                "over": 28800.0,
+                "rate": 0.064
+              },
+              {
+                "over": 21600.0,
+                "rate": 0.055
+              },
+              {
+                "over": 14400.0,
+                "rate": 0.032
+              },
+              {
+                "over": null,
+                "rate": 0.014
+              }
+            ]
+          },
+          "url": "https://files.hawaii.gov/tax/forms/2025/n11ins.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
           "content_sha256": "7160595e466b376ba9c14da1540d21532be9e05d48d01d877f5d953c85e4e4d4"
         }
       ]

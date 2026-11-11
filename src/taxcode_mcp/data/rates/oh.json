@@ -34,7 +34,15 @@
             "over": null,
             "amount": 2400.0
           }
-        ]
+        ],
+        "hoh": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        }
       }
     },
     "brackets": {
@@ -71,70 +79,48 @@
           "base": 0.0,
           "rate": 0.0
         }
-      ]
-    },
-    "brackets_2025": {
-      "single": [
-        {
-          "over": 100000.0,
-          "base": 2394.32,
-          "rate": 0.03125
-        },
-        {
-          "over": 26050.0,
-          "base": 342.0,
-          "rate": 0.0275
-        },
-        {
-          "over": null,
-          "base": 0.0,
-          "rate": 0.0
-        }
       ],
-      "mfj": [
-        {
-          "over": 100000.0,
-          "base": 2394.32,
-          "rate": 0.03125
-        },
-        {
-          "over": 26050.0,
-          "base": 342.0,
-          "rate": 0.0275
-        },
-        {
-          "over": null,
-          "base": 0.0,
-          "rate": 0.0
-        }
-      ]
+      "hoh": {
+        "same_as": "single",
+        "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+      }
     },
-    "brackets_2026": {
-      "single": [
-        {
-          "over": 26050.0,
-          "base": 332.0,
-          "rate": 0.0275
-        },
-        {
-          "over": null,
-          "base": 0.0,
-          "rate": 0.0
-        }
-      ],
-      "mfj": [
-        {
-          "over": 26050.0,
-          "base": 332.0,
-          "rate": 0.0275
-        },
-        {
-          "over": null,
-          "base": 0.0,
-          "rate": 0.0
-        }
-      ]
-    },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The IT 1040 booklet prints a partial schedule (seven brackets, 0% to $10,850 through 4.997% over $217,400). The missing edges and bases are not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "The IT 1040 booklet prints a partial schedule (0% to $21,750 through 4.797% over $217,400). The missing edges and bases are not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The IT 1040 booklet prints a partial schedule (0% to $22,150 through 4.797% over $221,300). The missing edges and bases are not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "The IT 1040 booklet prints a partial schedule (0% to $25,000 through 3.990% over $110,650). The missing edges and bases are not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "The IT 1040 booklet prints a partial schedule (0% to $26,050 through 3.990% over $115,300). The missing edges and bases are not stored."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "The IT 1040 booklet prints a partial schedule (0% to $26,050, 2.75% to $100,000, 3.688% to $115,300, 3.75% over $115,300; the bracket bases are not printed). The missing edges and bases are not stored."
+      }
+    ],
     "exemption_2018": {
       "amount": 2350.0,
       "phaseout": {
@@ -165,7 +151,15 @@
             "over": null,
             "amount": 2350.0
           }
-        ]
+        ],
+        "hoh": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        }
       }
     },
     "exemption_2020": {
@@ -198,7 +192,15 @@
             "over": null,
             "amount": 2400.0
           }
-        ]
+        ],
+        "hoh": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        }
       }
     },
     "exemption_2025": {
@@ -239,40 +241,94 @@
             "over": null,
             "amount": 2400.0
           }
-        ]
+        ],
+        "hoh": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+        }
       }
     },
-    "not_recorded": [
-      {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "The IT 1040 booklet prints a partial schedule (seven brackets, 0% to $10,850 through 4.997% over $217,400). The missing edges and bases are not stored."
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 100000.0,
+          "base": 2394.32,
+          "rate": 0.03125
+        },
+        {
+          "over": 26050.0,
+          "base": 342.0,
+          "rate": 0.0275
+        },
+        {
+          "over": null,
+          "base": 0.0,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 100000.0,
+          "base": 2394.32,
+          "rate": 0.03125
+        },
+        {
+          "over": 26050.0,
+          "base": 342.0,
+          "rate": 0.0275
+        },
+        {
+          "over": null,
+          "base": 0.0,
+          "rate": 0.0
+        }
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
       },
-      {
-        "param": "brackets",
-        "tax_year": 2019,
-        "reason": "The IT 1040 booklet prints a partial schedule (0% to $21,750 through 4.797% over $217,400). The missing edges and bases are not stored."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "The IT 1040 booklet prints a partial schedule (0% to $22,150 through 4.797% over $221,300). The missing edges and bases are not stored."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "The IT 1040 booklet prints a partial schedule (0% to $25,000 through 3.990% over $110,650). The missing edges and bases are not stored."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2022,
-        "reason": "The IT 1040 booklet prints a partial schedule (0% to $26,050 through 3.990% over $115,300). The missing edges and bases are not stored."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2023,
-        "reason": "The IT 1040 booklet prints a partial schedule (0% to $26,050, 2.75% to $100,000, 3.688% to $115,300, 3.75% over $115,300; the bracket bases are not printed). The missing edges and bases are not stored."
+      "mfs": {
+        "same_as": "single",
+        "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
       }
-    ]
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 26050.0,
+          "base": 332.0,
+          "rate": 0.0275
+        },
+        {
+          "over": null,
+          "base": 0.0,
+          "rate": 0.0
+        }
+      ],
+      "mfj": [
+        {
+          "over": 26050.0,
+          "base": 332.0,
+          "rate": 0.0275
+        },
+        {
+          "over": null,
+          "base": 0.0,
+          "rate": 0.0
+        }
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+      }
+    }
   }
 }

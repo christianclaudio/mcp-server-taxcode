@@ -461,7 +461,9 @@
           "tax_year": 2019,
           "values": {
             "years[0].single": 12200.0,
-            "years[0].mfj": 24400.0
+            "years[0].mfj": 24400.0,
+            "years[0].hoh": 18350.0,
+            "years[0].mfs": 12200.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-18-57.pdf",
           "official": true,
@@ -472,7 +474,9 @@
           "tax_year": 2020,
           "values": {
             "years[1].single": 12400.0,
-            "years[1].mfj": 24800.0
+            "years[1].mfj": 24800.0,
+            "years[1].hoh": 18650.0,
+            "years[1].mfs": 12400.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-19-44.pdf",
           "official": true,
@@ -483,7 +487,9 @@
           "tax_year": 2021,
           "values": {
             "years[2].single": 12550.0,
-            "years[2].mfj": 25100.0
+            "years[2].mfj": 25100.0,
+            "years[2].hoh": 18800.0,
+            "years[2].mfs": 12550.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-20-45.pdf",
           "official": true,
@@ -494,7 +500,9 @@
           "tax_year": 2022,
           "values": {
             "years[3].single": 12950.0,
-            "years[3].mfj": 25900.0
+            "years[3].mfj": 25900.0,
+            "years[3].hoh": 19400.0,
+            "years[3].mfs": 12950.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-21-45.pdf",
           "official": true,
@@ -505,7 +513,9 @@
           "tax_year": 2023,
           "values": {
             "years[4].single": 13850.0,
-            "years[4].mfj": 27700.0
+            "years[4].mfj": 27700.0,
+            "years[4].hoh": 20800.0,
+            "years[4].mfs": 13850.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-22-38.pdf",
           "official": true,
@@ -516,7 +526,9 @@
           "tax_year": 2024,
           "values": {
             "years[5].single": 14600.0,
-            "years[5].mfj": 29200.0
+            "years[5].mfj": 29200.0,
+            "years[5].hoh": 21900.0,
+            "years[5].mfs": 14600.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-23-34.pdf",
           "official": true,
@@ -527,7 +539,9 @@
           "tax_year": 2025,
           "values": {
             "years[6].single": 15750.0,
-            "years[6].mfj": 31500.0
+            "years[6].mfj": 31500.0,
+            "years[6].hoh": 23625.0,
+            "years[6].mfs": 15750.0
           },
           "url": "https://www.irs.gov/pub/irs-pdf/i1040gi.pdf",
           "official": true,
@@ -538,7 +552,9 @@
           "tax_year": 2026,
           "values": {
             "years[7].single": 16100.0,
-            "years[7].mfj": 32200.0
+            "years[7].mfj": 32200.0,
+            "years[7].hoh": 24150.0,
+            "years[7].mfs": 16100.0
           },
           "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
           "official": true,

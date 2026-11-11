@@ -10,24 +10,6 @@
     "regime": "graduated",
     "deduction_single": 2340.0,
     "deduction_mfj": 4680.0,
-    "deduction_single_2018": 2200.0,
-    "deduction_single_2019": 2200.0,
-    "deduction_single_2020": 2200.0,
-    "deduction_single_2021": 2200.0,
-    "deduction_single_2022": 2270.0,
-    "deduction_single_2023": 2340.0,
-    "deduction_single_2024": 2410.0,
-    "deduction_mfj_2018": 4400.0,
-    "deduction_mfj_2019": 4400.0,
-    "deduction_mfj_2020": 4400.0,
-    "deduction_mfj_2021": 4400.0,
-    "deduction_mfj_2022": 4540.0,
-    "deduction_mfj_2023": 4680.0,
-    "deduction_mfj_2024": 4820.0,
-    "deduction_single_2025": 2470.0,
-    "deduction_mfj_2025": 4940.0,
-    "deduction_single_2026": 2470.0,
-    "deduction_mfj_2026": 4940.0,
     "brackets": {
       "single": [
         {
@@ -72,8 +54,68 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The indexed tax tables are one schedule, with no status split."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "The indexed tax tables are one schedule, with no status split."
+      }
     },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.9% over $79,300; lower bands of the 0.9%-6.9% schedule are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.9% over $80,800; lower bands are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.6% over $82,000; lower bands are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "DFA bracket PDF prints only part of the schedule (top rate 5.9% over $39,700; lower bands are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.9% over $24,300; lower bands are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.7% over $25,000; lower bands are not printed)."
+      }
+    ],
+    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)",
+    "rate_desc_2026": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.70% over $26,399 (2026 withholding formula, which prints each of these bands; high-income phase-out not modeled) [ESTIMATE: Arkansas's 2026 standard deduction ($2,470 per taxpayer, $4,940 joint) is from the 2026 AR1000ES estimated-tax worksheet, not the final instructions. Tax year 2027 and later use the 2026 amount until a source is recorded]",
+    "deduction_single_2018": 2200.0,
+    "deduction_single_2019": 2200.0,
+    "deduction_single_2020": 2200.0,
+    "deduction_single_2021": 2200.0,
+    "deduction_single_2022": 2270.0,
+    "deduction_single_2023": 2340.0,
+    "deduction_single_2024": 2410.0,
+    "deduction_single_2025": 2470.0,
+    "deduction_single_2026": 2470.0,
+    "deduction_mfj_2018": 4400.0,
+    "deduction_mfj_2019": 4400.0,
+    "deduction_mfj_2020": 4400.0,
+    "deduction_mfj_2021": 4400.0,
+    "deduction_mfj_2022": 4540.0,
+    "deduction_mfj_2023": 4680.0,
+    "deduction_mfj_2024": 4820.0,
+    "deduction_mfj_2025": 4940.0,
+    "deduction_mfj_2026": 4940.0,
     "brackets_2025": {
       "single": [
         {
@@ -118,7 +160,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The indexed tax tables are one schedule, with no status split."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "The indexed tax tables are one schedule, with no status split."
+      }
     },
     "brackets_2026": {
       "single": [
@@ -164,41 +214,71 @@
           "over": null,
           "rate": 0.0
         }
-      ]
-    },
-    "rate_desc_2025": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.9% over $26,399 (DFA 2025 indexed brackets; minus-adjustment and high-income phase-out not modeled)",
-    "rate_desc_2026": "Graduated rates: 0% up to $5,599, 2% to $11,199, 3% to $15,999, 3.4% to $26,399, 3.70% over $26,399 (2026 withholding formula, which prints each of these bands; high-income phase-out not modeled) [ESTIMATE: Arkansas's 2026 standard deduction ($2,470 per taxpayer, $4,940 joint) is from the 2026 AR1000ES estimated-tax worksheet, not the final instructions. Tax year 2027 and later use the 2026 amount until a source is recorded]",
-    "not_recorded": [
-      {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.9% over $79,300; lower bands of the 0.9%-6.9% schedule are not printed)."
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The indexed tax tables are one schedule, with no status split."
       },
-      {
-        "param": "brackets",
-        "tax_year": 2019,
-        "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.9% over $80,800; lower bands are not printed)."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "DFA bracket PDF prints only part of the schedule (top rate 6.6% over $82,000; lower bands are not printed)."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "DFA bracket PDF prints only part of the schedule (top rate 5.9% over $39,700; lower bands are not printed)."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2022,
-        "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.9% over $24,300; lower bands are not printed)."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2023,
-        "reason": "DFA bracket PDF prints only part of the schedule (top rate 4.7% over $25,000; lower bands are not printed)."
+      "mfs": {
+        "same_as": "single",
+        "quote": "The indexed tax tables are one schedule, with no status split."
       }
-    ]
+    },
+    "deduction_hoh_2019": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_hoh_2020": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_hoh_2021": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_hoh_2022": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_hoh_2023": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_hoh_2024": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_hoh_2025": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    },
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+    }
   }
 }

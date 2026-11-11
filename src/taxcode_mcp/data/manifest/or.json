@@ -26,7 +26,19 @@
       "content_sha256": "5699915cfd98071020560e55ee1c7c07304390e1069af86bc263edb14ae7bd67",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": 4560.0
+          },
+          "url": "https://www.oregon.gov/dor/forms/FormsPubs/form-or-40-inst_101-040-1_2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "4ee45bad719499e2b69977b0db15de75ed063ac631b151fdefe3db081fa1eaeb"
+        }
+      ]
     }
   ]
 }

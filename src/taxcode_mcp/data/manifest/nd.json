@@ -26,7 +26,20 @@
       "content_sha256": "2d68ed94fb3cfbcaa0a770072daf21b56238b8b76d75b4aa47aab87c5de28e51",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "zero_bracket_hoh_2024": 63175.0,
+            "top_bracket_hoh_2024": 264100.0
+          },
+          "url": "https://www.tax.nd.gov/sites/www/files/documents/forms/individual/2024-iit/2024-form-nd-1-tax-tables-and-rates.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "2d68ed94fb3cfbcaa0a770072daf21b56238b8b76d75b4aa47aab87c5de28e51"
+        }
+      ]
     }
   ]
 }

@@ -73,6 +73,32 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "bbfd521e5a94d5c1356e310935f2880e4b3126d2149dd1bde89eccb44799cd96"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "exemption_2024.hoh": {
+              "same_as": "single",
+              "quote": "Single filing status includes Single, Head of Household, Widowed, and Married filing separately."
+            }
+          },
+          "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "e888e819a62d34fba51dae317960c9bb5e12889d21d153ac78ab6bd67646d35a"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "exemption_2025.hoh": {
+              "same_as": "single",
+              "quote": "Single filing status includes Single, Head of Household, Widowed, and Married filing separately."
+            }
+          },
+          "url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/forms/incometax/documents/currentyear/individual/il-1040-instr.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "e888e819a62d34fba51dae317960c9bb5e12889d21d153ac78ab6bd67646d35a"
         }
       ]
     },

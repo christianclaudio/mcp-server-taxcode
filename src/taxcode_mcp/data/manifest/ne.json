@@ -140,6 +140,34 @@
           "content_sha256": "b8eee1db1dcd628ee39471693b03559e77434936eafc265b829b94b93f5d6e68"
         },
         {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": 10750.0,
+            "brackets_hoh_2022": [
+              {
+                "over": 49200.0,
+                "rate": 0.0684
+              },
+              {
+                "over": 32950.0,
+                "rate": 0.0501
+              },
+              {
+                "over": 6410.0,
+                "rate": 0.0351
+              },
+              {
+                "over": null,
+                "rate": 0.0246
+              }
+            ]
+          },
+          "url": "https://revenue.nebraska.gov/sites/default/files/doc/2022_Ne_Individual_Income_Tax_Booklet_8-307-2022_final_2.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "5dea76fb691e0e557d33dd7a3822910a9be74b9dc829ebfa0a0d9fb905a95ae8"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "deduction_single": 7900.0,
@@ -179,6 +207,16 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "9142374d587900d8b6f31f4c2bc0c4c25b1bda43847dc94092eca310c421ddbd"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_hoh_2023": 11600.0
+          },
+          "url": "https://revenue.nebraska.gov/sites/revenue.nebraska.gov/files/doc/tax-forms/2023/incometax/f_1040n_booklet_2023_Final.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "e55ca4c1db04bfb5c2461ce4ac74677e273b89221060610060218ff2f7df3813"
         },
         {
           "tax_year": 2024,

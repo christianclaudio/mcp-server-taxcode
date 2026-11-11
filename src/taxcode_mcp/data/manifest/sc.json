@@ -51,6 +51,16 @@
           "content_sha256": "5bc2ffd78f4534dc641fc5175f946b1e7c35af857a88d8447cdd886edb641336"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh": "federal_standard_deduction"
+          },
+          "url": "https://dor.sc.gov/forms-site/Forms/SC1040TT_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "5bc2ffd78f4534dc641fc5175f946b1e7c35af857a88d8447cdd886edb641336"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "brackets_2026.single[0].over": 30000.0,

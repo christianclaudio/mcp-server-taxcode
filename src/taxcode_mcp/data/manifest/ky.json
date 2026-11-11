@@ -63,6 +63,19 @@
           "content_sha256": "1afca706b3027bb1ebccb02d8e7e735691d2d2c7c6ba5d502387265ca9d87f86"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "deduction_hoh_2019": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2650.0,
@@ -73,6 +86,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "51f3c2dfa4decd141d528348cde013f9de10231c39a0ea91badb3dcaea235304"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_hoh_2020": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
         },
         {
           "tax_year": 2021,
@@ -87,6 +113,19 @@
           "content_sha256": "714b561d98e16484df873611e58558d478d136785a4fbd9e1f3fc49de940f25f"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "deduction_hoh_2021": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "deduction_single_2022": 2770.0,
@@ -97,6 +136,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "fa4d83d689acf2a86b439cce152ca3020b0ee822f505f03e16fe8f7e24b4669a"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
         },
         {
           "tax_year": 2023,
@@ -131,6 +183,19 @@
           "content_sha256": "ff1518fdfb27eeac42f780fef0a727dc4d7d359866da6cf0b60dee5eabca850a"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_hoh_2023": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "rate_2024": 0.04
@@ -152,6 +217,19 @@
           "content_sha256": "ff1518fdfb27eeac42f780fef0a727dc4d7d359866da6cf0b60dee5eabca850a"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "rate": 0.04,
@@ -163,6 +241,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "cdb8e571c09f306961d5cb62154f8b57bd67f6ee50376b443647376b5667f421"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
         },
         {
           "tax_year": 2026,
@@ -194,6 +285,19 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "ba8f7b25f40ff55012f8e1713d4b4b58fcee9ac5a14b116e7b77c9c6a27b6777"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_hoh_2026": {
+              "same_as": "single",
+              "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+            }
+          },
+          "url": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=29067",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "15191d4bb195e64d4d318dc09da270f4cb09cbcaeea997a1a72afd8d2db67084"
         }
       ]
     }

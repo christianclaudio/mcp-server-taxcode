@@ -198,6 +198,57 @@
           "content_sha256": "446372719f6e1ce90132d550c268d7804fc44cefcf13514e09bf9ac9907ee374"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "brackets_2024.hoh": [
+              {
+                "over": 1000000.0,
+                "rate": 0.133
+              },
+              {
+                "over": 980987.0,
+                "rate": 0.123
+              },
+              {
+                "over": 588593.0,
+                "rate": 0.113
+              },
+              {
+                "over": 490493.0,
+                "rate": 0.103
+              },
+              {
+                "over": 96107.0,
+                "rate": 0.093
+              },
+              {
+                "over": 81364.0,
+                "rate": 0.08
+              },
+              {
+                "over": 65744.0,
+                "rate": 0.06
+              },
+              {
+                "over": 51000.0,
+                "rate": 0.04
+              },
+              {
+                "over": 21527.0,
+                "rate": 0.02
+              },
+              {
+                "over": null,
+                "rate": 0.01
+              }
+            ]
+          },
+          "url": "https://www.ftb.ca.gov/forms/2024/2024-540-tax-rate-schedules.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "80d4cb7e90a0c069ecf02c633f1823567162e825f2440e8a08d6d23cbbd60e16"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "deduction_2025.single": 5706.0,
@@ -239,6 +290,57 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.hoh": [
+              {
+                "over": 1010417.0,
+                "rate": 0.133
+              },
+              {
+                "over": 1000000.0,
+                "rate": 0.123
+              },
+              {
+                "over": 606251.0,
+                "rate": 0.113
+              },
+              {
+                "over": 505208.0,
+                "rate": 0.103
+              },
+              {
+                "over": 98990.0,
+                "rate": 0.093
+              },
+              {
+                "over": 83805.0,
+                "rate": 0.08
+              },
+              {
+                "over": 67716.0,
+                "rate": 0.06
+              },
+              {
+                "over": 52530.0,
+                "rate": 0.04
+              },
+              {
+                "over": 22173.0,
+                "rate": 0.02
+              },
+              {
+                "over": null,
+                "rate": 0.01
+              }
+            ]
+          },
+          "url": "https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "ad70ee345aa7daf5788b64419e04280c76fbebd0c15856820ccea71f3534a8c6"
         },
         {
           "tax_year": 2026,
@@ -297,6 +399,57 @@
           "official": true,
           "retrieved": "2026-11-05",
           "content_sha256": "b48ee24bd2f9b9e74fe9a5bbc548d15bae0bd1ce53306bef1ff33fc76f8078c1"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "brackets_2026.hoh": [
+              {
+                "over": 1044771.0,
+                "rate": 0.133
+              },
+              {
+                "over": 1000000.0,
+                "rate": 0.123
+              },
+              {
+                "over": 626864.0,
+                "rate": 0.113
+              },
+              {
+                "over": 522385.0,
+                "rate": 0.103
+              },
+              {
+                "over": 102356.0,
+                "rate": 0.093
+              },
+              {
+                "over": 86654.0,
+                "rate": 0.08
+              },
+              {
+                "over": 70018.0,
+                "rate": 0.06
+              },
+              {
+                "over": 54316.0,
+                "rate": 0.04
+              },
+              {
+                "over": 22927.0,
+                "rate": 0.02
+              },
+              {
+                "over": null,
+                "rate": 0.01
+              }
+            ]
+          },
+          "url": "https://www.ftb.ca.gov/forms/2026/2026-540-tax-rate-schedules.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "17d22dcf30285cc45c692f6c7ad2805593d95d5c264887da14156d4b992643b3"
         }
       ],
       "not_recorded": [

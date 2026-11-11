@@ -7,8 +7,6 @@
     "statutory_basis": "Mo. Rev. Stat. §§ 143.011, 143.101",
     "rate_authority": "Mo. Rev. Stat. § 143.011",
     "rate_desc": "Graduated top rate 4.80%",
-    "rate_desc_2025": "Graduated top rate 4.70%",
-    "rate_desc_2026": "Graduated top rate 4.70% (steps of $1,348, 4.70% over $9,436)",
     "regime": "graduated",
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
@@ -80,8 +78,50 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
+      }
     },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The instructions print the top rate (5.9% over $9,253) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "The instructions print the top rate (5.4% over $8,424) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The instructions print the top rate (5.4% over $8,584) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "The instructions print the top rate (5.4% over $8,704) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "The instructions print the top rate (5.3% over $8,968) and not every indexed edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "The instructions print the top rate (4.95% over $8,449) and not every indexed edge."
+      }
+    ],
+    "rate_desc_2025": "Graduated top rate 4.70%",
+    "rate_desc_2026": "Graduated top rate 4.70% (steps of $1,348, 4.70% over $9,436)",
     "brackets_2024": {
       "single": [
         {
@@ -150,7 +190,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
+      }
     },
     "brackets_2025": {
       "single": [
@@ -220,7 +268,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
+      }
     },
     "brackets_2026": {
       "single": [
@@ -290,39 +346,27 @@
           "over": null,
           "rate": 0.0
         }
-      ]
-    },
-    "not_recorded": [
-      {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "The instructions print the top rate (5.9% over $9,253) and not every indexed edge."
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
       },
-      {
-        "param": "brackets",
-        "tax_year": 2019,
-        "reason": "The instructions print the top rate (5.4% over $8,424) and not every indexed edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "The instructions print the top rate (5.4% over $8,584) and not every indexed edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "The instructions print the top rate (5.4% over $8,704) and not every indexed edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2022,
-        "reason": "The instructions print the top rate (5.3% over $8,968) and not every indexed edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2023,
-        "reason": "The instructions print the top rate (4.95% over $8,449) and not every indexed edge."
+      "mfs": {
+        "same_as": "single",
+        "quote": "A separate tax must be computed for you and your spouse."
       }
-    ]
+    },
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "exemption_hoh_2024": 1400.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Single or married filing separate use the same federal standard deduction."
+    },
+    "deduction_hoh_2025": "federal_standard_deduction",
+    "exemption_hoh_2025": 1400.0,
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Single or married filing separate use the same federal standard deduction."
+    }
   }
 }

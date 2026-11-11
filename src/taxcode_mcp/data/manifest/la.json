@@ -90,6 +90,16 @@
           "content_sha256": "f6be874f6ed059ebcbd6415a9ba2006364c29c9319727801daa4e657e365d986"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": 9000.0
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540(2024)D13%20TT.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "f6be874f6ed059ebcbd6415a9ba2006364c29c9319727801daa4e657e365d986"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "rate_2025": 0.03
@@ -133,6 +143,16 @@
           "content_sha256": "b301af5be15b42c50f92c8849f36ab251ed84ca509858927775857f84967fbe2"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": 25000.0
+          },
+          "url": "https://dam.ldr.la.gov/taxforms/IT540i-WEB-2025-Revised-7-26.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "b301af5be15b42c50f92c8849f36ab251ed84ca509858927775857f84967fbe2"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "deduction_single_2026": 12838.0,
@@ -141,6 +161,16 @@
           "url": "https://dam.ldr.la.gov/lawspolicies/RIB%2026-019.pdf",
           "official": true,
           "retrieved": "2026-11-10",
+          "content_sha256": "f22663cde2ebdf56eed6688779d25583e1c8fb86feaa773c8454b8735dd71067"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_hoh_2026": 25676.0
+          },
+          "url": "https://dam.ldr.la.gov/lawspolicies/RIB%2026-019.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
           "content_sha256": "f22663cde2ebdf56eed6688779d25583e1c8fb86feaa773c8454b8735dd71067"
         }
       ],

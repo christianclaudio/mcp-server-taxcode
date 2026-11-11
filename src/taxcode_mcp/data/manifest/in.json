@@ -26,7 +26,22 @@
       "content_sha256": "842e6fb089742c27cc129fd7c6c31588337e8f966c2fa29779db04682283e033",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": {
+              "same_as": "single",
+              "quote": "All other filers should enter $1,000 on this line."
+            }
+          },
+          "url": "https://forms.in.gov/Download.aspx?id=16915",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "b571f21423925108109187c58d0c9ec106bc4d1051d517e563a940228ed0c79c"
+        }
+      ]
     }
   ]
 }

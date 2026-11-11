@@ -33,7 +33,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "rate_desc_2018": "Graduated rates: 0% on the first $1,000, 3% on the next $4,000, 4% on the next $5,000, and 5% over $10,000 (MS DOR 2020 Form 80-100, What's New). Married combined returns: pass spouse_agi (MFJ only) to apply the schedule to each spouse's column (each gets a $10,000 zero band); the filing-status exemption and standard deduction are split evenly between columns, and dependent exemptions ($1,500 each) go to the taxpayer column. Dependent exemptions are included when dependents is passed.",
     "rate_desc_2019": "Graduated rates: 0% on the first $2,000, 3% on the next $3,000, 4% on the next $5,000, and 5% over $10,000 (MS DOR 2020 Form 80-100, What's New). Married combined returns: pass spouse_agi (MFJ only) to apply the schedule to each spouse's column (each gets a $10,000 zero band); the filing-status exemption and standard deduction are split evenly between columns, and dependent exemptions ($1,500 each) go to the taxpayer column. Dependent exemptions are included when dependents is passed.",
@@ -84,7 +92,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2019": {
       "single": [
@@ -122,7 +138,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2020": {
       "single": [
@@ -160,7 +184,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2021": {
       "single": [
@@ -198,7 +230,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2022": {
       "single": [
@@ -228,7 +268,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2023": {
       "single": [
@@ -250,7 +298,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2024": {
       "single": [
@@ -272,7 +328,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2025": {
       "single": [
@@ -294,7 +358,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2026": {
       "single": [
@@ -316,7 +388,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2027": {
       "single": [
@@ -338,7 +418,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2028": {
       "single": [
@@ -360,7 +448,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2029": {
       "single": [
@@ -382,7 +478,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
     },
     "brackets_2030": {
       "single": [
@@ -404,7 +508,65 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax computation schedule per individual."
+      }
+    },
+    "exemption_hoh_2020": 8000.0,
+    "deduction_hoh_2020": 3400.0,
+    "exemption_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "exemption_hoh_2022": 8000.0,
+    "deduction_hoh_2022": 3400.0,
+    "exemption_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "exemption_hoh_2023": 8000.0,
+    "deduction_hoh_2023": 3400.0,
+    "exemption_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "exemption_hoh_2024": 8000.0,
+    "deduction_hoh_2024": 3400.0,
+    "exemption_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "exemption_hoh_2025": 8000.0,
+    "deduction_hoh_2025": 3400.0,
+    "exemption_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
+    },
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separate returns use the single exemption and deduction."
     }
   }
 }

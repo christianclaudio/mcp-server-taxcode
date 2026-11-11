@@ -46,8 +46,100 @@
           "over": null,
           "rate": 0.0535
         }
+      ],
+      "hoh": [
+        {
+          "over": 256880.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 156760.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 39010.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
+      ],
+      "mfs": [
+        {
+          "over": 160725.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 92020.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 23165.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
       ]
     },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "Form M1 prints the 9.85% threshold ($160,020 / $266,700) and not the lower indexed edges."
+      },
+      {
+        "param": "deduction",
+        "tax_year": 2018,
+        "reason": "The 2018 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "Form M1 prints the 9.85% threshold ($161,720 / $269,010) and not the lower indexed edges."
+      },
+      {
+        "param": "deduction",
+        "tax_year": 2019,
+        "reason": "The 2019 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "Form M1 prints the 9.85% threshold ($164,400 / $273,470) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "Form M1 prints the 9.85% threshold ($166,040 / $276,200) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "Form M1 prints the 9.85% threshold ($171,220 / $284,810) and not the lower indexed edges."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2023,
+        "reason": "Form M1 prints the 9.85% threshold ($183,340 / $304,970) and not the lower indexed edges."
+      }
+    ],
+    "deduction_single_2020": 12400.0,
+    "deduction_single_2021": 12525.0,
+    "deduction_single_2022": 12900.0,
+    "deduction_single_2023": 13825.0,
+    "deduction_single_2024": 14575.0,
+    "deduction_single_2025": 14950.0,
+    "deduction_single_2026": 15300.0,
+    "deduction_mfj_2020": 24800.0,
+    "deduction_mfj_2021": 25050.0,
+    "deduction_mfj_2022": 25800.0,
+    "deduction_mfj_2023": 27650.0,
+    "deduction_mfj_2024": 29150.0,
+    "deduction_mfj_2025": 29900.0,
+    "deduction_mfj_2026": 30600.0,
     "brackets_2025": {
       "single": [
         {
@@ -78,6 +170,42 @@
         },
         {
           "over": 47620.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
+      ],
+      "hoh": [
+        {
+          "over": 264050.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 161130.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 40100.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
+      ],
+      "mfs": [
+        {
+          "over": 165205.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 94590.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 23810.0,
           "rate": 0.068
         },
         {
@@ -122,63 +250,78 @@
           "over": null,
           "rate": 0.0535
         }
+      ],
+      "hoh": [
+        {
+          "over": 270060.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 164800.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 41010.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
+      ],
+      "mfs": [
+        {
+          "over": 168965.0,
+          "rate": 0.0985
+        },
+        {
+          "over": 96740.0,
+          "rate": 0.0785
+        },
+        {
+          "over": 24350.0,
+          "rate": 0.068
+        },
+        {
+          "over": null,
+          "rate": 0.0535
+        }
       ]
     },
-    "deduction_single_2020": 12400.0,
-    "deduction_single_2021": 12525.0,
-    "deduction_single_2022": 12900.0,
-    "deduction_single_2023": 13825.0,
-    "deduction_single_2024": 14575.0,
-    "deduction_single_2025": 14950.0,
-    "deduction_single_2026": 15300.0,
-    "deduction_mfj_2020": 24800.0,
-    "deduction_mfj_2021": 25050.0,
-    "deduction_mfj_2022": 25800.0,
-    "deduction_mfj_2023": 27650.0,
-    "deduction_mfj_2024": 29150.0,
-    "deduction_mfj_2025": 29900.0,
-    "deduction_mfj_2026": 30600.0,
-    "not_recorded": [
-      {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "Form M1 prints the 9.85% threshold ($160,020 / $266,700) and not the lower indexed edges."
-      },
-      {
-        "param": "deduction",
-        "tax_year": 2018,
-        "reason": "The 2018 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2019,
-        "reason": "Form M1 prints the 9.85% threshold ($161,720 / $269,010) and not the lower indexed edges."
-      },
-      {
-        "param": "deduction",
-        "tax_year": 2019,
-        "reason": "The 2019 Form M1 starts the standard deduction from the federal amounts and does not isolate a Minnesota dollar amount."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "Form M1 prints the 9.85% threshold ($164,400 / $273,470) and not the lower indexed edges."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "Form M1 prints the 9.85% threshold ($166,040 / $276,200) and not the lower indexed edges."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2022,
-        "reason": "Form M1 prints the 9.85% threshold ($171,220 / $284,810) and not the lower indexed edges."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2023,
-        "reason": "Form M1 prints the 9.85% threshold ($183,340 / $304,970) and not the lower indexed edges."
-      }
-    ]
+    "deduction_hoh_2020": 18650.0,
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    },
+    "deduction_hoh_2021": 18800.0,
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    },
+    "deduction_hoh_2022": 19400.0,
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    },
+    "deduction_hoh_2023": 20800.0,
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    },
+    "deduction_hoh_2024": 21900.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    },
+    "deduction_hoh_2025": 22500.0,
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    },
+    "deduction_hoh_2026": 23000.0,
+    "deduction_mfs_2026": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction."
+    }
   }
 }

@@ -97,6 +97,16 @@
           "content_sha256": "f2b77b3383d4472f76e0ab6450c423b1e46788b6985399f4362259d6f4263a6a"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "deduction_hoh_2019": 5120.0
+          },
+          "url": "https://revenue.iowa.gov/media/2721/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "67ef375cd1fb6a19aa477a5be1235c373d531ad5b2a0873a1e6ec46a99f2dd21"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2110.0,
@@ -106,6 +116,16 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "d5d1b4a1aebe472d610af41d8bfe8e04a60afcfa8a894027b71ce2e75bfd623b"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_hoh_2020": 5210.0
+          },
+          "url": "https://revenue.iowa.gov/media/2721/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "67ef375cd1fb6a19aa477a5be1235c373d531ad5b2a0873a1e6ec46a99f2dd21"
         },
         {
           "tax_year": 2021,
@@ -164,6 +184,16 @@
           "content_sha256": "8ba8a2851d3045594e6077d43ad2f450766af0df43c8a17092b770babd0721df"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "deduction_hoh_2021": 5240.0
+          },
+          "url": "https://revenue.iowa.gov/media/2721/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "67ef375cd1fb6a19aa477a5be1235c373d531ad5b2a0873a1e6ec46a99f2dd21"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "deduction_single_2022": 2210.0,
@@ -172,6 +202,16 @@
           "url": "https://revenue.iowa.gov/media/2721/download?inline=",
           "official": true,
           "retrieved": "2026-11-10",
+          "content_sha256": "67ef375cd1fb6a19aa477a5be1235c373d531ad5b2a0873a1e6ec46a99f2dd21"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": 5450.0
+          },
+          "url": "https://revenue.iowa.gov/media/2721/download?inline=",
+          "official": true,
+          "retrieved": "2026-11-11",
           "content_sha256": "67ef375cd1fb6a19aa477a5be1235c373d531ad5b2a0873a1e6ec46a99f2dd21"
         },
         {

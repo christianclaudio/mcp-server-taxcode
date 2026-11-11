@@ -40,20 +40,28 @@
     },
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      }
+    ],
+    "rate_desc_2019": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $73,710 (one schedule for every filing status; IDR 2019 statistical report, Table 1).",
+    "rate_desc_2021": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $75,420 (one schedule for every filing status; IDR 2021 statistical report, Table 1).",
+    "rate_desc_2023": "Four brackets: 4.40% to $6,000, 4.82% to $30,000, 5.70% to $75,000, 6.00% over $75,000 (MFJ $12,000 / $60,000 / $150,000).",
+    "rate_desc_2024": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
     "regime_2025": "flat",
-    "rate_2025": 0.038,
-    "deduction_single_2018": 2030.0,
-    "deduction_single_2019": 2080.0,
-    "deduction_single_2020": 2110.0,
-    "deduction_single_2021": 2130.0,
-    "deduction_single_2022": 2210.0,
-    "deduction_single_2023": "federal_standard_deduction",
-    "deduction_mfj_2018": 5000.0,
-    "deduction_mfj_2019": 5120.0,
-    "deduction_mfj_2020": 5210.0,
-    "deduction_mfj_2021": 5240.0,
-    "deduction_mfj_2022": 5450.0,
-    "deduction_mfj_2023": "federal_standard_deduction",
     "brackets_2019": {
       "single": [
         {
@@ -246,7 +254,15 @@
           "over": null,
           "rate": 0.044
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "Non-joint filers use one schedule."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Non-joint filers use one schedule."
+      }
     },
     "brackets_2024": {
       "single": [
@@ -276,28 +292,68 @@
           "over": null,
           "rate": 0.044
         }
-      ]
-    },
-    "rate_desc_2019": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $73,710 (one schedule for every filing status; IDR 2019 statistical report, Table 1).",
-    "rate_desc_2021": "Nine brackets from 0.33% to 8.53%, top rate 8.53% over $75,420 (one schedule for every filing status; IDR 2021 statistical report, Table 1).",
-    "rate_desc_2023": "Four brackets: 4.40% to $6,000, 4.82% to $30,000, 5.70% to $75,000, 6.00% over $75,000 (MFJ $12,000 / $60,000 / $150,000).",
-    "rate_desc_2024": "Iowa graduated brackets in 2024 (top 5.70%); flat 3.80% in 2025+ (SF 2442)",
-    "not_recorded": [
-      {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "Non-joint filers use one schedule."
       },
-      {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2022,
-        "reason": "The rate-history page states the bracket rates but not the indexed dollar edges, and the statistical report that prints the edges was not found for this year."
+      "mfs": {
+        "same_as": "single",
+        "quote": "Non-joint filers use one schedule."
       }
-    ]
+    },
+    "deduction_single_2018": 2030.0,
+    "deduction_single_2019": 2080.0,
+    "deduction_single_2020": 2110.0,
+    "deduction_single_2021": 2130.0,
+    "deduction_single_2022": 2210.0,
+    "deduction_single_2023": "federal_standard_deduction",
+    "deduction_mfj_2018": 5000.0,
+    "deduction_mfj_2019": 5120.0,
+    "deduction_mfj_2020": 5210.0,
+    "deduction_mfj_2021": 5240.0,
+    "deduction_mfj_2022": 5450.0,
+    "deduction_mfj_2023": "federal_standard_deduction",
+    "rate_2025": 0.038,
+    "deduction_hoh_2019": 5120.0,
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "Filing status 3 or 4 uses the single standard deduction for each spouse."
+    },
+    "deduction_hoh_2020": 5210.0,
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Filing status 3 or 4 uses the single standard deduction for each spouse."
+    },
+    "deduction_hoh_2021": 5240.0,
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Filing status 3 or 4 uses the single standard deduction for each spouse."
+    },
+    "deduction_hoh_2022": 5450.0,
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Filing status 3 or 4 uses the single standard deduction for each spouse."
+    },
+    "deduction_hoh_2023": "federal_standard_deduction",
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2025": "federal_standard_deduction",
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2026": "federal_standard_deduction",
+    "deduction_mfs_2026": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    }
   }
 }

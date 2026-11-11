@@ -20,6 +20,7 @@ from taxcode_mcp.catalog import (
     GA_LAST_FIXED_YEAR,
     RATE_TABLE_MODELS,
     UNSOURCED_YEARS,
+    is_status_alias,
     load_federal_standard_deduction,
     load_rate_tables,
     series_param,
@@ -532,7 +533,7 @@ def evaluate_georgia_residency(
     # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
-    status = _status(is_mfj)
+    status = _filing_key(filing_status)
     standard_deduction = _ga_standard_deduction(ga, status, tax_year)
 
     # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
@@ -540,12 +541,16 @@ def evaluate_georgia_residency(
     retirement_exclusion_applied = min(retirement_income, max_exclusion)
 
     if GA_FIRST_GRADUATED_YEAR <= tax_year < GA_FLAT_RATE_FIRST_YEAR:
-        personal_ex = float(ga["exemption"][status])
+        personal_ex = (
+            _extra_amount(ga, "exemption", status, tax_year, "GA")
+            if _is_extra(status)
+            else float(ga["exemption"][status])
+        )
         taxable_income = max(
             0.0,
             federal_agi - standard_deduction - personal_ex - retirement_exclusion_applied,
         )
-        brackets = _for_year(ga, "brackets", tax_year)[status]
+        brackets = _extra_rows(ga, "brackets", status, tax_year, "GA")
         tax_rate = max(float(b["rate"]) for b in brackets)
         estimated_tax = _marginal_tax(brackets, taxable_income) if is_georgia_resident else 0.0
         rate_authority = (
@@ -614,6 +619,28 @@ SUPPORTED_STATE_JURISDICTIONS = frozenset({"FL", "TX", *RATE_TABLE_MODELS}) - CO
 
 def _status(is_mfj: bool) -> str:
     return "mfj" if is_mfj else "single"
+
+
+def _filing_key(filing_status: str) -> str:
+    """``single``, ``mfj``, ``hoh`` or ``mfs``.
+
+    Joint aliases stay joint. Head of household and married filing separately are
+    their own keys. Any other string stays on the single path, so existing single
+    and joint answers do not move.
+    """
+    raw = filing_status.strip().lower()
+    if raw in ("married_joint", "mfj", "married filing jointly"):
+        return "mfj"
+    compact = " ".join(raw.replace("_", " ").replace("-", " ").split())
+    if compact in {"hoh", "head of household"}:
+        return "hoh"
+    if compact in {"mfs", "married separate", "married filing separately"}:
+        return "mfs"
+    return "single"
+
+
+def _is_extra(status: str) -> bool:
+    return status in EXTRA_FILING_STATUSES
 
 
 def _federal_year(tax_year: int) -> int:
@@ -703,7 +730,12 @@ def _cumulative_tax(brackets: list[dict[str, Any]], taxable_income: float) -> fl
 
 
 def _under_zero_liability(
-    info: dict[str, Any], is_mfj: bool, taxable_income: float, tax_year: int
+    info: dict[str, Any],
+    is_mfj: bool,
+    taxable_income: float,
+    tax_year: int,
+    status: str | None = None,
+    state: str = "",
 ) -> bool:
     """Whether ``taxable_income`` is at or below a sourced zero-tax ceiling.
 
@@ -713,7 +745,13 @@ def _under_zero_liability(
     exclusion = _for_year(info, "low_income_exclusion", tax_year)
     if not isinstance(exclusion, dict):
         return False
-    return taxable_income <= float(exclusion[_status(is_mfj)])
+    chosen = _status(is_mfj) if status is None else status
+    if _is_extra(chosen) and chosen not in exclusion:
+        raise _missing_schedule(state, chosen, tax_year)
+    cell = exclusion[chosen]
+    if is_status_alias(cell):
+        cell = exclusion[cell["same_as"]]
+    return taxable_income <= float(cell)
 
 
 def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
@@ -736,6 +774,8 @@ def _registry_credit(
     *,
     credit_base_override: float | None = None,
     dependent_exemption_total: float = 0.0,
+    status: str | None = None,
+    state: str = "UT",
 ) -> float:
     """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0.
 
@@ -743,16 +783,22 @@ def _registry_credit(
     ``credit_base_override`` replaces that base (Utah itemized path). Dependent exemptions
     are added to the credit base when supplied (Utah TC-40 line 11).
     """
-    status = _status(is_mfj)
+    chosen = _status(is_mfj) if status is None else status
     if credit_base_override is None:
-        base = _federal_or_amount(
-            _for_year(info, f"credit_base_{status}", tax_year), is_mfj, tax_year
-        )
+        if _is_extra(chosen):
+            base = _extra_scalar(info, "credit_base", chosen, tax_year, state)
+        else:
+            base = _federal_or_amount(
+                _for_year(info, f"credit_base_{chosen}", tax_year), is_mfj, tax_year
+            )
     else:
         base = float(credit_base_override)
     base = base + float(dependent_exemption_total)
     initial = float(info["credit_rate"]) * base
-    phaseout = float(_for_year(info, f"credit_phaseout_{status}", tax_year))
+    if _is_extra(chosen):
+        phaseout = _extra_scalar(info, "credit_phaseout", chosen, tax_year, state)
+    else:
+        phaseout = float(_for_year(info, f"credit_phaseout_{chosen}", tax_year))
     over = max(0.0, taxable_income - phaseout)
     return max(0.0, initial - float(info["credit_phaseout_rate"]) * over)
 
@@ -814,16 +860,27 @@ def _ct_tax_recapture(rows: list[dict[str, Any]], agi: float) -> float:
     return float(next(r["amount"] for r in rows if r["over"] is None or agi > r["over"]))
 
 
-def _md_personal_exemption(info: dict[str, Any], is_mfj: bool, federal_agi: float) -> float:
+def _phase_rows(phase: Mapping[str, Any], status: str) -> list[dict[str, Any]]:
+    """One status's phase-out rows, following a same-as alias."""
+    rows = phase[status]
+    if is_status_alias(rows):
+        rows = phase[rows["same_as"]]
+    return rows
+
+
+def _md_personal_exemption(
+    info: dict[str, Any], is_mfj: bool, federal_agi: float, status: str | None = None
+) -> float:
     """Maryland personal exemptions: count by filing status times the FAGI-phased amount."""
+    chosen = _status(is_mfj) if status is None else status
     each = float(
         next(
             s["amount"]
-            for s in info["personal_exemption"]["phaseout"][_status(is_mfj)]
+            for s in _phase_rows(info["personal_exemption"]["phaseout"], chosen)
             if s["over"] is None or federal_agi > s["over"]
         )
     )
-    count = 2.0 if is_mfj else 1.0
+    count = 2.0 if chosen == "mfj" else 1.0
     return each * count
 
 
@@ -847,6 +904,7 @@ def _oh_personal_exemption(
     federal_agi: float,
     tax_year: int = 2024,
     dependents: int = 0,
+    status: str | None = None,
 ) -> float:
     """Ohio personal and dependent exemptions: count times the MAGI-tier amount.
 
@@ -855,15 +913,20 @@ def _oh_personal_exemption(
     spouse on a joint return), per the IT 1040 instructions.
     ``exemption_<YYYY>`` holds the amounts from that tax year on.
     """
-    exemption = _for_year(info, "exemption", tax_year)
+    chosen = _status(is_mfj) if status is None else status
+    exemption = (
+        _extra_table(info, "exemption", chosen, tax_year, "OH")
+        if _is_extra(chosen)
+        else _for_year(info, "exemption", tax_year)
+    )
     each = float(
         next(
             s["amount"]
-            for s in exemption["phaseout"][_status(is_mfj)]
+            for s in _phase_rows(exemption["phaseout"], chosen)
             if s["over"] is None or _oh_tier_reached(federal_agi, s)
         )
     )
-    count = (2.0 if is_mfj else 1.0) + float(dependents)
+    count = (2.0 if chosen == "mfj" else 1.0) + float(dependents)
     return each * count
 
 
@@ -948,6 +1011,8 @@ def _ga_standard_deduction(ga: dict[str, Any], status: str, tax_year: int) -> fl
     those years borrow; graduated-era floor amounts must not leak into that path.
     """
     year = tax_year if tax_year >= GA_FIRST_GRADUATED_YEAR else GA_FLAT_RATE_FIRST_YEAR
+    if _is_extra(status):
+        return _extra_amount(ga, "standard_deduction", status, year, "GA")
     return float(_for_year(ga, "standard_deduction", year)[status])
 
 
@@ -968,21 +1033,9 @@ _EXTRA_STATUS_LABELS = {
 
 
 def _extra_filing_status(filing_status: str) -> str | None:
-    """``hoh`` or ``mfs`` when the caller named that status.
-
-    Married-filing-jointly aliases stay on the historical joint path. Any other
-    string stays on the historical single path, so existing single and joint
-    answers do not move.
-    """
-    raw = filing_status.strip().lower()
-    if raw in ("married_joint", "mfj", "married filing jointly"):
-        return None
-    compact = " ".join(raw.replace("_", " ").replace("-", " ").split())
-    if compact in {"hoh", "head of household"}:
-        return "hoh"
-    if compact in {"mfs", "married separate", "married filing separately"}:
-        return "mfs"
-    return None
+    """``hoh`` or ``mfs`` when the caller named that status; ``None`` otherwise."""
+    status = _filing_key(filing_status)
+    return status if _is_extra(status) else None
 
 
 def _missing_schedule(state: str, status: str, tax_year: int) -> SafetyViolationError:
@@ -992,17 +1045,153 @@ def _missing_schedule(state: str, status: str, tax_year: int) -> SafetyViolation
     )
 
 
+def _selected_key(params: Mapping[str, Any], name: str, tax_year: int) -> str:
+    """The key :func:`_for_year` would read, without applying a ``not_recorded`` marker."""
+    key, latest = name, -1
+    prefix = f"{name}_"
+    for candidate in params:
+        if not candidate.startswith(prefix):
+            continue
+        year = candidate[len(prefix) :]
+        if year.isdigit() and latest < int(year) <= tax_year:
+            key, latest = candidate, int(year)
+    return key
+
+
+def _alias_cell(table: Mapping[str, Any], status: str) -> Any:
+    """The cell for ``status``, following one same-as alias to its target cell."""
+    cell = table[status]
+    if is_status_alias(cell):
+        cell = table[cell["same_as"]]
+    return cell
+
+
+def _as_amount(cell: Any, status: str, tax_year: int) -> float:
+    """A stored amount, or that status's federal standard deduction when the cell names it."""
+    if cell == FEDERAL_ALLOWANCE:
+        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][status]
+    return float(cell)
+
+
+def _extra_scalar(info: Mapping[str, Any], base: str, status: str, tax_year: int, state: str) -> float:
+    """Exact-year ``base_status`` amount. A later year does not reuse an earlier one.
+
+    An unsuffixed key applies only when the table has no ``_YYYY`` key for that
+    status. A same-as alias reads the single or joint amount for the year. A
+    ``deduction`` or ``exemption`` marker raises the same refusal single uses.
+    """
+    _refuse_if_marked(info, base, tax_year)
+    plain = f"{base}_{status}"
+    key = f"{plain}_{tax_year}"
+    if key not in info:
+        yearly = any(
+            candidate.startswith(f"{plain}_") and candidate[len(plain) + 1 :].isdigit()
+            for candidate in info
+        )
+        key = plain if not yearly and plain in info else ""
+    if not key:
+        raise _missing_schedule(state, status, tax_year)
+    cell = info[key]
+    if is_status_alias(cell):
+        target = cell["same_as"]
+        if any(candidate.startswith(f"{base}_{target}") for candidate in info):
+            return _sourced_registry_amount(info, f"{base}_{target}", target == "mfj", tax_year)
+        table = _for_year(info, base, tax_year)
+        if table == FEDERAL_ALLOWANCE:
+            return _as_amount(table, target, tax_year)
+        if isinstance(table, dict) and target in table:
+            return _as_amount(_alias_cell(table, target), target, tax_year)
+        raise _missing_schedule(state, status, tax_year)
+    if cell == FEDERAL_ALLOWANCE or type(cell) is float:
+        return _as_amount(cell, status, tax_year)
+    raise _missing_schedule(state, status, tax_year)
+
+
+def _extra_table(
+    params: Mapping[str, Any], base: str, status: str, tax_year: int, state: str
+) -> Mapping[str, Any]:
+    """The status map for one year. Extra statuses do not inherit another year's number."""
+    _refuse_if_marked(params, base, tax_year)
+    year_key = f"{base}_{tax_year}"
+    year_table = params.get(year_key)
+    if _table_has_status(year_table, status):
+        return year_table
+    selected_name = _selected_key(params, base, tax_year)
+    selected = params.get(selected_name)
+    # A same-as alias carries forward with its table. A number does not,
+    # except on the unsuffixed table, which is the schedule for the years before
+    # the first _YYYY key.
+    if _cell_is_alias(selected, status) or (
+        selected_name == base and _table_has_status(selected, status)
+    ):
+        return selected
+    raise _missing_schedule(state, status, tax_year)
+
+
+def _cell_is_alias(table: Any, status: str) -> bool:
+    """True when ``status`` on this table, or on a nested band, is a same-as alias."""
+    if not isinstance(table, dict):
+        return False
+    if status in table and is_status_alias(table[status]):
+        return True
+    for nested in ("minimum", "maximum", "phaseout"):
+        inner = table.get(nested)
+        if isinstance(inner, dict) and status in inner and is_status_alias(inner[status]):
+            return True
+    return False
+
+
+def _table_has_status(table: Any, status: str) -> bool:
+    """True when ``status`` is a column, or a column of minimum, maximum or phaseout."""
+    if not isinstance(table, dict):
+        return False
+    if status in table:
+        return True
+    for nested in ("minimum", "maximum", "phaseout"):
+        inner = table.get(nested)
+        if isinstance(inner, dict) and status in inner:
+            return True
+    return False
+
+
+def _extra_amount(
+    params: Mapping[str, Any], base: str, status: str, tax_year: int, state: str
+) -> float:
+    """Filing-status amount from a status map, or from a registry ``base_status`` key."""
+    if not _is_extra(status):
+        table = _for_year(params, base, tax_year)
+        return _as_amount(table[status], status, tax_year)
+    if any(key == f"{base}_{status}" or key.startswith(f"{base}_{status}_") for key in params):
+        return _extra_scalar(params, base, status, tax_year, state)
+    table = _extra_table(params, base, status, tax_year, state)
+    cell = _alias_cell(table, status)
+    if is_status_alias(table[status]):
+        return _as_amount(cell, table[status]["same_as"], tax_year)
+    return _as_amount(cell, status, tax_year)
+
+
+def _extra_rows(
+    params: Mapping[str, Any], base: str, status: str, tax_year: int, state: str
+) -> list[dict[str, Any]]:
+    """Rate schedule for ``status``. Single and joint keep the carried table."""
+    if not _is_extra(status):
+        table = _for_year(params, base, tax_year)
+        return table[status]
+    table = _extra_table(params, base, status, tax_year, state)
+    cell = _alias_cell(table, status)
+    if not isinstance(cell, list):
+        raise _missing_schedule(state, status, tax_year)
+    return cell
+
+
 def _extra_deduction(info: Mapping[str, Any], status: str, tax_year: int, state: str) -> float:
     """The stored standard deduction for ``status``.
 
     A ``deduction`` marker raises the same refusal single and joint use. A missing
-    amount, or the federal-standard-deduction token, refuses: that token is the
-    single and joint federal table, and this status does not read it.
+    amount refuses. The federal-standard-deduction token is that status's federal
+    figure. A same-as alias reads the named status's amount.
     """
-    value = _for_year(info, f"deduction_{status}", tax_year)
-    if type(value) is not float:
-        raise _missing_schedule(state, status, tax_year)
-    return value
+    return _extra_scalar(info, "deduction", status, tax_year, state)
 
 
 def _extra_brackets(
@@ -1012,17 +1201,21 @@ def _extra_brackets(
 
     ``brackets_{status}_YYYY`` is that year's list (used when the shared
     ``brackets`` series is marked for the year). Otherwise the status key inside
-    the shared schedule. A missing list refuses instead of reading single or joint.
+    that year's schedule, not a schedule carried from another year. A missing
+    list refuses instead of reading single or joint.
     """
     exact = info.get(f"brackets_{status}_{tax_year}")
     if isinstance(exact, list):
         return exact
-    _refuse_if_marked(info, "brackets", tax_year)
-    table = _for_year(info, "brackets", tax_year)
-    rows = table.get(status) if isinstance(table, dict) else None
-    if not isinstance(rows, list):
-        raise _missing_schedule(state, status, tax_year)
-    return rows
+    if is_status_alias(exact):
+        target = exact["same_as"]
+        shared = info.get(f"brackets_{tax_year}")
+        if not isinstance(shared, dict):
+            shared = info.get("brackets") if _selected_key(info, "brackets", tax_year) == "brackets" else None
+        rows = shared.get(target) if isinstance(shared, dict) else None
+        if isinstance(rows, list):
+            return rows
+    return _extra_rows(info, "brackets", status, tax_year, state)
 
 
 def _evaluate_extra_filing_status(
@@ -1255,8 +1448,21 @@ def evaluate_state_residency(
         raise SafetyViolationError("Itemized deductions cannot be negative.")
 
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
+    status_key = _filing_key(filing_status)
     if spouse_agi > 0.0 and not is_mfj:
         raise SafetyViolationError("spouse_agi applies only to married filing jointly.")
+    if status_key == "mfs" and state == "OR":
+        raise SafetyViolationError(
+            "not_recorded: Married filing separately for OR needs whether the spouse "
+            "itemizes. This tool has no spouse-itemizes input, so the deduction cannot "
+            "be computed."
+        )
+    if status_key == "mfs" and state == "MI":
+        raise SafetyViolationError(
+            "not_recorded: Married filing separately for MI needs whether the spouse has "
+            "no income. This tool has no spouse-income input, so the exemption cannot "
+            "be computed."
+        )
 
     # Common domicile audit risk factors
     audit_flags: list[str] = []
@@ -1269,21 +1475,6 @@ def evaluate_state_residency(
     if has_active_voter_registration:
         audit_flags.append(
             f"Active {state} voter registration is probative evidence of continuing domicile."
-        )
-
-    extra_status = _extra_filing_status(filing_status)
-    # Only Vermont has stored HoH and MFS schedules. Every other state keeps
-    # main's behavior for those filing-status strings.
-    if extra_status is not None and state == "VT":
-        return _evaluate_extra_filing_status(
-            state=state,
-            status=extra_status,
-            days_in_state=days_in_state,
-            is_domiciled=is_domiciled,
-            maintains_permanent_abode=maintains_permanent_abode,
-            federal_agi=federal_agi,
-            tax_year=tax_year,
-            audit_flags=audit_flags,
         )
 
     # State-specific statutory determination
@@ -1303,16 +1494,20 @@ def evaluate_state_residency(
             or (maintains_permanent_abode and days_in_state > 0)
         )
         ga = RATE_TABLES["GA"]
-        status = _status(is_mfj)
+        status = status_key
         standard_ded = _ga_standard_deduction(ga, status, tax_year)
         max_ret = _ga_retirement_cap(ga, age, tax_year)
         ret_excl = min(retirement_income, max_ret)
         rate_authority = "O.C.G.A. § 48-7-20"
         dep_ex = _require_dependent_exemption(ga, tax_year, dependents)
         if GA_FIRST_GRADUATED_YEAR <= tax_year < GA_FLAT_RATE_FIRST_YEAR:
-            personal_ex = float(ga["exemption"][status])
+            personal_ex = (
+                _extra_amount(ga, "exemption", status, tax_year, "GA")
+                if _is_extra(status)
+                else float(ga["exemption"][status])
+            )
             taxable_income = max(0.0, federal_agi - standard_ded - personal_ex - dep_ex - ret_excl)
-            brackets = _for_year(ga, "brackets", tax_year)[status]
+            brackets = _extra_rows(ga, "brackets", status, tax_year, "GA")
             rate_desc = (
                 _steps_desc(brackets) + _ga_estimate_note(tax_year) + DEPENDENT_EXEMPTION_NOTE
             )
@@ -1338,10 +1533,10 @@ def evaluate_state_residency(
         rate_authority = "NY Tax Law § 601"
         ny = RATE_TABLES["NY"]
         rate_desc = _range_desc(ny) + NY_RECAPTURE_NOTE + _outyear_estimate_note("NY", tax_year, ny)
-        std_ded = float(_for_year(ny, "deduction", tax_year)[_status(is_mfj)])
+        std_ded = _extra_amount(ny, "deduction", status_key, tax_year, "NY")
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            brackets = _for_year(ny, "brackets", tax_year)[_status(is_mfj)]
+            brackets = _extra_rows(ny, "brackets", status_key, tax_year, "NY")
             estimated_tax = _marginal_tax(brackets, taxable_income)
     elif state == "CA":
         statutory_basis = "Cal. Rev. & Tax Code § 17014, § 17016; 18 CCR § 17014"
@@ -1374,10 +1569,12 @@ def evaluate_state_residency(
                 f"over ${top['over']:,.0f}, applied once)"
             )
         rate_desc = f"{_range_desc(ca_range)}{fold_in}{_outyear_estimate_note('CA', tax_year, ca)}"
-        std_ded = float(_for_year(ca, "deduction", tax_year)[_status(is_mfj)])
+        std_ded = _extra_amount(ca, "deduction", status_key, tax_year, "CA")
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
-            estimated_tax = _marginal_tax(ca_brackets[_status(is_mfj)], taxable_income)
+            estimated_tax = _marginal_tax(
+                _extra_rows(ca, "brackets", status_key, tax_year, "CA"), taxable_income
+            )
     elif state == "FL":
         statutory_basis = "Fla. Const. Art. VII § 5; Fla. Stat. § 222.17"
         is_resident = is_domiciled or (maintains_permanent_abode and days_in_state >= 183)
@@ -1427,7 +1624,11 @@ def evaluate_state_residency(
             f"Flat {_pct(ma['rate'])} rate plus {_pct(ma_surtax['rate'])} Fair Share surtax "
             f"on income over {_money(ma_surtax['over'])}"
         )
-        std_ded = _allowance(ma, is_mfj)
+        std_ded = (
+            _extra_amount(ma, "deduction", status_key, tax_year, "MA")
+            if _is_extra(status_key)
+            else _allowance(ma, is_mfj)
+        )
         taxable_income = max(0.0, federal_agi - std_ded)
         if is_resident:
             base_tax = taxable_income * ma["rate"]
@@ -1446,17 +1647,21 @@ def evaluate_state_residency(
         rate_authority = "N.J.S.A. 54A:2-1"
         nj = RATE_TABLES["NJ"]
         rate_desc = _range_desc(nj) + _outyear_estimate_note("NJ", tax_year, nj)
-        exemption = float(_for_year(nj, "exemption", tax_year)[_status(is_mfj)])
+        exemption = _extra_amount(nj, "exemption", status_key, tax_year, "NJ")
         taxable_income = max(0.0, federal_agi - exemption)
         if is_resident:
-            brackets = _for_year(nj, "brackets", tax_year)[_status(is_mfj)]
+            brackets = _extra_rows(nj, "brackets", status_key, tax_year, "NJ")
             estimated_tax = _marginal_tax(brackets, taxable_income)
     elif state == "IL":
         statutory_basis = "35 ILCS 5/201, 5/1501(a)(20), 5/301"
         is_resident = is_domiciled or (days_in_state >= 183 and maintains_permanent_abode)
         rate_authority = "35 ILCS 5/201"
         rate_desc = f"Flat {_pct(RATE_TABLES['IL']['rate'])} rate {_FLAT_BY_CONSTITUTION}"
-        exemption = _allowance(RATE_TABLES["IL"], is_mfj)
+        exemption = (
+            _extra_amount(RATE_TABLES["IL"], "exemption", status_key, tax_year, "IL")
+            if _is_extra(status_key)
+            else _allowance(RATE_TABLES["IL"], is_mfj)
+        )
         taxable_income = max(0.0, federal_agi - exemption)
         estimated_tax = round(taxable_income * RATE_TABLES["IL"]["rate"], 2) if is_resident else 0.0
 
@@ -1486,15 +1691,20 @@ def evaluate_state_residency(
         rate_authority = "Conn. Gen. Stat. § 12-700"
         ct = RATE_TABLES["CT"]
         rate_desc = _range_desc(ct) + _outyear_estimate_note("CT", tax_year, ct)
-        exemption = _ct_exemption(ct["exemption"][_status(is_mfj)], federal_agi)
+        def _ct_cell(base: str) -> Any:
+            if not _is_extra(status_key):
+                return ct[base][status_key]
+            return _alias_cell(_extra_table(ct, base, status_key, tax_year, "CT"), status_key)
+
+        exemption = _ct_exemption(_ct_cell("exemption"), federal_agi)
         line3 = max(0.0, federal_agi - exemption)
         taxable_income = line3
         if is_resident:
-            initial = _marginal_tax(ct["brackets"][_status(is_mfj)], line3)
-            addback = _ct_phase_out_addback(ct["phase_out_addback"][_status(is_mfj)], federal_agi)
-            recapture = _ct_tax_recapture(ct["tax_recapture"][_status(is_mfj)], federal_agi)
+            initial = _marginal_tax(_ct_cell("brackets"), line3)
+            addback = _ct_phase_out_addback(_ct_cell("phase_out_addback"), federal_agi)
+            recapture = _ct_tax_recapture(_ct_cell("tax_recapture"), federal_agi)
             line7 = round(initial + addback + recapture, 2)
-            decimal = _ct_personal_credit(ct["personal_tax_credit"][_status(is_mfj)], federal_agi)
+            decimal = _ct_personal_credit(_ct_cell("personal_tax_credit"), federal_agi)
             credit = round(line7 * decimal, 2)
             estimated_tax = round(line7 - credit, 2)
     elif state == "NC":
@@ -1504,7 +1714,11 @@ def evaluate_state_residency(
         nc_step = _year_step(RATE_TABLES["NC"]["rates"], tax_year, RATE_TABLES["NC"])
         nc_rate = float(nc_step["rate"])
         rate_desc = str(nc_step["rate_desc"])
-        exemption = _allowance(RATE_TABLES["NC"], is_mfj)
+        exemption = (
+            _extra_amount(RATE_TABLES["NC"], "exemption", status_key, tax_year, "NC")
+            if _is_extra(status_key)
+            else _allowance(RATE_TABLES["NC"], is_mfj)
+        )
         taxable_income = max(0.0, federal_agi - exemption)
         estimated_tax = round(taxable_income * nc_rate, 2) if is_resident else 0.0
 
@@ -1516,10 +1730,10 @@ def evaluate_state_residency(
         rate_desc = _range_desc({"brackets": _for_year(va, "brackets", tax_year)})
         # Va. Code § 58.1-322.03 sets the standard deduction by year; the unsuffixed
         # amount is the pre-2019 figure and each deduction_YYYY applies from that year.
-        standard_ded = float(_for_year(va, "deduction", tax_year)[_status(is_mfj)])
+        standard_ded = _extra_amount(va, "deduction", status_key, tax_year, "VA")
         taxable_income = max(0.0, federal_agi - standard_ded)
         if is_resident:
-            brackets = _for_year(va, "brackets", tax_year)[_status(is_mfj)]
+            brackets = _extra_rows(va, "brackets", status_key, tax_year, "VA")
             estimated_tax = _cumulative_tax(brackets, taxable_income)
 
     elif state == "MD":
@@ -1551,20 +1765,38 @@ def evaluate_state_residency(
             f"{_outyear_estimate_note('MD', tax_year, md)}"
         )
         md_ded = md_year["standard_deduction"]
-        status = _status(is_mfj)
-        if status not in md_ded["maximum"] or status not in md_ded["minimum"]:
+        status = status_key
+        if _is_extra(status):
+            md_ded = _extra_table(md, "standard_deduction", status, tax_year, "MD")
+            personal_info = {
+                "personal_exemption": _extra_table(md, "personal_exemption", status, tax_year, "MD")
+            }
+        else:
+            personal_info = md_year
+        if not _is_extra(status) and (
+            status not in md_ded["maximum"] or status not in md_ded["minimum"]
+        ):
             raise SafetyViolationError(
                 f"No sourced standard deduction value exists for tax year {tax_year} "
                 f"({status}). The source states the single amount and does not state "
                 "the joint amount."
             )
-        max_ded = float(md_ded["maximum"][status])
-        min_ded = float(md_ded["minimum"][status])
+        if _is_extra(status):
+            max_ded = float(_alias_cell(md_ded["maximum"], status))
+            min_ded = float(_alias_cell(md_ded["minimum"], status))
+        else:
+            max_ded = float(md_ded["maximum"][status])
+            min_ded = float(md_ded["minimum"][status])
         standard_ded = min(max_ded, max(min_ded, federal_agi * md_ded["percent_of_agi"]))
-        personal_ex = _md_personal_exemption(md_year, is_mfj, federal_agi)
+        personal_ex = _md_personal_exemption(
+            personal_info,
+            is_mfj,
+            federal_agi,
+            status=status,
+        )
         taxable_income = max(0.0, federal_agi - standard_ded - personal_ex)
         if is_resident:
-            brackets = md_year["brackets"][_status(is_mfj)]
+            brackets = _extra_rows(md, "brackets", status, tax_year, "MD")
             estimated_tax = _marginal_tax(brackets, taxable_income)
             if (
                 isinstance(md_surtax, dict)
@@ -1583,7 +1815,11 @@ def evaluate_state_residency(
         co_step = _year_step(RATE_TABLES["CO"]["rates"], tax_year, RATE_TABLES["CO"])
         co_rate = float(co_step["rate"])
         rate_desc = f"{co_step['rate_desc']}{_co_estimate_note(tax_year, co_rate)}"
-        standard_ded = _allowance(RATE_TABLES["CO"], is_mfj, tax_year)
+        standard_ded = (
+            _extra_amount(RATE_TABLES["CO"], "deduction", status_key, tax_year, "CO")
+            if _is_extra(status_key)
+            else _allowance(RATE_TABLES["CO"], is_mfj, tax_year)
+        )
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * co_rate, 2) if is_resident else 0.0
 
@@ -1606,7 +1842,11 @@ def evaluate_state_residency(
         # earlier graduated year refuses the call instead of applying the flat rate.
         az_rate = float(_for_year(az, "rate", tax_year))
         rate_desc = f"Flat {_pct(az_rate)} rate (SB 1828)"
-        standard_ded = _allowance(az, is_mfj, tax_year)
+        standard_ded = (
+            _extra_amount(az, "deduction", status_key, tax_year, "AZ")
+            if _is_extra(status_key)
+            else _allowance(az, is_mfj, tax_year)
+        )
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * az_rate, 2) if is_resident else 0.0
 
@@ -1620,7 +1860,7 @@ def evaluate_state_residency(
                 "non-residency presumption."
             )
         rate_authority = "Ohio Rev. Code § 5747.02"
-        oh_brackets = _for_year(RATE_TABLES["OH"], "brackets", tax_year)[_status(is_mfj)]
+        oh_brackets = _extra_rows(RATE_TABLES["OH"], "brackets", status_key, tax_year, "OH")
         rate_desc = (
             _steps_desc(oh_brackets)
             + _outyear_estimate_note("OH", tax_year, RATE_TABLES["OH"])
@@ -1628,7 +1868,12 @@ def evaluate_state_residency(
             + DEPENDENT_EXEMPTION_NOTE
         )
         personal_exemption = _oh_personal_exemption(
-            RATE_TABLES["OH"], is_mfj, federal_agi, tax_year, dependents
+            RATE_TABLES["OH"],
+            is_mfj,
+            federal_agi,
+            tax_year,
+            dependents,
+            status=status_key,
         )
         taxable_income = max(0.0, federal_agi - personal_exemption)
         if is_resident:
@@ -1689,8 +1934,29 @@ def evaluate_state_residency(
 
         # Year-aware standard deduction and personal exemption. A year before the
         # first sourced ``_YYYY`` value fails instead of borrowing a later year.
-        ded = _sourced_registry_amount(info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year)
-        exemption = _sourced_registry_amount(info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year)
+        if regime == "none" and _is_extra(status_key):
+            # A zero-tax year still refuses when single would refuse (a not_recorded
+            # marker). It does not require a head-of-household column.
+            _sourced_registry_amount(info, "deduction_single", False, tax_year)
+            _sourced_registry_amount(info, "exemption_single", False, tax_year)
+            ded = 0.0
+            exemption = 0.0
+        elif _is_extra(status_key):
+            if any(key.startswith("deduction_") for key in info):
+                ded = _extra_scalar(info, "deduction", status_key, tax_year, state)
+            else:
+                ded = 0.0
+            if any(key.startswith("exemption_") for key in info):
+                exemption = _extra_scalar(info, "exemption", status_key, tax_year, state)
+            else:
+                exemption = 0.0
+        else:
+            ded = _sourced_registry_amount(
+                info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year
+            )
+            exemption = _sourced_registry_amount(
+                info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year
+            )
         dep_ex = 0.0
         if state in ("KS", "MS"):
             dep_ex = _require_dependent_exemption(info, tax_year, dependents)
@@ -1713,7 +1979,7 @@ def evaluate_state_residency(
             taxable_income = 0.0
             estimated_tax = 0.0
         elif regime == "graduated" and "brackets" in info:
-            brackets = _for_year(info, "brackets", tax_year)[_status(is_mfj)]
+            brackets = _extra_brackets(info, status_key, tax_year, state)
             if (
                 state == "MS"
                 and spouse_agi > 0.0
@@ -1729,7 +1995,9 @@ def evaluate_state_residency(
                 )
             else:
                 estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
-                if is_resident and _under_zero_liability(info, is_mfj, taxable_income, tax_year):
+                if is_resident and _under_zero_liability(
+                    info, is_mfj, taxable_income, tax_year, status=status_key, state=state
+                ):
                     estimated_tax = 0.0
         elif regime == "flat":
             # ``rate_<YYYY>`` holds the rate from that tax year on; the unsuffixed
@@ -1739,22 +2007,28 @@ def evaluate_state_residency(
         else:  # graduated
             _refuse_if_marked(info, "top_bracket", tax_year)
             _refuse_if_marked(info, "zero_bracket", tax_year)
-            if tax_year >= 2025 and (
-                "top_bracket_mfj_2025" in info if is_mfj else "top_bracket_single_2025" in info
-            ):
-                tb_key = "top_bracket_mfj_2025" if is_mfj else "top_bracket_single_2025"
+            if _is_extra(status_key):
+                top_bracket = _extra_scalar(info, "top_bracket", status_key, tax_year, state)
+                zero_bracket = _extra_scalar(info, "zero_bracket", status_key, tax_year, state)
             else:
-                tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
-            top_bracket = float(info.get(tb_key, 0.0))
+                if tax_year >= 2025 and (
+                    "top_bracket_mfj_2025" in info if is_mfj else "top_bracket_single_2025" in info
+                ):
+                    tb_key = "top_bracket_mfj_2025" if is_mfj else "top_bracket_single_2025"
+                else:
+                    tb_key = "top_bracket_mfj" if is_mfj else "top_bracket_single"
+                top_bracket = float(info.get(tb_key, 0.0))
+                if tax_year >= 2025 and (
+                    "zero_bracket_mfj_2025" in info
+                    if is_mfj
+                    else "zero_bracket_single_2025" in info
+                ):
+                    zb_key = "zero_bracket_mfj_2025" if is_mfj else "zero_bracket_single_2025"
+                else:
+                    zb_key = "zero_bracket_mfj" if is_mfj else "zero_bracket_single"
+                zero_bracket = float(info.get(zb_key, 0.0))
             top_rate = float(info.get("top_rate", 0.0))
             mid_rate = float(info["middle_rate"])
-            if tax_year >= 2025 and (
-                "zero_bracket_mfj_2025" in info if is_mfj else "zero_bracket_single_2025" in info
-            ):
-                zb_key = "zero_bracket_mfj_2025" if is_mfj else "zero_bracket_single_2025"
-            else:
-                zb_key = "zero_bracket_mfj" if is_mfj else "zero_bracket_single"
-            zero_bracket = float(info.get(zb_key, 0.0))
             if is_resident:
                 if taxable_income <= zero_bracket:
                     estimated_tax = 0.0
@@ -1780,8 +2054,15 @@ def evaluate_state_residency(
                 tax_year,
                 credit_base_override=ut_itemized,
                 dependent_exemption_total=ut_dep,
+                status=status_key,
+                state=state,
             )
             estimated_tax = max(0.0, round(estimated_tax - credit, 2))
+
+    if _is_extra(status_key) and state in {"AL", "WI"}:
+        rate_desc += (
+            " The standard deduction stored is the maximum; the income phase-down is not modeled."
+        )
 
     tax_computation: dict[str, Any] = {
         "taxable_net_income": taxable_income,

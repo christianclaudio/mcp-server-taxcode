@@ -7,36 +7,100 @@
     "statutory_basis": "Ky. Rev. Stat. Ann. §§ 141.010, 141.020",
     "rate_authority": "Ky. Rev. Stat. Ann. § 141.020",
     "rate_desc": "Flat 4.0% rate",
+    "regime": "flat",
+    "rate": 0.04,
+    "deduction_single": 3160.0,
+    "deduction_mfj": 3160.0,
     "rate_desc_2018": "Flat 5.0% rate",
     "rate_desc_2022": "Flat 5.0% rate",
     "rate_desc_2023": "Flat 4.5% rate",
     "rate_desc_2024": "Flat 4.0% rate",
     "rate_desc_2026": "Flat 3.5% rate",
-    "regime": "flat",
-    "rate": 0.04,
     "rate_2018": 0.05,
     "rate_2023": 0.045,
     "rate_2024": 0.04,
     "rate_2026": 0.035,
-    "deduction_single": 3160.0,
-    "deduction_mfj": 3160.0,
     "deduction_single_2018": 2530.0,
-    "deduction_mfj_2018": 2530.0,
     "deduction_single_2019": 2590.0,
-    "deduction_mfj_2019": 2590.0,
     "deduction_single_2020": 2650.0,
-    "deduction_mfj_2020": 2650.0,
     "deduction_single_2021": 2690.0,
-    "deduction_mfj_2021": 2690.0,
     "deduction_single_2022": 2770.0,
-    "deduction_mfj_2022": 2770.0,
     "deduction_single_2023": 2980.0,
-    "deduction_mfj_2023": 2980.0,
     "deduction_single_2024": 3160.0,
-    "deduction_mfj_2024": 3160.0,
     "deduction_single_2025": 3270.0,
-    "deduction_mfj_2025": 3270.0,
     "deduction_single_2026": 3360.0,
-    "deduction_mfj_2026": 3360.0
+    "deduction_mfj_2018": 2530.0,
+    "deduction_mfj_2019": 2590.0,
+    "deduction_mfj_2020": 2650.0,
+    "deduction_mfj_2021": 2690.0,
+    "deduction_mfj_2022": 2770.0,
+    "deduction_mfj_2023": 2980.0,
+    "deduction_mfj_2024": 3160.0,
+    "deduction_mfj_2025": 3270.0,
+    "deduction_mfj_2026": 3360.0,
+    "deduction_hoh_2019": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2020": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2021": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2022": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2023": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2024": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2025": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_hoh_2026": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    },
+    "deduction_mfs_2026": {
+      "same_as": "single",
+      "quote": "An individual, at his election, may deduct from his adjusted gross income a standard deduction of ..."
+    }
   }
 }
