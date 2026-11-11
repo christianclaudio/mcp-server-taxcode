@@ -62,8 +62,17 @@
           "over": null,
           "rate": 0.0025
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "The head of household column is the joint column."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single or married filing separate use the same standard deduction and tax table."
+      }
     },
+    "rate_desc_2026": "Graduated rates: 0% on the first $3,750 ($7,500 joint), then 2.5%, 3.5%, and 4.5% (68 O.S. § 2355(D); the further subsection E reduction is not applied)",
     "brackets_2026": {
       "single": [
         {
@@ -100,8 +109,20 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "The head of household column is the joint column."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single or married filing separate use the same standard deduction and tax table."
+      }
     },
-    "rate_desc_2026": "Graduated rates: 0% on the first $3,750 ($7,500 joint), then 2.5%, 3.5%, and 4.5% (68 O.S. § 2355(D); the further subsection E reduction is not applied)"
+    "deduction_hoh_2024": 9350.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Single or married filing separate use the same standard deduction and tax table."
+    }
   }
 }

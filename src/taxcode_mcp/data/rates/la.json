@@ -10,10 +10,6 @@
     "regime": "graduated",
     "deduction_single": 4500.0,
     "deduction_mfj": 9000.0,
-    "deduction_single_2025": 12500.0,
-    "deduction_mfj_2025": 25000.0,
-    "deduction_single_2026": 12838.0,
-    "deduction_mfj_2026": 25676.0,
     "brackets": {
       "single": [
         {
@@ -42,10 +38,43 @@
           "over": null,
           "rate": 0.0185
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The head of household table is computed with the single brackets."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single or married filing separately use the same combined deduction."
+      }
     },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "The 2018 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2018 file."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "The 2019 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2019 file."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
+      }
+    ],
     "regime_2025": "flat",
-    "rate_2025": 0.03,
+    "deduction_single_2025": 12500.0,
+    "deduction_single_2026": 12838.0,
+    "deduction_mfj_2025": 25000.0,
+    "deduction_mfj_2026": 25676.0,
     "brackets_2024": {
       "single": [
         {
@@ -74,29 +103,41 @@
           "over": null,
           "rate": 0.0185
         }
-      ]
-    },
-    "not_recorded": [
-      {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "The 2018 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2018 file."
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The head of household table is computed with the single brackets."
       },
-      {
-        "param": "brackets",
-        "tax_year": 2019,
-        "reason": "The 2019 IT-540 tax table is not on the LDR forms index. The 2%/4%/6% schedule is inferred, not read from a 2019 file."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "The tax table prints 6% over $51,000 single / $101,000 joint and the $4,500/$9,000 exemption. It does not print the middle-band rates or the $12,500/$25,000 edge."
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single or married filing separately use the same combined deduction."
       }
-    ]
+    },
+    "rate_2025": 0.03,
+    "deduction_hoh_2022": 9000.0,
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Single or married filing separately use the same combined deduction."
+    },
+    "deduction_hoh_2023": 9000.0,
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Single or married filing separately use the same combined deduction."
+    },
+    "deduction_hoh_2024": 9000.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Single or married filing separately use the same combined deduction."
+    },
+    "deduction_hoh_2025": 25000.0,
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Single or married filing separately use the same combined deduction."
+    },
+    "deduction_hoh_2026": 25676.0,
+    "deduction_mfs_2026": {
+      "same_as": "single",
+      "quote": "Single or married filing separately use the same combined deduction."
+    }
   }
 }

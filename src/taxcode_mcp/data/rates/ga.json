@@ -6,7 +6,12 @@
   "params": {
     "standard_deduction": {
       "single": 4600.0,
-      "mfj": 6000.0
+      "mfj": 6000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single/Head of Household share the standard deduction."
+      },
+      "mfs": 3000.0
     },
     "retirement_exclusion": [
       {
@@ -87,12 +92,99 @@
           "over": null,
           "rate": 0.01
         }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Married Filing Joint or Head of Household schedule."
+      },
+      "mfs": [
+        {
+          "over": 5000.0,
+          "rate": 0.06
+        },
+        {
+          "over": 3500.0,
+          "rate": 0.05
+        },
+        {
+          "over": 2500.0,
+          "rate": 0.04
+        },
+        {
+          "over": 1500.0,
+          "rate": 0.03
+        },
+        {
+          "over": 500.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
       ]
     },
     "exemption": {
       "single": 2700.0,
-      "mfj": 7400.0
+      "mfj": 7400.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "$2,700 for filing status A - Single or D - Head of Household."
+      },
+      "mfs": 3700.0
     },
+    "standard_deduction_2022": {
+      "single": 5400.0,
+      "mfj": 7100.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single/Head of Household share the standard deduction."
+      },
+      "mfs": 3550.0
+    },
+    "standard_deduction_2023": {
+      "single": 5400.0,
+      "mfj": 7100.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single/Head of Household share the standard deduction."
+      },
+      "mfs": 3550.0
+    },
+    "standard_deduction_2024": {
+      "single": 12000.0,
+      "mfj": 24000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single/Head of Household share the standard deduction."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married filing separate has its own standard deduction through 2023 and the single amount after."
+      }
+    },
+    "standard_deduction_2026": {
+      "single": 15000.0,
+      "mfj": 30000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single/Head of Household share the standard deduction."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married filing separate has its own standard deduction through 2023 and the single amount after."
+      }
+    },
+    "retirement_exclusion_2027": [
+      {
+        "min_age": 65,
+        "amount": 70000.0
+      },
+      {
+        "min_age": 62,
+        "amount": 35000.0
+      }
+    ],
     "brackets_2019": {
       "single": [
         {
@@ -145,30 +237,38 @@
           "over": null,
           "rate": 0.01
         }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Married Filing Joint or Head of Household schedule."
+      },
+      "mfs": [
+        {
+          "over": 5000.0,
+          "rate": 0.0575
+        },
+        {
+          "over": 3500.0,
+          "rate": 0.05
+        },
+        {
+          "over": 2500.0,
+          "rate": 0.04
+        },
+        {
+          "over": 1500.0,
+          "rate": 0.03
+        },
+        {
+          "over": 500.0,
+          "rate": 0.02
+        },
+        {
+          "over": null,
+          "rate": 0.01
+        }
       ]
     },
-    "standard_deduction_2022": {
-      "single": 5400.0,
-      "mfj": 7100.0
-    },
-    "standard_deduction_2024": {
-      "single": 12000.0,
-      "mfj": 24000.0
-    },
-    "standard_deduction_2026": {
-      "single": 15000.0,
-      "mfj": 30000.0
-    },
-    "retirement_exclusion_2027": [
-      {
-        "min_age": 65,
-        "amount": 70000.0
-      },
-      {
-        "min_age": 62,
-        "amount": 35000.0
-      }
-    ],
     "dependent_exemption_2018": 3000.0,
     "dependent_exemption_2019": 3000.0,
     "dependent_exemption_2024": 4000.0,

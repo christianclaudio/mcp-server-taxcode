@@ -350,6 +350,19 @@
           "content_sha256": "55d0fbac069e6a7ede49081caa0d9397119cd0df4ba5f3f558286b1f2068b1d3"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.hoh": {
+              "same_as": "mfj",
+              "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+            }
+          },
+          "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2025/resident-booklet.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "17bc9f77e055c0570daee8840921e635b1b0952a39d54f28e33516699b9b6ba5"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "standard_deduction_2026.percent_of_agi": 0.0,

@@ -112,11 +112,15 @@
           "over": null,
           "rate": 0.014
         }
-      ]
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married filing separately uses the single standard deduction and Schedule I."
+      }
     },
+    "rate_desc_2025": "Graduated brackets from 1.4% to 11.0% (2025 N-11 tax rate schedules; 11% over $325,000 single and $650,000 joint)",
     "deduction_single_2024": 4400.0,
     "deduction_mfj_2024": 8800.0,
-    "rate_desc_2025": "Graduated brackets from 1.4% to 11.0% (2025 N-11 tax rate schedules; 11% over $325,000 single and $650,000 joint)",
     "brackets_2025": {
       "single": [
         {
@@ -217,7 +221,396 @@
           "over": null,
           "rate": 0.014
         }
-      ]
-    }
+      ],
+      "hoh": [
+        {
+          "over": 487500.0,
+          "rate": 0.11
+        },
+        {
+          "over": 412500.0,
+          "rate": 0.1
+        },
+        {
+          "over": 337500.0,
+          "rate": 0.09
+        },
+        {
+          "over": 262500.0,
+          "rate": 0.0825
+        },
+        {
+          "over": 187500.0,
+          "rate": 0.079
+        },
+        {
+          "over": 72000.0,
+          "rate": 0.076
+        },
+        {
+          "over": 54000.0,
+          "rate": 0.072
+        },
+        {
+          "over": 36000.0,
+          "rate": 0.068
+        },
+        {
+          "over": 28800.0,
+          "rate": 0.064
+        },
+        {
+          "over": 21600.0,
+          "rate": 0.055
+        },
+        {
+          "over": 14400.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married filing separately uses the single standard deduction and Schedule I."
+      }
+    },
+    "deduction_hoh_2019": 3212.0,
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "brackets_hoh_2019": [
+      {
+        "over": 300000.0,
+        "rate": 0.11
+      },
+      {
+        "over": 262500.0,
+        "rate": 0.1
+      },
+      {
+        "over": 225000.0,
+        "rate": 0.09
+      },
+      {
+        "over": 72000.0,
+        "rate": 0.0825
+      },
+      {
+        "over": 54000.0,
+        "rate": 0.079
+      },
+      {
+        "over": 36000.0,
+        "rate": 0.076
+      },
+      {
+        "over": 28800.0,
+        "rate": 0.072
+      },
+      {
+        "over": 21600.0,
+        "rate": 0.068
+      },
+      {
+        "over": 14400.0,
+        "rate": 0.064
+      },
+      {
+        "over": 7200.0,
+        "rate": 0.055
+      },
+      {
+        "over": 3600.0,
+        "rate": 0.032
+      },
+      {
+        "over": null,
+        "rate": 0.014
+      }
+    ],
+    "deduction_hoh_2020": 3212.0,
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "brackets_hoh_2020": [
+      {
+        "over": 300000.0,
+        "rate": 0.11
+      },
+      {
+        "over": 262500.0,
+        "rate": 0.1
+      },
+      {
+        "over": 225000.0,
+        "rate": 0.09
+      },
+      {
+        "over": 72000.0,
+        "rate": 0.0825
+      },
+      {
+        "over": 54000.0,
+        "rate": 0.079
+      },
+      {
+        "over": 36000.0,
+        "rate": 0.076
+      },
+      {
+        "over": 28800.0,
+        "rate": 0.072
+      },
+      {
+        "over": 21600.0,
+        "rate": 0.068
+      },
+      {
+        "over": 14400.0,
+        "rate": 0.064
+      },
+      {
+        "over": 7200.0,
+        "rate": 0.055
+      },
+      {
+        "over": 3600.0,
+        "rate": 0.032
+      },
+      {
+        "over": null,
+        "rate": 0.014
+      }
+    ],
+    "deduction_hoh_2021": 3212.0,
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "brackets_hoh_2021": [
+      {
+        "over": 300000.0,
+        "rate": 0.11
+      },
+      {
+        "over": 262500.0,
+        "rate": 0.1
+      },
+      {
+        "over": 225000.0,
+        "rate": 0.09
+      },
+      {
+        "over": 72000.0,
+        "rate": 0.0825
+      },
+      {
+        "over": 54000.0,
+        "rate": 0.079
+      },
+      {
+        "over": 36000.0,
+        "rate": 0.076
+      },
+      {
+        "over": 28800.0,
+        "rate": 0.072
+      },
+      {
+        "over": 21600.0,
+        "rate": 0.068
+      },
+      {
+        "over": 14400.0,
+        "rate": 0.064
+      },
+      {
+        "over": 7200.0,
+        "rate": 0.055
+      },
+      {
+        "over": 3600.0,
+        "rate": 0.032
+      },
+      {
+        "over": null,
+        "rate": 0.014
+      }
+    ],
+    "deduction_hoh_2022": 3212.0,
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "brackets_hoh_2022": [
+      {
+        "over": 300000.0,
+        "rate": 0.11
+      },
+      {
+        "over": 262500.0,
+        "rate": 0.1
+      },
+      {
+        "over": 225000.0,
+        "rate": 0.09
+      },
+      {
+        "over": 72000.0,
+        "rate": 0.0825
+      },
+      {
+        "over": 54000.0,
+        "rate": 0.079
+      },
+      {
+        "over": 36000.0,
+        "rate": 0.076
+      },
+      {
+        "over": 28800.0,
+        "rate": 0.072
+      },
+      {
+        "over": 21600.0,
+        "rate": 0.068
+      },
+      {
+        "over": 14400.0,
+        "rate": 0.064
+      },
+      {
+        "over": 7200.0,
+        "rate": 0.055
+      },
+      {
+        "over": 3600.0,
+        "rate": 0.032
+      },
+      {
+        "over": null,
+        "rate": 0.014
+      }
+    ],
+    "deduction_hoh_2023": 3212.0,
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "brackets_hoh_2023": [
+      {
+        "over": 300000.0,
+        "rate": 0.11
+      },
+      {
+        "over": 262500.0,
+        "rate": 0.1
+      },
+      {
+        "over": 225000.0,
+        "rate": 0.09
+      },
+      {
+        "over": 72000.0,
+        "rate": 0.0825
+      },
+      {
+        "over": 54000.0,
+        "rate": 0.079
+      },
+      {
+        "over": 36000.0,
+        "rate": 0.076
+      },
+      {
+        "over": 28800.0,
+        "rate": 0.072
+      },
+      {
+        "over": 21600.0,
+        "rate": 0.068
+      },
+      {
+        "over": 14400.0,
+        "rate": 0.064
+      },
+      {
+        "over": 7200.0,
+        "rate": 0.055
+      },
+      {
+        "over": 3600.0,
+        "rate": 0.032
+      },
+      {
+        "over": null,
+        "rate": 0.014
+      }
+    ],
+    "deduction_hoh_2024": 6424.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "deduction_hoh_2025": 6424.0,
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single standard deduction and Schedule I."
+    },
+    "brackets_hoh_2024": [
+      {
+        "over": 300000.0,
+        "rate": 0.11
+      },
+      {
+        "over": 262500.0,
+        "rate": 0.1
+      },
+      {
+        "over": 225000.0,
+        "rate": 0.09
+      },
+      {
+        "over": 72000.0,
+        "rate": 0.0825
+      },
+      {
+        "over": 54000.0,
+        "rate": 0.079
+      },
+      {
+        "over": 36000.0,
+        "rate": 0.076
+      },
+      {
+        "over": 28800.0,
+        "rate": 0.072
+      },
+      {
+        "over": 21600.0,
+        "rate": 0.068
+      },
+      {
+        "over": 14400.0,
+        "rate": 0.064
+      },
+      {
+        "over": 7200.0,
+        "rate": 0.055
+      },
+      {
+        "over": 3600.0,
+        "rate": 0.032
+      },
+      {
+        "over": null,
+        "rate": 0.014
+      }
+    ]
   }
 }

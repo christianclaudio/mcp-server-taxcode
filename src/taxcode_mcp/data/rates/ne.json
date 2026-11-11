@@ -7,31 +7,9 @@
     "statutory_basis": "Neb. Rev. Stat. §§ 77-2714.01, 77-2715.03; 316 Neb. Admin. Code § 22-003",
     "rate_authority": "Neb. Rev. Stat. § 77-2715.03",
     "rate_desc": "Graduated top rate 6.64% (Convenience Rule State)",
-    "rate_desc_2024": "Graduated top rate 5.84% (Convenience Rule State)",
-    "rate_desc_2025": "Graduated top rate 5.20% (Convenience Rule State)",
-    "rate_desc_2026": "Graduated top rate 4.55% (Convenience Rule State)",
-    "rate_desc_2027": "Graduated top rate 3.99% (Convenience Rule State)",
     "regime": "graduated",
     "deduction_single": 7900.0,
     "deduction_mfj": 15800.0,
-    "deduction_single_2018": 6750.0,
-    "deduction_single_2019": 6900.0,
-    "deduction_single_2020": 7000.0,
-    "deduction_single_2021": 7100.0,
-    "deduction_single_2022": 7350.0,
-    "deduction_single_2023": 7900.0,
-    "deduction_single_2024": 8350.0,
-    "deduction_mfj_2018": 13500.0,
-    "deduction_mfj_2019": 13800.0,
-    "deduction_mfj_2020": 14000.0,
-    "deduction_mfj_2021": 14200.0,
-    "deduction_mfj_2022": 14700.0,
-    "deduction_mfj_2023": 15800.0,
-    "deduction_mfj_2024": 16700.0,
-    "deduction_single_2025": 8600.0,
-    "deduction_mfj_2025": 17200.0,
-    "deduction_single_2026": 8850.0,
-    "deduction_mfj_2026": 17700.0,
     "brackets": {
       "single": [
         {
@@ -68,8 +46,79 @@
           "over": null,
           "rate": 0.0246
         }
-      ]
+      ],
+      "hoh": [
+        {
+          "over": 52980.0,
+          "rate": 0.0664
+        },
+        {
+          "over": 35480.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 6900.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+      }
     },
+    "not_recorded": [
+      {
+        "param": "brackets",
+        "tax_year": 2018,
+        "reason": "Nebraska prints only part of the schedule (6.84% over $30,420 single / $60,840 joint; lower edges are not printed)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2019,
+        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2020,
+        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2021,
+        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+      },
+      {
+        "param": "brackets",
+        "tax_year": 2022,
+        "reason": "Nebraska prints only part of the schedule (6.84% over $33,180 single / $66,360 joint; lower edges are not printed)."
+      }
+    ],
+    "rate_desc_2024": "Graduated top rate 5.84% (Convenience Rule State)",
+    "rate_desc_2025": "Graduated top rate 5.20% (Convenience Rule State)",
+    "rate_desc_2026": "Graduated top rate 4.55% (Convenience Rule State)",
+    "rate_desc_2027": "Graduated top rate 3.99% (Convenience Rule State)",
+    "deduction_single_2018": 6750.0,
+    "deduction_single_2019": 6900.0,
+    "deduction_single_2020": 7000.0,
+    "deduction_single_2021": 7100.0,
+    "deduction_single_2022": 7350.0,
+    "deduction_single_2023": 7900.0,
+    "deduction_single_2024": 8350.0,
+    "deduction_single_2025": 8600.0,
+    "deduction_single_2026": 8850.0,
+    "deduction_mfj_2018": 13500.0,
+    "deduction_mfj_2019": 13800.0,
+    "deduction_mfj_2020": 14000.0,
+    "deduction_mfj_2021": 14200.0,
+    "deduction_mfj_2022": 14700.0,
+    "deduction_mfj_2023": 15800.0,
+    "deduction_mfj_2024": 16700.0,
+    "deduction_mfj_2025": 17200.0,
+    "deduction_mfj_2026": 17700.0,
     "brackets_2024": {
       "single": [
         {
@@ -106,7 +155,29 @@
           "over": null,
           "rate": 0.0246
         }
-      ]
+      ],
+      "hoh": [
+        {
+          "over": 55850.0,
+          "rate": 0.0584
+        },
+        {
+          "over": 37400.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 7270.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+      }
     },
     "brackets_2025": {
       "single": [
@@ -144,7 +215,29 @@
           "over": null,
           "rate": 0.0246
         }
-      ]
+      ],
+      "hoh": [
+        {
+          "over": 57630.0,
+          "rate": 0.052
+        },
+        {
+          "over": 38590.0,
+          "rate": 0.0501
+        },
+        {
+          "over": 7510.0,
+          "rate": 0.0351
+        },
+        {
+          "over": null,
+          "rate": 0.0246
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+      }
     },
     "brackets_2026": {
       "single": [
@@ -222,31 +315,57 @@
         }
       ]
     },
-    "not_recorded": [
+    "deduction_hoh_2019": 10100.0,
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "deduction_hoh_2020": 10300.0,
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "deduction_hoh_2021": 10450.0,
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "deduction_hoh_2022": 10750.0,
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "deduction_hoh_2023": 11600.0,
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "deduction_hoh_2024": 12250.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "deduction_hoh_2025": 12600.0,
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married, filing separately uses the single standard deduction and the single bracket edges."
+    },
+    "brackets_hoh_2022": [
       {
-        "param": "brackets",
-        "tax_year": 2018,
-        "reason": "Nebraska prints only part of the schedule (6.84% over $30,420 single / $60,840 joint; lower edges are not printed)."
+        "over": 49200.0,
+        "rate": 0.0684
       },
       {
-        "param": "brackets",
-        "tax_year": 2019,
-        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+        "over": 32950.0,
+        "rate": 0.0501
       },
       {
-        "param": "brackets",
-        "tax_year": 2020,
-        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
+        "over": 6410.0,
+        "rate": 0.0351
       },
       {
-        "param": "brackets",
-        "tax_year": 2021,
-        "reason": "Nebraska prints only part of the schedule (6.84% top rate; the booklet prints tax tables only and the schedule PDF was not found)."
-      },
-      {
-        "param": "brackets",
-        "tax_year": 2022,
-        "reason": "Nebraska prints only part of the schedule (6.84% over $33,180 single / $66,360 joint; lower edges are not printed)."
+        "over": null,
+        "rate": 0.0246
       }
     ]
   }

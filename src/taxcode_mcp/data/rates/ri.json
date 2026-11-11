@@ -10,10 +10,6 @@
     "regime": "graduated",
     "deduction_single": 10550.0,
     "deduction_mfj": 21150.0,
-    "deduction_single_2025": 10900.0,
-    "deduction_mfj_2025": 21800.0,
-    "deduction_single_2026": 11200.0,
-    "deduction_mfj_2026": 22400.0,
     "brackets": {
       "single": [
         {
@@ -42,8 +38,20 @@
           "over": null,
           "rate": 0.0375
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The tax rate schedule is for all filing status types."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "The tax rate schedule is for all filing status types."
+      }
     },
+    "deduction_single_2025": 10900.0,
+    "deduction_single_2026": 11200.0,
+    "deduction_mfj_2025": 21800.0,
+    "deduction_mfj_2026": 22400.0,
     "brackets_2025": {
       "single": [
         {
@@ -72,7 +80,15 @@
           "over": null,
           "rate": 0.0375
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The tax rate schedule is for all filing status types."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "The tax rate schedule is for all filing status types."
+      }
     },
     "brackets_2026": {
       "single": [
@@ -102,7 +118,29 @@
           "over": null,
           "rate": 0.0375
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "The tax rate schedule is for all filing status types."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "The tax rate schedule is for all filing status types."
+      }
+    },
+    "deduction_hoh_2023": 15050.0,
+    "deduction_hoh_2024": 15850.0,
+    "deduction_hoh_2025": 16350.0,
+    "deduction_hoh_2026": 16800.0,
+    "deduction_mfs_2023": 10025.0,
+    "deduction_mfs_2024": 10575.0,
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separately equals the single standard deduction."
+    },
+    "deduction_mfs_2026": {
+      "same_as": "single",
+      "quote": "Married filing separately equals the single standard deduction."
     }
   }
 }

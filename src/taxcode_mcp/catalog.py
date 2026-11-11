@@ -214,7 +214,7 @@ CANADA_BPA_FIELDS: tuple[str, ...] = ("maximum", "minimum", "phaseout_start", "p
 # unsuffixed key covers the years before (the registry's convention).
 YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     "georgia": ("standard_deduction", "retirement_exclusion", "brackets", "dependent_exemption"),
-    "flat_with_surtax": ("surtax",),
+    "flat_with_surtax": ("surtax", "deduction"),
     "capital_gains_excise": ("capital_gains_deduction", "tier"),
     "brackets_cumulative": ("brackets", "deduction", "exemption"),
     "brackets_marginal": ("brackets", "deduction", "exemption"),
@@ -222,8 +222,25 @@ YEARLY_PARAMS: dict[str, tuple[str, ...]] = {
     # Arizona's flat tax starts in 2023. Earlier years are not that one rate; ``rate_YYYY``
     # and ``deduction_YYYY`` hold the year the flat figures begin, and a ``not_recorded``
     # marker covers a year the flat table does not have.
-    "flat": ("deduction", "rate"),
+    "flat": ("deduction", "exemption", "rate"),
+    # Connecticut's single and joint tables stay unsuffixed. A ``_YYYY`` key holds that
+    # year's head-of-household and married-filing-separately columns beside copies of the
+    # single and joint columns, so a later year does not inherit an unsourced column.
+    "connecticut": (
+        "exemption",
+        "brackets",
+        "phase_out_addback",
+        "tax_recapture",
+        "personal_tax_credit",
+    ),
 }
+# A head-of-household or married-filing-separately cell may name the single or joint
+# value instead of copying it. ``quote`` is the official sentence that says so.
+ALIAS_FIELDS: tuple[str, ...] = ("same_as", "quote")
+_EXTRA_AMOUNT_RE = re.compile(
+    r"^(?:deduction|exemption|top_bracket|zero_bracket|credit_base|credit_phaseout)"
+    r"_(?:hoh|mfs)(?:_(?:20\d\d))?$"
+)
 # ``tier`` has no unsuffixed value (an unsuffixed ``tier`` is an unknown key): before its
 # first ``_YYYY`` key it doesn't apply. It is an additional rate on the taxable amount over
 # ``over`` (Washington's 2.9% on capital gains over $1,000,000 from 2025, RCW 82.87.040(1)(b)).
@@ -654,6 +671,24 @@ def _is_rate(value: Any) -> bool:
     return type(value) is float and 0.0 <= value < 1.0
 
 
+def is_status_alias(value: Any) -> bool:
+    """True when ``value`` is ``{"same_as": "single"|"mfj", "quote": "..."}``."""
+    return (
+        isinstance(value, dict)
+        and list(value) == list(ALIAS_FIELDS)
+        and value["same_as"] in FILING_STATUSES
+        and isinstance(value["quote"], str)
+        and bool(value["quote"].strip())
+    )
+
+
+def _check_alias(value: Any, where: str) -> None:
+    _check(
+        is_status_alias(value),
+        f"{where}: an alias must be {list(ALIAS_FIELDS)} with same_as single or mfj",
+    )
+
+
 def _check_amount(value: Any, where: str) -> None:
     _check(_is_amount(value), f"{where}: must be a non-negative float such as 1000.0")
 
@@ -662,11 +697,26 @@ def _check_rate(value: Any, where: str) -> None:
     _check(_is_rate(value), f"{where}: must be a float rate from 0.0 up to 1.0")
 
 
+def _status_keys(value: Mapping[str, Any]) -> tuple[str, ...]:
+    """``single`` and ``mfj``, then any extra status the object actually prints."""
+    return _bracket_statuses(value)
+
+
+def _check_status_cell(value: Any, where: str) -> None:
+    """A filing-status amount, the federal token, or a same-as alias."""
+    if value == FEDERAL_ALLOWANCE or is_status_alias(value):
+        if is_status_alias(value):
+            _check_alias(value, where)
+        return
+    _check_amount(value, where)
+
+
 def _check_by_status(value: Any, where: str) -> None:
     _check(isinstance(value, dict), f"{where}: must be an object")
-    _check_keys(value, FILING_STATUSES, where)
-    for status in FILING_STATUSES:
-        _check_amount(value[status], f"{where}.{status}")
+    statuses = _status_keys(value)
+    _check_keys(value, statuses, where)
+    for status in statuses:
+        _check_status_cell(value[status], f"{where}.{status}")
 
 
 def _check_md_deduction_band(value: Any, where: str, *, allow_missing_mfj: bool) -> None:
@@ -675,10 +725,10 @@ def _check_md_deduction_band(value: Any, where: str, *, allow_missing_mfj: bool)
         _check_by_status(value, where)
         return
     _check(isinstance(value, dict), f"{where}: must be an object")
-    allowed = set(FILING_STATUSES)
+    allowed = set(FILING_STATUSES) | set(EXTRA_FILING_STATUSES)
     _check(set(value) <= allowed and "single" in value, f"{where}: must state single")
     for status in value:
-        _check_amount(value[status], f"{where}.{status}")
+        _check_status_cell(value[status], f"{where}.{status}")
 
 
 def _check_steps(
@@ -715,9 +765,18 @@ def _check_zero_liability(value: Any, where: str) -> None:
     if value is None:
         return
     _check(isinstance(value, dict), f"{where}: must be an object or null")
-    _check_keys(value, FILING_STATUSES, where)
-    for status in FILING_STATUSES:
-        _check_amount(value[status], f"{where}.{status}")
+    statuses = _status_keys(value)
+    _check_keys(value, statuses, where)
+    for status in statuses:
+        cell = value[status]
+        if is_status_alias(cell):
+            _check_alias(cell, f"{where}.{status}")
+            _check(
+                cell["same_as"] in value and not is_status_alias(value[cell["same_as"]]),
+                f"{where}.{status}: same_as needs that status's amount",
+            )
+            continue
+        _check_amount(cell, f"{where}.{status}")
 
 
 def _bracket_statuses(value: Mapping[str, Any]) -> tuple[str, ...]:
@@ -742,7 +801,14 @@ def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
     statuses = _bracket_statuses(value)
     _check_keys(value, statuses, where)
     for status in statuses:
-        _check_steps(value[status], fields, "over", f"{where}.{status}", _check_bracket_row)
+        rows = value[status]
+        if status in EXTRA_FILING_STATUSES and is_status_alias(rows):
+            _check(
+                rows["same_as"] in value and not is_status_alias(value[rows["same_as"]]),
+                f"{where}.{status}: same_as {rows['same_as']!r} needs that status's schedule",
+            )
+            continue
+        _check_steps(rows, fields, "over", f"{where}.{status}", _check_bracket_row)
 
 
 def _extra_bracket_list(name: str) -> bool:
@@ -765,8 +831,15 @@ def _check_year_steps(value: Any, fields: Sequence[str], where: str) -> None:
     _check_steps(value, fields, "from_year", where, row)
 
 
+def _extra_amount_key(name: str) -> bool:
+    """A head-of-household or married-filing-separately amount, with or without a year."""
+    return _EXTRA_AMOUNT_RE.fullmatch(name) is not None
+
+
 def _check_registry(params: Mapping[str, Any], where: str) -> None:
-    unknown = sorted(set(params) - set(_REGISTRY_TYPES))
+    unknown = sorted(
+        name for name in params if name not in _REGISTRY_TYPES and not _extra_amount_key(name)
+    )
     _check(not unknown, f"{where}: unknown keys {unknown}")
     missing = [k for k in _REGISTRY_REQUIRED if k not in params]
     _check(not missing, f"{where}: missing keys {missing}")
@@ -774,11 +847,21 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         if name.startswith("low_income_exclusion_"):
             _check_zero_liability(value, f"{where}.{name}")
             continue
+        if _extra_amount_key(name) and name not in _REGISTRY_TYPES:
+            if value == FEDERAL_ALLOWANCE or is_status_alias(value):
+                if is_status_alias(value):
+                    _check_alias(value, f"{where}.{name}")
+                continue
+            _check_amount(value, f"{where}.{name}")
+            continue
         expected = _REGISTRY_TYPES[name]
         if value == FEDERAL_ALLOWANCE and (
             name.startswith("deduction_") or name.startswith("credit_base_")
         ):
             continue  # that tax year's federal standard deduction
+        if is_status_alias(value) and _extra_amount_key(name):
+            _check_alias(value, f"{where}.{name}")
+            continue
         _check(type(value) is expected, f"{where}.{name}: must be {expected.__name__}")
         if _extra_bracket_list(name):
             _check_steps(value, ("over", "rate"), "over", f"{where}.{name}", _check_bracket_row)
@@ -989,6 +1072,11 @@ def _check_params(model: str, params: Any, where: str, *, code: str) -> None:
 
 
 def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> None:
+    extra_keys = [key for key in params if _extra_amount_key(key)]
+    if extra_keys:
+        for key in extra_keys:
+            _check_status_cell(params[key], f"{where}.{key}")
+        params = {key: value for key, value in params.items() if key not in extra_keys}
     fields = list(RATE_MODEL_PARAMS[model])
     if fields[0] == "allowance":
         first = next(iter(params), None)
@@ -1034,14 +1122,17 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
             _check_amount(value["amount"], f"{at}.amount")
             phase = value["phaseout"]
             _check(isinstance(phase, dict), f"{at}.phaseout: must be an object")
-            _check_keys(phase, FILING_STATUSES, f"{at}.phaseout")
+            _check_keys(phase, _status_keys(phase), f"{at}.phaseout")
 
             def _phase_row(step: Mapping[str, Any], step_at: str) -> None:
                 if step["over"] is not None:
                     _check_amount(step["over"], f"{step_at}.over")
                 _check_amount(step["amount"], f"{step_at}.amount")
 
-            for status in FILING_STATUSES:
+            for status in _status_keys(phase):
+                if is_status_alias(phase[status]):
+                    _check_alias(phase[status], f"{at}.phaseout.{status}")
+                    continue
                 _check_steps(
                     phase[status],
                     ("over", "amount"),
@@ -1060,14 +1151,17 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
             _check_amount(value["amount"], f"{at}.amount")
             phase = value["phaseout"]
             _check(isinstance(phase, dict), f"{at}.phaseout: must be an object")
-            _check_keys(phase, FILING_STATUSES, f"{at}.phaseout")
+            _check_keys(phase, _status_keys(phase), f"{at}.phaseout")
 
             def _oh_phase_row(step: Mapping[str, Any], step_at: str) -> None:
                 if step["over"] is not None:
                     _check_amount(step["over"], f"{step_at}.over")
                 _check_amount(step["amount"], f"{step_at}.amount")
 
-            for status in FILING_STATUSES:
+            for status in _status_keys(phase):
+                if is_status_alias(phase[status]):
+                    _check_alias(phase[status], f"{at}.phaseout.{status}")
+                    continue
                 _check_steps(
                     phase[status],
                     ("over", "amount"),
@@ -1082,8 +1176,11 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
                 )
         elif name == "exemption" and model == "connecticut":
             _check(isinstance(value, dict), f"{at}: must be an object")
-            _check_keys(value, FILING_STATUSES, at)
-            for status in FILING_STATUSES:
+            _check_keys(value, _status_keys(value), at)
+            for status in _status_keys(value):
+                if is_status_alias(value[status]):
+                    _check_alias(value[status], f"{at}.{status}")
+                    continue
                 spec, sat = value[status], f"{at}.{status}"
                 _check(isinstance(spec, dict), f"{sat}: must be an object")
                 _check_keys(spec, ("full", "full_until", "step_agi", "step_amount"), sat)
@@ -1092,8 +1189,11 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
                 _check(spec["step_agi"] > 0.0, f"{sat}.step_agi: must be greater than 0.0")
         elif name == "phase_out_addback":
             _check(isinstance(value, dict), f"{at}: must be an object")
-            _check_keys(value, FILING_STATUSES, at)
-            for status in FILING_STATUSES:
+            _check_keys(value, _status_keys(value), at)
+            for status in _status_keys(value):
+                if is_status_alias(value[status]):
+                    _check_alias(value[status], f"{at}.{status}")
+                    continue
                 spec, sat = value[status], f"{at}.{status}"
                 _check(isinstance(spec, dict), f"{sat}: must be an object")
                 _check_keys(spec, ("start", "step_agi", "step_amount", "maximum"), sat)
@@ -1102,14 +1202,17 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
                 _check(spec["step_agi"] > 0.0, f"{sat}.step_agi: must be greater than 0.0")
         elif name == "tax_recapture":
             _check(isinstance(value, dict), f"{at}: must be an object")
-            _check_keys(value, FILING_STATUSES, at)
+            _check_keys(value, _status_keys(value), at)
 
             def _recapture_row(step: Mapping[str, Any], step_at: str) -> None:
                 if step["over"] is not None:
                     _check_amount(step["over"], f"{step_at}.over")
                 _check_amount(step["amount"], f"{step_at}.amount")
 
-            for status in FILING_STATUSES:
+            for status in _status_keys(value):
+                if is_status_alias(value[status]):
+                    _check_alias(value[status], f"{at}.{status}")
+                    continue
                 _check_steps(
                     value[status],
                     ("over", "amount"),
@@ -1119,14 +1222,17 @@ def _check_model_params(model: str, params: Mapping[str, Any], where: str) -> No
                 )
         elif name == "personal_tax_credit":
             _check(isinstance(value, dict), f"{at}: must be an object")
-            _check_keys(value, FILING_STATUSES, at)
+            _check_keys(value, _status_keys(value), at)
 
             def _credit_row(step: Mapping[str, Any], step_at: str) -> None:
                 if step["over"] is not None:
                     _check_amount(step["over"], f"{step_at}.over")
                 _check_rate(step["decimal"], f"{step_at}.decimal")
 
-            for status in FILING_STATUSES:
+            for status in _status_keys(value):
+                if is_status_alias(value[status]):
+                    _check_alias(value[status], f"{at}.{status}")
+                    continue
                 _check_steps(
                     value[status],
                     ("over", "decimal"),
@@ -1216,7 +1322,7 @@ FEDERAL_TABLE_FIELDS: tuple[str, ...] = (
     "source_url",
     "years",
 )
-FEDERAL_YEAR_FIELDS: tuple[str, ...] = ("tax_year", *FILING_STATUSES)
+FEDERAL_YEAR_FIELDS: tuple[str, ...] = ("tax_year", *FILING_STATUSES, *EXTRA_FILING_STATUSES)
 FEDERAL_STANDARD_DEDUCTION = "federal/standard_deduction"
 FEDERAL_TABLE_ID = "us-standard-deduction"
 
@@ -1224,8 +1330,8 @@ FEDERAL_TABLE_ID = "us-standard-deduction"
 def federal_table_document(root: Path = DATA_DIR) -> dict[str, Any]:
     """Load and validate ``federal/standard_deduction.json``; return the whole document.
 
-    ``years`` lists each tax year's ``single`` and ``mfj`` amounts, consecutive years
-    ascending, so every year from the first to the last is held exactly once.
+    ``years`` lists each tax year's ``single``, ``mfj``, ``hoh`` and ``mfs`` amounts,
+    consecutive years ascending, so every year from the first to the last is held exactly once.
     """
     where = f"{FEDERAL_STANDARD_DEDUCTION}.json"
     stray = _stray_files(root, "federal", {"standard_deduction"})
@@ -1250,7 +1356,7 @@ def federal_table_document(root: Path = DATA_DIR) -> dict[str, Any]:
             i == 0 or row["tax_year"] == years[i - 1]["tax_year"] + 1,
             f"{at}.tax_year: years must be consecutive, ascending",
         )
-        for status in FILING_STATUSES:
+        for status in (*FILING_STATUSES, *EXTRA_FILING_STATUSES):
             _check_amount(row[status], f"{at}.{status}")
     document: dict[str, Any] = doc
     return document
@@ -1259,7 +1365,9 @@ def federal_table_document(root: Path = DATA_DIR) -> dict[str, Any]:
 def load_federal_standard_deduction(root: Path = DATA_DIR) -> dict[int, dict[str, float]]:
     """The federal standard deduction by tax year: ``{2024: {"single": ..., "mfj": ...}}``."""
     return {
-        row["tax_year"]: {status: row[status] for status in FILING_STATUSES}
+        row["tax_year"]: {
+            status: row[status] for status in (*FILING_STATUSES, *EXTRA_FILING_STATUSES)
+        }
         for row in federal_table_document(root)["years"]
     }
 

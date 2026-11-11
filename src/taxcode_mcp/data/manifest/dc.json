@@ -26,7 +26,19 @@
       "content_sha256": "6aaae5ecdda770e883e2f8bdcbacd723f44d595440ff6ae717811c594cb33de8",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": 21900.0
+          },
+          "url": "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2024_D40_Booklet_062325.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "6aaae5ecdda770e883e2f8bdcbacd723f44d595440ff6ae717811c594cb33de8"
+        }
+      ]
     }
   ]
 }

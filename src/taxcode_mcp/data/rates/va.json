@@ -52,7 +52,15 @@
           "base": 0.0,
           "rate": 0.02
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One tax rate schedule."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One tax rate schedule."
+      }
     },
     "deduction_2019": {
       "single": 4500.0,
@@ -64,7 +72,15 @@
     },
     "deduction_2024": {
       "single": 8500.0,
-      "mfj": 17000.0
+      "mfj": 17000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Fill in the Head of Household oval if your filing status is Single."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Filing status 1 and filing status 3 use the same standard deduction."
+      }
     },
     "deduction_2025": {
       "single": 8750.0,

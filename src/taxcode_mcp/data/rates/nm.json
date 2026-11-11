@@ -49,6 +49,28 @@
           "over": null,
           "rate": 0.017
         }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Heads of household use the joint bracket schedule."
+      },
+      "mfs": [
+        {
+          "over": 12000.0,
+          "rate": 0.049
+        },
+        {
+          "over": 8000.0,
+          "rate": 0.047
+        },
+        {
+          "over": 4000.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.017
+        }
       ]
     },
     "rate_desc_2021": "Graduated brackets from 1.7% to 5.9%",
@@ -91,6 +113,32 @@
         },
         {
           "over": 8000.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.017
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Heads of household use the joint bracket schedule."
+      },
+      "mfs": [
+        {
+          "over": 157500.0,
+          "rate": 0.059
+        },
+        {
+          "over": 12000.0,
+          "rate": 0.049
+        },
+        {
+          "over": 8000.0,
+          "rate": 0.047
+        },
+        {
+          "over": 4000.0,
           "rate": 0.032
         },
         {
@@ -151,7 +199,77 @@
           "over": null,
           "rate": 0.015
         }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Heads of household use the joint bracket schedule."
+      },
+      "mfs": [
+        {
+          "over": 157500.0,
+          "rate": 0.059
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.049
+        },
+        {
+          "over": 25000.0,
+          "rate": 0.047
+        },
+        {
+          "over": 12500.0,
+          "rate": 0.043
+        },
+        {
+          "over": 4000.0,
+          "rate": 0.032
+        },
+        {
+          "over": null,
+          "rate": 0.015
+        }
       ]
+    },
+    "deduction_hoh_2019": "federal_standard_deduction",
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2020": "federal_standard_deduction",
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2021": "federal_standard_deduction",
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2022": "federal_standard_deduction",
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2023": "federal_standard_deduction",
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2025": "federal_standard_deduction",
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "deduction_hoh_2026": "federal_standard_deduction",
+    "deduction_mfs_2026": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
     }
   }
 }

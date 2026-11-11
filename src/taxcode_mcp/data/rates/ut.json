@@ -15,6 +15,12 @@
     "credit_phaseout_single": 17652.0,
     "credit_phaseout_mfj": 35304.0,
     "credit_phaseout_rate": 0.013,
+    "rate_desc_2025": "Flat 4.50% rate (HB 106 of 2025) less the taxpayer tax credit: 6% of the $15,750 ($31,500 joint) federal standard deduction, reduced by 1.3% of income over $18,213 ($36,426 joint). The credit base is the federal standard deduction, or federal itemized deductions when itemized_deductions is passed (pass them excluding state income tax, which Utah adds back; that add-back is not computed). The per-dependent exemption is added to that base when dependents is passed ($565 for 2018, $579 for 2019, $590 for 2020, $1,750 for 2021, $1,802 for 2022, $1,941 for 2023, $2,046 for 2024, $2,111 for 2025; later years raise when dependents > 0 until sourced).",
+    "rate_desc_2026": "Flat 4.45% rate (SB 60 of 2026) less the taxpayer tax credit: 6% of the $16,100 ($32,200 joint) federal standard deduction, reduced by 1.3% of income over $18,213 ($36,426 joint). The credit base is the federal standard deduction, or federal itemized deductions when itemized_deductions is passed (pass them excluding state income tax, which Utah adds back; that add-back is not computed). The per-dependent exemption is added to that base when dependents is passed ($565 for 2018, $579 for 2019, $590 for 2020, $1,750 for 2021, $1,802 for 2022, $1,941 for 2023, $2,046 for 2024, $2,111 for 2025; later years raise when dependents > 0 until sourced).",
+    "rate_2025": 0.045,
+    "rate_2026": 0.0445,
+    "credit_phaseout_single_2025": 18213.0,
+    "credit_phaseout_mfj_2025": 36426.0,
     "dependent_exemption_2018": 565.0,
     "dependent_exemption_2019": 579.0,
     "dependent_exemption_2020": 590.0,
@@ -23,11 +29,75 @@
     "dependent_exemption_2023": 1941.0,
     "dependent_exemption_2024": 2046.0,
     "dependent_exemption_2025": 2111.0,
-    "rate_desc_2025": "Flat 4.50% rate (HB 106 of 2025) less the taxpayer tax credit: 6% of the $15,750 ($31,500 joint) federal standard deduction, reduced by 1.3% of income over $18,213 ($36,426 joint). The credit base is the federal standard deduction, or federal itemized deductions when itemized_deductions is passed (pass them excluding state income tax, which Utah adds back; that add-back is not computed). The per-dependent exemption is added to that base when dependents is passed ($565 for 2018, $579 for 2019, $590 for 2020, $1,750 for 2021, $1,802 for 2022, $1,941 for 2023, $2,046 for 2024, $2,111 for 2025; later years raise when dependents > 0 until sourced).",
-    "rate_desc_2026": "Flat 4.45% rate (SB 60 of 2026) less the taxpayer tax credit: 6% of the $16,100 ($32,200 joint) federal standard deduction, reduced by 1.3% of income over $18,213 ($36,426 joint). The credit base is the federal standard deduction, or federal itemized deductions when itemized_deductions is passed (pass them excluding state income tax, which Utah adds back; that add-back is not computed). The per-dependent exemption is added to that base when dependents is passed ($565 for 2018, $579 for 2019, $590 for 2020, $1,750 for 2021, $1,802 for 2022, $1,941 for 2023, $2,046 for 2024, $2,111 for 2025; later years raise when dependents > 0 until sourced).",
-    "rate_2025": 0.045,
-    "rate_2026": 0.0445,
-    "credit_phaseout_single_2025": 18213.0,
-    "credit_phaseout_mfj_2025": 36426.0
+    "credit_base_hoh_2019": "federal_standard_deduction",
+    "credit_phaseout_hoh_2019": 21902.0,
+    "credit_phaseout_mfs_2019": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2019": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    },
+    "credit_base_hoh_2020": "federal_standard_deduction",
+    "credit_phaseout_hoh_2020": 22318.0,
+    "credit_phaseout_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2020": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    },
+    "credit_base_hoh_2021": "federal_standard_deduction",
+    "credit_phaseout_hoh_2021": 22643.0,
+    "credit_phaseout_mfs_2021": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2021": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    },
+    "credit_base_hoh_2022": "federal_standard_deduction",
+    "credit_phaseout_hoh_2022": 23322.0,
+    "credit_phaseout_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2022": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    },
+    "credit_base_hoh_2023": "federal_standard_deduction",
+    "credit_phaseout_hoh_2023": 25114.0,
+    "credit_phaseout_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2023": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    },
+    "credit_base_hoh_2024": "federal_standard_deduction",
+    "credit_phaseout_hoh_2024": 26478.0,
+    "credit_phaseout_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2024": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    },
+    "credit_base_hoh_2025": "federal_standard_deduction",
+    "credit_phaseout_hoh_2025": 27320.0,
+    "credit_phaseout_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separately uses the single phase-out amount."
+    },
+    "credit_base_mfs_2025": {
+      "same_as": "single",
+      "quote": "The credit base is the federal standard deduction, and federal married filing separately equals single."
+    }
   }
 }

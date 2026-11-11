@@ -38,7 +38,114 @@
           "over": null,
           "rate": 0.058
         }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single individuals and married persons filing separate returns."
+      }
+    },
+    "deduction_single_2025": 15000.0,
+    "deduction_single_2026": "federal_standard_deduction",
+    "deduction_mfj_2025": 30000.0,
+    "deduction_mfj_2026": "federal_standard_deduction",
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 63450.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 26800.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
+      ],
+      "mfj": [
+        {
+          "over": 126900.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 53600.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
+      ],
+      "hoh": [
+        {
+          "over": 95150.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 40200.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Schedule #1 covers single individuals and married persons filing separate returns."
+      }
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 61600.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 26050.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
+      ],
+      "mfj": [
+        {
+          "over": 123250.0,
+          "rate": 0.0715
+        },
+        {
+          "over": 52100.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.058
+        }
       ]
-    }
+    },
+    "brackets_hoh_2024": [
+      {
+        "over": 92450.0,
+        "rate": 0.0715
+      },
+      {
+        "over": 39050.0,
+        "rate": 0.0675
+      },
+      {
+        "over": null,
+        "rate": 0.058
+      }
+    ],
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "The Maine standard deduction amount is equal to the federal standard deduction amount."
+    },
+    "deduction_hoh_2025": 22500.0,
+    "deduction_mfs_2025": 15000.0
   }
 }

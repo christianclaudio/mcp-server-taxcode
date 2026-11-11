@@ -52,6 +52,16 @@
           "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
         },
         {
+          "tax_year": 2022,
+          "values": {
+            "exemption_hoh_2022": 19125.0
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.5.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fe352c7bc0f4cac0df6125067a1787b103026746b1f4c7fe48af969a3849e295"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "rates[3].rate": 0.0475
@@ -60,6 +70,26 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "exemption_hoh_2023": 19125.0
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.5.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fe352c7bc0f4cac0df6125067a1787b103026746b1f4c7fe48af969a3849e295"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "exemption_hoh_2024": 19125.0
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.5.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fe352c7bc0f4cac0df6125067a1787b103026746b1f4c7fe48af969a3849e295"
         },
         {
           "tax_year": 2025,
@@ -72,6 +102,16 @@
           "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "exemption_hoh_2025": 19125.0
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.5.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fe352c7bc0f4cac0df6125067a1787b103026746b1f4c7fe48af969a3849e295"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "rates[0].rate": 0.0399
@@ -80,6 +120,16 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "dde8faf990d13e1a2c9f97d2e7f3c6d07f6fe79d139a515483db21dd63d33f22"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "exemption_hoh_2026": 19125.0
+          },
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_105/GS_105-153.5.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fe352c7bc0f4cac0df6125067a1787b103026746b1f4c7fe48af969a3849e295"
         }
       ]
     }

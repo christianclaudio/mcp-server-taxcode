@@ -11,15 +11,33 @@
     "day_threshold": 210,
     "zero_bracket_single": 47150.0,
     "zero_bracket_mfj": 78775.0,
-    "zero_bracket_single_2025": 48475.0,
-    "zero_bracket_mfj_2025": 80975.0,
     "middle_rate": 0.0195,
     "deduction_single": "federal_standard_deduction",
     "deduction_mfj": "federal_standard_deduction",
     "top_bracket_single": 238200.0,
     "top_bracket_mfj": 289975.0,
+    "top_rate": 0.025,
+    "zero_bracket_single_2025": 48475.0,
+    "zero_bracket_mfj_2025": 80975.0,
     "top_bracket_single_2025": 244825.0,
     "top_bracket_mfj_2025": 298075.0,
-    "top_rate": 0.025
+    "zero_bracket_hoh_2024": 63175.0,
+    "top_bracket_hoh_2024": 264100.0,
+    "zero_bracket_mfs_2024": 39375.0,
+    "top_bracket_mfs_2024": 144975.0,
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    },
+    "zero_bracket_hoh_2025": 64950.0,
+    "top_bracket_hoh_2025": 271450.0,
+    "zero_bracket_mfs_2025": 40475.0,
+    "top_bracket_mfs_2025": 149025.0,
+    "deduction_hoh_2025": "federal_standard_deduction",
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Federal married filing separately equals the single standard deduction."
+    }
   }
 }

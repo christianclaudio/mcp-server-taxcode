@@ -65,7 +65,76 @@
       "content_sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2022,
+          "values": {
+            "brackets_2022.hoh": [
+              {
+                "over": 25000000.0,
+                "rate": 0.109
+              },
+              {
+                "over": 5000000.0,
+                "rate": 0.103
+              },
+              {
+                "over": 1616450.0,
+                "rate": 0.0965
+              },
+              {
+                "over": 269300.0,
+                "rate": 0.0685
+              },
+              {
+                "over": 107650.0,
+                "rate": 0.0625
+              },
+              {
+                "over": 20900.0,
+                "rate": 0.0585
+              },
+              {
+                "over": 17650.0,
+                "rate": 0.0525
+              },
+              {
+                "over": 12800.0,
+                "rate": 0.045
+              },
+              {
+                "over": null,
+                "rate": 0.04
+              }
+            ]
+          },
+          "url": "https://www.tax.ny.gov/pdf/2022/printable-pdfs/inc/it201i-2022.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "a82a7674a3fda3ee732843f21a000177ebbcfb2cc03a039282b4727c90b5d5b2"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_2023.hoh": 11200.0
+          },
+          "url": "https://www.tax.ny.gov/forms/html-instructions/2023/it/it201i-2023.htm",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "b68c5de9c545d571437c43e19088a288125b84027c747cfcd3545c4b8514808e"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_2025.hoh": 11200.0
+          },
+          "url": "https://www.tax.ny.gov/pdf/2025/inc/it201i_2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "29489d6eed7529bc1388e57a5bf0814e6e6d94d02288c5c83a377d21e3773f72"
+        }
+      ]
     },
     {
       "kind": "statute",

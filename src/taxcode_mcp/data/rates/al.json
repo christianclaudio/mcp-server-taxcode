@@ -12,16 +12,6 @@
     "deduction_mfj": 8500.0,
     "exemption_single": 1500.0,
     "exemption_mfj": 3000.0,
-    "deduction_single_2018": 2500.0,
-    "deduction_single_2019": 2500.0,
-    "deduction_mfj_2018": 7500.0,
-    "deduction_mfj_2019": 7500.0,
-    "deduction_single_2020": 2500.0,
-    "deduction_mfj_2020": 7500.0,
-    "deduction_single_2021": 2500.0,
-    "deduction_mfj_2021": 7500.0,
-    "deduction_single_2022": 3000.0,
-    "deduction_mfj_2022": 8500.0,
     "brackets": {
       "single": [
         {
@@ -50,7 +40,69 @@
           "over": null,
           "rate": 0.02
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "Tax table column header Single / Married filing separately / Head of family."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Tax table column header Single / Married filing separately / Head of family."
+      }
+    },
+    "deduction_single_2018": 2500.0,
+    "deduction_single_2019": 2500.0,
+    "deduction_single_2020": 2500.0,
+    "deduction_single_2021": 2500.0,
+    "deduction_single_2022": 3000.0,
+    "deduction_mfj_2018": 7500.0,
+    "deduction_mfj_2019": 7500.0,
+    "deduction_mfj_2020": 7500.0,
+    "deduction_mfj_2021": 7500.0,
+    "deduction_mfj_2022": 8500.0,
+    "deduction_hoh_2019": 4700.0,
+    "deduction_mfs_2019": 3750.0,
+    "deduction_hoh_2020": 4700.0,
+    "deduction_mfs_2020": 3750.0,
+    "deduction_hoh_2021": 4700.0,
+    "deduction_mfs_2021": 3750.0,
+    "deduction_hoh_2022": 5200.0,
+    "deduction_mfs_2022": 4250.0,
+    "deduction_hoh_2023": 5200.0,
+    "deduction_mfs_2023": 4250.0,
+    "deduction_hoh_2024": 5200.0,
+    "deduction_mfs_2024": 4250.0,
+    "deduction_hoh_2025": 5200.0,
+    "deduction_mfs_2025": 4250.0,
+    "exemption_hoh_2024": 3000.0,
+    "exemption_hoh_2025": 3000.0,
+    "exemption_mfs_2019": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
+    },
+    "exemption_mfs_2020": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
+    },
+    "exemption_mfs_2021": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
+    },
+    "exemption_mfs_2022": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
+    },
+    "exemption_mfs_2023": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
+    },
+    "exemption_mfs_2024": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
+    },
+    "exemption_mfs_2025": {
+      "same_as": "single",
+      "quote": "If you check box 3, enter $1,500."
     }
   }
 }

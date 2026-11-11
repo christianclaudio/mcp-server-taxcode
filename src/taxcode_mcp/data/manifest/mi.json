@@ -52,6 +52,19 @@
           "content_sha256": "fb456e0a6ad9e96a367e57173df8c8e82676a423c27b9ecc737f671edd3418b3"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "deduction_hoh_2019": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 4750.0,
@@ -61,6 +74,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "4027673d3f2e2e9dafc96f0aa8e51ae8393eaaa049eba27842c5d558c19a078c"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_hoh_2020": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
         },
         {
           "tax_year": 2021,
@@ -74,6 +100,19 @@
           "content_sha256": "dd1fb579744de8afe221e85128a31aa6f6d084502e8e90d41e7ec0625889687d"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "deduction_hoh_2021": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "deduction_single_2022": 5000.0,
@@ -83,6 +122,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "49980e57a11f9c5c1593edac56d0e3b8d0e12da6086088557f036dfe9ff2e4d7"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
         },
         {
           "tax_year": 2023,
@@ -97,6 +149,19 @@
           "content_sha256": "be7b4644f2cabe7541fe7f0b46c372831408e09601bf33de565ce3251af86e3a"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_hoh_2023": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "deduction_single_2024": 5600.0,
@@ -106,6 +171,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "70649c626de2e57ccc2ead002b8bbc5dab9c03c39fcb0fb88eda8d784ef1602a"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
         },
         {
           "tax_year": 2025,
@@ -119,6 +197,19 @@
           "content_sha256": "35b38086176f867d1365e20f4f31a40b9b85ef68befb3e44d6021eb4502f66cd"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "deduction_single_2026": 5900.0,
@@ -128,6 +219,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "5cfe50e6842338649de7f97027f39659d830bb87e64e0c5834cf8e61b3a91b04"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_hoh_2026": {
+              "same_as": "single",
+              "quote": "Each taxpayer may claim 1 personal exemption."
+            }
+          },
+          "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-206-30",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "7b61f7ddb0ef5b4125fb06298a599aa71f97c79fd39ee6d06619f87d3ee857ee"
         }
       ]
     }

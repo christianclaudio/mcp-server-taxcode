@@ -75,6 +75,17 @@
           "content_sha256": "1fa63d4d0ed11606a2e504808ec087ee4245bc51a28c2717865b2e3818d604d7"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "deduction_hoh_2019": 4700.0,
+            "deduction_mfs_2019": 3750.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2500.0,
@@ -98,6 +109,17 @@
           "content_sha256": "d536152835a54b804e670aefe355bd0e7269352cde38b4e4829b6eae7f63a588"
         },
         {
+          "tax_year": 2020,
+          "values": {
+            "deduction_hoh_2020": 4700.0,
+            "deduction_mfs_2020": 3750.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
+        },
+        {
           "tax_year": 2021,
           "values": {
             "deduction_single_2021": 2500.0,
@@ -119,6 +141,17 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "e9fa452731ba53adb39f733da0289540e71f8446c745737d942f886af4485d42"
+        },
+        {
+          "tax_year": 2021,
+          "values": {
+            "deduction_hoh_2021": 4700.0,
+            "deduction_mfs_2021": 3750.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
         },
         {
           "tax_year": 2022,
@@ -148,6 +181,17 @@
           "content_sha256": "c200edd87819d5e9eb21f784dc6aae5d05c38155125fae0c045e57d6d3bb424c"
         },
         {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": 5200.0,
+            "deduction_mfs_2022": 4250.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "deduction_single_2022": 3000.0,
@@ -169,6 +213,17 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "765d4fea1282884627514aa553da94774dd24e27f503ddd67b350760d8bd0f52"
+        },
+        {
+          "tax_year": 2023,
+          "values": {
+            "deduction_hoh_2023": 5200.0,
+            "deduction_mfs_2023": 4250.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
         },
         {
           "tax_year": 2024,
@@ -203,6 +258,27 @@
           "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": 5200.0,
+            "deduction_mfs_2024": 4250.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "exemption_hoh_2024": 3000.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "4f6c357f74e247bb871e5261c4e70275db8236b0209ae6e7c89e16e573a9d123"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "deduction_single_2022": 3000.0,
@@ -224,6 +300,27 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "7871a80bd580dff9bbfe0fd8252664bfd2394d3c51bd98199cdd5162a4b46699"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": 5200.0,
+            "deduction_mfs_2025": 4250.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40bk.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "3b9db350f83822b69ec145983d80c710b6bcb8dc6863507d8c416468d3367191"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "exemption_hoh_2025": 3000.0
+          },
+          "url": "https://www.revenue.alabama.gov/wp-content/uploads/2025/01/24f40.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "4f6c357f74e247bb871e5261c4e70275db8236b0209ae6e7c89e16e573a9d123"
         },
         {
           "tax_year": 2026,

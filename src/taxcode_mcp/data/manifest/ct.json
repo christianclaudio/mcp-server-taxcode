@@ -52,7 +52,20 @@
       "content_sha256": "fad02854c8e39e179c6fd5cf0b36b9c9ef638baa679762236e5f06acb3412c42",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "exemption_2024.hoh.full": 19000.0,
+            "brackets_2024.hoh[0].over": 800000.0
+          },
+          "url": "https://portal.ct.gov/-/media/drs/forms/2024/income/2024-ct-1040-instructions_1224.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fad02854c8e39e179c6fd5cf0b36b9c9ef638baa679762236e5f06acb3412c42"
+        }
+      ]
     }
   ]
 }

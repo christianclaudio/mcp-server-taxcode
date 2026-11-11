@@ -47,7 +47,13 @@
           "over": null,
           "rate": 0.0475
         }
-      ]
-    }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "ORS 316.042 computes head of household tax on the joint brackets."
+      }
+    },
+    "deduction_hoh_2024": 4420.0,
+    "deduction_hoh_2025": 4560.0
   }
 }

@@ -26,7 +26,22 @@
       "content_sha256": "aabd2f4fec01ef32246fce669fc3468d0644a3c117fd9e845abcacf265750b1b",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
-      "verification": "summary"
+      "verification": "summary",
+      "year_sources": [
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": {
+              "same_as": "single",
+              "quote": "Status 1, 3, 4 and 5 each list the same standard deduction."
+            }
+          },
+          "url": "https://revenuefiles.delaware.gov/2024/PIT_2024_Forms/PIT_Instructions/PIT-RES_TY24_2024-01_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "aabd2f4fec01ef32246fce669fc3468d0644a3c117fd9e845abcacf265750b1b"
+        }
+      ]
     }
   ]
 }

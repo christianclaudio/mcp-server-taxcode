@@ -90,6 +90,19 @@
           "content_sha256": "not_recorded"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_2024.hoh": {
+              "same_as": "single",
+              "quote": "Fill in the Head of Household oval if your filing status is Single."
+            }
+          },
+          "url": "https://www.tax.virginia.gov/sites/default/files/vatax-pdf/2024-760-instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "c71985e5d4c92f15cf4c51d5b734549bc7954084a18d7d429ff106d6729097a1"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "deduction_2025.single": 8750.0,

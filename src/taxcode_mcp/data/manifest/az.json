@@ -64,6 +64,16 @@
           "content_sha256": "44ba0d1e8dd41ca7740257bc9124cfbd188d74cb5e1e1d46c96b351aeff65105"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "deduction_hoh_2019": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_2019": "federal_standard_deduction"
@@ -72,6 +82,16 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "9126fb981c36a6c74f0417cf9ffc81d34ecc4de8c138ec0fad40c9731ce5a443"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_hoh_2020": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
         },
         {
           "tax_year": 2021,
@@ -84,6 +104,16 @@
           "content_sha256": "f042f9923e8ddbe7f62e1f7668123d9697b423e9e203b6ab75a316660a93a2f4"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "deduction_hoh_2021": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "deduction_2019": "federal_standard_deduction"
@@ -92,6 +122,16 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "b84e9a79f8500ab0433379e0de91504f8bd13bfe6bc81ddaffdae3a20a60df50"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
         },
         {
           "tax_year": 2023,
@@ -114,6 +154,16 @@
           "content_sha256": "809231c3bcfcdb4adbd2ce283168b90bd0ec8286ea4cde29ea6d75f1e3d539ba"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_hoh_2023": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "rate": 0.025
@@ -134,6 +184,16 @@
           "content_sha256": "595cf4083cea1b1b959aa29123818083b32b2579ab9e31eff45382dc6cd1352d"
         },
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "deduction_2019": "federal_standard_deduction"
@@ -141,6 +201,16 @@
           "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
           "official": true,
           "retrieved": "2026-11-10",
+          "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": "federal_standard_deduction"
+          },
+          "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
           "content_sha256": "fc5de97b82a807ea89296e4512985ff0a5b01bc9253682a3022c59d810fdfa04"
         }
       ],

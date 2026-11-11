@@ -175,6 +175,19 @@
           "content_sha256": "931b21e7484ba96e561cf2346d8a7d2a8005bd990724b5903c9a90acede5f50e"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "exemption.phaseout.hoh": {
+              "same_as": "single",
+              "quote": "In the case of individuals, the tax shall be measured by Ohio adjusted gross income, less an exemption for the taxpayer, the taxpayer's spouse, and each dependent."
+            }
+          },
+          "url": "https://codes.ohio.gov/assets/laws/revised-code/authenticated/57/5747/5747.02/9-30-2025/5747.02-9-30-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "e724e3060a009686473702423de4c3c9660b3b577471b2f6fe4504396ad6de72"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "brackets_2026.single[0].over": 26050.0,

@@ -70,7 +70,20 @@
           "over": null,
           "rate": 0.04
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "single",
+        "quote": "One income tax rate table, with no status split."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "One income tax rate table, with no status split."
+      }
+    },
+    "deduction_hoh_2024": 21900.0,
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Single and married filing separately are allowed a standard deduction of $14,600."
     }
   }
 }

@@ -236,6 +236,20 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "e42c336957583957ba9d5fa5ea9e89bb874598c826598dc76c5834d325216a72"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": 6180.0,
+            "exemption_hoh_2024": {
+              "same_as": "single",
+              "quote": "Single, head of household, or married filing separate allowance is $9,160."
+            }
+          },
+          "url": "https://www.ksrevenue.gov/pdf/ip24.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "771aa0205ad6da8f40e9557cc80d84029c59d1152ce538529c2078029d6283a5"
         }
       ]
     }

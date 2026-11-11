@@ -743,15 +743,23 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
         2018,
         2018,
         2019,
+        2019,
+        2020,
         2020,
         2021,
+        2021,
+        2022,
         2022,
         2023,
         2023,
         2023,
+        2023,
+        2024,
         2024,
         2024,
         2025,
+        2025,
+        2026,
         2026,
         2026,
         2026,
@@ -814,7 +822,7 @@ def test_year_sources_are_checked_against_the_rate_table(tree: tuple[Path, Path]
     belongs = "year_sources belongs only on a rate_table or federal_table entry"
     assert any(belongs in e for e in errors), errors
     co = next(e for e in catalog.manifest if e["id"] == "co-rates")
-    assert co["year_sources"][4]["values"] == {"rates[0].rate": 0.044}
+    assert co["year_sources"][5]["values"] == {"rates[0].rate": 0.044}
     # The #32 record for 2022 still names rates[2], now the 2022 step itself.
     assert co["year_sources"][3]["values"] == {"rates[2].rate": 0.044}
     assert catalog.rate_tables["CO"]["params"]["rates"][2]["from_year"] == 2022
@@ -829,14 +837,14 @@ def test_federal_standard_deduction_holds_each_years_irs_figure() -> None:
     # Rev. Procs. 2018-57, 2019-44, 2020-45, 2021-45, 2022-38, 2023-34 and 2025-32; for 2025,
     # P.L. 119-21 § 70102 (the TY2025 Form 1040 instructions print $15,750 / $31,500).
     assert load_federal_standard_deduction() == {
-        2019: {"single": 12200.0, "mfj": 24400.0},
-        2020: {"single": 12400.0, "mfj": 24800.0},
-        2021: {"single": 12550.0, "mfj": 25100.0},
-        2022: {"single": 12950.0, "mfj": 25900.0},
-        2023: {"single": 13850.0, "mfj": 27700.0},
-        2024: {"single": 14600.0, "mfj": 29200.0},
-        2025: {"single": 15750.0, "mfj": 31500.0},
-        2026: {"single": 16100.0, "mfj": 32200.0},
+        2019: {"single": 12200.0, "mfj": 24400.0, "hoh": 18350.0, "mfs": 12200.0},
+        2020: {"single": 12400.0, "mfj": 24800.0, "hoh": 18650.0, "mfs": 12400.0},
+        2021: {"single": 12550.0, "mfj": 25100.0, "hoh": 18800.0, "mfs": 12550.0},
+        2022: {"single": 12950.0, "mfj": 25900.0, "hoh": 19400.0, "mfs": 12950.0},
+        2023: {"single": 13850.0, "mfj": 27700.0, "hoh": 20800.0, "mfs": 13850.0},
+        2024: {"single": 14600.0, "mfj": 29200.0, "hoh": 21900.0, "mfs": 14600.0},
+        2025: {"single": 15750.0, "mfj": 31500.0, "hoh": 23625.0, "mfs": 15750.0},
+        2026: {"single": 16100.0, "mfj": 32200.0, "hoh": 24150.0, "mfs": 16100.0},
     }
     doc = federal_table_document()
     assert (doc["jurisdiction"], doc["authority"]) == ("US", "26 U.S.C. § 63(c)")
@@ -904,6 +912,7 @@ def test_georgia_rate_table_record_cites_hb_463_for_2026_and_2027(
         2019,
         2020,
         2021,
+        2022,
         2022,
         2022,
         2023,
@@ -1053,7 +1062,12 @@ def test_federal_table_has_one_manifest_record_with_a_source_per_year(
     sources = entry["year_sources"]
     assert [s["tax_year"] for s in sources] == list(range(2019, 2027))
     assert sources[6]["url"] == "https://www.irs.gov/pub/irs-pdf/i1040gi.pdf"
-    assert sources[6]["values"] == {"years[6].single": 15750.0, "years[6].mfj": 31500.0}
+    assert sources[6]["values"] == {
+        "years[6].single": 15750.0,
+        "years[6].mfj": 31500.0,
+        "years[6].hoh": 23625.0,
+        "years[6].mfs": 15750.0,
+    }
     assert catalog.documents["federal/standard_deduction"] is catalog.federal_tables[entry["id"]]
     assert manifest_errors(catalog) == []
 

@@ -31,7 +31,15 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Idaho Code 63-3024 treats head of household as a joint return."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single or married filing separately use the same tax computation."
+      }
     },
     "rate_desc_2025": "5.3% on taxable income over $4,811 ($9,622 joint)",
     "brackets_2025": {
@@ -54,7 +62,25 @@
           "over": null,
           "rate": 0.0
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Idaho Code 63-3024 treats head of household as a joint return."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single or married filing separately use the same tax computation."
+      }
+    },
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Single or married filing separately, enter the federal standard deduction."
+    },
+    "deduction_hoh_2025": "federal_standard_deduction",
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Single or married filing separately, enter the federal standard deduction."
     }
   }
 }

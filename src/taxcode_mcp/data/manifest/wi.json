@@ -155,6 +155,17 @@
           "official": true,
           "retrieved": "2026-11-03",
           "content_sha256": "dd7e88901ac4ec560aaa85024511a918656e2d90aaf7bcc10b37d615e505913c"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": 17520.0,
+            "deduction_mfs_2025": 11930.0
+          },
+          "url": "https://www.revenue.wi.gov/TaxForms2025/2025-Form1-Inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dd7e88901ac4ec560aaa85024511a918656e2d90aaf7bcc10b37d615e505913c"
         }
       ],
       "not_recorded": [

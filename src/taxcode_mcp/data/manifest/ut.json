@@ -141,6 +141,16 @@
           "content_sha256": "9ea2823d81494434fb4a3d77be1ad103042ba4bdd1462dcfdca33f8a2fdcddda"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "credit_phaseout_hoh_2025": 27320.0
+          },
+          "url": "https://files.tax.utah.gov/tax/forms/2025/tc-40inst.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "9ea2823d81494434fb4a3d77be1ad103042ba4bdd1462dcfdca33f8a2fdcddda"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "rate_2026": 0.0445

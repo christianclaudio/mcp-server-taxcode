@@ -11,6 +11,10 @@
     "rate": 0.0425,
     "deduction_single": 5600.0,
     "deduction_mfj": 11200.0,
+    "rate_desc_2023": "Flat 4.05% personal income tax rate",
+    "rate_desc_2024": "Flat 4.25% personal income tax rate",
+    "rate_2023": 0.0405,
+    "rate_2024": 0.0425,
     "deduction_single_2018": 4050.0,
     "deduction_single_2019": 4400.0,
     "deduction_single_2020": 4750.0,
@@ -29,9 +33,37 @@
     "deduction_mfj_2024": 11200.0,
     "deduction_mfj_2025": 11600.0,
     "deduction_mfj_2026": 11800.0,
-    "rate_2023": 0.0405,
-    "rate_2024": 0.0425,
-    "rate_desc_2023": "Flat 4.05% personal income tax rate",
-    "rate_desc_2024": "Flat 4.25% personal income tax rate"
+    "deduction_hoh_2019": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2020": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2021": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2022": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2023": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2024": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2025": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    },
+    "deduction_hoh_2026": {
+      "same_as": "single",
+      "quote": "Each taxpayer may claim 1 personal exemption."
+    }
   }
 }

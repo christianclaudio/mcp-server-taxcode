@@ -52,6 +52,19 @@
           "content_sha256": "3472304a04af71b2ae8604ec5edc2751ce97142cda69eb9be8829e27d239a038"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "deduction_hoh_2019": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 2200.0,
@@ -61,6 +74,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "368a82ded18889887d97193a5919b9bcac165acb6ce3f02a0e1ea02dc8706ca6"
+        },
+        {
+          "tax_year": 2020,
+          "values": {
+            "deduction_hoh_2020": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
         },
         {
           "tax_year": 2021,
@@ -74,6 +100,19 @@
           "content_sha256": "9ffbd619636e2bac951101c17df7d03462fa337e86f93f45af5e000f4d5b879f"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "deduction_hoh_2021": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "deduction_single_2022": 2270.0,
@@ -83,6 +122,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "a73294c0cac94782397c3fc0a9c44e33e3517785f1b68f5133c1e86dc31f3b68"
+        },
+        {
+          "tax_year": 2022,
+          "values": {
+            "deduction_hoh_2022": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
         },
         {
           "tax_year": 2023,
@@ -107,6 +159,19 @@
           "content_sha256": "62f1966af42cc42712f488c4f265fe1c8008644164ab88d3ebb4afd4894615a0"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "deduction_hoh_2023": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "deduction_single_2024": 2410.0,
@@ -115,6 +180,19 @@
           "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
           "official": true,
           "retrieved": "2026-11-10",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
+        },
+        {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
           "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
         },
         {
@@ -154,6 +232,19 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "9f24e23cfcfcc35633b288253f6d7e89ec7384f836010619798c105fddbf4857"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": {
+              "same_as": "single",
+              "quote": "Standard-deduction rows \"3 Head of Household\" and \"5 Married Filing Separately\" carry the single amount."
+            }
+          },
+          "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2024_AR1000F_and_AR1000NR_Instructions.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "dcaab308e4c47b372a0f51acbf0eae42d0be006426ee83ab989bf59f19fe9297"
         },
         {
           "tax_year": 2026,

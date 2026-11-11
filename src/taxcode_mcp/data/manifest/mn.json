@@ -153,6 +153,34 @@
           "official": true,
           "retrieved": "2026-11-10",
           "content_sha256": "db216e8d9c0db86bb381cd4fbe3e338b933eae66e833e9dbe57b27c483557b8b"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_hoh_2026": 23000.0,
+            "brackets_2026.hoh": [
+              {
+                "over": 270060.0,
+                "rate": 0.0985
+              },
+              {
+                "over": 164800.0,
+                "rate": 0.0785
+              },
+              {
+                "over": 41010.0,
+                "rate": 0.068
+              },
+              {
+                "over": null,
+                "rate": 0.0535
+              }
+            ]
+          },
+          "url": "https://www.revenue.state.mn.us/sites/default/files/2025-12/inflation-adjusted-amounts-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "db216e8d9c0db86bb381cd4fbe3e338b933eae66e833e9dbe57b27c483557b8b"
         }
       ],
       "not_recorded": [

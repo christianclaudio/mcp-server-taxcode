@@ -6,12 +6,6 @@
   "params": {
     "deduction": "federal_standard_deduction",
     "rate": 0.025,
-    "deduction_2018": {
-      "single": 5312.0,
-      "mfj": 10613.0
-    },
-    "deduction_2019": "federal_standard_deduction",
-    "rate_2023": 0.025,
     "not_recorded": [
       {
         "param": "rate",
@@ -38,6 +32,47 @@
         "tax_year": 2022,
         "reason": "Tax Table X/Y is graduated 2.55%/2.98% (2.98% over $28,653 single); the full table is not stored on the flat model."
       }
-    ]
+    ],
+    "deduction_2018": {
+      "single": 5312.0,
+      "mfj": 10613.0
+    },
+    "deduction_2019": "federal_standard_deduction",
+    "rate_2023": 0.025,
+    "deduction_hoh_2019": "federal_standard_deduction",
+    "deduction_mfs_2019": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    },
+    "deduction_hoh_2020": "federal_standard_deduction",
+    "deduction_mfs_2020": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    },
+    "deduction_hoh_2021": "federal_standard_deduction",
+    "deduction_mfs_2021": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    },
+    "deduction_hoh_2022": "federal_standard_deduction",
+    "deduction_mfs_2022": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    },
+    "deduction_hoh_2023": "federal_standard_deduction",
+    "deduction_mfs_2023": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    },
+    "deduction_hoh_2024": "federal_standard_deduction",
+    "deduction_mfs_2024": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    },
+    "deduction_hoh_2025": "federal_standard_deduction",
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "Married filing separate equals the single federal standard deduction."
+    }
   }
 }

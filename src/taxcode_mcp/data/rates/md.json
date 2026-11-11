@@ -8,11 +8,27 @@
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1800.0,
-        "mfj": 3650.0
+        "mfj": 3650.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2700.0,
-        "mfj": 5450.0
+        "mfj": 5450.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "personal_exemption": {
@@ -53,7 +69,15 @@
             "over": null,
             "amount": 3200.0
           }
-        ]
+        ],
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "brackets": {
@@ -124,83 +148,210 @@
           "over": null,
           "rate": 0.02
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+      }
     },
+    "not_recorded": [
+      {
+        "param": "standard_deduction",
+        "tax_year": 2018,
+        "reason": "No official 2018 resident booklet is online. The archived min/max ($1,500/$3,000 and $2,250/$4,500) are not taken from an NBER copy."
+      }
+    ],
     "standard_deduction_2019": {
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1500.0,
-        "mfj": 3050.0
+        "mfj": 3050.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2250.0,
-        "mfj": 4550.0
+        "mfj": 4550.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2020": {
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1550.0,
-        "mfj": 3100.0
+        "mfj": 3100.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2300.0,
-        "mfj": 4650.0
+        "mfj": 4650.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2021": {
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1550.0,
-        "mfj": 3100.0
+        "mfj": 3100.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2350.0,
-        "mfj": 4700.0
+        "mfj": 4700.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2022": {
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1600.0,
-        "mfj": 3200.0
+        "mfj": 3200.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2400.0,
-        "mfj": 4850.0
+        "mfj": 4850.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2023": {
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1700.0,
-        "mfj": 3450.0
+        "mfj": 3450.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2550.0,
-        "mfj": 5150.0
+        "mfj": 5150.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2024": {
       "percent_of_agi": 0.15,
       "minimum": {
         "single": 1800.0,
-        "mfj": 3650.0
+        "mfj": 3650.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 2700.0,
-        "mfj": 5450.0
+        "mfj": 5450.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2025": {
       "percent_of_agi": 0.0,
       "minimum": {
         "single": 3350.0,
-        "mfj": 6700.0
+        "mfj": 6700.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       },
       "maximum": {
         "single": 3350.0,
-        "mfj": 6700.0
+        "mfj": 6700.0,
+        "hoh": {
+          "same_as": "mfj",
+          "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+        },
+        "mfs": {
+          "same_as": "single",
+          "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+        }
       }
     },
     "standard_deduction_2026": {
@@ -296,19 +447,20 @@
           "over": null,
           "rate": 0.02
         }
-      ]
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Schedule II, the joint deduction, and the joint exemption column cover head of household."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Schedule I and the single deduction and exemption cover married filing separately."
+      }
     },
     "capital_gains_surtax_2025": {
       "rate": 0.02,
       "fagi_over": 350000.0,
       "through_year": 2028
-    },
-    "not_recorded": [
-      {
-        "param": "standard_deduction",
-        "tax_year": 2018,
-        "reason": "No official 2018 resident booklet is online. The archived min/max ($1,500/$3,000 and $2,250/$4,500) are not taken from an NBER copy."
-      }
-    ]
+    }
   }
 }

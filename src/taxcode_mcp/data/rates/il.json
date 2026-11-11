@@ -8,6 +8,34 @@
       "single": 2775.0,
       "mfj": 5550.0
     },
-    "rate": 0.0495
+    "rate": 0.0495,
+    "exemption_2024": {
+      "single": 2775.0,
+      "mfj": 5550.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single filing status includes Single, Head of Household, Widowed, and Married filing separately."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single filing status includes Single, Head of Household, Widowed, and Married filing separately."
+      }
+    },
+    "exemption_2025": {
+      "single": 2775.0,
+      "mfj": 5550.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "Single filing status includes Single, Head of Household, Widowed, and Married filing separately."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single filing status includes Single, Head of Household, Widowed, and Married filing separately."
+      }
+    },
+    "exemption_2026": {
+      "single": 2775.0,
+      "mfj": 5550.0
+    }
   }
 }

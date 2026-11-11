@@ -85,6 +85,987 @@
           "rate": 0.04
         }
       ]
+    },
+    "deduction_2019": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2020": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2021": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2022": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2023": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2024": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2025": {
+      "single": 8000.0,
+      "mfj": 16050.0,
+      "hoh": 11200.0,
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2019": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 1616450.0,
+          "rate": 0.0882
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.0649
+        },
+        {
+          "over": 32200.0,
+          "rate": 0.0621
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.059
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2020": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 1616450.0,
+          "rate": 0.0882
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.0641
+        },
+        {
+          "over": 32200.0,
+          "rate": 0.0609
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.059
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2021": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1616450.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.0633
+        },
+        {
+          "over": 32200.0,
+          "rate": 0.0597
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.059
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2022": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1616450.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.0625
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.0585
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2023": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1616450.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2024": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1616450.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1616450.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 269300.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 107650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 20900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 17650.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 12800.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfs": {
+        "same_as": "single",
+        "quote": "Single and married filing separately share the deduction and the rate schedule."
+      }
+    },
+    "deduction_2026": {
+      "single": 8000.0,
+      "mfj": 16050.0
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 1077550.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 215400.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 80650.0,
+          "rate": 0.06
+        },
+        {
+          "over": 13900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 11700.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 8500.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "over": 25000000.0,
+          "rate": 0.109
+        },
+        {
+          "over": 5000000.0,
+          "rate": 0.103
+        },
+        {
+          "over": 2155350.0,
+          "rate": 0.0965
+        },
+        {
+          "over": 323200.0,
+          "rate": 0.0685
+        },
+        {
+          "over": 161550.0,
+          "rate": 0.06
+        },
+        {
+          "over": 27900.0,
+          "rate": 0.055
+        },
+        {
+          "over": 23600.0,
+          "rate": 0.0525
+        },
+        {
+          "over": 17150.0,
+          "rate": 0.045
+        },
+        {
+          "over": null,
+          "rate": 0.04
+        }
+      ]
     }
   }
 }

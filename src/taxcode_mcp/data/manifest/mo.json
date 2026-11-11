@@ -112,6 +112,16 @@
           "content_sha256": "99b1d607e1c9c7623ecf3cd7a8f6fba2a732861dcb54164cc7e7e3a82c5df540"
         },
         {
+          "tax_year": 2025,
+          "values": {
+            "exemption_hoh_2025": 1400.0
+          },
+          "url": "https://dor.mo.gov/forms/MO-1040%20Instructions_2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "99b1d607e1c9c7623ecf3cd7a8f6fba2a732861dcb54164cc7e7e3a82c5df540"
+        },
+        {
           "tax_year": 2026,
           "values": {
             "brackets_2026.single[0].over": 9436.0,

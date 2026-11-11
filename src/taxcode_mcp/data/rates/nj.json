@@ -73,6 +73,506 @@
           "rate": 0.014
         }
       ]
+    },
+    "exemption_2019": {
+      "single": 1000.0,
+      "mfj": 2000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      }
+    },
+    "exemption_2021": {
+      "single": 1000.0,
+      "mfj": 2000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      }
+    },
+    "exemption_2023": {
+      "single": 1000.0,
+      "mfj": 2000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      }
+    },
+    "exemption_2024": {
+      "single": 1000.0,
+      "mfj": 2000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      }
+    },
+    "exemption_2025": {
+      "single": 1000.0,
+      "mfj": 2000.0,
+      "hoh": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "You can claim a $1,000 exemption for yourself."
+      }
+    },
+    "brackets_2019": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Table A covers single and married/CU partner filing a separate return."
+      }
+    },
+    "brackets_2021": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Table A covers single and married/CU partner filing a separate return."
+      }
+    },
+    "brackets_2023": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Table A covers single and married/CU partner filing a separate return."
+      }
+    },
+    "brackets_2024": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Table A covers single and married/CU partner filing a separate return."
+      }
+    },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Table B covers married filing jointly, head of household, and qualifying surviving spouse."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Table A covers single and married/CU partner filing a separate return."
+      }
+    },
+    "brackets_2026": {
+      "single": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 75000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 40000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 35000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ],
+      "mfj": [
+        {
+          "over": 1000000.0,
+          "rate": 0.1075
+        },
+        {
+          "over": 500000.0,
+          "rate": 0.0897
+        },
+        {
+          "over": 150000.0,
+          "rate": 0.0637
+        },
+        {
+          "over": 80000.0,
+          "rate": 0.05525
+        },
+        {
+          "over": 70000.0,
+          "rate": 0.035
+        },
+        {
+          "over": 50000.0,
+          "rate": 0.0245
+        },
+        {
+          "over": 20000.0,
+          "rate": 0.0175
+        },
+        {
+          "over": null,
+          "rate": 0.014
+        }
+      ]
+    },
+    "exemption_2026": {
+      "single": 1000.0,
+      "mfj": 2000.0
     }
   }
 }

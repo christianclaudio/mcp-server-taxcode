@@ -29,6 +29,16 @@
       "verification": "summary",
       "year_sources": [
         {
+          "tax_year": 2024,
+          "values": {
+            "deduction_hoh_2024": "federal_standard_deduction"
+          },
+          "url": "https://tax.idaho.gov/wp-content/uploads/forms/EIN00046/EIN00046_03-02-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "952263e92f7c096b10aba50555cc7c166c78efc3b6ce6e5029d4837404553005"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "brackets_2025.single[0].over": 4811.0,
@@ -63,6 +73,16 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "cb34fd6aa3ac8644ced3fa2ac22c5e1eed9f79fa2bbbd29e8639a96ae1d4fb4e"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "deduction_hoh_2025": "federal_standard_deduction"
+          },
+          "url": "https://tax.idaho.gov/wp-content/uploads/forms/EIN00046/EIN00046_03-02-2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "952263e92f7c096b10aba50555cc7c166c78efc3b6ce6e5029d4837404553005"
         }
       ]
     }

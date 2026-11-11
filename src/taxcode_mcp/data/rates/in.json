@@ -9,10 +9,18 @@
     "rate_desc": "Flat state rate 3.05% (2024), 3.00% (2025), 2.95% (2026), 2.90% (2027+) plus county LIT",
     "regime": "flat",
     "rate": 0.0305,
+    "deduction_single": 1000.0,
+    "deduction_mfj": 2000.0,
     "rate_2025": 0.03,
     "rate_2026": 0.0295,
     "rate_2027": 0.029,
-    "deduction_single": 1000.0,
-    "deduction_mfj": 2000.0
+    "deduction_hoh_2025": {
+      "same_as": "single",
+      "quote": "All other filers should enter $1,000 on this line."
+    },
+    "deduction_mfs_2025": {
+      "same_as": "single",
+      "quote": "All other filers should enter $1,000 on this line."
+    }
   }
 }

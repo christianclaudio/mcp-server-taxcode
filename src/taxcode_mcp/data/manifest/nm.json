@@ -81,6 +81,41 @@
           "official": true,
           "retrieved": "2026-11-02",
           "content_sha256": "4d494485bd03db1613d02d70e6eea548b3f2249059bf8fe3c1029aee740dee45"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.mfs": [
+              {
+                "over": 157500.0,
+                "rate": 0.059
+              },
+              {
+                "over": 50000.0,
+                "rate": 0.049
+              },
+              {
+                "over": 25000.0,
+                "rate": 0.047
+              },
+              {
+                "over": 12500.0,
+                "rate": 0.043
+              },
+              {
+                "over": 4000.0,
+                "rate": 0.032
+              },
+              {
+                "over": null,
+                "rate": 0.015
+              }
+            ]
+          },
+          "url": "https://www.nmlegis.gov/sessions/24%20Regular/final/HB0252.PDF",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "4d494485bd03db1613d02d70e6eea548b3f2249059bf8fe3c1029aee740dee45"
         }
       ]
     }
