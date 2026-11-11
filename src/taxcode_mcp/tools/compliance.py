@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import math
 from collections.abc import Mapping
-from typing import Annotated, Any
+from typing import Annotated, Any, cast
 
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
@@ -531,7 +531,6 @@ def evaluate_georgia_residency(
         )
 
     # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
-    is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
     ga = RATE_TABLES["GA"]
     status = _filing_key(filing_status)
     standard_deduction = _ga_standard_deduction(ga, status, tax_year)
@@ -865,7 +864,7 @@ def _phase_rows(phase: Mapping[str, Any], status: str) -> list[dict[str, Any]]:
     rows = phase[status]
     if is_status_alias(rows):
         rows = phase[rows["same_as"]]
-    return rows
+    return cast(list[dict[str, Any]], rows)
 
 
 def _md_personal_exemption(
@@ -1073,7 +1072,9 @@ def _as_amount(cell: Any, status: str, tax_year: int) -> float:
     return float(cell)
 
 
-def _extra_scalar(info: Mapping[str, Any], base: str, status: str, tax_year: int, state: str) -> float:
+def _extra_scalar(
+    info: Mapping[str, Any], base: str, status: str, tax_year: int, state: str
+) -> float:
     """Exact-year ``base_status`` amount. A later year does not reuse an earlier one.
 
     An unsuffixed key applies only when the table has no ``_YYYY`` key for that
@@ -1095,7 +1096,9 @@ def _extra_scalar(info: Mapping[str, Any], base: str, status: str, tax_year: int
     if is_status_alias(cell):
         target = cell["same_as"]
         if any(candidate.startswith(f"{base}_{target}") for candidate in info):
-            return _sourced_registry_amount(info, f"{base}_{target}", target == "mfj", tax_year)
+            return _sourced_registry_amount(
+                cast(dict[str, Any], info), f"{base}_{target}", target == "mfj", tax_year
+            )
         table = _for_year(info, base, tax_year)
         if table == FEDERAL_ALLOWANCE:
             return _as_amount(table, target, tax_year)
@@ -1114,15 +1117,16 @@ def _extra_table(
     _refuse_if_marked(params, base, tax_year)
     year_key = f"{base}_{tax_year}"
     year_table = params.get(year_key)
-    if _table_has_status(year_table, status):
+    if isinstance(year_table, dict) and _table_has_status(year_table, status):
         return year_table
     selected_name = _selected_key(params, base, tax_year)
     selected = params.get(selected_name)
     # A same-as alias carries forward with its table. A number does not,
     # except on the unsuffixed table, which is the schedule for the years before
     # the first _YYYY key.
-    if _cell_is_alias(selected, status) or (
-        selected_name == base and _table_has_status(selected, status)
+    if isinstance(selected, dict) and (
+        _cell_is_alias(selected, status)
+        or (selected_name == base and _table_has_status(selected, status))
     ):
         return selected
     raise _missing_schedule(state, status, tax_year)
@@ -1176,7 +1180,7 @@ def _extra_rows(
     """Rate schedule for ``status``. Single and joint keep the carried table."""
     if not _is_extra(status):
         table = _for_year(params, base, tax_year)
-        return table[status]
+        return cast(list[dict[str, Any]], table[status])
     table = _extra_table(params, base, status, tax_year, state)
     cell = _alias_cell(table, status)
     if not isinstance(cell, list):
@@ -1207,11 +1211,15 @@ def _extra_brackets(
     exact = info.get(f"brackets_{status}_{tax_year}")
     if isinstance(exact, list):
         return exact
-    if is_status_alias(exact):
+    if isinstance(exact, dict) and is_status_alias(exact):
         target = exact["same_as"]
         shared = info.get(f"brackets_{tax_year}")
         if not isinstance(shared, dict):
-            shared = info.get("brackets") if _selected_key(info, "brackets", tax_year) == "brackets" else None
+            shared = (
+                info.get("brackets")
+                if _selected_key(info, "brackets", tax_year) == "brackets"
+                else None
+            )
         rows = shared.get(target) if isinstance(shared, dict) else None
         if isinstance(rows, list):
             return rows
@@ -1691,6 +1699,7 @@ def evaluate_state_residency(
         rate_authority = "Conn. Gen. Stat. § 12-700"
         ct = RATE_TABLES["CT"]
         rate_desc = _range_desc(ct) + _outyear_estimate_note("CT", tax_year, ct)
+
         def _ct_cell(base: str) -> Any:
             if not _is_extra(status_key):
                 return ct[base][status_key]
@@ -1951,9 +1960,7 @@ def evaluate_state_residency(
             else:
                 exemption = 0.0
         else:
-            ded = _sourced_registry_amount(
-                info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year
-            )
+            ded = _sourced_registry_amount(info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year)
             exemption = _sourced_registry_amount(
                 info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year
             )

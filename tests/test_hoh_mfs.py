@@ -7,11 +7,12 @@ married-filing-separately rules for Oregon and Michigan are refused rather than 
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from taxcode_mcp.errors import SafetyViolationError
 from taxcode_mcp.tools import compliance
-
 from tests.test_rate_tables import _resident_tax, _tax
 
 
@@ -177,14 +178,19 @@ def test_lookup_edges_refuse_a_bad_alias_and_a_missing_exclusion() -> None:
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         compliance._extra_rows({"brackets": {"hoh": 1.0}}, "brackets", "hoh", 2024, "ZZ")
     shared = {"single": [{"over": None, "rate": 0.01}], "mfj": [{"over": None, "rate": 0.02}]}
-    assert compliance._extra_brackets(
-        {"brackets_mfs_2024": {"same_as": "single", "quote": "same"}, "brackets": shared},
-        "mfs",
-        2024,
-        "ZZ",
-    ) == shared["single"]
+    assert (
+        compliance._extra_brackets(
+            {"brackets_mfs_2024": {"same_as": "single", "quote": "same"}, "brackets": shared},
+            "mfs",
+            2024,
+            "ZZ",
+        )
+        == shared["single"]
+    )
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         compliance._extra_table({}, "brackets", "hoh", 2024, "ZZ")
+    assert compliance._cell_is_alias(None, "hoh") is False
+    assert compliance._table_has_status(1, "hoh") is False
     # The default residency rule requires an abode; this call only exercises that branch.
     present = compliance._evaluate_extra_filing_status(
         state="VT",
@@ -199,10 +205,9 @@ def test_lookup_edges_refuse_a_bad_alias_and_a_missing_exclusion() -> None:
     assert present["is_resident"] is True
 
 
-def test_connecticut_alias_columns_validate() -> None:
+def test_connecticut_alias_columns_validate(tmp_path: Path) -> None:
     """An alias is accepted on each Connecticut table, not only on brackets."""
     import json
-    from pathlib import Path
 
     from taxcode_mcp.catalog import DATA_DIR, rate_table_document
 
@@ -210,7 +215,7 @@ def test_connecticut_alias_columns_validate() -> None:
     alias = {"same_as": "single", "quote": "Same as single."}
     for name in ("exemption", "phase_out_addback", "tax_recapture", "personal_tax_credit"):
         doc["params"][name]["mfs"] = alias
-    path = Path("/tmp/tc101/ct-alias.json")
+    path = tmp_path / "ct-alias.json"
     path.write_text(json.dumps(doc))
     loaded = rate_table_document(path, "CT")
     assert loaded["params"]["exemption"]["mfs"]["same_as"] == "single"

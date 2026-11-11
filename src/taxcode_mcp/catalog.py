@@ -1365,7 +1365,9 @@ def federal_table_document(root: Path = DATA_DIR) -> dict[str, Any]:
 def load_federal_standard_deduction(root: Path = DATA_DIR) -> dict[int, dict[str, float]]:
     """The federal standard deduction by tax year: ``{2024: {"single": ..., "mfj": ...}}``."""
     return {
-        row["tax_year"]: {status: row[status] for status in (*FILING_STATUSES, *EXTRA_FILING_STATUSES)}
+        row["tax_year"]: {
+            status: row[status] for status in (*FILING_STATUSES, *EXTRA_FILING_STATUSES)
+        }
         for row in federal_table_document(root)["years"]
     }
 
