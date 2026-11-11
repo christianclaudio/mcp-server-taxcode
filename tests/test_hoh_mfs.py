@@ -54,15 +54,17 @@ def test_exemption_fixes_for_mississippi_kansas_and_missouri() -> None:
 def test_oregon_and_michigan_married_separate_default_to_one_allowance() -> None:
     """Issue #103: the default spouse inputs match a single filer's allowance."""
     oregon = _resident_tax("OR", 2026, 80000.0, "married_separate")
-    assert oregon["taxable_net_income"] == _resident_tax("OR", 2026, 80000.0, "single")[
-        "taxable_net_income"
-    ]
+    assert (
+        oregon["taxable_net_income"]
+        == _resident_tax("OR", 2026, 80000.0, "single")["taxable_net_income"]
+    )
     assert oregon["standard_deduction"] == 2745.0
     assert oregon["spouse_itemizes"] is False
     michigan = _resident_tax("MI", 2026, 80000.0, "mfs")
-    assert michigan["taxable_net_income"] == _resident_tax("MI", 2026, 80000.0, "single")[
-        "taxable_net_income"
-    ]
+    assert (
+        michigan["taxable_net_income"]
+        == _resident_tax("MI", 2026, 80000.0, "single")["taxable_net_income"]
+    )
     assert michigan["personal_exemption"] == 5900.0
     assert michigan["spouse_has_no_gross_income"] is False
 

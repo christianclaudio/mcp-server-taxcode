@@ -6,7 +6,7 @@ the Louisiana IT-540 tax tables for 2022-2024, and S.C. Code § 12-6-1140(15).
 
 from __future__ import annotations
 
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
 
 import pytest
@@ -120,9 +120,7 @@ def test_washington_spouses_share_one_standard_deduction() -> None:
     assert shared["spouse_wa_capital_gains_deduction"] == 100000.0
     assert shared["taxable_net_income"] == 230000.0
     assert shared["estimated_state_tax"] == 16100.0
-    claimed_all = _call(
-        "WA", 2024, 0.0, "mfs", spouse_wa_capital_gains_deduction=270000.0, **gains
-    )
+    claimed_all = _call("WA", 2024, 0.0, "mfs", spouse_wa_capital_gains_deduction=270000.0, **gains)
     assert claimed_all["standard_deduction"] == 0.0
     assert claimed_all["taxable_net_income"] == 400000.0
     with pytest.raises(SafetyViolationError, match="cannot exceed"):

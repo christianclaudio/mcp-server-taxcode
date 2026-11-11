@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import math
 from collections.abc import Mapping
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Annotated, Any, cast
 
 from fastmcp import FastMCP
@@ -986,14 +986,10 @@ def _reject_spouse_inputs_outside_mfs(
     ``spouse_wa_capital_gains_deduction`` is also refused outside Washington.
     """
     if spouse_wa_capital_gains_deduction < 0:
-        raise SafetyViolationError(
-            "Spouse Washington capital-gains deduction cannot be negative."
-        )
+        raise SafetyViolationError("Spouse Washington capital-gains deduction cannot be negative.")
     if status != "mfs":
         if spouse_itemizes:
-            raise SafetyViolationError(
-                "spouse_itemizes applies only to married filing separately."
-            )
+            raise SafetyViolationError("spouse_itemizes applies only to married filing separately.")
         if spouse_has_no_gross_income:
             raise SafetyViolationError(
                 "spouse_has_no_gross_income applies only to married filing separately."
@@ -1004,9 +1000,7 @@ def _reject_spouse_inputs_outside_mfs(
             )
         return
     if spouse_wa_capital_gains_deduction > 0 and jurisdiction.strip().upper() != "WA":
-        raise SafetyViolationError(
-            "spouse_wa_capital_gains_deduction applies only to Washington."
-        )
+        raise SafetyViolationError("spouse_wa_capital_gains_deduction applies only to Washington.")
 
 
 _SURVIVING_SPOUSE = frozenset(
@@ -2030,8 +2024,10 @@ def evaluate_state_residency(
         )
         # IRC 63(c)(6)(A): a separate return's federal standard deduction is zero when
         # either spouse itemizes. Colorado tax is based on federal taxable income.
-        if status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
-            RATE_TABLES["CO"], "deduction", tax_year
+        if (
+            status_key == "mfs"
+            and spouse_itemizes
+            and _mfs_cell_is_federal_standard(RATE_TABLES["CO"], "deduction", tax_year)
         ):
             standard_ded = 0.0
             _note_spouse_itemizes(reported, standard_ded)
@@ -2064,8 +2060,10 @@ def evaluate_state_residency(
             else _allowance(az, is_mfj, tax_year)
         )
         # IRC 63(c)(6)(A), on top of Arizona's federal standard deduction.
-        if status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
-            az, "deduction", tax_year
+        if (
+            status_key == "mfs"
+            and spouse_itemizes
+            and _mfs_cell_is_federal_standard(az, "deduction", tax_year)
         ):
             standard_ded = 0.0
             _note_spouse_itemizes(reported, standard_ded)
@@ -2188,8 +2186,10 @@ def evaluate_state_residency(
                 " The South Carolina Income Adjusted Deduction "
                 "(S.C. Code § 12-6-1140(15)) replaces the federal standard deduction."
             )
-        elif status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
-            info, "deduction", tax_year
+        elif (
+            status_key == "mfs"
+            and spouse_itemizes
+            and _mfs_cell_is_federal_standard(info, "deduction", tax_year)
         ):
             ded = 0.0
             _note_spouse_itemizes(reported, ded)
@@ -2270,11 +2270,13 @@ def evaluate_state_residency(
                         else 0.0
                     )
                 else:
-                    estimated_tax = (
-                        _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+                    estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+                if (
+                    is_resident
+                    and not la_credit
+                    and _under_zero_liability(
+                        info, is_mfj, taxable_income, tax_year, status=status_key, state=state
                     )
-                if is_resident and not la_credit and _under_zero_liability(
-                    info, is_mfj, taxable_income, tax_year, status=status_key, state=state
                 ):
                     estimated_tax = 0.0
         elif regime == "flat":
@@ -2325,8 +2327,10 @@ def evaluate_state_residency(
                 ut_dep = _require_dependent_exemption(info, tax_year, dependents)
                 if itemized_deductions > 0.0:
                     ut_itemized = itemized_deductions
-                elif status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
-                    info, "credit_base", tax_year
+                elif (
+                    status_key == "mfs"
+                    and spouse_itemizes
+                    and _mfs_cell_is_federal_standard(info, "credit_base", tax_year)
                 ):
                     # IRC 63(c)(6)(A): the federal standard deduction credit base is zero.
                     # Itemized deductions, when passed, stay the credit base instead.
