@@ -1580,14 +1580,29 @@ def test_vt_hoh_side_schedule_is_readable_when_shared_brackets_are_marked() -> N
 
 
 def test_unrecorded_hoh_and_mfs_refuse_without_using_single() -> None:
+    recorded = [
+        marker["reason"]
+        for marker in compliance.RATE_TABLES["VT"]["not_recorded"]
+        if marker["tax_year"] == 2018
+    ]
+    assert recorded == [
+        (
+            "not_recorded: The 2018 IN-111 instructions and the rate schedule "
+            "are not on tax.vermont.gov (404)."
+        ),
+        (
+            "not_recorded: The 2018 IN-111 instructions and the rate schedule "
+            "are not on tax.vermont.gov (404)."
+        ),
+    ]
+    expected = f"No sourced deduction value exists for tax year 2018. {recorded[0]}"
     with pytest.raises(SafetyViolationError, match="not_recorded") as single_raised:
         _resident_tax("VT", 2018, 50000.0)
-    assert "404" in str(single_raised.value)
+    assert str(single_raised.value) == expected
     for status in ("head_of_household", "married_separate"):
         with pytest.raises(SafetyViolationError, match="not_recorded") as raised:
             _resident_tax("VT", 2018, 50000.0, status)
-        assert str(raised.value) == str(single_raised.value)
-        assert "404" in str(raised.value)
+        assert str(raised.value) == expected
     assert _tax("NY", 2024, 80000.0, "head of household") == _tax("NY", 2024, 80000.0, "single")
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         compliance._extra_brackets(compliance.RATE_TABLES["VT"], "hoh", 2017, "VT")
