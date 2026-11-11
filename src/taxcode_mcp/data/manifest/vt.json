@@ -33,7 +33,9 @@
           "tax_year": 2019,
           "values": {
             "deduction_single_2019": 6150.0,
-            "deduction_mfj_2019": 12300.0
+            "deduction_mfj_2019": 12300.0,
+            "deduction_hoh_2019": 9200.0,
+            "deduction_mfs_2019": 6150.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2019.pdf",
           "official": true,
@@ -41,10 +43,37 @@
           "content_sha256": "060a61524acf7e8ddac01a7ee0374cc832d91445a23f2fc430272e472bfc7968"
         },
         {
+          "tax_year": 2019,
+          "values": {
+            "brackets_hoh_2019[0].over": 221950.0,
+            "brackets_hoh_2019[0].rate": 0.0875,
+            "brackets_hoh_2019[1].over": 137050.0,
+            "brackets_hoh_2019[1].rate": 0.076,
+            "brackets_hoh_2019[2].over": 53100.0,
+            "brackets_hoh_2019[2].rate": 0.066,
+            "brackets_hoh_2019[3].over": null,
+            "brackets_hoh_2019[3].rate": 0.0335,
+            "brackets_mfs_2019[0].over": 121875.0,
+            "brackets_mfs_2019[0].rate": 0.0875,
+            "brackets_mfs_2019[1].over": 79975.0,
+            "brackets_mfs_2019[1].rate": 0.076,
+            "brackets_mfs_2019[2].over": 33075.0,
+            "brackets_mfs_2019[2].rate": 0.066,
+            "brackets_mfs_2019[3].over": null,
+            "brackets_mfs_2019[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2019.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "867f144fae07924647720e0734f7b88697178fb1417ca0e5d8deadd24cdee44a"
+        },
+        {
           "tax_year": 2020,
           "values": {
             "deduction_single_2020": 6250.0,
-            "deduction_mfj_2020": 12500.0
+            "deduction_mfj_2020": 12500.0,
+            "deduction_hoh_2020": 9400.0,
+            "deduction_mfs_2020": 6250.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2020.pdf",
           "official": true,
@@ -52,10 +81,37 @@
           "content_sha256": "41b4864f72bd6670a2cf6067f6f97535c3fbe6b433b8e0fb8011a1d940384323"
         },
         {
+          "tax_year": 2020,
+          "values": {
+            "brackets_hoh_2020[0].over": 226200.0,
+            "brackets_hoh_2020[0].rate": 0.0875,
+            "brackets_hoh_2020[1].over": 139650.0,
+            "brackets_hoh_2020[1].rate": 0.076,
+            "brackets_hoh_2020[2].over": 54100.0,
+            "brackets_hoh_2020[2].rate": 0.066,
+            "brackets_hoh_2020[3].over": null,
+            "brackets_hoh_2020[3].rate": 0.0335,
+            "brackets_mfs_2020[0].over": 124175.0,
+            "brackets_mfs_2020[0].rate": 0.0875,
+            "brackets_mfs_2020[1].over": 81500.0,
+            "brackets_mfs_2020[1].rate": 0.076,
+            "brackets_mfs_2020[2].over": 33725.0,
+            "brackets_mfs_2020[2].rate": 0.066,
+            "brackets_mfs_2020[3].over": null,
+            "brackets_mfs_2020[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2020.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "7a3dc91f9ee556cebb72694256e79a949ed84288dbacd543f4507c25d093e4cc"
+        },
+        {
           "tax_year": 2021,
           "values": {
             "deduction_single_2021": 6350.0,
-            "deduction_mfj_2021": 12700.0
+            "deduction_mfj_2021": 12700.0,
+            "deduction_hoh_2021": 9500.0,
+            "deduction_mfs_2021": 6350.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2021.pdf",
           "official": true,
@@ -63,10 +119,37 @@
           "content_sha256": "9bc240818c056b0c03b62f7855a063117d4aa9bd75c6a705604be2583dde1603"
         },
         {
+          "tax_year": 2021,
+          "values": {
+            "brackets_hoh_2021[0].over": 229450.0,
+            "brackets_hoh_2021[0].rate": 0.0875,
+            "brackets_hoh_2021[1].over": 141700.0,
+            "brackets_hoh_2021[1].rate": 0.076,
+            "brackets_hoh_2021[2].over": 54850.0,
+            "brackets_hoh_2021[2].rate": 0.066,
+            "brackets_hoh_2021[3].over": null,
+            "brackets_hoh_2021[3].rate": 0.0335,
+            "brackets_mfs_2021[0].over": 125975.0,
+            "brackets_mfs_2021[0].rate": 0.0875,
+            "brackets_mfs_2021[1].over": 82675.0,
+            "brackets_mfs_2021[1].rate": 0.076,
+            "brackets_mfs_2021[2].over": 34200.0,
+            "brackets_mfs_2021[2].rate": 0.066,
+            "brackets_mfs_2021[3].over": null,
+            "brackets_mfs_2021[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2021.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "d367adfffb745454767cdf47c50afe262d865f8b309cd8c16ad5853980123262"
+        },
+        {
           "tax_year": 2022,
           "values": {
             "deduction_single_2022": 6500.0,
-            "deduction_mfj_2022": 13050.0
+            "deduction_mfj_2022": 13050.0,
+            "deduction_hoh_2022": 9800.0,
+            "deduction_mfs_2022": 6500.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2022.pdf",
           "official": true,
@@ -74,10 +157,37 @@
           "content_sha256": "18fa37cef2e2593255a550f933a6ddcb2f9bba51d87fe117c23bd9d4dd6f23a9"
         },
         {
+          "tax_year": 2022,
+          "values": {
+            "brackets_hoh_2022[0].over": 236350.0,
+            "brackets_hoh_2022[0].rate": 0.0875,
+            "brackets_hoh_2022[1].over": 145950.0,
+            "brackets_hoh_2022[1].rate": 0.076,
+            "brackets_hoh_2022[2].over": 56500.0,
+            "brackets_hoh_2022[2].rate": 0.066,
+            "brackets_hoh_2022[3].over": null,
+            "brackets_hoh_2022[3].rate": 0.0335,
+            "brackets_mfs_2022[0].over": 129750.0,
+            "brackets_mfs_2022[0].rate": 0.0875,
+            "brackets_mfs_2022[1].over": 85150.0,
+            "brackets_mfs_2022[1].rate": 0.076,
+            "brackets_mfs_2022[2].over": 35225.0,
+            "brackets_mfs_2022[2].rate": 0.066,
+            "brackets_mfs_2022[3].over": null,
+            "brackets_mfs_2022[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2022.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "7db8f9ef3c6bc637d32bf54471e90f0d78a27ef9853d54edbd7e562a30a0b872"
+        },
+        {
           "tax_year": 2023,
           "values": {
             "deduction_single_2023": 7000.0,
-            "deduction_mfj_2023": 14050.0
+            "deduction_mfj_2023": 14050.0,
+            "deduction_hoh_2023": 10550.0,
+            "deduction_mfs_2023": 7000.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2023.pdf",
           "official": true,
@@ -85,10 +195,37 @@
           "content_sha256": "d63a9063a168af75f96c846e7d89f4a75081a02b48be1f95dc5882889fa68a44"
         },
         {
+          "tax_year": 2023,
+          "values": {
+            "brackets_hoh_2023[0].over": 254500.0,
+            "brackets_hoh_2023[0].rate": 0.0875,
+            "brackets_hoh_2023[1].over": 157150.0,
+            "brackets_hoh_2023[1].rate": 0.076,
+            "brackets_hoh_2023[2].over": 60850.0,
+            "brackets_hoh_2023[2].rate": 0.066,
+            "brackets_hoh_2023[3].over": null,
+            "brackets_hoh_2023[3].rate": 0.0335,
+            "brackets_mfs_2023[0].over": 139725.0,
+            "brackets_mfs_2023[0].rate": 0.0875,
+            "brackets_mfs_2023[1].over": 91700.0,
+            "brackets_mfs_2023[1].rate": 0.076,
+            "brackets_mfs_2023[2].over": 37925.0,
+            "brackets_mfs_2023[2].rate": 0.066,
+            "brackets_mfs_2023[3].over": null,
+            "brackets_mfs_2023[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2023.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "1fc8ffbe0ecc673d83d5335273b4bba3cd713c22a3abb21c2ff3980fd68f8721"
+        },
+        {
           "tax_year": 2024,
           "values": {
             "deduction_single_2024": 7400.0,
-            "deduction_mfj_2024": 14850.0
+            "deduction_mfj_2024": 14850.0,
+            "deduction_hoh_2024": 11100.0,
+            "deduction_mfs_2024": 7400.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111%20Instr-2024.pdf",
           "official": true,
@@ -113,7 +250,23 @@
             "brackets_2024.mfj[2].over": 79950.0,
             "brackets_2024.mfj[2].rate": 0.066,
             "brackets_2024.mfj[3].over": null,
-            "brackets_2024.mfj[3].rate": 0.0335
+            "brackets_2024.mfj[3].rate": 0.0335,
+            "brackets_2024.hoh[0].over": 268300.0,
+            "brackets_2024.hoh[0].rate": 0.0875,
+            "brackets_2024.hoh[1].over": 165700.0,
+            "brackets_2024.hoh[1].rate": 0.076,
+            "brackets_2024.hoh[2].over": 64200.0,
+            "brackets_2024.hoh[2].rate": 0.066,
+            "brackets_2024.hoh[3].over": null,
+            "brackets_2024.hoh[3].rate": 0.0335,
+            "brackets_2024.mfs[0].over": 147300.0,
+            "brackets_2024.mfs[0].rate": 0.0875,
+            "brackets_2024.mfs[1].over": 96650.0,
+            "brackets_2024.mfs[1].rate": 0.076,
+            "brackets_2024.mfs[2].over": 39975.0,
+            "brackets_2024.mfs[2].rate": 0.066,
+            "brackets_2024.mfs[3].over": null,
+            "brackets_2024.mfs[3].rate": 0.0335
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/RateSched-2024.pdf",
           "official": true,
@@ -123,20 +276,8 @@
         {
           "tax_year": 2025,
           "values": {
-            "brackets_2025.single[0].over": 249700.0,
-            "brackets_2025.single[0].rate": 0.0875,
-            "brackets_2025.single[1].over": 119700.0,
-            "brackets_2025.single[1].rate": 0.076,
-            "brackets_2025.single[2].over": 49400.0,
-            "brackets_2025.single[2].rate": 0.066,
-            "brackets_2025.single[3].rate": 0.0335,
-            "brackets_2025.mfj[0].over": 304000.0,
-            "brackets_2025.mfj[0].rate": 0.0875,
-            "brackets_2025.mfj[1].over": 199450.0,
-            "brackets_2025.mfj[1].rate": 0.076,
-            "brackets_2025.mfj[2].over": 82500.0,
-            "brackets_2025.mfj[2].rate": 0.066,
-            "brackets_2025.mfj[3].rate": 0.0335
+            "deduction_hoh_2025": 11450.0,
+            "deduction_mfs_2025": 7650.0
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
           "official": true,
@@ -159,7 +300,58 @@
             "brackets_2025.mfj[1].rate": 0.076,
             "brackets_2025.mfj[2].over": 82500.0,
             "brackets_2025.mfj[2].rate": 0.066,
-            "brackets_2025.mfj[3].rate": 0.0335
+            "brackets_2025.mfj[3].rate": 0.0335,
+            "brackets_2025.hoh[0].over": 276850.0,
+            "brackets_2025.hoh[0].rate": 0.0875,
+            "brackets_2025.hoh[1].over": 171000.0,
+            "brackets_2025.hoh[1].rate": 0.076,
+            "brackets_2025.hoh[2].over": 66200.0,
+            "brackets_2025.hoh[2].rate": 0.066,
+            "brackets_2025.hoh[3].rate": 0.0335,
+            "brackets_2025.mfs[0].over": 152000.0,
+            "brackets_2025.mfs[0].rate": 0.0875,
+            "brackets_2025.mfs[1].over": 99725.0,
+            "brackets_2025.mfs[1].rate": 0.076,
+            "brackets_2025.mfs[2].over": 41250.0,
+            "brackets_2025.mfs[2].rate": 0.066,
+            "brackets_2025.mfs[3].rate": 0.0335
+          },
+          "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
+          "official": true,
+          "retrieved": "2026-11-10",
+          "content_sha256": "e56ef973b1831973e9448df80feb9ee8540f427794ecdc22352a77f8f4264639"
+        },
+        {
+          "tax_year": 2025,
+          "values": {
+            "brackets_2025.single[0].over": 249700.0,
+            "brackets_2025.single[0].rate": 0.0875,
+            "brackets_2025.single[1].over": 119700.0,
+            "brackets_2025.single[1].rate": 0.076,
+            "brackets_2025.single[2].over": 49400.0,
+            "brackets_2025.single[2].rate": 0.066,
+            "brackets_2025.single[3].rate": 0.0335,
+            "brackets_2025.mfj[0].over": 304000.0,
+            "brackets_2025.mfj[0].rate": 0.0875,
+            "brackets_2025.mfj[1].over": 199450.0,
+            "brackets_2025.mfj[1].rate": 0.076,
+            "brackets_2025.mfj[2].over": 82500.0,
+            "brackets_2025.mfj[2].rate": 0.066,
+            "brackets_2025.mfj[3].rate": 0.0335,
+            "brackets_2025.hoh[0].over": 276850.0,
+            "brackets_2025.hoh[0].rate": 0.0875,
+            "brackets_2025.hoh[1].over": 171000.0,
+            "brackets_2025.hoh[1].rate": 0.076,
+            "brackets_2025.hoh[2].over": 66200.0,
+            "brackets_2025.hoh[2].rate": 0.066,
+            "brackets_2025.hoh[3].rate": 0.0335,
+            "brackets_2025.mfs[0].over": 152000.0,
+            "brackets_2025.mfs[0].rate": 0.0875,
+            "brackets_2025.mfs[1].over": 99725.0,
+            "brackets_2025.mfs[1].rate": 0.076,
+            "brackets_2025.mfs[2].over": 41250.0,
+            "brackets_2025.mfs[2].rate": 0.066,
+            "brackets_2025.mfs[3].rate": 0.0335
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
           "official": true,
@@ -182,7 +374,21 @@
             "brackets_2026.mfj[1].rate": 0.076,
             "brackets_2026.mfj[2].over": 84700.0,
             "brackets_2026.mfj[2].rate": 0.066,
-            "brackets_2026.mfj[3].rate": 0.0335
+            "brackets_2026.mfj[3].rate": 0.0335,
+            "brackets_2026.hoh[0].over": 284150.0,
+            "brackets_2026.hoh[0].rate": 0.0875,
+            "brackets_2026.hoh[1].over": 175500.0,
+            "brackets_2026.hoh[1].rate": 0.076,
+            "brackets_2026.hoh[2].over": 68000.0,
+            "brackets_2026.hoh[2].rate": 0.066,
+            "brackets_2026.hoh[3].rate": 0.0335,
+            "brackets_2026.mfs[0].over": 156025.0,
+            "brackets_2026.mfs[0].rate": 0.0875,
+            "brackets_2026.mfs[1].over": 102375.0,
+            "brackets_2026.mfs[1].rate": 0.076,
+            "brackets_2026.mfs[2].over": 42350.0,
+            "brackets_2026.mfs[2].rate": 0.066,
+            "brackets_2026.mfs[3].rate": 0.0335
           },
           "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-114-Instr-2026.pdf",
           "official": true,
@@ -194,12 +400,12 @@
         {
           "param": "brackets",
           "tax_year": 2018,
-          "reason": "The rate schedule prints the 8.75% threshold ($195,450 / $237,950 (preliminary schedule)) and not the lower indexed edges."
+          "reason": "not_recorded: The 2018 IN-111 instructions and the rate schedule are not on tax.vermont.gov (404)."
         },
         {
           "param": "deduction",
           "tax_year": 2018,
-          "reason": "The 2018 IN-111 instructions are not on tax.vermont.gov (404). The standard deduction is not taken from an archive copy."
+          "reason": "not_recorded: The 2018 IN-111 instructions and the rate schedule are not on tax.vermont.gov (404)."
         },
         {
           "param": "brackets",

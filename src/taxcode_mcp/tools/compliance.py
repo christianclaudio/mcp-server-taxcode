@@ -13,6 +13,7 @@ from pydantic import Field
 
 from taxcode_mcp.catalog import (
     COUNTRY_RATE_TABLES,
+    EXTRA_FILING_STATUSES,
     FEDERAL_ALLOWANCE,
     GA_FIRST_GRADUATED_YEAR,
     GA_FLAT_RATE_FIRST_YEAR,
@@ -650,14 +651,26 @@ def _refuse_if_marked(params: Mapping[str, Any], param: str, tax_year: int) -> N
             )
 
 
+def _marker_series(name: str) -> str:
+    """The ``not_recorded`` param a ``_for_year`` read checks.
+
+    ``deduction_hoh`` checks ``deduction``. ``brackets_hoh`` does not check
+    ``brackets``: that marker covers the shared single and joint schedule, and a
+    head-of-household list stored as ``brackets_hoh_YYYY`` stays readable.
+    """
+    if name in {f"brackets_{status}" for status in EXTRA_FILING_STATUSES}:
+        return name
+    return series_param(name)
+
+
 def _for_year(params: Mapping[str, Any], name: str, tax_year: int) -> Any:
     """``params[name]``, or its latest ``<name>_<YYYY>`` value whose year the tax year reached.
 
     A ``_YYYY`` key holds the value from that tax year on; the unsuffixed key covers the
     years before. ``None`` when neither applies. A ``not_recorded`` marker for
-    :func:`series_param` of ``name`` and this year raises instead of carrying.
+    :func:`_marker_series` of ``name`` and this year raises instead of carrying.
     """
-    _refuse_if_marked(params, series_param(name), tax_year)
+    _refuse_if_marked(params, _marker_series(name), tax_year)
     key, latest = name, -1
     for candidate in params:
         year = candidate[len(name) + 1 :]
@@ -948,6 +961,138 @@ _FLAT_BY_CONSTITUTION = "(the state constitution requires a flat rate)"
 NY_RECAPTURE_NOTE = " [NYAGI-based tax computation worksheets (recapture) are not modeled]"
 
 
+_EXTRA_STATUS_LABELS = {
+    "hoh": "head of household",
+    "mfs": "married filing separately",
+}
+
+
+def _extra_filing_status(filing_status: str) -> str | None:
+    """``hoh`` or ``mfs`` when the caller named that status.
+
+    Married-filing-jointly aliases stay on the historical joint path. Any other
+    string stays on the historical single path, so existing single and joint
+    answers do not move.
+    """
+    raw = filing_status.strip().lower()
+    if raw in ("married_joint", "mfj", "married filing jointly"):
+        return None
+    compact = " ".join(raw.replace("_", " ").replace("-", " ").split())
+    if compact in {"hoh", "head of household"}:
+        return "hoh"
+    if compact in {"mfs", "married separate", "married filing separately"}:
+        return "mfs"
+    return None
+
+
+def _missing_schedule(state: str, status: str, tax_year: int) -> SafetyViolationError:
+    label = _EXTRA_STATUS_LABELS[status]
+    return SafetyViolationError(
+        f"not_recorded: No sourced {label} schedule exists for {state} tax year {tax_year}."
+    )
+
+
+def _extra_deduction(info: Mapping[str, Any], status: str, tax_year: int, state: str) -> float:
+    """The stored standard deduction for ``status``.
+
+    A ``deduction`` marker raises the same refusal single and joint use. A missing
+    amount, or the federal-standard-deduction token, refuses: that token is the
+    single and joint federal table, and this status does not read it.
+    """
+    value = _for_year(info, f"deduction_{status}", tax_year)
+    if type(value) is not float:
+        raise _missing_schedule(state, status, tax_year)
+    return value
+
+
+def _extra_brackets(
+    info: Mapping[str, Any], status: str, tax_year: int, state: str
+) -> list[dict[str, Any]]:
+    """The stored rate schedule for ``status``.
+
+    ``brackets_{status}_YYYY`` is that year's list (used when the shared
+    ``brackets`` series is marked for the year). Otherwise the status key inside
+    the shared schedule. A missing list refuses instead of reading single or joint.
+    """
+    exact = info.get(f"brackets_{status}_{tax_year}")
+    if isinstance(exact, list):
+        return exact
+    _refuse_if_marked(info, "brackets", tax_year)
+    table = _for_year(info, "brackets", tax_year)
+    rows = table.get(status) if isinstance(table, dict) else None
+    if not isinstance(rows, list):
+        raise _missing_schedule(state, status, tax_year)
+    return rows
+
+
+def _evaluate_extra_filing_status(
+    *,
+    state: str,
+    status: str,
+    days_in_state: int,
+    is_domiciled: bool,
+    maintains_permanent_abode: bool,
+    federal_agi: float,
+    tax_year: int,
+    audit_flags: list[str],
+) -> dict[str, Any]:
+    """Vermont residency and tax for head of household or married filing separately.
+
+    The tax comes only from that status's stored deduction and rate schedule.
+    A Vermont year with no such schedule refuses. Other states keep the
+    historical single or joint path and do not call this.
+    """
+    info = STATE_REGISTRY[state]
+    deduction = _extra_deduction(info, status, tax_year, state)
+    brackets = _extra_brackets(info, status, tax_year, state)
+    statutory_basis = str(info["statutory_basis"])
+    rate_authority = str(info["rate_authority"])
+    rate_desc = str(_for_year(info, "rate_desc", tax_year)) + _outyear_estimate_note(
+        state, tax_year, info
+    )
+    day_threshold = int(info.get("day_threshold", 183))
+    requires_abode = bool(info.get("requires_abode", True))
+    inclusive_threshold = bool(info.get("inclusive_threshold", False))
+    presence_met = (
+        days_in_state >= day_threshold if inclusive_threshold else days_in_state > day_threshold
+    )
+    if requires_abode:
+        is_resident = is_domiciled or (presence_met and maintains_permanent_abode)
+    else:
+        is_resident = is_domiciled or presence_met
+    exemption_value = _for_year(info, f"exemption_{status}", tax_year)
+    exemption = float(exemption_value) if type(exemption_value) is float else 0.0
+    taxable_income = max(0.0, federal_agi - deduction - exemption)
+    estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+    return {
+        "status": "success",
+        "jurisdiction": state,
+        "tax_year": tax_year,
+        "is_resident": is_resident,
+        "residency_tests": {
+            "domicile_satisfied": is_domiciled,
+            "days_in_state": days_in_state,
+            "maintains_permanent_abode": maintains_permanent_abode,
+            "statutory_basis": statutory_basis,
+        },
+        "domicile_audit_risk": {
+            "risk_level": "high" if audit_flags else "standard",
+            "flags": audit_flags,
+        },
+        "tax_computation": {
+            "taxable_net_income": taxable_income,
+            "estimated_state_tax": estimated_tax,
+            "is_estimate": True,
+            "estimate_note": ESTIMATE_NOTE,
+            "rate_description": rate_desc,
+            "statutory_rate_authority": rate_authority,
+            "middle_rate_is_estimate": False,
+        },
+        "disclaimer": BILINGUAL_DISCLAIMER,
+        "content_notice": CONTENT_NOTICE,
+    }
+
+
 @compliance_server.tool(
     name="evaluate_state_residency",
     description=(
@@ -1124,6 +1269,21 @@ def evaluate_state_residency(
     if has_active_voter_registration:
         audit_flags.append(
             f"Active {state} voter registration is probative evidence of continuing domicile."
+        )
+
+    extra_status = _extra_filing_status(filing_status)
+    # Only Vermont has stored HoH and MFS schedules. Every other state keeps
+    # main's behavior for those filing-status strings.
+    if extra_status is not None and state == "VT":
+        return _evaluate_extra_filing_status(
+            state=state,
+            status=extra_status,
+            days_in_state=days_in_state,
+            is_domiciled=is_domiciled,
+            maintains_permanent_abode=maintains_permanent_abode,
+            federal_agi=federal_agi,
+            tax_year=tax_year,
+            audit_flags=audit_flags,
         )
 
     # State-specific statutory determination
