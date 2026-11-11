@@ -83,6 +83,11 @@
         "param": "brackets",
         "tax_year": 2025,
         "reason": "SC1040TT 2025 (sha256 bf27744d0b7fba462b7ff9f69ec9b66af21073de8b95485b2d50e95bc36726b5) prints a top rate of 6% (minus $642) and approximate edges (about $3,560 and $17,830). The dollar edges are not exact, so the schedule is not stored."
+      },
+      {
+        "param": "deduction",
+        "tax_year": 2026,
+        "reason": "not_recorded: SC 2026 uses the South Carolina Income Adjusted Deduction (S.C. Code § 12-6-1140(15), 2026 Act 110; https://github.com/christianclaudio/mcp-server-taxcode/issues/106), which phases down with AGI and is not modeled yet."
       }
     ],
     "deduction_hoh": "federal_standard_deduction",
@@ -90,6 +95,7 @@
       "same_as": "single",
       "quote": "Federal married filing separately equals the single standard deduction."
     },
+    "deduction_single_2025": "federal_standard_deduction",
     "rate_desc_2026": "Graduated rates: 1.99% up to $30,000, 5.21% over $30,000 (S.C. Code Ann. § 12-6-510(C))",
     "brackets_2026": {
       "single": [

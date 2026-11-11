@@ -221,6 +221,37 @@ def test_connecticut_alias_columns_validate(tmp_path: Path) -> None:
     assert loaded["params"]["exemption"]["mfs"]["same_as"] == "single"
 
 
+_SC_2026_REFUSAL = (
+    "No sourced deduction value exists for tax year 2026. "
+    "not_recorded: SC 2026 uses the South Carolina Income Adjusted Deduction "
+    "(S.C. Code § 12-6-1140(15), 2026 Act 110; "
+    "https://github.com/christianclaudio/mcp-server-taxcode/issues/106), "
+    "which phases down with AGI and is not modeled yet."
+)
+_SC_2025_SINGLE = (
+    "No sourced brackets value exists for tax year 2025. "
+    "SC1040TT 2025 (sha256 bf27744d0b7fba462b7ff9f69ec9b66af21073de8b95485b2d50e95bc36726b5) "
+    "prints a top rate of 6% (minus $642) and approximate edges (about $3,560 and $17,830). "
+    "The dollar edges are not exact, so the schedule is not stored."
+)
+
+
+def test_south_carolina_2026_refuses_the_unmodeled_deduction() -> None:
+    """SC 2026 refuses every status; the phased deduction is not modeled (#106).
+
+    S.C. Code § 12-6-1140(15) (2026 Act 110) replaces the federal standard deduction
+    with the South Carolina Income Adjusted Deduction, which phases down with AGI.
+    https://github.com/christianclaudio/mcp-server-taxcode/issues/106
+    """
+    for status in ("single", "mfj", "head_of_household", "married_separate"):
+        with pytest.raises(SafetyViolationError) as raised:
+            _resident_tax("SC", 2026, 50000.0, status)
+        assert str(raised.value) == _SC_2026_REFUSAL
+    with pytest.raises(SafetyViolationError) as prior:
+        _resident_tax("SC", 2025, 50000.0, "single")
+    assert str(prior.value) == _SC_2025_SINGLE
+
+
 def test_kansas_low_income_exclusion_covers_head_of_household() -> None:
     # Taxable income at the non-joint ceiling is zero. Just under it stays zero.
     assert _tax("KS", 2019, 5500.0 + 4500.0 + 2500.0, "head_of_household") == 0.0
