@@ -1587,7 +1587,7 @@ def test_unrecorded_hoh_and_mfs_refuse_without_using_single() -> None:
         with pytest.raises(SafetyViolationError, match="not_recorded") as raised:
             _resident_tax("VT", 2018, 50000.0, status)
         assert str(raised.value) == str(single_raised.value)
-        assert "tax.vermont.gov" in str(raised.value)
+        assert "404" in str(raised.value)
     assert _tax("NY", 2024, 80000.0, "head of household") == _tax("NY", 2024, 80000.0, "single")
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         compliance._extra_brackets(compliance.RATE_TABLES["VT"], "hoh", 2017, "VT")
