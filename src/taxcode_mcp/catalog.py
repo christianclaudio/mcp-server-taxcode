@@ -424,6 +424,16 @@ _REGISTRY_TYPES: dict[str, type] = {
         ),
         float,
     ),
+    # South Carolina Income Adjusted Deduction (S.C. Code § 12-6-1140(15)), from 2026.
+    # The bases, thresholds and denominators are not indexed.
+    **dict.fromkeys(
+        (
+            f"sciad_{part}_{status}_2026"
+            for part in ("base", "threshold", "denominator")
+            for status in ("single", "hoh", "mfj")
+        ),
+        float,
+    ),
     "brackets": dict,
     # Later-year values of the bracket schedule, its prose and the credit's base and
     # phase-out amounts. Each needs its unsuffixed key, placed after it, years ascending.

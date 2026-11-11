@@ -51,9 +51,17 @@
       "hoh": {
         "same_as": "mfj",
         "quote": "ORS 316.042 computes head of household tax on the joint brackets."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Use Chart S if your filing status is single or married filing separately."
       }
     },
     "deduction_hoh_2024": 4420.0,
-    "deduction_hoh_2025": 4560.0
+    "deduction_hoh_2025": 4560.0,
+    "deduction_mfs": {
+      "same_as": "single",
+      "quote": "If spouse claims standard deduction, $2,745."
+    }
   }
 }

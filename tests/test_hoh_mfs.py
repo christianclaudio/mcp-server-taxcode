@@ -1,7 +1,7 @@
 """Head of household and married filing separately use sourced columns.
 
-A missing column refuses. It does not fall through to single or joint. Spouse-dependent
-married-filing-separately rules for Oregon and Michigan are refused rather than modeled
+A missing column refuses. It does not fall through to single or joint. Oregon and
+Michigan married filing separately answer at the default spouse inputs
 (https://github.com/christianclaudio/mcp-server-taxcode/issues/103).
 """
 
@@ -51,12 +51,20 @@ def test_exemption_fixes_for_mississippi_kansas_and_missouri() -> None:
     assert mo["taxable_net_income"] == 50000.0 - 21900.0 - 1400.0
 
 
-def test_oregon_and_michigan_married_separate_need_a_spouse_input() -> None:
-    """Issue #103: do not model a spouse-itemizes or spouse-has-no-income rule."""
-    with pytest.raises(SafetyViolationError, match="spouse itemizes"):
-        _tax("OR", 2025, 80000.0, "married_separate")
-    with pytest.raises(SafetyViolationError, match="spouse has no income"):
-        _tax("MI", 2024, 80000.0, "mfs")
+def test_oregon_and_michigan_married_separate_default_to_one_allowance() -> None:
+    """Issue #103: the default spouse inputs match a single filer's allowance."""
+    oregon = _resident_tax("OR", 2026, 80000.0, "married_separate")
+    assert oregon["taxable_net_income"] == _resident_tax("OR", 2026, 80000.0, "single")[
+        "taxable_net_income"
+    ]
+    assert oregon["standard_deduction"] == 2745.0
+    assert oregon["spouse_itemizes"] is False
+    michigan = _resident_tax("MI", 2026, 80000.0, "mfs")
+    assert michigan["taxable_net_income"] == _resident_tax("MI", 2026, 80000.0, "single")[
+        "taxable_net_income"
+    ]
+    assert michigan["personal_exemption"] == 5900.0
+    assert michigan["spouse_has_no_gross_income"] is False
 
 
 def test_connecticut_2024_head_of_household_uses_its_own_tables() -> None:
@@ -221,13 +229,6 @@ def test_connecticut_alias_columns_validate(tmp_path: Path) -> None:
     assert loaded["params"]["exemption"]["mfs"]["same_as"] == "single"
 
 
-_SC_2026_REFUSAL = (
-    "No sourced deduction value exists for tax year 2026. "
-    "not_recorded: SC 2026 uses the South Carolina Income Adjusted Deduction "
-    "(S.C. Code § 12-6-1140(15), 2026 Act 110; "
-    "https://github.com/christianclaudio/mcp-server-taxcode/issues/106), "
-    "which phases down with AGI and is not modeled yet."
-)
 _SC_2025_SINGLE = (
     "No sourced brackets value exists for tax year 2025. "
     "SC1040TT 2025 (sha256 bf27744d0b7fba462b7ff9f69ec9b66af21073de8b95485b2d50e95bc36726b5) "
@@ -236,17 +237,12 @@ _SC_2025_SINGLE = (
 )
 
 
-def test_south_carolina_2026_refuses_the_unmodeled_deduction() -> None:
-    """SC 2026 refuses every status; the phased deduction is not modeled (#106).
-
-    S.C. Code § 12-6-1140(15) (2026 Act 110) replaces the federal standard deduction
-    with the South Carolina Income Adjusted Deduction, which phases down with AGI.
-    https://github.com/christianclaudio/mcp-server-taxcode/issues/106
-    """
-    for status in ("single", "mfj", "head_of_household", "married_separate"):
-        with pytest.raises(SafetyViolationError) as raised:
-            _resident_tax("SC", 2026, 50000.0, status)
-        assert str(raised.value) == _SC_2026_REFUSAL
+def test_south_carolina_2026_uses_the_income_adjusted_deduction() -> None:
+    """SC 2026 answers with the Income Adjusted Deduction (#106). 2025 still refuses."""
+    # Single AGI 50,000: reduction 2,727.27 rounds down to 2,720, so the deduction is 12,280.
+    single = _resident_tax("SC", 2026, 50000.0, "single")
+    assert single["taxable_net_income"] == 50000.0 - 12280.0
+    assert "12-6-1140(15)" in single["rate_description"]
     with pytest.raises(SafetyViolationError) as prior:
         _resident_tax("SC", 2025, 50000.0, "single")
     assert str(prior.value) == _SC_2025_SINGLE

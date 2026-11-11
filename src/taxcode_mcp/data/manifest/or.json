@@ -29,6 +29,23 @@
       "verification": "summary",
       "year_sources": [
         {
+          "tax_year": 2024,
+          "values": {
+            "brackets.mfs": {
+              "same_as": "single",
+              "quote": "Use Chart S if your filing status is single or married filing separately."
+            },
+            "deduction_mfs": {
+              "same_as": "single",
+              "quote": "If spouse claims standard deduction, $2,745."
+            }
+          },
+          "url": "https://www.oregon.gov/dor/forms/FormsPubs/form-or-40-inst_101-040-1_2024.pdf",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "697d45e372fa352d1f4edd5e3299dc8a6b81c1b1ee91ba6217c0025489d8b1b7"
+        },
+        {
           "tax_year": 2025,
           "values": {
             "deduction_hoh_2025": 4560.0

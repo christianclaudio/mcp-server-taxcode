@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import math
 from collections.abc import Mapping
+from decimal import Decimal, ROUND_HALF_UP
 from typing import Annotated, Any, cast
 
 from fastmcp import FastMCP
@@ -936,6 +937,161 @@ def _federal_or_amount(raw: Any, is_mfj: bool, tax_year: int) -> float:
     return float(raw or 0.0)
 
 
+def _mfs_allowance_key(info: Mapping[str, Any], base: str, tax_year: int) -> str:
+    """The exact-year or unsuffixed ``base_mfs`` key, or ``""`` when that year has none."""
+    plain = f"{base}_mfs"
+    key = f"{plain}_{tax_year}"
+    if key in info:
+        return key
+    yearly = any(
+        candidate.startswith(f"{plain}_") and candidate[len(plain) + 1 :].isdigit()
+        for candidate in info
+    )
+    if not yearly and plain in info:
+        return plain
+    return ""
+
+
+def _mfs_cell_is_federal_standard(info: Mapping[str, Any], base: str, tax_year: int) -> bool:
+    """Whether the married-filing-separately allowance is the federal standard deduction.
+
+    A same-as alias is federal when the named status's amount is the federal token, or
+    when the table's own allowance is that token (Colorado and Arizona store it once).
+    A stored dollar amount is not the token.
+    """
+    key = _mfs_allowance_key(info, base, tax_year)
+    if not key:
+        return False
+    cell = info[key]
+    if cell == FEDERAL_ALLOWANCE:
+        return True
+    if not is_status_alias(cell):
+        return False
+    named = _for_year(info, f"{base}_{cell['same_as']}", tax_year)
+    if named == FEDERAL_ALLOWANCE:
+        return True
+    return bool(_for_year(info, base, tax_year) == FEDERAL_ALLOWANCE)
+
+
+def _reject_spouse_inputs_outside_mfs(
+    status: str,
+    *,
+    spouse_itemizes: bool,
+    spouse_has_no_gross_income: bool,
+    spouse_wa_capital_gains_deduction: float,
+    jurisdiction: str,
+) -> None:
+    """Married-filing-separately spouse inputs are refused on every other status.
+
+    ``spouse_wa_capital_gains_deduction`` is also refused outside Washington.
+    """
+    if spouse_wa_capital_gains_deduction < 0:
+        raise SafetyViolationError(
+            "Spouse Washington capital-gains deduction cannot be negative."
+        )
+    if status != "mfs":
+        if spouse_itemizes:
+            raise SafetyViolationError(
+                "spouse_itemizes applies only to married filing separately."
+            )
+        if spouse_has_no_gross_income:
+            raise SafetyViolationError(
+                "spouse_has_no_gross_income applies only to married filing separately."
+            )
+        if spouse_wa_capital_gains_deduction > 0:
+            raise SafetyViolationError(
+                "spouse_wa_capital_gains_deduction applies only to married filing separately."
+            )
+        return
+    if spouse_wa_capital_gains_deduction > 0 and jurisdiction.strip().upper() != "WA":
+        raise SafetyViolationError(
+            "spouse_wa_capital_gains_deduction applies only to Washington."
+        )
+
+
+_SURVIVING_SPOUSE = frozenset(
+    {"qualifying widow", "qualifying surviving spouse", "surviving spouse"}
+)
+
+
+def _compact_status(filing_status: str) -> str:
+    raw = filing_status.strip().lower().replace("_", " ").replace("-", " ")
+    return " ".join(raw.split())
+
+
+def _sciad_column(filing_status: str, status: str) -> str:
+    """The SCIAD column: surviving spouse uses the joint amounts; MFS uses single."""
+    if _compact_status(filing_status) in _SURVIVING_SPOUSE:
+        return "mfj"
+    if status == "mfs":
+        return "single"
+    return status
+
+
+def _round_down_ten(amount: Decimal) -> Decimal:
+    """Next lowest multiple of $10, leaving an exact multiple unchanged."""
+    ten = Decimal(10)
+    if amount % ten == 0:
+        return amount
+    return (amount // ten) * ten
+
+
+def _phase_sciad(base: float, threshold: float, denominator: float, agi: float) -> float:
+    """S.C. Code § 12-6-1140(15): base reduced by AGI over the threshold.
+
+    fraction = max(0, AGI − threshold) / denominator. At or above 1 the deduction is
+    zero. Otherwise the reduction is base × fraction, rounded down to a multiple of
+    $10 when it is not already one. The inputs are not indexed.
+    """
+    base_d = Decimal(str(base))
+    excess = Decimal(str(agi)) - Decimal(str(threshold))
+    if excess <= 0:
+        return float(base_d)
+    fraction = excess / Decimal(str(denominator))
+    if fraction >= 1:
+        return 0.0
+    reduction = _round_down_ten(base_d * fraction)
+    return float(base_d - reduction)
+
+
+def _south_carolina_sciad(
+    info: Mapping[str, Any], column: str, tax_year: int, federal_agi: float
+) -> float:
+    """The South Carolina Income Adjusted Deduction for ``column`` and ``tax_year``."""
+    base = _for_year(info, f"sciad_base_{column}", tax_year)
+    threshold = _for_year(info, f"sciad_threshold_{column}", tax_year)
+    denominator = _for_year(info, f"sciad_denominator_{column}", tax_year)
+    return _phase_sciad(float(base), float(threshold), float(denominator), federal_agi)
+
+
+def _la_exemption_credit_tax(
+    brackets: list[dict[str, Any]], taxable_income: float, exemption: float
+) -> float:
+    """Tax on income with no exemption subtracted, minus exemption times the lowest rate.
+
+    The credit is nonrefundable. Louisiana's 2022-2024 tax tables are built this way:
+    the printed tax is this amount rounded to the nearest dollar.
+    """
+    lowest = Decimal(str(next(b["rate"] for b in brackets if b["over"] is None)))
+    tax = Decimal(0)
+    ceiling = Decimal(str(taxable_income))
+    for bracket in brackets:
+        floor = Decimal(0) if bracket["over"] is None else Decimal(str(bracket["over"]))
+        if ceiling > floor:
+            tax += Decimal(str(bracket["rate"])) * (ceiling - floor)
+            ceiling = floor
+    net = tax - Decimal(str(exemption)) * lowest
+    if net < 0:
+        net = Decimal(0)
+    return float(net.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
+
+
+def _note_spouse_itemizes(reported: dict[str, Any], deduction: float) -> None:
+    """Record that IRC 63(c)(6)(A) zeroed the federal standard deduction."""
+    reported["standard_deduction"] = deduction
+    reported["spouse_itemizes"] = True
+
+
 def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_year: int) -> float:
     """A registry deduction or exemption for ``tax_year``.
 
@@ -1354,6 +1510,40 @@ def evaluate_state_residency(
             )
         ),
     ] = 0.0,
+    spouse_itemizes: Annotated[
+        bool,
+        Field(
+            description=(
+                "Married filing separately only. True when the spouse itemizes on their "
+                "separate return. Oregon's standard deduction is then zero (ORS "
+                "316.695(1)(c)(F)(i)). A state whose married-filing-separately deduction "
+                "is the federal standard deduction is also zero (IRC 63(c)(6)(A)), "
+                "including Utah's credit base. South Carolina tax years 2026 and later "
+                "do not adopt the federal deduction and ignore this input."
+            )
+        ),
+    ] = False,
+    spouse_has_no_gross_income: Annotated[
+        bool,
+        Field(
+            description=(
+                "Married filing separately only. True when the spouse has no gross income "
+                "and is not anyone's dependent. Michigan then allows one additional "
+                "personal exemption (MCL 206.30(2)(a))."
+            )
+        ),
+    ] = False,
+    spouse_wa_capital_gains_deduction: Annotated[
+        float,
+        Field(
+            description=(
+                "Married filing separately, Washington only. The part of that year's "
+                "standard deduction the spouse claims on their separate return. This "
+                "return's deduction is the year's amount minus this input (RCW "
+                "82.87.060(1)). Must be at least 0 and at most that year's amount."
+            )
+        ),
+    ] = 0.0,
     itemized_deductions: Annotated[
         float,
         Field(
@@ -1394,6 +1584,14 @@ def evaluate_state_residency(
     ] = None,
 ) -> dict[str, Any]:
     """Evaluate state domicile, presence day counts, and statutory state tax liability."""
+    status_key = _filing_key(filing_status)
+    _reject_spouse_inputs_outside_mfs(
+        status_key,
+        spouse_itemizes=spouse_itemizes,
+        spouse_has_no_gross_income=spouse_has_no_gross_income,
+        spouse_wa_capital_gains_deduction=spouse_wa_capital_gains_deduction,
+        jurisdiction=jurisdiction,
+    )
     if is_canada(jurisdiction):
         return evaluate_canada(
             RATE_TABLES["CAN"],
@@ -1456,21 +1654,10 @@ def evaluate_state_residency(
         raise SafetyViolationError("Itemized deductions cannot be negative.")
 
     is_mfj = filing_status.strip().lower() in ("married_joint", "mfj", "married filing jointly")
-    status_key = _filing_key(filing_status)
     if spouse_agi > 0.0 and not is_mfj:
         raise SafetyViolationError("spouse_agi applies only to married filing jointly.")
-    if status_key == "mfs" and state == "OR":
-        raise SafetyViolationError(
-            "not_recorded: Married filing separately for OR needs whether the spouse "
-            "itemizes. This tool has no spouse-itemizes input, so the deduction cannot "
-            "be computed."
-        )
-    if status_key == "mfs" and state == "MI":
-        raise SafetyViolationError(
-            "not_recorded: Married filing separately for MI needs whether the spouse has "
-            "no income. This tool has no spouse-income input, so the exemption cannot "
-            "be computed."
-        )
+    # Spouse inputs that changed a deduction or exemption are copied onto the result.
+    reported: dict[str, Any] = {}
 
     # Common domicile audit risk factors
     audit_flags: list[str] = []
@@ -1605,6 +1792,18 @@ def evaluate_state_residency(
         rate_authority = "RCW 82.87.040"
         wa = RATE_TABLES["WA"]
         cap_gain_ded = float(_for_year(wa, "capital_gains_deduction", tax_year))
+        # RCW 82.87.060(1): spouses share one standard deduction, joint or separate.
+        # This return keeps the year's amount minus the part the spouse claims.
+        if status_key == "mfs":
+            if spouse_wa_capital_gains_deduction > cap_gain_ded:
+                raise SafetyViolationError(
+                    "spouse_wa_capital_gains_deduction cannot exceed that year's "
+                    "Washington standard deduction."
+                )
+            cap_gain_ded -= spouse_wa_capital_gains_deduction
+            if spouse_wa_capital_gains_deduction > 0:
+                reported["standard_deduction"] = cap_gain_ded
+                reported["spouse_wa_capital_gains_deduction"] = spouse_wa_capital_gains_deduction
         rate_desc = (
             f"No ordinary income tax; {_pct(wa['rate'])} excise tax on capital gains over "
             f"the {_money(cap_gain_ded)} deduction"
@@ -1829,6 +2028,14 @@ def evaluate_state_residency(
             if _is_extra(status_key)
             else _allowance(RATE_TABLES["CO"], is_mfj, tax_year)
         )
+        # IRC 63(c)(6)(A): a separate return's federal standard deduction is zero when
+        # either spouse itemizes. Colorado tax is based on federal taxable income.
+        if status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
+            RATE_TABLES["CO"], "deduction", tax_year
+        ):
+            standard_ded = 0.0
+            _note_spouse_itemizes(reported, standard_ded)
+            rate_desc += " IRC 63(c)(6)(A) sets the federal standard deduction to zero."
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * co_rate, 2) if is_resident else 0.0
 
@@ -1856,6 +2063,13 @@ def evaluate_state_residency(
             if _is_extra(status_key)
             else _allowance(az, is_mfj, tax_year)
         )
+        # IRC 63(c)(6)(A), on top of Arizona's federal standard deduction.
+        if status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
+            az, "deduction", tax_year
+        ):
+            standard_ded = 0.0
+            _note_spouse_itemizes(reported, standard_ded)
+            rate_desc += " IRC 63(c)(6)(A) sets the federal standard deduction to zero."
         taxable_income = max(0.0, federal_agi - standard_ded)
         estimated_tax = round(taxable_income * az_rate, 2) if is_resident else 0.0
 
@@ -1964,6 +2178,54 @@ def evaluate_state_residency(
             exemption = _sourced_registry_amount(
                 info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year
             )
+        # South Carolina 2026+ replaces the federal deduction. Act 110 § 2 does not
+        # adopt IRC 63(b) through (g), so spouse_itemizes does not zero this amount.
+        if state == "SC" and tax_year >= 2026:
+            ded = _south_carolina_sciad(
+                info, _sciad_column(filing_status, status_key), tax_year, federal_agi
+            )
+            rate_desc += (
+                " The South Carolina Income Adjusted Deduction "
+                "(S.C. Code § 12-6-1140(15)) replaces the federal standard deduction."
+            )
+        elif status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
+            info, "deduction", tax_year
+        ):
+            ded = 0.0
+            _note_spouse_itemizes(reported, ded)
+            rate_desc += " IRC 63(c)(6)(A) sets the federal standard deduction to zero."
+        if state == "OR" and status_key == "mfs":
+            # ORS 316.695(1)(c)(B)(iii) indexes the separate-return deduction with single.
+            # Subparagraph (F)(i) makes it zero when the other spouse itemizes.
+            if spouse_itemizes:
+                ded = 0.0
+            reported["standard_deduction"] = ded
+            reported["spouse_itemizes"] = spouse_itemizes
+            rate_desc += (
+                " ORS 316.695: married filing separately uses the single standard "
+                "deduction, or zero when the spouse itemizes."
+            )
+        if state == "MI" and status_key == "mfs":
+            # MCL 206.30(2)(a): one personal exemption, plus the spouse's when the
+            # spouse has no gross income and is not another taxpayer's dependent.
+            if spouse_has_no_gross_income:
+                ded += _sourced_registry_amount(info, "deduction_single", False, tax_year)
+            reported["personal_exemption"] = ded
+            reported["spouse_has_no_gross_income"] = spouse_has_no_gross_income
+            rate_desc += (
+                " MCL 206.30(2)(a): one personal exemption, plus the spouse's when "
+                "the spouse has no gross income and is not a dependent."
+            )
+        # 2022-2024 Louisiana tables tax the income and credit the exemption at the
+        # lowest rate. 2025+ keeps the standard deduction. Earlier years stay refused.
+        la_credit = state == "LA" and 2022 <= tax_year <= 2024
+        la_exemption = ded if la_credit else 0.0
+        if la_credit:
+            ded = 0.0
+            rate_desc += (
+                " The combined personal exemption and standard deduction is a "
+                "nonrefundable credit at the lowest bracket rate."
+            )
         dep_ex = 0.0
         if state in ("KS", "MS"):
             dep_ex = _require_dependent_exemption(info, tax_year, dependents)
@@ -2001,8 +2263,17 @@ def evaluate_state_residency(
                     else 0.0
                 )
             else:
-                estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
-                if is_resident and _under_zero_liability(
+                if la_credit:
+                    estimated_tax = (
+                        _la_exemption_credit_tax(brackets, taxable_income, la_exemption)
+                        if is_resident
+                        else 0.0
+                    )
+                else:
+                    estimated_tax = (
+                        _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+                    )
+                if is_resident and not la_credit and _under_zero_liability(
                     info, is_mfj, taxable_income, tax_year, status=status_key, state=state
                 ):
                     estimated_tax = 0.0
@@ -2054,6 +2325,14 @@ def evaluate_state_residency(
                 ut_dep = _require_dependent_exemption(info, tax_year, dependents)
                 if itemized_deductions > 0.0:
                     ut_itemized = itemized_deductions
+                elif status_key == "mfs" and spouse_itemizes and _mfs_cell_is_federal_standard(
+                    info, "credit_base", tax_year
+                ):
+                    # IRC 63(c)(6)(A): the federal standard deduction credit base is zero.
+                    # Itemized deductions, when passed, stay the credit base instead.
+                    ut_itemized = 0.0
+                    _note_spouse_itemizes(reported, 0.0)
+                    rate_desc += " IRC 63(c)(6)(A) sets the federal standard deduction to zero."
             credit = _registry_credit(
                 info,
                 is_mfj,
@@ -2080,6 +2359,8 @@ def evaluate_state_residency(
         "statutory_rate_authority": rate_authority,
         "middle_rate_is_estimate": middle_rate_estimated,
     }
+    if reported:
+        tax_computation.update(reported)
     return {
         "status": "success",
         "jurisdiction": state,
