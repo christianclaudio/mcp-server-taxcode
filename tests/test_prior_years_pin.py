@@ -315,11 +315,13 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # Plus Oregon 2025-2028 single answers: the 2025 OR-40 standard deduction is
 # $2,835 and _for_year carries deduction_single_2025 forward (12 calls: four
 # years, three incomes above the deduction). Joint, and single at AGI 0, stay put.
+# Plus 12 Oregon 2025-2028 joint answers: Table 5's $5,670, carried forward the
+# same way. Joint at AGI 0 stays put.
 # Wave 1 changes 90 searches: 32 newly differ from base, 58 already differed.
 # Plus the answers that now list a Canada (CAN) row or CRA publication: the CANADA_COUNT ones
 # outside the windows, checked byte for byte without those rows, and searches the windows
 # above already allow to change. An answer that changed for both reasons is counted once.
-CHANGED_OUT = 3876
+CHANGED_OUT = 3888
 # Answers that newly list a Canada row or publication and sit outside the allowlists above.
 # A search in every jurisdiction ranks the Canada rows among the others, and the newest-first
 # publication pages list the CRA guidance. Each is the pinned base answer, byte for byte,

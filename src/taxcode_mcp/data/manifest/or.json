@@ -37,7 +37,7 @@
             },
             "deduction_mfs": {
               "same_as": "single",
-              "quote": "If spouse claims standard deduction, $2,745."
+              "quote": "If spouse claims the standard deduction, married filing separately uses the single standard deduction."
             }
           },
           "url": "https://www.oregon.gov/dor/forms/FormsPubs/form-or-40-inst_101-040-1_2024.pdf",
@@ -49,6 +49,7 @@
           "tax_year": 2025,
           "values": {
             "deduction_hoh_2025": 4560.0,
+            "deduction_mfj_2025": 5670.0,
             "deduction_single_2025": 2835.0
           },
           "url": "https://www.oregon.gov/dor/forms/FormsPubs/form-or-40-inst_101-040-1_2025.pdf",

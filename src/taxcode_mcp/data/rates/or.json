@@ -12,6 +12,7 @@
     "deduction_single": 2745.0,
     "deduction_single_2025": 2835.0,
     "deduction_mfj": 5495.0,
+    "deduction_mfj_2025": 5670.0,
     "brackets": {
       "single": [
         {
@@ -62,7 +63,7 @@
     "deduction_hoh_2025": 4560.0,
     "deduction_mfs": {
       "same_as": "single",
-      "quote": "If spouse claims standard deduction, $2,745."
+      "quote": "If spouse claims the standard deduction, married filing separately uses the single standard deduction."
     }
   }
 }

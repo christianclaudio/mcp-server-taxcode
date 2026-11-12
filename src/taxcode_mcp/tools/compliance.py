@@ -2194,6 +2194,15 @@ def evaluate_state_residency(
             ded = 0.0
             _note_spouse_itemizes(reported, ded)
             rate_desc += " IRC 63(c)(6)(A) sets the federal standard deduction to zero."
+        if (
+            state == "OR"
+            and tax_year >= 2025
+            and _compact_status(filing_status) in _SURVIVING_SPOUSE
+        ):
+            # 2025 OR-40 Table 5 gives a qualifying surviving spouse the joint
+            # standard deduction. _filing_key still keeps this status on single
+            # brackets. _for_year carries deduction_mfj_2025 into later years.
+            ded = _sourced_registry_amount(info, "deduction_mfj", True, tax_year)
         if state == "OR" and status_key == "mfs":
             # ORS 316.695(1)(c)(B)(iii) indexes the separate-return deduction with single.
             # Subparagraph (F)(i) makes it zero when the other spouse itemizes.

@@ -86,6 +86,30 @@ def test_oregon_2025_standard_deduction_carries_forward() -> None:
     assert earlier["estimated_state_tax"] == 6458.81
 
 
+def test_oregon_2025_joint_and_surviving_spouse_deduction() -> None:
+    """2025 OR-40 Table 5: joint and qualifying surviving spouse deduct $5,670.
+
+    ``_filing_key`` leaves a surviving spouse on single brackets. From 2025 the
+    Oregon deduction uses ``deduction_mfj``, and ``_for_year`` carries
+    ``deduction_mfj_2025`` forward, so 2026 joint is the same $5,670.
+    """
+    assert compliance.RATE_TABLES["OR"]["deduction_mfj_2025"] == 5670.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2025) == 5670.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2026) == 5670.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2024) == 5495.0
+    quote = compliance.RATE_TABLES["OR"]["deduction_mfs"]["quote"]
+    assert "$" not in quote
+    for year in (2025, 2026):
+        joint = _call("OR", year, 100000.0, "mfj")
+        assert joint["taxable_net_income"] == 94330.0
+        assert joint["estimated_state_tax"] == 7651.88
+    surviving = _call("OR", 2025, 100000.0, "qualifying_surviving_spouse")
+    assert surviving["taxable_net_income"] == 94330.0
+    assert surviving["estimated_state_tax"] == 7952.87
+    assert _call("OR", 2025, 100000.0, "surviving spouse")["estimated_state_tax"] == 7952.87
+    assert _call("OR", 2024, 100000.0, "mfj")["taxable_net_income"] == 94505.0
+
+
 def test_michigan_spouse_with_no_income_adds_one_exemption() -> None:
     plain = _call("MI", 2026, 80000.0, "mfs")
     claimed = _call("MI", 2026, 80000.0, "mfs", spouse_has_no_gross_income=True)
