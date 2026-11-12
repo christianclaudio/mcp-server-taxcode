@@ -103,11 +103,39 @@ def test_oregon_2025_joint_and_surviving_spouse_deduction() -> None:
         joint = _call("OR", year, 100000.0, "mfj")
         assert joint["taxable_net_income"] == 94330.0
         assert joint["estimated_state_tax"] == 7651.88
-    surviving = _call("OR", 2025, 100000.0, "qualifying_surviving_spouse")
-    assert surviving["taxable_net_income"] == 94330.0
-    assert surviving["estimated_state_tax"] == 7952.87
-    assert _call("OR", 2025, 100000.0, "surviving spouse")["estimated_state_tax"] == 7952.87
     assert _call("OR", 2024, 100000.0, "mfj")["taxable_net_income"] == 94505.0
+
+
+def test_oregon_surviving_spouse_uses_chart_j() -> None:
+    """2024 and 2025 OR-40 Chart J is the joint schedule, including a surviving spouse.
+
+    The joint deduction is $5,495 in 2024 and $5,670 from 2025, carried forward.
+    A year before the pinned 2024 instructions stays on the single schedule.
+    """
+    quote = compliance.RATE_TABLES["OR"]["brackets"]["hoh"]["quote"]
+    assert quote == (
+        "Chart J: For persons filing jointly, head of household, "
+        "or qualifying surviving spouse."
+    )
+    info = compliance.RATE_TABLES["OR"]
+    for year in (2024, 2025, 2026):
+        assert compliance._extra_brackets(info, "mfj", year, "OR") == compliance._extra_brackets(
+            info, "hoh", year, "OR"
+        )
+    expected = {2024: (94505.0, 7667.19), 2025: (94330.0, 7651.88)}
+    for year, (taxable, tax) in expected.items():
+        joint = _call("OR", year, 100000.0, "mfj")
+        for status in ("qualifying_surviving_spouse", "surviving spouse", "qualifying widow"):
+            got = _call("OR", year, 100000.0, status)
+            assert got["taxable_net_income"] == taxable == joint["taxable_net_income"]
+            assert got["estimated_state_tax"] == tax == joint["estimated_state_tax"]
+    carried = _call("OR", 2026, 100000.0, "qualifying_surviving_spouse")
+    joint_2026 = _call("OR", 2026, 100000.0, "mfj")
+    assert carried["taxable_net_income"] == 94330.0
+    assert carried["estimated_state_tax"] == joint_2026["estimated_state_tax"]
+    earlier = _call("OR", 2023, 100000.0, "qualifying_surviving_spouse")
+    assert earlier["taxable_net_income"] == 97255.0
+    assert earlier["estimated_state_tax"] == 8208.81
 
 
 def test_michigan_spouse_with_no_income_adds_one_exemption() -> None:

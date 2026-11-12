@@ -2194,14 +2194,16 @@ def evaluate_state_residency(
             ded = 0.0
             _note_spouse_itemizes(reported, ded)
             rate_desc += " IRC 63(c)(6)(A) sets the federal standard deduction to zero."
-        if (
+        # 2024 and 2025 OR-40 Chart J covers joint, head of household, and a
+        # qualifying surviving spouse. The unsuffixed joint brackets apply from
+        # the first pinned year on, the same carry _for_year uses. Earlier years
+        # have no pinned Chart J line, so they stay on single.
+        or_chart_j = (
             state == "OR"
-            and tax_year >= 2025
+            and tax_year >= 2024
             and _compact_status(filing_status) in _SURVIVING_SPOUSE
-        ):
-            # 2025 OR-40 Table 5 gives a qualifying surviving spouse the joint
-            # standard deduction. _filing_key still keeps this status on single
-            # brackets. _for_year carries deduction_mfj_2025 into later years.
+        )
+        if or_chart_j:
             ded = _sourced_registry_amount(info, "deduction_mfj", True, tax_year)
         if state == "OR" and status_key == "mfs":
             # ORS 316.695(1)(c)(B)(iii) indexes the separate-return deduction with single.
@@ -2257,7 +2259,8 @@ def evaluate_state_residency(
             taxable_income = 0.0
             estimated_tax = 0.0
         elif regime == "graduated" and "brackets" in info:
-            brackets = _extra_brackets(info, status_key, tax_year, state)
+            bracket_status = "mfj" if or_chart_j else status_key
+            brackets = _extra_brackets(info, bracket_status, tax_year, state)
             if (
                 state == "MS"
                 and spouse_agi > 0.0
