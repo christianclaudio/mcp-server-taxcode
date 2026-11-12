@@ -114,8 +114,7 @@ def test_oregon_surviving_spouse_uses_chart_j() -> None:
     """
     quote = compliance.RATE_TABLES["OR"]["brackets"]["hoh"]["quote"]
     assert quote == (
-        "Chart J: For persons filing jointly, head of household, "
-        "or qualifying surviving spouse."
+        "Chart J: For persons filing jointly, head of household, or qualifying surviving spouse."
     )
     info = compliance.RATE_TABLES["OR"]
     for year in (2024, 2025, 2026):
