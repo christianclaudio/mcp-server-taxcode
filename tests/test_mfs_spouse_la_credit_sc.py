@@ -76,10 +76,10 @@ def test_oregon_2025_standard_deduction_carries_forward() -> None:
         single = _call("OR", year, 80000.0, "single")
         separate = _call("OR", year, 80000.0, "married_separate")
         assert single["taxable_net_income"] == 77165.0
-        assert single["estimated_state_tax"] == 6450.94
+        assert single["estimated_state_tax"] == 6441.94
         assert separate["standard_deduction"] == 2835.0
         assert separate["taxable_net_income"] == 77165.0
-        assert separate["estimated_state_tax"] == 6450.94
+        assert separate["estimated_state_tax"] == 6441.94
     earlier = _call("OR", 2024, 80000.0, "married_separate")
     assert earlier["standard_deduction"] == 2745.0
     assert earlier["taxable_net_income"] == 77255.0
@@ -102,7 +102,7 @@ def test_oregon_2025_joint_and_surviving_spouse_deduction() -> None:
     for year in (2025, 2026):
         joint = _call("OR", year, 100000.0, "mfj")
         assert joint["taxable_net_income"] == 94330.0
-        assert joint["estimated_state_tax"] == 7651.88
+        assert joint["estimated_state_tax"] == 7634.88
     assert _call("OR", 2024, 100000.0, "mfj")["taxable_net_income"] == 94505.0
 
 
@@ -121,7 +121,7 @@ def test_oregon_surviving_spouse_uses_chart_j() -> None:
         assert compliance._extra_brackets(info, "mfj", year, "OR") == compliance._extra_brackets(
             info, "hoh", year, "OR"
         )
-    expected = {2024: (94505.0, 7667.19), 2025: (94330.0, 7651.88)}
+    expected = {2024: (94505.0, 7667.19), 2025: (94330.0, 7634.88)}
     for year, (taxable, tax) in expected.items():
         joint = _call("OR", year, 100000.0, "mfj")
         for status in ("qualifying_surviving_spouse", "surviving spouse", "qualifying widow"):
@@ -135,6 +135,64 @@ def test_oregon_surviving_spouse_uses_chart_j() -> None:
     earlier = _call("OR", 2023, 100000.0, "qualifying_surviving_spouse")
     assert earlier["taxable_net_income"] == 97255.0
     assert earlier["estimated_state_tax"] == 8208.81
+
+
+def test_oregon_2025_rate_chart_bases() -> None:
+    """2025 OR-40 Charts S and J, carried forward by ``brackets_2025``.
+
+    Chart S: $4,065 plus 8.75% over $50,000, and $10,627 plus 9.9% over $125,000.
+    Chart J: $3,756 plus 8.75% over $50,000, and $21,256 plus 9.9% over $250,000.
+    Married filing separately uses Chart S. Head of household uses Chart J with
+    its own $4,560 deduction. A surviving spouse uses Chart J and the joint
+    deduction. Income under $50,000 stays on the marginal schedule. 2024 does not
+    pick up the 2025 bases.
+    """
+    chart_s = (
+        (50000.0, 4065.0),
+        (60000.0, 4940.0),
+        (125000.0, 10627.0),
+        (130000.0, 11122.0),
+    )
+    chart_j = (
+        (50000.0, 3756.0),
+        (60000.0, 4631.0),
+        (250000.0, 21256.0),
+        (260000.0, 22246.0),
+    )
+    schedules = (
+        ("single", 2835.0, chart_s),
+        ("married_separate", 2835.0, chart_s),
+        ("mfj", 5670.0, chart_j),
+        ("head_of_household", 4560.0, chart_j),
+        ("qualifying_surviving_spouse", 5670.0, chart_j),
+    )
+    rows = compliance.RATE_TABLES["OR"]["brackets_2025"]
+    assert rows["single"][0] == {"over": 125000.0, "base": 10627.0, "rate": 0.099}
+    assert rows["single"][1] == {"over": 50000.0, "base": 4065.0, "rate": 0.0875}
+    assert rows["mfj"][0] == {"over": 250000.0, "base": 21256.0, "rate": 0.099}
+    assert rows["mfj"][1] == {"over": 50000.0, "base": 3756.0, "rate": 0.0875}
+    assert "$4,065" in rows["mfs"]["quote"] and "$10,627" in rows["mfs"]["quote"]
+    assert "$3,756" in rows["hoh"]["quote"] and "$21,256" in rows["hoh"]["quote"]
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2026) == rows
+    for status, deduction, points in schedules:
+        # Head of household's deduction is an exact-year key, so 2026 has none.
+        years = (2025,) if status == "head_of_household" else (2025, 2026)
+        for year in years:
+            for taxable, tax in points:
+                got = _call("OR", year, taxable + deduction, status)
+                assert got["taxable_net_income"] == taxable
+                assert got["estimated_state_tax"] == tax
+    under = _call("OR", 2025, 20000.0 + 2835.0, "single")
+    earlier_under = _call("OR", 2024, 20000.0 + 2745.0, "single")
+    assert under["taxable_net_income"] == earlier_under["taxable_net_income"] == 20000.0
+    assert under["estimated_state_tax"] == earlier_under["estimated_state_tax"]
+    single_2024 = _call("OR", 2024, 50000.0 + 2745.0, "single")
+    joint_2024 = _call("OR", 2024, 50000.0 + 5495.0, "mfj")
+    assert single_2024["estimated_state_tax"] == 4074.0
+    assert joint_2024["estimated_state_tax"] == 3773.0
+    spouse = _call("OR", 2025, 100000.0, "qualifying_surviving_spouse")
+    assert spouse["taxable_net_income"] == 94330.0
+    assert spouse["estimated_state_tax"] == 7634.88
 
 
 def test_michigan_spouse_with_no_income_adds_one_exemption() -> None:
@@ -253,8 +311,13 @@ _LA_ROWS = (
     (2024, "mfj", 0, 9000, 0, 9000.0),
     (2024, "mfj", 20000, 20250, 206, 9000.0),
     (2024, "mfj", 100000, 100250, 2926, 9000.0),
+    (2022, "hoh", 9000, 9250, 2, 9000.0),
+    (2022, "hoh", 50750, 51000, 1414, 9000.0),
+    (2023, "hoh", 9000, 9250, 2, 9000.0),
+    (2023, "hoh", 50750, 51000, 1414, 9000.0),
     (2024, "hoh", 9000, 9250, 2, 9000.0),
     (2024, "hoh", 20750, 21000, 358, 9000.0),
+    (2024, "hoh", 50750, 51000, 1414, 9000.0),
 )
 
 
@@ -280,8 +343,49 @@ def test_louisiana_credit_is_nonrefundable_and_later_years_still_deduct() -> Non
     later = _call("LA", 2025, 20000.0, "single")
     assert later["taxable_net_income"] == 20000.0 - 12500.0
     assert "nonrefundable credit" not in later["rate_description"]
-    with pytest.raises(SafetyViolationError, match="No sourced brackets value exists"):
-        _call("LA", 2021, 20000.0, "single")
+    for year in (2019, 2020, 2021):
+        with pytest.raises(SafetyViolationError, match="No sourced brackets value exists"):
+            _call("LA", year, 20000.0, "single")
+
+
+def test_louisiana_above_the_table_adds_the_top_rate() -> None:
+    """Past the printed table, tax adds 4.25% of the excess over $51,000 or $101,000.
+
+    2022 (``93f832da``), 2023 (``e183a0b6``), and 2024 (``f6be874f``) each print
+    that line. Head of household is filing status 4 in the 2024 instructions
+    (``46f455fe``). Each head-of-household table uses the $9,000 combined
+    personal exemption-standard deduction as a credit at the single schedule's
+    1.85% rate. The 2022 single and joint rows inside the table are pinned with
+    the other printed rows; this checks the formula past the last row.
+    """
+    info = compliance.RATE_TABLES["LA"]
+    single = compliance._extra_brackets(info, "single", 2024, "LA")
+    assert single[-1]["rate"] == 0.0185
+    # year, status, at the formula floor, $9,000 above it
+    points = (
+        (2022, "single", 51000.0, 60000.0),
+        (2022, "mfj", 101000.0, 110000.0),
+        (2022, "hoh", 51000.0, 60000.0),
+        (2023, "hoh", 51000.0, 60000.0),
+        (2024, "hoh", 51000.0, 60000.0),
+    )
+    for year, status, floor, above in points:
+        at = _call("LA", year, floor, status)
+        over = _call("LA", year, above, status)
+        assert over["taxable_net_income"] == above
+        assert over["estimated_state_tax"] == pytest.approx(at["estimated_state_tax"] + 382.5)
+        schedule = "mfj" if status == "mfj" else "single"
+        brackets = compliance._extra_brackets(info, schedule, year, "LA")
+        if status == "hoh":
+            assert compliance._extra_scalar(info, "deduction", "hoh", year, "LA") == 9000.0
+            assert compliance._extra_brackets(info, "hoh", year, "LA") == single
+            assert over["estimated_state_tax"] == compliance._la_exemption_credit_tax(
+                single, above, 9000.0
+            )
+        else:
+            assert over["estimated_state_tax"] == compliance._la_exemption_credit_tax(
+                brackets, above, 4500.0 if status == "single" else 9000.0
+            )
 
 
 def test_south_carolina_income_adjusted_deduction_phaseout() -> None:

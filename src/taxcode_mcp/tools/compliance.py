@@ -766,6 +766,23 @@ def _marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> floa
     return float(round(tax, 2))
 
 
+def _chart_or_marginal_tax(brackets: list[dict[str, Any]], taxable_income: float) -> float:
+    """A chart line's base plus its rate on the excess, or the marginal schedule below it.
+
+    Rows are highest threshold first. The first row that states a ``base`` and whose
+    ``over`` the income has reached is that line of the rate chart (the chart's "or more").
+    Income under every such row, and a schedule with no base, uses the marginal rates.
+    """
+    for row in brackets:
+        if "base" not in row:
+            continue
+        over = float(row["over"])
+        if taxable_income >= over:
+            excess = taxable_income - over
+            return float(round(float(row["base"]) + float(row["rate"]) * excess, 2))
+    return _marginal_tax(brackets, taxable_income)
+
+
 def _registry_credit(
     info: dict[str, Any],
     is_mfj: bool,
@@ -2282,7 +2299,8 @@ def evaluate_state_residency(
                         else 0.0
                     )
                 else:
-                    estimated_tax = _marginal_tax(brackets, taxable_income) if is_resident else 0.0
+                    tax_on = _chart_or_marginal_tax if state == "OR" else _marginal_tax
+                    estimated_tax = tax_on(brackets, taxable_income) if is_resident else 0.0
                 if (
                     is_resident
                     and not la_credit

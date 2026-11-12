@@ -821,6 +821,54 @@ def _check_brackets(value: Any, fields: Sequence[str], where: str) -> None:
         _check_steps(rows, fields, "over", f"{where}.{status}", _check_bracket_row)
 
 
+def _schedule_states_base(value: Mapping[str, Any]) -> bool:
+    """True when a yearly bracket schedule prints a chart ``base`` on a row."""
+    return any(
+        isinstance(rows, list) and any(isinstance(step, dict) and "base" in step for step in rows)
+        for rows in value.values()
+    )
+
+
+def _check_chart_bracket_steps(steps: Any, where: str) -> None:
+    """Bracket steps. A row may state the chart's ``base`` beside ``over`` and ``rate``."""
+    _check(isinstance(steps, list) and len(steps) > 0, f"{where}: must be a non-empty list")
+    previous: Any = None
+    for i, step in enumerate(steps):
+        at = f"{where}[{i}]"
+        _check(isinstance(step, dict), f"{at}: must be an object")
+        keys = list(step)
+        _check(
+            keys in (["over", "rate"], ["over", "base", "rate"]),
+            f"{at}: fields must be exactly ['over', 'rate'] or ['over', 'base', 'rate'], "
+            f"got {keys}",
+        )
+        _check_bracket_row(step, at)
+        bound = step["over"]
+        order = f"{at}: steps out of order; sort by over from highest to lowest, null last"
+        if bound is None:
+            _check(i == len(steps) - 1, order)
+        else:
+            _check(previous is None or bound < previous, order)
+            _check(i < len(steps) - 1, f"{at}: the last step's over must be null")
+            previous = bound
+
+
+def _check_chart_brackets(value: Any, where: str) -> None:
+    """A yearly schedule whose rows may carry the rate chart's accumulated tax."""
+    _check(isinstance(value, dict), f"{where}: must be an object")
+    statuses = _bracket_statuses(value)
+    _check_keys(value, statuses, where)
+    for status in statuses:
+        rows = value[status]
+        if status in EXTRA_FILING_STATUSES and is_status_alias(rows):
+            _check(
+                rows["same_as"] in value and not is_status_alias(value[rows["same_as"]]),
+                f"{where}.{status}: same_as {rows['same_as']!r} needs that status's schedule",
+            )
+            continue
+        _check_chart_bracket_steps(rows, f"{where}.{status}")
+
+
 def _extra_bracket_list(name: str) -> bool:
     """A ``brackets_hoh_YYYY`` / ``brackets_mfs_YYYY`` list, not a status map."""
     return any(name.startswith(f"brackets_{status}_") for status in EXTRA_FILING_STATUSES)
@@ -876,7 +924,12 @@ def _check_registry(params: Mapping[str, Any], where: str) -> None:
         if _extra_bracket_list(name):
             _check_steps(value, ("over", "rate"), "over", f"{where}.{name}", _check_bracket_row)
         elif name.startswith("brackets"):
-            _check_brackets(value, ("over", "rate"), f"{where}.{name}")
+            # The unsuffixed schedule stays over+rate. A later year may print a
+            # chart base on the rows the form states that way (Oregon's 2025 charts).
+            if name != "brackets" and isinstance(value, dict) and _schedule_states_base(value):
+                _check_chart_brackets(value, f"{where}.{name}")
+            else:
+                _check_brackets(value, ("over", "rate"), f"{where}.{name}")
         elif expected is float:
             check = _check_rate if "rate" in name else _check_amount
             check(value, f"{where}.{name}")

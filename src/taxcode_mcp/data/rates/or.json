@@ -59,6 +59,64 @@
         "quote": "Use Chart S if your filing status is single or married filing separately."
       }
     },
+    "brackets_2025": {
+      "single": [
+        {
+          "over": 125000.0,
+          "base": 10627.0,
+          "rate": 0.099
+        },
+        {
+          "over": 50000.0,
+          "base": 4065.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 10750.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 4300.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ],
+      "mfj": [
+        {
+          "over": 250000.0,
+          "base": 21256.0,
+          "rate": 0.099
+        },
+        {
+          "over": 50000.0,
+          "base": 3756.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 21500.0,
+          "rate": 0.0875
+        },
+        {
+          "over": 8600.0,
+          "rate": 0.0675
+        },
+        {
+          "over": null,
+          "rate": 0.0475
+        }
+      ],
+      "hoh": {
+        "same_as": "mfj",
+        "quote": "Chart J: For persons filing jointly, head of household, or qualifying surviving spouse—If your taxable income is $50,000 or more but not over $250,000 your tax is $3,756 plus 8.75% of excess over $50,000. If your taxable income is over $250,000 your tax is $21,256 plus 9.9% of excess over $250,000."
+      },
+      "mfs": {
+        "same_as": "single",
+        "quote": "Chart S: For persons filing single or married filing separately—If your taxable income is $50,000 or more but not over $125,000 your tax is $4,065 plus 8.75% of excess over $50,000. If your taxable income is over $125,000 your tax is $10,627 plus 9.9% of excess over $125,000."
+      }
+    },
     "deduction_hoh_2024": 4420.0,
     "deduction_hoh_2025": 4560.0,
     "deduction_mfs": {
