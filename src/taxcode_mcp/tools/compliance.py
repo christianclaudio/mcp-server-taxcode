@@ -503,6 +503,7 @@ def evaluate_georgia_residency(
     ga_voter_registration_active: bool = False,
 ) -> dict[str, Any]:
     """Evaluate Georgia domicile, 183-day presence, and state income tax liability."""
+    status = _filing_key(filing_status)
     if days_present_ga < 0 or days_present_ga > 366:
         raise SafetyViolationError("Day count must be between 0 and 366.")
     if federal_agi < 0:
@@ -533,7 +534,6 @@ def evaluate_georgia_residency(
 
     # 3. Tax Calculation (O.C.G.A. § 48-7-20 & § 48-7-27), citing the law that set the year's rate
     ga = RATE_TABLES["GA"]
-    status = _filing_key(filing_status)
     standard_deduction = _ga_standard_deduction(ga, status, tax_year)
 
     # Retirement Income Exclusion (O.C.G.A. § 48-7-27)
@@ -621,22 +621,51 @@ def _status(is_mfj: bool) -> str:
     return "mfj" if is_mfj else "single"
 
 
+# Joint aliases match the stripped lowercase string exactly, including internal spaces.
+# Head of household and married filing separately also fold underscores and hyphens.
+_MFJ_FILING_STATUSES = frozenset({"married_joint", "mfj", "married filing jointly"})
+_HOH_FILING_STATUSES = frozenset({"hoh", "head of household"})
+_MFS_FILING_STATUSES = frozenset({"mfs", "married separate", "married filing separately"})
+_ACCEPTED_FILING_STATUSES = (
+    "single",
+    "mfj",
+    "married_joint",
+    "married filing jointly",
+    "hoh",
+    "head of household",
+    "mfs",
+    "married separate",
+    "married filing separately",
+    "qualifying widow",
+    "qualifying surviving spouse",
+    "surviving spouse",
+)
+
+
 def _filing_key(filing_status: str) -> str:
     """``single``, ``mfj``, ``hoh`` or ``mfs``.
 
     Joint aliases stay joint. Head of household and married filing separately are
-    their own keys. Any other string stays on the single path, so existing single
-    and joint answers do not move.
+    their own keys. A qualifying surviving spouse stays on the single path; Oregon
+    Chart J and the South Carolina SCIAD still read the original string. A blank
+    status stays single. Any other non-empty string is refused.
     """
     raw = filing_status.strip().lower()
-    if raw in ("married_joint", "mfj", "married filing jointly"):
+    if raw == "":
+        return "single"
+    if raw in _MFJ_FILING_STATUSES:
         return "mfj"
     compact = " ".join(raw.replace("_", " ").replace("-", " ").split())
-    if compact in {"hoh", "head of household"}:
+    if compact in _HOH_FILING_STATUSES:
         return "hoh"
-    if compact in {"mfs", "married separate", "married filing separately"}:
+    if compact in _MFS_FILING_STATUSES:
         return "mfs"
-    return "single"
+    if compact == "single" or compact in _SURVIVING_SPOUSE:
+        return "single"
+    accepted = ", ".join(_ACCEPTED_FILING_STATUSES)
+    raise SafetyViolationError(
+        f"Unknown filing status {filing_status!r}. Accepted values: {accepted}."
+    )
 
 
 def _is_extra(status: str) -> bool:
@@ -1200,7 +1229,10 @@ _EXTRA_STATUS_LABELS = {
 
 
 def _extra_filing_status(filing_status: str) -> str | None:
-    """``hoh`` or ``mfs`` when the caller named that status; ``None`` otherwise."""
+    """``hoh`` or ``mfs`` when the caller named that status; ``None`` for single or joint.
+
+    An unknown status is refused by :func:`_filing_key` before this returns.
+    """
     status = _filing_key(filing_status)
     return status if _is_extra(status) else None
 
