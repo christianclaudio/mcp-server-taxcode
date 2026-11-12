@@ -169,8 +169,12 @@ def test_oregon_2025_rate_chart_bases() -> None:
     rows = compliance.RATE_TABLES["OR"]["brackets_2025"]
     assert rows["single"][0] == {"over": 125000.0, "base": 10627.0, "rate": 0.099}
     assert rows["single"][1] == {"over": 50000.0, "base": 4065.0, "rate": 0.0875}
+    assert rows["single"][2]["over"] == 11100.0
+    assert rows["single"][3]["over"] == 4400.0
     assert rows["mfj"][0] == {"over": 250000.0, "base": 21256.0, "rate": 0.099}
     assert rows["mfj"][1] == {"over": 50000.0, "base": 3756.0, "rate": 0.0875}
+    assert rows["mfj"][2]["over"] == 22150.0
+    assert rows["mfj"][3]["over"] == 8800.0
     assert "$4,065" in rows["mfs"]["quote"] and "$10,627" in rows["mfs"]["quote"]
     assert "$3,756" in rows["hoh"]["quote"] and "$21,256" in rows["hoh"]["quote"]
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2026) == rows
@@ -185,7 +189,8 @@ def test_oregon_2025_rate_chart_bases() -> None:
     under = _call("OR", 2025, 20000.0 + 2835.0, "single")
     earlier_under = _call("OR", 2024, 20000.0 + 2745.0, "single")
     assert under["taxable_net_income"] == earlier_under["taxable_net_income"] == 20000.0
-    assert under["estimated_state_tax"] == earlier_under["estimated_state_tax"]
+    assert under["estimated_state_tax"] == 1440.0
+    assert earlier_under["estimated_state_tax"] == 1449.0
     single_2024 = _call("OR", 2024, 50000.0 + 2745.0, "single")
     joint_2024 = _call("OR", 2024, 50000.0 + 5495.0, "mfj")
     assert single_2024["estimated_state_tax"] == 4074.0
@@ -193,6 +198,57 @@ def test_oregon_2025_rate_chart_bases() -> None:
     spouse = _call("OR", 2025, 100000.0, "qualifying_surviving_spouse")
     assert spouse["taxable_net_income"] == 94330.0
     assert spouse["estimated_state_tax"] == 7634.88
+
+
+def test_oregon_2025_tax_table_breaks() -> None:
+    """2025 OR-40 tax table, midpoint of the band, nearest dollar, half up.
+
+    Column S breaks at $4,400 and $11,100. Column J breaks at $8,800 and
+    $22,150. Those four thresholds are what make Chart S's tax at $50,000
+    equal $4,065 and Chart J's tax at $50,000 and $250,000 equal $3,756
+    and $21,256. One printed row is pinned on each side of each break,
+    including $4,400–$4,500 single = 212 and $22,100–$22,200 joint = 1,319.
+    """
+    # status, deduction, low, high, printed dollar
+    rows = (
+        ("single", 2835.0, 4300, 4400, 207),
+        ("single", 2835.0, 4400, 4500, 212),
+        ("single", 2835.0, 11000, 11100, 658),
+        ("single", 2835.0, 11200, 11300, 674),
+        ("married_separate", 2835.0, 4400, 4500, 212),
+        ("mfj", 5670.0, 8700, 8800, 416),
+        ("mfj", 5670.0, 8800, 8900, 421),
+        ("mfj", 5670.0, 22000, 22100, 1312),
+        ("mfj", 5670.0, 22100, 22200, 1319),
+        ("mfj", 5670.0, 22400, 22500, 1345),
+        ("head_of_household", 4560.0, 22100, 22200, 1319),
+        ("qualifying_surviving_spouse", 5670.0, 22100, 22200, 1319),
+    )
+    for status, deduction, low, high, printed in rows:
+        midpoint = (low + high) / 2
+        got = _call("OR", 2025, midpoint + deduction, status)
+        assert got["taxable_net_income"] == midpoint
+        assert _dollars(got["estimated_state_tax"]) == printed
+    # The same breaks carry into 2026.
+    carried = _call("OR", 2026, 4450.0 + 2835.0, "single")
+    assert _dollars(carried["estimated_state_tax"]) == 212
+    single_49999 = _call("OR", 2025, 49999.0 + 2835.0, "single")
+    single_50000 = _call("OR", 2025, 50000.0 + 2835.0, "single")
+    joint_49999 = _call("OR", 2025, 49999.0 + 5670.0, "mfj")
+    joint_50000 = _call("OR", 2025, 50000.0 + 5670.0, "mfj")
+    assert single_49999["estimated_state_tax"] <= single_50000["estimated_state_tax"]
+    assert joint_49999["estimated_state_tax"] <= joint_50000["estimated_state_tax"]
+    assert single_50000["estimated_state_tax"] == 4065.0
+    assert joint_50000["estimated_state_tax"] == 3756.0
+    for status, deduction, breaks in (
+        ("single", 2835.0, (4400.0, 11100.0)),
+        ("mfj", 5670.0, (8800.0, 22150.0, 250000.0)),
+    ):
+        for threshold in breaks:
+            at = _call("OR", 2025, threshold + deduction, status)["estimated_state_tax"]
+            below = _call("OR", 2025, threshold - 0.01 + deduction, status)["estimated_state_tax"]
+            above = _call("OR", 2025, threshold + 0.01 + deduction, status)["estimated_state_tax"]
+            assert below <= at <= above
 
 
 def test_michigan_spouse_with_no_income_adds_one_exemption() -> None:
