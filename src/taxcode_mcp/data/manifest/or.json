@@ -92,6 +92,46 @@
           "official": true,
           "retrieved": "2026-11-11",
           "content_sha256": "4ee45bad719499e2b69977b0db15de75ed063ac631b151fdefe3db081fa1eaeb"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "deduction_single_2026": 2900.0,
+            "deduction_mfj_2026": 5800.0,
+            "deduction_hoh_2026": 4650.0,
+            "brackets_2026.single[0].over": 125000.0,
+            "brackets_2026.single[0].base": 10618.0,
+            "brackets_2026.single[0].rate": 0.099,
+            "brackets_2026.single[1].over": 11400.0,
+            "brackets_2026.single[1].base": 678.0,
+            "brackets_2026.single[1].rate": 0.0875,
+            "brackets_2026.single[2].over": 4550.0,
+            "brackets_2026.single[2].base": 216.0,
+            "brackets_2026.single[2].rate": 0.0675,
+            "brackets_2026.single[3].rate": 0.0475,
+            "brackets_2026.mfj[0].over": 250000.0,
+            "brackets_2026.mfj[0].base": 21237.0,
+            "brackets_2026.mfj[0].rate": 0.099,
+            "brackets_2026.mfj[1].over": 22800.0,
+            "brackets_2026.mfj[1].base": 1357.0,
+            "brackets_2026.mfj[1].rate": 0.0875,
+            "brackets_2026.mfj[2].over": 9100.0,
+            "brackets_2026.mfj[2].base": 432.0,
+            "brackets_2026.mfj[2].rate": 0.0675,
+            "brackets_2026.mfj[3].rate": 0.0475,
+            "brackets_2026.hoh": {
+              "same_as": "mfj",
+              "quote": "Chart J: Married filing jointly, Head of household, or Qualifying surviving spouse—Not over $9,100, 4.75% of taxable income. Over $9,100 but not over $22,800, $432 plus 6.75% of excess over $9,100. Over $22,800 but not over $250,000, $1,357 plus 8.75% of excess over $22,800. Over $250,000, $21,237 plus 9.9% of excess over $250,000."
+            },
+            "brackets_2026.mfs": {
+              "same_as": "single",
+              "quote": "Chart S: Single or Married filing separately—Not over $4,550, 4.75% of taxable income. Over $4,550 but not over $11,400, $216 plus 6.75% of excess over $4,550. Over $11,400 but not over $125,000, $678 plus 8.75% of excess over $11,400. Over $125,000, $10,618 plus 9.9% of excess over $125,000."
+            }
+          },
+          "url": "https://www.oregon.gov/dor/forms/FormsPubs/publication-or-estimate_101-026_2026.pdf",
+          "official": true,
+          "retrieved": "2026-11-12",
+          "content_sha256": "6abb5d87494ce16da8f32b93b812bd95c830acb0763294b8e0bcff420bee96b1"
         }
       ]
     }

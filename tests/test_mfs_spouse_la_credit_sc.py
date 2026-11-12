@@ -53,7 +53,7 @@ def test_spouse_inputs_are_refused_outside_married_filing_separately() -> None:
 def test_oregon_spouse_itemizes_zeros_the_standard_deduction() -> None:
     plain = _call("OR", 2026, 80000.0, "married_separate")
     itemized = _call("OR", 2026, 80000.0, "married_separate", spouse_itemizes=True)
-    assert plain["standard_deduction"] == 2835.0
+    assert plain["standard_deduction"] == 2900.0
     assert plain["spouse_itemizes"] is False
     assert itemized["standard_deduction"] == 0.0
     assert itemized["spouse_itemizes"] is True
@@ -63,23 +63,33 @@ def test_oregon_spouse_itemizes_zeros_the_standard_deduction() -> None:
 
 
 def test_oregon_2025_standard_deduction_carries_forward() -> None:
-    """2025 OR-40 prints $2,835 for single and for married filing separately.
+    """2025 OR-40 prints $2,835. The 2026 estimate prints $2,900.
 
-    ``_for_year`` keeps the latest ``deduction_single_YYYY`` for later years, so
-    2026 uses $2,835 as well. 2024 stays on the unsuffixed $2,745.
+    ``_for_year`` keeps the latest ``deduction_single_YYYY``, so 2026 and 2027
+    use $2,900. 2025 stays on $2,835. 2024 stays on the unsuffixed $2,745.
+    Married filing separately follows the single amount.
     """
     assert compliance.RATE_TABLES["OR"]["deduction_single_2025"] == 2835.0
+    assert compliance.RATE_TABLES["OR"]["deduction_single_2026"] == 2900.0
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2025) == 2835.0
-    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2026) == 2835.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2026) == 2900.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2027) == 2900.0
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2024) == 2745.0
-    for year in (2025, 2026):
+    single_2025 = _call("OR", 2025, 80000.0, "single")
+    separate_2025 = _call("OR", 2025, 80000.0, "married_separate")
+    assert single_2025["taxable_net_income"] == 77165.0
+    assert single_2025["estimated_state_tax"] == 6441.94
+    assert separate_2025["standard_deduction"] == 2835.0
+    assert separate_2025["taxable_net_income"] == 77165.0
+    assert separate_2025["estimated_state_tax"] == 6441.94
+    for year in (2026, 2027):
         single = _call("OR", year, 80000.0, "single")
         separate = _call("OR", year, 80000.0, "married_separate")
-        assert single["taxable_net_income"] == 77165.0
-        assert single["estimated_state_tax"] == 6441.94
-        assert separate["standard_deduction"] == 2835.0
-        assert separate["taxable_net_income"] == 77165.0
-        assert separate["estimated_state_tax"] == 6441.94
+        assert single["taxable_net_income"] == 77100.0
+        assert single["estimated_state_tax"] == 6426.75
+        assert separate["standard_deduction"] == 2900.0
+        assert separate["taxable_net_income"] == 77100.0
+        assert separate["estimated_state_tax"] == 6426.75
     earlier = _call("OR", 2024, 80000.0, "married_separate")
     assert earlier["standard_deduction"] == 2745.0
     assert earlier["taxable_net_income"] == 77255.0
@@ -89,56 +99,63 @@ def test_oregon_2025_standard_deduction_carries_forward() -> None:
 def test_oregon_2025_joint_and_surviving_spouse_deduction() -> None:
     """2025 OR-40 Table 5: joint and qualifying surviving spouse deduct $5,670.
 
-    ``_filing_key`` leaves a surviving spouse on single brackets. From 2025 the
-    Oregon deduction uses ``deduction_mfj``, and ``_for_year`` carries
-    ``deduction_mfj_2025`` forward, so 2026 joint is the same $5,670.
+    The 2026 estimate prints $5,800 for joint and for a qualifying surviving
+    spouse. ``_for_year`` carries ``deduction_mfj_2026`` into 2027. 2025 stays
+    on $5,670.
     """
     assert compliance.RATE_TABLES["OR"]["deduction_mfj_2025"] == 5670.0
+    assert compliance.RATE_TABLES["OR"]["deduction_mfj_2026"] == 5800.0
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2025) == 5670.0
-    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2026) == 5670.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2026) == 5800.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2027) == 5800.0
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_mfj", 2024) == 5495.0
     quote = compliance.RATE_TABLES["OR"]["deduction_mfs"]["quote"]
     assert "$" not in quote
-    for year in (2025, 2026):
+    joint_2025 = _call("OR", 2025, 100000.0, "mfj")
+    assert joint_2025["taxable_net_income"] == 94330.0
+    assert joint_2025["estimated_state_tax"] == 7634.88
+    for year in (2026, 2027):
         joint = _call("OR", year, 100000.0, "mfj")
-        assert joint["taxable_net_income"] == 94330.0
-        assert joint["estimated_state_tax"] == 7634.88
+        assert joint["taxable_net_income"] == 94200.0
+        assert joint["estimated_state_tax"] == 7604.5
     assert _call("OR", 2024, 100000.0, "mfj")["taxable_net_income"] == 94505.0
 
 
 def test_oregon_surviving_spouse_uses_chart_j() -> None:
     """2024 and 2025 OR-40 Chart J is the joint schedule, including a surviving spouse.
 
-    The joint deduction is $5,495 in 2024 and $5,670 from 2025, carried forward.
-    A year before the pinned 2024 instructions stays on the single schedule.
+    The joint deduction is $5,495 in 2024 and $5,670 in 2025. The 2026 estimate
+    prints $5,800, and 2027 uses that amount. A year before the pinned 2024
+    instructions stays on the single schedule.
     """
     quote = compliance.RATE_TABLES["OR"]["brackets"]["hoh"]["quote"]
     assert quote == (
         "Chart J: For persons filing jointly, head of household, or qualifying surviving spouse."
     )
     info = compliance.RATE_TABLES["OR"]
-    for year in (2024, 2025, 2026):
+    for year in (2024, 2025, 2026, 2027):
         assert compliance._extra_brackets(info, "mfj", year, "OR") == compliance._extra_brackets(
             info, "hoh", year, "OR"
         )
-    expected = {2024: (94505.0, 7667.19), 2025: (94330.0, 7634.88)}
+    expected = {
+        2024: (94505.0, 7667.19),
+        2025: (94330.0, 7634.88),
+        2026: (94200.0, 7604.5),
+        2027: (94200.0, 7604.5),
+    }
     for year, (taxable, tax) in expected.items():
         joint = _call("OR", year, 100000.0, "mfj")
         for status in ("qualifying_surviving_spouse", "surviving spouse", "qualifying widow"):
             got = _call("OR", year, 100000.0, status)
             assert got["taxable_net_income"] == taxable == joint["taxable_net_income"]
             assert got["estimated_state_tax"] == tax == joint["estimated_state_tax"]
-    carried = _call("OR", 2026, 100000.0, "qualifying_surviving_spouse")
-    joint_2026 = _call("OR", 2026, 100000.0, "mfj")
-    assert carried["taxable_net_income"] == 94330.0
-    assert carried["estimated_state_tax"] == joint_2026["estimated_state_tax"]
     earlier = _call("OR", 2023, 100000.0, "qualifying_surviving_spouse")
     assert earlier["taxable_net_income"] == 97255.0
     assert earlier["estimated_state_tax"] == 8208.81
 
 
 def test_oregon_2025_rate_chart_bases() -> None:
-    """2025 OR-40 Charts S and J, carried forward by ``brackets_2025``.
+    """2025 OR-40 Charts S and J. 2026 uses its own published chart.
 
     Chart S: $4,065 plus 8.75% over $50,000, and $10,627 plus 9.9% over $125,000.
     Chart J: $3,756 plus 8.75% over $50,000, and $21,256 plus 9.9% over $250,000.
@@ -177,15 +194,11 @@ def test_oregon_2025_rate_chart_bases() -> None:
     assert rows["mfj"][3]["over"] == 8800.0
     assert "$4,065" in rows["mfs"]["quote"] and "$10,627" in rows["mfs"]["quote"]
     assert "$3,756" in rows["hoh"]["quote"] and "$21,256" in rows["hoh"]["quote"]
-    assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2026) == rows
     for status, deduction, points in schedules:
-        # Head of household's deduction is an exact-year key, so 2026 has none.
-        years = (2025,) if status == "head_of_household" else (2025, 2026)
-        for year in years:
-            for taxable, tax in points:
-                got = _call("OR", year, taxable + deduction, status)
-                assert got["taxable_net_income"] == taxable
-                assert got["estimated_state_tax"] == tax
+        for taxable, tax in points:
+            got = _call("OR", 2025, taxable + deduction, status)
+            assert got["taxable_net_income"] == taxable
+            assert got["estimated_state_tax"] == tax
     under = _call("OR", 2025, 20000.0 + 2835.0, "single")
     earlier_under = _call("OR", 2024, 20000.0 + 2745.0, "single")
     assert under["taxable_net_income"] == earlier_under["taxable_net_income"] == 20000.0
@@ -198,6 +211,60 @@ def test_oregon_2025_rate_chart_bases() -> None:
     spouse = _call("OR", 2025, 100000.0, "qualifying_surviving_spouse")
     assert spouse["taxable_net_income"] == 94330.0
     assert spouse["estimated_state_tax"] == 7634.88
+
+
+def test_oregon_2026_rate_chart_and_2027_carry() -> None:
+    """2026 Publication OR-ESTIMATE Charts S and J. 2027 uses those figures.
+
+    Chart S tax at $50,000 is $4,055.50 ($678 plus 8.75% of the excess over
+    $11,400). Chart J tax at $50,000 is $3,737 ($1,357 plus 8.75% of the excess
+    over $22,800). The publication's worked example taxes $68,000 on Chart J
+    at $5,312. Head of household's $4,650 deduction is an exact-year key, so
+    2027 head of household still has no sourced amount.
+    """
+    rows = compliance.RATE_TABLES["OR"]["brackets_2026"]
+    assert rows["single"][0] == {"over": 125000.0, "base": 10618.0, "rate": 0.099}
+    assert rows["single"][1] == {"over": 11400.0, "base": 678.0, "rate": 0.0875}
+    assert rows["single"][2] == {"over": 4550.0, "base": 216.0, "rate": 0.0675}
+    assert rows["mfj"][0] == {"over": 250000.0, "base": 21237.0, "rate": 0.099}
+    assert rows["mfj"][1] == {"over": 22800.0, "base": 1357.0, "rate": 0.0875}
+    assert rows["mfj"][2] == {"over": 9100.0, "base": 432.0, "rate": 0.0675}
+    assert "$4,550" in rows["mfs"]["quote"] and "$10,618" in rows["mfs"]["quote"]
+    assert "$9,100" in rows["hoh"]["quote"] and "$21,237" in rows["hoh"]["quote"]
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2026) == rows
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2027) == rows
+    chart_s = (
+        (4550.0, 216.0),
+        (11400.0, 678.0),
+        (50000.0, 4055.5),
+        (125000.0, 10618.0),
+        (130000.0, 11113.0),
+    )
+    chart_j = (
+        (9100.0, 432.0),
+        (22800.0, 1357.0),
+        (50000.0, 3737.0),
+        (68000.0, 5312.0),
+        (250000.0, 21237.0),
+        (260000.0, 22227.0),
+    )
+    schedules = (
+        ("single", 2900.0, chart_s),
+        ("married_separate", 2900.0, chart_s),
+        ("mfj", 5800.0, chart_j),
+        ("qualifying_surviving_spouse", 5800.0, chart_j),
+    )
+    for year in (2026, 2027):
+        for status, deduction, points in schedules:
+            for taxable, tax in points:
+                got = _call("OR", year, taxable + deduction, status)
+                assert got["taxable_net_income"] == taxable
+                assert got["estimated_state_tax"] == tax
+    household = _call("OR", 2026, 50000.0 + 4650.0, "head_of_household")
+    assert household["taxable_net_income"] == 50000.0
+    assert household["estimated_state_tax"] == 3737.0
+    with pytest.raises(SafetyViolationError, match="not_recorded"):
+        _call("OR", 2027, 50000.0, "head_of_household")
 
 
 def test_oregon_2025_tax_table_breaks() -> None:
@@ -229,9 +296,6 @@ def test_oregon_2025_tax_table_breaks() -> None:
         got = _call("OR", 2025, midpoint + deduction, status)
         assert got["taxable_net_income"] == midpoint
         assert _dollars(got["estimated_state_tax"]) == printed
-    # The same breaks carry into 2026.
-    carried = _call("OR", 2026, 4450.0 + 2835.0, "single")
-    assert _dollars(carried["estimated_state_tax"]) == 212
     single_49999 = _call("OR", 2025, 49999.0 + 2835.0, "single")
     single_50000 = _call("OR", 2025, 50000.0 + 2835.0, "single")
     joint_49999 = _call("OR", 2025, 49999.0 + 5670.0, "mfj")

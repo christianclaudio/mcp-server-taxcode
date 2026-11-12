@@ -58,7 +58,7 @@ def test_oregon_and_michigan_married_separate_default_to_one_allowance() -> None
         oregon["taxable_net_income"]
         == _resident_tax("OR", 2026, 80000.0, "single")["taxable_net_income"]
     )
-    assert oregon["standard_deduction"] == 2835.0
+    assert oregon["standard_deduction"] == 2900.0
     assert oregon["spouse_itemizes"] is False
     michigan = _resident_tax("MI", 2026, 80000.0, "mfs")
     assert (
