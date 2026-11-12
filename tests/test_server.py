@@ -1302,8 +1302,8 @@ def test_evaluate_state_residency_cases() -> None:
         filing_status="single",
         tax_year=2024,
     )
-    # Taxable: 100,000 - 4500 = 95,500 -> 1.85% to 12,500, 3.5% to 50,000, then 4.25%
-    expected_la_2024 = round(231.25 + 1312.5 + 0.0425 * (95500.0 - 50000.0), 2)
+    # Tax on $100,000 with no exemption subtracted, minus $4,500 at 1.85%.
+    expected_la_2024 = round(231.25 + 1312.5 + 2125.0 - 83.25, 2)
     assert la_2024["tax_computation"]["estimated_state_tax"] == expected_la_2024
 
     la_2025 = server.evaluate_state_residency(

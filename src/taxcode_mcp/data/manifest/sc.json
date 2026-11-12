@@ -76,14 +76,38 @@
         {
           "tax_year": 2026,
           "values": {
-            "not_recorded[7].param": "deduction",
-            "not_recorded[7].tax_year": 2026,
-            "not_recorded[7].reason": "not_recorded: SC 2026 uses the South Carolina Income Adjusted Deduction (S.C. Code § 12-6-1140(15), 2026 Act 110; https://github.com/christianclaudio/mcp-server-taxcode/issues/106), which phases down with AGI and is not modeled yet."
+            "sciad_base_single_2026": 15000.0,
+            "sciad_base_hoh_2026": 22500.0,
+            "sciad_base_mfj_2026": 30000.0,
+            "sciad_threshold_single_2026": 40000.0,
+            "sciad_threshold_hoh_2026": 60000.0,
+            "sciad_threshold_mfj_2026": 80000.0,
+            "sciad_denominator_single_2026": 55000.0,
+            "sciad_denominator_hoh_2026": 82500.0,
+            "sciad_denominator_mfj_2026": 110000.0
           },
           "url": "https://www.scstatehouse.gov/code/t12c006.php",
           "official": true,
           "retrieved": "2026-11-11",
           "content_sha256": "26aed0cc93a60eb4069a84c66dc55cf5cad7e237bf6d08428b46a247a105cb8a"
+        },
+        {
+          "tax_year": 2026,
+          "values": {
+            "sciad_base_single_2026": 15000.0,
+            "sciad_base_hoh_2026": 22500.0,
+            "sciad_base_mfj_2026": 30000.0,
+            "sciad_threshold_single_2026": 40000.0,
+            "sciad_threshold_hoh_2026": 60000.0,
+            "sciad_threshold_mfj_2026": 80000.0,
+            "sciad_denominator_single_2026": 55000.0,
+            "sciad_denominator_hoh_2026": 82500.0,
+            "sciad_denominator_mfj_2026": 110000.0
+          },
+          "url": "https://www.scstatehouse.gov/sess126_2025-2026/bills/4216.htm",
+          "official": true,
+          "retrieved": "2026-11-11",
+          "content_sha256": "9e3fbbd48551b138866bd5c54f1faadd6404d624ba350195459c0c65477e7493"
         }
       ],
       "not_recorded": [
@@ -121,11 +145,6 @@
           "param": "brackets",
           "tax_year": 2025,
           "reason": "SC1040TT 2025 (sha256 bf27744d0b7fba462b7ff9f69ec9b66af21073de8b95485b2d50e95bc36726b5) prints a top rate of 6% (minus $642) and approximate edges (about $3,560 and $17,830). The dollar edges are not exact, so the schedule is not stored."
-        },
-        {
-          "param": "deduction",
-          "tax_year": 2026,
-          "reason": "not_recorded: SC 2026 uses the South Carolina Income Adjusted Deduction (S.C. Code § 12-6-1140(15), 2026 Act 110; https://github.com/christianclaudio/mcp-server-taxcode/issues/106), which phases down with AGI and is not modeled yet."
         }
       ]
     }

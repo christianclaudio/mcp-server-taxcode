@@ -29,7 +29,8 @@ def test_grid_covers_every_tool_and_jurisdiction() -> None:
 
     cases = read_cases()
     assert set(cases) == set(TOOLS)
-    assert sum(len(v) for v in cases.values()) == 25619
+    # 25619, plus two Oregon qualifying-surviving-spouse rows (2024 and 2025).
+    assert sum(len(v) for v in cases.values()) == 25621
     seen = {str(c["jurisdiction"]).upper() for c in cases["compliance_evaluate_state_residency"]}
     assert set(SUPPORTED_STATE_JURISDICTIONS) <= seen
     statuses = {c.get("filing_status") for c in cases["compliance_evaluate_state_residency"]}
