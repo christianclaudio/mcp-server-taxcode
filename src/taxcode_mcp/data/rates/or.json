@@ -10,6 +10,7 @@
     "regime": "graduated",
     "day_threshold": 200,
     "deduction_single": 2745.0,
+    "deduction_single_2025": 2835.0,
     "deduction_mfj": 5495.0,
     "brackets": {
       "single": [

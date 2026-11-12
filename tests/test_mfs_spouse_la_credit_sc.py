@@ -53,13 +53,37 @@ def test_spouse_inputs_are_refused_outside_married_filing_separately() -> None:
 def test_oregon_spouse_itemizes_zeros_the_standard_deduction() -> None:
     plain = _call("OR", 2026, 80000.0, "married_separate")
     itemized = _call("OR", 2026, 80000.0, "married_separate", spouse_itemizes=True)
-    assert plain["standard_deduction"] == 2745.0
+    assert plain["standard_deduction"] == 2835.0
     assert plain["spouse_itemizes"] is False
     assert itemized["standard_deduction"] == 0.0
     assert itemized["spouse_itemizes"] is True
     assert itemized["taxable_net_income"] == 80000.0
     assert itemized["estimated_state_tax"] > plain["estimated_state_tax"]
     assert "316.695" in itemized["rate_description"]
+
+
+def test_oregon_2025_standard_deduction_carries_forward() -> None:
+    """2025 OR-40 prints $2,835 for single and for married filing separately.
+
+    ``_for_year`` keeps the latest ``deduction_single_YYYY`` for later years, so
+    2026 uses $2,835 as well. 2024 stays on the unsuffixed $2,745.
+    """
+    assert compliance.RATE_TABLES["OR"]["deduction_single_2025"] == 2835.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2025) == 2835.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2026) == 2835.0
+    assert compliance._for_year(compliance.RATE_TABLES["OR"], "deduction_single", 2024) == 2745.0
+    for year in (2025, 2026):
+        single = _call("OR", year, 80000.0, "single")
+        separate = _call("OR", year, 80000.0, "married_separate")
+        assert single["taxable_net_income"] == 77165.0
+        assert single["estimated_state_tax"] == 6450.94
+        assert separate["standard_deduction"] == 2835.0
+        assert separate["taxable_net_income"] == 77165.0
+        assert separate["estimated_state_tax"] == 6450.94
+    earlier = _call("OR", 2024, 80000.0, "married_separate")
+    assert earlier["standard_deduction"] == 2745.0
+    assert earlier["taxable_net_income"] == 77255.0
+    assert earlier["estimated_state_tax"] == 6458.81
 
 
 def test_michigan_spouse_with_no_income_adds_one_exemption() -> None:

@@ -312,11 +312,14 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # non-state call kinds; those rows sum to this number.
 # Plus 24 Louisiana 2022-2024 answers: the exemption is a credit at 1.85%, not a
 # deduction (8 calls a year: single and joint, four incomes).
+# Plus Oregon 2025-2028 single answers: the 2025 OR-40 standard deduction is
+# $2,835 and _for_year carries deduction_single_2025 forward (12 calls: four
+# years, three incomes above the deduction). Joint, and single at AGI 0, stay put.
 # Wave 1 changes 90 searches: 32 newly differ from base, 58 already differed.
 # Plus the answers that now list a Canada (CAN) row or CRA publication: the CANADA_COUNT ones
 # outside the windows, checked byte for byte without those rows, and searches the windows
 # above already allow to change. An answer that changed for both reasons is counted once.
-CHANGED_OUT = 3864
+CHANGED_OUT = 3876
 # Answers that newly list a Canada row or publication and sit outside the allowlists above.
 # A search in every jurisdiction ranks the Canada rows among the others, and the newest-first
 # publication pages list the CRA guidance. Each is the pinned base answer, byte for byte,
@@ -350,6 +353,8 @@ SCHEDULE_UPDATES: dict[str, Collection[int]] = {
     "MS": set(range(2018, 2024)),
     "VT": set(range(2018, 2029)),
     "WA": {2022, 2026, 2027, 2028},
+    # Oregon 2025 OR-40 single standard deduction ($2,835), carried forward.
+    "OR": {2025, 2026, 2027, 2028},
 }
 
 
