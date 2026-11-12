@@ -113,9 +113,7 @@ def test_blank_filing_status_stays_on_the_single_path() -> None:
 
 
 def test_public_tools_treat_aliases_as_the_same_status() -> None:
-    joint = compliance.evaluate_georgia_residency(
-        days_present_ga=10, filing_status="married_joint"
-    )
+    joint = compliance.evaluate_georgia_residency(days_present_ga=10, filing_status="married_joint")
     spaced = compliance.evaluate_georgia_residency(
         days_present_ga=10, filing_status="  Married Filing Jointly  "
     )
@@ -145,8 +143,9 @@ def test_public_tools_treat_aliases_as_the_same_status() -> None:
         tax_year=2024,
     )
     assert folded == household
-    assert household["tax_computation"]["estimated_state_tax"] != (
-        single["tax_computation"]["estimated_state_tax"]
+    assert (
+        household["tax_computation"]["estimated_state_tax"]
+        != (single["tax_computation"]["estimated_state_tax"])
     )
 
 
