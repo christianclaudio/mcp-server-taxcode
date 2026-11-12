@@ -6,7 +6,7 @@ the Louisiana IT-540 tax tables for 2022-2024, and S.C. Code § 12-6-1140(15).
 
 from __future__ import annotations
 
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import ROUND_HALF_EVEN, ROUND_HALF_UP, Decimal
 from typing import Any
 
 import pytest
@@ -167,7 +167,7 @@ def test_oregon_2025_rate_chart_bases() -> None:
     chart_s = (
         (50000.0, 4065.0),
         (60000.0, 4940.0),
-        (125000.0, 10627.0),
+        (125000.0, 10627.5),
         (130000.0, 11122.0),
     )
     chart_j = (
@@ -234,15 +234,15 @@ def test_oregon_2026_rate_chart_and_2027_carry() -> None:
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2026) == rows
     assert compliance._for_year(compliance.RATE_TABLES["OR"], "brackets", 2027) == rows
     chart_s = (
-        (4550.0, 216.0),
-        (11400.0, 678.0),
+        (4550.0, 216.12),
+        (11400.0, 678.38),
         (50000.0, 4055.5),
         (125000.0, 10618.0),
         (130000.0, 11113.0),
     )
     chart_j = (
-        (9100.0, 432.0),
-        (22800.0, 1357.0),
+        (9100.0, 432.25),
+        (22800.0, 1356.75),
         (50000.0, 3737.0),
         (68000.0, 5312.0),
         (250000.0, 21237.0),
@@ -265,6 +265,89 @@ def test_oregon_2026_rate_chart_and_2027_carry() -> None:
     assert household["estimated_state_tax"] == 3737.0
     with pytest.raises(SafetyViolationError, match="not_recorded"):
         _call("OR", 2027, 50000.0, "head_of_household")
+
+
+def _oregon_cents(amount: Decimal) -> float:
+    """A printed chart formula, in cents (half to even)."""
+    return float(amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_EVEN))
+
+
+def test_oregon_chart_income_exactly_at_a_break_stays_on_the_lower_line() -> None:
+    """Oregon's charts tax "Over $X" on the next line, so equality stays below it.
+
+    Each expected amount is the printed lower-line formula at the break, and the
+    upper line one dollar above it. 2025 Chart S breaks at $4,400, $11,100,
+    $50,000 and $125,000. Chart J breaks at $8,800, $22,150, $50,000 and
+    $250,000. 2026 Chart S breaks at $4,550, $11,400 and $125,000. Chart J
+    breaks at $9,100, $22,800 and $250,000.
+    """
+    rate_475 = Decimal("0.0475")
+    rate_675 = Decimal("0.0675")
+    rate_875 = Decimal("0.0875")
+    rate_990 = Decimal("0.099")
+
+    def s_2025(income: Decimal) -> Decimal:
+        b1, b2, b3, b4 = Decimal(4400), Decimal(11100), Decimal(50000), Decimal(125000)
+        if income <= b1:
+            return income * rate_475
+        if income <= b2:
+            return b1 * rate_475 + (income - b1) * rate_675
+        if income <= b3:
+            at = b1 * rate_475 + (b2 - b1) * rate_675
+            return at + (income - b2) * rate_875
+        if income <= b4:
+            return Decimal(4065) + (income - b3) * rate_875
+        return Decimal(10627) + (income - b4) * rate_990
+
+    def j_2025(income: Decimal) -> Decimal:
+        b1, b2, b3, b4 = Decimal(8800), Decimal(22150), Decimal(50000), Decimal(250000)
+        if income <= b1:
+            return income * rate_475
+        if income <= b2:
+            return b1 * rate_475 + (income - b1) * rate_675
+        if income <= b3:
+            at = b1 * rate_475 + (b2 - b1) * rate_675
+            return at + (income - b2) * rate_875
+        if income <= b4:
+            return Decimal(3756) + (income - b3) * rate_875
+        return Decimal(21256) + (income - b4) * rate_990
+
+    def s_2026(income: Decimal) -> Decimal:
+        b1, b2, b3 = Decimal(4550), Decimal(11400), Decimal(125000)
+        if income <= b1:
+            return income * rate_475
+        if income <= b2:
+            return Decimal(216) + (income - b1) * rate_675
+        if income <= b3:
+            return Decimal(678) + (income - b2) * rate_875
+        return Decimal(10618) + (income - b3) * rate_990
+
+    def j_2026(income: Decimal) -> Decimal:
+        b1, b2, b3 = Decimal(9100), Decimal(22800), Decimal(250000)
+        if income <= b1:
+            return income * rate_475
+        if income <= b2:
+            return Decimal(432) + (income - b1) * rate_675
+        if income <= b3:
+            return Decimal(1357) + (income - b2) * rate_875
+        return Decimal(21237) + (income - b3) * rate_990
+
+    cases = (
+        (2025, "single", 2835, s_2025, (4400, 11100, 50000, 125000)),
+        (2025, "mfj", 5670, j_2025, (8800, 22150, 50000, 250000)),
+        (2026, "single", 2900, s_2026, (4550, 11400, 125000)),
+        (2026, "mfj", 5800, j_2026, (9100, 22800, 250000)),
+    )
+    for year, status, deduction, formula, breaks in cases:
+        for threshold in breaks:
+            at = Decimal(threshold)
+            above = at + 1
+            got = _call("OR", year, float(at) + deduction, status)
+            nxt = _call("OR", year, float(above) + deduction, status)
+            assert got["taxable_net_income"] == float(at)
+            assert nxt["taxable_net_income"] == float(above)
+            assert got["estimated_state_tax"] == _oregon_cents(formula(at))
+            assert nxt["estimated_state_tax"] == _oregon_cents(formula(above))
 
 
 def test_oregon_2025_tax_table_breaks() -> None:

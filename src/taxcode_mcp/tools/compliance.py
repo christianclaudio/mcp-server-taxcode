@@ -770,14 +770,15 @@ def _chart_or_marginal_tax(brackets: list[dict[str, Any]], taxable_income: float
     """A chart line's base plus its rate on the excess, or the marginal schedule below it.
 
     Rows are highest threshold first. The first row that states a ``base`` and whose
-    ``over`` the income has reached is that line of the rate chart (the chart's "or more").
-    Income under every such row, and a schedule with no base, uses the marginal rates.
+    ``over`` the income is strictly over is that line (the chart's "Over"). Income
+    exactly at the threshold stays on the lower line. Income under every such row,
+    and a schedule with no base, uses the marginal rates.
     """
     for row in brackets:
         if "base" not in row:
             continue
         over = float(row["over"])
-        if taxable_income >= over:
+        if taxable_income > over:
             excess = taxable_income - over
             return float(round(float(row["base"]) + float(row["rate"]) * excess, 2))
     return _marginal_tax(brackets, taxable_income)
