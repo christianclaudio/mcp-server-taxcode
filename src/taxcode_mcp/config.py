@@ -30,7 +30,7 @@ class Settings(BaseSettings):
         default=3,
         ge=0,
         le=10,
-        description="Maximum retry attempts on HTTP 429 / 5xx",
+        description="Maximum retry attempts on HTTP 429 / 5xx for GET, HEAD, and OPTIONS",
     )
     DB_PATH: str = Field(
         default=":memory:",

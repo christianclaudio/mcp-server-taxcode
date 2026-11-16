@@ -10,6 +10,9 @@ from typing import Any
 import httpx
 import pytest
 
+# The floor test drives a child pytest with this plugin's pytester fixture.
+pytest_plugins = ["pytester"]
+
 # ``taxcode_mcp.server`` builds its module-level ``mcp`` from these variables when it
 # is imported, which happens at collection, before any fixture runs. Clear the shell's
 # values first so a token exported for a manual run can't leak into the suite.
@@ -41,10 +44,34 @@ class RealNetworkUsedError(AssertionError):
     """A test opened a real socket connection or DNS lookup instead of the fake network."""
 
 
-_REAL_GETADDRINFO = socket.getaddrinfo
-
-
 _LOOKUP_ALLOWED_NAMES = frozenset({"localhost", "localhost.", "ip6-localhost"})
+
+
+def _local_addrinfo(host: str, *args: Any, **kwargs: Any) -> list[Any]:
+    """Answer an IP literal or localhost without calling the resolver.
+
+    Allowed lookups stay inside the process. A resolver that refuses every name,
+    including literals, cannot turn this path into a network call.
+    """
+    port = args[0] if args else kwargs.get("port")
+    socktype = socket.SOCK_STREAM
+    if len(args) > 2 and args[2]:
+        socktype = args[2]
+    elif kwargs.get("type"):
+        socktype = kwargs["type"]
+    lowered = host.lower()
+    if lowered == "ip6-localhost":
+        address: str | ipaddress.IPv4Address | ipaddress.IPv6Address = ipaddress.ip_address("::1")
+    elif lowered in {"localhost", "localhost."}:
+        address = ipaddress.ip_address("127.0.0.1")
+    else:
+        address = ipaddress.ip_address(host)
+    family = socket.AF_INET if isinstance(address, ipaddress.IPv4Address) else socket.AF_INET6
+    sockaddr: tuple[Any, ...] = (
+        (str(address), port) if family == socket.AF_INET else (str(address), port, 0, 0)
+    )
+    proto = socket.IPPROTO_TCP if socktype == socket.SOCK_STREAM else 0
+    return [(family, socktype, proto, "", sockaddr)]
 
 
 def _refuse_real_lookup(host: Any, *args: Any, **kwargs: Any) -> Any:
@@ -57,7 +84,12 @@ def _refuse_real_lookup(host: Any, *args: Any, **kwargs: Any) -> Any:
                 f"test tried a real DNS lookup of {name!r}; patch socket.getaddrinfo "
                 "or use tests.fake_network"
             ) from None
-    return _REAL_GETADDRINFO(host, *args, **kwargs)
+    if not isinstance(name, str):
+        raise RealNetworkUsedError(
+            f"test tried a real DNS lookup of {name!r}; patch socket.getaddrinfo "
+            "or use tests.fake_network"
+        )
+    return _local_addrinfo(name, *args, **kwargs)
 
 
 def _refuse_real_connect(*args: Any, **_kwargs: Any) -> Any:
@@ -69,17 +101,18 @@ def _refuse_real_connect(*args: Any, **_kwargs: Any) -> Any:
 
 @pytest.fixture(autouse=True)
 def _no_real_network(request: pytest.FixtureRequest, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Fail any test that dials a real host or looks up a real name (``e2e`` excepted).
+    """Fail any test that dials a real host or looks up a real name (``live`` excepted).
 
     ``socket.socket.connect`` / ``connect_ex`` sit under every client stack (httpx and
     httpcore through anyio and asyncio, ``urllib``, ``socket.create_connection``), so an
     unmocked path fails here instead of reaching the network. ``socket.getaddrinfo`` is
-    refused for any name other than localhost or an IP literal, so an unmocked lookup
-    fails before it leaves the machine. The fake network patches httpcore's backends
+    refused for any name other than localhost or an IP literal, and those are answered
+    locally, so an unmocked lookup fails before it leaves the machine. The fake network
+    patches httpcore's backends
     above this layer and never opens a socket; tests that check DNS patch
     ``socket.getaddrinfo`` themselves, which replaces this guard for that test.
     """
-    if request.node.get_closest_marker("e2e") is not None:
+    if request.node.get_closest_marker("live") is not None:
         return
     monkeypatch.setattr(socket.socket, "connect", _refuse_real_connect)
     monkeypatch.setattr(socket.socket, "connect_ex", _refuse_real_connect)
@@ -110,6 +143,42 @@ def pytest_sessionstart(session: pytest.Session) -> None:
     error = code_mode_ci_guard_error()
     if error is not None:
         pytest.exit(error, returncode=3)
+
+
+LIVE_REQUIRED_ENV = ("TAXCODE_BASE_URL", "TAXCODE_API_KEY")
+
+# Host of the default base URL (config.py). The skip reason names the variable, never this value.
+_PLACEHOLDER_BASE_HOST = "api.example.com"
+
+
+def live_skip_reason(environ: dict[str, str] | None = None) -> str | None:
+    """Return why a live test must skip, or None when it may run.
+
+    Live tests run only when ``MCP_LIVE_TESTS`` is ``1`` and every name in
+    ``LIVE_REQUIRED_ENV`` is non-empty. A placeholder base URL skips too.
+    The reason lists missing names and never a value.
+    """
+    env = os.environ if environ is None else environ
+    if env.get("MCP_LIVE_TESTS") != "1":
+        return "MCP_LIVE_TESTS is not 1"
+    missing = [name for name in LIVE_REQUIRED_ENV if not env.get(name, "").strip()]
+    if missing:
+        return "missing or empty: " + ", ".join(missing)
+    if _PLACEHOLDER_BASE_HOST in env.get("TAXCODE_BASE_URL", ""):
+        return "TAXCODE_BASE_URL is the placeholder base URL"
+    return None
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """Skip live items unless the opt-in, credentials, and a real base URL are set."""
+    del config
+    reason = live_skip_reason()
+    if reason is None:
+        return
+    skip = pytest.mark.skip(reason=reason)
+    for item in items:
+        if item.get_closest_marker("live") is not None:
+            item.add_marker(skip)
 
 
 @pytest.fixture
@@ -145,8 +214,17 @@ def mock_transport() -> httpx.MockTransport:
 
 
 @pytest.fixture(autouse=True)
-def mock_server_client(mock_transport: httpx.MockTransport) -> Iterator[None]:
-    """Ensure taxcode_mcp.server.client uses mock_transport during test runs."""
+def mock_server_client(
+    request: pytest.FixtureRequest, mock_transport: httpx.MockTransport
+) -> Iterator[None]:
+    """Ensure taxcode_mcp.server.client uses mock_transport during test runs.
+
+    A live item keeps the real client. The autouse mock must not wrap it, or
+    ``-m live`` never reaches an upstream.
+    """
+    if request.node.get_closest_marker("live") is not None:
+        yield
+        return
     from taxcode_mcp import server
 
     orig_custom = server.client._custom_client

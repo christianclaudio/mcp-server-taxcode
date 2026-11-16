@@ -266,7 +266,7 @@ uv run python scripts/check_tool_contract.py
 uv run python scripts/check_openapi_drift.py
 uv run python scripts/build_catalog.py --check   # data files, source manifest, generated docs
 uv run pytest tests/test_protocol.py
-uv run pytest tests/test_e2e_live.py -m e2e   # on demand; default CI uses -m 'not e2e'
+uv run pytest tests/test_live.py -m live   # on demand; default CI uses -m 'not live'
 ./scripts/check_conformance.sh
 
 # 5. AI code review gate (CodeRabbit)
