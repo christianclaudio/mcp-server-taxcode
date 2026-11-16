@@ -3,10 +3,13 @@
 import asyncio
 import contextvars
 import random
+import re
 import ssl
 import time
 import urllib.parse
 from collections.abc import Callable, Iterable
+from datetime import UTC, datetime
+from email.utils import parsedate_to_datetime
 from typing import Any
 from urllib.parse import urlparse
 
@@ -227,6 +230,40 @@ class SSRFSafeAsyncTransport(httpx.AsyncHTTPTransport):
             _PINNED_IPS.reset(token)
 
 
+def _retry_after_seconds(response: httpx.Response) -> float | None:
+    """Return the wait a ``Retry-After`` header asks for, or None if absent or malformed.
+
+    RFC 9110 section 10.2.3 allows delta-seconds or an HTTP-date. A date is taken
+    relative to now and a past date counts as zero; a negative number is malformed.
+    """
+    value = response.headers.get("Retry-After")
+    if value is None:
+        return None
+    value = value.strip()
+    if re.fullmatch(r"[0-9]+", value):
+        return float(value)
+    try:
+        when = parsedate_to_datetime(value)
+    except (TypeError, ValueError, IndexError):
+        return None
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=UTC)
+    return max(0.0, (when - datetime.now(UTC)).total_seconds())
+
+
+MAX_RETRY_AFTER_SECONDS = 120
+"""Maximum ``Retry-After``, in seconds, that is honored in full.
+
+A value at or under this limit is waited out. A larger value, or a header
+that cannot be parsed, is hostile: the call raises ``RateLimitError`` on a
+429 and ``TemplateError`` on a 5xx at once and does not retry, so the client
+never waits less than the server asked. This limit is not the request timeout.
+"""
+
+# Only these methods are retried on 429, 5xx, or a transport error.
+_IDEMPOTENT_METHODS = frozenset({"GET", "HEAD", "OPTIONS"})
+
+
 class TemplateClient:
     """Hardened async client for interacting with upstream APIs."""
 
@@ -296,6 +333,33 @@ class TemplateClient:
             target = container
         return target if isinstance(target, dict) else {}
 
+    def _retry_delay(self, attempt: int, response: httpx.Response) -> float:
+        """Seconds to wait before retrying a 429 or 5xx response.
+
+        The longer of the jittered exponential backoff and a ``Retry-After`` at
+        or under ``MAX_RETRY_AFTER_SECONDS``. A hostile header is rejected by
+        the caller before this runs, so the wait is never shorter than the
+        server asked.
+        """
+        backoff = float(2**attempt) + random.uniform(0.1, 0.5)
+        retry_after = _retry_after_seconds(response)
+        if retry_after is None:
+            return backoff
+        return max(backoff, retry_after)
+
+    def _reject_hostile_retry_after(self, response: httpx.Response) -> None:
+        """Fail at once when a present ``Retry-After`` is over the cap or unreadable."""
+        if response.headers.get("Retry-After") is None:
+            return
+        seconds = _retry_after_seconds(response)
+        if seconds is None or seconds > MAX_RETRY_AFTER_SECONDS:
+            if response.status_code >= 500:
+                raise TemplateError(f"HTTP {response.status_code}: Upstream server error.")
+            raise RateLimitError(
+                f"HTTP {response.status_code}: Retry-After exceeds "
+                f"{MAX_RETRY_AFTER_SECONDS}s or cannot be parsed."
+            )
+
     async def request(
         self,
         method: str,
@@ -303,10 +367,18 @@ class TemplateClient:
         params: dict[str, Any] | None = None,
         json_data: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Execute request with exponential backoff and randomized jitter."""
+        """Execute request with backoff. Only idempotent methods are retried.
+
+        A 429, a 5xx, or a transport error is retried only for GET, HEAD, and
+        OPTIONS. The wait is the longer of the jittered backoff and a
+        ``Retry-After`` at or under ``MAX_RETRY_AFTER_SECONDS``. A longer or
+        unparseable ``Retry-After`` fails at once. Transport errors retry only
+        for GET, HEAD, and OPTIONS; an unmapped HTTP status never retries.
+        """
         client = await self.get_client()
         url = f"{self.base_url}/{path.lstrip('/')}"
         last_exception: Exception | None = None
+        idempotent = method.upper() in _IDEMPOTENT_METHODS
 
         for attempt in range(self.max_retries + 1):
             try:
@@ -321,17 +393,17 @@ class TemplateClient:
                     raise AuthenticationError(f"HTTP {response.status_code}: {response.text}")
                 if response.status_code == 404:
                     raise ResourceNotFoundError(f"HTTP 404: Resource at '{path}' not found.")
+                if response.status_code == 429 or response.status_code >= 500:
+                    self._reject_hostile_retry_after(response)
                 if response.status_code == 429:
-                    if attempt < self.max_retries:
-                        backoff = (2**attempt) + random.uniform(0.1, 0.5)
-                        await asyncio.sleep(backoff)
+                    if idempotent and attempt < self.max_retries:
+                        await asyncio.sleep(self._retry_delay(attempt, response))
                         continue
                     raise RateLimitError("HTTP 429: Rate limit exceeded after retries.")
 
                 if response.status_code >= 500:
-                    if attempt < self.max_retries:
-                        backoff = (2**attempt) + random.uniform(0.1, 0.5)
-                        await asyncio.sleep(backoff)
+                    if idempotent and attempt < self.max_retries:
+                        await asyncio.sleep(self._retry_delay(attempt, response))
                         continue
                     raise TemplateError(f"HTTP {response.status_code}: Upstream server error.")
 
@@ -340,10 +412,15 @@ class TemplateClient:
                     return {}
                 return response.json()  # type: ignore[no-any-return]
 
-            except (httpx.RequestError, httpx.HTTPStatusError) as exc:
+            except httpx.HTTPStatusError as exc:
+                # Transport errors retry only for GET, HEAD, and OPTIONS.
+                # An unmapped HTTP status never retries.
+                raise TemplateError(f"Request failed: {redact_secrets(str(exc))}") from exc
+            except httpx.RequestError as exc:
                 last_exception = exc
-                if attempt < self.max_retries:
+                if idempotent and attempt < self.max_retries:
                     await asyncio.sleep((2**attempt) + random.uniform(0.1, 0.5))
                     continue
+                break
 
         raise TemplateError(f"Request failed: {redact_secrets(str(last_exception))}")
