@@ -230,6 +230,31 @@ async def test_post_http_error_is_not_retried(sleeps: list[float], status: int) 
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("method", ["GET", "POST"])
+@pytest.mark.parametrize("status", [400, 409])
+async def test_unmapped_status_is_not_retried(
+    sleeps: list[float], method: str, status: int
+) -> None:
+    """An unmapped 4xx is one request and the client error, for GET and POST."""
+    calls = 0
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal calls
+        calls += 1
+        return httpx.Response(status, text="no")
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler), base_url=BASE) as http:
+        client = TemplateClient(max_retries=3, http_client=http)
+        with pytest.raises(TemplateError) as exc_info:
+            await client.request(method, "retry")
+    assert type(exc_info.value) is TemplateError
+    assert str(exc_info.value).startswith("Request failed:")
+    assert isinstance(exc_info.value.__cause__, httpx.HTTPStatusError)
+    assert calls == 1
+    assert sleeps == []
+
+
+@pytest.mark.asyncio
 async def test_post_transport_error_is_not_retried(sleeps: list[float]) -> None:
     """POST is not retried when the transport fails."""
     calls = 0

@@ -372,8 +372,8 @@ class TemplateClient:
         A 429, a 5xx, or a transport error is retried only for GET, HEAD, and
         OPTIONS. The wait is the longer of the jittered backoff and a
         ``Retry-After`` at or under ``MAX_RETRY_AFTER_SECONDS``. A longer or
-        unparseable ``Retry-After`` fails at once. An ``HTTPStatusError`` from
-        ``raise_for_status`` is still retried for every method.
+        unparseable ``Retry-After`` fails at once. Transport errors retry only
+        for GET, HEAD, and OPTIONS; an unmapped HTTP status never retries.
         """
         client = await self.get_client()
         url = f"{self.base_url}/{path.lstrip('/')}"
@@ -412,12 +412,13 @@ class TemplateClient:
                     return {}
                 return response.json()  # type: ignore[no-any-return]
 
-            except (httpx.RequestError, httpx.HTTPStatusError) as exc:
+            except httpx.HTTPStatusError as exc:
+                # Transport errors retry only for GET, HEAD, and OPTIONS.
+                # An unmapped HTTP status never retries.
+                raise TemplateError(f"Request failed: {redact_secrets(str(exc))}") from exc
+            except httpx.RequestError as exc:
                 last_exception = exc
-                # Transport errors retry only for idempotent methods. HTTPStatusError
-                # (a status this method does not map itself) keeps the previous retry.
-                transport_error = isinstance(exc, httpx.RequestError)
-                if (idempotent or not transport_error) and attempt < self.max_retries:
+                if idempotent and attempt < self.max_retries:
                     await asyncio.sleep((2**attempt) + random.uniform(0.1, 0.5))
                     continue
                 break
