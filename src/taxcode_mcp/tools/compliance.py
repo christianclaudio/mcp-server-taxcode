@@ -262,11 +262,13 @@ def _co_estimate_note(tax_year: int, rate: float) -> str:
     """The estimate label for a Colorado tax year the table's figures don't cover; else empty.
 
     Colorado starts from federal taxable income, so its deduction is that year's federal
-    standard deduction; a year outside the federal table uses the nearest year it holds.
+    standard deduction. A year before the federal table uses the oldest figure and is
+    labeled here. A later year uses :func:`_federal_past_table_note`, the same sentence
+    every state that reads the federal figure uses.
     """
     reasons = []
     held = _federal_year(tax_year)
-    if held != tax_year:
+    if held != tax_year and tax_year < held:
         reasons.append(
             f"tax year {tax_year}'s federal figure is not in this table, so the {held} "
             "figure is used"
@@ -675,6 +677,27 @@ def _is_extra(status: str) -> bool:
 def _federal_year(tax_year: int) -> int:
     """The tax year itself if the federal table holds it; else the nearest year it holds."""
     return min(max(tax_year, min(FEDERAL_STANDARD_DEDUCTION)), max(FEDERAL_STANDARD_DEDUCTION))
+
+
+# States whose allowance is the federal standard deduction. A year after the table's
+# newest row is an estimate, and the sentence is the same for all of them.
+FEDERAL_FIGURE_STATES = frozenset(
+    {"AZ", "CO", "DC", "IA", "ID", "ME", "MO", "MT", "ND", "NM", "SC", "UT"}
+)
+
+
+def _federal_past_table_note(tax_year: int) -> str:
+    """The estimate label for a year after the newest federal standard deduction.
+
+    A year the table holds, and a year before its oldest row, is not labeled here.
+    """
+    held = _federal_year(tax_year)
+    if tax_year <= held:
+        return ""
+    return (
+        f" [ESTIMATE: tax year {tax_year}'s federal figure is not in this table, so the "
+        f"{held} figure is used]"
+    )
 
 
 def _allowance(params: dict[str, Any], is_mfj: bool, tax_year: int = 0) -> float:
@@ -2416,6 +2439,8 @@ def evaluate_state_residency(
         rate_desc += (
             " The standard deduction stored is the maximum; the income phase-down is not modeled."
         )
+    if state in FEDERAL_FIGURE_STATES:
+        rate_desc += _federal_past_table_note(tax_year)
 
     tax_computation: dict[str, Any] = {
         "taxable_net_income": taxable_income,

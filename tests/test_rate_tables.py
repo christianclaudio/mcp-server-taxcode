@@ -995,10 +995,12 @@ def test_colorado_years_off_the_held_figures_are_labeled_estimates() -> None:
         assert label(tax_year) == prop_121, tax_year
     assert label(2024) == "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
     assert label(2026) == f"{prop_121} [ESTIMATE: {late.format(2026)}]"
-    # 2027 is in the federal table (Rev. Proc. 2026-35). 2030 still clamps, now to 2027.
+    # 2027 is in the federal table (Rev. Proc. 2026-35). 2030 still clamps, now to 2027,
+    # and the federal-figure sentence is the one every federal-figure state uses.
     assert label(2027) == f"{prop_121} [ESTIMATE: {late.format(2027)}]"
-    reasons = f"{deduction.format(2030, 2027)}; {late.format(2030)}"
-    assert label(2030) == f"{prop_121} [ESTIMATE: {reasons}]"
+    assert label(2030) == (
+        f"{prop_121} [ESTIMATE: {late.format(2030)}] [ESTIMATE: {deduction.format(2030, 2027)}]"
+    )
     assert compliance._co_estimate_note(2024, 0.0425) == ""
 
 
@@ -1116,7 +1118,7 @@ def test_utah_rate_and_credit_by_year() -> None:
     )
     for tax_year in (2026, 2027, 2030, 2035):
         assert _resident_tax("UT", tax_year, 1.0)["rate_description"] == (
-            ut_2026 + _ut_note(tax_year)
+            ut_2026 + _ut_note(tax_year) + compliance._federal_past_table_note(tax_year)
         ), tax_year
 
 
