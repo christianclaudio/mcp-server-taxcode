@@ -51,11 +51,11 @@ def test_run_ingest_source_filters() -> None:
     """Filter by specific jurisdiction or corpus subsets."""
     us_stats = run_ingest(db_path=":memory:", sources="us", dry_run=True)
     assert us_stats["statutes_considered"] > 0
-    assert us_stats["publications_considered"] == 6
+    assert us_stats["publications_considered"] == 7
 
     pr_stats = run_ingest(db_path=":memory:", sources="pr", dry_run=True)
     assert pr_stats["statutes_considered"] > 0
-    assert pr_stats["publications_considered"] == 26
+    assert pr_stats["publications_considered"] == 28
 
     cfr_stats = run_ingest(db_path=":memory:", sources="cfr", dry_run=True)
     assert cfr_stats["statutes_considered"] > 0
@@ -235,7 +235,11 @@ def test_2026_publications_cite_the_issuing_agency_pdf() -> None:
     pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
     pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
     hacienda = [f"pr-cc-ri-26-{n:02d}" for n in range(1, 14)]
-    hacienda += [f"pr-bi-26-{n:02d}" for n in range(1, 6)] + ["pr-da-26-01", "pr-da-26-02"]
+    hacienda += [f"pr-bi-26-{n:02d}" for n in range(1, 7)] + [
+        "pr-da-26-01",
+        "pr-da-26-02",
+        "pr-da-26-03",
+    ]
     ddec = ["pr-ddec-cc-2026-001", "pr-ddec-ib-2026-004"]
     for pid in hacienda + ddec:
         assert pubs[pid] == pub_catalog[pid], pid

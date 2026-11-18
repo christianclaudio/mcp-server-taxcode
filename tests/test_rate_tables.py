@@ -995,9 +995,12 @@ def test_colorado_years_off_the_held_figures_are_labeled_estimates() -> None:
         assert label(tax_year) == prop_121, tax_year
     assert label(2024) == "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
     assert label(2026) == f"{prop_121} [ESTIMATE: {late.format(2026)}]"
-    for tax_year in (2027, 2030):
-        reasons = f"{deduction.format(tax_year, 2026)}; {late.format(tax_year)}"
-        assert label(tax_year) == f"{prop_121} [ESTIMATE: {reasons}]", tax_year
+    # 2027 is in the federal table (Rev. Proc. 2026-35). 2030 still clamps, now to 2027,
+    # and the federal-figure sentence is the one every federal-figure state uses.
+    assert label(2027) == f"{prop_121} [ESTIMATE: {late.format(2027)}]"
+    assert label(2030) == (
+        f"{prop_121} [ESTIMATE: {late.format(2030)}] [ESTIMATE: {deduction.format(2030, 2027)}]"
+    )
     assert compliance._co_estimate_note(2024, 0.0425) == ""
 
 
@@ -1083,7 +1086,10 @@ def test_utah_rate_and_credit_by_year() -> None:
     for tax_year, pins in (
         (2024, (649.52, 2404.52, 1299.05, 4550.00)),
         (2025, (558.23, 2298.23, 1116.46, 4500.00)),
-        *((year, (522.23, 2247.23, 1044.46, 4450.00)) for year in range(2026, 2036)),
+        (2026, (522.23, 2247.23, 1044.46, 4450.00)),
+        # 2027+ credit base is Rev. Proc. 2026-35 ($16,600 / $33,200). The $500 / $1,000
+        # increase lowers tax by 6% of that increase where the credit is not phased out.
+        *((year, (492.23, 2217.23, 984.46, 4450.00)) for year in range(2027, 2036)),
     ):
         got = (
             _tax("UT", tax_year, 30000.0),
@@ -1112,7 +1118,7 @@ def test_utah_rate_and_credit_by_year() -> None:
     )
     for tax_year in (2026, 2027, 2030, 2035):
         assert _resident_tax("UT", tax_year, 1.0)["rate_description"] == (
-            ut_2026 + _ut_note(tax_year)
+            ut_2026 + _ut_note(tax_year) + compliance._federal_past_table_note(tax_year)
         ), tax_year
 
 
@@ -1128,7 +1134,71 @@ def test_utah_credit_base_is_the_federal_standard_deduction() -> None:
     assert federal[2025]["hoh"] == 23625.0
     assert federal[2026]["single"] == 16100.0 and federal[2026]["mfj"] == 32200.0
     assert federal[2026]["hoh"] == 24150.0
+    assert federal[2027]["single"] == 16600.0 and federal[2027]["mfj"] == 33200.0
+    assert federal[2027]["hoh"] == 24925.0 and federal[2027]["mfs"] == 16600.0
     assert "credit_base_single_2025" not in ut
+
+
+def test_surviving_spouse_federal_allowance_is_the_joint_amount() -> None:
+    """IRC § 63(c)(2)(A) and Rev. Proc. 2026-35 § 3.15(1): the joint column.
+
+    ``_filing_key`` stays single. A table that is not the federal allowance does too.
+    """
+    federal = {"deduction": "federal_standard_deduction"}
+    own = {"deduction": {"single": 1.0, "mfj": 2.0}}
+    aliases = (
+        "qualifying widow",
+        "qualifying surviving spouse",
+        "surviving spouse",
+        "qualifying_surviving_spouse",
+    )
+    assert compliance._filing_key("qualifying surviving spouse") == "single"
+    for year in range(2019, 2028):
+        joint = compliance.FEDERAL_STANDARD_DEDUCTION[year]["mfj"]
+        single = compliance.FEDERAL_STANDARD_DEDUCTION[year]["single"]
+        for alias in aliases:
+            assert compliance._allowance(federal, False, year, alias) == joint, (year, alias)
+        assert compliance._allowance(federal, False, year, "single") == single, year
+        assert compliance._allowance(own, False, year, "qualifying surviving spouse") == 1.0
+    assert compliance.FEDERAL_STANDARD_DEDUCTION[2027]["mfj"] == 33200.0
+    assert compliance.FEDERAL_STANDARD_DEDUCTION[2026]["mfj"] == 32200.0
+    assert compliance.FEDERAL_STANDARD_DEDUCTION[2027]["single"] == 16600.0
+    # Colorado's only filing-status amount is that allowance, so the tax matches joint.
+    assert _tax("CO", 2027, 100000.0, "qualifying surviving spouse") == _tax(
+        "CO", 2027, 100000.0, "married filing jointly"
+    )
+    assert _tax("CO", 2027, 100000.0, "qualifying surviving spouse") != _tax("CO", 2027, 100000.0)
+
+
+def test_utah_surviving_spouse_uses_the_joint_federal_credit_base() -> None:
+    """Utah reads the federal allowance as its credit base. Rev. Proc. 2026-35 § 3.15(1).
+
+    The allowance is the joint $33,200. Utah's own phase-out stays on the single key,
+    because ``_filing_key`` is unchanged, so the tax is not the joint tax. The rate
+    description is the table's label, not a rewritten filing status.
+    """
+    allowance = compliance._federal_or_amount(
+        "federal_standard_deduction", False, 2027, "qualifying surviving spouse"
+    )
+    assert allowance == 33200.0
+    single = _resident_tax("UT", 2027, 60000.0, "single")
+    joint = _resident_tax("UT", 2027, 60000.0, "married filing jointly")
+    widow = _resident_tax("UT", 2027, 60000.0, "qualifying surviving spouse")
+    # 6% of the $16,600 gap between the single and joint federal allowances.
+    assert round(single["estimated_state_tax"] - widow["estimated_state_tax"], 2) == 996.00
+    assert widow["estimated_state_tax"] != joint["estimated_state_tax"]
+    assert widow["rate_description"] == single["rate_description"] == joint["rate_description"]
+    assert compliance._filing_key("qualifying surviving spouse") == "single"
+    direct = compliance.evaluate_state_residency(
+        jurisdiction="UT",
+        days_in_state=300,
+        is_domiciled=True,
+        maintains_permanent_abode=True,
+        federal_agi=60000.0,
+        filing_status="qualifying surviving spouse",
+        tax_year=2027,
+    )
+    assert direct["tax_computation"]["estimated_state_tax"] == widow["estimated_state_tax"]
 
 
 def test_idaho_schedule_and_deduction_by_year() -> None:
@@ -1308,7 +1378,8 @@ def test_colorado_deduction_follows_the_federal_figure() -> None:
         (2024, 3629.50, 3009.00),
         (2025, 3707.00, 3014.00),
         (2026, 3691.60, 2983.20),
-        (2027, 3691.60, 2983.20),
+        # Rev. Proc. 2026-35: (100,000 - 16,600) * 4.40% = 3,669.60; joint 2,939.20.
+        (2027, 3669.60, 2939.20),
     ):
         assert _tax("CO", tax_year, 100000.0) == single, tax_year
         assert _tax("CO", tax_year, 100000.0, "married_joint") == joint, tax_year
@@ -1777,6 +1848,7 @@ def test_batch4_federal_standard_deduction_readers() -> None:
     assert _resident_tax("AZ", 2024, 14600.0)["estimated_state_tax"] == 0.0
     assert _resident_tax("AZ", 2025, 15750.0)["estimated_state_tax"] == 0.0
     assert _resident_tax("AZ", 2026, 16100.0)["estimated_state_tax"] == 0.0
+    assert _resident_tax("AZ", 2027, 16600.0)["estimated_state_tax"] == 0.0
     assert _tax("NM", 2024, 14600.0) == 0.0
     assert _tax("NM", 2025, 15750.0) == 0.0
 

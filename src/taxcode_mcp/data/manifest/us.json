@@ -445,14 +445,27 @@
       "verification": "summary"
     },
     {
-      "kind": "federal_table",
-      "id": "us-standard-deduction",
-      "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+      "kind": "publication",
+      "id": "us-irs-rp-2026-35",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
       "edition": "not_recorded",
       "official": true,
       "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
-      "retrieved": "2026-10-23",
-      "content_sha256": "e9ada115fb43a4af5ea326ca91edd40ab0bf29b9be01d2c13d7b8fa96214635b",
+      "retrieved": "2026-11-18",
+      "content_sha256": "87b383c6ce6e616fd006a61f5eed46fe67099b9c23fb1e1c42ff5359474513b8",
+      "enacting_law": "not_recorded",
+      "effective_date": "not_recorded",
+      "verification": "summary"
+    },
+    {
+      "kind": "federal_table",
+      "id": "us-standard-deduction",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+      "edition": "not_recorded",
+      "official": true,
+      "licence": "US federal government work; not subject to US copyright (17 U.S.C. § 105)",
+      "retrieved": "2026-11-18",
+      "content_sha256": "87b383c6ce6e616fd006a61f5eed46fe67099b9c23fb1e1c42ff5359474513b8",
       "enacting_law": "not_recorded",
       "effective_date": "not_recorded",
       "verification": "not_recorded",
@@ -560,6 +573,19 @@
           "official": true,
           "retrieved": "2026-10-23",
           "content_sha256": "e9ada115fb43a4af5ea326ca91edd40ab0bf29b9be01d2c13d7b8fa96214635b"
+        },
+        {
+          "tax_year": 2027,
+          "values": {
+            "years[8].single": 16600.0,
+            "years[8].mfj": 33200.0,
+            "years[8].hoh": 24925.0,
+            "years[8].mfs": 16600.0
+          },
+          "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+          "official": true,
+          "retrieved": "2026-11-18",
+          "content_sha256": "87b383c6ce6e616fd006a61f5eed46fe67099b9c23fb1e1c42ff5359474513b8"
         }
       ]
     }

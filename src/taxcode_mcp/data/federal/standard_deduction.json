@@ -2,7 +2,7 @@
   "schema": 1,
   "jurisdiction": "US",
   "authority": "26 U.S.C. § 63(c)",
-  "source_url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+  "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
   "years": [
     {
       "tax_year": 2019,
@@ -59,6 +59,13 @@
       "mfj": 32200.0,
       "hoh": 24150.0,
       "mfs": 16100.0
+    },
+    {
+      "tax_year": 2027,
+      "single": 16600.0,
+      "mfj": 33200.0,
+      "hoh": 24925.0,
+      "mfs": 16600.0
     }
   ]
 }

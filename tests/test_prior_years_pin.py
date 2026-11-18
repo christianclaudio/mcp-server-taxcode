@@ -321,13 +321,17 @@ GA_SCHEDULE_YEARS = range(2018, 2024)
 # Plus the answers that now list a Canada (CAN) row or CRA publication: the CANADA_COUNT ones
 # outside the windows, checked byte for byte without those rows, and searches the windows
 # above already allow to change. An answer that changed for both reasons is counted once.
-CHANGED_OUT = 3888
+# The two publication pages moved into the catalog allow above, so they left this count.
+# Plus 28 answers after Rev. Proc. 2026-35 and the shared sentence for a year past the
+# federal table: Colorado 2027 and 2028, the two publication pages, and answers that
+# had still matched the pin (the health check's publication count, and 2028 labels).
+CHANGED_OUT = 3916
 # Answers that newly list a Canada row or publication and sit outside the allowlists above.
 # A search in every jurisdiction ranks the Canada rows among the others, and the newest-first
 # publication pages list the CRA guidance. Each is the pinned base answer, byte for byte,
 # once the Canada rows are dropped. Main counted 68; Wave 1's search allowlist covers the
 # rest, so the pin test's counter on the merged catalog is lower.
-CANADA_COUNT = 52
+CANADA_COUNT = 50
 # Schedules added from official publications in this sourcing pass. A year in the
 # range may change because that year's figures no longer borrow a neighboring schedule,
 # or because the rate prose now names the statute. 2024 amounts that were already
@@ -435,6 +439,10 @@ def _allowed(key: str) -> tuple[bool, bool]:
             return True, False
         if state in FEDERAL_TABLE_STATES and year != 2024:
             return True, False
+        # Colorado reads the same federal figure. 2027 uses Rev. Proc. 2026-35;
+        # 2028 is past the table and carries the shared estimate sentence.
+        if state == "CO" and year in (2027, 2028):
+            return True, False
         if state in EXEMPTION_STATES and year in EXEMPTION_YEARS:
             return True, False
         if state == "GA" and year in GA_SCHEDULE_YEARS:
@@ -464,6 +472,10 @@ def _allowed(key: str) -> tuple[bool, bool]:
         return (
             key in CORRECTED_RESOURCES or key in SLASH_RESOURCES or key == "resource|OK|2355"
         ), False
+    # The publication pages gained the 2027 revenue procedure and two Hacienda rows,
+    # and the Hacienda summaries gained an English line.
+    if kind == "pubs":
+        return True, False
     if kind != "lookup":
         return is_corrected(key), False
     query, jurisdiction, year = rest[0], rest[1], rest[2]

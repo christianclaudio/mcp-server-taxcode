@@ -27,7 +27,7 @@ graph TD
     SysSub["System Sub-server (mount: 'system')<br>• system_get_health_status<br>• taxcode://system/reference/capabilities"]
     StatSub["Statutes Sub-server (mount: 'statutes')<br>• statutes_lookup_statute<br>• statutes_search_tax_code<br>• statutes_list_publications<br>• taxcode://statutes/{jurisdiction}/{section*}"]
     CompSub["Compliance Sub-server (mount: 'compliance')<br>• compliance_evaluate_pr_bona_fide_residency<br>• compliance_calculate_built_in_gain_sourcing<br>• compliance_evaluate_georgia_residency<br>• compliance_evaluate_state_residency"]
-    DuckDB["DuckDB In-Memory & File Engine<br>(235 Statutes, 42 Publications, Full-Text Search, Temporal Versions)"]
+    DuckDB["DuckDB In-Memory & File Engine<br>(235 Statutes, 45 Publications, Full-Text Search, Temporal Versions)"]
 
     Client <-->|"JSON-RPC (tools/list, tools/call)"| Gateway
     Gateway --> ParentMW
@@ -263,7 +263,8 @@ uv run ruff format --check .
 
 # 4. Tool contract, protocol & drift assertions
 uv run python scripts/check_tool_contract.py
-uv run python scripts/check_openapi_drift.py
+uv run python scripts/check_openapi_drift.py  # route contract; it does not watch tax sources
+uv run python scripts/check_source_freshness.py  # weekly job; pinned official sources
 uv run python scripts/build_catalog.py --check   # data files, source manifest, generated docs
 uv run pytest tests/test_protocol.py
 uv run pytest tests/test_live.py -m live   # on demand; default CI uses -m 'not live'

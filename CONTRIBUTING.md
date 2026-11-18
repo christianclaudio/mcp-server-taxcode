@@ -32,14 +32,16 @@ Every manifest entry has every field below. A value we don't have is the explici
 | `edition` | Which text the source at `url` is: `as_enacted` (the law as passed), `amended_compilation` (a compilation with later amendments folded in, such as an OGP "según enmendada" text), or `"not_recorded"`. |
 | `official` | `true` when the URL is on the issuing government body's own site, `false` for a third-party site, or `"not_recorded"`. It says nothing about whether the stored text is official. |
 | `licence` | Reuse terms of the source, or `"not_recorded"`. |
-| `retrieved` | Date the source was fetched (`YYYY-MM-DD`), or `"not_recorded"`. |
-| `content_sha256` | SHA-256 of the fetched source artifact, or `"not_recorded"`. |
+| `retrieved` | Date the source was fetched (`YYYY-MM-DD`), or `"not_recorded"`. The weekly freshness check re-reads every recorded date. |
+| `content_sha256` | SHA-256 of the fetched source artifact, or `"not_recorded"`. The weekly freshness check re-fetches every recorded hash. |
 | `enacting_law` | Law that enacted or last amended the text, or `"not_recorded"`. |
 | `effective_date` | Date the text took effect (`YYYY-MM-DD`), or `"not_recorded"`. |
 | `verification` | `verified_verbatim` (checked word for word against the fetched source; needs `retrieved` and `content_sha256`), `summary` (the stored text is a summary, not a copy), or `"not_recorded"`. |
 | `french_source` | Optional, `statute` entries only, after `verification`, and required when the row has `text_fr`. An object with `url` (https) and `content_sha256` (64 lowercase hex digits) for the fetched French source artifact. |
 | `verification_note` | Optional, and only on a `rate_table` whose `verification` is `not_recorded`, after `verification` and before `year_sources`. A non-empty string saying why that table could not be confirmed. A checked table does not carry it. |
 | `year_sources` | Optional, `rate_table` and `federal_table` entries only, as the last field. A list of the sources for figures of other tax years or corroborating second sources on `url`'s year, `tax_year` ascending. Each has exactly `tax_year`, `values` (the table values it confirms, keyed by their path in `params`, such as `rates[0].rate`, `deduction_mfj_2025` or `years[0].brackets[4].rate`, or for the federal table in its document, such as `years[6].single`; each must equal the table's value), `url` (https), `official` (`true`), `retrieved` and `content_sha256` (`"not_recorded"` when the bytes could not be kept). |
+
+`scripts/check_source_freshness.py` re-fetches every recorded `content_sha256` (entries, `year_sources` and `french_source`) on the weekly `drift-check` job. A changed PDF, ZIP, XML or raw file fails the check. A changed web page is a warning, because page chrome moves. A record still at `"not_recorded"` is listed and not fetched. After a real change, re-read the source and set `retrieved` and `content_sha256` on that same record. The record is the new baseline; there is no separate snapshot file.
 
 To add or change a row:
 
