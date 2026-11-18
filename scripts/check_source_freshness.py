@@ -437,11 +437,9 @@ def _check_hacienda(
 
 
 def _calendar_backstop(newest: int, report: Report) -> None:
-    """On or after 1 December of year Y, tax year Y+1 should already be in the table."""
+    """From 1 December of year Y, tax year Y+1 should be in the table; before that, tax year Y."""
     today = _today()
-    if (today.month, today.day) < (12, 1):
-        return
-    expected = today.year + 1
+    expected = today.year + 1 if today.month == 12 else today.year
     if newest < expected:
         report.newer += 1
         report.lines.append(

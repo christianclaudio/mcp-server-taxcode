@@ -162,6 +162,10 @@ def _routes(
     return routes
 
 
+# A fixed date so results never depend on the real calendar (the backstop reads it).
+DEFAULT_TODAY = date(2026, 11, 18)
+
+
 def _run(
     tmp_path: Path,
     routes: dict[str, list[tuple[int, bytes]]],
@@ -171,7 +175,7 @@ def _run(
     publications: list[dict[str, Any]] | None = None,
     watch: dict[str, Any] | None = None,
     watch_text: str | None = None,
-    today: date | None = None,
+    today: date = DEFAULT_TODAY,
     fail: set[str] | None = None,
 ) -> tuple[int, str, RoutedNetwork]:
     data, watch_path = _tree(
@@ -185,8 +189,7 @@ def _run(
     net = RoutedNetwork(routes)
     if fail:
         net.fail = set(fail)
-    if today is not None:
-        freshness._today = lambda: today  # type: ignore[method-assign]
+    freshness._today = lambda: today  # type: ignore[method-assign]
     try:
         with net.patches(), pytest.MonkeyPatch.context() as monkey:
             monkey.setattr("socket.getaddrinfo", lambda *a, **k: answer(PUBLIC_IP))
@@ -311,6 +314,12 @@ def test_calendar_backstop_december_and_november(
     text = _output(capsys)
     assert code == 0
     assert "Expected publication missing" not in text
+    code, _, _net = _run(tmp_path, _routes(), today=date(2028, 1, 1))
+    text = _output(capsys)
+    assert code == 1
+    assert (
+        "❌ Expected publication missing: IRS inflation revenue procedure for tax year 2028" in text
+    )
 
 
 def test_unknown_hacienda_bulletin_is_newer(

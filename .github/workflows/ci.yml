@@ -358,7 +358,9 @@ jobs:
         run: uv run python scripts/check_openapi_drift.py
 
       - name: Check official source freshness
+        # Runs even when the OpenAPI step failed; that failure still fails the job.
         id: freshness
+        if: ${{ !cancelled() }}
         run: |
           set +e
           uv run python scripts/check_source_freshness.py > freshness.txt
@@ -368,7 +370,7 @@ jobs:
           exit 0
 
       - name: Create Issue on Failure
-        if: steps.freshness.outputs.exit_code != '0'
+        if: ${{ !cancelled() && steps.freshness.outcome == 'success' && steps.freshness.outputs.exit_code != '0' }}
         env:
           GH_TOKEN: ${{ github.token }}
           FRESHNESS_EXIT: ${{ steps.freshness.outputs.exit_code }}

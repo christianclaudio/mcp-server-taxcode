@@ -112,6 +112,11 @@ def test_freshness_check_runs_only_on_the_drift_job() -> None:
     assert "taxcode: official source changed" in drift
     assert "taxcode: newer official publication" in drift
     assert "taxcode freshness monitor failed (exit" in drift
+    assert "id: freshness\n        if: ${{ !cancelled() }}" in drift
+    assert (
+        "if: ${{ !cancelled() && steps.freshness.outcome == 'success' "
+        "&& steps.freshness.outputs.exit_code != '0' }}"
+    ) in drift
     assert "issues: write" in drift
     assert _ci_text().count("issues: write") == 1
     for job_id in EXPECTED_JOBS:
