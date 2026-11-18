@@ -206,7 +206,37 @@ def test_manifest_records_unknowns_explicitly() -> None:
         for e in catalog.manifest
         if e["kind"] == "publication" and e["content_sha256"] != NOT_RECORDED
     }
-    assert hashed_pubs == {"ga-dor-hb-149-pte-tax-faq"}
+    # Hacienda PDFs pinned 2026-11-18, plus Rev. Proc. 2026-35 and the Georgia FAQ.
+    assert hashed_pubs == {
+        "ga-dor-hb-149-pte-tax-faq",
+        "pr-bi-26-01",
+        "pr-bi-26-02",
+        "pr-bi-26-03",
+        "pr-bi-26-04",
+        "pr-bi-26-05",
+        "pr-bi-26-06",
+        "pr-cc-ri-21-10",
+        "pr-cc-ri-25-12",
+        "pr-cc-ri-26-01",
+        "pr-cc-ri-26-02",
+        "pr-cc-ri-26-03",
+        "pr-cc-ri-26-04",
+        "pr-cc-ri-26-05",
+        "pr-cc-ri-26-06",
+        "pr-cc-ri-26-07",
+        "pr-cc-ri-26-08",
+        "pr-cc-ri-26-09",
+        "pr-cc-ri-26-10",
+        "pr-cc-ri-26-11",
+        "pr-cc-ri-26-12",
+        "pr-cc-ri-26-13",
+        "pr-da-21-04",
+        "pr-da-23-04",
+        "pr-da-26-01",
+        "pr-da-26-02",
+        "pr-da-26-03",
+        "us-irs-rp-2026-35",
+    }
 
 
 def test_check_reports_docs_drift_and_write_repairs_it(tree: tuple[Path, Path]) -> None:
@@ -494,7 +524,7 @@ def test_a_manifest_entry_without_an_edition_is_rejected(tree: tuple[Path, Path]
 def test_recorded_editions_include_verified_enacted_nj_amendments() -> None:
     catalog = load_catalog(with_manifest=True)
     editions = {e["id"]: e["edition"] for e in catalog.manifest if e["kind"] not in TABLE_KINDS}
-    assert len(editions) == 277
+    assert len(editions) == 280
     # The Canada rows quote a consolidation (the Act or regulations as amended).
     for row_id in sorted(CAN_STATUTE_IDS):
         assert editions.pop(row_id) == "amended_compilation", row_id
