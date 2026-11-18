@@ -700,15 +700,32 @@ def _federal_past_table_note(tax_year: int) -> str:
     )
 
 
-def _allowance(params: dict[str, Any], is_mfj: bool, tax_year: int = 0) -> float:
+def _federal_column(filing_status: str, is_mfj: bool) -> str:
+    """The federal standard-deduction column for a filing status.
+
+    A qualifying surviving spouse takes the joint amount (IRC § 63(c)(2)(A);
+    Rev. Proc. 2026-35 § 3.15(1)). ``_filing_key`` still returns ``single`` for
+    that status: state brackets, Oregon Chart J and the South Carolina SCIAD
+    read the original string.
+    """
+    if _compact_status(filing_status) in _SURVIVING_SPOUSE:
+        return "mfj"
+    return _status(is_mfj)
+
+
+def _allowance(
+    params: dict[str, Any], is_mfj: bool, tax_year: int = 0, filing_status: str = ""
+) -> float:
     """The filing-status deduction or exemption of a rate table.
 
     An allowance of ``"federal_standard_deduction"`` is the tax year's federal figure (the
-    nearest year the federal table holds when it doesn't hold that year).
+    nearest year the federal table holds when it doesn't hold that year). A qualifying
+    surviving spouse reads the joint column of that figure and no other column.
     """
     by_status = params["deduction"] if "deduction" in params else params["exemption"]
     if by_status == FEDERAL_ALLOWANCE:
-        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][_status(is_mfj)]
+        column = _federal_column(filing_status, is_mfj)
+        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][column]
     return float(by_status[_status(is_mfj)])
 
 
@@ -846,6 +863,7 @@ def _registry_credit(
     dependent_exemption_total: float = 0.0,
     status: str | None = None,
     state: str = "UT",
+    filing_status: str = "",
 ) -> float:
     """A registry table's nonrefundable credit: rate x base, less the phase-out, not below 0.
 
@@ -859,7 +877,10 @@ def _registry_credit(
             base = _extra_scalar(info, "credit_base", chosen, tax_year, state)
         else:
             base = _federal_or_amount(
-                _for_year(info, f"credit_base_{chosen}", tax_year), is_mfj, tax_year
+                _for_year(info, f"credit_base_{chosen}", tax_year),
+                is_mfj,
+                tax_year,
+                filing_status,
             )
     else:
         base = float(credit_base_override)
@@ -1000,10 +1021,15 @@ def _oh_personal_exemption(
     return each * count
 
 
-def _federal_or_amount(raw: Any, is_mfj: bool, tax_year: int) -> float:
-    """A rate-table amount, or that tax year's federal standard deduction when named."""
+def _federal_or_amount(raw: Any, is_mfj: bool, tax_year: int, filing_status: str = "") -> float:
+    """A rate-table amount, or that tax year's federal standard deduction when named.
+
+    A qualifying surviving spouse reads the joint column, the same rule as
+    :func:`_allowance`. Any other allowance is unchanged.
+    """
     if raw == FEDERAL_ALLOWANCE:
-        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][_status(is_mfj)]
+        column = _federal_column(filing_status, is_mfj)
+        return FEDERAL_STANDARD_DEDUCTION[_federal_year(tax_year)][column]
     return float(raw or 0.0)
 
 
@@ -1156,7 +1182,13 @@ def _note_spouse_itemizes(reported: dict[str, Any], deduction: float) -> None:
     reported["spouse_itemizes"] = True
 
 
-def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_year: int) -> float:
+def _sourced_registry_amount(
+    info: dict[str, Any],
+    name: str,
+    is_mfj: bool,
+    tax_year: int,
+    filing_status: str = "",
+) -> float:
     """A registry deduction or exemption for ``tax_year``.
 
     When the table holds ``_YYYY`` values and has no unsuffixed amount, a year before
@@ -1175,7 +1207,7 @@ def _sourced_registry_amount(info: dict[str, Any], name: str, is_mfj: bool, tax_
             f"No sourced {label} value exists for tax year {tax_year}; "
             f"this table holds it from tax year {min(yearly)}."
         )
-    return _federal_or_amount(value, is_mfj, tax_year)
+    return _federal_or_amount(value, is_mfj, tax_year, filing_status)
 
 
 def _dependent_exemption_each(info: dict[str, Any], tax_year: int) -> float | None:
@@ -2093,7 +2125,7 @@ def evaluate_state_residency(
         standard_ded = (
             _extra_amount(RATE_TABLES["CO"], "deduction", status_key, tax_year, "CO")
             if _is_extra(status_key)
-            else _allowance(RATE_TABLES["CO"], is_mfj, tax_year)
+            else _allowance(RATE_TABLES["CO"], is_mfj, tax_year, filing_status)
         )
         # IRC 63(c)(6)(A): a separate return's federal standard deduction is zero when
         # either spouse itemizes. Colorado tax is based on federal taxable income.
@@ -2130,7 +2162,7 @@ def evaluate_state_residency(
         standard_ded = (
             _extra_amount(az, "deduction", status_key, tax_year, "AZ")
             if _is_extra(status_key)
-            else _allowance(az, is_mfj, tax_year)
+            else _allowance(az, is_mfj, tax_year, filing_status)
         )
         # IRC 63(c)(6)(A), on top of Arizona's federal standard deduction.
         if (
@@ -2245,7 +2277,9 @@ def evaluate_state_residency(
             else:
                 exemption = 0.0
         else:
-            ded = _sourced_registry_amount(info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year)
+            ded = _sourced_registry_amount(
+                info, f"deduction_{_status(is_mfj)}", is_mfj, tax_year, filing_status
+            )
             exemption = _sourced_registry_amount(
                 info, f"exemption_{_status(is_mfj)}", is_mfj, tax_year
             )
@@ -2432,6 +2466,7 @@ def evaluate_state_residency(
                 dependent_exemption_total=ut_dep,
                 status=status_key,
                 state=state,
+                filing_status=filing_status,
             )
             estimated_tax = max(0.0, round(estimated_tax - credit, 2))
 
