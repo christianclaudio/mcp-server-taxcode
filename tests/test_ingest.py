@@ -235,7 +235,11 @@ def test_2026_publications_cite_the_issuing_agency_pdf() -> None:
     pubs = {p["id"]: p for p in INITIAL_PUBLICATIONS}
     pub_catalog = {p.id: p.to_dict() for p in PUBLICATIONS_CATALOG}
     hacienda = [f"pr-cc-ri-26-{n:02d}" for n in range(1, 14)]
-    hacienda += [f"pr-bi-26-{n:02d}" for n in range(1, 6)] + ["pr-da-26-01", "pr-da-26-02"]
+    hacienda += [f"pr-bi-26-{n:02d}" for n in range(1, 7)] + [
+        "pr-da-26-01",
+        "pr-da-26-02",
+        "pr-da-26-03",
+    ]
     ddec = ["pr-ddec-cc-2026-001", "pr-ddec-ib-2026-004"]
     for pid in hacienda + ddec:
         assert pubs[pid] == pub_catalog[pid], pid

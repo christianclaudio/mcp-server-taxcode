@@ -834,8 +834,9 @@ def test_statute_doc_path_matches_the_committed_pages() -> None:
 
 
 def test_federal_standard_deduction_holds_each_years_irs_figure() -> None:
-    # Rev. Procs. 2018-57, 2019-44, 2020-45, 2021-45, 2022-38, 2023-34 and 2025-32; for 2025,
-    # P.L. 119-21 § 70102 (the TY2025 Form 1040 instructions print $15,750 / $31,500).
+    # Rev. Procs. 2018-57, 2019-44, 2020-45, 2021-45, 2022-38, 2023-34, 2025-32 and
+    # 2026-35 § 3.15(1); for 2025, P.L. 119-21 § 70102 (the TY2025 Form 1040 instructions
+    # print $15,750 / $31,500).
     assert load_federal_standard_deduction() == {
         2019: {"single": 12200.0, "mfj": 24400.0, "hoh": 18350.0, "mfs": 12200.0},
         2020: {"single": 12400.0, "mfj": 24800.0, "hoh": 18650.0, "mfs": 12400.0},
@@ -845,6 +846,7 @@ def test_federal_standard_deduction_holds_each_years_irs_figure() -> None:
         2024: {"single": 14600.0, "mfj": 29200.0, "hoh": 21900.0, "mfs": 14600.0},
         2025: {"single": 15750.0, "mfj": 31500.0, "hoh": 23625.0, "mfs": 15750.0},
         2026: {"single": 16100.0, "mfj": 32200.0, "hoh": 24150.0, "mfs": 16100.0},
+        2027: {"single": 16600.0, "mfj": 33200.0, "hoh": 24925.0, "mfs": 16600.0},
     }
     doc = federal_table_document()
     assert (doc["jurisdiction"], doc["authority"]) == ("US", "26 U.S.C. § 63(c)")
@@ -1056,11 +1058,11 @@ def test_federal_table_has_one_manifest_record_with_a_source_per_year(
     entries = [e for e in catalog.manifest if e["kind"] == "federal_table"]
     assert [(e["_jurisdiction"], e["id"]) for e in entries] == [("US", "us-standard-deduction")]
     entry = entries[0]
-    assert entry["url"] == "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf"
+    assert entry["url"] == "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf"
     assert entry["url"] == catalog.federal_tables["us-standard-deduction"]["source_url"]
-    assert entry["official"] is True and entry["retrieved"] == "2026-10-23"
+    assert entry["official"] is True and entry["retrieved"] == "2026-11-18"
     sources = entry["year_sources"]
-    assert [s["tax_year"] for s in sources] == list(range(2019, 2027))
+    assert [s["tax_year"] for s in sources] == list(range(2019, 2028))
     assert sources[6]["url"] == "https://www.irs.gov/pub/irs-pdf/i1040gi.pdf"
     assert sources[6]["values"] == {
         "years[6].single": 15750.0,
@@ -1089,7 +1091,7 @@ def test_federal_table_has_one_manifest_record_with_a_source_per_year(
     errors = us(lambda e: e.update(url="https://www.irs.gov/pub/irs-drop/rp-24-40.pdf"))
     assert errors == [
         f"{where}: url 'https://www.irs.gov/pub/irs-drop/rp-24-40.pdf' != row source_url "
-        "'https://www.irs.gov/pub/irs-drop/rp-25-32.pdf'"
+        "'https://www.irs.gov/pub/irs-drop/rp-26-35.pdf'"
     ]
     errors = us(lambda e: e.update(id="us-other"))
     assert errors == [

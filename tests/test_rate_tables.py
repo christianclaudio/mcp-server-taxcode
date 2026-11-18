@@ -995,9 +995,10 @@ def test_colorado_years_off_the_held_figures_are_labeled_estimates() -> None:
         assert label(tax_year) == prop_121, tax_year
     assert label(2024) == "Flat 4.25% rate (2024 TABOR reduction, SB 24-228)"
     assert label(2026) == f"{prop_121} [ESTIMATE: {late.format(2026)}]"
-    for tax_year in (2027, 2030):
-        reasons = f"{deduction.format(tax_year, 2026)}; {late.format(tax_year)}"
-        assert label(tax_year) == f"{prop_121} [ESTIMATE: {reasons}]", tax_year
+    # 2027 is in the federal table (Rev. Proc. 2026-35). 2030 still clamps, now to 2027.
+    assert label(2027) == f"{prop_121} [ESTIMATE: {late.format(2027)}]"
+    reasons = f"{deduction.format(2030, 2027)}; {late.format(2030)}"
+    assert label(2030) == f"{prop_121} [ESTIMATE: {reasons}]"
     assert compliance._co_estimate_note(2024, 0.0425) == ""
 
 
@@ -1083,7 +1084,10 @@ def test_utah_rate_and_credit_by_year() -> None:
     for tax_year, pins in (
         (2024, (649.52, 2404.52, 1299.05, 4550.00)),
         (2025, (558.23, 2298.23, 1116.46, 4500.00)),
-        *((year, (522.23, 2247.23, 1044.46, 4450.00)) for year in range(2026, 2036)),
+        (2026, (522.23, 2247.23, 1044.46, 4450.00)),
+        # 2027+ credit base is Rev. Proc. 2026-35 ($16,600 / $33,200). The $500 / $1,000
+        # increase lowers tax by 6% of that increase where the credit is not phased out.
+        *((year, (492.23, 2217.23, 984.46, 4450.00)) for year in range(2027, 2036)),
     ):
         got = (
             _tax("UT", tax_year, 30000.0),
@@ -1128,6 +1132,8 @@ def test_utah_credit_base_is_the_federal_standard_deduction() -> None:
     assert federal[2025]["hoh"] == 23625.0
     assert federal[2026]["single"] == 16100.0 and federal[2026]["mfj"] == 32200.0
     assert federal[2026]["hoh"] == 24150.0
+    assert federal[2027]["single"] == 16600.0 and federal[2027]["mfj"] == 33200.0
+    assert federal[2027]["hoh"] == 24925.0 and federal[2027]["mfs"] == 16600.0
     assert "credit_base_single_2025" not in ut
 
 
@@ -1308,7 +1314,8 @@ def test_colorado_deduction_follows_the_federal_figure() -> None:
         (2024, 3629.50, 3009.00),
         (2025, 3707.00, 3014.00),
         (2026, 3691.60, 2983.20),
-        (2027, 3691.60, 2983.20),
+        # Rev. Proc. 2026-35: (100,000 - 16,600) * 4.40% = 3,669.60; joint 2,939.20.
+        (2027, 3669.60, 2939.20),
     ):
         assert _tax("CO", tax_year, 100000.0) == single, tax_year
         assert _tax("CO", tax_year, 100000.0, "married_joint") == joint, tax_year
@@ -1777,6 +1784,7 @@ def test_batch4_federal_standard_deduction_readers() -> None:
     assert _resident_tax("AZ", 2024, 14600.0)["estimated_state_tax"] == 0.0
     assert _resident_tax("AZ", 2025, 15750.0)["estimated_state_tax"] == 0.0
     assert _resident_tax("AZ", 2026, 16100.0)["estimated_state_tax"] == 0.0
+    assert _resident_tax("AZ", 2027, 16600.0)["estimated_state_tax"] == 0.0
     assert _tax("NM", 2024, 14600.0) == 0.0
     assert _tax("NM", 2025, 15750.0) == 0.0
 

@@ -184,3 +184,6 @@ def test_federal_rows_served_by_existing_tools() -> None:
     assert any(h["id"] == "us-irc-1411" for h in hits)
     pubs = db.list_publications(category="irs-publication", limit=20)
     assert {p["id"] for p in pubs} == {f"us-irs-pub-{n}" for n in IRS_PUBS}
+    procedures = db.list_publications(category="irs-revenue-procedure", limit=20)
+    assert [p["id"] for p in procedures] == ["us-irs-rp-2026-35"]
+    assert procedures[0]["doc_number"] == "Rev. Proc. 2026-35"
