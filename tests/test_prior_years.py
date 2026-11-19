@@ -570,6 +570,12 @@ def test_no_earlier_year_is_given_the_current_text() -> None:
 
 def test_standard_deduction_figures_and_their_sources_are_pinned() -> None:
     table = load_federal_standard_deduction()
+    assert table[2027] == {
+        "single": 16600.0,
+        "mfj": 33200.0,
+        "hoh": 24925.0,
+        "mfs": 16600.0,
+    }
     assert {y: (v["single"], v["mfj"]) for y, v in table.items() if y <= 2025} == {
         2019: (12200.0, 24400.0),
         2020: (12400.0, 24800.0),
@@ -592,6 +598,7 @@ def test_standard_deduction_figures_and_their_sources_are_pinned() -> None:
         2024: "544ba41c7ba64f77",
         2025: "482e9c487c608f1b",
         2026: "e9ada115fb43a4af",
+        2027: "87b383c6ce6e616f",
     }
 
 

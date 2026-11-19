@@ -330,6 +330,7 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     permissions:
       contents: read
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -355,3 +356,42 @@ jobs:
 
       - name: Run OpenAPI drift detection
         run: uv run python scripts/check_openapi_drift.py
+
+      - name: Check official source freshness
+        # Runs even when the OpenAPI step failed; that failure still fails the job.
+        id: freshness
+        if: ${{ !cancelled() }}
+        run: |
+          set +e
+          uv run python scripts/check_source_freshness.py > freshness.txt
+          code=$?
+          echo "exit_code=${code}" >> "$GITHUB_OUTPUT"
+          cat freshness.txt
+          exit 0
+
+      - name: Create Issue on Failure
+        if: ${{ !cancelled() && steps.freshness.outcome == 'success' && steps.freshness.outputs.exit_code != '0' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FRESHNESS_EXIT: ${{ steps.freshness.outputs.exit_code }}
+        run: |
+          changed=0
+          newer=0
+          if grep -Eq '❌ Source changed|❌ Source gone' freshness.txt; then
+            changed=1
+          fi
+          if grep -Eq '❌ Newer publication|❌ Expected publication missing' freshness.txt; then
+            newer=1
+          fi
+          if [ "$changed" = 1 ] && [ "$newer" = 1 ]; then
+            title='taxcode: official source changed'
+            title="$title; taxcode: newer official publication"
+          elif [ "$changed" = 1 ]; then
+            title='taxcode: official source changed'
+          elif [ "$newer" = 1 ]; then
+            title='taxcode: newer official publication'
+          else
+            title="taxcode freshness monitor failed (exit ${FRESHNESS_EXIT})"
+          fi
+          gh issue create --title "$title" --body-file freshness.txt
+          exit 1

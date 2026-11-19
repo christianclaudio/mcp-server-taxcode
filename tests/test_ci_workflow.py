@@ -102,6 +102,31 @@ def test_conformance_is_its_own_job() -> None:
     assert 'CONFORMANCE_VERSION="${CONFORMANCE_VERSION:-0.1.16}"' in script
 
 
+def test_freshness_check_runs_only_on_the_drift_job() -> None:
+    """Official-source freshness, and issues: write, belong to drift-check alone."""
+    jobs = _jobs_section(_ci_text())
+    drift = _job_block(jobs, "drift-check")
+    assert "Check official source freshness" in drift
+    assert "scripts/check_source_freshness.py" in drift
+    assert "Create Issue on Failure" in drift
+    assert "taxcode: official source changed" in drift
+    assert "taxcode: newer official publication" in drift
+    assert "taxcode freshness monitor failed (exit" in drift
+    assert "id: freshness\n        if: ${{ !cancelled() }}" in drift
+    assert (
+        "if: ${{ !cancelled() && steps.freshness.outcome == 'success' "
+        "&& steps.freshness.outputs.exit_code != '0' }}"
+    ) in drift
+    assert "issues: write" in drift
+    assert _ci_text().count("issues: write") == 1
+    for job_id in EXPECTED_JOBS:
+        if job_id == "drift-check":
+            continue
+        body = _job_block(jobs, job_id)
+        assert "issues: write" not in body
+        assert "check_source_freshness.py" not in body
+
+
 def test_governance_required_contexts() -> None:
     """Required checks use the aggregate Tests name plus image build and conformance."""
     text = GOVERNANCE_PATH.read_text(encoding="utf-8")

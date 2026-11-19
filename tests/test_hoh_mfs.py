@@ -31,6 +31,7 @@ def test_alias_reads_the_named_status_and_a_missing_year_refuses() -> None:
 def test_federal_head_of_household_deduction_is_status_specific() -> None:
     assert compliance.FEDERAL_STANDARD_DEDUCTION[2025]["hoh"] == 23625.0
     assert compliance.FEDERAL_STANDARD_DEDUCTION[2026]["mfs"] == 16100.0
+    assert compliance.FEDERAL_STANDARD_DEDUCTION[2027]["hoh"] == 24925.0
     # Colorado subtracts the federal standard deduction. 2026 head of household is $24,150.
     assert _resident_tax("CO", 2026, 180000.0, "head_of_household")["taxable_net_income"] == (
         180000.0 - 24150.0
