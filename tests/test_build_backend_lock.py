@@ -54,13 +54,13 @@ def test_base_python_reads_the_dockerfile() -> None:
 
 
 # The digest pinned on both FROM lines. glibc comes from the trixie suffix, not this digest.
-_PINNED_DIGEST = "sha256:fbecd461fc72d21b2143c6eaba25143738079154a6d0ea3da3aec724f50eed4a"
+_PINNED_DIGEST = "sha256:65a65fc7b30b06cb6df4930fd4650697cb23f4c2698ab81fc87e4b031bc36928"
 
 
 def test_image_glibc_is_pinned_to_the_dockerfile_base() -> None:
     dockerfile = (gen_build_backend.ROOT / "Dockerfile").read_text(encoding="utf-8")
-    assert dockerfile.count(f"FROM python:3.14-slim-trixie@{_PINNED_DIGEST}") == 2
-    assert gen_build_backend.base_python(dockerfile) == "3.14"
+    assert dockerfile.count(f"FROM python:3.15-slim-trixie@{_PINNED_DIGEST}") == 2
+    assert gen_build_backend.base_python(dockerfile) == "3.15"
     assert gen_build_backend.image_glibc(dockerfile) == (2, 41)
 
 
