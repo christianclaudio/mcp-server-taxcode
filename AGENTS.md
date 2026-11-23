@@ -134,7 +134,7 @@ coderabbit review --agent --uncommitted
 ## 🔄 CI & Releases
 
 - **CI (`.github/workflows/ci.yml`):** runs on `push`/`pull_request` to `main`, weekly schedule, and `workflow_dispatch`. Jobs: `lint-and-types`, `test` (Python 3.11–3.15) + aggregate `tests`, `tool-contract`, `conformance`, `build-check`, `docker-build` (builds without pushing, validates OCI label, stripped build deps, stdio `initialize`/`tools/list`, and negative `CA_CERTIFICATES_FLOOR` check), and `drift-check` (schedule/manual only; the OpenAPI drift check, which does not watch tax sources, plus the official-source freshness check, which does).
-- **Dependabot (`.github/dependabot.yml` + `dependabot-automerge.yml`):** squash-merges minor/patch PRs after CI passes on that head commit; major and `docker` ecosystem updates always wait for human review.
+- **Dependabot (`.github/dependabot.yml` + `dependabot-automerge.yml`):** squash-merges minor/patch PRs after CI passes on that head commit, only when every commit is Dependabot's or a clean GitHub update-branch merge; major and `docker` updates always wait for human review.
 - **Releases (`.github/workflows/release.yml`):** triggered on `v*` tags (`fetch-depth: 0`); builds & verifies wheel version matches tag, publishes to PyPI via OIDC, creates GitHub Release from `scripts/release_notes.py`, pushes container image to GHCR, attests provenance for wheel and container digests (`actions/attest-build-provenance`), and publishes `server.json` to the MCP Registry.
 
 ---
